@@ -3,7 +3,7 @@
 
 = Introduction =
 
-Checkout from SVN [Source] or downloand from a [Downloads] page the source.
+Checkout from SVN [http://code.google.com/p/marioai/source/list Source] or downloand from a [http://code.google.com/p/marioai/downloads/list Downloads] page the zipped source.
 
 
 = Details =
