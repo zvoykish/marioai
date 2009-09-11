@@ -1,0 +1,15 @@
+#summary A comprehensive and always up-to-date getting started instructions.
+#labels Phase-Deploy,Phase-Implementation
+
+= Introduction =
+
+Checkout from SVN [Source] or downloand from a [Downloads] page the source.
+
+
+= Details =
+
+Seek for the specific project files in trunk. Project files for IntelliJ IDEA, Eclipse Galileo 3.5, NetBeans provided.
+Or you might also checkout from SVN using the above mentioned IDEs.
+
+Updates of this page to be continued...
+Comments and requests are welcome!
