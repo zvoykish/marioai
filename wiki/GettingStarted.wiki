@@ -11,5 +11,20 @@ Checkout from SVN [Source] or downloand from a [Downloads] page the source.
 Seek for the specific project files in trunk. Project files for IntelliJ IDEA, Eclipse Galileo 3.5, NetBeans provided.
 Or you might also checkout from SVN using the above mentioned IDEs.
 
+ * *IntelliJ IDEA*
+  # Checkout from Version Control.
+  # Subversion. 
+  # http://marioai.googlecode.com/svn/trunk/ or http://marioai.googlecode.com/svn/ if you would like to checkout the entire project with branches, documentation and target folder, etc.
+  # Create a project from source in _YourJustCreatedFolder_? Yes
+  # *Next>* (if you satisfied with suggested project name and path; otherwise, change it!)
+  # Mark All if you want IDEA to recognize all java files in source directories.
+  # *Next>*
+  # Mark `jdom.jar` and press *Next>*
+  # Select _Trunk_ or _Src_ in *Modules* column. In the right column *Module Dependencies* you should see `jdom.jar`
+  # *Next >*
+  # Exclude if any facets in Python src found
+  # *Finish* !
+
+
 Updates of this page to be continued...
 Comments and requests are welcome!
