@@ -8,14 +8,14 @@ Checkout from SVN [http://code.google.com/p/marioai/source/checkout Source] or d
 
 = Details =
 
-Seek for the specific project files in trunk. Project files for IntelliJ IDEA, Eclipse Galileo and NetBeans are provided.
+Seek for the specific project files in trunk. Project files for IntelliJ IDEA, Eclipse Galileo and Netbeans are provided.
 Or you might also checkout from SVN using the above mentioned IDEs.
 
  * *IntelliJ IDEA*
   # Checkout from Version Control.
   # Subversion. 
   # http://marioai.googlecode.com/svn/trunk/ or http://marioai.googlecode.com/svn/ if you would like to checkout the entire project with branches, documentation and target folder, etc.
-  # Create a project from source in _YourJustCreatedFolder_? Yes
+  # Create a project from source in _Your_Just_Created_Folder_? Yes
   # *Next>* (if you satisfied with suggested project name and path; otherwise, change it!)
   # Mark All if you want IDEA to recognize all java files in source directories.
   # *Next>*
