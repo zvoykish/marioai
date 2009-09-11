@@ -25,6 +25,5 @@ Or you might also checkout from SVN using the above mentioned IDEs.
   # Exclude if any facets in Python src found
   # *Finish* !
 
-<wiki:gadget url="http://markmail.org/gadgets/markmailmini.xqy?l=com.googlegroups.google-maps-api&title=dssdds" width="310" height="566" />
 Updates of this page to be continued...
 Comments and requests are welcome!
