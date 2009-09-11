@@ -8,7 +8,7 @@ Checkout from SVN [http://code.google.com/p/marioai/source/checkout Source] or d
 
 = Details =
 
-Seek for the specific project files in trunk. Project files for IntelliJ IDEA, Eclipse Galileo 3.5, NetBeans provided.
+Seek for the specific project files in trunk. Project files for IntelliJ IDEA, Eclipse Galileo and NetBeans are provided.
 Or you might also checkout from SVN using the above mentioned IDEs.
 
  * *IntelliJ IDEA*
