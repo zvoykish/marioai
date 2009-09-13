@@ -25,19 +25,19 @@ Or you might also checkout from SVN using the above mentioned IDEs.
   # Exclude if any facets in Python src found
   # *Finish* !
 
-* *Eclipse Galileo for Python parts of the project only*
-	 # File -> New -> Other
-	 # SVN -> Checkout projects from SVN
-	 # Create a new repository location http://marioai.googlecode.com/svn/trunk
-	 # *Next >* 
-	 # src -> python -> competition
-	 # *Next >*
-	 # Select "Check out as a project configured using the New Project Wizard"
-	 # *Next >* (You will see a project creation wizard) 
-	 # Pydev -> Pydev Project ([pydev.org Pydev] plugin for Eclipse should be installed) 
-	 # Give name to a project, say "iMarioCompetition"
-	 # uncheck "Create default 'src'..."
-	 # *Finish*
+ * *Eclipse Galileo for Python parts of the project only*
+	  # File -> New -> Other
+	  # SVN -> Checkout projects from SVN
+	  # Create a new repository location http://marioai.googlecode.com/svn/trunk
+	  # *Next >* 
+	  # src -> python -> competition
+	  # *Next >*
+	  # Select "Check out as a project configured using the New Project Wizard"
+	  # *Next >* (You will see a project creation wizard) 
+	  # Pydev -> Pydev Project ([http://pydev.org Pydev] plugin for Eclipse should be installed) 
+	  # Give name to a project, say "iMarioCompetition"
+	  # uncheck "Create default 'src'..."
+	  # *Finish*
 
 Updates of this page to be continued...
 Comments and requests are welcome!
