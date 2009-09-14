@@ -1,6 +1,8 @@
 #summary Comprehensive and always up-to-date getting started instructions.
 #labels Phase-Deploy,Phase-Implementation
 
+<wiki:toc max_depth="2" /> 
+
 = Introduction =
 
 Checkout from SVN [http://code.google.com/p/marioai/source/checkout Source] or download from a [http://code.google.com/p/marioai/downloads/list Downloads] page the zipped source.
@@ -11,7 +13,7 @@ Checkout from SVN [http://code.google.com/p/marioai/source/checkout Source] or d
 Seek for the specific project files in trunk. Project files for IntelliJ IDEA, Eclipse Galileo and Netbeans are provided.
 Or you might also checkout from SVN using the above mentioned IDEs.
 
- * *IntelliJ IDEA*
+ == * *IntelliJ IDEA* ==
   # Checkout from Version Control.
   # Subversion. 
   # http://marioai.googlecode.com/svn/trunk/ or http://marioai.googlecode.com/svn/ if you would like to checkout the entire project with branches, documentation and target folder, etc.
@@ -28,7 +30,7 @@ Or you might also checkout from SVN using the above mentioned IDEs.
   # Add here `;*.lvl;*.dat` (this makes IDEA to copy these files within the compiled binary class-files; so the IDE could find it while running)
   # *OK*
 
- * *Eclipse Galileo for Python parts of the project only*
+ == * *Eclipse Galileo for Python parts of the project only* ==
 	  # File -> New -> Other
 	  # SVN -> Checkout projects from SVN
 	  # Create a new repository location http://marioai.googlecode.com/svn/trunk
@@ -42,7 +44,7 @@ Or you might also checkout from SVN using the above mentioned IDEs.
 	  # uncheck "Create default 'src'..."
 	  # *Finish*
 	 
-	 * *Eclipse Galileo for Java part and entire source*
+	 == * *Eclipse Galileo for Java part and entire source* ==
 	  # File -> New -> Other
 	  # SVN -> Checkout projects from SVN
 	  # Create a new repository location http://marioai.googlecode.com/svn/trunk or use the existing one
@@ -56,11 +58,11 @@ Or you might also checkout from SVN using the above mentioned IDEs.
 	  # Press *Add* and put down '*.lvl', '*.dat'
 	  # *Finish*
 	  
-	* *Netbeans IDE*
-	 * Please, let  us know, if one need instructions for Netbeans (which are similar to the aboves)
+	== * *Netbeans IDE* ==
+	 * Please, let  us know, if one need instructions for Netbeans (which are basically similar to the aboves)
 		
 		Once your project had been set up, you can go to [Overview], run the becnhmark, [Play] and start programming your [Agent]!
 		
 	------
-	This page is finished unless if any request will appear.   
+	This page is finished unless any request will appear.   
 Comments and requests are welcome!
