@@ -25,7 +25,7 @@ Or you might also checkout from SVN using the above mentioned IDEs.
   # Exclude if any facets in Python src found
   # *Finish* !
   # Go to *Preferences* > *Compiler*
-  # Add here `;*.lvl;*.dat`
+  # Add here `;*.lvl;*.dat` (this makes IDEA to copy these files within the compiled binary class-files; so the IDE could find it while running)
   # *OK*
 
  * *Eclipse Galileo for Python parts of the project only*
@@ -51,6 +51,7 @@ Or you might also checkout from SVN using the above mentioned IDEs.
 	  # *Next >* (You will see a project creation wizard)
 	  # Select "_Java_ _Project_"
 	  # Name the project, say "iMario" and select a location
+	  # Make root folder as source folder
 	  # *Finish*
 	  
 
