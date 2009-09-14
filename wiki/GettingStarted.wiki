@@ -52,6 +52,8 @@ Or you might also checkout from SVN using the above mentioned IDEs.
 	  # Select "_Java_ _Project_"
 	  # Name the project, say "iMario" and select a location
 	  # Make root folder as source folder
+	  # Configure inclusion and exclusion filters
+	  # Press *Add* and put down '*.lvl', '*.dat'
 	  # *Finish*
 	  
 
