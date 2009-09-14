@@ -56,6 +56,11 @@ Or you might also checkout from SVN using the above mentioned IDEs.
 	  # Press *Add* and put down '*.lvl', '*.dat'
 	  # *Finish*
 	  
-
-Updates of this page to be continued...
+	* *Netbeans IDE*
+	 * Please, let  us know, if one need instructions for Netbeans (which are similar to the aboves)
+		
+		Once your project had been set up, you can go to [Overview], run the becnhmark, [Play] and start programming your [Agent]!
+		
+	------
+	This page is finished unless if any request will appear.   
 Comments and requests are welcome!
