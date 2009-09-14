@@ -24,6 +24,9 @@ Or you might also checkout from SVN using the above mentioned IDEs.
   # *Next >*
   # Exclude if any facets in Python src found
   # *Finish* !
+  # Go to *Preferences* > *Compiler*
+  # Add here ;\*.lvl;\*.dat
+  # *OK*
 
  * *Eclipse Galileo for Python parts of the project only*
 	  # File -> New -> Other
@@ -34,7 +37,7 @@ Or you might also checkout from SVN using the above mentioned IDEs.
 	  # *Next >*
 	  # Select "Check out as a project configured using the New Project Wizard"
 	  # *Next >* (You will see a project creation wizard) 
-	  # _Pydev) -> _Pydev_ Project ([http://pydev.org Pydev] plugin for Eclipse should be installed) 
+	  # _Pydev_ -> _Pydev_ Project ([http://pydev.org Pydev] plugin for Eclipse should be installed) 
 	  # Give name to a project, say "iMarioCompetition"
 	  # uncheck "Create default 'src'..."
 	  # *Finish*
@@ -49,6 +52,7 @@ Or you might also checkout from SVN using the above mentioned IDEs.
 	  # Select "_Java_ _Project_"
 	  # Name the project, say "iMario" and select a location
 	  # *Finish*
+	  
 
 Updates of this page to be continued...
 Comments and requests are welcome!
