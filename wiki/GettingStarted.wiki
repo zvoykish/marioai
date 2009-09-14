@@ -25,7 +25,7 @@ Or you might also checkout from SVN using the above mentioned IDEs.
   # Exclude if any facets in Python src found
   # *Finish* !
   # Go to *Preferences* > *Compiler*
-  # Add here ;\*.lvl;\*.dat
+  # Add here `;*.lvl;*.dat`
   # *OK*
 
  * *Eclipse Galileo for Python parts of the project only*
