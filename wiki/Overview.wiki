@@ -1,4 +1,4 @@
-#summary Where and how to start exploring and use the benchmark. Main classes and methods of the iMario benchmark interface.
+#summary Where and how to start exploring and use the benchmark. Main classes and methods of the MarioAI benchmark interface.
 #labels Featured,Phase-Implementation
 
 <wiki:toc max_depth="2" /> 
