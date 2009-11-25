@@ -40,7 +40,7 @@ Or you might also checkout from SVN using the above mentioned IDEs.
 	  # Select "Check out as a project configured using the New Project Wizard"
 	  # *Next >* (You will see a project creation wizard) 
 	  # _Pydev_ -> _Pydev_ Project ([http://pydev.org Pydev] plugin for Eclipse should be installed) 
-	  # Give name to a project, say "iMarioCompetition"
+	  # Give name to a project, say "MarioAICompetition"
 	  # uncheck "Create default 'src'..."
 	  # *Finish*
 	 
@@ -52,7 +52,7 @@ Or you might also checkout from SVN using the above mentioned IDEs.
 	  # Select "Check out as a project configured using the New Project Wizard"
 	  # *Next >* (You will see a project creation wizard)
 	  # Select "_Java_ _Project_"
-	  # Name the project, say "iMario" and select a location
+	  # Name the project, say "MarioAI" and select a location
 	  # Make root folder as source folder
 	  # Configure inclusion and exclusion filters
 	  # Press *Add* and put down '*.lvl', '*.dat'
