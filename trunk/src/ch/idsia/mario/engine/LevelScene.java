@@ -267,6 +267,7 @@ public class LevelScene extends Scene implements SpriteContext
                     case(Sprite.KIND_SHELL):
                     case(Sprite.KIND_SPIKY):
                     case(Sprite.KIND_ENEMY_FLOWER):
+                    case(Sprite.KIND_SPIKY_WINGED):
                         return 1;
                 }
                 System.err.println("Z2 UNKNOWNN el = " + el);
