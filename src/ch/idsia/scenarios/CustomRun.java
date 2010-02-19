@@ -1,5 +1,8 @@
 package ch.idsia.scenarios;
+//https://marioai.googlecode.com/svn/trunk/src
 
+import ch.idsia.ai.agents.Agent;
+import ch.idsia.ai.agents.AmiCoAgent;
 import ch.idsia.ai.agents.ai.ForwardAgent;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.Evaluator;
@@ -14,9 +17,17 @@ import ch.idsia.tools.Evaluator;
 
 public class CustomRun
 {
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         CmdLineOptions options = new CmdLineOptions(args);
         Evaluator evaluator = new Evaluator(options);
-        evaluator.evaluate();                
+        Agent agent = new ForwardAgent();
+        options.setMaxFPS(true);
+//        options.setVisualization(false);
+        System.out.println("evaluator = " + evaluator);
+//        Agent agent = new AmiCoAgent();
+        options.setAgent(agent);
+        evaluator.evaluate();
+        System.exit(0);
     }
 }
