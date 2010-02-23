@@ -65,4 +65,10 @@ public class CmdLineOptions extends EvaluationOptions
 
     public Boolean isEcho() {
         return b(getParameterValue("-echo"));      }
+
+    public String getPyAmiCoModuleName()
+    {
+        return getParameterValue("-pym");
+    }
+ 
 }

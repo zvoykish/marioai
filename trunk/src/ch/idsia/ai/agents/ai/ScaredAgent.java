@@ -45,7 +45,7 @@ public class ScaredAgent extends BasicAIAgent implements Agent {
         if (/*levelScene[11][13] != 0 ||*/ levelScene[11][12] != 0 ||
            /* levelScene[12][13] == 0 ||*/ levelScene[12][12] == 0 )
         {
-            if (observation.mayMarioJump() || ( !observation.isMarioOnGround() && action[Mario.KEY_JUMP]))
+            if (observation.isMarioAbleToJump() || ( !observation.isMarioOnGround() && action[Mario.KEY_JUMP]))
             {
                 action[Mario.KEY_JUMP] = true;
             }

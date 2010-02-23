@@ -16,7 +16,7 @@ public interface Environment
     public static final int HalfObsHeight = 11;
 
     // always the same dimensionality: 22x22
-    // always centered on the agent
+    // always centered on the agent 
 
     // KILLS
     
@@ -25,12 +25,22 @@ public interface Environment
     // if your agent recieves too ambiguous observation, it might request for more precise one for the next step
 
 
+    // ATAVIZMS for back compatibility! Strongly recommended to use new interface.
+
+    @Deprecated
     public byte[][] getCompleteObservation();   // default: ZLevelScene = 1, ZLevelEnemies = 0
-
+    @Deprecated
     public byte[][] getEnemiesObservation();    // default: ZLevelEnemies = 0
-
+    @Deprecated
     public byte[][] getLevelSceneObservation(); // default: ZLevelScene = 1
 
+    // For Server usage only, Java agents should use non-bitmap versions.
+    @Deprecated
+    public String getBitmapEnemiesObservation();
+    @Deprecated
+    public String getBitmapLevelObservation();
+
+    // NEW INTERFACE
     public float[] getMarioFloatPos();
 
     public int getMarioMode();
@@ -38,8 +48,10 @@ public interface Environment
     public float[] getEnemiesFloatPos();
 
     public boolean isMarioOnGround();
-    public boolean mayMarioJump();
+    public boolean isMarioAbleToJump();
     public boolean isMarioCarrying();
+    // Pilot (test) additions
+    public boolean isMarioAbleToShoot();
 
     public byte[][] getMergedObservationZ(int ZLevelScene, int ZLevelEnemies);
     public byte[][] getLevelSceneObservationZ(int ZLevelScene);
@@ -50,12 +62,6 @@ public interface Environment
     public int getKillsByStomp();
     public int getKillsByShell();
 
-    // Pilot (test) additions
-    public boolean canShoot();
-    
-    // For Server usage only, Java agents should use non-bitmap versions.
-    public String getBitmapEnemiesObservation();
 
-    public String getBitmapLevelObservation();
-
+    int getMarioStatus();
 }

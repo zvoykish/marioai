@@ -1,5 +1,6 @@
 package ch.idsia.scenarios;
 
+import ch.idsia.ai.agents.AmiCoAgent;
 import ch.idsia.ai.agents.ai.*;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
@@ -17,7 +18,7 @@ import ch.idsia.mario.simulation.SimulationOptions;
 //import competition.icegic.sergiolopez.AdaptiveAgent;
 //import competition.icegic.perez.Perez;
 //import competition.icegic.robin.AStarAgent;
-import competition.cig.sergeykarakovskiy.SergeyKarakovskiy_JumpingAgent;
+
 //import competition.cig.trondellingsen.TrondEllingsen_LuckyAgent;
 //import competition.cig.sergeypolikarpov.SergeyPolikarpov_SimpleCyberNeuronAgent;
 //import competition.cig.spencerschumann.SpencerSchumann_SlideRule;
@@ -32,6 +33,27 @@ import competition.cig.sergeykarakovskiy.SergeyKarakovskiy_JumpingAgent;
  * Time: 4:35:08 PM
  * Package: ch.idsia
  */
+
+
+/*
+	experimental setup :
+	C++ , glue, python, AmiCo, type of Machine
+Model Name:	MacBook Pro
+Model Identifier:	MacBookPro4,1
+Processor Name:	Intel Core 2 Duo
+Processor Speed:	2.4 GHz
+Number Of Processors:	1
+Total Number Of Cores:	2
+L2 Cache:	3 MB
+Memory:	4 GB
+Bus Speed:	800 MHz
+Boot ROM Version:	MBP41.00C1.B03
+SMC Version (system):	1.27f2
+Serial Number (system):	W88390K8YJZ
+Hardware UUID:	B08E5FEB-8575-528D-8A3A-54EF0832F4D4
+Sudden Motion Sensor:
+State:	Enabled
+*/
 
 public class MainRun 
 {
@@ -54,7 +76,7 @@ public class MainRun
         {
             Evaluator evaluator = new Evaluator(evaluationOptions);
             evaluationOptions.setAgent(AgentsPool.getCurrentAgent());
-
+//            evaluationOptions.setAgent(new AmiCoAgent(amicoModuleName, amicoAgentName));
             while (cmdLineOptions.getNumberOfTrials() >= SimulationOptions.currentTrial) {
 //                List<EvaluationInfo> evaluationSummary;
                 System.out.println("SimulationOptions.currentTrial = " + SimulationOptions.currentTrial);
@@ -88,7 +110,7 @@ public class MainRun
 //            AgentsPool.addAgent(new SlowAgent());
 //            AgentsPool.addAgent(new AStarAgent());
 //            AgentsPool.addAgent(new RjAgent());
-            AgentsPool.addAgent(new SergeyKarakovskiy_JumpingAgent());
+//            AgentsPool.addAgent(new SergeyKarakovskiy_JumpingAgent());
             //CIG:
 //            AgentsPool.addAgent(new TrondEllingsen_LuckyAgent());
 //            AgentsPool.addAgent(new SergeyPolikarpov_SimpleCyberNeuronAgent());

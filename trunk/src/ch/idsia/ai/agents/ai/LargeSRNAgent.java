@@ -61,7 +61,7 @@ public class LargeSRNAgent extends BasicAIAgent implements Agent, Evolvable {
             }
         }
         inputs[inputs.length - 3] = observation.isMarioOnGround() ? 1 : 0;
-        inputs[inputs.length - 2] = observation.mayMarioJump() ? 1 : 0;
+        inputs[inputs.length - 2] = observation.isMarioAbleToJump() ? 1 : 0;
         inputs[inputs.length - 1] = 1;
         double[] outputs = srn.propagate (inputs);
         boolean[] action = new boolean[numberOfOutputs];

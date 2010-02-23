@@ -161,7 +161,7 @@ public class ForwardAgent extends BasicAIAgent implements Agent
         
 //        if (levelSceneFromBitmap[11][13] != 0 || levelSceneFromBitmap[11][12] != 0 ||  DangerOfGap(levelSceneFromBitmap))
 //        {
-//            if (observation.mayMarioJump() || ( !observation.isMarioOnGround() && action[Mario.KEY_JUMP]))
+//            if (observation.isMarioAbleToJump() || ( !observation.isMarioOnGround() && action[Mario.KEY_JUMP]))
 //            {
 //                action[Mario.KEY_JUMP] = true;
 //            }
@@ -185,7 +185,7 @@ public class ForwardAgent extends BasicAIAgent implements Agent
 //
         if (levelScene[11][13] != 0 || levelScene[11][12] != 0 ||  DangerOfGap(levelScene))
         {
-            if (observation.mayMarioJump() || ( !observation.isMarioOnGround() && action[Mario.KEY_JUMP]))
+            if (observation.isMarioAbleToJump() || ( !observation.isMarioOnGround() && action[Mario.KEY_JUMP]))
             {
                 action[Mario.KEY_JUMP] = true;
             }

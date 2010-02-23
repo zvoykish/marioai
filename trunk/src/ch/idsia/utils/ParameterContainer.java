@@ -59,6 +59,7 @@ public class ParameterContainer
 //            "-powerRestoration",
                     "-pr",
                     "-pw",
+                    "-pym",
                     "-server",
                     "-ssiw",
 //            "-stopSimulationIfWin",

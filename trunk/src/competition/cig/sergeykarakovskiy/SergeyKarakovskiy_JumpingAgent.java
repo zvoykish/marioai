@@ -31,7 +31,7 @@ public class SergeyKarakovskiy_JumpingAgent implements Agent
 
     public boolean[] getAction(Environment observation)
     {
-        action[Mario.KEY_SPEED] = action[Mario.KEY_JUMP] =  observation.mayMarioJump() || !observation.isMarioOnGround();
+        action[Mario.KEY_SPEED] = action[Mario.KEY_JUMP] =  observation.isMarioAbleToJump() || !observation.isMarioOnGround();
         return action;
     }
 

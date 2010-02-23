@@ -154,9 +154,10 @@ public class Evaluator implements Runnable
 //        LOGGER.println(message, verbose_mode);
 //    }
 
-    public void getMeanEvaluationSummary()
+    public String getMeanEvaluationSummary()
     {
         //TODO: SK
+        return "\nEvaluation Summary:\n...\nEnd of Evaluation Summary\n";
     }
 
     public String exportToMatLabFile()
