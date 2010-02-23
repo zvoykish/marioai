@@ -84,6 +84,8 @@ public class Mario extends Sprite
     private int jumpTime = 0;
     private float xJumpSpeed;
     private float yJumpSpeed;
+
+
     private boolean canShoot = false;
 
     int width = 4;
@@ -767,4 +769,9 @@ public class Mario extends Sprite
     public boolean mayJump() {
         return mayJump;
     }
+
+    public boolean isCanShoot()
+    {
+        return canShoot;
+    }    
 }

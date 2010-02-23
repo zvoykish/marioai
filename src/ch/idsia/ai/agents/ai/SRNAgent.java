@@ -51,7 +51,7 @@ public class SRNAgent implements Agent, Evolvable {
                                 probe(-1, -1, enemies), probe(0, -1, enemies), probe(1, -1, enemies),
                                 probe(-1, 0, enemies), probe(0, 0, enemies), probe(1, 0, enemies),
                                 probe(-1, 1, enemies), probe(0, 1, enemies), probe(1, 1, enemies),
-                                observation.isMarioOnGround() ? 1 : 0, observation.mayMarioJump() ? 1 : 0,
+                                observation.isMarioOnGround() ? 1 : 0, observation.isMarioAbleToJump() ? 1 : 0,
                                 1};
         double[] outputs = srn.propagate (inputs);
         boolean[] action = new boolean[numberOfOutputs];

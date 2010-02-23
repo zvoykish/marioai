@@ -21,13 +21,17 @@ public class CustomRun
     {
         CmdLineOptions options = new CmdLineOptions(args);
         Evaluator evaluator = new Evaluator(options);
-        Agent agent = new ForwardAgent();
+//        Agent agent = new ForwardAgent();
         options.setMaxFPS(true);
 //        options.setVisualization(false);
-        System.out.println("evaluator = " + evaluator);
-//        Agent agent = new AmiCoAgent();
+        String amicoModuleName = options.getPyAmiCoModuleName();
+        System.out.println("amicoModuleName = " + amicoModuleName);
+//        String amicoAgentName = "ForwardAgent";
+        System.out.println("options.getAgentName() = " + options.getAgentName());
+        Agent agent = new AmiCoAgent(amicoModuleName, options.getAgentName());
         options.setAgent(agent);
         evaluator.evaluate();
+        System.out.println("evaluator = " + evaluator.getMeanEvaluationSummary());
         System.exit(0);
     }
 }

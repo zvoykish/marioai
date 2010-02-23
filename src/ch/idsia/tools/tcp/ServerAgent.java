@@ -74,7 +74,7 @@ public class ServerAgent extends BasicAIAgent implements Agent
         byte[][] mergedObs = observation.getCompleteObservation(/*1, 0*/);
 
         String tmpData = "O " +
-                observation.mayMarioJump() + " " + observation.isMarioOnGround();
+                observation.isMarioAbleToJump() + " " + observation.isMarioOnGround();
         for (int x = 0; x < mergedObs.length; ++x)
         {
             for (int y = 0; y < mergedObs.length; ++y)
@@ -109,7 +109,7 @@ public class ServerAgent extends BasicAIAgent implements Agent
     {
         
         String tmpData =  "E" +
-                          (observation.mayMarioJump() ? "1" : "0")  +
+                          (observation.isMarioAbleToJump() ? "1" : "0")  +
                           (observation.isMarioOnGround() ? "1" : "0") +
                           observation.getBitmapLevelObservation();
 //                          observation.getBitmapEnemiesObservation();

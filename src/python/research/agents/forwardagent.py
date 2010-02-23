@@ -100,7 +100,7 @@ class ForwardAgent(MarioAgent):
         """ Possible analysis of current observation and sending an action back
         """
 #        print "M: mayJump: %s, onGround: %s, level[11,12]: %d, level[11,13]: %d, jc: %d" \
-#            % (self.mayMarioJump, self.isMarioOnGround, self.levelScene[11,12], \
+#            % (self.isMarioAbleToJump, self.isMarioOnGround, self.levelScene[11,12], \
 #            self.levelScene[11,13], self.trueJumpCounter)
 #        if (self.isEpisodeOver):
 #            return numpy.ones(5, int)

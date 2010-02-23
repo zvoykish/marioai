@@ -102,6 +102,10 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
 
     public void stop() {
         running = false;
+        System.out.println("\nmario.x = " + mario.x);
+        System.out.println("mario.xD = " + mario.xDeathPos);
+        System.out.println("mario.getStatus() = " + mario.getStatus());
+        System.out.println("frame = " + frame);
     }
 
     public void run() {
@@ -182,8 +186,8 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
             ((LevelScene) scene).mario.keys = action;
             ((LevelScene) scene).mario.cheatKeys = cheatAgent.getAction(null);
 
-            if (GlobalOptions.VisualizationOn) {
-
+            if (GlobalOptions.VisualizationOn)
+            {
                 String msg = "Agent: " + agent.getName();
                 LevelScene.drawStringDropShadow(og, msg, 0, 7, 5);
 
@@ -221,6 +225,10 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
                 } else {
                     g.drawImage(image, 0, 0, null);
                 }
+                // Win or Die without renderer!! independently.
+                marioStatus = ((LevelScene) scene).mario.getStatus();
+                if (marioStatus != Mario.STATUS_RUNNING)
+                    stop();                
             } else {
                 // Win or Die without renderer!! independently.
                 marioStatus = ((LevelScene) scene).mario.getStatus();
@@ -364,8 +372,13 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
         return mario.world.killedCreaturesByShell;
     }
 
-    public boolean canShoot() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    public boolean isMarioAbleToShoot() {
+        return mario.isCanShoot();  
+    }
+
+    public int getMarioStatus()
+    {
+        return mario.getStatus();
     }
 
     public byte[][] getCompleteObservation() {
@@ -390,7 +403,7 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
         return mario.isOnGround();
     }
 
-    public boolean mayMarioJump() {
+    public boolean isMarioAbleToJump() {
         return mario.mayJump();
     }
 

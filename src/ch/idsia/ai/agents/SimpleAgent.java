@@ -24,7 +24,7 @@ public class SimpleAgent implements Agent
 
     public boolean[] getAction(Environment observation)
     {
-        Action[Mario.KEY_SPEED] = Action[Mario.KEY_JUMP] =  observation.mayMarioJump() || !observation.isMarioOnGround();
+        Action[Mario.KEY_SPEED] = Action[Mario.KEY_JUMP] =  observation.isMarioAbleToJump() || !observation.isMarioOnGround();
         return Action;
     }
 

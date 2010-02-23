@@ -23,7 +23,7 @@ import ch.idsia.tools.EvaluationOptions;
  *
  * @author  Julian Togelius, Sergey Karakovskiy
  * @version 1.0, May 5, 2009
- * @since   JDK1.0
+
  */
 
 public class Play {
