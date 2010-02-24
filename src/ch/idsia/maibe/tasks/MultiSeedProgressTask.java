@@ -1,4 +1,4 @@
-package ch.idsia.ai.tasks;
+package ch.idsia.maibe.tasks;
 
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.tools.Evaluator;
@@ -13,17 +13,20 @@ import java.util.List;
  * Date: May 23, 2009
  * Time: 11:37:47 PM
  */
-public class MultiSeedProgressTask implements Task {
 
+public class MultiSeedProgressTask implements Task
+{
     private EvaluationOptions options;
     private int startingSeed = 0;
     private int numberOfSeeds = 3;
 
-    public MultiSeedProgressTask(EvaluationOptions evaluationOptions) {
+    public MultiSeedProgressTask(EvaluationOptions evaluationOptions)
+    {
         setOptions(evaluationOptions);
     }
 
-    public double[] evaluate(Agent controller) {
+    public double[] evaluate(Agent controller)
+    {
         double distanceTravelled = 0;
 
         options.setAgent(controller);
@@ -39,19 +42,38 @@ public class MultiSeedProgressTask implements Task {
         return new double[]{distanceTravelled};
     }
 
-    public void setStartingSeed (int seed) {
+    public void setStartingSeed (int seed)
+    {
         startingSeed = seed;
     }
 
-    public void setNumberOfSeeds (int number) {
+    public void setNumberOfSeeds (int number)
+    {
         numberOfSeeds = number;
     }
 
-    public void setOptions(EvaluationOptions options) {
+    public void setOptions(EvaluationOptions options)
+    {
         this.options = options;
     }
 
-    public EvaluationOptions getOptions() {
+    public EvaluationOptions getOptions()
+    {
         return options;
+    }
+
+    public void doEpisodes(int amount)
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public boolean isFinished()
+    {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void reset()
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

@@ -3,7 +3,7 @@ package ch.idsia.ai.ea;
 import ch.idsia.ai.EA;
 import ch.idsia.ai.Evolvable;
 import ch.idsia.ai.agents.Agent;
-import ch.idsia.ai.tasks.Task;
+import ch.idsia.maibe.tasks.Task;
 
 /**
  * Created by IntelliJ IDEA.

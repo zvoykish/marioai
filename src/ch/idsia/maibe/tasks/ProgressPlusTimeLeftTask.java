@@ -1,4 +1,4 @@
-package ch.idsia.ai.tasks;
+package ch.idsia.maibe.tasks;
 
 /**
  * Created by IntelliJ IDEA.

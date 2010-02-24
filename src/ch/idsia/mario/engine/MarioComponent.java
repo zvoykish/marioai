@@ -317,26 +317,6 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
         }
     }
 
-    public String getBitmapEnemiesObservation()
-    {
-        if (scene instanceof LevelScene)
-            return ((LevelScene) scene).bitmapEnemiesObservation(1);
-        else {
-            //
-            return new String();
-        }                
-    }
-
-    public String getBitmapLevelObservation()
-    {
-        if (scene instanceof LevelScene)
-            return ((LevelScene) scene).bitmapLevelObservation(1);
-        else {
-            //
-            return null;
-        }
-    }
-
     // Chaning ZLevel during the game on-the-fly;
     public byte[][] getMergedObservationZ(int zLevelScene, int zLevelEnemies) {
         if (scene instanceof LevelScene)

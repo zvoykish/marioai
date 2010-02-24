@@ -5,7 +5,7 @@ import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
 import ch.idsia.ai.agents.ai.SimpleMLPAgent;
 import ch.idsia.ai.ea.ES;
-import ch.idsia.ai.tasks.MultiSeedProgressTask;
+import ch.idsia.maibe.tasks.MultiSeedProgressTask;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationOptions;
 import wox.serial.Easy;

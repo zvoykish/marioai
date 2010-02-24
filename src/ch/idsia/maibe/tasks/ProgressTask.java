@@ -1,4 +1,4 @@
-package ch.idsia.ai.tasks;
+package ch.idsia.maibe.tasks;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.tools.EvaluationInfo;
@@ -12,7 +12,7 @@ import java.util.List;
  * User: Sergey Karakovskiy
  * Date: Apr 8, 2009
  * Time: 11:26:43 AM
- * Package: ch.idsia.ai.tasks
+ * Package: ch.idsia.maibe.tasks
  */
 public class ProgressTask implements Task {
 
@@ -43,6 +43,21 @@ public class ProgressTask implements Task {
 
     public EvaluationOptions getOptions() {
         return options;
+    }
+
+    public void doEpisodes(int amount)
+    {
+        
+    }
+
+    public boolean isFinished()
+    {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void reset()
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
 }
