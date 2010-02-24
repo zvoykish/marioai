@@ -136,7 +136,7 @@ class ForwardAgent(MarioAgent):
         for x in range(22):
             tmpData = ""
             for y in range(22):
-                tmpData += self.mapElToStr(self.levelScene[x][y]);
+                tmpData += self.mapElToStr(self.levelScene[x][y])
             ret += "\n%s" % tmpData;
         print ret
 

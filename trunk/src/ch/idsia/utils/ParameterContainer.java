@@ -28,24 +28,13 @@ public class ParameterContainer
         if (allowed == null)
             allowed = new String[]{
                     "-ag",
-//            "-agentName",
-//            "-attemptsNumber",
-//            "-e",
                     "-echo",
                     "-ewf",
                     "-fastTCP",
-//            "-exitWhenFinished",
-//            "-gameViewer",
-//            "-gameViewerContinuousUpdates",
-//            "-gui",
                     "-gv",
                     "-gvc",
                     "-i",
                     "-ld",
-//            "-levelDifficulty",
-//            "-levelLength",
-//            "-levelRandSeed",
-//            "-levelType",
                     "-ll",
                     "-ls",
                     "-lt",
@@ -53,26 +42,17 @@ public class ParameterContainer
                     "-mm",
                     "-maxFPS",
                     "-not",
-//            "-matLabFile",
-//            "-pauseWorld",
                     "-port",
-//            "-powerRestoration",
                     "-pr",
                     "-pw",
                     "-pym",
                     "-server",
                     "-ssiw",
-//            "-stopSimulationIfWin",
                     "-t",
                     "-tc",
                     "-tl",
-//            "-toolsConfigurator",
                     "-vaot",
-//            "-viewAlwaysOnTop",
-//            "-viewLocationX",
-//            "-viewLocationY",
                     "-vis",
-//            "-visual",
                     "-vlx",
                     "-vly",
                     "-ze",
@@ -85,17 +65,6 @@ public class ParameterContainer
         }
 
         InitDefaults();
-    }
-
-    public void addParameterValue(String param, String value)
-    {
-        if (allowedOptions.contains(param))
-        {
-            assert (optionsHashMap.get(param) == null);
-            optionsHashMap.put(param, value);
-        }
-        else
-            System.err.println("Parameter " + param + " is not valid. Typo?");
     }
 
     public void setParameterValue(String param, String value)
@@ -222,7 +191,7 @@ public class ParameterContainer
         }
         else
         {
-            System.err.println("Reques for Default Parameter " + param + " Failed. Typo?");
+            System.err.println("Requires for Default Parameter " + param + " Failed. Typo?");
             return "";
         }
     }

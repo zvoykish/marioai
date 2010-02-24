@@ -42,7 +42,6 @@ class EpisodicExperiment(Experiment):
                 rewards.append(r)
             all_rewards.append(rewards)
         return all_rewards
-        
 
 #class EpisodicExperiment(Experiment):
 #    """

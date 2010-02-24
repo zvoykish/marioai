@@ -4,7 +4,7 @@ import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.ai.Evolvable;
 import ch.idsia.ai.ea.ES;
-import ch.idsia.ai.tasks.ProgressTask;
+import ch.idsia.maibe.tasks.ProgressTask;
 import ch.idsia.ai.agents.ai.SimpleMLPAgent;
 import ch.idsia.scenarios.Stats;
 import wox.serial.Easy;

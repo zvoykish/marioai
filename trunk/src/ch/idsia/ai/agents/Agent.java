@@ -11,6 +11,7 @@ import ch.idsia.mario.environments.Environment;
  */
 public interface Agent
 {
+
     public enum AGENT_TYPE {AI, HUMAN, TCP_SERVER }
 
     // clears all dynamic data, such as hidden layers in recurrent networks

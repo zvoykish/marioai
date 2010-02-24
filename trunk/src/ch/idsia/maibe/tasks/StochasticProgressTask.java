@@ -1,4 +1,4 @@
-package ch.idsia.ai.tasks;
+package ch.idsia.maibe.tasks;
 
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.tools.Evaluator;
@@ -52,6 +52,21 @@ public class StochasticProgressTask implements Task {
 
     public EvaluationOptions getOptions() {
         return options;
+    }
+
+    public void doEpisodes(int amount)
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public boolean isFinished()
+    {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void reset()
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
 }

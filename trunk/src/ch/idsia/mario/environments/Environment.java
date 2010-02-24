@@ -35,10 +35,6 @@ public interface Environment
     public byte[][] getLevelSceneObservation(); // default: ZLevelScene = 1
 
     // For Server usage only, Java agents should use non-bitmap versions.
-    @Deprecated
-    public String getBitmapEnemiesObservation();
-    @Deprecated
-    public String getBitmapLevelObservation();
 
     // NEW INTERFACE
     public float[] getMarioFloatPos();

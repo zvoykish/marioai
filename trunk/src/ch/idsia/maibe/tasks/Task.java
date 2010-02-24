@@ -1,4 +1,4 @@
-package ch.idsia.ai.tasks;
+package ch.idsia.maibe.tasks;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.tools.EvaluationOptions;
@@ -8,13 +8,20 @@ import ch.idsia.tools.EvaluationOptions;
  * User: Sergey Karakovskiy
  * Date: Apr 8, 2009
  * Time: 11:20:41 AM
- * Package: ch.idsia.ai.tasks
+ * Package: ch.idsia.maibe.tasks
  */
-public interface Task {
+
+public interface Task
+{
     public double[] evaluate (Agent controller);
 
     public void setOptions (EvaluationOptions options);
 
     public EvaluationOptions getOptions ();
 
+    void doEpisodes(int amount);
+
+    boolean isFinished();
+
+    void reset();
 }

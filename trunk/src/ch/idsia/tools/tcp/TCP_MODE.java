@@ -8,6 +8,5 @@ package ch.idsia.tools.tcp;
  * Package: ch.idsia.tools.tcp
  */
 public enum TCP_MODE {
-    SIMPLE_TCP,
-    FAST_TCP
+    SIMPLE_TCP
 }
