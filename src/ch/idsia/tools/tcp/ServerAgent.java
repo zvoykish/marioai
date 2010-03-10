@@ -55,6 +55,11 @@ public class ServerAgent extends BasicAIAgent implements Agent
         return (server != null) && server.isClientConnected();
     }
 
+    public boolean[] getAction()
+    {
+        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public void reset()
     {
         action = new boolean[Environment.numberOfButtons];

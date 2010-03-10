@@ -18,8 +18,7 @@ public interface Environment
     // always the same dimensionality: 22x22
     // always centered on the agent 
 
-    // KILLS
-    
+    // KILLS    
 
     // Chaning ZLevel during the game on-the-fly;
     // if your agent recieves too ambiguous observation, it might request for more precise one for the next step
@@ -34,9 +33,14 @@ public interface Environment
     @Deprecated
     public byte[][] getLevelSceneObservation(); // default: ZLevelScene = 1
 
-    // For Server usage only, Java agents should use non-bitmap versions.
-
     // NEW INTERFACE
+
+    public void resetDefault();
+
+    public void reset(int[] setUpOptions);
+
+    public void tick();
+
     public float[] getMarioFloatPos();
 
     public int getMarioMode();
@@ -49,7 +53,7 @@ public interface Environment
     // Pilot (test) additions
     public boolean isMarioAbleToShoot();
 
-    public byte[][] getMergedObservationZ(int ZLevelScene, int ZLevelEnemies);
+    public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies);
     public byte[][] getLevelSceneObservationZ(int ZLevelScene);
     public byte[][] getEnemiesObservationZ(int ZLevelEnemies);
 
@@ -58,6 +62,46 @@ public interface Environment
     public int getKillsByStomp();
     public int getKillsByShell();
 
-
     int getMarioStatus();
+
+    // FOR AmiCo
+
+    public double[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies);
+    /**
+     * Serializes the LevelScene observation from 22x22 byte array to a 1x484 byte array
+     * @param ZLevelScene
+     * @return byte[] with sequenced elements of corresponding getLevelSceneObservationZ output
+     */
+    public byte[] getSerializedLevelSceneObservationZ(int ZLevelScene);
+    /**
+     * Serializes the LevelScene observation from 22x22 byte array to a 1x484 byte array
+     * @param ZLevelEnemies
+     * @return byte[] with sequenced elements of corresponding <code>getLevelSceneObservationZ</code> output
+     */
+    public byte[] getSerializedEnemiesObservationZ(int ZLevelEnemies);
+    public byte[] getSerializedMergedObservationZZ(int ZLevelScene, int ZLevelEnemies);
+
+    public float[] getCreaturesFloatPos();
+
+    /**
+     * @return array filled with various data about Mario : {
+     * getMarioStatus(),
+     * getMarioMode(),
+     * isMarioOnGround() ? 1 : 0,
+     * isMarioAbleToJump() ? 1 : 0,
+     * isMarioAbleToShoot() ? 1 : 0,
+     * isMarioCarrying() ? 1 : 0,
+     * getKillsTotal(),
+     * getKillsByFire(),
+     * getKillsByStomp(),
+     * getKillsByShell()
+    }
+     */
+    public int[] getMarioState();
+
+    void performAction(boolean[] action);
+
+    boolean isLevelFinished();
+
+    double [] getEvaluationInfo();
 }

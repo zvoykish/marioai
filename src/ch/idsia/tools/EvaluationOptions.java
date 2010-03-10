@@ -30,7 +30,7 @@ public class EvaluationOptions extends SimulationOptions
 //                System.err.println("It is a perfect day to kill yourself with the yellow wall");
             }
         GlobalOptions.VisualizationOn = isVisualization();
-        GlobalOptions.FPS = (isMaxFPS()) ? GlobalOptions.InfiniteFPS : 24 /*GlobalOptions.FPS*/;
+        GlobalOptions.FPS = (getFPS() > 99) ? GlobalOptions.MaxFPS : getFPS() /*GlobalOptions.FPS*/;
         GlobalOptions.pauseWorld = isPauseWorld();
         GlobalOptions.PowerRestoration = isPowerRestoration();
         GlobalOptions.StopSimulationIfWin = isStopSimulationIfWin();
@@ -59,19 +59,19 @@ public class EvaluationOptions extends SimulationOptions
     public Boolean isViewAlwaysOnTop() {
         return b(getParameterValue("-vaot"));      }
 
-    public void setMaxFPS(boolean isMaxFPS ) {
-        setParameterValue("-maxFPS", s(isMaxFPS));
-        GlobalOptions.FPS = (isMaxFPS()) ? GlobalOptions.InfiniteFPS : 24 ;
+    public void setFPS(int fps ) {
+        setParameterValue("-FPS", s(fps));
+        GlobalOptions.FPS = getFPS();
     }
 
-    public Boolean isMaxFPS() {
-        return b(getParameterValue("-maxFPS"));      }
+    public Integer getFPS() {
+        return i(getParameterValue("-maxFPS"));      }
 
     public String getAgentName() {
         return getParameterValue("-ag");      }
 
     public Integer getServerAgentPort() {
-        setNumberOfTrials(-1);
+//        setNumberOfTrials(-1);
         String value = optionsHashMap.get("-port");
         if (value == null)
         {
@@ -92,11 +92,6 @@ public class EvaluationOptions extends SimulationOptions
 
     public boolean isServerMode() {
         return b(getParameterValue("-server"));
-    }
-
-    public boolean isFastTCP()
-    {
-        return b(getParameterValue("-fastTCP"));
     }
 
     public boolean isTimer() {

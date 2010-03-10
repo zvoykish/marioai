@@ -1,5 +1,6 @@
 package ch.idsia.scenarios.test;
 
+import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.ai.Evolvable;
@@ -24,11 +25,11 @@ public class EvolveWithChangingSeeds {
 
     public static void main(String[] args) {
         EvaluationOptions options = new CmdLineOptions(new String[0]);
-        options.setNumberOfTrials(1);
+//        options.setNumberOfTrials(1);
         options.setPauseWorld(false);
         Evolvable initial = new SmallMLPAgent();
         AgentsPool.addAgent((Agent) initial);
-        options.setMaxFPS(true);
+        options.setFPS(GlobalOptions.MaxFPS);
         options.setVisualization(false);
         MultiDifficultyProgressTask task = new MultiDifficultyProgressTask(options);
 

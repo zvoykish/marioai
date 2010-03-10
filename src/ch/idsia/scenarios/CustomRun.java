@@ -2,8 +2,8 @@ package ch.idsia.scenarios;
 //https://marioai.googlecode.com/svn/trunk/src
 
 import ch.idsia.ai.agents.Agent;
-import ch.idsia.ai.agents.AmiCoAgent;
 import ch.idsia.ai.agents.ai.ForwardAgent;
+import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.Evaluator;
 
@@ -21,14 +21,14 @@ public class CustomRun
     {
         CmdLineOptions options = new CmdLineOptions(args);
         Evaluator evaluator = new Evaluator(options);
-//        Agent agent = new ForwardAgent();
-        options.setMaxFPS(true);
+        Agent agent = new ForwardAgent();
+        options.setFPS(GlobalOptions.MaxFPS);
 //        options.setVisualization(false);
         String amicoModuleName = options.getPyAmiCoModuleName();
         System.out.println("amicoModuleName = " + amicoModuleName);
 //        String amicoAgentName = "ForwardAgent";
         System.out.println("options.getAgentName() = " + options.getAgentName());
-        Agent agent = new AmiCoAgent(amicoModuleName, options.getAgentName());
+//        Agent agent = new AmiCoAgent(amicoModuleName, options.getAgentName());
         options.setAgent(agent);
         evaluator.evaluate();
         System.out.println("evaluator = " + evaluator.getMeanEvaluationSummary());

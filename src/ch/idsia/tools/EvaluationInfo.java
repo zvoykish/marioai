@@ -39,6 +39,28 @@ public class EvaluationInfo
     public int marioMode = MagicNumberUndef;
     public int killsTotal = MagicNumberUndef;
 
+    public EvaluationInfo(double[] evaluationInfoArray)
+    {
+        // Turn double[] into a plausible form!
+        assert (evaluationInfoArray.length == 11);
+        this.marioStatus = (int) evaluationInfoArray[0];
+        this.lengthOfLevelPassedCells = (int) evaluationInfoArray[1];
+        this.lengthOfLevelPassedPhys = evaluationInfoArray[2];
+        this.totalLengthOfLevelCells = (int) evaluationInfoArray[3];
+        this.totalLengthOfLevelPhys = evaluationInfoArray[4];
+        this.timeSpentOnLevel = (int) evaluationInfoArray[5];
+        this.timeLeft = (int) evaluationInfoArray[6];
+        this.totalTimeGiven = (int) evaluationInfoArray[7];
+        this.numberOfGainedCoins = (int) evaluationInfoArray[8];
+        this.marioMode = (int) evaluationInfoArray[9];
+        this.killsTotal = (int) evaluationInfoArray[10];
+    }
+
+    public EvaluationInfo()
+    {
+        
+    }
+
     public double computeBasicFitness()
     {
         // neglect totalActionsPerfomed;

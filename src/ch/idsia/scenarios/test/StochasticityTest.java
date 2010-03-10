@@ -24,9 +24,9 @@ public class StochasticityTest {
         options.setAgent(controller);
         options.setPauseWorld (false);
         Task task = new ProgressTask(options);
-        options.setMaxFPS(true);
+//        options.setFPS(true);
         options.setVisualization(false);      
-        options.setNumberOfTrials(1);
+//        options.setNumberOfTrials(1);
         options.setMatlabFileName("");
         task.setOptions(options);
         for (int i = 0; i < repetitions; i++) {

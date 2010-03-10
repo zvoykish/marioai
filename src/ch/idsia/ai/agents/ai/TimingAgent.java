@@ -15,8 +15,19 @@ public class TimingAgent implements Agent {
     private long timeTaken = 0;
     private int evaluations = 0;
 
-    public TimingAgent (Agent agent) {
+    public TimingAgent (Agent agent)
+    {
         this.agent = agent;
+    }
+
+    public void integrateObservation(byte[] serializedLevelSceneObservationZ, byte[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public boolean[] getAction()
+    {
+        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public void reset() {

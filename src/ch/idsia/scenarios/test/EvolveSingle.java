@@ -1,5 +1,6 @@
 package ch.idsia.scenarios.test;
 
+import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.ai.Evolvable;
@@ -23,11 +24,11 @@ public class EvolveSingle {
 
     public static void main(String[] args) {
         EvaluationOptions options = new CmdLineOptions(new String[0]);
-        options.setNumberOfTrials(1);
+//        options.setNumberOfTrials(1);
         options.setPauseWorld(false);
         Evolvable initial = new SimpleMLPAgent();
 //        RegisterableAgent.registerAgent ((Agent) initial);
-        options.setMaxFPS(true);
+        options.setFPS(GlobalOptions.MaxFPS);
         options.setLevelDifficulty(0);
         options.setVisualization(false);
         ProgressTask task = new ProgressTask(options);

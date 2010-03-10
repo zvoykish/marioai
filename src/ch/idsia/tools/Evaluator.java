@@ -100,7 +100,6 @@ public class Evaluator implements Runnable
             return null;
         }
 
-
         Simulation simulator = new BasicSimulator(evaluationOptions.getSimulationOptionsCopy());
         // Simulate One Level
 
@@ -109,11 +108,6 @@ public class Evaluator implements Runnable
         long startTime = System.currentTimeMillis();
         String startMessage = "Evaluation started at " + GlobalOptions.getDateTime(null);
 //        LOGGER.println(startMessage, LOGGER.VERBOSE_MODE.ALL);
-
-//        boolean continueCondition;
-//        int i = 0;
-//        do
-//        {
 //            LOGGER.println("Attempts left: " + (evaluationOptions.getNumberOfTrials() - ++i ), LOGGER.VERBOSE_MODE.ALL);
             evaluationInfo = simulator.simulateOneLevel();
                                                         
@@ -124,7 +118,7 @@ public class Evaluator implements Runnable
 //            LOGGER.VERBOSE_MODE VM = (evaluationInfo.marioStatus == Mario.STATUS_WIN) ? LOGGER.VERBOSE_MODE.INFO : LOGGER.VERBOSE_MODE.ALL;
 //            LOGGER.println("run  finished with result : " + evaluationInfo, VM);
 //            continueCondition = !GlobalOptions.StopSimulationIfWin || !(evaluationInfo.marioStatus == Mario.STATUS_WIN);
-//        }
+
 //        while ((evaluationOptions.getNumberOfTrials() > i || evaluationOptions.getNumberOfTrials() == -1 ) && continueCondition);
 
         String fileName = "";
@@ -216,9 +210,16 @@ public class Evaluator implements Runnable
 
     public void init(EvaluationOptions evaluationOptions)
     {
-        ToolsConfigurator.CreateMarioComponentFrame(
-                evaluationOptions);
-        
+
+        if (evaluationOptions.isVisualization())
+        {
+            ToolsConfigurator.CreateMarioComponentFrame(
+                    evaluationOptions);
+        }
+        else
+        {
+
+        }
         GlobalOptions.pauseWorld = evaluationOptions.isPauseWorld();
         this.evaluationOptions = evaluationOptions;
         if (thisThread == null)

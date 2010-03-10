@@ -6,6 +6,7 @@ import ch.idsia.ai.agents.AgentsPool;
 import ch.idsia.ai.agents.ai.SimpleMLPAgent;
 import ch.idsia.ai.ea.ES;
 import ch.idsia.maibe.tasks.MultiSeedProgressTask;
+import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationOptions;
 import wox.serial.Easy;
@@ -24,7 +25,7 @@ public class EvolveIncrementally {
 
     public static void main(String[] args) {
         EvaluationOptions options = new CmdLineOptions(new String[0]);
-        options.setNumberOfTrials(1);
+//        options.setNumberOfTrials(1);
         options.setPauseWorld(true);
         Evolvable initial = new SimpleMLPAgent();
         if (args.length > 0) {
@@ -37,7 +38,7 @@ public class EvolveIncrementally {
         {
             System.out.println("New EvolveIncrementally phase with difficulty = " + difficulty + " started.");
             options.setLevelDifficulty(difficulty);
-            options.setMaxFPS(true);
+            options.setFPS(GlobalOptions.MaxFPS);
             options.setVisualization(false);
             //Task task = new ProgressTask(options);
             MultiSeedProgressTask task = new MultiSeedProgressTask(options);
@@ -50,14 +51,14 @@ public class EvolveIncrementally {
                 double bestResult = es.getBestFitnesses()[0];
                 System.out.println("Generation " + gen + " best " + bestResult);
                 options.setVisualization(gen % 5 == 0 || bestResult > 4000);
-                options.setMaxFPS(true);
+//                options.setFPS(true);
                 Agent a = (Agent) es.getBests()[0];
                 a.setName(((Agent)initial).getName() + gen);
 //                AgentsPool.addAgent(a);
 //                AgentsPool.setCurrentAgent(a);
                 double result = task.evaluate(a)[0];
                 options.setVisualization(false);
-                options.setMaxFPS(true);
+//                options.setFPS(true);
                 Easy.save (es.getBests()[0], "evolved.xml");
                 if (result > 4000) {
                     initial = es.getBests()[0];

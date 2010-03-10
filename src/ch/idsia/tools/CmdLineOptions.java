@@ -1,7 +1,6 @@
 package ch.idsia.tools;
 
 import ch.idsia.mario.engine.GlobalOptions;
-import ch.idsia.ai.agents.AgentsPool;
 
 import java.util.Map;
 
@@ -16,7 +15,7 @@ import java.util.Map;
 
 /**
  * The <code>CmdLineOptions</code> class handles the commandline options received from actual
- * command line or through TCP interface. It sets up parameters from command line if there are any.
+ * command line. It sets up parameters from command line if there are any.
  * Defaults are used otherwise.
  *
  * @author  Sergey Karakovskiy
@@ -25,7 +24,7 @@ import java.util.Map;
  * @see ch.idsia.utils.ParameterContainer
  * @see ch.idsia.tools.EvaluationOptions
  *
- * @since   iMario1.0
+ * @since   MarioAI0.1
  */
 
 public class CmdLineOptions extends EvaluationOptions
@@ -70,5 +69,60 @@ public class CmdLineOptions extends EvaluationOptions
     {
         return getParameterValue("-pym");
     }
- 
+
+    public int[] toIntArray()
+    {
+//!!!        "-ag",    ?????? ??? ???????? ??????????? %,5^$#<>%
+// !!!       "-amico",
+//!!!        "-echo",
+// !!!       "-ewf",
+// !!!       "-gv",
+//        "-gvc",
+//        "-i",
+//        "-ld",
+//        "-ll",
+//        "-ls",
+//        "-lt",
+//!!!<<<        "-m",
+//        "-mm",
+//        "-maxFPS",
+//                    "-not",
+//                    "-port",
+//        "-pr",
+//        "-pw",
+//!!!        "-pym",
+//                    "-server",
+//                    "-ssiw",
+//        "-t",
+//        "-tc",
+//        "-tl",
+//        "-vaot",
+//        "-vis",
+//        "-vlx",
+//        "-vly",
+//        "-ze",
+//        "-zs"
+        return new int[]
+                {
+                        this.isGameViewer() ? 1 : 0,
+                        this.isMarioInvulnerable() ? 1 : 0,
+                        this.getLevelDifficulty(),
+                        this.getLevelLength(),
+                        this.getLevelRandSeed(),
+                        this.getLevelType(),
+                        this.getMarioMode(),
+                        this.getFPS(),
+                        this.isPowerRestoration() ? 1 : 0,
+                        this.isPauseWorld() ? 1 : 0,
+                        this.isTimer() ? 1 : 0, // TODO:SK remove rudundancy (-1 -- no time limit)
+                        this.isToolsConfigurator() ? 1 : 0,
+                        this.getTimeLimit(),
+                        this.isViewAlwaysOnTop() ? 1 : 0,
+                        this.isVisualization() ? 1 : 0,
+                        this.getViewLocation().x,
+                        this.getViewLocation().y,
+                        this.getZLevelEnemies(),
+                        this.getZLevelScene()
+                }; 
+    }
 }
