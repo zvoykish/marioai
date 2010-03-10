@@ -1,10 +1,12 @@
 package ch.idsia.mario.engine;
 
+import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.human.CheaterKeyboardAgent;
 import ch.idsia.mario.engine.level.BgLevelGenerator;
 import ch.idsia.mario.engine.level.Level;
 import ch.idsia.mario.engine.sprites.Mario;
 import ch.idsia.mario.engine.sprites.Sprite;
+import ch.idsia.mario.environments.Environment;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +22,7 @@ public class MarioVisualComponent extends JComponent
 {
     private CheaterKeyboardAgent cheatAgent = null;
 
-    private int width, height;
+    public int width, height;
 
     public VolatileImage thisVolatileImage;
     public Graphics thisVolatileImageGraphics;
@@ -105,8 +107,57 @@ public class MarioVisualComponent extends JComponent
 
     public void tick()
     {
+
+
+
+
         this.render(thisVolatileImageGraphics, 0);
-        thisGraphics.drawImage(thisVolatileImage, 0, 0, null);        
+
+
+
+        String msg = "Agent: " + "no agent yet"; /*agent.getName();*/
+        drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 7, 5);
+
+        msg = "Selected Actions: ";
+        drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 8, 6);
+
+        msg = "";
+        if (mario.keys != null)
+        {
+            for (int i = 0; i < Environment.numberOfButtons; ++i)
+                msg += (mario.keys[i]) ? Scene.keysStr[i] : "      ";
+        }
+        else
+            msg = "NULL";
+        drawString(thisVolatileImageGraphics, msg, 6, 78, 1);
+
+        if (!this.hasFocus() && tm / 4 % 2 == 0) {
+            String msgClick = "CLICK TO PLAY";
+            thisVolatileImageGraphics.setColor(Color.YELLOW);
+            thisVolatileImageGraphics.drawString(msgClick, 310 + 1, 20 + 1);
+            drawString(thisVolatileImageGraphics, msgClick, 160 - msgClick.length() * 4, 110, 1);
+            drawString(thisVolatileImageGraphics, msgClick, 160 - msgClick.length() * 4, 110, 7);
+        }
+//        thisVolatileImageGraphics.setColor(Color.DARK_GRAY);
+        drawStringDropShadow(thisVolatileImageGraphics, "FPS: ", 32, 2, 7); 
+        drawStringDropShadow(thisVolatileImageGraphics, ((GlobalOptions.FPS > 99) ? "\\infty" : GlobalOptions.FPS.toString()), 32, 3, 7);
+
+//                msg = totalNumberOfTrials == -2 ? "" : currentTrial + "(" + ((totalNumberOfTrials == -1) ? "\\infty" : totalNumberOfTrials) + ")";
+
+//            drawStringDropShadow(thisVolatileImageGraphics, "Trial:", 33, 4, 7);
+        drawStringDropShadow(thisVolatileImageGraphics, msg, 33, 5, 7);
+
+//        if (width != 320 || height != 240) {
+//            thisGraphics.drawImage(thisVolatileImage, 0, 0, 320 * 4, 240 * 4, null);
+//        } else {
+//            thisGraphics.drawImage(thisVolatileImage, 0, 0, null);
+//        }
+
+
+
+        
+
+        thisGraphics.drawImage(thisVolatileImage, 0, 0, null);
         // Delay depending on how far we are behind.
         if (delay > 0)
         {
@@ -133,8 +184,10 @@ public class MarioVisualComponent extends JComponent
             //        int yCam = (int) (yCamO + (this.yCam - yCamO) * alpha);
             if (xCam < 0) xCam = 0;
             if (yCam < 0) yCam = 0;
-            if (xCam > level.width * 16 - 320) xCam = level.width * 16 - 320;
-            if (yCam > level.height * 16 - 240) yCam = level.height * 16 - 240;
+            if (xCam > level.width * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH)
+                xCam = level.width * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH;
+            if (yCam > level.height * 16 - GlobalOptions.VISUAL_COMPONENT_HEIGHT)
+                yCam = level.height * 16 - GlobalOptions.VISUAL_COMPONENT_HEIGHT;
         }
         //      g.drawImage(Art.background, 0, 0, null);
 
@@ -169,7 +222,7 @@ public class MarioVisualComponent extends JComponent
         {
             if (sprite.layer == 1) sprite.render(g, alpha);
             if (mario.cheatKeys[Mario.KEY_DUMP_CURRENT_WORLD] && sprite.mapX >= 0 && sprite.mapX < level.observation.length &&
-                    sprite.mapY >= 0 && sprite.mapY < level.observation[0].length)
+                sprite.mapY >= 0 && sprite.mapY < level.observation[0].length)
                 level.observation[sprite.mapX][sprite.mapY] = sprite.kind;
 
         }
@@ -224,7 +277,8 @@ public class MarioVisualComponent extends JComponent
 //                init();
             }
 
-            renderBlackout(g, mario.xDeathPos - xCam, mario.yDeathPos - yCam, (int) (320 - t));
+            renderBlackout(g, mario.xDeathPos - xCam, mario.yDeathPos - yCam,
+                           (int) (GlobalOptions.VISUAL_COMPONENT_WIDTH - t));
         }
 
         if (mario.deathTime > 0)
@@ -236,7 +290,7 @@ public class MarioVisualComponent extends JComponent
 //            {
 //                renderer.levelFailed();
             mario.die();
-                //              replayer = new Replayer(recorder.getBytes());
+            //              replayer = new Replayer(recorder.getBytes());
 //                init();
 //            }
 
@@ -253,7 +307,7 @@ public class MarioVisualComponent extends JComponent
             progress_str += ".";
         progress_str += "M";
         try {
-        drawStringDropShadow(g, entirePathStr.substring(progress_str.length()), progress_str.length(), 28, 0);
+            drawStringDropShadow(g, entirePathStr.substring(progress_str.length()), progress_str.length(), 28, 0);
         } catch (StringIndexOutOfBoundsException e)
         {
 //            System.err.println("warning: progress line inaccuracy");
@@ -278,7 +332,7 @@ public class MarioVisualComponent extends JComponent
 
     private void renderBlackout(Graphics g, int x, int y, int radius)
     {
-        if (radius > 320) return;
+        if (radius > GlobalOptions.VISUAL_COMPONENT_WIDTH) return;
 
         int[] xp = new int[20];
         int[] yp = new int[20];
@@ -287,12 +341,12 @@ public class MarioVisualComponent extends JComponent
             xp[i] = x + (int) (Math.cos(i * Math.PI / 15) * radius);
             yp[i] = y + (int) (Math.sin(i * Math.PI / 15) * radius);
         }
-        xp[16] = 320;
+        xp[16] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
         yp[16] = y;
-        xp[17] = 320;
-        yp[17] = 240;
+        xp[17] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
+        yp[17] = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
         xp[18] = 0;
-        yp[18] = 240;
+        yp[18] = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
         xp[19] = 0;
         yp[19] = y;
         g.fillPolygon(xp, yp, xp.length);
@@ -302,9 +356,9 @@ public class MarioVisualComponent extends JComponent
             xp[i] = x - (int) (Math.cos(i * Math.PI / 15) * radius);
             yp[i] = y - (int) (Math.sin(i * Math.PI / 15) * radius);
         }
-        xp[16] = 320;
+        xp[16] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
         yp[16] = y;
-        xp[17] = 320;
+        xp[17] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
         yp[17] = 0;
         xp[18] = 0;
         yp[18] = 0;
@@ -313,7 +367,7 @@ public class MarioVisualComponent extends JComponent
 
         g.fillPolygon(xp, yp, xp.length);
     }
-    
+
 //    static GraphicsConfiguration CreateMarioComponentFrame(EvaluationOptions evaluationOptions)
 //    {
 ////        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -343,7 +397,7 @@ public class MarioVisualComponent extends JComponent
         System.out.println("!!HRUYA: graphicsConfiguration = " + graphicsConfiguration);
 //        assert (graphicsConfiguration == null);
 //        if (graphicsConfiguration != null) {
-            Art.init(graphicsConfiguration);
+        Art.init(graphicsConfiguration);
 //        }
 
 
@@ -352,7 +406,7 @@ public class MarioVisualComponent extends JComponent
     public void postInitGraphics()
     {
         System.out.println("this = " + this);
-        this.thisVolatileImage = this.createVolatileImage(320, 240);
+        this.thisVolatileImage = this.createVolatileImage(GlobalOptions.VISUAL_COMPONENT_WIDTH, GlobalOptions.VISUAL_COMPONENT_HEIGHT);
         this.thisGraphics = getGraphics();
         this.thisVolatileImageGraphics = this.thisVolatileImage.getGraphics();
         System.out.println("thisGraphics = " + thisGraphics);
@@ -375,10 +429,10 @@ public class MarioVisualComponent extends JComponent
             for (int i = 0; i < 2; i++)
             {
                 int scrollSpeed = 4 >> i;
-                int w = ((level.width * 16) - 320) / scrollSpeed + 320;
-                int h = ((level.height * 16) - 240) / scrollSpeed + 240;
+                int w = ((level.width * 16) - GlobalOptions.VISUAL_COMPONENT_WIDTH) / scrollSpeed + GlobalOptions.VISUAL_COMPONENT_WIDTH;
+                int h = ((level.height * 16) - GlobalOptions.VISUAL_COMPONENT_HEIGHT) / scrollSpeed + GlobalOptions.VISUAL_COMPONENT_HEIGHT;
                 Level bgLevel = BgLevelGenerator.createLevel(w / 32 + 1, h / 32 + 1, i == 0, levelScene.getLevelType());
-                bgLayer[i] = new BgRenderer(bgLevel, graphicsConfiguration, 320, 240, scrollSpeed);
+                bgLayer[i] = new BgRenderer(bgLevel, graphicsConfiguration, GlobalOptions.VISUAL_COMPONENT_WIDTH, GlobalOptions.VISUAL_COMPONENT_HEIGHT, scrollSpeed);
             }
         }
     }
@@ -387,7 +441,7 @@ public class MarioVisualComponent extends JComponent
     {
         int fps = GlobalOptions.FPS;
         delay = (fps > 0) ? (fps >= GlobalOptions.MaxFPS) ? 0 : (1000 / fps) : 100;
-//        System.out.println("Delay: " + delay);
+        System.out.println("Delay: " + delay);
     }
 
 }

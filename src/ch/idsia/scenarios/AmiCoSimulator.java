@@ -20,34 +20,25 @@ public class AmiCoSimulator
     {
         CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
         int[] options = cmdLineOptions.toIntArray();
-        int seed = 0;
-        int diff = 0;
-        int type = 2;
-        int length = 440;
-        int timeLimit = 128;
-        int visualize = 1;
         Environment environment = new MarioEnvironment();
         Agent agent = new ForwardJumpingAgent();
-        int zLevelScene = 1;
-        int zLevelEnemies = 0;
-        int fps = 24;
-        int marioMode = 1;
-        for (seed = 16; seed < 20; ++seed)
+        for (int seed = 16; seed < 20; ++seed)
         {
-            int[] setUpOptions = new int[]{seed, diff, type, length, timeLimit, marioMode, visualize, fps};
-            environment.reset(setUpOptions);
+            options[4] = seed;  // seed
+            options[14] = seed % 2;    // visualization
+            environment.reset(options);
             while (!environment.isLevelFinished())
             {
                 environment.tick();
-                agent.integrateObservation(environment.getSerializedLevelSceneObservationZ(zLevelScene),
-                                           environment.getSerializedEnemiesObservationZ(zLevelEnemies),
+                agent.integrateObservation(environment.getSerializedLevelSceneObservationZ(options[17]),
+                                           environment.getSerializedEnemiesObservationZ(options[18]),
                                            environment.getMarioFloatPos(),
                                            environment.getEnemiesFloatPos(),
                                            environment.getMarioState());
                 environment.performAction(agent.getAction());
             }
             EvaluationInfo evaluationInfo = new EvaluationInfo(environment.getEvaluationInfo());
-//            System.out.println("evaluationInfo = " + evaluationInfo);
+            System.out.println("evaluationInfo = " + evaluationInfo);
         }
         System.exit(0);
     }

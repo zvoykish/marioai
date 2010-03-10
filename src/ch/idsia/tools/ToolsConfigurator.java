@@ -59,7 +59,7 @@ public class ToolsConfigurator extends JFrame
         toolsConfigurator.CheckboxMaximizeFPS.setState(cmdLineOptions.getFPS() > GlobalOptions.MaxFPS - 1);
         toolsConfigurator.CheckboxPauseWorld.setState(cmdLineOptions.isPauseWorld());
         toolsConfigurator.CheckboxPowerRestoration.setState(cmdLineOptions.isPowerRestoration());
-        toolsConfigurator.CheckboxStopSimulationIfWin.setState(cmdLineOptions.isStopSimulationIfWin());
+//        toolsConfigurator.CheckboxStopSimulationIfWin.setState(cmdLineOptions.isStopSimulationIfWin());
         toolsConfigurator.CheckboxExitOnFinish.setState(cmdLineOptions.isExitProgramWhenFinished());
         toolsConfigurator.TextFieldMatLabFileName.setText(cmdLineOptions.getMatlabFileName());
 
@@ -138,7 +138,7 @@ public class ToolsConfigurator extends JFrame
     public Choice ChoiceVerbose = new Choice();
     private static final String strPlay        = "->  Play! ->";
     private static final String strSimulate    = "Simulate! ->";
-    public Checkbox CheckboxStopSimulationIfWin = new Checkbox("Stop simulation If Win");
+//    public Checkbox CheckboxStopSimulationIfWin = new Checkbox("Stop simulation If Win");
     public JButton JButtonPlaySimulate = new JButton(strPlay);
     public JButton JButtonResetEvaluationSummary = new JButton("Reset");
 
@@ -222,7 +222,7 @@ public class ToolsConfigurator extends JFrame
         CheckboxPowerRestoration.setEnabled(true);
 
         //      CheckboxStopSimulationIfWin
-        CheckboxStopSimulationIfWin.addItemListener(toolsConfiguratorActions);
+//        CheckboxStopSimulationIfWin.addItemListener(toolsConfiguratorActions);
 
         //      JButtonPlaySimulate
         JButtonPlaySimulate.addActionListener(toolsConfiguratorActions);
@@ -298,7 +298,7 @@ public class ToolsConfigurator extends JFrame
         JPanelMiscellaneousOptions.add(JButtonResetEvaluationSummary);
         JPanelMiscellaneousOptions.add(new Label("Max # of attemps:"));
         JPanelMiscellaneousOptions.add(JSpinnerMaxAttempts);
-        JPanelMiscellaneousOptions.add(CheckboxStopSimulationIfWin);
+//        JPanelMiscellaneousOptions.add(CheckboxStopSimulationIfWin);
         JPanelMiscellaneousOptions.add(CheckboxExitOnFinish);
 
         JPanel JPanelConsole = new JPanel(new FlowLayout());
@@ -457,13 +457,13 @@ public class ToolsConfigurator extends JFrame
 //                LOGGER.println("Mario Power Restoration Turned " + (GlobalOptions.PowerRestoration ? "on" : "off"),
 //                        LOGGER.VERBOSE_MODE.INFO);
             }
-            else if (ob == CheckboxStopSimulationIfWin)
-            {
-                GlobalOptions.StopSimulationIfWin = CheckboxStopSimulationIfWin.getState();
-//                LOGGER.println("Stop simulation if Win Criteria Turned " +
-//                        (GlobalOptions.StopSimulationIfWin ? "on" : "off"),
-//                        LOGGER.VERBOSE_MODE.INFO);
-            }
+//            else if (ob == CheckboxStopSimulationIfWin)
+//            {
+//                GlobalOptions.StopSimulationIfWin = CheckboxStopSimulationIfWin.getState();
+////                LOGGER.println("Stop simulation if Win Criteria Turned " +
+////                        (GlobalOptions.StopSimulationIfWin ? "on" : "off"),
+////                        LOGGER.VERBOSE_MODE.INFO);
+//            }
             else if (ob == ChoiceAgent)
             {
 //                LOGGER.println("Agent chosen: " + (ChoiceAgent.getSelectedItem()), LOGGER.VERBOSE_MODE.INFO);

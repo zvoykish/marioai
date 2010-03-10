@@ -33,7 +33,6 @@ public class EvaluationOptions extends SimulationOptions
         GlobalOptions.FPS = getFPS() /*GlobalOptions.FPS*/;
         GlobalOptions.PauseWorld = isPauseWorld();
         GlobalOptions.PowerRestoration = isPowerRestoration();
-        GlobalOptions.StopSimulationIfWin = isStopSimulationIfWin();
         GlobalOptions.TimerOn = isTimer();
     }
     
@@ -60,12 +59,12 @@ public class EvaluationOptions extends SimulationOptions
         return b(getParameterValue("-vaot"));      }
 
     public void setFPS(int fps ) {
-        setParameterValue("-FPS", s(fps));
+        setParameterValue("-fps", s(fps));
         GlobalOptions.FPS = getFPS();
     }
 
     public Integer getFPS() {
-        return i(getParameterValue("-maxFPS"));      }
+        return i(getParameterValue("-fps"));      }
 
     public String getAgentName() {
         return getParameterValue("-ag");      }

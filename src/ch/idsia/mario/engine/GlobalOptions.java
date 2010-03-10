@@ -25,8 +25,10 @@ public class GlobalOptions {
     public static boolean GameVeiwerContinuousUpdatesOn = false;
     public static boolean PowerRestoration;
 
-    public static boolean StopSimulationIfWin;
     public static String MAIBeVersionStr = "0.1";
+    private static MarioVisualComponent marioVisualComponent;
+    public static final int VISUAL_COMPONENT_WIDTH = 320;
+    public static final int VISUAL_COMPONENT_HEIGHT = 240;
 
     public static void registerMarioComponent(MarioComponent mc)
     {
@@ -35,6 +37,7 @@ public class GlobalOptions {
 
     public static void registerMarioVisualComponent(MarioVisualComponent mc)
     {
+        marioVisualComponent = mc;
     }
 
     public static MarioComponent getMarioComponent()
@@ -46,7 +49,13 @@ public class GlobalOptions {
         GameViewer = gv;
     }
 
-    public static void AdjustMarioComponentFPS() { marioComponent.adjustFPS(); }
+    public static void AdjustMarioComponentFPS()
+    {
+        if ( marioComponent != null)
+            marioComponent.adjustFPS();
+        else if (marioVisualComponent != null)
+            marioVisualComponent.adjustFPS();
+    }
 
     public static void gameViewerTick()
     {

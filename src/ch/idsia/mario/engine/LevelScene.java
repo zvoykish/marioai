@@ -109,13 +109,16 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         paused = false;
         Sprite.spriteContext = this;
         sprites.clear();
-        this.width = 320;
-        this.height = 240;
+        this.width = GlobalOptions.VISUAL_COMPONENT_WIDTH;
+        this.height = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
 
 
 
         mario = new Mario(this);
         sprites.add(mario);
+        System.out.println("sprites = " + sprites);
+        System.out.println("mario = " + mario);
+        System.out.println("mario.sheet = " + mario.sheet);
         startTime = 1;
 
         timeLeft = timeLimit *15;
@@ -560,7 +563,8 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         xCam = targetXCam;
 
         if (xCam < 0) xCam = 0;
-        if (xCam > level.width * 16 - 320) xCam = level.width * 16 - 320;
+        if (xCam > level.width * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH)
+            xCam = level.width * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH;
 
         /*      if (recorder != null)
          {
@@ -580,7 +584,7 @@ public class LevelScene extends Scene implements SpriteContext, Environment
             {
                 float xd = sprite.x - xCam;
                 float yd = sprite.y - yCam;
-                if (xd < -64 || xd > 320 + 64 || yd < -64 || yd > 240 + 64)
+                if (xd < -64 || xd > GlobalOptions.VISUAL_COMPONENT_WIDTH + 64 || yd < -64 || yd > GlobalOptions.VISUAL_COMPONENT_HEIGHT + 64)
                 {
                     removeSprite(sprite);
                 }
@@ -963,10 +967,9 @@ public class LevelScene extends Scene implements SpriteContext, Environment
     public void reset(int[] setUpData)
     {
 //        this.gameViewer = setUpData[0] == 1;
-        this.mario.isMarioInvulnerable = setUpData[1] == 0;
+        this.mario.isMarioInvulnerable = setUpData[1] == 1;
         this.levelDifficulty = setUpData[2];
         this.levelLength = setUpData[3];
-
         this.levelSeed = setUpData[4];
         this.levelType = setUpData[5];
         Mario.resetStatic(setUpData[6]);
