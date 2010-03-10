@@ -3,6 +3,7 @@ package ch.idsia.scenarios;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
 import ch.idsia.ai.agents.ai.TimingAgent;
+import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.Evaluator;
@@ -27,9 +28,9 @@ public class Stats {
 //        RegisterableAgent.registerAgent (controller);
         EvaluationOptions options = new CmdLineOptions(new String[0]);
 
-        options.setNumberOfTrials(1);
+//        options.setNumberOfTrials(1);
         options.setVisualization(false);
-        options.setMaxFPS(true);
+        options.setFPS(GlobalOptions.MaxFPS);
         System.out.println("Testing controller " + controller + " with starting seed " + startingSeed);
 
         double competitionScore = 0;

@@ -1,5 +1,6 @@
 package ch.idsia.scenarios.test;
 
+import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.ai.Evolvable;
@@ -25,13 +26,13 @@ public class PaperEvolve {
 
     public static void main(String[] args) {
         EvaluationOptions options = new CmdLineOptions(new String[0]);
-        options.setNumberOfTrials(1);
+//        options.setNumberOfTrials(1);
         Evolvable initial = new LargeSRNAgent();
         if (args.length > 0) {
             initial = (Evolvable) AgentsPool.load (args[0]);
         }
         AgentsPool.addAgent ((Agent) initial);
-        options.setMaxFPS(true);
+        options.setFPS(GlobalOptions.MaxFPS);
         options.setPauseWorld(false);
         options.setVisualization(false);
         ProgressTask task = new ProgressTask(options);

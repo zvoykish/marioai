@@ -31,7 +31,7 @@ public class GameViewer extends JFrame
     public void AdjustFPS()
     {
         int fps = FPS; // GlobalOptions.FPS;
-        delay = (fps > 0) ? (fps >= GlobalOptions.InfiniteFPS) ? 0 : (1000 / fps) : 100;
+        delay = (fps > 0) ? (fps >= GlobalOptions.MaxFPS) ? 0 : (1000 / fps) : 100;
         System.out.println("Game Viewer animator delay: " + delay);
     }
 

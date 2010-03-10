@@ -15,6 +15,16 @@ public class SimpleAgent implements Agent
     protected boolean Action[] = new boolean[Environment.numberOfButtons];
     protected String Name = "SimpleAgent";
 
+    public void integrateObservation(byte[] serializedLevelSceneObservationZ, byte[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public boolean[] getAction()
+    {
+        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public void reset()
     {
         Action = new boolean[Environment.numberOfButtons];

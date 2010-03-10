@@ -36,6 +36,11 @@ public class MediumSRNAgent extends BasicAIAgent implements Agent, Evolvable {
         return new MediumSRNAgent(srn.copy ());
     }
 
+    public boolean[] getAction()
+    {
+        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public void reset() {
         srn.reset ();
     }

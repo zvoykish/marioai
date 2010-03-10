@@ -4,6 +4,7 @@ import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.mario.engine.MarioComponent;
+import ch.idsia.mario.engine.MarioVisualComponent;
 import ch.idsia.mario.engine.level.LevelGenerator;
 import ch.idsia.scenarios.MainRun;
 
@@ -53,16 +54,14 @@ public class ToolsConfigurator extends JFrame
         toolsConfigurator.JSpinnerLevelRandomizationSeed.setValue(cmdLineOptions.getLevelRandSeed());
         toolsConfigurator.JSpinnerLevelLength.setValue(cmdLineOptions.getLevelLength());
         toolsConfigurator.CheckboxShowVizualization.setState(cmdLineOptions.isVisualization());
-        toolsConfigurator.JSpinnerMaxAttempts.setValue(cmdLineOptions.getNumberOfTrials());
+//        toolsConfigurator.JSpinnerMaxAttempts.setValue(cmdLineOptions.getNumberOfTrials());
         toolsConfigurator.ChoiceAgent.select(AgentsPool.getCurrentAgent().getName());
-        toolsConfigurator.CheckboxMaximizeFPS.setState(cmdLineOptions.isMaxFPS());
+        toolsConfigurator.CheckboxMaximizeFPS.setState(cmdLineOptions.getFPS() > GlobalOptions.MaxFPS - 1);
         toolsConfigurator.CheckboxPauseWorld.setState(cmdLineOptions.isPauseWorld());
         toolsConfigurator.CheckboxPowerRestoration.setState(cmdLineOptions.isPowerRestoration());
         toolsConfigurator.CheckboxStopSimulationIfWin.setState(cmdLineOptions.isStopSimulationIfWin());
         toolsConfigurator.CheckboxExitOnFinish.setState(cmdLineOptions.isExitProgramWhenFinished());
         toolsConfigurator.TextFieldMatLabFileName.setText(cmdLineOptions.getMatlabFileName());
-
-
 
         gameViewer = new GameViewer(null, null);
 
@@ -82,9 +81,8 @@ public class ToolsConfigurator extends JFrame
         }
     }
 
-
-
     private static JFrame marioComponentFrame = null;
+    public static MarioVisualComponent marioVisualComponent = null;
     public static void CreateMarioComponentFrame()
     {
         CreateMarioComponentFrame(new EvaluationOptions());
@@ -96,12 +94,16 @@ public class ToolsConfigurator extends JFrame
 //        frame.setLocation((screenSize.width-frame.getWidth())/2, (screenSize.height-frame.getHeight())/2);        
         if (marioComponentFrame == null)
         {
-            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentName() +*/ "Mario Intelligent 2.0");
+            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentName() +*/ "Mario AI benchmark-" + GlobalOptions.MAIBeVersionStr);
             marioComponent = new MarioComponent(320, 240);
+//            marioVisualComponent = new MarioVisualComponent(320, 240);
             marioComponentFrame.setContentPane(marioComponent);
+//            marioComponentFrame.setContentPane(marioVisualComponent);
             marioComponent.init();
+//            marioVisualComponent.init();
             marioComponentFrame.pack();
             marioComponentFrame.setResizable(false);
+
             marioComponentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         }
 //        marioComponentFrame.setTitle(evaluationOptions.getAgent().getName() + " - Mario Intelligent 2.0");
@@ -346,7 +348,7 @@ public class ToolsConfigurator extends JFrame
         evaluationOptions.setLevelRandSeed(Integer.parseInt(JSpinnerLevelRandomizationSeed.getValue().toString()));
         evaluationOptions.setLevelLength(Integer.parseInt(JSpinnerLevelLength.getValue().toString()));
         evaluationOptions.setVisualization(CheckboxShowVizualization.getState());
-        evaluationOptions.setNumberOfTrials(Integer.parseInt(JSpinnerMaxAttempts.getValue().toString()));
+//        evaluationOptions.setNumberOfTrials(Integer.parseInt(JSpinnerMaxAttempts.getValue().toString()));
         evaluationOptions.setPauseWorld(CheckboxPauseWorld.getState());
         evaluationOptions.setPowerRestoration(CheckboxPowerRestoration.getState());
         evaluationOptions.setExitProgramWhenFinished(CheckboxExitOnFinish.getState());
@@ -367,9 +369,9 @@ public class ToolsConfigurator extends JFrame
             }
             else if (ob == upFPS)
             {
-                if(++GlobalOptions.FPS >= GlobalOptions.InfiniteFPS)
+                if(++GlobalOptions.FPS >= GlobalOptions.MaxFPS)
                 {
-                    GlobalOptions.FPS = GlobalOptions.InfiniteFPS;
+                    GlobalOptions.FPS = GlobalOptions.MaxFPS;
                     CheckboxMaximizeFPS.setState(true);
                 }
                 marioComponent.adjustFPS();
@@ -425,7 +427,7 @@ public class ToolsConfigurator extends JFrame
             }
             else if (ob == CheckboxMaximizeFPS)
             {
-                prevFPS = (GlobalOptions.FPS == GlobalOptions.InfiniteFPS) ? prevFPS : GlobalOptions.FPS;
+                prevFPS = (GlobalOptions.FPS == GlobalOptions.MaxFPS) ? prevFPS : GlobalOptions.FPS;
                 GlobalOptions.FPS = CheckboxMaximizeFPS.getState() ? 100 : prevFPS;
                 marioComponent.adjustFPS();
 //                LOGGER.println("FPS set to " + (CheckboxMaximizeFPS.getState() ? "infinity" : GlobalOptions.FPS),

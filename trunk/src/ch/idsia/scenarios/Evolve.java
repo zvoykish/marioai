@@ -6,6 +6,7 @@ import ch.idsia.ai.agents.ai.SimpleMLPAgent;
 import ch.idsia.ai.ea.ES;
 import ch.idsia.maibe.tasks.ProgressTask;
 import ch.idsia.maibe.tasks.Task;
+import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationOptions;
 import wox.serial.Easy;
@@ -28,7 +29,7 @@ public class Evolve {
 
     public static void main(String[] args) {
         EvaluationOptions options = new CmdLineOptions(args);
-        options.setNumberOfTrials(1);
+//        options.setNumberOfTrials(1);
         options.setPauseWorld(true);
         List<Agent> bestAgents = new ArrayList<Agent>();
         DecimalFormat df = new DecimalFormat("0000");
@@ -40,7 +41,7 @@ public class Evolve {
             options.setLevelDifficulty(difficulty);
             options.setAgent((Agent)initial);
 
-            options.setMaxFPS(true);
+            options.setFPS(GlobalOptions.MaxFPS);
             options.setVisualization(false);
 
             Task task = new ProgressTask(options);
@@ -52,7 +53,7 @@ public class Evolve {
 //                LOGGER.println("Generation " + gen + " best " + bestResult, LOGGER.VERBOSE_MODE.INFO);
                 System.out.println("Generation " + gen + " best " + bestResult);
                 options.setVisualization(gen % 5 == 0 || bestResult > 4000);
-                options.setMaxFPS(true);
+//                options.setFPS(true);
                 Agent a = (Agent) es.getBests()[0];
                 a.setName(((Agent)initial).getName() + df.format(gen));
 //                AgentsPool.setCurrentAgent(a);
@@ -60,7 +61,7 @@ public class Evolve {
                 double result = task.evaluate(a)[0];
 //                LOGGER.println("trying: " + result, LOGGER.VERBOSE_MODE.INFO);
                 options.setVisualization(false);
-                options.setMaxFPS(true);
+//                options.setFPS(true);
                 Easy.save (es.getBests()[0], "evolved.xml");
                 if (result > 4000)
                     break; // Go to next difficulty.

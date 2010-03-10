@@ -11,6 +11,13 @@ import ch.idsia.mario.environments.Environment;
  */
 public interface Agent
 {
+    void integrateObservation(byte[] serializedLevelSceneObservationZ,
+                              byte[] serializedEnemiesObservationZ,
+                              float[] marioFloatPos,
+                              float[] enemiesFloatPos,
+                              int[] marioState);
+
+    boolean[] getAction();
 
     public enum AGENT_TYPE {AI, HUMAN, TCP_SERVER }
 

@@ -28,9 +28,9 @@ public class ParameterContainer
         if (allowed == null)
             allowed = new String[]{
                     "-ag",
+                    "-amico",
                     "-echo",
                     "-ewf",
-                    "-fastTCP",
                     "-gv",
                     "-gvc",
                     "-i",
@@ -41,13 +41,13 @@ public class ParameterContainer
                     "-m",
                     "-mm",
                     "-maxFPS",
-                    "-not",
-                    "-port",
+//                    "-not",
+//                    "-port",
                     "-pr",
                     "-pw",
                     "-pym",
-                    "-server",
-                    "-ssiw",
+//                    "-server",
+//                    "-ssiw",
                     "-t",
                     "-tc",
                     "-tl",
@@ -56,7 +56,7 @@ public class ParameterContainer
                     "-vlx",
                     "-vly",
                     "-ze",
-                    "-zm"
+                    "-zs"
             };
         if (allowedOptions == null)
         {
@@ -151,9 +151,9 @@ public class ParameterContainer
             defaultOptionsHashMap = new HashMap<String, String>();
             AgentsPool.setCurrentAgent(new HumanKeyboardAgent());
             defaultOptionsHashMap.put("-ag","HumanKeyboardAgent"); //defaultOptionsHashMap.put("-agentName","NoAgent");
+            defaultOptionsHashMap.put("-amico","off");
             defaultOptionsHashMap.put("-echo","off"); //defaultOptionsHashMap.put("-echo","off");
             defaultOptionsHashMap.put("-ewf","on"); //defaultOptionsHashMap.put("-exitWhenFinished","off");
-            defaultOptionsHashMap.put("-fastTCP","off"); //
             defaultOptionsHashMap.put("-gv","off"); //defaultOptionsHashMap.put("-gameViewer","off");
             defaultOptionsHashMap.put("-gvc","off"); //defaultOptionsHashMap.put("-gameViewerContinuousUpdates","off");
             defaultOptionsHashMap.put("-i","off"); // Invulnerability
@@ -161,24 +161,25 @@ public class ParameterContainer
             defaultOptionsHashMap.put("-ll","320"); //defaultOptionsHashMap.put("-levelLength","320");
             defaultOptionsHashMap.put("-ls","0"); //defaultOptionsHashMap.put("-levelRandSeed","1");
             defaultOptionsHashMap.put("-lt","0"); //defaultOptionsHashMap.put("-levelType","1");
+            // TODO:SK turn out to just FPS, if FPS > 100 -> make it maximum
             defaultOptionsHashMap.put("-maxFPS","off"); //defaultOptionsHashMap.put("-maxFPS","off");
             defaultOptionsHashMap.put("-m",""); //defaultOptionsHashMap.put("-matLabFile","DefaultMatlabFile");
-            defaultOptionsHashMap.put("-mm","2");
-            defaultOptionsHashMap.put("-not","1"); //defaultOptionsHashMap.put("-attemptsNumber","5");
+            defaultOptionsHashMap.put("-mm","2"); //Mario Mode
+//            defaultOptionsHashMap.put("-not","1"); //defaultOptionsHashMap.put("-attemptsNumber","5");
             defaultOptionsHashMap.put("-pw","off"); //defaultOptionsHashMap.put("-pauseWorld","off");
-            defaultOptionsHashMap.put("-port","4242"); //defaultOptionsHashMap.put("-port","4242");
+//            defaultOptionsHashMap.put("-port","4242"); //defaultOptionsHashMap.put("-port","4242");
             defaultOptionsHashMap.put("-pr","off"); //defaultOptionsHashMap.put("-powerRestoration","off");
-            defaultOptionsHashMap.put("-ssiw","off"); //defaultOptionsHashMap.put("-stopSimulationIfWin","off");
-            defaultOptionsHashMap.put("-server","off");
+//            defaultOptionsHashMap.put("-ssiw","off"); //defaultOptionsHashMap.put("-stopSimulationIfWin","off");
+//            defaultOptionsHashMap.put("-server","off");
             defaultOptionsHashMap.put("-t","on"); //defaultOptionsHashMap.put("-timer","on");
-            defaultOptionsHashMap.put("-tl","200"); //defaultOptionsHashMap.put("-timer","on");
+            defaultOptionsHashMap.put("-tl","200"); //Time Limit
             defaultOptionsHashMap.put("-tc","off"); //defaultOptionsHashMap.put("-toolsConfigurator","off");
             defaultOptionsHashMap.put("-vaot","off"); //defaultOptionsHashMap.put("-viewAlwaysOnTop","off");
             defaultOptionsHashMap.put("-vlx","0"); //defaultOptionsHashMap.put("-viewLocationX","0");
             defaultOptionsHashMap.put("-vly","0"); //defaultOptionsHashMap.put("-viewLocationY","0");
             defaultOptionsHashMap.put("-vis","on"); //defaultOptionsHashMap.put("-visual","on");
-            defaultOptionsHashMap.put("-zm","1");
-            defaultOptionsHashMap.put("-ze","0");
+            defaultOptionsHashMap.put("-zs","1");  // ZoomLevel of LevelScene observation
+            defaultOptionsHashMap.put("-ze","0"); //  ZoomLevel of Enemies observation
         }
     }
 

@@ -39,11 +39,10 @@ public class SimulationOptions extends ParameterContainer
         ret.setVisualization(isVisualization());
         ret.setPauseWorld(isPauseWorld());
         ret.setPowerRestoration(isPowerRestoration());
-        ret.setNumberOfTrials(getNumberOfTrials());
         ret.setMarioMode(getMarioMode());
         ret.setTimeLimit(getTimeLimit());
         ret.setZLevelEnemies(getZLevelEnemies());
-        ret.setZLevelMap(getZLevelMap());
+        ret.setZLevelScene(getZLevelScene());
         ret.setMarioInvulnerable(isMarioInvulnerable());
 //        ret.setCurrentTrial(getCurrentTrial());
         return ret;
@@ -126,16 +125,6 @@ public class SimulationOptions extends ParameterContainer
     public Boolean isStopSimulationIfWin() {
         return b(getParameterValue("-ssiw"));     }
 
-    public void setStopSimulationIfWin(boolean stopSimulationIfWin) {
-        setParameterValue("-ssiw", s(stopSimulationIfWin));    }
-
-    //Number Of Trials
-    public int getNumberOfTrials() {
-        return i(getParameterValue("-not"));     }
-
-    public void setNumberOfTrials(int numberOfTrials) {
-        setParameterValue("-not", s(numberOfTrials));    }
-
     //MarioMode
     public int getMarioMode() {
         return i(getParameterValue("-mm"));
@@ -145,14 +134,14 @@ public class SimulationOptions extends ParameterContainer
         setParameterValue("-mm", s(marioMode));
     }
 
-    //ZLevelMap
-    public int getZLevelMap() {
-        return i(getParameterValue("-zm"));
+    //ZLevelScene
+    public int getZLevelScene() {
+        return i(getParameterValue("-zl"));
     }
 
-    public void setZLevelMap(int zLevelMap)
+    public void setZLevelScene(int zLevelMap)
     {
-        setParameterValue("-zm", s(zLevelMap));
+        setParameterValue("-zl", s(zLevelMap));
     }
 
     //ZLevelEnemies
@@ -187,12 +176,4 @@ public class SimulationOptions extends ParameterContainer
     {
         currentTrial = 1;
     }    
-//    public void setCurrentTrial(int curTrial) {
-//        setParameterValue("-not", s(curTrial));
-//    }
-//
-//    public int getCurrentTrial()
-//    {
-//        return i(getParameterValue("-not"));
-//    }
 }

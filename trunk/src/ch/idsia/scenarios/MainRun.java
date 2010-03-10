@@ -77,11 +77,11 @@ public class MainRun
             Evaluator evaluator = new Evaluator(evaluationOptions);
             evaluationOptions.setAgent(AgentsPool.getCurrentAgent());
 //            evaluationOptions.setAgent(new AmiCoAgent(amicoModuleName, amicoAgentName));
-            while (cmdLineOptions.getNumberOfTrials() >= SimulationOptions.currentTrial) {
+//            while (cmdLineOptions.getNumberOfTrials() >= SimulationOptions.currentTrial) {
 //                List<EvaluationInfo> evaluationSummary;
                 System.out.println("SimulationOptions.currentTrial = " + SimulationOptions.currentTrial);
                 evaluator.evaluate();
-            }
+//            }
 //        LOGGER.save("log.txt");
         }
 
@@ -140,7 +140,7 @@ public class MainRun
         TimingAgent controller = new TimingAgent (agent);
         EvaluationOptions options = cmdLineOptions;
 
-        options.setNumberOfTrials(1);
+//        options.setNumberOfTrials(1);
 //        options.setVisualization(false);
 //        options.setMaxFPS(true);
         System.out.println("\nScoring controller " + agent.getName() + " with starting seed " + startingSeed);
@@ -182,7 +182,7 @@ public class MainRun
         int marioMode = 0;
         int marioStatus = 0;
 
-        options.setNumberOfTrials(numberOfTrials);
+//        options.setNumberOfTrials(numberOfTrials);
         options.resetCurrentTrial();
         for (int i = 0; i < numberOfTrials; i++) {
             options.setLevelRandSeed(seed + i);

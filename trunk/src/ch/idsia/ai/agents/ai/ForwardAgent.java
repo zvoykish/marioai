@@ -47,13 +47,16 @@ public class ForwardAgent extends BasicAIAgent implements Agent
         return false;
     }
 
+    private boolean DangerOfGap()
+    {
+        return DangerOfGap(levelScene);
+    }
 
     public boolean[] getAction(Environment observation)
     {
-        //TODO: Discuss increasing diffuculty for handling the gaps.
         // this Agent requires observation.
-
         assert(observation != null);
+
         byte[][] levelScene = observation.getCompleteObservation(/*1, 0*/);
         float[] marioPos = observation.getMarioFloatPos();
         float[] enemiesPos = observation.getEnemiesFloatPos();
@@ -79,6 +82,34 @@ public class ForwardAgent extends BasicAIAgent implements Agent
         }
 
         action[Mario.KEY_SPEED] = DangerOfGap(levelScene);
+        return action;
+    }
+
+    public boolean[] getAction()
+    {
+        // this Agent requires observation integrated in advance.
+
+        if (levelScene[11][13] != 0 || levelScene[11][12] != 0 ||  DangerOfGap())
+        {
+            if (isMarioAbleToJump || ( !isMarioOnGround && action[Mario.KEY_JUMP]))
+            {
+                action[Mario.KEY_JUMP] = true;
+            }
+            ++trueJumpCounter;
+        }
+        else
+        {
+            action[Mario.KEY_JUMP] = false;
+            trueJumpCounter = 0;
+        }
+
+        if (trueJumpCounter > 16)
+        {
+            trueJumpCounter = 0;
+            action[Mario.KEY_JUMP] = false;
+        }
+
+        action[Mario.KEY_SPEED] = DangerOfGap();
         return action;
     }
 }

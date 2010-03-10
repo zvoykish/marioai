@@ -37,6 +37,11 @@ public class ScaredSpeedyAgent extends BasicAIAgent implements Agent {
     }
 
 
+    public boolean[] getAction()
+    {
+        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public void reset() {
         action[Mario.KEY_RIGHT] = true;
         action[Mario.KEY_SPEED] = true;

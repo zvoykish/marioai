@@ -26,6 +26,16 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
         reset();
     }
 
+    public void integrateObservation(byte[] serializedLevelSceneObservationZ, byte[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public boolean[] getAction()
+    {
+        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public void reset()
     {
         // Just check you keyboard.
@@ -113,9 +123,9 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
                 {
                     int temp = prevFPS;
                     prevFPS = GlobalOptions.FPS;
-                    GlobalOptions.FPS = (GlobalOptions.FPS == GlobalOptions.InfiniteFPS) ? temp : GlobalOptions.InfiniteFPS ;
+                    GlobalOptions.FPS = (GlobalOptions.FPS == GlobalOptions.MaxFPS) ? temp : GlobalOptions.MaxFPS;
 //                    LOGGER.println("FPS has been changed. Current FPS is " +
-//                            ((GlobalOptions.FPS == GlobalOptions.InfiniteFPS) ? "\\infty" : GlobalOptions.FPS), LOGGER.VERBOSE_MODE.INFO);
+//                            ((GlobalOptions.FPS == GlobalOptions.MaxFPS) ? "\\infty" : GlobalOptions.FPS), LOGGER.VERBOSE_MODE.INFO);
                     GlobalOptions.AdjustMarioComponentFPS();
                 }
                 break;

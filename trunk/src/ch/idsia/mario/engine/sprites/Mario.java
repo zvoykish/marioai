@@ -644,7 +644,7 @@ public class Mario extends Sprite
         }
     }
 
-    private void win()
+    public void win()
     {
         xDeathPos = (int) x;
         yDeathPos = (int) y;
