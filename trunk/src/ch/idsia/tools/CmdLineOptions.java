@@ -104,25 +104,26 @@ public class CmdLineOptions extends EvaluationOptions
 //        "-zs"
         return new int[]
                 {
-                        this.isGameViewer() ? 1 : 0,
-                        this.isMarioInvulnerable() ? 1 : 0,
-                        this.getLevelDifficulty(),
-                        this.getLevelLength(),
-                        this.getLevelRandSeed(),
-                        this.getLevelType(),
-                        this.getMarioMode(),
-                        this.getFPS(),
-                        this.isPowerRestoration() ? 1 : 0,
-                        this.isPauseWorld() ? 1 : 0,
-                        this.isTimer() ? 1 : 0, // TODO:SK remove rudundancy (-1 -- no time limit)
-                        this.isToolsConfigurator() ? 1 : 0,
-                        this.getTimeLimit(),
-                        this.isViewAlwaysOnTop() ? 1 : 0,
-                        this.isVisualization() ? 1 : 0,
-                        this.getViewLocation().x,
-                        this.getViewLocation().y,
-                        this.getZLevelEnemies(),
-                        this.getZLevelScene()
+                        this.isGameViewer() ? 1 : 0,        /*0*/
+                        this.isMarioInvulnerable() ? 1 : 0, /*1*/
+                        this.getLevelDifficulty(),          /*2*/
+                        this.getLevelLength(),              /*3*/
+                        this.getLevelRandSeed(),            /*4*/
+                        this.getLevelType(),                /*5*/
+                        this.getMarioMode(),                /*6*/
+                        this.getFPS(),                      /*7*/
+                        this.isPowerRestoration() ? 1 : 0,  /*8*/
+                        this.isPauseWorld() ? 1 : 0,        /*9*/
+                        this.isTimer() ? 1 : 0,             /*10*/
+                        // TODO:SK remove rudundancy (-1 -- no time limit)
+                        this.isToolsConfigurator() ? 1 : 0, /*11*/
+                        this.getTimeLimit(),                /*12*/
+                        this.isViewAlwaysOnTop() ? 1 : 0,   /*13*/
+                        this.isVisualization() ? 1 : 0,     /*14*/
+                        this.getViewLocation().x,           /*15*/
+                        this.getViewLocation().y,           /*16*/
+                        this.getZLevelEnemies(),            /*17*/
+                        this.getZLevelScene()               /*18*/
                 }; 
     }
 }

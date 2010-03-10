@@ -204,7 +204,7 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
                 if (action != null)
                 {
                     for (int i = 0; i < Environment.numberOfButtons; ++i)
-                        msg += (action[i]) ? scene.keysStr[i] : "      ";
+                        msg += (action[i]) ? Scene.keysStr[i] : "      ";
                     }
                 else
                     msg = "NULL";                    

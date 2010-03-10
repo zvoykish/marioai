@@ -4,9 +4,6 @@ import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.mario.engine.LevelScene;
 import ch.idsia.mario.engine.MarioVisualComponent;
 
-import javax.swing.*;
-import java.awt.*;
-
 /**
  * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 3, 2010 Time: 10:08:13 PM
  * Package: ch.idsia.mario.environments
@@ -16,12 +13,11 @@ public class MarioEnvironment implements Environment
 {
     final LevelScene levelScene;
     private int frame = 0;
-    final private MarioVisualComponent marioVisualComponent;
+    private MarioVisualComponent marioVisualComponent;
 
     public MarioEnvironment()
     {
         levelScene = new LevelScene(0, 0, 0, 0, 0, 0);
-        marioVisualComponent = MarioVisualComponent.Create(320, 240, levelScene);
     }
 
     public void resetDefault()
@@ -29,11 +25,20 @@ public class MarioEnvironment implements Environment
         levelScene.resetDefault();
     }
 
-    public void reset(int[] setUpData)
+    public void reset(int[] setUpOptions)
     {
-        levelScene.reset(setUpData);
-        marioVisualComponent.reset();
-        marioVisualComponent.postInitGraphicsAndLevel();
+        if (/*levelScene.visualization*/ setUpOptions[14] == 1)
+        {
+            if (marioVisualComponent == null)
+                marioVisualComponent = MarioVisualComponent.Create(GlobalOptions.VISUAL_COMPONENT_WIDTH,
+                                                                   GlobalOptions.VISUAL_COMPONENT_HEIGHT,
+                                                                   levelScene);
+            levelScene.reset(setUpOptions);
+            marioVisualComponent.reset();
+            marioVisualComponent.postInitGraphicsAndLevel();
+        }
+        else
+            levelScene.reset(setUpOptions);
     }
 
     public void tick()

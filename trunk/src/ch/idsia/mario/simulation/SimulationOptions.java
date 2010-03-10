@@ -122,8 +122,8 @@ public class SimulationOptions extends ParameterContainer
         setParameterValue("-pr", s(powerRestoration));    }
 
     //StopSimulationIfWin
-    public Boolean isStopSimulationIfWin() {
-        return b(getParameterValue("-ssiw"));     }
+//    public Boolean isStopSimulationIfWin() {
+//        return b(getParameterValue("-ssiw"));     }
 
     //MarioMode
     public int getMarioMode() {
@@ -136,12 +136,12 @@ public class SimulationOptions extends ParameterContainer
 
     //ZLevelScene
     public int getZLevelScene() {
-        return i(getParameterValue("-zl"));
+        return i(getParameterValue("-zs"));
     }
 
     public void setZLevelScene(int zLevelMap)
     {
-        setParameterValue("-zl", s(zLevelMap));
+        setParameterValue("-zs", s(zLevelMap));
     }
 
     //ZLevelEnemies
