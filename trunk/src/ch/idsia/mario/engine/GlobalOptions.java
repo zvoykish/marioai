@@ -12,14 +12,13 @@ public class GlobalOptions {
     public static boolean MarioAlwaysInCenter = false;
     public static Integer FPS = 24;
     public static int MaxFPS = 100;
-    public static boolean pauseWorld = false;
+    public static boolean PauseWorld = false;
 
     public static boolean VisualizationOn = true;
     public static boolean GameVeiwerOn = true;
 
     private static MarioComponent marioComponent = null;
-    private static MarioVisualComponent marioVisualComponent;
-    private static GameViewer gameViewer = null;
+    private static GameViewer GameViewer = null;
     public static boolean TimerOn = true;
 
     //    public static Defaults defaults = new Defaults();
@@ -27,8 +26,6 @@ public class GlobalOptions {
     public static boolean PowerRestoration;
 
     public static boolean StopSimulationIfWin;
-    public static boolean isMarioInvulnerable;
-    public static int jumpTicks = 0;
     public static String MAIBeVersionStr = "0.1";
 
     public static void registerMarioComponent(MarioComponent mc)
@@ -38,7 +35,6 @@ public class GlobalOptions {
 
     public static void registerMarioVisualComponent(MarioVisualComponent mc)
     {
-        marioVisualComponent = mc;
     }
 
     public static MarioComponent getMarioComponent()
@@ -47,15 +43,15 @@ public class GlobalOptions {
 
     public static void registerGameViewer(GameViewer gv)
     {
-        gameViewer = gv;
+        GameViewer = gv;
     }
 
     public static void AdjustMarioComponentFPS() { marioComponent.adjustFPS(); }
 
     public static void gameViewerTick()
     {
-        if (gameViewer != null)
-            gameViewer.tick();
+        if (GameViewer != null)
+            GameViewer.tick();
 //        else
 //            LOGGER.println("GameViewer is not available. Request for dump ignored.", LOGGER.VERBOSE_MODE.ERROR);
     }

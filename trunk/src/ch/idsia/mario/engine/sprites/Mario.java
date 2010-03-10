@@ -312,9 +312,9 @@ public class Mario extends Sprite
         // Cheats:
         if (GlobalOptions.PowerRestoration && keys[KEY_SPEED] && (!Mario.large || !Mario.fire))
             setLarge(true, true);
-        if (cheatKeys[KEY_LIFE_UP])
-            this.lives++;
-        world.paused = GlobalOptions.pauseWorld;
+//        if (cheatKeys[KEY_LIFE_UP])
+//            this.lives++;
+        world.paused = GlobalOptions.PauseWorld;
         if (cheatKeys[KEY_WIN])
             win();
 //        if (keys[KEY_DUMP_CURRENT_WORLD])

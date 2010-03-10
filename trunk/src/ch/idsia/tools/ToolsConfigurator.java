@@ -441,10 +441,10 @@ public class ToolsConfigurator extends JFrame
             }
             else if (ob == CheckboxPauseWorld)
             {
-                GlobalOptions.pauseWorld = CheckboxPauseWorld.getState();
+                GlobalOptions.PauseWorld = CheckboxPauseWorld.getState();
 
-                marioComponent.setPaused(GlobalOptions.pauseWorld);
-//                LOGGER.println("World " + (GlobalOptions.pauseWorld ? "paused" : "unpaused"),
+                marioComponent.setPaused(GlobalOptions.PauseWorld);
+//                LOGGER.println("World " + (GlobalOptions.PauseWorld ? "paused" : "unpaused"),
 //                        LOGGER.VERBOSE_MODE.INFO);
             }
             else if (ob == CheckboxPauseMario)

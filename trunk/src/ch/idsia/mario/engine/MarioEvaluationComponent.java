@@ -3,11 +3,7 @@ package ch.idsia.mario.engine;
 import ch.idsia.mario.engine.sprites.Mario;
 import ch.idsia.mario.environments.Environment;
 import ch.idsia.tools.EvaluationInfo;
-import ch.idsia.tools.tcp.ServerAgent;
 import ch.idsia.ai.agents.Agent;
-
-import java.awt.*;
-import java.awt.image.VolatileImage;
 
 /**
  * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Feb 26, 2010 Time: 3:55:08 PM
@@ -184,7 +180,7 @@ public class MarioEvaluationComponent
         evaluationInfo.totalLengthOfLevelPhys = levelScene.level.getWidthPhys();
         evaluationInfo.timeSpentOnLevel = levelScene.getStartTime();
         evaluationInfo.timeLeft = levelScene.getTimeLeft();
-        evaluationInfo.totalTimeGiven = levelScene.getTotalTime();
+        evaluationInfo.totalTimeGiven = levelScene.getTimeLimit();
         evaluationInfo.numberOfGainedCoins = Mario.coins;
 //        evaluationInfo.totalNumberOfCoins   = -1 ; // TODO: total Number of coins.
         evaluationInfo.totalActionsPerfomed = totalActionsPerfomed; // Counted during the play/simulation process
