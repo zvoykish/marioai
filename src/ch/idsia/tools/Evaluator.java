@@ -220,7 +220,7 @@ public class Evaluator implements Runnable
         {
 
         }
-        GlobalOptions.pauseWorld = evaluationOptions.isPauseWorld();
+        GlobalOptions.PauseWorld = evaluationOptions.isPauseWorld();
         this.evaluationOptions = evaluationOptions;
         if (thisThread == null)
             thisThread = new Thread(this);

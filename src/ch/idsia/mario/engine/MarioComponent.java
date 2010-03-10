@@ -263,7 +263,7 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
         evaluationInfo.totalLengthOfLevelPhys = levelScene.level.getWidthPhys();
         evaluationInfo.timeSpentOnLevel = levelScene.getStartTime();
         evaluationInfo.timeLeft = levelScene.getTimeLeft();
-        evaluationInfo.totalTimeGiven = levelScene.getTotalTime();
+        evaluationInfo.totalTimeGiven = levelScene.getTimeLimit();
         evaluationInfo.numberOfGainedCoins = Mario.coins;
 //        evaluationInfo.totalNumberOfCoins   = -1 ; // TODO: total Number of coins.
         evaluationInfo.totalActionsPerfomed = totalActionsPerfomed; // Counted during the play/simulation process
@@ -390,7 +390,7 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
                 levelScene.level.getWidthPhys(),
                 levelScene.getStartTime(),
                 levelScene.getTimeLeft(),
-                levelScene.getTotalTime(),
+                levelScene.getTimeLimit(),
                 Mario.coins,
                 mario.getMode(),
                 mario.world.killedCreaturesTotal,

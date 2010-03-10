@@ -1,6 +1,5 @@
 package ch.idsia.mario.engine;
 
-import ch.idsia.mario.engine.level.BgLevelGenerator;
 import ch.idsia.mario.engine.level.Level;
 import ch.idsia.mario.engine.level.LevelGenerator;
 import ch.idsia.mario.engine.level.SpriteTemplate;
@@ -10,7 +9,6 @@ import ch.idsia.mario.environments.Environment;
 import java.awt.*;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +33,10 @@ public class LevelScene extends Scene implements SpriteContext, Environment
     // Visualization stuff
     public boolean visualization = false;
 
-    public int getTotalTime() {  return totalTime; }
-    public void setTotalTime(int totalTime) {  this.totalTime = totalTime; }
+    public int getTimeLimit() {  return timeLimit; }
+    public void setTimeLimit(int timeLimit) {  this.timeLimit = timeLimit; }
 
-    private int totalTime = 200;
+    private int timeLimit = 200;
 
     //    private Recorder recorder = new Recorder();
     //    private Replayer replayer = null;
@@ -62,7 +60,7 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         this.levelDifficulty = levelDifficulty;
         this.levelType = type;
         this.levelLength = levelLength;
-        this.setTotalTime(timeLimit);
+        this.setTimeLimit(timeLimit);
         killedCreaturesTotal = 0;
         killedCreaturesByFireBall = 0;
         killedCreaturesByStomp = 0;
@@ -77,7 +75,7 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         this.levelDifficulty = levelDifficulty;
         this.levelType = type;
         this.levelLength = levelLength;
-        this.setTotalTime(timeLimit);
+        this.setTimeLimit(timeLimit);
         this.visualization = visualization == 1;
         killedCreaturesTotal = 0;
         killedCreaturesByFireBall = 0;
@@ -120,7 +118,7 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         sprites.add(mario);
         startTime = 1;
 
-        timeLeft = totalTime*15;
+        timeLeft = timeLimit *15;
 
         tick = 0;
     }
@@ -874,7 +872,7 @@ public class LevelScene extends Scene implements SpriteContext, Environment
                 level.getWidthPhys(),
                 getStartTime(),
                 getTimeLeft(),
-                getTotalTime(),
+                getTimeLimit(),
                 Mario.coins,
                 mario.getMode(),
                 mario.world.killedCreaturesTotal,
@@ -964,13 +962,27 @@ public class LevelScene extends Scene implements SpriteContext, Environment
 
     public void reset(int[] setUpData)
     {
-        this.levelSeed = setUpData[0];
-        this.levelDifficulty = setUpData[1];
-        this.levelType = setUpData[2];
+//        this.gameViewer = setUpData[0] == 1;
+        this.mario.isMarioInvulnerable = setUpData[1] == 0;
+        this.levelDifficulty = setUpData[2];
         this.levelLength = setUpData[3];
-        this.setTotalTime(setUpData[4]);
-        Mario.resetStatic(setUpData[5]);
-        this.visualization = setUpData[6] == 1;
+
+        this.levelSeed = setUpData[4];
+        this.levelType = setUpData[5];
+        Mario.resetStatic(setUpData[6]);
+        GlobalOptions.FPS = setUpData[7];
+        GlobalOptions.PowerRestoration = setUpData[8] == 1;
+        GlobalOptions.PauseWorld = setUpData[9] == 1;
+        GlobalOptions.TimerOn = setUpData[10] == 1;
+//        isToolsConfigurator = setUpData[11] == 1;
+        this.setTimeLimit(setUpData[12]);
+//        this.isViewAlwaysOnTop() ? 1 : 0, setUpData[13]
+        this.visualization = setUpData[14] == 1;
+//        this.getViewLocation().x, setUpData[15] == 1;
+//        this.getViewLocation().y, setUpData[16] == 1;
+//        this.getZLevelEnemies(),setUpData[17] ;
+//        this.getZLevelScene()   setUpData[18] ;
+
         killedCreaturesTotal = 0;
         killedCreaturesByFireBall = 0;
         killedCreaturesByStomp = 0;

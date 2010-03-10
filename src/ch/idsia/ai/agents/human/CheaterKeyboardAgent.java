@@ -86,8 +86,8 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
                 if (isPressed)
                 {
 //                    LOGGER.println("Pause On/Off", LOGGER.VERBOSE_MODE.INFO);
-                    GlobalOptions.pauseWorld = !GlobalOptions.pauseWorld;
-                    Action[Mario.KEY_PAUSE] = GlobalOptions.pauseWorld;
+                    GlobalOptions.PauseWorld = !GlobalOptions.PauseWorld;
+                    Action[Mario.KEY_PAUSE] = GlobalOptions.PauseWorld;
                 }
                 break;
             case KeyEvent.VK_L:
