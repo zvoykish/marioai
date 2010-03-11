@@ -22,7 +22,7 @@ public class SergeyKarakovskiy_JumpingAgent implements Agent
         reset();
     }
 
-    public void integrateObservation(byte[] serializedLevelSceneObservationZ, byte[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
+    public void integrateObservation(int[] serializedLevelSceneObservationZ, int[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
     {
         //To change body of implemented methods use File | Settings | File Templates.
     }

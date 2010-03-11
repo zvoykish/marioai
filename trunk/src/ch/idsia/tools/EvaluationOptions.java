@@ -90,7 +90,7 @@ public class EvaluationOptions extends SimulationOptions
     }
 
     public boolean isServerMode() {
-        return b(getParameterValue("-server"));
+        return b(getParameterValue("    -server"));
     }
 
     public boolean isTimer() {

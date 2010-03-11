@@ -17,7 +17,24 @@ public class MarioEnvironment implements Environment
 
     public MarioEnvironment()
     {
+        System.out.println("System.getProperty(\"java.awt.headless\") = " + System.getProperty("java.awt.headless"));
+        System.out.println("Java: JA ZDES'!!");
+        System.out.flush();
         levelScene = new LevelScene(0, 0, 0, 0, 0, 0);
+    }
+
+    public void finalize()
+    {
+        System.out.println("\n!!!!!!!!!!!!!!!!!!!!!!!!");
+        try
+        {
+            System.out.println("\nJava: FINALIZING this = " + this);
+            super.finalize();
+        } catch (Throwable throwable)
+        {
+            System.err.println("\nJava: AHHA!");
+            throwable.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
     public void resetDefault()
@@ -27,6 +44,13 @@ public class MarioEnvironment implements Environment
 
     public void reset(int[] setUpOptions)
     {
+        System.out.println("\nsetUpOptions = " + setUpOptions);
+        for (int i = 0; i < setUpOptions.length; ++i)
+        {
+            System.out.print(" op[" + i +"] = " + setUpOptions[i]);
+        }
+        System.out.println("");
+        System.out.flush();
         if (/*levelScene.visualization*/ setUpOptions[14] == 1)
         {
             if (marioVisualComponent == null)
@@ -43,6 +67,7 @@ public class MarioEnvironment implements Environment
 
     public void tick()
     {
+        System.out.println("MarioEnvironment: tick()");
         levelScene.tick();
         if (levelScene.visualization)
             marioVisualComponent.tick();
@@ -145,17 +170,17 @@ public class MarioEnvironment implements Environment
         return levelScene.getSerializedFullObservationZZ(ZLevelScene, ZLevelEnemies);
     }
 
-    public byte[] getSerializedLevelSceneObservationZ(int ZLevelScene)
+    public int[] getSerializedLevelSceneObservationZ(int ZLevelScene)
     {
         return levelScene.getSerializedLevelSceneObservationZ(ZLevelScene);
     }
 
-    public byte[] getSerializedEnemiesObservationZ(int ZLevelEnemies)
+    public int[] getSerializedEnemiesObservationZ(int ZLevelEnemies)
     {
         return levelScene.getSerializedEnemiesObservationZ(ZLevelEnemies);
     }
 
-    public byte[] getSerializedMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
+    public int[] getSerializedMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
     {
         return levelScene.getSerializedMergedObservationZZ(ZLevelScene, ZLevelEnemies);
     }

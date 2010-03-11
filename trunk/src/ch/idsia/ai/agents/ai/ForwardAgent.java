@@ -57,7 +57,7 @@ public class ForwardAgent extends BasicAIAgent implements Agent
         // this Agent requires observation.
         assert(observation != null);
 
-        byte[][] levelScene = observation.getCompleteObservation(/*1, 0*/);
+        byte[][] levelScene = observation.getLevelSceneObservationZ(1);
         float[] marioPos = observation.getMarioFloatPos();
         float[] enemiesPos = observation.getEnemiesFloatPos();
 

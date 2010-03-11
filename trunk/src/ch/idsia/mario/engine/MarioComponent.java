@@ -413,7 +413,7 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
         return new double[0];  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public byte[] getSerializedLevelSceneObservationZ(int ZLevelScene)
+    public int[] getSerializedLevelSceneObservationZ(int ZLevelScene)
     {
         // serialization into arrays of primitive types to speed up the data transfer.
         byte[][] levelScene = this.getLevelSceneObservationZ(ZLevelScene);
@@ -421,7 +421,7 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
         int rows = Environment.HalfObsHeight*2;
         int cols = Environment.HalfObsWidth*2;
 
-        byte[] squashedLevelScene = new byte[rows * cols];
+        int[] squashedLevelScene = new int[rows * cols];
 //        byte[] squashedEnemies = new byte[enemies.length * enemies[0].length];
 
         for (int i = 0; i < squashedLevelScene.length; ++i)
@@ -432,7 +432,7 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
         return squashedLevelScene; 
     }
 
-    public byte[] getSerializedEnemiesObservationZ(int ZLevelEnemies)
+    public int[] getSerializedEnemiesObservationZ(int ZLevelEnemies)
     {
         // serialization into arrays of primitive types to speed up the data transfer.
         byte[][] levelScene = this.getLevelSceneObservationZ(ZLevelScene);
@@ -441,7 +441,7 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
         int cols = Environment.HalfObsWidth*2;
 
         byte[] squashedLevelScene = new byte[rows * cols];
-        byte[] squashedEnemies = new byte[enemies.length * enemies[0].length];
+        int[] squashedEnemies = new int[enemies.length * enemies[0].length];
 
         for (int i = 0; i < squashedLevelScene.length; ++i)
         {
@@ -450,9 +450,9 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
         return squashedEnemies;
     }
 
-    public byte[] getSerializedMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
+    public int[] getSerializedMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
     {
-        return new byte[0];  //To change body of implemented methods use File | Settings | File Templates.
+        return new int[0];  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public float[] getCreaturesFloatPos()
