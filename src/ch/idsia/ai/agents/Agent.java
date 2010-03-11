@@ -11,8 +11,8 @@ import ch.idsia.mario.environments.Environment;
  */
 public interface Agent
 {
-    void integrateObservation(byte[] serializedLevelSceneObservationZ,
-                              byte[] serializedEnemiesObservationZ,
+    void integrateObservation(int[] serializedLevelSceneObservationZ,
+                              int[] serializedEnemiesObservationZ,
                               float[] marioFloatPos,
                               float[] enemiesFloatPos,
                               int[] marioState);

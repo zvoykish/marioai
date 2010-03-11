@@ -72,14 +72,14 @@ public interface Environment
      * @param ZLevelScene
      * @return byte[] with sequenced elements of corresponding getLevelSceneObservationZ output
      */
-    public byte[] getSerializedLevelSceneObservationZ(int ZLevelScene);
+    public int[] getSerializedLevelSceneObservationZ(int ZLevelScene);
     /**
      * Serializes the LevelScene observation from 22x22 byte array to a 1x484 byte array
      * @param ZLevelEnemies
      * @return byte[] with sequenced elements of corresponding <code>getLevelSceneObservationZ</code> output
      */
-    public byte[] getSerializedEnemiesObservationZ(int ZLevelEnemies);
-    public byte[] getSerializedMergedObservationZZ(int ZLevelScene, int ZLevelEnemies);
+    public int[] getSerializedEnemiesObservationZ(int ZLevelEnemies);
+    public int[] getSerializedMergedObservationZZ(int ZLevelScene, int ZLevelEnemies);
 
     public float[] getCreaturesFloatPos();
 

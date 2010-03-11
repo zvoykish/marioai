@@ -899,7 +899,7 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         return new double[0];  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public byte[] getSerializedLevelSceneObservationZ(int ZLevelScene)
+    public int[] getSerializedLevelSceneObservationZ(int ZLevelScene)
     {
         // serialization into arrays of primitive types to speed up the data transfer.
         byte[][] levelScene = this.getLevelSceneObservationZ(ZLevelScene);
@@ -907,18 +907,20 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         int rows = Environment.HalfObsHeight*2;
         int cols = Environment.HalfObsWidth*2;
 
-        byte[] squashedLevelScene = new byte[rows * cols];
+        int[] squashedLevelScene = new int[rows * cols];
 //        byte[] squashedEnemies = new byte[enemies.length * enemies[0].length];
 
+        System.out.println("\n#*#*#*#*#**##*#*#*#*Java:");
         for (int i = 0; i < squashedLevelScene.length; ++i)
         {
-            squashedLevelScene[i] = levelScene[i / cols][i % rows];
+            squashedLevelScene[i] = (int)levelScene[i / cols][i % rows];
+            System.out.print(" " + squashedLevelScene[i]);
 //            squashedEnemies[i] = enemies[i / cols][i % rows];
         }
         return squashedLevelScene;
     }
 
-    public byte[] getSerializedEnemiesObservationZ(int ZLevelEnemies)
+    public int[] getSerializedEnemiesObservationZ(int ZLevelEnemies)
     {
         // serialization into arrays of primitive types to speed up the data transfer.
 //        byte[][] levelScene = this.getLevelSceneObservationZ(ZLevelScene);
@@ -927,7 +929,7 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         int cols = Environment.HalfObsWidth*2;
 
         byte[] squashedLevelScene = new byte[rows * cols];
-        byte[] squashedEnemies = new byte[enemies.length * enemies[0].length];
+        int[] squashedEnemies = new int[enemies.length * enemies[0].length];
 
         for (int i = 0; i < squashedLevelScene.length; ++i)
         {
@@ -936,10 +938,10 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         return squashedEnemies;
     }
 
-    public byte[] getSerializedMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
+    public int[] getSerializedMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
     {
         // TODO: SK
-        return new byte[0];
+        return new int[0];
     }
 
     public float[] getCreaturesFloatPos()
@@ -967,6 +969,7 @@ public class LevelScene extends Scene implements SpriteContext, Environment
     public void reset(int[] setUpData)
     {
 //        this.gameViewer = setUpData[0] == 1;
+        System.out.println("\nLevelScene RESET!");
         this.mario.isMarioInvulnerable = setUpData[1] == 1;
         this.levelDifficulty = setUpData[2];
         this.levelLength = setUpData[3];

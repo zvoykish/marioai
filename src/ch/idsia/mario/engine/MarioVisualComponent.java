@@ -72,6 +72,7 @@ public class MarioVisualComponent extends JComponent
 
         System.out.println("this (from constructor) = " + this);
         GlobalOptions.registerMarioVisualComponent(this);
+        System.out.println("\nJava: registered");
     }
 
     public static MarioVisualComponent Create(int width, int height, LevelScene levelScene)
@@ -83,20 +84,43 @@ public class MarioVisualComponent extends JComponent
 
     private static JFrame marioComponentFrame = null;
 
+    public class JFrameThread extends Thread implements Runnable
+    {
+
+    }
+
     public static void CreateMarioComponentFrame(MarioVisualComponent m)
     {
         if (marioComponentFrame == null)
         {
-            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentName() +*/ "Mario AI benchmark-" + GlobalOptions.MAIBeVersionStr);
+            System.out.println("Java: FramE");
+
+            try
+            {
+                marioComponentFrame = new JFrame(/*evaluationOptions.getAgentName() +*/ "Mario AI benchmark-" + GlobalOptions.MAIBeVersionStr);
+            }
+            catch (HeadlessException e)
+            {
+                e.printStackTrace();
+                System.err.println("ex: " + e);
+            }
+
+            System.out.println("Java: Works1!");
+            System.out.flush();
             marioComponentFrame.setContentPane(m);
             m.init();
+            System.out.println("Java: Works2!");
             marioComponentFrame.pack();
+            System.out.println("Java: Works3!");
             marioComponentFrame.setResizable(false);
+            System.out.println("Java: Works4!");
             marioComponentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            System.out.println("Java: Works5!");
         }
         marioComponentFrame.setAlwaysOnTop(true);
         marioComponentFrame.setLocation(new Point(42,42));
         marioComponentFrame.setVisible(true);
+        System.out.println("Java: Works!");
         m.postInitGraphics();
     }
 

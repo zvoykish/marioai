@@ -38,15 +38,15 @@ public class BasicAIAgent implements Agent
         enemies = new byte[Environment.HalfObsHeight * 2][Environment.HalfObsWidth * 2];
     }
 
-    public void integrateObservation(byte[] serializedLevelSceneObservationZ, byte[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
+    public void integrateObservation(int[] serializedLevelSceneObservationZ, int[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
     {
         int k = 0;
         for (int i = 0; i < levelScene.length; ++i)
         {
             for (int j = 0; j < levelScene[0].length; ++j)
             {
-                levelScene[i][j] = serializedLevelSceneObservationZ[k];
-                enemies[i][j] = serializedEnemiesObservationZ[k++];
+                levelScene[i][j] = (byte)serializedLevelSceneObservationZ[k];
+                enemies[i][j] = (byte)serializedEnemiesObservationZ[k++];
 
                 // Simulating merged observation!
                 if (enemies[i][j] != 0)
