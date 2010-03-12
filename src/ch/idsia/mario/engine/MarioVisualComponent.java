@@ -78,7 +78,7 @@ public class MarioVisualComponent extends JComponent
     public static MarioVisualComponent Create(int width, int height, LevelScene levelScene)
     {
         MarioVisualComponent marioVisualComponent = new MarioVisualComponent(width, height, levelScene);
-        MarioVisualComponent.CreateMarioComponentFrame(marioVisualComponent);
+        marioVisualComponent.CreateMarioComponentFrame(marioVisualComponent);
         return marioVisualComponent;
     }
 
@@ -86,10 +86,28 @@ public class MarioVisualComponent extends JComponent
 
     public class JFrameThread extends Thread implements Runnable
     {
-
+        JFrame fr = null;
+        public void run()
+        {
+            fr = new JFrame(/*evaluationOptions.getAgentName() +*/ "Mario AI benchmark-" + GlobalOptions.MAIBeVersionStr);
+            System.out.println("Java: Created!");
+        }
+        JFrame getF()
+        {
+            while        (fr == null) try
+            {
+                Thread.sleep(300);
+                System.out.println("marioComponentFrame = " + fr);
+            } catch (InterruptedException e)
+            {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            return fr;
+        }
     }
 
-    public static void CreateMarioComponentFrame(MarioVisualComponent m)
+    public static Object mutex = new Object();
+    public void CreateMarioComponentFrame(MarioVisualComponent m)
     {
         if (marioComponentFrame == null)
         {
@@ -97,7 +115,13 @@ public class MarioVisualComponent extends JComponent
 
             try
             {
-                marioComponentFrame = new JFrame(/*evaluationOptions.getAgentName() +*/ "Mario AI benchmark-" + GlobalOptions.MAIBeVersionStr);
+                JFrameThread jFrameThread = new JFrameThread();
+                jFrameThread.start();
+                synchronized(mutex)
+                {
+                    marioComponentFrame = jFrameThread.getF();
+                    System.out.println("marioComponentFrame = " + marioComponentFrame);
+                }
             }
             catch (HeadlessException e)
             {
@@ -107,6 +131,7 @@ public class MarioVisualComponent extends JComponent
 
             System.out.println("Java: Works1!");
             System.out.flush();
+
             marioComponentFrame.setContentPane(m);
             m.init();
             System.out.println("Java: Works2!");
@@ -469,3 +494,5 @@ public class MarioVisualComponent extends JComponent
     }
 
 }
+
+

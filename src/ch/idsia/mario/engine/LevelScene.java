@@ -910,11 +910,11 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         int[] squashedLevelScene = new int[rows * cols];
 //        byte[] squashedEnemies = new byte[enemies.length * enemies[0].length];
 
-        System.out.println("\n#*#*#*#*#**##*#*#*#*Java:");
+//        System.out.println("\n#*#*#*#*#**##*#*#*#*Java:");
         for (int i = 0; i < squashedLevelScene.length; ++i)
         {
             squashedLevelScene[i] = (int)levelScene[i / cols][i % rows];
-            System.out.print(" " + squashedLevelScene[i]);
+//            System.out.print(" " + squashedLevelScene[i]);
 //            squashedEnemies[i] = enemies[i / cols][i % rows];
         }
         return squashedLevelScene;

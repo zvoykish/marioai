@@ -2,7 +2,10 @@ package ch.idsia.mario.environments;
 
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.mario.engine.LevelScene;
+import ch.idsia.mario.engine.MThread;
 import ch.idsia.mario.engine.MarioVisualComponent;
+
+import java.awt.event.WindowAdapter;
 
 /**
  * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 3, 2010 Time: 10:08:13 PM
@@ -53,21 +56,25 @@ public class MarioEnvironment implements Environment
         System.out.flush();
         if (/*levelScene.visualization*/ setUpOptions[14] == 1)
         {
+            MThread mt = new MThread(levelScene, GlobalOptions.VISUAL_COMPONENT_WIDTH, GlobalOptions.VISUAL_COMPONENT_HEIGHT);
+            mt.start();
             if (marioVisualComponent == null)
-                marioVisualComponent = MarioVisualComponent.Create(GlobalOptions.VISUAL_COMPONENT_WIDTH,
-                                                                   GlobalOptions.VISUAL_COMPONENT_HEIGHT,
-                                                                   levelScene);
+                marioVisualComponent = mt.getMVC();
+//                marioVisualComponent = MarioVisualComponent.Create(GlobalOptions.VISUAL_COMPONENT_WIDTH,
+//                                                                   GlobalOptions.VISUAL_COMPONENT_HEIGHT,
+//                                                                   levelScene);
             levelScene.reset(setUpOptions);
             marioVisualComponent.reset();
             marioVisualComponent.postInitGraphicsAndLevel();
         }
         else
             levelScene.reset(setUpOptions);
+        
     }
 
     public void tick()
     {
-        System.out.println("MarioEnvironment: tick()");
+//        System.out.println("MarioEnvironment: tick()");
         levelScene.tick();
         if (levelScene.visualization)
             marioVisualComponent.tick();
