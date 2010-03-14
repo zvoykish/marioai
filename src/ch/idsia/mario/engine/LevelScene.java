@@ -118,9 +118,9 @@ public class LevelScene extends Scene implements SpriteContext, Environment
 
         mario = new Mario(this);
         sprites.add(mario);
-        System.out.println("sprites = " + sprites);
-        System.out.println("mario = " + mario);
-        System.out.println("mario.sheet = " + mario.sheet);
+//        System.out.println("sprites = " + sprites);
+//        System.out.println("mario = " + mario);
+//        System.out.println("mario.sheet = " + mario.sheet);
         startTime = 1;
 
         timeLeft = timeLimit *15;

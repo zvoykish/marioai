@@ -60,7 +60,7 @@ public class Play {
             environment.reset(cmdLineOptions);
             basicTask.setEnvironment(environment);
         basicTask.runEpisode();
-            EvaluationInfo evaluationInfo = new EvaluationInfo(environment.getEvaluationInfo());
+            EvaluationInfo evaluationInfo = new EvaluationInfo();
             System.out.println("evaluationInfo = " + evaluationInfo);
 //        }
         System.exit(0);
