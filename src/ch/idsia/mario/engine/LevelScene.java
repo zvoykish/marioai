@@ -32,7 +32,6 @@ public class LevelScene extends Scene implements SpriteContext, Environment
     private int width;
     private int height;
 
-    // Visualization stuff
     public boolean visualization = false;
 
     public int getTimeLimit() {  return timeLimit; }
@@ -54,26 +53,9 @@ public class LevelScene extends Scene implements SpriteContext, Environment
     public static int killedCreaturesByShell;
 
 
-    public LevelScene(GraphicsConfiguration graphicsConfiguration, MarioComponent renderer, long seed, int levelDifficulty, int type, int levelLength, int timeLimit)
-    {
-//        this.graphicsConfiguration = graphicsConfiguration;
-        this.levelSeed = seed;
-//        this.renderer = renderer;
-        this.levelDifficulty = levelDifficulty;
-        this.levelType = type;
-        this.levelLength = levelLength;
-        this.setTimeLimit(timeLimit);
-        killedCreaturesTotal = 0;
-        killedCreaturesByFireBall = 0;
-        killedCreaturesByStomp = 0;
-        killedCreaturesByShell = 0;
-    }
-
     public LevelScene(long seed, int levelDifficulty, int type, int levelLength, int timeLimit, int visualization)
     {
-        // TODO: keep track of optional visualization.
         this.levelSeed = seed;
-//        this.renderer = null;
         this.levelDifficulty = levelDifficulty;
         this.levelType = type;
         this.levelLength = levelLength;

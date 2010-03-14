@@ -2,6 +2,7 @@ package ch.idsia.maibe.tasks;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.mario.environments.Environment;
+import ch.idsia.tools.CmdLineOptions;
 
 /**
  * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 14, 2010 Time: 4:47:33 PM
@@ -38,5 +39,11 @@ public class BasicTask
     {
         this.agent = agent;
         environment.setAgent(agent);
+    }
+
+    public void reset(CmdLineOptions cmdLineOptions)
+    {
+        environment.reset(cmdLineOptions);
+        agent.reset();
     }
 }
