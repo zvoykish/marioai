@@ -30,7 +30,8 @@ import ch.idsia.tools.EvaluationOptions;
 
  */
 
-public class Play {
+public class Play
+{
     /**
      * <p>An entry point of the class.
      *
@@ -49,20 +50,14 @@ public class Play {
 
         final Environment environment = new MarioEnvironment();
         final Agent agent = new HumanKeyboardAgent();
-//        agent.reset();
         final BasicTask basicTask = new BasicTask(environment, agent);
         int seed  = 16;
-//        for (int seed = 16; seed < 20; ++seed)
-//        {
-            cmdLineOptions.setLevelRandSeed(seed);  // seed
-//            cmdLineOptions.setVisualization(seed % 2 == 1);    // visualization
+        cmdLineOptions.setLevelRandSeed(seed);  // seed
         cmdLineOptions.setVisualization(true);
-            environment.reset(cmdLineOptions);
-            basicTask.setEnvironment(environment);
+        basicTask.reset(cmdLineOptions);
         basicTask.runEpisode();
-            EvaluationInfo evaluationInfo = new EvaluationInfo();
-            System.out.println("evaluationInfo = " + evaluationInfo);
-//        }
+        EvaluationInfo evaluationInfo = new EvaluationInfo();
+        System.out.println("evaluationInfo = " + evaluationInfo);
         System.exit(0);
     }
 }

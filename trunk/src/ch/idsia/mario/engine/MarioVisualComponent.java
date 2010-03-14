@@ -90,10 +90,7 @@ public class MarioVisualComponent extends JComponent
     {
         if (marioComponentFrame == null)
         {
-//            System.out.println("Java: FramE");
-
             marioComponentFrame = new JFrame(/*evaluationOptions.getAgentName() +*/ "Mario AI benchmark-" + GlobalOptions.MAIBeVersionStr);
-
             marioComponentFrame.setContentPane(m);
             m.init();
             marioComponentFrame.pack();
@@ -113,13 +110,7 @@ public class MarioVisualComponent extends JComponent
 
     public void tick()
     {
-
-
-
-
         this.render(thisVolatileImageGraphics, 0);
-
-
 
         String msg = "Agent: " + "no agent yet"; /*agent.getName();*/
         drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 7, 5);
