@@ -9,7 +9,7 @@ import ch.idsia.mario.environments.Environment;
  * Date: Aug 10, 2009
  * Time: 6:41:42 PM
  */
-public class TimingAgent implements Agent {
+public class TimingAgent extends BasicAIAgent implements Agent {
 
     private Agent agent;
     private long timeTaken = 0;
@@ -17,6 +17,7 @@ public class TimingAgent implements Agent {
 
     public TimingAgent (Agent agent)
     {
+        super("TimingAgent");
         this.agent = agent;
     }
 

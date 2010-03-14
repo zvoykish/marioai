@@ -24,7 +24,7 @@ public class HumanKeyboardAgent extends KeyAdapter implements Agent
 
     public HumanKeyboardAgent()
     {
-        this.reset ();
+        this.reset();
 //        RegisterableAgent.registerAgent(this);
     }
 
@@ -35,7 +35,12 @@ public class HumanKeyboardAgent extends KeyAdapter implements Agent
 
     public boolean[] getAction()
     {
-        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
+        return Action;
+    }
+
+    public void integrateObservation(Environment environment)
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public void reset()

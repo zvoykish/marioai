@@ -1,5 +1,8 @@
 package ch.idsia.mario.environments;
 
+import ch.idsia.ai.agents.Agent;
+import ch.idsia.tools.CmdLineOptions;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Sergey Karakovskiy
@@ -104,4 +107,8 @@ public interface Environment
     boolean isLevelFinished();
 
     double [] getEvaluationInfo();
+
+    void reset(CmdLineOptions cmdLineOptions);
+
+    void setAgent(Agent agent);
 }

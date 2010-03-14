@@ -4,6 +4,7 @@ import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.human.CheaterKeyboardAgent;
 import ch.idsia.mario.engine.sprites.Mario;
 import ch.idsia.mario.environments.Environment;
+import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.tools.GameViewer;
 import ch.idsia.tools.tcp.ServerAgent;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MarioComponent extends JComponent implements Runnable, /*KeyListener,*/ /*FocusListener,*/ Environment
+public class MarioComponent extends JComponent implements Runnable, /*KeyListener, /*FocusListener,*/ Environment
 {
     private static final long serialVersionUID = 790878775993203817L;
     public static final int TICKS_PER_SECOND = 24;
@@ -396,6 +397,12 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
                 mario.world.killedCreaturesTotal,
         };
         return evaluationInfoArray;
+    }
+
+    public void reset(CmdLineOptions cmdLineOptions)
+    {
+        levelScene.reset(cmdLineOptions);
+
     }
 
     public boolean isMarioAbleToShoot() {
