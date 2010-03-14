@@ -223,6 +223,7 @@ public class Mario extends Sprite
 
         wasOnGround = onGround;
         float sideWaysSpeed = keys[KEY_SPEED] ? 1.2f : 0.6f;
+
         //        float sideWaysSpeed = onGround ? 2.5f : 1.2f;
 
         if (onGround)

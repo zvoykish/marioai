@@ -1,11 +1,10 @@
 package ch.idsia.mario.environments;
 
+import ch.idsia.ai.agents.Agent;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.mario.engine.LevelScene;
-import ch.idsia.mario.engine.MThread;
 import ch.idsia.mario.engine.MarioVisualComponent;
-
-import java.awt.event.WindowAdapter;
+import ch.idsia.tools.CmdLineOptions;
 
 /**
  * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 3, 2010 Time: 10:08:13 PM
@@ -17,27 +16,14 @@ public class MarioEnvironment implements Environment
     final LevelScene levelScene;
     private int frame = 0;
     private MarioVisualComponent marioVisualComponent;
+    private Agent agent;
 
     public MarioEnvironment()
     {
-        System.out.println("System.getProperty(\"java.awt.headless\") = " + System.getProperty("java.awt.headless"));
-        System.out.println("Java: JA ZDES'!!");
-        System.out.flush();
+//        System.out.println("System.getProperty(\"java.awt.headless\") = " + System.getProperty("java.awt.headless"));
+//        System.out.println("Java: JA ZDES'!!");
+//        System.out.flush();
         levelScene = new LevelScene(0, 0, 0, 0, 0, 0);
-    }
-
-    public void finalize()
-    {
-        System.out.println("\n!!!!!!!!!!!!!!!!!!!!!!!!");
-        try
-        {
-            System.out.println("\nJava: FINALIZING this = " + this);
-            super.finalize();
-        } catch (Throwable throwable)
-        {
-            System.err.println("\nJava: AHHA!");
-            throwable.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
     }
 
     public void resetDefault()
@@ -47,25 +33,23 @@ public class MarioEnvironment implements Environment
 
     public void reset(int[] setUpOptions)
     {
-        System.out.println("\nsetUpOptions = " + setUpOptions);
-        for (int i = 0; i < setUpOptions.length; ++i)
-        {
-            System.out.print(" op[" + i +"] = " + setUpOptions[i]);
-        }
-        System.out.println("");
-        System.out.flush();
+//        System.out.println("\nsetUpOptions = " + setUpOptions);
+//        for (int i = 0; i < setUpOptions.length; ++i)
+//        {
+//            System.out.print(" op[" + i +"] = " + setUpOptions[i]);
+//        }
+//        System.out.println("");
+//        System.out.flush();
         if (/*levelScene.visualization*/ setUpOptions[14] == 1)
         {
-            MThread mt = new MThread(levelScene, GlobalOptions.VISUAL_COMPONENT_WIDTH, GlobalOptions.VISUAL_COMPONENT_HEIGHT);
-            mt.start();
             if (marioVisualComponent == null)
-                marioVisualComponent = mt.getMVC();
-//                marioVisualComponent = MarioVisualComponent.Create(GlobalOptions.VISUAL_COMPONENT_WIDTH,
-//                                                                   GlobalOptions.VISUAL_COMPONENT_HEIGHT,
-//                                                                   levelScene);
+                marioVisualComponent = MarioVisualComponent.Create(GlobalOptions.VISUAL_COMPONENT_WIDTH,
+                                                                   GlobalOptions.VISUAL_COMPONENT_HEIGHT,
+                                                                   levelScene);
             levelScene.reset(setUpOptions);
             marioVisualComponent.reset();
             marioVisualComponent.postInitGraphicsAndLevel();
+            marioVisualComponent.setAgent(agent);
         }
         else
             levelScene.reset(setUpOptions);
@@ -215,5 +199,15 @@ public class MarioEnvironment implements Environment
     public double[] getEvaluationInfo()
     {
         return levelScene.getEvaluationInfo();
+    }
+
+    public void reset(CmdLineOptions cmdLineOptions)
+    {
+        this.reset(cmdLineOptions.toIntArray());
+    }
+
+    public void setAgent(Agent agent)
+    {
+        this.agent = agent;
     }
 }

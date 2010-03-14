@@ -10,6 +10,7 @@ import ch.idsia.mario.environments.Environment;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
 import java.awt.image.VolatileImage;
 import java.text.DecimalFormat;
 
@@ -44,6 +45,7 @@ public class MarioVisualComponent extends JComponent
 
     private long tm = System.currentTimeMillis();
     int delay;
+    private KeyAdapter prevHumanKeyBoardAgent;
 
 
     private MarioVisualComponent(int width, int height, LevelScene levelScene)
@@ -70,9 +72,9 @@ public class MarioVisualComponent extends JComponent
             this.addKeyListener(cheatAgent);
         }
 
-        System.out.println("this (from constructor) = " + this);
+//        System.out.println("this (from constructor) = " + this);
         GlobalOptions.registerMarioVisualComponent(this);
-        System.out.println("\nJava: registered");
+//        System.out.println("\nJava: registered");
     }
 
     public static MarioVisualComponent Create(int width, int height, LevelScene levelScene)
@@ -84,68 +86,23 @@ public class MarioVisualComponent extends JComponent
 
     private static JFrame marioComponentFrame = null;
 
-    public class JFrameThread extends Thread implements Runnable
-    {
-        JFrame fr = null;
-        public void run()
-        {
-            fr = new JFrame(/*evaluationOptions.getAgentName() +*/ "Mario AI benchmark-" + GlobalOptions.MAIBeVersionStr);
-            System.out.println("Java: Created!");
-        }
-        JFrame getF()
-        {
-            while        (fr == null) try
-            {
-                Thread.sleep(300);
-                System.out.println("marioComponentFrame = " + fr);
-            } catch (InterruptedException e)
-            {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
-            return fr;
-        }
-    }
-
-    public static Object mutex = new Object();
     public void CreateMarioComponentFrame(MarioVisualComponent m)
     {
         if (marioComponentFrame == null)
         {
-            System.out.println("Java: FramE");
+//            System.out.println("Java: FramE");
 
-            try
-            {
-                JFrameThread jFrameThread = new JFrameThread();
-                jFrameThread.start();
-                synchronized(mutex)
-                {
-                    marioComponentFrame = jFrameThread.getF();
-                    System.out.println("marioComponentFrame = " + marioComponentFrame);
-                }
-            }
-            catch (HeadlessException e)
-            {
-                e.printStackTrace();
-                System.err.println("ex: " + e);
-            }
-
-            System.out.println("Java: Works1!");
-            System.out.flush();
+            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentName() +*/ "Mario AI benchmark-" + GlobalOptions.MAIBeVersionStr);
 
             marioComponentFrame.setContentPane(m);
             m.init();
-            System.out.println("Java: Works2!");
             marioComponentFrame.pack();
-            System.out.println("Java: Works3!");
             marioComponentFrame.setResizable(false);
-            System.out.println("Java: Works4!");
             marioComponentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            System.out.println("Java: Works5!");
         }
         marioComponentFrame.setAlwaysOnTop(true);
         marioComponentFrame.setLocation(new Point(42,42));
         marioComponentFrame.setVisible(true);
-        System.out.println("Java: Works!");
         m.postInitGraphics();
     }
 
@@ -443,7 +400,7 @@ public class MarioVisualComponent extends JComponent
     public void init()
     {
         graphicsConfiguration = getGraphicsConfiguration();
-        System.out.println("!!HRUYA: graphicsConfiguration = " + graphicsConfiguration);
+//        System.out.println("!!HRUYA: graphicsConfiguration = " + graphicsConfiguration);
 //        assert (graphicsConfiguration == null);
 //        if (graphicsConfiguration != null) {
         Art.init(graphicsConfiguration);
@@ -454,12 +411,12 @@ public class MarioVisualComponent extends JComponent
 
     public void postInitGraphics()
     {
-        System.out.println("this = " + this);
+//        System.out.println("this = " + this);
         this.thisVolatileImage = this.createVolatileImage(GlobalOptions.VISUAL_COMPONENT_WIDTH, GlobalOptions.VISUAL_COMPONENT_HEIGHT);
         this.thisGraphics = getGraphics();
         this.thisVolatileImageGraphics = this.thisVolatileImage.getGraphics();
-        System.out.println("thisGraphics = " + thisGraphics);
-        System.out.println("thisVolatileImageGraphics = " + thisVolatileImageGraphics);
+//        System.out.println("thisGraphics = " + thisGraphics);
+//        System.out.println("thisVolatileImageGraphics = " + thisVolatileImageGraphics);
     }
 
 
@@ -467,12 +424,12 @@ public class MarioVisualComponent extends JComponent
     {
         if (graphicsConfiguration != null)
         {
-            System.out.println("level = " + level);
-            System.out.println("levelScene .level = " + levelScene.level);
+//            System.out.println("level = " + level);
+//            System.out.println("levelScene .level = " + levelScene.level);
             level =                                     levelScene.level;
 
             this.mario = levelScene.mario;
-            System.out.println("mario = " + mario);
+//            System.out.println("mario = " + mario);
             this.level = levelScene.level;
             layer = new LevelRenderer(level, graphicsConfiguration, this.width, this.height);
             for (int i = 0; i < 2; i++)
@@ -490,8 +447,20 @@ public class MarioVisualComponent extends JComponent
     {
         int fps = GlobalOptions.FPS;
         delay = (fps > 0) ? (fps >= GlobalOptions.MaxFPS) ? 0 : (1000 / fps) : 100;
-        System.out.println("Delay: " + delay);
+//        System.out.println("Delay: " + delay);
     }
+
+    public void setAgent(Agent agent) {
+//        this.agent = agent;
+        System.out.println("agent = " + agent);
+        if (agent instanceof KeyAdapter) {
+            if (prevHumanKeyBoardAgent != null)
+                this.removeKeyListener(prevHumanKeyBoardAgent);
+            this.prevHumanKeyBoardAgent = (KeyAdapter) agent;
+            this.addKeyListener(prevHumanKeyBoardAgent);
+        }
+    }
+
 
 }
 

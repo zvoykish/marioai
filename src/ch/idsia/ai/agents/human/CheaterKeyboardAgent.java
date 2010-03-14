@@ -36,6 +36,11 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
         return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    public void integrateObservation(Environment environment)
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public void reset()
     {
         // Just check you keyboard.

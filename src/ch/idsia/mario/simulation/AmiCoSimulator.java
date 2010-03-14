@@ -1,4 +1,4 @@
-package ch.idsia.scenarios;
+package ch.idsia.mario.simulation;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.ai.ForwardAgent;
@@ -48,5 +48,10 @@ public class AmiCoSimulator
             System.out.println("evaluationInfo = " + evaluationInfo);
         }
         System.exit(0);
+    }
+
+    public void runEpisodes()
+    {
+        
     }
 }

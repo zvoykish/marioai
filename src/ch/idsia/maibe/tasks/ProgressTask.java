@@ -14,15 +14,16 @@ import java.util.List;
  * Time: 11:26:43 AM
  * Package: ch.idsia.maibe.tasks
  */
-public class ProgressTask implements Task {
+public class ProgressTask implements Task
+{
 
     private EvaluationOptions options;
 
-    public ProgressTask(EvaluationOptions evaluationOptions) {
-        setOptions(evaluationOptions);
-    }
+    public ProgressTask(EvaluationOptions evaluationOptions)
+    {        setOptions(evaluationOptions);    }
 
-    public double[] evaluate(Agent controller) {
+    public double[] evaluate(Agent controller)
+    {
         double distanceTravelled = 0;
 //        controller.reset();
         options.setAgent(controller);
@@ -52,12 +53,12 @@ public class ProgressTask implements Task {
 
     public boolean isFinished()
     {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return false;
     }
 
     public void reset()
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+        
     }
 
 }

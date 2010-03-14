@@ -1,8 +1,15 @@
 package ch.idsia.scenarios;
 
+import ch.idsia.ai.agents.Agent;
+import ch.idsia.ai.agents.ai.ForwardJumpingAgent;
+import ch.idsia.ai.agents.human.HumanKeyboardAgent;
+import ch.idsia.maibe.tasks.BasicTask;
 import ch.idsia.maibe.tasks.ProgressTask;
 import ch.idsia.maibe.tasks.Task;
+import ch.idsia.mario.environments.Environment;
+import ch.idsia.mario.environments.MarioEnvironment;
 import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.tools.EvaluationOptions;
 
 /**
@@ -33,20 +40,29 @@ public class Play {
      * @see ch.idsia.tools.CmdLineOptions
      * @see ch.idsia.tools.EvaluationOptions
      *
-     * @since   iMario1.0
+     * @since   MarioAI-0.1
      */
 
-    public static void main(String[] args) {
-        EvaluationOptions options = new CmdLineOptions(args);
-        Task task = new ProgressTask(options);
-//        options.setMaxFPS(false);
-//        options.setVisualization(true);
-//        options.setNumberOfTrials(1);
-        options.setLevelRandSeed((int) (Math.random () * Integer.MAX_VALUE));
-        options.setLevelDifficulty(3);
-        task.setOptions(options);
+    public static void main(String[] args)
+    {
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
 
-        System.out.println ("Score: " + task.evaluate (options.getAgent())[0]);
-        System.out.println("Simulation/Play finished");       
+        final Environment environment = new MarioEnvironment();
+        final Agent agent = new HumanKeyboardAgent();
+//        agent.reset();
+        final BasicTask basicTask = new BasicTask(environment, agent);
+        int seed  = 16;
+//        for (int seed = 16; seed < 20; ++seed)
+//        {
+            cmdLineOptions.setLevelRandSeed(seed);  // seed
+//            cmdLineOptions.setVisualization(seed % 2 == 1);    // visualization
+        cmdLineOptions.setVisualization(true);
+            environment.reset(cmdLineOptions);
+            basicTask.setEnvironment(environment);
+        basicTask.runEpisode();
+            EvaluationInfo evaluationInfo = new EvaluationInfo(environment.getEvaluationInfo());
+            System.out.println("evaluationInfo = " + evaluationInfo);
+//        }
+        System.exit(0);
     }
 }

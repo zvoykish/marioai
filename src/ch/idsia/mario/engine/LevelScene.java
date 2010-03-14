@@ -1,10 +1,12 @@
 package ch.idsia.mario.engine;
 
+import ch.idsia.ai.agents.Agent;
 import ch.idsia.mario.engine.level.Level;
 import ch.idsia.mario.engine.level.LevelGenerator;
 import ch.idsia.mario.engine.level.SpriteTemplate;
 import ch.idsia.mario.engine.sprites.*;
 import ch.idsia.mario.environments.Environment;
+import ch.idsia.tools.CmdLineOptions;
 
 import java.awt.*;
 import java.io.DataInputStream;
@@ -884,6 +886,16 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         return evaluationInfoArray;
     }
 
+    public void reset(CmdLineOptions cmdLineOptions)
+    {
+        reset(cmdLineOptions.toIntArray());
+    }
+
+    public void setAgent(Agent agent)
+    {
+        // 
+    }
+
     public boolean isMarioAbleToShoot() {
         return mario.isCanShoot();
     }
@@ -969,7 +981,7 @@ public class LevelScene extends Scene implements SpriteContext, Environment
     public void reset(int[] setUpData)
     {
 //        this.gameViewer = setUpData[0] == 1;
-        System.out.println("\nLevelScene RESET!");
+//        System.out.println("\nLevelScene RESET!");
         this.mario.isMarioInvulnerable = setUpData[1] == 1;
         this.levelDifficulty = setUpData[2];
         this.levelLength = setUpData[3];

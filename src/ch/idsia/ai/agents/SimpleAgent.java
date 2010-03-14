@@ -25,6 +25,11 @@ public class SimpleAgent implements Agent
         return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    public void integrateObservation(Environment environment)
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public void reset()
     {
         Action = new boolean[Environment.numberOfButtons];
