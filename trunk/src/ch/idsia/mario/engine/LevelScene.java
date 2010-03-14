@@ -8,7 +8,6 @@ import ch.idsia.mario.engine.sprites.*;
 import ch.idsia.mario.environments.Environment;
 import ch.idsia.tools.CmdLineOptions;
 
-import java.awt.*;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,7 +42,6 @@ public class LevelScene extends Scene implements SpriteContext, Environment
     //    private Replayer replayer = null;
 
     private long levelSeed;
-//    private MarioComponent renderer;
     private int levelType;
     private int levelDifficulty;
     private int levelLength;
@@ -305,7 +303,7 @@ public class LevelScene extends Scene implements SpriteContext, Environment
                     case(Sprite.KIND_SPIKY_WINGED):
                         return 1;
                 }
-                System.err.println("Z2 UNKNOWNN el = " + el);
+                System.err.println("ERROR: Z2 UNKNOWNN el = " + el);
                 return 1;
         }
         return el; //TODO: Throw unknown ZLevel exception
@@ -904,7 +902,6 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         int[] squashedLevelScene = new int[rows * cols];
 //        byte[] squashedEnemies = new byte[enemies.length * enemies[0].length];
 
-//        System.out.println("\n#*#*#*#*#**##*#*#*#*Java:");
         for (int i = 0; i < squashedLevelScene.length; ++i)
         {
             squashedLevelScene[i] = (int)levelScene[i / cols][i % rows];
