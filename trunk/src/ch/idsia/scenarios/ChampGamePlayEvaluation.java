@@ -19,7 +19,7 @@ import ch.idsia.utils.StatisticalSummary;
  * Date: Mar 17, 2010 Time: 8:33:43 AM
  * Package: ch.idsia.scenarios
  */
-public class ChampionshipGamePlayTrackEvaluation
+public class ChampGamePlayEvaluation
 {
     final static int numberOfTrials = 10;
     final static boolean scoring = false;
@@ -55,10 +55,10 @@ public class ChampionshipGamePlayTrackEvaluation
 
     }
 
-    public static void score(Agent agent, int startingSeed, CmdLineOptions cmdLineOptions) {
+    public static void score(Agent agent, int startingSeed, CmdLineOptions cmdLineOptions)
+    {
         TimingAgent controller = new TimingAgent (agent);
         EvaluationOptions options = cmdLineOptions;
-
 //        options.setNumberOfTrials(1);
 //        options.setVisualization(false);
 //        options.setMaxFPS(true);
@@ -84,7 +84,8 @@ public class ChampionshipGamePlayTrackEvaluation
         System.out.println("TOTAL SUM for " + agent.getName() + " = " + (competitionScore + killsSum + marioStatusSum + marioModeSum + timeLeftSum));
     }
 
-    public static double testConfig (TimingAgent controller, EvaluationOptions options, int seed, int levelDifficulty, boolean paused) {
+    public static double testConfig (TimingAgent controller, EvaluationOptions options, int seed, int levelDifficulty, boolean paused)
+    {
         options.setLevelDifficulty(levelDifficulty);
         options.setPauseWorld(paused);
         StatisticalSummary ss = test (controller, options, seed);
@@ -94,7 +95,8 @@ public class ChampionshipGamePlayTrackEvaluation
         return ss.mean();
     }
 
-    public static StatisticalSummary test (Agent controller, EvaluationOptions options, int seed) {
+    public static StatisticalSummary test (Agent controller, EvaluationOptions options, int seed)
+    {
         StatisticalSummary ss = new StatisticalSummary ();
         int kills = 0;
         int timeLeft = 0;

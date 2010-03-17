@@ -16,7 +16,7 @@ public class BasicAIAgent implements Agent
     protected String name = "Instance_of_BasicAIAgent._Change_this_name";
     /*final*/ protected byte[][] levelScene;
     /*final */protected byte[][] enemies;
-    private byte[][] mergedObservation;
+    protected byte[][] mergedObservation;
 
     protected float[] marioFloatPos = null;
     protected float[] enemiesFloatPos = null;

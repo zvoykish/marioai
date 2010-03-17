@@ -89,7 +89,7 @@ public class ForwardAgent extends BasicAIAgent implements Agent
     {
         // this Agent requires observation integrated in advance.
 
-        if (levelScene[11][13] != 0 || levelScene[11][12] != 0 ||  DangerOfGap())
+        if (mergedObservation[11][13] != 0 || mergedObservation[11][12] != 0 ||  DangerOfGap())
         {
             if (isMarioAbleToJump || ( !isMarioOnGround && action[Mario.KEY_JUMP]))
             {

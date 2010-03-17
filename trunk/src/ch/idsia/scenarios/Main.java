@@ -17,7 +17,7 @@ public class Main
 {
     public static void main(String[] args)
     {
-        String argsString = "-vis on";
+        final String argsString = "-vis on";
         args = argsString.split("\\s");
         final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
         final Environment environment = new MarioEnvironment();
