@@ -162,7 +162,7 @@ public class ParameterContainer
             defaultOptionsHashMap.put("-ls","0"); //defaultOptionsHashMap.put("-levelRandSeed","1");
             defaultOptionsHashMap.put("-lt","0"); //defaultOptionsHashMap.put("-levelType","1");
             // TODO:SK turn out to just FPS, if FPS > 100 -> make it maximum
-            defaultOptionsHashMap.put("-fps", "42"); //defaultOptionsHashMap.put("-maxFPS","off");
+            defaultOptionsHashMap.put("-fps", "24"); //defaultOptionsHashMap.put("-maxFPS","off");
             defaultOptionsHashMap.put("-m",""); //defaultOptionsHashMap.put("-matLabFile","DefaultMatlabFile");
             defaultOptionsHashMap.put("-mm","2"); //Mario Mode
 //            defaultOptionsHashMap.put("-not","1"); //defaultOptionsHashMap.put("-attemptsNumber","5");
