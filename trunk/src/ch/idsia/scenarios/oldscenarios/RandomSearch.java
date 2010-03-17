@@ -1,4 +1,4 @@
-package ch.idsia.scenarios;
+package ch.idsia.scenarios.oldscenarios;
 
 /**
  * Created by IntelliJ IDEA.

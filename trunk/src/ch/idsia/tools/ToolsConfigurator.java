@@ -6,7 +6,7 @@ import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.mario.engine.MarioComponent;
 import ch.idsia.mario.engine.MarioVisualComponent;
 import ch.idsia.mario.engine.level.LevelGenerator;
-import ch.idsia.scenarios.MainRun;
+import ch.idsia.scenarios.oldscenarios.MainRun;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

@@ -1,4 +1,4 @@
-package ch.idsia.scenarios;
+package ch.idsia.scenarios.oldscenarios;
 
 import ch.idsia.ai.agents.AmiCoAgent;
 import ch.idsia.ai.agents.ai.*;
