@@ -9,7 +9,7 @@ import ch.idsia.maibe.tasks.ProgressTask;
 import ch.idsia.ai.agents.ai.*;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
-import ch.idsia.scenarios.Stats;
+import ch.idsia.scenarios.oldscenarios.Stats;
 import wox.serial.Easy;
 
 /**

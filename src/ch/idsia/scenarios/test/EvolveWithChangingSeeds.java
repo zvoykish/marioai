@@ -1,6 +1,7 @@
 package ch.idsia.scenarios.test;
 
 import ch.idsia.mario.engine.GlobalOptions;
+import ch.idsia.scenarios.oldscenarios.Stats;
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.ai.Evolvable;
@@ -9,7 +10,6 @@ import ch.idsia.maibe.tasks.MultiDifficultyProgressTask;
 import ch.idsia.ai.agents.ai.SmallMLPAgent;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
-import ch.idsia.scenarios.Stats;
 import wox.serial.Easy;
 
 /**

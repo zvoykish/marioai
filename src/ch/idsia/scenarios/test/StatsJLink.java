@@ -3,7 +3,7 @@ package ch.idsia.scenarios.test;
 import ch.idsia.ai.SRN;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.ai.LargeSRNAgent;
-import ch.idsia.scenarios.Stats;
+import ch.idsia.scenarios.oldscenarios.Stats;
 
 /**
  * Created by IntelliJ IDEA.

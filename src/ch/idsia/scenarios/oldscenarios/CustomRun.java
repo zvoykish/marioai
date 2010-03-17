@@ -1,4 +1,4 @@
-package ch.idsia.scenarios;
+package ch.idsia.scenarios.oldscenarios;
 //https://marioai.googlecode.com/svn/trunk/src
 
 import ch.idsia.ai.agents.Agent;

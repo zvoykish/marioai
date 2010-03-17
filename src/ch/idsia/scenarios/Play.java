@@ -1,16 +1,12 @@
 package ch.idsia.scenarios;
 
 import ch.idsia.ai.agents.Agent;
-import ch.idsia.ai.agents.ai.ForwardJumpingAgent;
 import ch.idsia.ai.agents.human.HumanKeyboardAgent;
 import ch.idsia.maibe.tasks.BasicTask;
-import ch.idsia.maibe.tasks.ProgressTask;
-import ch.idsia.maibe.tasks.Task;
 import ch.idsia.mario.environments.Environment;
 import ch.idsia.mario.environments.MarioEnvironment;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
-import ch.idsia.tools.EvaluationOptions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -37,7 +33,7 @@ public class Play
      *
      * @param args input parameters for customization of the benchmark.
      *
-     * @see ch.idsia.scenarios.MainRun
+     * @see ch.idsia.scenarios.oldscenarios.MainRun
      * @see ch.idsia.tools.CmdLineOptions
      * @see ch.idsia.tools.EvaluationOptions
      *
@@ -47,7 +43,6 @@ public class Play
     public static void main(String[] args)
     {
         final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
-
         final Environment environment = new MarioEnvironment();
         final Agent agent = new HumanKeyboardAgent();
         final BasicTask basicTask = new BasicTask(environment, agent);
@@ -56,7 +51,7 @@ public class Play
         cmdLineOptions.setVisualization(true);
         basicTask.reset(cmdLineOptions);
         basicTask.runEpisode();
-        EvaluationInfo evaluationInfo = new EvaluationInfo();
+        EvaluationInfo evaluationInfo = new EvaluationInfo(environment.getEvaluationInfo());
         System.out.println("evaluationInfo = " + evaluationInfo);
         System.exit(0);
     }
