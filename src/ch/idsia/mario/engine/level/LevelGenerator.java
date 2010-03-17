@@ -31,7 +31,7 @@ public class LevelGenerator
     private static final int ODDS_TUBES = 2;
     private static final int ODDS_JUMP = 3;
     private static final int ODDS_CANNONS = 4;
-    private int[]  odds = new int[5];
+    private int[] odds = new int[5];
     private int totalOdds;
     private int difficulty;
     private int type;

@@ -22,21 +22,6 @@ public class SergeyKarakovskiy_JumpingAgent implements Agent
         reset();
     }
 
-    public void integrateObservation(int[] serializedLevelSceneObservationZ, int[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public boolean[] getAction()
-    {
-        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public void integrateObservation(Environment environment)
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
     public void reset()
     {
         action = new boolean[Environment.numberOfButtons];
@@ -46,7 +31,7 @@ public class SergeyKarakovskiy_JumpingAgent implements Agent
 
     public boolean[] getAction(Environment observation)
     {
-        action[Mario.KEY_SPEED] = action[Mario.KEY_JUMP] =  observation.isMarioAbleToJump() || !observation.isMarioOnGround();
+        action[Mario.KEY_SPEED] = action[Mario.KEY_JUMP] =  observation.mayMarioJump() || !observation.isMarioOnGround();
         return action;
     }
 

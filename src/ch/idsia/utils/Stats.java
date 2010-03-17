@@ -63,8 +63,7 @@ public class Stats {
     }
 
     /**
-     * @param v - sample
-     * @return the average of an array of int.
+     * Returns the average of an array of int.
      */
 
     public static double mean(int[] v) {

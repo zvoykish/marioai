@@ -1,13 +1,12 @@
 package ch.idsia.scenarios.test;
 
-import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.ai.Evolvable;
 import ch.idsia.ai.ea.ES;
-import ch.idsia.maibe.tasks.ProgressTask;
+import ch.idsia.ai.tasks.ProgressTask;
 import ch.idsia.ai.agents.ai.SimpleMLPAgent;
-import ch.idsia.scenarios.oldscenarios.Stats;
+import ch.idsia.scenarios.Stats;
 import wox.serial.Easy;
 
 /**
@@ -24,11 +23,11 @@ public class EvolveSingle {
 
     public static void main(String[] args) {
         EvaluationOptions options = new CmdLineOptions(new String[0]);
-//        options.setNumberOfTrials(1);
+        options.setNumberOfTrials(1);
         options.setPauseWorld(false);
         Evolvable initial = new SimpleMLPAgent();
 //        RegisterableAgent.registerAgent ((Agent) initial);
-        options.setFPS(GlobalOptions.MaxFPS);
+        options.setMaxFPS(true);
         options.setLevelDifficulty(0);
         options.setVisualization(false);
         ProgressTask task = new ProgressTask(options);

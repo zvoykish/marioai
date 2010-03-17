@@ -31,16 +31,21 @@ public class ServerAgent extends BasicAIAgent implements Agent
         }
     }
 
-    public ServerAgent(Server server)
+    public ServerAgent(Server server, boolean isFastTCP)
     {
         super("ServerAgent");
         this.server = server;
-        this.tcpMode = TCP_MODE.SIMPLE_TCP;
+        this.tcpMode = (isFastTCP) ? TCP_MODE.FAST_TCP : TCP_MODE.SIMPLE_TCP;
     }
 
     public String getName()
     {
         return this.name + ((server == null) ? "" : server.getClientName());
+    }
+
+    public void setFastTCP(boolean isFastTCP)
+    {
+        this.tcpMode = (isFastTCP) ? TCP_MODE.FAST_TCP : TCP_MODE.SIMPLE_TCP;
     }
 
     // A tiny bit of singletone-like concept. Server is created ones for each egent. Basically we are not going
@@ -53,11 +58,6 @@ public class ServerAgent extends BasicAIAgent implements Agent
     public boolean isAvailable()
     {
         return (server != null) && server.isClientConnected();
-    }
-
-    public boolean[] getAction()
-    {
-        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public void reset()
@@ -74,7 +74,7 @@ public class ServerAgent extends BasicAIAgent implements Agent
         byte[][] mergedObs = observation.getCompleteObservation(/*1, 0*/);
 
         String tmpData = "O " +
-                observation.isMarioAbleToJump() + " " + observation.isMarioOnGround();
+                observation.mayMarioJump() + " " + observation.isMarioOnGround();
         for (int x = 0; x < mergedObs.length; ++x)
         {
             for (int y = 0; y < mergedObs.length; ++y)
@@ -90,7 +90,7 @@ public class ServerAgent extends BasicAIAgent implements Agent
             tmpData += " " + enemiesFloatPoses[i];
 
         server.sendSafe(tmpData);
-        // TODO: StateEncoderDecoder.Encode.Decode.  zip, gzip
+        // TODO: StateEncoderDecoder.Encode.Decode.  zip, gzip do not send mario position. zero instead for better compression.
     }
 
     private void sendObservation(Environment observation)
@@ -99,6 +99,41 @@ public class ServerAgent extends BasicAIAgent implements Agent
         {
             this.sendRawObservation(observation);
         }
+        else if (this.tcpMode == TCP_MODE.FAST_TCP)
+        {
+            this.sendBitmapObservation(observation);
+        }
+    }
+
+    private void sendBitmapObservation(Environment observation)
+    {
+        
+        String tmpData =  "E" +
+                          (observation.mayMarioJump() ? "1" : "0")  +
+                          (observation.isMarioOnGround() ? "1" : "0") +
+                          observation.getBitmapLevelObservation();
+//                          observation.getBitmapEnemiesObservation();
+        int check_sum = 0;
+        for (int i = 3; i < tmpData.length(); ++i)
+        {
+            char cur_char = tmpData.charAt(i);
+            if (cur_char != 0)
+            {
+//                System.out.print(i + " ");
+//                MathX.show(cur_char);
+                check_sum += Integer.valueOf(cur_char);
+            }
+        }
+        if (tmpData.length() != /*125 - 61*/34)
+            try {
+                throw new Exception("Pipetz!");
+            } catch (Exception e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                System.err.println(e.getMessage());
+            }
+        tmpData += " " + check_sum;
+//        System.out.println("tmpData size = " + tmpData.length());
+        server.sendSafe(tmpData);
     }
 
     public void integrateEvaluationInfo(EvaluationInfo evaluationInfo)

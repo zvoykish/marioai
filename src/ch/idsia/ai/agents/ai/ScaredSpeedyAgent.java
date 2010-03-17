@@ -37,11 +37,6 @@ public class ScaredSpeedyAgent extends BasicAIAgent implements Agent {
     }
 
 
-    public boolean[] getAction()
-    {
-        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
     public void reset() {
         action[Mario.KEY_RIGHT] = true;
         action[Mario.KEY_SPEED] = true;
@@ -52,7 +47,7 @@ public class ScaredSpeedyAgent extends BasicAIAgent implements Agent {
         if (/*levelScene[11][13] != 0 ||*/ levelScene[11][12] != 0 ||
            /* levelScene[12][13] == 0 ||*/ levelScene[12][12] == 0 )
         {
-            if (observation.isMarioAbleToJump() || ( !observation.isMarioOnGround() && action[Mario.KEY_JUMP]))
+            if (observation.mayMarioJump() || ( !observation.isMarioOnGround() && action[Mario.KEY_JUMP]))
             {
                 action[Mario.KEY_JUMP] = true;
             }

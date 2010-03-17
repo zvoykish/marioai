@@ -11,16 +11,6 @@ import ch.idsia.mario.environments.Environment;
  */
 public interface Agent
 {
-    void integrateObservation(int[] serializedLevelSceneObservationZ,
-                              int[] serializedEnemiesObservationZ,
-                              float[] marioFloatPos,
-                              float[] enemiesFloatPos,
-                              int[] marioState);
-
-    boolean[] getAction();
-
-    void integrateObservation(Environment environment);
-
     public enum AGENT_TYPE {AI, HUMAN, TCP_SERVER }
 
     // clears all dynamic data, such as hidden layers in recurrent networks

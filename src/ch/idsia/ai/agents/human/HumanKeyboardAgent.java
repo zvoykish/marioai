@@ -24,23 +24,8 @@ public class HumanKeyboardAgent extends KeyAdapter implements Agent
 
     public HumanKeyboardAgent()
     {
-        this.reset();
+        this.reset ();
 //        RegisterableAgent.registerAgent(this);
-    }
-
-    public void integrateObservation(int[] serializedLevelSceneObservationZ, int[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public boolean[] getAction()
-    {
-        return Action;
-    }
-
-    public void integrateObservation(Environment environment)
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public void reset()

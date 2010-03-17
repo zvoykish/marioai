@@ -17,5 +17,5 @@ public abstract class Scene
 
     public abstract void tick();
 
-//    public abstract void render(Graphics og, float alpha);
+    public abstract void render(Graphics og, float alpha);
 }

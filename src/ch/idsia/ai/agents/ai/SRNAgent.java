@@ -34,21 +34,6 @@ public class SRNAgent implements Agent, Evolvable {
         return new SRNAgent (srn.copy ());
     }
 
-    public void integrateObservation(int[] serializedLevelSceneObservationZ, int[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public boolean[] getAction()
-    {
-        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public void integrateObservation(Environment environment)
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
     public void reset() {
         srn.reset ();
     }
@@ -66,7 +51,7 @@ public class SRNAgent implements Agent, Evolvable {
                                 probe(-1, -1, enemies), probe(0, -1, enemies), probe(1, -1, enemies),
                                 probe(-1, 0, enemies), probe(0, 0, enemies), probe(1, 0, enemies),
                                 probe(-1, 1, enemies), probe(0, 1, enemies), probe(1, 1, enemies),
-                                observation.isMarioOnGround() ? 1 : 0, observation.isMarioAbleToJump() ? 1 : 0,
+                                observation.isMarioOnGround() ? 1 : 0, observation.mayMarioJump() ? 1 : 0,
                                 1};
         double[] outputs = srn.propagate (inputs);
         boolean[] action = new boolean[numberOfOutputs];

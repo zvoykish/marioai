@@ -84,8 +84,6 @@ public class Mario extends Sprite
     private int jumpTime = 0;
     private float xJumpSpeed;
     private float yJumpSpeed;
-
-
     private boolean canShoot = false;
 
     int width = 4;
@@ -223,7 +221,6 @@ public class Mario extends Sprite
 
         wasOnGround = onGround;
         float sideWaysSpeed = keys[KEY_SPEED] ? 1.2f : 0.6f;
-
         //        float sideWaysSpeed = onGround ? 2.5f : 1.2f;
 
         if (onGround)
@@ -313,9 +310,9 @@ public class Mario extends Sprite
         // Cheats:
         if (GlobalOptions.PowerRestoration && keys[KEY_SPEED] && (!Mario.large || !Mario.fire))
             setLarge(true, true);
-//        if (cheatKeys[KEY_LIFE_UP])
-//            this.lives++;
-        world.paused = GlobalOptions.PauseWorld;
+        if (cheatKeys[KEY_LIFE_UP])
+            this.lives++;
+        world.paused = GlobalOptions.pauseWorld;
         if (cheatKeys[KEY_WIN])
             win();
 //        if (keys[KEY_DUMP_CURRENT_WORLD])
@@ -645,7 +642,7 @@ public class Mario extends Sprite
         }
     }
 
-    public void win()
+    private void win()
     {
         xDeathPos = (int) x;
         yDeathPos = (int) y;
@@ -770,9 +767,4 @@ public class Mario extends Sprite
     public boolean mayJump() {
         return mayJump;
     }
-
-    public boolean isCanShoot()
-    {
-        return canShoot;
-    }    
 }

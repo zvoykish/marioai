@@ -4,21 +4,21 @@ import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.human.CheaterKeyboardAgent;
 import ch.idsia.mario.engine.sprites.Mario;
 import ch.idsia.mario.environments.Environment;
-import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.tools.GameViewer;
 import ch.idsia.tools.tcp.ServerAgent;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.image.VolatileImage;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MarioComponent extends JComponent implements Runnable, /*KeyListener, /*FocusListener,*/ Environment
-{
+public class MarioComponent extends JComponent implements Runnable, /*KeyListener,*/ FocusListener, Environment {
     private static final long serialVersionUID = 790878775993203817L;
     public static final int TICKS_PER_SECOND = 24;
 
@@ -26,7 +26,7 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
     private int width, height;
     private GraphicsConfiguration graphicsConfiguration;
     private Scene scene;
-//    private boolean focused = false;
+    private boolean focused = false;
 
     int frame;
     int delay;
@@ -35,8 +35,7 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
     private int ZLevelEnemies = 1;
     private int ZLevelScene = 1;
 
-    public void setGameViewer(GameViewer gameViewer)
-    {
+    public void setGameViewer(GameViewer gameViewer) {
         this.gameViewer = gameViewer;
     }
 
@@ -74,10 +73,9 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
         GlobalOptions.registerMarioComponent(this);
     }
 
-    public void adjustFPS()
-    {
+    public void adjustFPS() {
         int fps = GlobalOptions.FPS;
-        delay = (fps > 0) ? (fps >= GlobalOptions.MaxFPS) ? 0 : (1000 / fps) : 100;
+        delay = (fps > 0) ? (fps >= GlobalOptions.InfiniteFPS) ? 0 : (1000 / fps) : 100;
 //        System.out.println("Delay: " + delay);
     }
 
@@ -87,8 +85,7 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
     public void update(Graphics g) {
     }
 
-    public void init()
-    {
+    public void init() {
         graphicsConfiguration = getGraphicsConfiguration();
 //        if (graphicsConfiguration != null) {
             Art.init(graphicsConfiguration);
@@ -105,40 +102,36 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
 
     public void stop() {
         running = false;
-        System.out.println("\nmario.x = " + mario.x);
-        System.out.println("mario.xD = " + mario.xDeathPos);
-        System.out.println("mario.getStatus() = " + mario.getStatus());
-        System.out.println("frame = " + frame);
     }
 
-    public void run() {}
+    public void run() {
 
-    public EvaluationInfo run1(int currentTrial)
-    {
+    }
+
+    public EvaluationInfo run1(int currentTrial, int totalNumberOfTrials) {
         running = true;
         adjustFPS();
         EvaluationInfo evaluationInfo = new EvaluationInfo();
 
-        VolatileImage thisVolatileImage = null;
-        Graphics thisGraphics = null;
-        Graphics thisVolatileImageGraphics = null;
+        VolatileImage image = null;
+        Graphics g = null;
+        Graphics og = null;
 
-        
-        thisVolatileImage = this.createVolatileImage(320, 240);
-        thisGraphics = getGraphics();
-        thisVolatileImageGraphics = thisVolatileImage.getGraphics();
+        image = createVolatileImage(320, 240);
+        g = getGraphics();
+        og = image.getGraphics();
 
-        if (!GlobalOptions.VisualizationOn)
-        {
+        if (!GlobalOptions.VisualizationOn) {
             String msgClick = "Vizualization is not available";
-            drawString(thisVolatileImageGraphics, msgClick, 160 - msgClick.length() * 4, 110, 1);
-            drawString(thisVolatileImageGraphics, msgClick, 160 - msgClick.length() * 4, 110, 7);
+            drawString(og, msgClick, 160 - msgClick.length() * 4, 110, 1);
+            drawString(og, msgClick, 160 - msgClick.length() * 4, 110, 7);
         }
 
-//        addFocusListener(this);
+        addFocusListener(this);
 
         // Remember the starting time
         long tm = System.currentTimeMillis();
+        long tick = tm;
         int marioStatus = Mario.STATUS_RUNNING;
 
         mario = ((LevelScene) scene).mario;
@@ -146,20 +139,19 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
 // TODO: Manage better place for this:
         Mario.resetCoins();
 
-        while (/*Thread.currentThread() == animator*/ running)
-        {
+        while (/*Thread.currentThread() == animator*/ running) {
             // Display the next frame of animation.
 //                repaint();
-            levelScene.tick();
+            scene.tick();
             if (gameViewer != null && gameViewer.getContinuousUpdatesState())
                 gameViewer.tick();
 
             float alpha = 0;
 
-//            thisVolatileImageGraphics.setColor(Color.RED);
+//            og.setColor(Color.RED);
             if (GlobalOptions.VisualizationOn) {
-//                thisVolatileImageGraphics.fillRect(0, 0, 320, 240);
-//                levelScene.render(thisVolatileImageGraphics, alpha);
+                og.fillRect(0, 0, 320, 240);
+                scene.render(og, alpha);
             }
 
             if (agent instanceof ServerAgent && !((ServerAgent) agent).isAvailable()) {
@@ -190,52 +182,45 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
             ((LevelScene) scene).mario.keys = action;
             ((LevelScene) scene).mario.cheatKeys = cheatAgent.getAction(null);
 
-            if (GlobalOptions.VisualizationOn)
-                thisGraphics.drawImage(thisVolatileImage, 0, 0, null);
-            
-            if (false)
-            {
+            if (GlobalOptions.VisualizationOn) {
+
                 String msg = "Agent: " + agent.getName();
-//                LevelScene.drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 7, 5);
+                LevelScene.drawStringDropShadow(og, msg, 0, 7, 5);
 
                 msg = "Selected Actions: ";
-//                LevelScene.drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 8, 6);
+                LevelScene.drawStringDropShadow(og, msg, 0, 8, 6);
 
                 msg = "";
                 if (action != null)
                 {
                     for (int i = 0; i < Environment.numberOfButtons; ++i)
-                        msg += (action[i]) ? Scene.keysStr[i] : "      ";
-                    }
+                        msg += (action[i]) ? scene.keysStr[i] : "      ";
+                }
                 else
                     msg = "NULL";                    
-                drawString(thisVolatileImageGraphics, msg, 6, 78, 1);
+                drawString(og, msg, 6, 78, 1);
 
-                if (!this.hasFocus() && tm / 4 % 2 == 0) {
+                if (!this.hasFocus() && tick / 4 % 2 == 0) {
                     String msgClick = "CLICK TO PLAY";
-//                    thisVolatileImageGraphics.setColor(Color.YELLOW);
-//                    thisVolatileImageGraphics.drawString(msgClick, 320 + 1, 20 + 1);
-                    drawString(thisVolatileImageGraphics, msgClick, 160 - msgClick.length() * 4, 110, 1);
-                    drawString(thisVolatileImageGraphics, msgClick, 160 - msgClick.length() * 4, 110, 7);
+//                    og.setColor(Color.YELLOW);
+//                    og.drawString(msgClick, 320 + 1, 20 + 1);
+                    drawString(og, msgClick, 160 - msgClick.length() * 4, 110, 1);
+                    drawString(og, msgClick, 160 - msgClick.length() * 4, 110, 7);
                 }
-                thisVolatileImageGraphics.setColor(Color.DARK_GRAY);
-//                LevelScene.drawStringDropShadow(thisVolatileImageGraphics, "FPS: ", 32, 2, 7);
-//                LevelScene.drawStringDropShadow(thisVolatileImageGraphics, ((GlobalOptions.FPS > 99) ? "\\infty" : GlobalOptions.FPS.toString()), 32, 3, 7);
+                og.setColor(Color.DARK_GRAY);
+                LevelScene.drawStringDropShadow(og, "FPS: ", 32, 2, 7);
+                LevelScene.drawStringDropShadow(og, ((GlobalOptions.FPS > 99) ? "\\infty" : GlobalOptions.FPS.toString()), 32, 3, 7);
 
-//                msg = totalNumberOfTrials == -2 ? "" : currentTrial + "(" + ((totalNumberOfTrials == -1) ? "\\infty" : totalNumberOfTrials) + ")";
+                msg = totalNumberOfTrials == -2 ? "" : currentTrial + "(" + ((totalNumberOfTrials == -1) ? "\\infty" : totalNumberOfTrials) + ")";
 
-//                LevelScene.drawStringDropShadow(thisVolatileImageGraphics, "Trial:", 33, 4, 7);
-//                LevelScene.drawStringDropShadow(thisVolatileImageGraphics, msg, 33, 5, 7);
+                LevelScene.drawStringDropShadow(og, "Trial:", 33, 4, 7);
+                LevelScene.drawStringDropShadow(og, msg, 33, 5, 7);
 
                 if (width != 320 || height != 240) {
-                        thisGraphics.drawImage(thisVolatileImage, 0, 0, 640 * 2, 480 * 2, null);
+                        g.drawImage(image, 0, 0, 640 * 2, 480 * 2, null);
                 } else {
-                    thisGraphics.drawImage(thisVolatileImage, 0, 0, null);
+                    g.drawImage(image, 0, 0, null);
                 }
-                // Win or Die without renderer!! independently.
-                marioStatus = ((LevelScene) scene).mario.getStatus();
-                if (marioStatus != Mario.STATUS_RUNNING)
-                    stop();                
             } else {
                 // Win or Die without renderer!! independently.
                 marioStatus = ((LevelScene) scene).mario.getStatus();
@@ -264,7 +249,7 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
         evaluationInfo.totalLengthOfLevelPhys = levelScene.level.getWidthPhys();
         evaluationInfo.timeSpentOnLevel = levelScene.getStartTime();
         evaluationInfo.timeLeft = levelScene.getTimeLeft();
-        evaluationInfo.totalTimeGiven = levelScene.getTimeLimit();
+        evaluationInfo.totalTimeGiven = levelScene.getTotalTime();
         evaluationInfo.numberOfGainedCoins = Mario.coins;
 //        evaluationInfo.totalNumberOfCoins   = -1 ; // TODO: total Number of coins.
         evaluationInfo.totalActionsPerfomed = totalActionsPerfomed; // Counted during the play/simulation process
@@ -285,8 +270,7 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
     }
 
     public void startLevel(long seed, int difficulty, int type, int levelLength, int timeLimit) {
-//        scene = new LevelScene(graphicsConfiguration, this, seed, difficulty, type, levelLength, timeLimit);
-        scene = new LevelScene(seed, difficulty, type, levelLength, timeLimit, 1);
+        scene = new LevelScene(graphicsConfiguration, this, seed, difficulty, type, levelLength, timeLimit);
         levelScene = ((LevelScene) scene);
         scene.init();
     }
@@ -297,13 +281,13 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
         stop();
     }
 
-//    public void focusGained(FocusEvent arg0) {
-//        focused = true;
-//    }
+    public void focusGained(FocusEvent arg0) {
+        focused = true;
+    }
 
-//    public void focusLost(FocusEvent arg0) {
-//        focused = false;
-//    }
+    public void focusLost(FocusEvent arg0) {
+        focused = false;
+    }
 
     public void levelWon() {
         stop();
@@ -325,17 +309,43 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
         }
     }
 
+    public String getBitmapEnemiesObservation()
+    {
+        if (scene instanceof LevelScene)
+            return ((LevelScene) scene).bitmapEnemiesObservation(1);
+        else {
+            //
+            return new String();
+        }                
+    }
+
+    public String getBitmapLevelObservation()
+    {
+        if (scene instanceof LevelScene)
+            return ((LevelScene) scene).bitmapLevelObservation(1);
+        else {
+            //
+            return null;
+        }
+    }
+
     // Chaning ZLevel during the game on-the-fly;
-    public byte[][] getMergedObservationZZ(int zLevelScene, int zLevelEnemies) {
-        return levelScene.getMergedObservationZZ(zLevelScene, zLevelEnemies);
+    public byte[][] getMergedObservationZ(int zLevelScene, int zLevelEnemies) {
+        if (scene instanceof LevelScene)
+            return ((LevelScene) scene).mergedObservation(zLevelScene, zLevelEnemies);
+        return null;
     }
 
     public byte[][] getLevelSceneObservationZ(int zLevelScene) {
-        return levelScene.getLevelSceneObservationZ(zLevelScene);
+        if (scene instanceof LevelScene)
+            return ((LevelScene) scene).levelSceneObservation(zLevelScene);
+        return null;
     }
 
     public byte[][] getEnemiesObservationZ(int zLevelEnemies) {
-        return levelScene.getEnemiesObservationZ(zLevelEnemies);
+        if (scene instanceof LevelScene)
+            return ((LevelScene) scene).enemiesObservation(zLevelEnemies);
+        return null;
     }
 
     public int getKillsTotal() {
@@ -354,158 +364,33 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
         return mario.world.killedCreaturesByShell;
     }
 
-    public int[] getMarioState()
-    {
-        int[] marioState = new int[]{
-                this.getMarioStatus(),
-                this.getMarioMode(),
-                this.isMarioOnGround() ? 1 : 0,
-                this.isMarioAbleToJump() ? 1 : 0,
-                this.isMarioAbleToShoot() ? 1 : 0,
-                this.isMarioCarrying() ? 1 : 0,
-                this.getKillsTotal(),
-                this.getKillsByFire(),
-                this.getKillsByStomp(),
-                this.getKillsByStomp(),
-                this.getKillsByShell()
-        };
-        return marioState;
+    public boolean canShoot() {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public void performAction(boolean[] action)
-    {
-        // no need here...
+    public byte[][] getCompleteObservation() {
+        if (scene instanceof LevelScene)
+            return ((LevelScene) scene).mergedObservation(this.ZLevelScene, this.ZLevelEnemies);
+        return null;
     }
 
-    public boolean isLevelFinished()
-    {
-        return levelScene.isLevelFinished();
-    }
-
-    public double[] getEvaluationInfo()
-    {
-        double[] evaluationInfoArray = new double[]{
-                mario.getStatus(),
-                mario.x,
-                mario.mapX,
-                levelScene.level.getWidthCells(),
-                levelScene.level.getWidthPhys(),
-                levelScene.getStartTime(),
-                levelScene.getTimeLeft(),
-                levelScene.getTimeLimit(),
-                Mario.coins,
-                mario.getMode(),
-                mario.world.killedCreaturesTotal,
-        };
-        return evaluationInfoArray;
-    }
-
-    public void reset(CmdLineOptions cmdLineOptions)
-    {
-        levelScene.reset(cmdLineOptions);
-
-    }
-
-    public boolean isMarioAbleToShoot() {
-        return mario.isCanShoot();  
-    }
-
-    public int getMarioStatus()
-    {
-        return mario.getStatus();
-    }
-
-    public double[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies)
-    {
-        // TODO:SK, serialize all data to a sole double[]        
-        return new double[0];  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public int[] getSerializedLevelSceneObservationZ(int ZLevelScene)
-    {
-        // serialization into arrays of primitive types to speed up the data transfer.
-        byte[][] levelScene = this.getLevelSceneObservationZ(ZLevelScene);
-        byte[][] enemies = this.getEnemiesObservationZ(ZLevelEnemies);
-        int rows = Environment.HalfObsHeight*2;
-        int cols = Environment.HalfObsWidth*2;
-
-        int[] squashedLevelScene = new int[rows * cols];
-//        byte[] squashedEnemies = new byte[enemies.length * enemies[0].length];
-
-        for (int i = 0; i < squashedLevelScene.length; ++i)
-        {
-            squashedLevelScene[i] = levelScene[i / cols][i % rows];
-//            squashedEnemies[i] = enemies[i / cols][i % rows];
-        }
-        return squashedLevelScene; 
-    }
-
-    public int[] getSerializedEnemiesObservationZ(int ZLevelEnemies)
-    {
-        // serialization into arrays of primitive types to speed up the data transfer.
-        byte[][] levelScene = this.getLevelSceneObservationZ(ZLevelScene);
-        byte[][] enemies = this.getEnemiesObservationZ(ZLevelEnemies);
-        int rows = Environment.HalfObsHeight*2;
-        int cols = Environment.HalfObsWidth*2;
-
-        byte[] squashedLevelScene = new byte[rows * cols];
-        int[] squashedEnemies = new int[enemies.length * enemies[0].length];
-
-        for (int i = 0; i < squashedLevelScene.length; ++i)
-        {
-            squashedEnemies[i] = enemies[i / cols][i % rows];
-        }
-        return squashedEnemies;
-    }
-
-    public int[] getSerializedMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
-    {
-        return new int[0];  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public float[] getCreaturesFloatPos()
-    {
-        float[] enemies = this.getEnemiesFloatPos();
-        float ret[] = new float[enemies.length + 2];
-        System.arraycopy(this.getMarioFloatPos(), 0, ret, 0, 2);
-        System.arraycopy(enemies, 0, ret, 2, enemies.length);
-        return ret;
-    }
-
-    public byte[][] getCompleteObservation()
-    {
-        return levelScene.getMergedObservationZZ(this.ZLevelScene, this.ZLevelEnemies);
-    }
-
-    public byte[][] getEnemiesObservation()
-    {
-        return levelScene.getEnemiesObservationZ(this.ZLevelEnemies);
+    public byte[][] getEnemiesObservation() {
+        if (scene instanceof LevelScene)
+            return ((LevelScene) scene).enemiesObservation(this.ZLevelEnemies);
+        return null;
     }
 
     public byte[][] getLevelSceneObservation() {
-        return levelScene.getLevelSceneObservationZ(this.ZLevelScene);
-    }
-
-    public void resetDefault()
-    {
-        
-    }
-
-    public void reset(int[] setUpData)
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public void tick()
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
+        if (scene instanceof LevelScene)
+            return ((LevelScene) scene).levelSceneObservation(this.ZLevelScene);
+        return null;
     }
 
     public boolean isMarioOnGround() {
         return mario.isOnGround();
     }
 
-    public boolean isMarioAbleToJump() {
+    public boolean mayMarioJump() {
         return mario.mayJump();
     }
 
@@ -543,7 +428,9 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
 
     public float[] getEnemiesFloatPos()
     {
-        return levelScene.getEnemiesFloatPos();
+        if (scene instanceof LevelScene)
+            return ((LevelScene) scene).enemiesFloatPos();
+        return null;
     }
 
     public int getMarioMode()

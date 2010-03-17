@@ -28,77 +28,80 @@ public class Evaluator implements Runnable
 
     private List<EvaluationInfo> evaluationSummary = new ArrayList<EvaluationInfo>();
 
-//    private void evaluateServerMode()
-//    {
-//        Server server = new Server(evaluationOptions.getServerAgentPort(), Environment.numberOfObservationElements, Environment.numberOfButtons);
-//        evaluationOptions.setAgent(new ServerAgent(server));
-//
-//        Simulation simulator = new BasicSimulator(evaluationOptions.getSimulationOptionsCopy());
-//        while (server.isRunning())
-//        {
-//            String resetData = server.recvUnSafe();
-//            if (resetData.startsWith("ciao"))
-//            {
-//                System.out.println("Evaluator: ciao received from client; restarting server");
-//                server.restartServer();
-//                continue;
-//            }
-//            if (resetData.startsWith("reset"))
-//            {
-//                resetData = resetData.split("reset\\s*")[1];
-//                evaluationOptions.setUpOptions(resetData.split("[\\s]+"));
-//                init(evaluationOptions);
-//                // Simulate One Level
-//                EvaluationInfo evaluationInfo;
-//
-//                long startTime = System.currentTimeMillis();
-//                String startMessage = "Evaluation started at " + GlobalOptions.getDateTime(null);
-////                LOGGER.println(startMessage, LOGGER.VERBOSE_MODE.ALL);
-//
-//                simulator.setSimulationOptions(evaluationOptions);
-//                evaluationInfo = simulator.simulateOneLevel();
-//
-//                evaluationInfo.levelType = evaluationOptions.getLevelType();
-//                evaluationInfo.levelDifficulty = evaluationOptions.getLevelDifficulty();
-//                evaluationInfo.levelRandSeed = evaluationOptions.getLevelRandSeed();
-//                evaluationSummary.add(evaluationInfo);
-////                LOGGER.VERBOSE_MODE VM = (evaluationInfo.marioStatus == Mario.STATUS_WIN) ? LOGGER.VERBOSE_MODE.INFO : LOGGER.VERBOSE_MODE.ALL;
-////                LOGGER.println("run finished with result : " + evaluationInfo, VM);
-//
-//                String fileName = "";
-//                if (!this.evaluationOptions.getMatlabFileName().equals(""))
-//                    fileName = exportToMatLabFile();
-//                Collections.sort(evaluationSummary, new evBasicFitnessComparator());
-//
-////                LOGGER.println("Entire Evaluation Finished with results:", LOGGER.VERBOSE_MODE.ALL);
-////                for (EvaluationInfo ev : evaluationSummary)
-////                {
-////                    LOGGER.println(ev.toString(), LOGGER.VERBOSE_MODE.ALL);
-////                }
-//                long currentTime = System.currentTimeMillis();
-//                long elapsed = currentTime - startTime;
-////                LOGGER.println(startMessage, LOGGER.VERBOSE_MODE.ALL);
-////                LOGGER.println("Evaluation Finished at " + GlobalOptions.getDateTime(null), LOGGER.VERBOSE_MODE.ALL);
-////                LOGGER.println("Total Evaluation Duration (HH:mm:ss:ms) " + GlobalOptions.getDateTime(elapsed), LOGGER.VERBOSE_MODE.ALL);
-////                if (!fileName.equals(""))
-////                    LOGGER.println("Exported to " + fileName, LOGGER.VERBOSE_MODE.ALL);
-////                return evaluationSummary;
-//            }
-//            else
-//            {
-//                System.err.println("Evaluator: Message <" + resetData + "> is incorrect client behavior. Exiting evaluation...");
-//                server.restartServer();
-//            }
-//        }
-//    }
+    private void evaluateServerMode()
+    {
+        Server server = new Server(evaluationOptions.getServerAgentPort(), Environment.numberOfObservationElements, Environment.numberOfButtons);
+        evaluationOptions.setAgent(new ServerAgent(server, evaluationOptions.isFastTCP()));
+
+        Simulation simulator = new BasicSimulator(evaluationOptions.getSimulationOptionsCopy());
+        while (server.isRunning())
+        {
+            String resetData = server.recvUnSafe();
+            if (resetData.startsWith("ciao"))
+            {
+                System.out.println("Evaluator: ciao received from client; restarting server");
+                server.restartServer();
+                continue;
+            }
+            if (resetData.startsWith("reset"))
+            {
+                resetData = resetData.split("reset\\s*")[1];
+                evaluationOptions.setUpOptions(resetData.split("[\\s]+"));
+                //TODO: Fix this in more general way
+                ((ServerAgent)evaluationOptions.getAgent()).setFastTCP(evaluationOptions.isFastTCP());
+                init(evaluationOptions);
+                // Simulate One Level
+                EvaluationInfo evaluationInfo;
+
+                long startTime = System.currentTimeMillis();
+                String startMessage = "Evaluation started at " + GlobalOptions.getDateTime(null);
+//                LOGGER.println(startMessage, LOGGER.VERBOSE_MODE.ALL);
+
+                simulator.setSimulationOptions(evaluationOptions);
+                evaluationInfo = simulator.simulateOneLevel();
+
+                evaluationInfo.levelType = evaluationOptions.getLevelType();
+                evaluationInfo.levelDifficulty = evaluationOptions.getLevelDifficulty();
+                evaluationInfo.levelRandSeed = evaluationOptions.getLevelRandSeed();
+                evaluationSummary.add(evaluationInfo);
+//                LOGGER.VERBOSE_MODE VM = (evaluationInfo.marioStatus == Mario.STATUS_WIN) ? LOGGER.VERBOSE_MODE.INFO : LOGGER.VERBOSE_MODE.ALL;
+//                LOGGER.println("run finished with result : " + evaluationInfo, VM);
+
+                String fileName = "";
+                if (!this.evaluationOptions.getMatlabFileName().equals(""))
+                    fileName = exportToMatLabFile();
+                Collections.sort(evaluationSummary, new evBasicFitnessComparator());
+
+//                LOGGER.println("Entire Evaluation Finished with results:", LOGGER.VERBOSE_MODE.ALL);
+//                for (EvaluationInfo ev : evaluationSummary)
+//                {
+//                    LOGGER.println(ev.toString(), LOGGER.VERBOSE_MODE.ALL);
+//                }
+                long currentTime = System.currentTimeMillis();
+                long elapsed = currentTime - startTime;
+//                LOGGER.println(startMessage, LOGGER.VERBOSE_MODE.ALL);
+//                LOGGER.println("Evaluation Finished at " + GlobalOptions.getDateTime(null), LOGGER.VERBOSE_MODE.ALL);
+//                LOGGER.println("Total Evaluation Duration (HH:mm:ss:ms) " + GlobalOptions.getDateTime(elapsed), LOGGER.VERBOSE_MODE.ALL);
+//                if (!fileName.equals(""))
+//                    LOGGER.println("Exported to " + fileName, LOGGER.VERBOSE_MODE.ALL);
+//                return evaluationSummary;
+            }
+            else
+            {
+                System.err.println("Evaluator: Message <" + resetData + "> is incorrect client behavior. Exiting evaluation...");
+                server.restartServer();
+            }
+        }
+    }
 
     public List<EvaluationInfo> evaluate()
     {
-//        if (this.evaluationOptions.isServerMode() )
-//        {
-//            this.evaluateServerMode();
-//            return null;
-//        }
+        if (this.evaluationOptions.isServerMode() )
+        {
+            this.evaluateServerMode();
+            return null;
+        }
+
 
         Simulation simulator = new BasicSimulator(evaluationOptions.getSimulationOptionsCopy());
         // Simulate One Level
@@ -108,6 +111,11 @@ public class Evaluator implements Runnable
         long startTime = System.currentTimeMillis();
         String startMessage = "Evaluation started at " + GlobalOptions.getDateTime(null);
 //        LOGGER.println(startMessage, LOGGER.VERBOSE_MODE.ALL);
+
+//        boolean continueCondition;
+//        int i = 0;
+//        do
+//        {
 //            LOGGER.println("Attempts left: " + (evaluationOptions.getNumberOfTrials() - ++i ), LOGGER.VERBOSE_MODE.ALL);
             evaluationInfo = simulator.simulateOneLevel();
                                                         
@@ -118,7 +126,7 @@ public class Evaluator implements Runnable
 //            LOGGER.VERBOSE_MODE VM = (evaluationInfo.marioStatus == Mario.STATUS_WIN) ? LOGGER.VERBOSE_MODE.INFO : LOGGER.VERBOSE_MODE.ALL;
 //            LOGGER.println("run  finished with result : " + evaluationInfo, VM);
 //            continueCondition = !GlobalOptions.StopSimulationIfWin || !(evaluationInfo.marioStatus == Mario.STATUS_WIN);
-
+//        }
 //        while ((evaluationOptions.getNumberOfTrials() > i || evaluationOptions.getNumberOfTrials() == -1 ) && continueCondition);
 
         String fileName = "";
@@ -146,10 +154,9 @@ public class Evaluator implements Runnable
 //        LOGGER.println(message, verbose_mode);
 //    }
 
-    public String getMeanEvaluationSummary()
+    public void getMeanEvaluationSummary()
     {
         //TODO: SK
-        return "\nEvaluation Summary:\n...\nEnd of Evaluation Summary\n";
     }
 
     public String exportToMatLabFile()
@@ -210,17 +217,10 @@ public class Evaluator implements Runnable
 
     public void init(EvaluationOptions evaluationOptions)
     {
-
-        if (evaluationOptions.isVisualization())
-        {
-            ToolsConfigurator.CreateMarioComponentFrame(
-                    evaluationOptions);
-        }
-        else
-        {
-
-        }
-        GlobalOptions.PauseWorld = evaluationOptions.isPauseWorld();
+        ToolsConfigurator.CreateMarioComponentFrame(
+                evaluationOptions);
+        
+        GlobalOptions.pauseWorld = evaluationOptions.isPauseWorld();
         this.evaluationOptions = evaluationOptions;
         if (thisThread == null)
             thisThread = new Thread(this);

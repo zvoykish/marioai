@@ -26,21 +26,6 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
         reset();
     }
 
-    public void integrateObservation(int[] serializedLevelSceneObservationZ, int[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public boolean[] getAction()
-    {
-        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public void integrateObservation(Environment environment)
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
     public void reset()
     {
         // Just check you keyboard.
@@ -91,8 +76,8 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
                 if (isPressed)
                 {
 //                    LOGGER.println("Pause On/Off", LOGGER.VERBOSE_MODE.INFO);
-                    GlobalOptions.PauseWorld = !GlobalOptions.PauseWorld;
-                    Action[Mario.KEY_PAUSE] = GlobalOptions.PauseWorld;
+                    GlobalOptions.pauseWorld = !GlobalOptions.pauseWorld;
+                    Action[Mario.KEY_PAUSE] = GlobalOptions.pauseWorld;
                 }
                 break;
             case KeyEvent.VK_L:
@@ -128,9 +113,9 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
                 {
                     int temp = prevFPS;
                     prevFPS = GlobalOptions.FPS;
-                    GlobalOptions.FPS = (GlobalOptions.FPS == GlobalOptions.MaxFPS) ? temp : GlobalOptions.MaxFPS;
+                    GlobalOptions.FPS = (GlobalOptions.FPS == GlobalOptions.InfiniteFPS) ? temp : GlobalOptions.InfiniteFPS ;
 //                    LOGGER.println("FPS has been changed. Current FPS is " +
-//                            ((GlobalOptions.FPS == GlobalOptions.MaxFPS) ? "\\infty" : GlobalOptions.FPS), LOGGER.VERBOSE_MODE.INFO);
+//                            ((GlobalOptions.FPS == GlobalOptions.InfiniteFPS) ? "\\infty" : GlobalOptions.FPS), LOGGER.VERBOSE_MODE.INFO);
                     GlobalOptions.AdjustMarioComponentFPS();
                 }
                 break;

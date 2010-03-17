@@ -48,6 +48,8 @@ def main():
     task.env.levelDifficulty = 5
     exp.doEpisodes(1)
     print 'mm 2, ld 5: ', task.reward
+
+    
     print "finished"
 
 #    clo = CmdLineOptions(sys.argv)

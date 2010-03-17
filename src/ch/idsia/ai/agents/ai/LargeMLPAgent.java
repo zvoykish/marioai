@@ -36,11 +36,6 @@ public class LargeMLPAgent extends BasicAIAgent implements Agent, Evolvable {
         return new LargeMLPAgent(mlp.copy ());
     }
 
-    public boolean[] getAction()
-    {
-        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
     public void reset() {
         mlp.reset ();
     }
@@ -66,7 +61,7 @@ public class LargeMLPAgent extends BasicAIAgent implements Agent, Evolvable {
             }
         }
         inputs[inputs.length - 3] = observation.isMarioOnGround() ? 1 : 0;
-        inputs[inputs.length - 2] = observation.isMarioAbleToJump() ? 1 : 0;
+        inputs[inputs.length - 2] = observation.mayMarioJump() ? 1 : 0;
         inputs[inputs.length - 1] = 1;
         double[] outputs = mlp.propagate (inputs);
         boolean[] action = new boolean[numberOfOutputs];

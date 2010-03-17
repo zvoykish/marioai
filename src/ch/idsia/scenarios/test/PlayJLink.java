@@ -38,9 +38,9 @@ public class PlayJLink {
         EvaluationOptions options = new CmdLineOptions(new String[0]);
         final int startingSeed = 0;
         options.setLevelRandSeed(seed);
-//        options.setNumberOfTrials(1);
+        options.setNumberOfTrials(1);
         options.setVisualization(true);
-//        options.setFPS(false);
+        options.setMaxFPS(false);
         options.setLevelDifficulty(level);
         options.setPauseWorld(false);
         agent.reset();

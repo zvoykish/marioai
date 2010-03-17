@@ -39,10 +39,11 @@ public class SimulationOptions extends ParameterContainer
         ret.setVisualization(isVisualization());
         ret.setPauseWorld(isPauseWorld());
         ret.setPowerRestoration(isPowerRestoration());
+        ret.setNumberOfTrials(getNumberOfTrials());
         ret.setMarioMode(getMarioMode());
         ret.setTimeLimit(getTimeLimit());
         ret.setZLevelEnemies(getZLevelEnemies());
-        ret.setZLevelScene(getZLevelScene());
+        ret.setZLevelMap(getZLevelMap());
         ret.setMarioInvulnerable(isMarioInvulnerable());
 //        ret.setCurrentTrial(getCurrentTrial());
         return ret;
@@ -122,8 +123,18 @@ public class SimulationOptions extends ParameterContainer
         setParameterValue("-pr", s(powerRestoration));    }
 
     //StopSimulationIfWin
-//    public Boolean isStopSimulationIfWin() {
-//        return b(getParameterValue("-ssiw"));     }
+    public Boolean isStopSimulationIfWin() {
+        return b(getParameterValue("-ssiw"));     }
+
+    public void setStopSimulationIfWin(boolean stopSimulationIfWin) {
+        setParameterValue("-ssiw", s(stopSimulationIfWin));    }
+
+    //Number Of Trials
+    public int getNumberOfTrials() {
+        return i(getParameterValue("-not"));     }
+
+    public void setNumberOfTrials(int numberOfTrials) {
+        setParameterValue("-not", s(numberOfTrials));    }
 
     //MarioMode
     public int getMarioMode() {
@@ -134,14 +145,14 @@ public class SimulationOptions extends ParameterContainer
         setParameterValue("-mm", s(marioMode));
     }
 
-    //ZLevelScene
-    public int getZLevelScene() {
-        return i(getParameterValue("-zs"));
+    //ZLevelMap
+    public int getZLevelMap() {
+        return i(getParameterValue("-zm"));
     }
 
-    public void setZLevelScene(int zLevelMap)
+    public void setZLevelMap(int zLevelMap)
     {
-        setParameterValue("-zs", s(zLevelMap));
+        setParameterValue("-zm", s(zLevelMap));
     }
 
     //ZLevelEnemies
@@ -176,4 +187,12 @@ public class SimulationOptions extends ParameterContainer
     {
         currentTrial = 1;
     }    
+//    public void setCurrentTrial(int curTrial) {
+//        setParameterValue("-not", s(curTrial));
+//    }
+//
+//    public int getCurrentTrial()
+//    {
+//        return i(getParameterValue("-not"));
+//    }
 }

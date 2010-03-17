@@ -2,8 +2,8 @@ package ch.idsia.scenarios.test;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
-import ch.idsia.maibe.tasks.ProgressTask;
-import ch.idsia.maibe.tasks.Task;
+import ch.idsia.ai.tasks.ProgressTask;
+import ch.idsia.ai.tasks.Task;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationOptions;
 
@@ -24,9 +24,9 @@ public class StochasticityTest {
         options.setAgent(controller);
         options.setPauseWorld (false);
         Task task = new ProgressTask(options);
-//        options.setFPS(true);
+        options.setMaxFPS(true);
         options.setVisualization(false);      
-//        options.setNumberOfTrials(1);
+        options.setNumberOfTrials(1);
         options.setMatlabFileName("");
         task.setOptions(options);
         for (int i = 0; i < repetitions; i++) {

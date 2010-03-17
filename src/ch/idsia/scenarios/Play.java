@@ -1,12 +1,12 @@
 package ch.idsia.scenarios;
 
 import ch.idsia.ai.agents.Agent;
+import ch.idsia.ai.agents.AgentsPool;
 import ch.idsia.ai.agents.human.HumanKeyboardAgent;
-import ch.idsia.maibe.tasks.BasicTask;
-import ch.idsia.mario.environments.Environment;
-import ch.idsia.mario.environments.MarioEnvironment;
+import ch.idsia.ai.tasks.ProgressTask;
+import ch.idsia.ai.tasks.Task;
 import ch.idsia.tools.CmdLineOptions;
-import ch.idsia.tools.EvaluationInfo;
+import ch.idsia.tools.EvaluationOptions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,36 +23,33 @@ import ch.idsia.tools.EvaluationInfo;
  *
  * @author  Julian Togelius, Sergey Karakovskiy
  * @version 1.0, May 5, 2009
-
+ * @since   JDK1.0
  */
 
-public class Play
-{
+public class Play {
     /**
      * <p>An entry point of the class.
      *
      * @param args input parameters for customization of the benchmark.
      *
-     * @see ch.idsia.scenarios.oldscenarios.MainRun
+     * @see ch.idsia.scenarios.MainRun
      * @see ch.idsia.tools.CmdLineOptions
      * @see ch.idsia.tools.EvaluationOptions
      *
-     * @since   MarioAI-0.1
+     * @since   iMario1.0
      */
 
-    public static void main(String[] args)
-    {
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
-        final Environment environment = new MarioEnvironment();
-        final Agent agent = new HumanKeyboardAgent();
-        final BasicTask basicTask = new BasicTask(environment, agent);
-        int seed  = 16;
-        cmdLineOptions.setLevelRandSeed(seed);  // seed
-        cmdLineOptions.setVisualization(true);
-        basicTask.reset(cmdLineOptions);
-        basicTask.runEpisode();
-        EvaluationInfo evaluationInfo = new EvaluationInfo(environment.getEvaluationInfo());
-        System.out.println("evaluationInfo = " + evaluationInfo);
-        System.exit(0);
+    public static void main(String[] args) {
+        EvaluationOptions options = new CmdLineOptions(args);
+        Task task = new ProgressTask(options);
+//        options.setMaxFPS(false);
+//        options.setVisualization(true);
+//        options.setNumberOfTrials(1);
+        options.setLevelRandSeed((int) (Math.random () * Integer.MAX_VALUE));
+        options.setLevelDifficulty(3);
+        task.setOptions(options);
+
+        System.out.println ("Score: " + task.evaluate (options.getAgent())[0]);
+        System.out.println("Simulation/Play finished");       
     }
 }

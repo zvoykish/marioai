@@ -15,21 +15,6 @@ public class SimpleAgent implements Agent
     protected boolean Action[] = new boolean[Environment.numberOfButtons];
     protected String Name = "SimpleAgent";
 
-    public void integrateObservation(int[] serializedLevelSceneObservationZ, int[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public boolean[] getAction()
-    {
-        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public void integrateObservation(Environment environment)
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
     public void reset()
     {
         Action = new boolean[Environment.numberOfButtons];
@@ -39,7 +24,7 @@ public class SimpleAgent implements Agent
 
     public boolean[] getAction(Environment observation)
     {
-        Action[Mario.KEY_SPEED] = Action[Mario.KEY_JUMP] =  observation.isMarioAbleToJump() || !observation.isMarioOnGround();
+        Action[Mario.KEY_SPEED] = Action[Mario.KEY_JUMP] =  observation.mayMarioJump() || !observation.isMarioOnGround();
         return Action;
     }
 
