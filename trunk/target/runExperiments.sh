@@ -4,7 +4,7 @@ rm *.m
 # ./runServer.sh
 ATTEMPTS=5
 
-echo "iMarioFramework: Starting Native Java Agents..."
+echo "MarioAI Benchmark: Starting Native Java Agents..."
 java -jar iMario.jar -m iMario1 -ag ForwardAgent -vlx 0 -vly 0 -an ${ATTEMPTS} -ld 5 -pw on -echo on -gv off -tc off -vis on -maxFPS on -ewf on -vaot on &
 java -jar iMario.jar -m iMario2 -ag ForwardJumpingAgent -vlx 330 -vly 0 -an ${ATTEMPTS} -ld 9 -pw on -echo on -gv off -tc off -vis on -maxFPS on -ewf on -vaot on &
 java -jar iMario.jar -m iMario3 -ag RandomAgent -vlx 660 -vly 0 -an ${ATTEMPTS} -ld 5 -pw on -echo on -gv off -tc off -vis on -maxFPS on -ewf on -vaot on &
