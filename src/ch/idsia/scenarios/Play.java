@@ -16,7 +16,7 @@ import ch.idsia.tools.EvaluationInfo;
  */
 
 /**
- * The <code>Play</code> class shows how simple is to run an iMario benchmark.
+ * The <code>Play</code> class shows how simple is to run a MarioAI Benchmark.
  * It shows how to set up some parameters, create a task,
  * use the CmdLineParameters class to set up options from command line if any.
  * Defaults are used otherwise.
