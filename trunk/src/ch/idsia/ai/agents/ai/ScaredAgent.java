@@ -37,7 +37,7 @@ public class ScaredAgent extends BasicAIAgent implements Agent {
 
     public boolean[] getAction()
     {
-        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
+        return action;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public void reset() {

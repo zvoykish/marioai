@@ -20,7 +20,8 @@ public class MarioEnvironment implements Environment
 
     public MarioEnvironment()
     {
-//        System.out.println("System.getProperty(\"java.awt.headless\") = " + System.getProperty("java.awt.headless"));
+        System.out.println("System.getProperty(\"java.awt.headless\") = " + System.getProperty("java.awt.headless"));
+        System.out.println("System.getProperty(\"verbose\") = " + System.getProperty("-verbose"));
 //        System.out.println("Java: JA ZDES'!!");
 //        System.out.flush();
         levelScene = new LevelScene(0, 0, 0, 0, 0, 0);
@@ -196,7 +197,7 @@ public class MarioEnvironment implements Environment
         return levelScene.isLevelFinished();
     }
 
-    public double[] getEvaluationInfo()
+    public float[] getEvaluationInfo()
     {
         return levelScene.getEvaluationInfo();
     }

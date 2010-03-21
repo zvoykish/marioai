@@ -795,7 +795,7 @@ public class LevelScene extends Scene implements SpriteContext, Environment
 //        System.arraycopy(action, 0, mario.keys, 0, 6);
 //    }
 
-    public int getStartTime() {  return startTime / 15;    }
+    public int getTimeSpent() {  return startTime / 15;    }
 
     public int getTimeLeft() {        return timeLeft / 15;    }
 
@@ -848,15 +848,15 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         return mario.getStatus() != Mario.STATUS_RUNNING;
     }
 
-    public double[] getEvaluationInfo()
+    public float[] getEvaluationInfo()
     {
-        double[] evaluationInfoArray = new double[]{
+        float[] evaluationInfoArray = new float[]{
                 mario.getStatus(),
                 mario.x,
                 mario.mapX,
                 level.getWidthCells(),
                 level.getWidthPhys(),
-                getStartTime(),
+                getTimeSpent(),
                 getTimeLeft(),
                 getTimeLimit(),
                 Mario.coins,
@@ -957,28 +957,47 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         init();
     }
 
-    public void reset(int[] setUpData)
+    public void reset(int[] setUpOptions)
     {
-//        this.gameViewer = setUpData[0] == 1;
+//        this.gameViewer = setUpOptions[0] == 1;
 //        System.out.println("\nLevelScene RESET!");
-        this.mario.isMarioInvulnerable = setUpData[1] == 1;
-        this.levelDifficulty = setUpData[2];
-        this.levelLength = setUpData[3];
-        this.levelSeed = setUpData[4];
-        this.levelType = setUpData[5];
-        Mario.resetStatic(setUpData[6]);
-        GlobalOptions.FPS = setUpData[7];
-        GlobalOptions.PowerRestoration = setUpData[8] == 1;
-        GlobalOptions.PauseWorld = setUpData[9] == 1;
-        GlobalOptions.TimerOn = setUpData[10] == 1;
-//        isToolsConfigurator = setUpData[11] == 1;
-        this.setTimeLimit(setUpData[12]);
-//        this.isViewAlwaysOnTop() ? 1 : 0, setUpData[13]
-        this.visualization = setUpData[14] == 1;
-//        this.getViewLocation().x, setUpData[15] == 1;
-//        this.getViewLocation().y, setUpData[16] == 1;
-//        this.getZLevelEnemies(),setUpData[17] ;
-//        this.getZLevelScene()   setUpData[18] ;
+
+        System.out.println("\n setUpOptions:");
+        for (int i = 0; i < setUpOptions.length; ++i)
+        {
+            System.out.print(setUpOptions[i] + ",");
+        }
+
+        this.mario.isMarioInvulnerable = setUpOptions[1] == 1;
+        System.out.println("this.mario.isMarioInvulnerable = " + this.mario.isMarioInvulnerable);
+        this.levelDifficulty = setUpOptions[2];
+        System.out.println("this.levelDifficulty = " + this.levelDifficulty);
+        this.levelLength = setUpOptions[3];
+        System.out.println("this.levelLength = " + this.levelLength);
+        this.levelSeed = setUpOptions[4];
+        System.out.println("levelSeed = " + levelSeed);
+        this.levelType = setUpOptions[5];
+        System.out.println("levelType = " + levelType);
+        Mario.resetStatic(setUpOptions[6]);
+
+        GlobalOptions.FPS = setUpOptions[7];
+        System.out.println("GlobalOptions.FPS = " + GlobalOptions.FPS);
+        GlobalOptions.PowerRestoration = setUpOptions[8] == 1;
+        System.out.println("GlobalOptions.PowerRestoration = " + GlobalOptions.PowerRestoration);
+        GlobalOptions.PauseWorld = setUpOptions[9] == 1;
+        System.out.println("GlobalOptions = " + GlobalOptions.PauseWorld);
+        GlobalOptions.TimerOn = setUpOptions[10] == 1;
+        System.out.println("GlobalOptions.TimerOn = " + GlobalOptions.TimerOn);
+//        isToolsConfigurator = setUpOptions[11] == 1;
+        this.setTimeLimit(setUpOptions[12]);
+        System.out.println("this.getTimeLimit() = " + this.getTimeLimit());
+//        this.isViewAlwaysOnTop() ? 1 : 0, setUpOptions[13]
+        this.visualization = setUpOptions[14] == 1;
+        System.out.println("visualization = " + visualization);
+//        this.getViewLocation().x, setUpOptions[15] == 1;
+//        this.getViewLocation().y, setUpOptions[16] == 1;
+//        this.getZLevelEnemies(),setUpOptions[17] ;
+//        this.getZLevelScene()   setUpOptions[18] ;
 
         killedCreaturesTotal = 0;
         killedCreaturesByFireBall = 0;

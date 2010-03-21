@@ -233,5 +233,5 @@ public class Level
 
     public int getWidthCells() {         return width;    }
 
-    public double getWidthPhys() {         return width * 16;    }
+    public float getWidthPhys() {         return width * 16;    }
 }

@@ -262,7 +262,7 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
         evaluationInfo.lengthOfLevelPassedCells = mario.mapX;
         evaluationInfo.totalLengthOfLevelCells = levelScene.level.getWidthCells();
         evaluationInfo.totalLengthOfLevelPhys = levelScene.level.getWidthPhys();
-        evaluationInfo.timeSpentOnLevel = levelScene.getStartTime();
+        evaluationInfo.timeSpentOnLevel = levelScene.getTimeSpent();
         evaluationInfo.timeLeft = levelScene.getTimeLeft();
         evaluationInfo.totalTimeGiven = levelScene.getTimeLimit();
         evaluationInfo.numberOfGainedCoins = Mario.coins;
@@ -382,22 +382,9 @@ public class MarioComponent extends JComponent implements Runnable, /*KeyListene
         return levelScene.isLevelFinished();
     }
 
-    public double[] getEvaluationInfo()
+    public float[] getEvaluationInfo()
     {
-        double[] evaluationInfoArray = new double[]{
-                mario.getStatus(),
-                mario.x,
-                mario.mapX,
-                levelScene.level.getWidthCells(),
-                levelScene.level.getWidthPhys(),
-                levelScene.getStartTime(),
-                levelScene.getTimeLeft(),
-                levelScene.getTimeLimit(),
-                Mario.coins,
-                mario.getMode(),
-                mario.world.killedCreaturesTotal,
-        };
-        return evaluationInfoArray;
+        return levelScene.getEvaluationInfo();
     }
 
     public void reset(CmdLineOptions cmdLineOptions)

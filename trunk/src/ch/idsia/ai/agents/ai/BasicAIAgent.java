@@ -47,6 +47,7 @@ public class BasicAIAgent implements Agent
         setName(s);
         levelScene = new byte[Environment.HalfObsHeight * 2][Environment.HalfObsWidth * 2];
         enemies = new byte[Environment.HalfObsHeight * 2][Environment.HalfObsWidth * 2];
+        mergedObservation = new byte[Environment.HalfObsHeight * 2][Environment.HalfObsWidth * 2];
     }
 
     public void integrateObservation(int[] serializedLevelSceneObservationZ, int[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
@@ -58,11 +59,11 @@ public class BasicAIAgent implements Agent
             {
                 levelScene[i][j] = (byte)serializedLevelSceneObservationZ[k];
                 enemies[i][j] = (byte)serializedEnemiesObservationZ[k++];
-
+                mergedObservation[i][j] = levelScene[i][j];
                 // Simulating merged observation!
                 if (enemies[i][j] != 0)
                 {
-                    levelScene[i][j] = enemies[i][j];
+                    mergedObservation[i][j] = enemies[i][j];
                 }
 //                System.out.print(observation[i][j] + "\t");
             }

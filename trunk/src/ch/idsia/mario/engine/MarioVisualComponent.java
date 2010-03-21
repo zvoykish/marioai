@@ -441,9 +441,11 @@ public class MarioVisualComponent extends JComponent
 //        System.out.println("Delay: " + delay);
     }
 
+    // THis method here solely for the displaying information in order to reduce
+    // amount of info passed between Env and VisComponent
     public void setAgent(Agent agent) {
 //        this.agent = agent;
-        System.out.println("agent = " + agent);
+//        System.out.println("agent = " + agent);
         if (agent instanceof KeyAdapter) {
             if (prevHumanKeyBoardAgent != null)
                 this.removeKeyListener(prevHumanKeyBoardAgent);
