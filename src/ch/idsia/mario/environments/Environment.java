@@ -106,7 +106,7 @@ public interface Environment
 
     boolean isLevelFinished();
 
-    double [] getEvaluationInfo();
+    float [] getEvaluationInfo();
 
     void reset(CmdLineOptions cmdLineOptions);
 

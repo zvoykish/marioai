@@ -39,10 +39,11 @@ public class EvaluationInfo
     public int marioMode = MagicNumberUndef;
     public int killsTotal = MagicNumberUndef;
 
-    public EvaluationInfo(double[] evaluationInfoArray)
+    public EvaluationInfo(float[] evaluationInfoArray)
     {
         // Turn double[] into a plausible form!
         assert (evaluationInfoArray.length == 11);
+        
         this.marioStatus = (int) evaluationInfoArray[0];
         this.lengthOfLevelPassedCells = (int) evaluationInfoArray[1];
         this.lengthOfLevelPassedPhys = evaluationInfoArray[2];

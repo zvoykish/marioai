@@ -3,6 +3,8 @@ package ch.idsia.mario.simulation;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.ai.ForwardAgent;
 import ch.idsia.ai.agents.ai.ForwardJumpingAgent;
+import ch.idsia.ai.agents.ai.ScaredSpeedyAgent;
+import ch.idsia.ai.agents.human.HumanKeyboardAgent;
 import ch.idsia.mario.engine.LevelScene;
 import ch.idsia.mario.engine.sprites.Mario;
 import ch.idsia.mario.environments.Environment;
@@ -22,13 +24,15 @@ public class AmiCoSimulator
     public static void main(String[] args)
     {
         CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
+        cmdLineOptions.setMarioInvulnerable(true);
         int[] options = cmdLineOptions.toIntArray();
         for (int i = 0; i < options.length; ++i)
         {
             System.out.print(options[i] + ",");
         }
         Environment environment = new MarioEnvironment();
-        Agent agent = new ForwardJumpingAgent();
+        Agent agent = new ForwardAgent();
+        options[17] = 1;
         for (int seed = 16; seed < 20; ++seed)
         {
             options[4] = seed;  // seed

@@ -178,7 +178,7 @@ public class MarioEvaluationComponent
         evaluationInfo.lengthOfLevelPassedCells = mario.mapX;
         evaluationInfo.totalLengthOfLevelCells = levelScene.level.getWidthCells();
         evaluationInfo.totalLengthOfLevelPhys = levelScene.level.getWidthPhys();
-        evaluationInfo.timeSpentOnLevel = levelScene.getStartTime();
+        evaluationInfo.timeSpentOnLevel = levelScene.getTimeSpent();
         evaluationInfo.timeLeft = levelScene.getTimeLeft();
         evaluationInfo.totalTimeGiven = levelScene.getTimeLimit();
         evaluationInfo.numberOfGainedCoins = Mario.coins;
