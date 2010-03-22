@@ -15,9 +15,9 @@ import java.util.List;
 
 public class LevelScene extends Scene implements SpriteContext, Environment
 {
-    public List<Sprite> sprites = new ArrayList<Sprite>();
-    private List<Sprite> spritesToAdd = new ArrayList<Sprite>();
-    private List<Sprite> spritesToRemove = new ArrayList<Sprite>();
+    final public List<Sprite> sprites = new ArrayList<Sprite>();
+    final private List<Sprite> spritesToAdd = new ArrayList<Sprite>();
+    final private List<Sprite> spritesToRemove = new ArrayList<Sprite>();
 
     public Level level;
     public Mario mario;
@@ -32,6 +32,21 @@ public class LevelScene extends Scene implements SpriteContext, Environment
     private int height;
 
     public boolean visualization = false;
+
+    final private int rows = Environment.HalfObsHeight*2;
+    final private int cols = Environment.HalfObsWidth*2;
+    final private int[] serializedLevelScene = new int[rows * cols];
+    final private int[] serializedEnemies = new int[rows * cols];
+    final private int[] serializedMergedObservation = new int[rows * cols];
+
+    final private byte[][] levelSceneZ = new byte[Environment.HalfObsWidth*2][Environment.HalfObsHeight*2];
+    final private byte[][] enemiesZ = new byte[Environment.HalfObsWidth*2][Environment.HalfObsHeight*2];
+    final private byte[][] mergedZ = new byte[Environment.HalfObsWidth*2][Environment.HalfObsHeight*2];
+
+    final private List<Float> enemiesFloatsList = new ArrayList<Float>();
+    final private float[] marioFloatPos = new float[2];
+    final private int[] marioState = new int[11];
+
 
     public int getTimeLimit() {  return timeLimit; }
     public void setTimeLimit(int timeLimit) {  this.timeLimit = timeLimit; }
@@ -63,10 +78,8 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         killedCreaturesByFireBall = 0;
         killedCreaturesByStomp = 0;
         killedCreaturesByShell = 0;
-    }
 
-    public void init()
-    {
+        // moved from init;
         try
         {
             Level.loadBehaviors(new DataInputStream(LevelScene.class.getResourceAsStream("resources/tiles.dat")));
@@ -76,12 +89,27 @@ public class LevelScene extends Scene implements SpriteContext, Environment
             e.printStackTrace();
             System.exit(0);
         }
+    }
+
+    public void init()
+    {
+        System.out.println("\nJava:init() entered.");
+//        try
+//        {
+//            Level.loadBehaviors(new DataInputStream(LevelScene.class.getResourceAsStream("resources/tiles.dat")));
+//        }
+//        catch (IOException e)
+//        {
+//            e.printStackTrace();
+//            System.exit(0);
+//        }
         /*        if (replayer!=null)
          {                level = LevelGenerator.createLevel(2048, 15, replayer.nextLong());         }
          else
          {*/
 //        level = LevelGenerator.createLevel(320, 15, levelSeed);
         level = LevelGenerator.createLevel(levelLength, 15, levelSeed, levelDifficulty, levelType);
+        System.out.println("\nJava:level created.");
         //        }
 
         /*        if (recorder != null)
@@ -94,9 +122,9 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         this.width = GlobalOptions.VISUAL_COMPONENT_WIDTH;
         this.height = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
 
-
-
+        System.out.println("\nJava:about to create Mario");
         mario = new Mario(this);
+        System.out.println("mario.getStatus() = " + mario.getStatus());
         sprites.add(mario);
 //        System.out.println("sprites = " + sprites);
 //        System.out.println("mario = " + mario);
@@ -311,7 +339,6 @@ public class LevelScene extends Scene implements SpriteContext, Environment
 
     public byte[][] getLevelSceneObservationZ(int ZLevel)
     {
-        byte[][] ret = new byte[Environment.HalfObsWidth*2][Environment.HalfObsHeight*2];
         //TODO: Move to constants 16
         int MarioXInMap = (int)mario.x/16;
         int MarioYInMap = (int)mario.y/16;
@@ -322,28 +349,27 @@ public class LevelScene extends Scene implements SpriteContext, Environment
             {
                 if (x >=0 /*  && x <= level.xExit */ && y >= 0 && y < level.height)
                 {
-                    ret[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevel);
+                    levelSceneZ[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevel);
                 }
                 else
-                    ret[obsX][obsY] = 0;
+                    levelSceneZ[obsX][obsY] = 0;
 //                if (x == MarioXInMap && y == MarioYInMap)
-//                    ret[obsX][obsY] = mario.kind;
+//                    levelSceneZ[obsX][obsY] = mario.kind;
             }
         }
-        return ret;
+        return levelSceneZ;
     }
 
     public byte[][] getEnemiesObservationZ(int ZLevel)
-    {
-        byte[][] ret = new byte[Environment.HalfObsWidth*2][Environment.HalfObsHeight*2];
+    {        
         //TODO: Move to constants 16
         int MarioXInMap = (int)mario.x/16;
         int MarioYInMap = (int)mario.y/16;
 
-        for (int w = 0; w < ret.length; w++)
-            for (int h = 0; h < ret[0].length; h++)
-                ret[w][h] = 0;
-//        ret[Environment.HalfObsWidth][Environment.HalfObsHeight] = mario.kind;
+        for (int w = 0; w < enemiesZ.length; w++)
+            for (int h = 0; h < enemiesZ[0].length; h++)
+                enemiesZ[w][h] = 0;
+//        enemiesZ[Environment.HalfObsWidth][Environment.HalfObsHeight] = mario.kind;
         for (Sprite sprite : sprites)
         {
             if (sprite.kind == mario.kind)
@@ -357,38 +383,39 @@ public class LevelScene extends Scene implements SpriteContext, Environment
             {
                 int obsX = sprite.mapY - MarioYInMap + Environment.HalfObsHeight;
                 int obsY = sprite.mapX - MarioXInMap + Environment.HalfObsWidth;
-                ret[obsX][obsY] = ZLevelEnemyGeneralization(sprite.kind, ZLevel);
+                enemiesZ[obsX][obsY] = ZLevelEnemyGeneralization(sprite.kind, ZLevel);
             }
         }
-        return ret;
+        return enemiesZ;
     }
 
     public float[] getEnemiesFloatPos()
     {
-        List<Float> poses = new ArrayList<Float>();
+        enemiesFloatsList.clear();
         for (Sprite sprite : sprites)
         {
             // check if is an influenceable creature
             if (sprite.kind >= Sprite.KIND_GOOMBA && sprite.kind <= Sprite.KIND_MUSHROOM)
             {
-                poses.add((float)sprite.kind);
-                poses.add(sprite.x);
-                poses.add(sprite.y);
+                enemiesFloatsList.add((float)sprite.kind);
+                enemiesFloatsList.add(sprite.x);
+                enemiesFloatsList.add(sprite.y);
             }
         }
 
-        float[] ret = new float[poses.size()];
+        // potential memory leak while using through JNI, careful!
+        float[] enemiesFloatsPosArray = new float[enemiesFloatsList.size()];
 
         int i = 0;
-        for (Float F: poses)
-            ret[i++] = F;
+        for (Float F: enemiesFloatsList)
+            enemiesFloatsPosArray[i++] = F;
 
-        return ret;
+        return enemiesFloatsPosArray;
     }
 
     public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
     {
-        byte[][] ret = new byte[Environment.HalfObsWidth*2][Environment.HalfObsHeight*2];
+
         //TODO: Move to constants 16
         int MarioXInMap = (int)mario.x/16;
         int MarioYInMap = (int)mario.y/16;
@@ -399,19 +426,19 @@ public class LevelScene extends Scene implements SpriteContext, Environment
             {
                 if (x >=0 /*&& x <= level.xExit*/ && y >= 0 && y < level.height)
                 {
-                    ret[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevelScene);
+                    mergedZ[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevelScene);
                 }
                 else
-                    ret[obsX][obsY] = 0;
+                    mergedZ[obsX][obsY] = 0;
 //                if (x == MarioXInMap && y == MarioYInMap)
-//                    ret[obsX][obsY] = mario.kind;
+//                    mergedZ[obsX][obsY] = mario.kind;
             }
         }
 
-//        for (int w = 0; w < ret.length; w++)
-//            for (int h = 0; h < ret[0].length; h++)
-//                ret[w][h] = -1;
-//        ret[Environment.HalfObsWidth][Environment.HalfObsHeight] = mario.kind;
+//        for (int w = 0; w < mergedZ.length; w++)
+//            for (int h = 0; h < mergedZ[0].length; h++)
+//                mergedZ[w][h] = -1;
+//        mergedZ[Environment.HalfObsWidth][Environment.HalfObsHeight] = mario.kind;
         for (Sprite sprite : sprites)
         {
             if (sprite.kind == mario.kind)
@@ -426,16 +453,16 @@ public class LevelScene extends Scene implements SpriteContext, Environment
                 int obsX = sprite.mapY - MarioYInMap + Environment.HalfObsHeight;
                 int obsY = sprite.mapX - MarioXInMap + Environment.HalfObsWidth;
                 // quick fix TODO: handle this in more general way.
-                if (ret[obsX][obsY] != 14)
+                if (mergedZ[obsX][obsY] != 14)
                 {
                     byte tmp = ZLevelEnemyGeneralization(sprite.kind, ZLevelEnemies);
                     if (tmp != Sprite.KIND_NONE)
-                        ret[obsX][obsY] = tmp;
+                        mergedZ[obsX][obsY] = tmp;
                 }
             }
         }
 
-        return ret;
+        return mergedZ;
     }
 
     public List<String> LevelSceneAroundMarioASCII(boolean Enemies, boolean LevelMap,
@@ -821,19 +848,18 @@ public class LevelScene extends Scene implements SpriteContext, Environment
 
     public int[] getMarioState()
     {
-        int[] marioState = new int[]{
-                this.getMarioStatus(),
-                this.getMarioMode(),
-                this.isMarioOnGround() ? 1 : 0,
-                this.isMarioAbleToJump() ? 1 : 0,
-                this.isMarioAbleToShoot() ? 1 : 0,
-                this.isMarioCarrying() ? 1 : 0,
-                this.getKillsTotal(),
-                this.getKillsByFire(),
-                this.getKillsByStomp(),
-                this.getKillsByStomp(),
-                this.getKillsByShell()
-        };
+
+        marioState[0] =         this.getMarioStatus();
+        marioState[1] =         this.getMarioMode();
+        marioState[2] =         this.isMarioOnGround() ? 1 : 0;
+        marioState[3] =         this.isMarioAbleToJump() ? 1 : 0;
+        marioState[4] =         this.isMarioAbleToShoot() ? 1 : 0;
+        marioState[5] =         this.isMarioCarrying() ? 1 : 0;
+        marioState[6] =         this.getKillsTotal();
+        marioState[7] =         this.getKillsByFire();
+        marioState[8] =         this.getKillsByStomp();
+        marioState[9] =         this.getKillsByStomp();
+        marioState[10] =        this.getKillsByShell();
         return marioState;
     }
 
@@ -895,44 +921,33 @@ public class LevelScene extends Scene implements SpriteContext, Environment
     {
         // serialization into arrays of primitive types to speed up the data transfer.
         byte[][] levelScene = this.getLevelSceneObservationZ(ZLevelScene);
-//        byte[][] enemies = this.getEnemiesObservationZ(ZLevelEnemies);
-        int rows = Environment.HalfObsHeight*2;
-        int cols = Environment.HalfObsWidth*2;
-
-        int[] squashedLevelScene = new int[rows * cols];
-//        byte[] squashedEnemies = new byte[enemies.length * enemies[0].length];
-
-        for (int i = 0; i < squashedLevelScene.length; ++i)
+        for (int i = 0; i < serializedLevelScene.length; ++i)
         {
-            squashedLevelScene[i] = (int)levelScene[i / cols][i % rows];
-//            System.out.print(" " + squashedLevelScene[i]);
-//            squashedEnemies[i] = enemies[i / cols][i % rows];
+            serializedLevelScene[i] = (int)levelScene[i / cols][i % rows];
         }
-        return squashedLevelScene;
+        return serializedLevelScene;
     }
 
     public int[] getSerializedEnemiesObservationZ(int ZLevelEnemies)
     {
         // serialization into arrays of primitive types to speed up the data transfer.
-//        byte[][] levelScene = this.getLevelSceneObservationZ(ZLevelScene);
         byte[][] enemies = this.getEnemiesObservationZ(ZLevelEnemies);
-        int rows = Environment.HalfObsHeight*2;
-        int cols = Environment.HalfObsWidth*2;
-
-        byte[] squashedLevelScene = new byte[rows * cols];
-        int[] squashedEnemies = new int[enemies.length * enemies[0].length];
-
-        for (int i = 0; i < squashedLevelScene.length; ++i)
+        for (int i = 0; i < serializedEnemies.length; ++i)
         {
-            squashedEnemies[i] = enemies[i / cols][i % rows];
+            serializedEnemies[i] = (int)enemies[i / cols][i % rows];
         }
-        return squashedEnemies;
+        return serializedEnemies;
     }
 
     public int[] getSerializedMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
     {
-        // TODO: SK
-        return new int[0];
+        // serialization into arrays of primitive types to speed up the data transfer.
+        byte[][] merged = this.getMergedObservationZZ(ZLevelScene, ZLevelEnemies);
+        for (int i = 0; i < serializedMergedObservation.length; ++i)
+        {
+            serializedMergedObservation[i] = (int)merged[i / cols][i % rows];
+        }
+        return serializedMergedObservation;
     }
 
     public float[] getCreaturesFloatPos()
@@ -1003,11 +1018,16 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         killedCreaturesByFireBall = 0;
         killedCreaturesByStomp = 0;
         killedCreaturesByShell = 0;
+        System.out.println("Call to init:");
         init();
     }
 
     public float[] getMarioFloatPos()
-    {        return new float[]{this.mario.x, this.mario.y};    }
+    {
+        marioFloatPos[0] = this.mario.x;
+        marioFloatPos[1]  = this.mario.y;
+        return marioFloatPos;
+    }
 
     public int getMarioMode()
     {   return mario.getMode();    }

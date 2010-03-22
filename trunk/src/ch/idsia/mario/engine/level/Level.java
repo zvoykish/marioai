@@ -48,10 +48,23 @@ public class Level
 
         xExit = 10;
         yExit = 10;
+//        System.out.println("Java: Level: lots of news here...");
+//        System.out.println("width = " + width);
+//        System.out.println("height = " + height);
+        try{
         map = new byte[width][height];
+//        System.out.println("map = " + map);
         data = new byte[width][height];
+//        System.out.println("data = " + data);
+
         spriteTemplates = new SpriteTemplate[width][height];
+        }catch (OutOfMemoryError e)
+        {
+            e.printStackTrace();
+        }
+//        System.out.println("spriteTemplates = " + spriteTemplates);
         observation = new byte[width][height];
+//        System.out.println("observation = " + observation);
     }
 
 //    public void ASCIIToOutputStream(OutputStream os) throws IOException {
