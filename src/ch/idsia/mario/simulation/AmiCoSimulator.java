@@ -32,11 +32,15 @@ public class AmiCoSimulator
         }
         Environment environment = new MarioEnvironment();
         Agent agent = new ForwardAgent();
+        options = new int[]{0, 1, 0, 1500, 0, 2, 1, 100, 1, 0, 1, 0, 11024, 0, 0, 0, 0, 0, 1};
         options[17] = 1;
-        for (int seed = 16; seed < 20; ++seed)
+//        for (int seed = 16; seed < 20; ++seed)
+        for (int length = 4500; length < 100000; length += 500)
         {
-            options[4] = seed;  // seed
-            options[14] = seed % 2;    // visualization
+            options[4] = 16;  // seed
+            options[3] = length;
+//            options[14] = seed % 2;    // visualization
+            options[14] = 0;    // visualization
             environment.reset(options);
             while (!environment.isLevelFinished())
             {

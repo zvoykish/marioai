@@ -17,13 +17,16 @@ public class LevelGenerator
 
     public static Level createLevel(int width, int height, long seed, int difficulty, int type)
     {
+//        System.out.println("\nJava:createLevel() entered.");
         LevelGenerator levelGenerator = new LevelGenerator(width, height);
+//        System.out.println("\nJava:LevelGenerator() finished.");
         return levelGenerator.createLevel(seed, difficulty, type);
     }
 
     private int width;
     private int height;
-    Level level = new Level(width, height);
+//    Level level = new Level(width, height);
+    Level level;
     Random random;
 
     private static final int ODDS_STRAIGHT = 0;
@@ -44,6 +47,7 @@ public class LevelGenerator
 
     private Level createLevel(long seed, int difficulty, int type)
     {
+//        System.out.println("\nJava:createLevel() entered.");
         this.type = type;
         this.difficulty = difficulty;
         odds[ODDS_STRAIGHT] = 20;
@@ -51,6 +55,7 @@ public class LevelGenerator
         odds[ODDS_TUBES] = 2 + 1 * difficulty;
         odds[ODDS_JUMP] = 2 * difficulty;
         odds[ODDS_CANNONS] = -10 + 5 * difficulty;
+
 
         if (type != LevelGenerator.TYPE_OVERGROUND)
         {
@@ -65,8 +70,12 @@ public class LevelGenerator
         }
 
         lastSeed = seed;
+//        System.out.println("level = " + level);
+//        System.out.println("random = " + random);
         level = new Level(width, height);
+//        System.out.println("level = " + level);
         random = new Random(seed);
+//        System.out.println("random = " + random);
 
         int length = 0;
         length += buildStraight(0, level.width, true);
@@ -113,6 +122,7 @@ public class LevelGenerator
         }
 
         fixWalls();
+//        System.out.println("\nJava:about to return level");
         return level;
     }
 
