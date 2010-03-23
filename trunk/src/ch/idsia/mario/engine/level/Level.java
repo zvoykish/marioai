@@ -61,6 +61,7 @@ public class Level
         }catch (OutOfMemoryError e)
         {
             e.printStackTrace();
+            System.exit(-3);
         }
 //        System.out.println("spriteTemplates = " + spriteTemplates);
         observation = new byte[width][height];

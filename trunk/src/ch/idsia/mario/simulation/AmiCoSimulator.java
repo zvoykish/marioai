@@ -40,7 +40,7 @@ public class AmiCoSimulator
             options[4] = 16;  // seed
             options[3] = length;
 //            options[14] = seed % 2;    // visualization
-            options[14] = 0;    // visualization
+            options[14] = 1;    // visualization
             environment.reset(options);
             while (!environment.isLevelFinished())
             {
