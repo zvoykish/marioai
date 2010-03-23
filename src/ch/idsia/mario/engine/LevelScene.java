@@ -45,7 +45,7 @@ public class LevelScene extends Scene implements SpriteContext, Environment
 
     final private List<Float> enemiesFloatsList = new ArrayList<Float>();
     final private float[] marioFloatPos = new float[2];
-    final private int[] marioState = new int[11];
+    final private int[] marioState = new int[12];
 
 
     public int getTimeLimit() {  return timeLimit; }
@@ -93,7 +93,7 @@ public class LevelScene extends Scene implements SpriteContext, Environment
 
     public void init()
     {
-        System.out.println("\nJava:init() entered.");
+//        System.out.println("\nJava:init() entered.");
 //        try
 //        {
 //            Level.loadBehaviors(new DataInputStream(LevelScene.class.getResourceAsStream("resources/tiles.dat")));
@@ -109,7 +109,7 @@ public class LevelScene extends Scene implements SpriteContext, Environment
          {*/
 //        level = LevelGenerator.createLevel(320, 15, levelSeed);
         level = LevelGenerator.createLevel(levelLength, 15, levelSeed, levelDifficulty, levelType);
-        System.out.println("\nJava:level created.");
+//        System.out.println("\nJava:level created.");
         //        }
 
         /*        if (recorder != null)
@@ -122,12 +122,8 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         this.width = GlobalOptions.VISUAL_COMPONENT_WIDTH;
         this.height = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
 
-        System.out.println("\nJava:about to create Mario");
         mario = new Mario(this);
-        System.out.println("mario.getStatus() = " + mario.getStatus());
         sprites.add(mario);
-//        System.out.println("sprites = " + sprites);
-//        System.out.println("mario = " + mario);
 //        System.out.println("mario.sheet = " + mario.sheet);
         startTime = 1;
 
@@ -860,6 +856,8 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         marioState[8] =         this.getKillsByStomp();
         marioState[9] =         this.getKillsByStomp();
         marioState[10] =        this.getKillsByShell();
+//        marioState[11] =        this.getTimeLimit();
+        marioState[11] =        this.getTimeLeft();
         return marioState;
     }
 
@@ -977,38 +975,38 @@ public class LevelScene extends Scene implements SpriteContext, Environment
 //        this.gameViewer = setUpOptions[0] == 1;
 //        System.out.println("\nLevelScene RESET!");
 
-        System.out.println("\n setUpOptions:");
-        for (int i = 0; i < setUpOptions.length; ++i)
-        {
-            System.out.print(setUpOptions[i] + ",");
-        }
+//        System.out.println("\n setUpOptions:");
+//        for (int i = 0; i < setUpOptions.length; ++i)
+//        {
+//            System.out.print(setUpOptions[i] + ",");
+//        }
 
         this.mario.isMarioInvulnerable = setUpOptions[1] == 1;
-        System.out.println("this.mario.isMarioInvulnerable = " + this.mario.isMarioInvulnerable);
+//        System.out.println("this.mario.isMarioInvulnerable = " + this.mario.isMarioInvulnerable);
         this.levelDifficulty = setUpOptions[2];
-        System.out.println("this.levelDifficulty = " + this.levelDifficulty);
+//        System.out.println("this.levelDifficulty = " + this.levelDifficulty);
         this.levelLength = setUpOptions[3];
-        System.out.println("this.levelLength = " + this.levelLength);
+//        System.out.println("this.levelLength = " + this.levelLength);
         this.levelSeed = setUpOptions[4];
-        System.out.println("levelSeed = " + levelSeed);
+//        System.out.println("levelSeed = " + levelSeed);
         this.levelType = setUpOptions[5];
-        System.out.println("levelType = " + levelType);
+//        System.out.println("levelType = " + levelType);
         Mario.resetStatic(setUpOptions[6]);
 
         GlobalOptions.FPS = setUpOptions[7];
-        System.out.println("GlobalOptions.FPS = " + GlobalOptions.FPS);
+//        System.out.println("GlobalOptions.FPS = " + GlobalOptions.FPS);
         GlobalOptions.PowerRestoration = setUpOptions[8] == 1;
-        System.out.println("GlobalOptions.PowerRestoration = " + GlobalOptions.PowerRestoration);
+//        System.out.println("GlobalOptions.PowerRestoration = " + GlobalOptions.PowerRestoration);
         GlobalOptions.PauseWorld = setUpOptions[9] == 1;
-        System.out.println("GlobalOptions = " + GlobalOptions.PauseWorld);
+//        System.out.println("GlobalOptions = " + GlobalOptions.PauseWorld);
         GlobalOptions.TimerOn = setUpOptions[10] == 1;
-        System.out.println("GlobalOptions.TimerOn = " + GlobalOptions.TimerOn);
+//        System.out.println("GlobalOptions.TimerOn = " + GlobalOptions.TimerOn);
 //        isToolsConfigurator = setUpOptions[11] == 1;
         this.setTimeLimit(setUpOptions[12]);
-        System.out.println("this.getTimeLimit() = " + this.getTimeLimit());
+//        System.out.println("this.getTimeLimit() = " + this.getTimeLimit());
 //        this.isViewAlwaysOnTop() ? 1 : 0, setUpOptions[13]
         this.visualization = setUpOptions[14] == 1;
-        System.out.println("visualization = " + visualization);
+//        System.out.println("visualization = " + visualization);
 //        this.getViewLocation().x, setUpOptions[15] == 1;
 //        this.getViewLocation().y, setUpOptions[16] == 1;
 //        this.getZLevelEnemies(),setUpOptions[17] ;
@@ -1018,7 +1016,7 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         killedCreaturesByFireBall = 0;
         killedCreaturesByStomp = 0;
         killedCreaturesByShell = 0;
-        System.out.println("Call to init:");
+//        System.out.println("Call to init:");
         init();
     }
 

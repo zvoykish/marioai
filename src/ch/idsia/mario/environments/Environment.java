@@ -97,7 +97,9 @@ public interface Environment
      * getKillsTotal(),
      * getKillsByFire(),
      * getKillsByStomp(),
-     * getKillsByShell()
+     * getKillsByShell(),
+     * getTimeLimit(),
+     * getTimeLeft
     }
      */
     public int[] getMarioState();
