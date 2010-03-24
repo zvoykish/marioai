@@ -14,9 +14,6 @@ import ch.idsia.mario.engine.sprites.Mario;
  */
 public class SergeyKarakovskiy_JumpingAgent extends BasicAIAgent implements Agent
 {
-    private String name;
-    private boolean[] action;
-
     public SergeyKarakovskiy_JumpingAgent()
     {
         super("SergeyKarakovskiy_JumpingAgent");
@@ -31,7 +28,8 @@ public class SergeyKarakovskiy_JumpingAgent extends BasicAIAgent implements Agen
 
     public void reset()
     {
-        action = new boolean[Environment.numberOfButtons];
+        for (int i = 0; i < action.length; ++i)
+            action[i] = false;
         action[Mario.KEY_RIGHT] = true;
         action[Mario.KEY_SPEED] = true;
     }
