@@ -1,6 +1,7 @@
 package competition.cig.sergeykarakovskiy;
 
 import ch.idsia.ai.agents.Agent;
+import ch.idsia.ai.agents.ai.BasicAIAgent;
 import ch.idsia.mario.environments.Environment;
 import ch.idsia.mario.engine.sprites.Mario;
 
@@ -11,30 +12,21 @@ import ch.idsia.mario.engine.sprites.Mario;
  * Time: 3:12:07 PM
  * Package: competition.cig.sergeykarakovskiy
  */
-public class SergeyKarakovskiy_JumpingAgent implements Agent
+public class SergeyKarakovskiy_JumpingAgent extends BasicAIAgent implements Agent
 {
     private String name;
     private boolean[] action;
 
     public SergeyKarakovskiy_JumpingAgent()
     {
-        setName("SergeyKarakovskiy_JumpingAgent");
+        super("SergeyKarakovskiy_JumpingAgent");
         reset();
-    }
-
-    public void integrateObservation(int[] serializedLevelSceneObservationZ, int[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public boolean[] getAction()
     {
-        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public void integrateObservation(Environment environment)
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
+        action[Mario.KEY_SPEED] = action[Mario.KEY_JUMP] =  isMarioAbleToJump || !isMarioOnGround;
+        return action;
     }
 
     public void reset()
@@ -42,12 +34,6 @@ public class SergeyKarakovskiy_JumpingAgent implements Agent
         action = new boolean[Environment.numberOfButtons];
         action[Mario.KEY_RIGHT] = true;
         action[Mario.KEY_SPEED] = true;
-    }
-
-    public boolean[] getAction(Environment observation)
-    {
-        action[Mario.KEY_SPEED] = action[Mario.KEY_JUMP] =  observation.isMarioAbleToJump() || !observation.isMarioOnGround();
-        return action;
     }
 
     public Agent.AGENT_TYPE getType()

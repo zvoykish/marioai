@@ -87,7 +87,7 @@ public class BasicAIAgent implements Agent
 
     public boolean[] getAction()
     {
-        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
+        return new boolean[Environment.numberOfButtons];
     }
 
     public void integrateObservation(Environment environment)
@@ -119,6 +119,7 @@ public class BasicAIAgent implements Agent
         action = new boolean[Environment.numberOfButtons];// Empty action
     }
 
+    @Deprecated
     public boolean[] getAction(Environment observation)
     {
         return new boolean[Environment.numberOfButtons]; // Empty action
