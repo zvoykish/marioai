@@ -45,11 +45,12 @@ public class AmiCoSimulator
             while (!environment.isLevelFinished())
             {
                 environment.tick();
-                agent.integrateObservation(environment.getSerializedLevelSceneObservationZ(options[17]),
-                                           environment.getSerializedEnemiesObservationZ(options[18]),
-                                           environment.getMarioFloatPos(),
-                                           environment.getEnemiesFloatPos(),
-                                           environment.getMarioState());
+//                agent.integrateObservation(environment.getSerializedLevelSceneObservationZ(options[17]),
+//                                           environment.getSerializedEnemiesObservationZ(options[18]),
+//                                           environment.getMarioFloatPos(),
+//                                           environment.getEnemiesFloatPos(),
+//                                           environment.getMarioState());
+                agent.integrateObservation(environment);
                 environment.performAction(agent.getAction());
             }
             EvaluationInfo evaluationInfo = new EvaluationInfo(environment.getEvaluationInfo());

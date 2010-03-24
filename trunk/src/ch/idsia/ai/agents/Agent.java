@@ -11,12 +11,6 @@ import ch.idsia.mario.environments.Environment;
  */
 public interface Agent
 {
-    void integrateObservation(int[] serializedLevelSceneObservationZ,
-                              int[] serializedEnemiesObservationZ,
-                              float[] marioFloatPos,
-                              float[] enemiesFloatPos,
-                              int[] marioState);
-
     boolean[] getAction();
 
     void integrateObservation(Environment environment);
@@ -28,11 +22,21 @@ public interface Agent
     
     public void reset();
 
-    public boolean[] getAction(Environment observation);
-
     public AGENT_TYPE getType();
 
     public String getName();
 
     public void setName(String name);
+
+
+
+    @Deprecated
+    public boolean[] getAction(Environment observation);
+        
+    @Deprecated
+    void integrateObservation(int[] serializedLevelSceneObservationZ,
+                              int[] serializedEnemiesObservationZ,
+                              float[] marioFloatPos,
+                              float[] enemiesFloatPos,
+                              int[] marioState);
 }

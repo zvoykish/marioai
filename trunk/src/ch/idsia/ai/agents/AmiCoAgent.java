@@ -97,22 +97,16 @@ public class AmiCoAgent implements Agent
 
     public AGENT_TYPE getType()
     {
-        return AGENT_TYPE.AI;  //To change body of implemented methods use File | Settings | File Templates.
+        return AGENT_TYPE.AI;
     }
 
     public String getName()
     {
-        return this.agentName;  //To change body of implemented methods use File | Settings | File Templates.
+        return this.agentName;
     }
 
     public void setName(String name)
     {
         throw new Error("AmiCo agent name must be set only via constructor");
     }
-//    static
-//    {
-////            System.out.println("Java: loading AmiCo...");
-////
-////            System.out.println("Java: AmiCo library has been successfully loaded!");
-//    }
 }
