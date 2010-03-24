@@ -98,9 +98,14 @@ public class MarioVisualComponent extends JComponent
             marioComponentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         }
         marioComponentFrame.setAlwaysOnTop(true);
-        marioComponentFrame.setLocation(new Point(42,42));
+//        marioComponentFrame.setLocation(new Point(42,42));
         marioComponentFrame.setVisible(true);
         m.postInitGraphics();
+    }
+
+    public void setLocation(int x, int y)
+    {
+        marioComponentFrame.setLocation(x, y);
     }
 
     public void reset()

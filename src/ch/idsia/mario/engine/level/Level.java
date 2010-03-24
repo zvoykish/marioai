@@ -60,6 +60,7 @@ public class Level
         spriteTemplates = new SpriteTemplate[width][height];
         }catch (OutOfMemoryError e)
         {
+            System.err.println("Java: MarioAI MEMORY EXCEPTION: OutOfMemory exception. Exiting...");
             e.printStackTrace();
             System.exit(-3);
         }
