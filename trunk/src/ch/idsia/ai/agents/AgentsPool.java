@@ -1,7 +1,9 @@
 package ch.idsia.ai.agents;
 
+import ch.idsia.ai.agents.human.HumanKeyboardAgent;
 import wox.serial.Easy;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 
 /**
@@ -33,12 +35,22 @@ public final class AgentsPool
         catch (ClassNotFoundException e) {
             System.out.println (name + " is not a class name; trying to load a wox definition with that name.");
             agent = (Agent) Easy.load (name);
+            System.err.println("agent = " + agent);
+            if (agent == null)
+            {
+                System.err.println("wox definition has not been found as well. Loading <HumanKeyboardAgent> instead");
+                agent = new HumanKeyboardAgent();
+                System.out.println("agent = " + agent);
+            }                
         }
         catch (Exception e) {
-            e.printStackTrace ();
-            agent = null;
-            System.exit (1);
+//            e.printStackTrace ();
+            agent = new HumanKeyboardAgent();
+            System.err.println("Agent is null. Loading agent with name " + name + " failed.");
+            System.out.println("agent = " + agent);
+//            System.exit (1);
         }
+
         return agent;
     }
 

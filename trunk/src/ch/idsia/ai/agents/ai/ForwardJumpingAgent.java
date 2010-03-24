@@ -35,7 +35,9 @@ public class ForwardJumpingAgent extends BasicAIAgent implements Agent
 
     public boolean[] getAction(Environment observation)
     {
-        action[Mario.KEY_SPEED] = action[Mario.KEY_JUMP] =  observation.isMarioAbleToJump() || !observation.isMarioOnGround();
+        action[Mario.KEY_SPEED] = action[Mario.KEY_JUMP] =
+                observation.isMarioAbleToJump() ||
+                !observation.isMarioOnGround();
         return action;
     }
 }
