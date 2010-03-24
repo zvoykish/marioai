@@ -18,14 +18,13 @@ public class JavaCallsPython
     }
 
     public native int setModuleName(String moduleName);
+    public native int setAgentName(String agentName);
     public native int[] getAction(int[] squashedObservation, int[] squashedEnemies,
                                   float[] marioPos, float[] enemiesPos, int[] marioState);
-    public native int setAgentName(String agentName);
-    
     static
     {
-            System.out.println("Java: loading AmiCo...");
-            System.loadLibrary("AmiCo");
-            System.out.println("Java: AmiCo library has been successfully loaded!");
+        System.out.println("Java: loading AmiCo...");
+        System.loadLibrary("AmiCo");
+        System.out.println("Java: AmiCo library has been successfully loaded!");
     }
 }

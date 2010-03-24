@@ -19,7 +19,6 @@ public class BasicTask
         this.setAgent(agent);
     }
 
-
     public void runEpisode()
     {
         while (!environment.isLevelFinished())

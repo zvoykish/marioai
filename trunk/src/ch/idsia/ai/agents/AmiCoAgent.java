@@ -15,6 +15,7 @@ public class AmiCoAgent implements Agent
     static JavaCallsPython javaCallsPython = null;
     private final String moduleName;
     private final String agentName;
+    private Environment env;
 
     public AmiCoAgent(String amicoModuleName, String amicoAgentName)
     {
@@ -30,12 +31,12 @@ public class AmiCoAgent implements Agent
 
     public boolean[] getAction()
     {
-        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
+        return this.getAction(this.env);
     }
 
     public void integrateObservation(Environment environment)
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+        this.env = environment;
     }
 
     public void reset()
