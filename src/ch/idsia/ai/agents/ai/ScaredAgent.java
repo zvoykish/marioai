@@ -19,38 +19,12 @@ public class ScaredAgent extends BasicAIAgent implements Agent {
     int trueJumpCounter = 0;
     int trueSpeedCounter = 0;
 
-    private boolean DangerOfGap(byte[][] levelScene)
-    {
-        for (int x = 9; x < 13; ++x)
-        {
-            boolean f = true;
-            for(int y = 12; y < 22; ++y)
-            {
-                if  (levelScene[y][x] != 0)
-                    f = false;
-            }
-            if (f && levelScene[12][11] != 0)
-                return true;
-        }
-        return false;
-    }
-
     public boolean[] getAction()
     {
-        return action;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public void reset() {
-        action[Mario.KEY_RIGHT] = true;
-        action[Mario.KEY_SPEED] = false;
-    }
-
-    public boolean[] getAction(Environment observation) {
-        byte[][] levelScene = observation.getLevelSceneObservation(/*1*/);
         if (/*levelScene[11][13] != 0 ||*/ levelScene[11][12] != 0 ||
            /* levelScene[12][13] == 0 ||*/ levelScene[12][12] == 0 )
         {
-            if (observation.isMarioAbleToJump() || ( !observation.isMarioOnGround() && action[Mario.KEY_JUMP]))
+            if (isMarioAbleToJump || ( !isMarioOnGround && action[Mario.KEY_JUMP]))
             {
                 action[Mario.KEY_JUMP] = true;
             }
@@ -68,6 +42,17 @@ public class ScaredAgent extends BasicAIAgent implements Agent {
             action[Mario.KEY_JUMP] = false;
         }
 
-        return action;
+        return action;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void reset() {
+        action[Mario.KEY_RIGHT] = true;
+        action[Mario.KEY_SPEED] = false;
+    }
+
+    public boolean[] getAction(Environment observation)
+    {
+        System.err.println("No getAction Implementation here: use getAction() instead");
+        return super.getAction(observation);
     }
 }

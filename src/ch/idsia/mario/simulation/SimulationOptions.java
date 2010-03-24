@@ -54,8 +54,6 @@ public class SimulationOptions extends ParameterContainer
 //        return a(getParameterValue("-ag"));      }
         if (agent == null)
         {
-            System.out.println("            getParameterValue(\"-ag\")\n = " + getParameterValue("-ag")
-            );
             agent = AgentsPool.load(getParameterValue("-ag"));
 //            System.out.println("Info: Agent not specified. Default " + agent.getName() + " has been used instead");
         }
