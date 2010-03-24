@@ -8,6 +8,7 @@ import ch.idsia.tools.CmdLineOptions;
  * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 14, 2010 Time: 4:47:33 PM
  * Package: ch.idsia.maibe.tasks
  */
+
 public class BasicTask
 {
     private Environment environment;
