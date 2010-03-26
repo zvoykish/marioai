@@ -1,4 +1,4 @@
-package ch.idsia.scenarios;
+package ch.idsia.scenarios.champ;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
@@ -19,7 +19,7 @@ import ch.idsia.utils.StatisticalSummary;
  * Date: Mar 17, 2010 Time: 8:33:43 AM
  * Package: ch.idsia.scenarios
  */
-public class ChampGamePlayEvaluation
+public class GamePlayEvaluation
 {
     final static int numberOfTrials = 10;
     final static boolean scoring = false;

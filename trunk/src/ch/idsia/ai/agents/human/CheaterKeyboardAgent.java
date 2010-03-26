@@ -33,7 +33,7 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
 
     public boolean[] getAction()
     {
-        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
+        return Action;
     }
 
     public void integrateObservation(Environment environment)
@@ -113,6 +113,7 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
                 if (isPressed)
                 {
 //                    LOGGER.println("FPS increase by 1. Current FPS is " + ++GlobalOptions.FPS, LOGGER.VERBOSE_MODE.INFO);
+                    ++GlobalOptions.FPS;
                     GlobalOptions.AdjustMarioComponentFPS();
                 }
                 break;
@@ -120,6 +121,7 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
                 if (isPressed)
                 {
 //                    LOGGER.println("FPS decrease . Current FPS is " + --GlobalOptions.FPS, LOGGER.VERBOSE_MODE.INFO);
+                    --GlobalOptions.FPS;
                     GlobalOptions.AdjustMarioComponentFPS();
                 }
                 break;

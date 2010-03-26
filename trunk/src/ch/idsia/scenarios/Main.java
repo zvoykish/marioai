@@ -29,6 +29,7 @@ public class Main
         basicTask.reset(cmdLineOptions);
         basicTask.runEpisode();
         EvaluationInfo evaluationInfo = new EvaluationInfo(environment.getEvaluationInfo());
+        System.out.println("cmdLineOptions.getLevelLength() = " + cmdLineOptions.getLevelLength());
         System.out.println("evaluationInfo = " + evaluationInfo);
         System.exit(0);
     }
