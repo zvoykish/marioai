@@ -33,8 +33,6 @@ public class SergeyKarakovskiy_JumpingAgent implements Agent
     protected int getKillsByStomp;
     protected int getKillsByShell;
 
-
-
     // values of these variables could be changed during the Agent-Environment interaction.
     // Use them to get more detailed or less detailed description of the level.
     // for information see documentation for the benchmark <link: marioai.org/marioaibenchmark/zLevels

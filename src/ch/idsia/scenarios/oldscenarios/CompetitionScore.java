@@ -32,7 +32,8 @@ public class CompetitionScore {
         System.exit (0);
     }
 
-    public static void score (Agent agent, int startingSeed) {
+    public static void score (Agent agent, int startingSeed)
+    {
         killsSum = 0;
         marioStatusSum = 0;
         timeLeftSum = 0;
@@ -58,8 +59,6 @@ public class CompetitionScore {
         System.out.println("Total time left = " + timeLeftSum);
         System.out.println("Total kills = " + killsSum);
         System.out.println("Mario mode (small, large, fire) sum = " + marioModeSum);
-
-
     }
 
     public static double testConfig (TimingAgent controller, EvaluationOptions options, int seed, int level, boolean paused) {
