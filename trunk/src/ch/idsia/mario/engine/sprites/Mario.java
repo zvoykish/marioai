@@ -360,9 +360,6 @@ public class Mario extends Sprite
             xa = 0;
         }
 
-//        System.out.println("y = " + y);
-//        System.out.println("world.level.yExit = " + world.level.yExit);
-//        System.out.println("world.level.yExit*16 = " + world.level.yExit * 16);
         if (x > world.level.xExit * 16 - 16 &&
             x < world.level.xExit * 16 + 2 * 16 && 
             y < world.level.yExit * 16)
