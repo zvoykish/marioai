@@ -10,7 +10,7 @@ public class AppletLauncher extends JApplet
 {
     private static final long serialVersionUID = -2238077255106243788L;
 
-    private MarioComponent mario;
+//    private MarioComponent mario;
     private boolean started = false;
 
     public void init()
@@ -31,12 +31,12 @@ public class AppletLauncher extends JApplet
             started = true;
             Agent hka = new HumanKeyboardAgent();
             hka.reset();            
-            mario = new MarioComponent(getWidth(), getHeight());
-            setContentPane(mario);
+//            mario = new MarioComponent(getWidth(), getHeight());
+//            setContentPane(mario);
             setFocusable(false);
-            mario.setFocusCycleRoot(true);
+//            mario.setFocusCycleRoot(true);
 
-            mario.start();
+//            mario.start();
 //            addKeyListener(mario);
 //            addFocusListener(mario);
         }
@@ -48,7 +48,7 @@ public class AppletLauncher extends JApplet
         {
             started = false;
 //            removeKeyListener(mario);
-            mario.stop();
+//            mario.stop();
 //            removeFocusListener(mario);
         }
     }

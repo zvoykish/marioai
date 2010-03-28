@@ -39,30 +39,15 @@ public class Play
 
     public static void main(String[] args)
     {
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions(new String[]{});
-        int attempts = 1;
-        if (args.length > 0 && args[0].equals("-secret"))
-        {
-            System.out.println("Welcome to a secret Level test for Learning track! \n" +
-                               "Please, remember about Wall jumps, favor exploration and be a bit smart ;-)\n" +
-                               "You are given 5 attempts, 256 mariosecond per each attempt;\n " +
-                               "You'll be evaluated on the 6th trial. Enjoy!");
-            cmdLineOptions.setLevelRandSeed(152);
-            cmdLineOptions.setTimeLimit(256);
-            attempts = 6;
-        }
-        else
-            cmdLineOptions.setArgs(args);
-
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
         final Environment environment = new MarioEnvironment();
         final Agent agent = new HumanKeyboardAgent();
         final BasicTask basicTask = new BasicTask(environment, agent);
         cmdLineOptions.setVisualization(true);
         basicTask.reset(cmdLineOptions);
 //        basicTask.runOneEpisode();
-
-        // run 5 episodes with same options, each time giving output of Evaluation info.
-        basicTask.runEpisodes(attempts, false);
+        // run 1 episode with same options, each time giving output of Evaluation info.
+        basicTask.runEpisodes(1, false);
         System.out.println("\nEvaluationInfo: \n" + environment.getEvaluationInfoAsString());
         System.exit(0);
     }
