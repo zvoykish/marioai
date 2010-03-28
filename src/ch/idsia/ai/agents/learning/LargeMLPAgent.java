@@ -1,39 +1,40 @@
-package ch.idsia.ai.agents.ai;
+package ch.idsia.ai.agents.learning;
 
-import ch.idsia.ai.agents.Agent;
+import ch.idsia.ai.MLP;
 import ch.idsia.ai.Evolvable;
-import ch.idsia.ai.SRN;
+import ch.idsia.ai.agents.Agent;
+import ch.idsia.ai.agents.controllers.BasicAIAgent;
 import ch.idsia.mario.environments.Environment;
 
 /**
  * Created by IntelliJ IDEA.
  * User: julian
- * Date: Jun 17, 2009
- * Time: 2:50:49 PM
+ * Date: Jun 14, 2009
+ * Time: 1:43:04 PM
  */
-public class LargeSRNAgent extends BasicAIAgent implements Agent, Evolvable {
+public class LargeMLPAgent extends BasicAIAgent implements Agent, Evolvable {
 
-    private SRN srn;
+    static private String name = "LargeMLPAgent";
+    private MLP mlp;
     final int numberOfOutputs = Environment.numberOfButtons;
     final int numberOfInputs = 101;
-    static private final String name = "LargeSRNAgent";
 
-    public LargeSRNAgent() {
+    public LargeMLPAgent() {
         super (name);
-        srn = new SRN (numberOfInputs, 10, numberOfOutputs);
+        mlp = new MLP (numberOfInputs, 10, numberOfOutputs);
     }
 
-    public LargeSRNAgent(SRN srn) {
+    private LargeMLPAgent(MLP mlp) {
         super (name);
-        this.srn = srn;
+        this.mlp = mlp;
     }
 
     public Evolvable getNewInstance() {
-        return new LargeSRNAgent(srn.getNewInstance());
+        return new LargeMLPAgent(mlp.getNewInstance());
     }
 
     public Evolvable copy() {
-        return new LargeSRNAgent(srn.copy ());
+        return new LargeMLPAgent(mlp.copy ());
     }
 
     public boolean[] getAction()
@@ -42,11 +43,11 @@ public class LargeSRNAgent extends BasicAIAgent implements Agent, Evolvable {
     }
 
     public void reset() {
-        srn.reset ();
+        mlp.reset ();
     }
 
     public void mutate() {
-        srn.mutate ();
+        mlp.mutate ();
     }
 
     public boolean[] getAction(Environment observation) {
@@ -68,7 +69,7 @@ public class LargeSRNAgent extends BasicAIAgent implements Agent, Evolvable {
         inputs[inputs.length - 3] = observation.isMarioOnGround() ? 1 : 0;
         inputs[inputs.length - 2] = observation.isMarioAbleToJump() ? 1 : 0;
         inputs[inputs.length - 1] = 1;
-        double[] outputs = srn.propagate (inputs);
+        double[] outputs = mlp.propagate (inputs);
         boolean[] action = new boolean[numberOfOutputs];
         for (int i = 0; i < action.length; i++) {
             action[i] = outputs[i] > 0;
@@ -76,16 +77,12 @@ public class LargeSRNAgent extends BasicAIAgent implements Agent, Evolvable {
         return action;
     }
 
-
-    public AGENT_TYPE getType() {
-        return AGENT_TYPE.AI;
+    public Agent.AGENT_TYPE getType() {
+        return Agent.AGENT_TYPE.AI;
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
     }
 
     private double probe (int x, int y, byte[][] scene) {
@@ -93,4 +90,6 @@ public class LargeSRNAgent extends BasicAIAgent implements Agent, Evolvable {
         int realY = y + 11;
         return (scene[realX][realY] != 0) ? 1 : 0;
     }
+
+
 }

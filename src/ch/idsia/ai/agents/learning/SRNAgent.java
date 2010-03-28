@@ -1,44 +1,53 @@
-package ch.idsia.ai.agents.ai;
+package ch.idsia.ai.agents.learning;
 
-import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.Evolvable;
 import ch.idsia.ai.SRN;
+import ch.idsia.ai.agents.Agent;
 import ch.idsia.mario.environments.Environment;
 
 /**
  * Created by IntelliJ IDEA.
  * User: julian
- * Date: Jun 16, 2009
- * Time: 5:26:58 PM
+ * Date: May 24, 2009
+ * Time: 11:24:54 PM
  */
-public class SmallSRNAgent extends BasicAIAgent implements Agent, Evolvable {
+public class SRNAgent implements Agent, Evolvable {
 
     private SRN srn;
+    private String name;
     final int numberOfOutputs = 6;
     final int numberOfInputs = 21;
-    static private final String name = "SmallSRNAgent";
 
-    public SmallSRNAgent() {
-        super (name);
+    public SRNAgent ()
+    {
         srn = new SRN (numberOfInputs, 10, numberOfOutputs);
     }
 
-    private SmallSRNAgent(SRN srn) {
-        super (name);
+    private SRNAgent (SRN srn) {
         this.srn = srn;
     }
 
     public Evolvable getNewInstance() {
-        return new SmallSRNAgent(srn.getNewInstance());
+        return new SRNAgent(srn.getNewInstance());
     }
 
     public Evolvable copy() {
-        return new SmallSRNAgent(srn.copy ());
+        return new SRNAgent (srn.copy ());
+    }
+
+    public void integrateObservation(int[] serializedLevelSceneObservationZ, int[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public boolean[] getAction()
     {
         return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void integrateObservation(Environment environment)
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public void reset() {
@@ -68,8 +77,9 @@ public class SmallSRNAgent extends BasicAIAgent implements Agent, Evolvable {
         return action;
     }
 
-    public AGENT_TYPE getType() {
-        return AGENT_TYPE.AI;
+    public Agent.AGENT_TYPE getType()
+    {
+        return Agent.AGENT_TYPE.AI;
     }
 
     public String getName() {
@@ -77,11 +87,14 @@ public class SmallSRNAgent extends BasicAIAgent implements Agent, Evolvable {
     }
 
     public void setName(String name) {
+        this.name = name;
     }
 
-    private double probe (int x, int y, byte[][] scene) {
+    private double probe (int x, int y, byte[][] scene)
+    {
         int realX = x + 11;
         int realY = y + 11;
         return (scene[realX][realY] != 0) ? 1 : 0;
     }
+
 }

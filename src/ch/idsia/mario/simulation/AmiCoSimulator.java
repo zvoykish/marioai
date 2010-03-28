@@ -1,16 +1,10 @@
 package ch.idsia.mario.simulation;
 
 import ch.idsia.ai.agents.Agent;
-import ch.idsia.ai.agents.ai.ForwardAgent;
-import ch.idsia.ai.agents.ai.ForwardJumpingAgent;
-import ch.idsia.ai.agents.ai.ScaredSpeedyAgent;
-import ch.idsia.ai.agents.human.HumanKeyboardAgent;
-import ch.idsia.mario.engine.LevelScene;
-import ch.idsia.mario.engine.sprites.Mario;
+import ch.idsia.ai.agents.controllers.ForwardAgent;
 import ch.idsia.mario.environments.Environment;
 import ch.idsia.mario.environments.MarioEnvironment;
 import ch.idsia.tools.CmdLineOptions;
-import ch.idsia.tools.EvaluationInfo;
 
 /**
  * Created by IntelliJ IDEA.
@@ -41,6 +35,7 @@ public class AmiCoSimulator
 //            options[3] = length;
 //            options[14] = seed % 2;    // visualization
             options[14] = 1;    // visualization
+//        options[9] = 1;
             environment.reset(options);
             while (!environment.isLevelFinished())
             {
@@ -53,8 +48,12 @@ public class AmiCoSimulator
                 agent.integrateObservation(environment);
                 environment.performAction(agent.getAction());
             }
-            EvaluationInfo evaluationInfo = new EvaluationInfo(environment.getEvaluationInfo());
-            System.out.println("evaluationInfo = " + evaluationInfo);
+        System.out.println("Evaluation Info:");
+        float[] ev = environment.getEvaluationInfoAsFloats();
+        for (float anEv : ev)
+        {
+            System.out.print(anEv + ", ");
+        }
 //        }
         System.exit(0);
     }

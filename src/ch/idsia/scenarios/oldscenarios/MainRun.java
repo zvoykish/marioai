@@ -1,7 +1,6 @@
 package ch.idsia.scenarios.oldscenarios;
 
-import ch.idsia.ai.agents.AmiCoAgent;
-import ch.idsia.ai.agents.ai.*;
+import ch.idsia.ai.agents.controllers.*;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
 import ch.idsia.tools.CmdLineOptions;
@@ -60,7 +59,7 @@ public class MainRun
     final static int numberOfTrials = 10;
     final static boolean scoring = false;
     private static int killsSum = 0;
-    private static int marioStatusSum = 0;
+    private static float marioStatusSum = 0;
     private static int timeLeftSum = 0;
     private static int marioModeSum = 0;
     private static boolean detailedStats = false;
@@ -180,7 +179,7 @@ public class MainRun
         int kills = 0;
         int timeLeft = 0;
         int marioMode = 0;
-        int marioStatus = 0;
+        float marioStatus = 0;
 
 //        options.setNumberOfTrials(numberOfTrials);
         options.resetCurrentTrial();

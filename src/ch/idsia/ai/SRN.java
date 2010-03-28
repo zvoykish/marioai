@@ -23,7 +23,8 @@ public class SRN implements FA<double[], double[]>, Evolvable {
 
     private final Random random = new Random();
 
-    public SRN(int numberOfInputs, int numberOfHidden, int numberOfOutputs) {
+    public SRN(int numberOfInputs, int numberOfHidden, int numberOfOutputs)
+    {
         firstConnectionLayer = new double[numberOfInputs][numberOfHidden];
         recurrentConnectionLayer = new double[numberOfHidden][numberOfHidden];
         secondConnectionLayer = new double[numberOfHidden][numberOfOutputs];

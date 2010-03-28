@@ -13,14 +13,12 @@ public class Mario extends Sprite
     public static boolean large = false;
     public static boolean fire = false;
     public static int coins = 0;
-    public static int lives = 1024;
-//    public static int numberOfAttempts = 0;
-//    public static String levelString = "none";
     private int status = STATUS_RUNNING;
     private final int FractionalPowerUpTime = 0;
     public static int gainedMushrooms;
     public static int gainedFlowers;
     public static boolean isMarioInvulnerable;
+    public static final String[] MODES = new String[]{"small", "Large", "FIRE"};
 
     public static void resetStatic(int marioMode)
     {
@@ -29,10 +27,6 @@ public class Mario extends Sprite
         coins = 0;
         gainedMushrooms = 0;
         gainedFlowers = 0;
-
-//        lives = 65536;
-//        levelString = "none";
-//        numberOfAttempts = 0;
     }
 
     public static void setMode(MODE mode)
@@ -366,7 +360,12 @@ public class Mario extends Sprite
             xa = 0;
         }
 
-        if (x > world.level.xExit * 16)
+//        System.out.println("y = " + y);
+//        System.out.println("world.level.yExit = " + world.level.yExit);
+//        System.out.println("world.level.yExit*16 = " + world.level.yExit * 16);
+        if (x > world.level.xExit * 16 - 16 &&
+            x < world.level.xExit * 16 + 2 * 16 && 
+            y < world.level.yExit * 16)
         {
             x = world.level.xExit * 16;
             win();
@@ -747,16 +746,16 @@ public class Mario extends Sprite
         }
     }
 
-    public static void get1Up()
-    {
-        lives++;
-    }
+//    public static void get1Up()
+//    {
+//        lives++;
+//    }
     
     public static void getCoin()
     {
         coins++;
-        if (coins % 100 == 0)
-            get1Up();
+//        if (coins % 100 == 0)
+//            get1Up();
     }
 
     public int getStatus() {

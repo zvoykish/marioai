@@ -8,7 +8,7 @@ import ch.idsia.mario.environments.Environment;
  * User: Sergey Karakovskiy, sergey at idsia dot ch
  * Date: Dec 11, 2009
  * Time: 8:29:15 PM
- * Package: ch.idsia.ai.agents
+ * Package: ch.idsia.controllers.agents
  */
 public class AmiCoAgent implements Agent
 {

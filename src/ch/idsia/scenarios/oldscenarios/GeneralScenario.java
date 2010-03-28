@@ -1,13 +1,10 @@
 package ch.idsia.scenarios.oldscenarios;
 
-import ch.idsia.ai.agents.Agent;
-import ch.idsia.ai.agents.ai.ForwardAgent;
 import ch.idsia.maibe.experiments.EpisodicExperiment;
 import ch.idsia.maibe.experiments.Experiment;
 import ch.idsia.maibe.tasks.ProgressTask;
 import ch.idsia.maibe.tasks.Task;
 import ch.idsia.tools.CmdLineOptions;
-import ch.idsia.tools.EvaluationOptions;
 
 /**
  * Created by IntelliJ IDEA.

@@ -1,4 +1,4 @@
-package ch.idsia.ai.agents.ai;
+package ch.idsia.ai.agents.controllers;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.mario.environments.Environment;

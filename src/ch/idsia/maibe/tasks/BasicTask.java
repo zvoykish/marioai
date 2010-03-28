@@ -13,6 +13,7 @@ public class BasicTask
 {
     private Environment environment;
     private Agent agent;
+    private CmdLineOptions options;
 
     public BasicTask(Environment environment, Agent agent)
     {
@@ -20,13 +21,26 @@ public class BasicTask
         this.setAgent(agent);
     }
 
-    public void runEpisode()
+    public void runOneEpisode()
     {
         while (!environment.isLevelFinished())
         {
             environment.tick();
             agent.integrateObservation(environment);
             environment.performAction(agent.getAction());
+        }
+    }
+
+    public void runEpisodes(int amount, boolean verbose)
+    {
+        for (int i = 0; i < amount; ++i)
+        {
+            this.reset(options);
+            this.runOneEpisode();
+            if (verbose)
+            {
+                System.out.println(environment.getEvaluationInfoAsString());
+            }
         }
     }
 
@@ -43,6 +57,7 @@ public class BasicTask
 
     public void reset(CmdLineOptions cmdLineOptions)
     {
+        options = cmdLineOptions;
         environment.reset(cmdLineOptions);
         agent.reset();
     }

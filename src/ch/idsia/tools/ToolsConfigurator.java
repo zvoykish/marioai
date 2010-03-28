@@ -3,7 +3,6 @@ package ch.idsia.tools;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
 import ch.idsia.mario.engine.GlobalOptions;
-import ch.idsia.mario.engine.MarioComponent;
 import ch.idsia.mario.engine.MarioVisualComponent;
 import ch.idsia.mario.engine.level.LevelGenerator;
 import ch.idsia.scenarios.oldscenarios.MainRun;
@@ -68,7 +67,7 @@ public class ToolsConfigurator extends JFrame
         CreateMarioComponentFrame(cmdLineOptions);
 //        marioComponent.init();
 
-        toolsConfigurator.setMarioComponent(marioComponent);
+//        toolsConfigurator.setMarioComponent(marioComponent);
 
         toolsConfigurator.setGameViewer(gameViewer);
         gameViewer.setAlwaysOnTop(false);
@@ -88,6 +87,7 @@ public class ToolsConfigurator extends JFrame
         CreateMarioComponentFrame(new EvaluationOptions());
     }
 
+    @Deprecated
     static void CreateMarioComponentFrame(EvaluationOptions evaluationOptions)
     {
 //        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -95,11 +95,11 @@ public class ToolsConfigurator extends JFrame
         if (marioComponentFrame == null)
         {
             marioComponentFrame = new JFrame(/*evaluationOptions.getAgentName() +*/ "Mario AI benchmark-" + GlobalOptions.MAIBeVersionStr);
-            marioComponent = new MarioComponent(320, 240);
+//            marioComponent = new MarioComponent(320, 240);
 //            marioVisualComponent = new MarioVisualComponent(320, 240);
-            marioComponentFrame.setContentPane(marioComponent);
+//            marioComponentFrame.setContentPane(marioComponent);
 //            marioComponentFrame.setContentPane(marioVisualComponent);
-            marioComponent.init();
+//            marioComponent.init();
 //            marioVisualComponent.init();
             marioComponentFrame.pack();
             marioComponentFrame.setResizable(false);
@@ -156,7 +156,7 @@ public class ToolsConfigurator extends JFrame
     private int prevFPS = 24;
 
     private static GameViewer gameViewer = null; //new GameViewer(null, null);
-    private static MarioComponent marioComponent;
+//    private static MarioComponent marioComponent;
 
     public ToolsConfigurator(Point location, Dimension size)
     {
@@ -374,7 +374,7 @@ public class ToolsConfigurator extends JFrame
                     GlobalOptions.FPS = GlobalOptions.MaxFPS;
                     CheckboxMaximizeFPS.setState(true);
                 }
-                marioComponent.adjustFPS();
+//                marioComponent.adjustFPS();
 //                LOGGER.println("FPS set to " + (CheckboxMaximizeFPS.getState() ? "infinity" : GlobalOptions.FPS),
 //                        LOGGER.VERBOSE_MODE.INFO );
             }
@@ -383,7 +383,7 @@ public class ToolsConfigurator extends JFrame
                 if(--GlobalOptions.FPS < 1)
                     GlobalOptions.FPS = 1;
                 CheckboxMaximizeFPS.setState(false);
-                marioComponent.adjustFPS();
+//                marioComponent.adjustFPS();
 //                LOGGER.println("FPS set to " + (CheckboxMaximizeFPS.getState() ? "infinity" : GlobalOptions.FPS),
 //                        LOGGER.VERBOSE_MODE.INFO );
             }
@@ -429,7 +429,7 @@ public class ToolsConfigurator extends JFrame
             {
                 prevFPS = (GlobalOptions.FPS == GlobalOptions.MaxFPS) ? prevFPS : GlobalOptions.FPS;
                 GlobalOptions.FPS = CheckboxMaximizeFPS.getState() ? 100 : prevFPS;
-                marioComponent.adjustFPS();
+//                marioComponent.adjustFPS();
 //                LOGGER.println("FPS set to " + (CheckboxMaximizeFPS.getState() ? "infinity" : GlobalOptions.FPS),
 //                        LOGGER.VERBOSE_MODE.INFO );
             }
@@ -443,7 +443,7 @@ public class ToolsConfigurator extends JFrame
             {
                 GlobalOptions.PauseWorld = CheckboxPauseWorld.getState();
 
-                marioComponent.setPaused(GlobalOptions.PauseWorld);
+//                marioComponent.setPaused(GlobalOptions.PauseWorld);
 //                LOGGER.println("World " + (GlobalOptions.PauseWorld ? "paused" : "unpaused"),
 //                        LOGGER.VERBOSE_MODE.INFO);
             }
@@ -499,12 +499,12 @@ public class ToolsConfigurator extends JFrame
     }
 
     public void setGameViewer(GameViewer gameViewer) {        this.gameViewer = gameViewer;    }
-    public void setMarioComponent(MarioComponent marioComponent)
-    {
-        this.marioComponent = marioComponent;
-        this.marioComponent.setGameViewer(gameViewer);
-    }
-    public MarioComponent getMarioComponent() {          return marioComponent;    }
+//    public void setMarioComponent(MarioComponent marioComponent)
+//    {
+//        this.marioComponent = marioComponent;
+//        this.marioComponent.setGameViewer(gameViewer);
+//    }
+//    public MarioComponent getMarioComponent() {          return marioComponent;    }
 
     public void setConsoleText(String text)
     {

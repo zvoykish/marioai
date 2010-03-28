@@ -8,7 +8,7 @@ import ch.idsia.mario.environments.Environment;
  * User: Sergey Karakovskiy, firstname_at_idsia_dot_ch
  * Date: May 12, 2009
  * Time: 7:28:57 PM
- * Package: ch.idsia.ai.agents
+ * Package: ch.idsia.controllers.agents
  */
 public class SimpleAgent implements Agent
 {

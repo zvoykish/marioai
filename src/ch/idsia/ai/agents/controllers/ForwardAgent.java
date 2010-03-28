@@ -1,4 +1,4 @@
-package ch.idsia.ai.agents.ai;
+package ch.idsia.ai.agents.controllers;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.mario.engine.sprites.Mario;
@@ -9,7 +9,7 @@ import ch.idsia.mario.environments.Environment;
  * User: Sergey Karakovskiy
  * Date: Apr 8, 2009
  * Time: 4:03:46 AM
- * Package: ch.idsia.ai.agents.ai;
+ * Package: ch.idsia.controllers.agents.controllers;
  */
 public class ForwardAgent extends BasicAIAgent implements Agent
 {

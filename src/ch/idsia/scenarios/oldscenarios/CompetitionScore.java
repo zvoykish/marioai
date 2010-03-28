@@ -2,7 +2,7 @@ package ch.idsia.scenarios.oldscenarios;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
-import ch.idsia.ai.agents.ai.TimingAgent;
+import ch.idsia.ai.agents.controllers.TimingAgent;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.tools.CmdLineOptions;
@@ -20,7 +20,7 @@ public class CompetitionScore {
 
     final static int numberOfTrials = 10;
     private static int killsSum = 0;
-    private static int marioStatusSum = 0;
+    private static float marioStatusSum = 0;
     private static int timeLeftSum = 0;
     private static int marioModeSum = 0;
 
@@ -82,7 +82,7 @@ public class CompetitionScore {
         int kills = 0;
         int timeLeft = 0;
         int marioMode = 0;
-        int marioStatus = 0;
+        float marioStatus = 0;
         for (int i = 0; i < numberOfTrials; i++) {
             options.setLevelLength (200 + (i * 128) + (seed % (i + 1)));
             options.setLevelType (i % 3);

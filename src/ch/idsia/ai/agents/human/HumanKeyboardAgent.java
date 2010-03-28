@@ -14,7 +14,7 @@ import java.util.List;
  * User: Sergey Karakovskiy
  * Date: Mar 29, 2009
  * Time: 12:19:49 AM
- * Package: ch.idsia.ai.agents.ai;
+ * Package: ch.idsia.controllers.agents.controllers;
  */
 public class HumanKeyboardAgent extends KeyAdapter implements Agent
 {

@@ -29,10 +29,15 @@ import java.util.Map;
 
 public class CmdLineOptions extends EvaluationOptions
 {
-    // TODO: SK Move default options to xml, properties, beans, whatever.. //relevant?
+    // TODO: SK Move default options to xml, properties, beans, whatever..
     public CmdLineOptions(String[] args)
     {
         super();
+        this.setArgs(args);
+    }
+
+    public void setArgs(String[] args)
+    {
         if (args.length > 0 && !args[0].startsWith("-") /*starts with a path to agent then*/)
         {
             this.setAgent(args[0]);
@@ -50,7 +55,7 @@ public class CmdLineOptions extends EvaluationOptions
             for (Map.Entry<String,String> el : optionsHashMap.entrySet())
                 System.out.println(el.getKey() + ": " + el.getValue());
         }
-        GlobalOptions.GameVeiwerContinuousUpdatesOn = isGameViewerContinuousUpdates();        
+        GlobalOptions.GameVeiwerContinuousUpdatesOn = isGameViewerContinuousUpdates();
     }
 
     public Boolean isToolsConfigurator() {

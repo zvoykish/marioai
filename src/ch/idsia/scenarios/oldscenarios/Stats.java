@@ -2,7 +2,7 @@ package ch.idsia.scenarios.oldscenarios;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
-import ch.idsia.ai.agents.ai.TimingAgent;
+import ch.idsia.ai.agents.controllers.TimingAgent;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.tools.CmdLineOptions;
