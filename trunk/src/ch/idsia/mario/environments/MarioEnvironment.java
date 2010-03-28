@@ -4,7 +4,9 @@ import ch.idsia.ai.agents.Agent;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.mario.engine.LevelScene;
 import ch.idsia.mario.engine.MarioVisualComponent;
+import ch.idsia.mario.engine.sprites.Mario;
 import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.EvaluationInfo;
 
 /**
  * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 3, 2010 Time: 10:08:13 PM
@@ -198,9 +200,41 @@ public class MarioEnvironment implements Environment
         return levelScene.isLevelFinished();
     }
 
-    public float[] getEvaluationInfo()
+    public float[] getEvaluationInfoAsFloats()
     {
-        return levelScene.getEvaluationInfo();
+        return this.getEvaluationInfo().toFloatArray();
+    }
+
+    public String getEvaluationInfoAsString()
+    {
+        return this.getEvaluationInfo().toString();
+    }
+
+    public EvaluationInfo getEvaluationInfo()
+    {
+        EvaluationInfo evaluationInfo = new EvaluationInfo();
+
+//        evaluationInfo.agentType = agent.getClass().getSimpleName();
+//        evaluationInfo.agentName = agent.getName();
+        evaluationInfo.marioStatus =         levelScene.getMarioStatus();
+        evaluationInfo.lengthOfLevelPassedPhys = levelScene.getMarioFloatPos()[0];
+//     evaluationInfo.lengthOfLevelPassedCells = mario.mapX;
+//     evaluationInfo.totalLengthOfLevelCells = levelScene.level.getWidthCells();
+//     evaluationInfo.totalLengthOfLevelPhys = levelScene.level.getWidthPhys();
+        evaluationInfo.timeSpentOnLevel = levelScene.getTimeSpent();
+        evaluationInfo.timeLeft = levelScene.getTimeLeft();
+//     evaluationInfo.totalTimeGiven = levelScene.getTimeLimit();
+        evaluationInfo.numberOfCoinsGained = Mario.coins;
+//        evaluationInfo.totalNumberOfCoins   = -1 ; // TODO: total Number of coins.
+        evaluationInfo.marioMode = levelScene.getMarioMode();
+        evaluationInfo.killsTotal = levelScene.getKillsTotal();
+        evaluationInfo.killsByStomp = levelScene.getKillsByStomp();
+        evaluationInfo.killsByFire = levelScene.getKillsByFire();
+        evaluationInfo.killsByShell = levelScene.getKillsByShell();
+        evaluationInfo.numberOfHiddenCoinsGained = levelScene.getNumberOfHiddenCoinsGained();
+
+//        evaluationInfo.Memo = "Number of attempt: " + Mario.numberOfAttempts;
+        return evaluationInfo;
     }
 
     public void reset(CmdLineOptions cmdLineOptions)

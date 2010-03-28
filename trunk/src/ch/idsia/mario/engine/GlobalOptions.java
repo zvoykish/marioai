@@ -7,7 +7,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class GlobalOptions {
+public abstract class GlobalOptions
+{
+    public static final int primaryVerionUID = 0;
+    public static final int minorVerionUID = 1;
+    public static final int minorSubVerionID = 3;
+
     public static boolean Labels = false;
     public static boolean MarioAlwaysInCenter = false;
     public static Integer FPS = 24;
@@ -17,7 +22,7 @@ public class GlobalOptions {
     public static boolean VisualizationOn = true;
     public static boolean GameVeiwerOn = true;
 
-    private static MarioComponent marioComponent = null;
+//    private static MarioComponent marioComponent = null;
     private static GameViewer GameViewer = null;
     public static boolean TimerOn = true;
 
@@ -30,18 +35,38 @@ public class GlobalOptions {
     public static final int VISUAL_COMPONENT_WIDTH = 320;
     public static final int VISUAL_COMPONENT_HEIGHT = 240;
 
-    public static void registerMarioComponent(MarioComponent mc)
+    public static int getPrimaryVersionUID()
     {
-        marioComponent = mc;
+        return primaryVerionUID;
     }
+
+    public static int getMinorVersionUID()
+    {
+        return minorVerionUID;
+    }
+
+    public static int getMinorSubVerionID()
+    {
+        return minorSubVerionID;
+    }
+
+    public static String getVersionUID()
+    {
+        return " v-" + getPrimaryVersionUID() + "." + getMinorVersionUID() + "." + getMinorSubVerionID();
+    }
+
+//    public static void registerMarioComponent(MarioComponent mc)
+//    {
+//        marioComponent = mc;
+//    }
 
     public static void registerMarioVisualComponent(MarioVisualComponent mc)
     {
         marioVisualComponent = mc;
     }
 
-    public static MarioComponent getMarioComponent()
-    {   return marioComponent;                       }
+//    public static MarioComponent getMarioComponent()
+//    {   return marioComponent;                       }
     
 
     public static void registerGameViewer(GameViewer gv)
@@ -51,9 +76,7 @@ public class GlobalOptions {
 
     public static void AdjustMarioComponentFPS()
     {
-        if ( marioComponent != null)
-            marioComponent.adjustFPS();
-        else if (marioVisualComponent != null)
+        if (marioVisualComponent != null)
             marioVisualComponent.adjustFPS();
     }
 

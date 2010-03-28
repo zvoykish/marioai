@@ -1,7 +1,7 @@
 package ch.idsia.tools.tcp;
 
 import ch.idsia.ai.agents.Agent;
-import ch.idsia.ai.agents.ai.BasicAIAgent;
+import ch.idsia.ai.agents.controllers.BasicAIAgent;
 import ch.idsia.mario.environments.Environment;
 import ch.idsia.tools.EvaluationInfo;
 
@@ -108,7 +108,7 @@ public class ServerAgent extends BasicAIAgent implements Agent
                 evaluationInfo.computeDistancePassed() + " " +
                 evaluationInfo.timeLeft + " " +
                 evaluationInfo.marioMode + " " +
-                evaluationInfo.numberOfGainedCoins + " ";
+                evaluationInfo.numberOfCoinsGained + " ";
         server.sendSafe(fitnessStr);
     }
 

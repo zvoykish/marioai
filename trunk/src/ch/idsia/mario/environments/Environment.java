@@ -2,6 +2,7 @@ package ch.idsia.mario.environments;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.EvaluationInfo;
 
 /**
  * Created by IntelliJ IDEA.
@@ -108,7 +109,11 @@ public interface Environment
 
     boolean isLevelFinished();
 
-    float [] getEvaluationInfo();
+    float [] getEvaluationInfoAsFloats();
+
+    String getEvaluationInfoAsString();
+
+    EvaluationInfo getEvaluationInfo();
 
     void reset(CmdLineOptions cmdLineOptions);
 

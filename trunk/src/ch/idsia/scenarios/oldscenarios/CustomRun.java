@@ -3,8 +3,6 @@ package ch.idsia.scenarios.oldscenarios;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AmiCoAgent;
-import ch.idsia.ai.agents.ai.ForwardAgent;
-import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.Evaluator;
 

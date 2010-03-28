@@ -146,7 +146,7 @@ public class ParameterContainer
         {
             defaultOptionsHashMap = new HashMap<String, String>();
             AgentsPool.setCurrentAgent(new HumanKeyboardAgent());
-            defaultOptionsHashMap.put("-ag","ch.idsia.ai.agents.human.HumanKeyboardAgent"); //defaultOptionsHashMap.put("-agentName","NoAgent");
+            defaultOptionsHashMap.put("-ag","ch.idsia.controllers.agents.human.HumanKeyboardAgent"); //defaultOptionsHashMap.put("-agentName","NoAgent");
             defaultOptionsHashMap.put("-amico","off");
             defaultOptionsHashMap.put("-echo","off"); //defaultOptionsHashMap.put("-echo","off");
             defaultOptionsHashMap.put("-ewf","on"); //defaultOptionsHashMap.put("-exitWhenFinished","off");

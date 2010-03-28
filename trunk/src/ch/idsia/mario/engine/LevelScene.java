@@ -1,6 +1,5 @@
 package ch.idsia.mario.engine;
 
-import ch.idsia.ai.agents.Agent;
 import ch.idsia.mario.engine.level.Level;
 import ch.idsia.mario.engine.level.LevelGenerator;
 import ch.idsia.mario.engine.level.SpriteTemplate;
@@ -13,7 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LevelScene extends Scene implements SpriteContext, Environment
+public class LevelScene extends Scene implements SpriteContext
 {
     final public List<Sprite> sprites = new ArrayList<Sprite>();
     final private List<Sprite> spritesToAdd = new ArrayList<Sprite>();
@@ -46,7 +45,7 @@ public class LevelScene extends Scene implements SpriteContext, Environment
     final private List<Float> enemiesFloatsList = new ArrayList<Float>();
     final private float[] marioFloatPos = new float[2];
     final private int[] marioState = new int[12];
-
+    private int numberOfHiddenCoinsGained;
 
     public int getTimeLimit() {  return timeLimit; }
     public void setTimeLimit(int timeLimit) {  this.timeLimit = timeLimit; }
@@ -65,7 +64,6 @@ public class LevelScene extends Scene implements SpriteContext, Environment
     public static int killedCreaturesByStomp;
     public static int killedCreaturesByShell;
 
-
     public LevelScene(long seed, int levelDifficulty, int type, int levelLength, int timeLimit, int visualization)
     {
         this.levelSeed = seed;
@@ -82,6 +80,8 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         // moved from init;
         try
         {
+//            System.out.println("Java::LevelScene: loading tiles.dat...");
+//            System.out.println("LS: System.getProperty(\"user.dir()\") = " + System.getProperty("user.dir"));
             Level.loadBehaviors(new DataInputStream(LevelScene.class.getResourceAsStream("resources/tiles.dat")));
         }
         catch (IOException e)
@@ -108,8 +108,24 @@ public class LevelScene extends Scene implements SpriteContext, Environment
          else
          {*/
 //        level = LevelGenerator.createLevel(320, 15, levelSeed);
-        level = LevelGenerator.createLevel(levelLength, 15, levelSeed, levelDifficulty, levelType);
-//        System.out.println("\nJava:level created.");
+        if (levelSeed != 152)
+            level = LevelGenerator.createLevel(levelLength, 15, levelSeed, levelDifficulty, levelType);
+        else
+        try
+        {
+            level = Level.load(new DataInputStream(LevelScene.class.getResourceAsStream("resources/test.lvl")));
+//            System.out.println("level.getWidthCells() = " + level.getWidthCells());
+            level.xExit = level.width - 6;
+            level.yExit = 5;
+
+//            System.out.println("level.xExit = " + level.xExit);
+//            System.out.println("level.yExit = " + level.yExit);
+        } catch (IOException e)
+        {
+            System.err.println("OOPS! Sorry! Critical ERROR: \n " +
+                               "Generation of secret level failed. Please, contact sergey@idsia.ch");
+        }
+//        Ssystem.out.println("\nJava:level created.");
         //        }
 
         /*        if (recorder != null)
@@ -126,7 +142,8 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         sprites.add(mario);
 //        System.out.println("mario.sheet = " + mario.sheet);
         startTime = 1;
-
+//        if (levelSeed == 152)
+//            mario.x = level.xExit * 16 - 17;
         timeLeft = timeLimit *15;
 
         tick = 0;
@@ -872,35 +889,14 @@ public class LevelScene extends Scene implements SpriteContext, Environment
         return mario.getStatus() != Mario.STATUS_RUNNING;
     }
 
-    public float[] getEvaluationInfo()
-    {
-        float[] evaluationInfoArray = new float[]{
-                mario.getStatus(),
-                mario.x,
-                mario.mapX,
-                level.getWidthCells(),
-                level.getWidthPhys(),
-                getTimeSpent(),
-                getTimeLeft(),
-                getTimeLimit(),
-                Mario.coins,
-                mario.getMode(),
-                mario.world.killedCreaturesTotal,
-        };
-        return evaluationInfoArray;
-    }
 
     public void reset(CmdLineOptions cmdLineOptions)
     {
         reset(cmdLineOptions.toIntArray());
     }
 
-    public void setAgent(Agent agent)
+    public boolean isMarioAbleToShoot()
     {
-        // 
-    }
-
-    public boolean isMarioAbleToShoot() {
         return mario.isCanShoot();
     }
 
@@ -1035,37 +1031,28 @@ public class LevelScene extends Scene implements SpriteContext, Environment
 
 
     public byte[][] getCompleteObservation()
-    {
-        return getMergedObservationZZ(1, 0);
-    }
+    {  return getMergedObservationZZ(1, 0);    }
 
     public byte[][] getEnemiesObservation()
-    {
-        return getEnemiesObservationZ(0);
-    }
+    {        return getEnemiesObservationZ(0);    }
 
     public byte[][] getLevelSceneObservation()
-    {
-        return getLevelSceneObservationZ(1);
-    }
+    {         return getLevelSceneObservationZ(1);    }
 
     public int getLevelDifficulty()
-    {
-        return levelDifficulty;
-    }
+    {         return levelDifficulty;    }
 
     public long getLevelSeed()
-    {
-        return levelSeed;
-    }
+    {                                        return levelSeed;    }
 
     public int getLevelLength()
-    {
-        return levelLength;
-    }
+    {        return levelLength;    }
 
     public int getLevelType()
+    {        return levelType;    }
+
+    public int getNumberOfHiddenCoinsGained()
     {
-        return levelType;
+        return numberOfHiddenCoinsGained;
     }
 }

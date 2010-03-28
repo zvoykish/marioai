@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
  * User: Sergey Karakovskiy
  * Date: Apr 8, 2009
  * Time: 3:36:16 AM
- * Package: ch.idsia.ai.agents.ai;
+ * Package: ch.idsia.controllers.agents.controllers;
  */
 public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
     private boolean Action[] = null;

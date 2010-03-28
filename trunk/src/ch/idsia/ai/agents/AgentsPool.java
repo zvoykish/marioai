@@ -3,7 +3,6 @@ package ch.idsia.ai.agents;
 import ch.idsia.ai.agents.human.HumanKeyboardAgent;
 import wox.serial.Easy;
 
-import java.io.FileNotFoundException;
 import java.util.*;
 
 /**
@@ -11,7 +10,7 @@ import java.util.*;
  * User: Sergey Karakovskiy, firstname_at_idsia_dot_ch
  * Date: May 9, 2009
  * Time: 8:28:06 PM
- * Package: ch.idsia.ai.agents
+ * Package: ch.idsia.controllers.agents
  */
 
 public final class AgentsPool

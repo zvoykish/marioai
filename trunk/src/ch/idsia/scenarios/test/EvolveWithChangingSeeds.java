@@ -7,7 +7,7 @@ import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.ai.Evolvable;
 import ch.idsia.ai.ea.ES;
 import ch.idsia.maibe.tasks.MultiDifficultyProgressTask;
-import ch.idsia.ai.agents.ai.SmallMLPAgent;
+import ch.idsia.ai.agents.learning.SmallMLPAgent;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
 import wox.serial.Easy;

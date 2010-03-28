@@ -1,12 +1,12 @@
 package ch.idsia.scenarios.test;
 
+import ch.idsia.ai.agents.learning.SimpleMLPAgent;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.ai.Evolvable;
 import ch.idsia.ai.ea.ES;
 import ch.idsia.maibe.tasks.ProgressTask;
-import ch.idsia.ai.agents.ai.SimpleMLPAgent;
 import ch.idsia.scenarios.oldscenarios.Stats;
 import wox.serial.Easy;
 

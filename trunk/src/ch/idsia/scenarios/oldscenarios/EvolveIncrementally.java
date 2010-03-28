@@ -3,7 +3,7 @@ package ch.idsia.scenarios.oldscenarios;
 import ch.idsia.ai.Evolvable;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
-import ch.idsia.ai.agents.ai.SimpleMLPAgent;
+import ch.idsia.ai.agents.learning.SimpleMLPAgent;
 import ch.idsia.ai.ea.ES;
 import ch.idsia.maibe.tasks.MultiSeedProgressTask;
 import ch.idsia.mario.engine.GlobalOptions;

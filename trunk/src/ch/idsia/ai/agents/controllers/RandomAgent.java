@@ -1,4 +1,4 @@
-package ch.idsia.ai.agents.ai;
+package ch.idsia.ai.agents.controllers;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.mario.environments.Environment;
@@ -10,7 +10,7 @@ import java.util.Random;
  * User: Sergey Karakovskiy
  * Date: Mar 28, 2009
  * Time: 10:37:18 PM
- * Package: ch.idsia.ai.agents.ai;
+ * Package: ch.idsia.controllers.agents.controllers;
  */
 public class RandomAgent extends BasicAIAgent implements Agent
 {

@@ -2,8 +2,8 @@ package ch.idsia.scenarios.champ;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
-import ch.idsia.ai.agents.ai.ForwardAgent;
-import ch.idsia.ai.agents.ai.TimingAgent;
+import ch.idsia.ai.agents.controllers.ForwardAgent;
+import ch.idsia.ai.agents.controllers.TimingAgent;
 import ch.idsia.maibe.tasks.BasicTask;
 import ch.idsia.mario.environments.Environment;
 import ch.idsia.mario.environments.MarioEnvironment;
@@ -21,10 +21,20 @@ import ch.idsia.utils.StatisticalSummary;
  */
 public class GamePlayEvaluation
 {
+
+
+
+
+
+
+
+
+
+
     final static int numberOfTrials = 10;
     final static boolean scoring = false;
     private static int killsSum = 0;
-    private static int marioStatusSum = 0;
+    private static float marioStatusSum = 0;
     private static int timeLeftSum = 0;
     private static int marioModeSum = 0;
     private static boolean detailedStats = false;
@@ -33,13 +43,27 @@ public class GamePlayEvaluation
     public static void main(String[] args)
     {
         final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
+
+        int levelLength = cmdLineOptions.getLevelLength();
+
+        final int[] timeLimits = new int[]{levelLength * MarioSystemOfValues.timeLengthMapping.TIGHT,
+                                           levelLength * MarioSystemOfValues.timeLengthMapping.MEDIUM,
+                                           levelLength * MarioSystemOfValues.timeLengthMapping.FLEXIBLE};
+
+        final int[] levelDifficulties = new int[]{0, 1, 3, 5, 12, 16, 20};
+        final int[] levelTypes = new int[]{0, 1, 2};
+        final boolean[] creaturesEnables = new boolean[]{false, true};
+        int levelSeed = cmdLineOptions.getLevelRandSeed();
+
+
+
         final Environment environment = new MarioEnvironment();
         final Agent agent = new ForwardAgent();
         final BasicTask basicTask = new BasicTask(environment, agent);
         basicTask.reset(cmdLineOptions);
-        basicTask.runEpisode();
-        EvaluationInfo evaluationInfo = new EvaluationInfo(environment.getEvaluationInfo());
-        System.out.println("evaluationInfo = " + evaluationInfo);
+        basicTask.runOneEpisode();
+//        EvaluationInfo evaluationInfo = new EvaluationInfo(environment.getEvaluationInfoAsFloats());
+//        System.out.println("evaluationInfo = " + evaluationInfo);
         System.exit(0);
     }
 
@@ -101,7 +125,7 @@ public class GamePlayEvaluation
         int kills = 0;
         int timeLeft = 0;
         int marioMode = 0;
-        int marioStatus = 0;
+        float marioStatus = 0;
 
 //        options.setNumberOfTrials(numberOfTrials);
         options.resetCurrentTrial();

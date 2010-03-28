@@ -1,39 +1,40 @@
-package ch.idsia.ai.agents.ai;
+package ch.idsia.ai.agents.learning;
 
-import ch.idsia.ai.MLP;
-import ch.idsia.ai.Evolvable;
 import ch.idsia.ai.agents.Agent;
+import ch.idsia.ai.Evolvable;
+import ch.idsia.ai.MLP;
+import ch.idsia.ai.agents.controllers.BasicAIAgent;
 import ch.idsia.mario.environments.Environment;
 
 /**
  * Created by IntelliJ IDEA.
  * User: julian
- * Date: Jun 14, 2009
- * Time: 1:43:04 PM
+ * Date: May 13, 2009
+ * Time: 11:11:33 AM
  */
-public class LargeMLPAgent extends BasicAIAgent implements Agent, Evolvable {
+public class MediumMLPAgent extends BasicAIAgent implements Agent, Evolvable {
 
-    static private String name = "LargeMLPAgent";
+    private static final String name = "MediumMLPAgent";
     private MLP mlp;
     final int numberOfOutputs = Environment.numberOfButtons;
-    final int numberOfInputs = 101;
+    final int numberOfInputs = 53;
 
-    public LargeMLPAgent() {
+    public MediumMLPAgent() {
         super (name);
         mlp = new MLP (numberOfInputs, 10, numberOfOutputs);
     }
 
-    private LargeMLPAgent(MLP mlp) {
+    private MediumMLPAgent(MLP mlp) {
         super (name);
         this.mlp = mlp;
     }
 
     public Evolvable getNewInstance() {
-        return new LargeMLPAgent(mlp.getNewInstance());
+        return new MediumMLPAgent(mlp.getNewInstance());
     }
 
     public Evolvable copy() {
-        return new LargeMLPAgent(mlp.copy ());
+        return new MediumMLPAgent(mlp.copy ());
     }
 
     public boolean[] getAction()
@@ -50,18 +51,17 @@ public class LargeMLPAgent extends BasicAIAgent implements Agent, Evolvable {
     }
 
     public boolean[] getAction(Environment observation) {
-        double[] inputs;// = new double[numberOfInputs];
         byte[][] scene = observation.getLevelSceneObservation(/*1*/);
         byte[][] enemies = observation.getEnemiesObservation(/*0*/);
-        inputs = new double[numberOfInputs];
+        double[] inputs = new double[numberOfInputs];
         int which = 0;
-        for (int i = -3; i < 4; i++) {
-            for (int j = -3; j < 4; j++) {
+        for (int i = -2; i < 3; i++) {
+            for (int j = -2; j < 3; j++) {
                 inputs[which++] = probe(i, j, scene);
             }
         }
-        for (int i = -3; i < 4; i++) {
-            for (int j = -3; j < 4; j++) {
+        for (int i = -2; i < 3; i++) {
+            for (int j = -2; j < 3; j++) {
                 inputs[which++] = probe(i, j, enemies);
             }
         }
@@ -76,12 +76,15 @@ public class LargeMLPAgent extends BasicAIAgent implements Agent, Evolvable {
         return action;
     }
 
-    public Agent.AGENT_TYPE getType() {
-        return Agent.AGENT_TYPE.AI;
+    public AGENT_TYPE getType() {
+        return AGENT_TYPE.AI;
     }
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
     }
 
     private double probe (int x, int y, byte[][] scene) {
@@ -89,6 +92,5 @@ public class LargeMLPAgent extends BasicAIAgent implements Agent, Evolvable {
         int realY = y + 11;
         return (scene[realX][realY] != 0) ? 1 : 0;
     }
-
 
 }

@@ -1,11 +1,8 @@
 package ch.idsia.tools;
 
 import ch.idsia.mario.engine.GlobalOptions;
-import ch.idsia.mario.environments.Environment;
 import ch.idsia.mario.simulation.BasicSimulator;
 import ch.idsia.mario.simulation.Simulation;
-import ch.idsia.tools.tcp.Server;
-import ch.idsia.tools.tcp.ServerAgent;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -111,9 +108,9 @@ public class Evaluator implements Runnable
 //            LOGGER.println("Attempts left: " + (evaluationOptions.getNumberOfTrials() - ++i ), LOGGER.VERBOSE_MODE.ALL);
             evaluationInfo = simulator.simulateOneLevel();
                                                         
-            evaluationInfo.levelType = evaluationOptions.getLevelType();
-            evaluationInfo.levelDifficulty = evaluationOptions.getLevelDifficulty();
-            evaluationInfo.levelRandSeed = evaluationOptions.getLevelRandSeed();
+//            evaluationInfo.levelType = evaluationOptions.getLevelType();
+//            evaluationInfo.levelDifficulty = evaluationOptions.getLevelDifficulty();
+//            evaluationInfo.levelRandSeed = evaluationOptions.getLevelRandSeed();
             evaluationSummary.add(evaluationInfo);
 //            LOGGER.VERBOSE_MODE VM = (evaluationInfo.marioStatus == Mario.STATUS_WIN) ? LOGGER.VERBOSE_MODE.INFO : LOGGER.VERBOSE_MODE.ALL;
 //            LOGGER.println("run  finished with result : " + evaluationInfo, VM);
@@ -246,9 +243,9 @@ class evCoinsFitnessComparator implements Comparator
 {
     public int compare(Object o, Object o1)
     {
-        int ei1Fitness = ((EvaluationInfo)(o)).numberOfGainedCoins;
+        float ei1Fitness = ((EvaluationInfo)(o)).numberOfCoinsGained;
 
-        int ei2Fitness = ((EvaluationInfo)(o1)).numberOfGainedCoins;
+        float ei2Fitness = ((EvaluationInfo)(o1)).numberOfCoinsGained;
         if (ei1Fitness < ei2Fitness)
             return 1;
         else if (ei1Fitness > ei2Fitness)

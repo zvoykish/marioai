@@ -1,4 +1,4 @@
-package ch.idsia.ai.agents.ai;
+package ch.idsia.ai.agents.controllers;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.mario.engine.sprites.Mario;
@@ -6,14 +6,17 @@ import ch.idsia.mario.environments.Environment;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Sergey Karakovskiy, firstname_at_idsia_dot_ch
+ * User: Sergey Karakovskiy, sergey_at_idsia_dot_ch
  * Date: May 9, 2009
- * Time: 9:46:59 AM
- * Package: ch.idsia.ai.agents
+ * Time: 1:42:03 PM
+ * Package: ch.idsia.ai.agents.controllers
  */
-public class ScaredAgent extends BasicAIAgent implements Agent {
-    public ScaredAgent() {
-        super("ScaredAgent");
+
+public class ScaredSpeedyAgent extends BasicAIAgent implements Agent
+{
+    public ScaredSpeedyAgent()
+    {
+        super("ScaredSpeedyAgent");
     }
 
     int trueJumpCounter = 0;
@@ -21,10 +24,22 @@ public class ScaredAgent extends BasicAIAgent implements Agent {
 
     public boolean[] getAction()
     {
+        return action;
+    }
+
+    public void reset()
+    {
+        action[Mario.KEY_RIGHT] = true;
+        action[Mario.KEY_SPEED] = true;
+    }
+
+    public boolean[] getAction(Environment observation)
+    {
+        byte[][] levelScene = observation.getLevelSceneObservation(/*1*/);
         if (/*levelScene[11][13] != 0 ||*/ levelScene[11][12] != 0 ||
            /* levelScene[12][13] == 0 ||*/ levelScene[12][12] == 0 )
         {
-            if (isMarioAbleToJump || ( !isMarioOnGround && action[Mario.KEY_JUMP]))
+            if (observation.isMarioAbleToJump() || ( !observation.isMarioOnGround() && action[Mario.KEY_JUMP]))
             {
                 action[Mario.KEY_JUMP] = true;
             }
@@ -42,17 +57,6 @@ public class ScaredAgent extends BasicAIAgent implements Agent {
             action[Mario.KEY_JUMP] = false;
         }
 
-        return action;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public void reset() {
-        action[Mario.KEY_RIGHT] = true;
-        action[Mario.KEY_SPEED] = false;
-    }
-
-    public boolean[] getAction(Environment observation)
-    {
-        System.err.println("No getAction Implementation here: use getAction() instead");
-        return super.getAction(observation);
+        return action;
     }
 }
