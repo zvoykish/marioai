@@ -31,7 +31,8 @@ public class Easy {
         }
     }
 
-    public static Object load(String filename) {
+    public static Object load(String filename)
+    {
         try {
             SAXBuilder builder = new SAXBuilder();
             InputStream is = new FileInputStream(filename);
@@ -39,8 +40,9 @@ public class Easy {
             Element el = doc.getRootElement();
             ObjectReader reader = new SimpleReader();
             return reader.read(el);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception e)
+        {
+            System.err.println("Easy: cannot find wox definition with name " + filename);
             return null;
         }
     }

@@ -2,14 +2,14 @@
 <project name="module_marioai" default="compile.module.marioai">
   <dirname property="module.marioai.basedir" file="${ant.file.module_marioai}"/>
   
-  <property name="module.jdk.home.marioai" value="${jdk.home.1.5}"/>
-  <property name="module.jdk.bin.marioai" value="${jdk.bin.1.5}"/>
-  <property name="module.jdk.classpath.marioai" value="jdk.classpath.1.5"/>
+  <property name="module.jdk.home.marioai" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.marioai" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.marioai" value="${project.jdk.classpath}"/>
   
   <property name="compiler.args.marioai" value="${compiler.args}"/>
   
-  <property name="marioai.output.dir" value="/Users/Duke/Projects/MarioAI/bin"/>
-  <property name="marioai.testoutput.dir" value="/Users/Duke/Projects/MarioAI/bin"/>
+  <property name="marioai.output.dir" value="${module.marioai.basedir}/bin"/>
+  <property name="marioai.testoutput.dir" value="${module.marioai.basedir}/bin"/>
   
   <path id="marioai.module.bootclasspath">
     <!-- Paths to be included in compilation bootclasspath -->
@@ -17,13 +17,13 @@
   
   <path id="marioai.module.classpath">
     <path refid="${module.jdk.classpath.marioai}"/>
-    <pathelement location="${basedir}/trunk/lib/jdom.jar"/>
+    <pathelement location="${basedir}/lib/jdom.jar"/>
     <path refid="library.python_2.5.2_interpreter_library.classpath"/>
   </path>
   
   <path id="marioai.runtime.module.classpath">
     <pathelement location="${marioai.output.dir}"/>
-    <pathelement location="${basedir}/trunk/lib/jdom.jar"/>
+    <pathelement location="${basedir}/lib/jdom.jar"/>
     <path refid="library.python_2.5.2_interpreter_library.classpath"/>
   </path>
   

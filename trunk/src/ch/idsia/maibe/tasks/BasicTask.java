@@ -14,6 +14,7 @@ public class BasicTask
     private Environment environment;
     private Agent agent;
     private CmdLineOptions options;
+    private long COMPUTATIONAL_TIME_BOUND = 42; // stands for  FPS 24, prescribed FPS.
 
     public BasicTask(Environment environment, Agent agent)
     {
@@ -21,14 +22,38 @@ public class BasicTask
         this.setAgent(agent);
     }
 
-    public void runOneEpisode()
+    /**
+     *
+     * @return whether controller is disqualified or not
+     */
+
+    public boolean runOneEpisode()
     {
         while (!environment.isLevelFinished())
         {
             environment.tick();
+//            start timer
+            long tm = System.currentTimeMillis();
             agent.integrateObservation(environment);
-            environment.performAction(agent.getAction());
+//            try
+//            {
+//                Thread.sleep(45);
+//            } catch (InterruptedException e)
+//            {
+//                e.printStackTrace();
+//            }
+//            finish timer and check
+            boolean[] action = agent.getAction();
+//            System.out.println("System.currentTimeMillis() - tm > COMPUTATIONAL_TIME_BOUND = " + (System.currentTimeMillis() - tm ));
+            if (System.currentTimeMillis() - tm > COMPUTATIONAL_TIME_BOUND)   
+            {
+//                # controller disqualified on this level
+                System.out.println("Agent is disqualified on this level");
+                break;
+            }
+            environment.performAction(action);
         }
+        return true;
     }
 
     public void runEpisodes(int amount, boolean verbose)
