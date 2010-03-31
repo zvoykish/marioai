@@ -43,30 +43,32 @@ public class GamePlayEvaluation
         final int[] levelTypes = new int[]{0, 1, 2};
         final boolean[] creaturesEnables = new boolean[]{false, true};
         int levelSeed = cmdLineOptions.getLevelRandSeed();
-//        cmdLineOptions.setVisualization(false);
-        cmdLineOptions.setFPS(24);
+        cmdLineOptions.setVisualization(false);
+//        cmdLineOptions.setFPS(24);
 
         final Environment environment = new MarioEnvironment();
         final Agent agent = new ForwardAgent();
         final BasicTask basicTask = new BasicTask(environment, agent);
         float fitness = 0;
-        for ( int i = 0; i < levelDifficulties.length; ++i)
+        for (int levelDifficulty : levelDifficulties)
         {
-            for (int j = 0; j < levelTypes.length; ++j)
+            for (int levelType : levelTypes)
             {
-                for  (int k = 0; k < creaturesEnables.length; ++k)
+                for (boolean creaturesEnable : creaturesEnables)
                 {
-                    for (int m = 0; m < timeLimits.length; ++m)
+                    for (int timeLimit : timeLimits)
                     {
-                        cmdLineOptions.setLevelDifficulty(levelDifficulties[i]);
-                        cmdLineOptions.setLevelType(levelTypes[j]);
-                        cmdLineOptions.setPauseWorld(!creaturesEnables[k]);
-                        System.out.println("timeLimits = " + timeLimits[m]);
-                        cmdLineOptions.setTimeLimit(timeLimits[m]);
+                        cmdLineOptions.setLevelDifficulty(levelDifficulty);
+                        cmdLineOptions.setLevelType(levelType);
+                        cmdLineOptions.setPauseWorld(!creaturesEnable);
+                        cmdLineOptions.setTimeLimit(timeLimit);
                         basicTask.reset(cmdLineOptions);
                         basicTask.runOneEpisode();
-                        float f = environment.getEvaluationInfo().computeMultiObjectiveFitness();
-                        System.out.println("Intermediate score = " + f);
+                        EvaluationInfo evaluationInfo = environment.getEvaluationInfo();
+                        float f = evaluationInfo.computeMultiObjectiveFitness();
+                        System.out.println("LEVEL OPTIONS: -ld " + levelDifficulty + " -lt " + levelType + " -pw " + !creaturesEnable +
+                            " -tl " + timeLimit);
+                        System.out.println("Intermediate SCORE = " + f + "; Details: " + evaluationInfo.toStringSingleLine());
                         fitness += f;
                     }
                 }

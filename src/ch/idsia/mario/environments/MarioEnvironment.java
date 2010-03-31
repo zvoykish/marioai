@@ -218,7 +218,7 @@ public class MarioEnvironment implements Environment
 //        evaluationInfo.agentName = agent.getName();
         evaluationInfo.marioStatus =         levelScene.getMarioStatus();
         evaluationInfo.lengthOfLevelPassedPhys = levelScene.getMarioFloatPos()[0];
-//     evaluationInfo.lengthOfLevelPassedCells = mario.mapX;
+     evaluationInfo.lengthOfLevelPassedCells = levelScene.mario.mapX;
 //     evaluationInfo.totalLengthOfLevelCells = levelScene.level.getWidthCells();
 //     evaluationInfo.totalLengthOfLevelPhys = levelScene.level.getWidthPhys();
         evaluationInfo.timeSpentOnLevel = levelScene.getTimeSpent();
