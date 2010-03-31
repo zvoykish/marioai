@@ -1,14 +1,17 @@
 package ch.idsia.mario.engine.mapedit;
 
+import ch.idsia.mario.engine.LevelScene;
+import ch.idsia.mario.engine.level.Level;
+
+import javax.swing.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
-
-import javax.swing.*;
-import javax.swing.border.*;
-
-import ch.idsia.mario.engine.level.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
 
 
 public class LevelEditor extends JFrame implements ActionListener
@@ -29,7 +32,9 @@ public class LevelEditor extends JFrame implements ActionListener
         
         try
         {
-            Level.loadBehaviors(new DataInputStream(new FileInputStream("tiles.dat")));
+            System.out.println("System.getProperty(\"user.dir()\") = " + System.getProperty("user.dir"));
+            Level.loadBehaviors(new DataInputStream(LevelScene.class.getResourceAsStream("resources/tiles.dat")));
+//            Level.loadBehaviors(new DataInputStream(new FileInputStream("ch/idsia/mario/resources/tiles.dat")));
         }
         catch (Exception e)
         {
@@ -82,12 +87,13 @@ public class LevelEditor extends JFrame implements ActionListener
 
                     try
                     {
-                        Level.saveBehaviors(new DataOutputStream(new FileOutputStream("tiles.dat")));
+                        System.out.println("bm = " + bm);
+                        Level.saveBehaviors(new DataOutputStream(new FileOutputStream("SAVEDtiles.dat")));
                     }
                     catch (Exception e)
                     {
                         e.printStackTrace();
-                        JOptionPane.showMessageDialog(LevelEditor.this, e.toString(), "Failed to load tile behaviors", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(LevelEditor.this, e.toString(), "Failed to SAVE tile behaviors", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             });
@@ -115,7 +121,7 @@ public class LevelEditor extends JFrame implements ActionListener
         {
             if (e.getSource() == loadButton)
             {
-                levelEditView.setLevel(Level.load(new DataInputStream(new FileInputStream(nameField.getText().trim()))));
+                levelEditView.setLevel(Level.load(new DataInputStream(LevelScene.class.getResourceAsStream(nameField.getText().trim()))));
             }
             if (e.getSource() == saveButton)
             {

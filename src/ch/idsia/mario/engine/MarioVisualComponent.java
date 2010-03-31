@@ -90,7 +90,7 @@ public class MarioVisualComponent extends JComponent
     {
         if (marioComponentFrame == null)
         {
-            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentName() +*/ "Mario AI benchmark-" + GlobalOptions.MAIBeVersionStr);
+            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentName() +*/ "Mario AI benchmark " + GlobalOptions.getVersionUID());
             marioComponentFrame.setContentPane(m);
             m.init();
             marioComponentFrame.pack();
@@ -161,6 +161,7 @@ public class MarioVisualComponent extends JComponent
         // Delay depending on how far we are behind.
         if (delay > 0)
         {
+//            System.out.println("delay = " + delay);
             try {
                 tm += delay;
                 Thread.sleep(Math.max(0, tm - System.currentTimeMillis()));

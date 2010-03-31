@@ -70,12 +70,8 @@ public class LevelGenerator
         }
 
         lastSeed = seed;
-//        System.out.println("level = " + level);
-//        System.out.println("random = " + random);
         level = new Level(width, height);
-//        System.out.println("level = " + level);
         random = new Random(seed);
-//        System.out.println("random = " + random);
 
         int length = 0;
         length += buildStraight(0, level.width, true);

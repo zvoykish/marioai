@@ -21,16 +21,6 @@ import ch.idsia.utils.StatisticalSummary;
  */
 public class GamePlayEvaluation
 {
-
-
-
-
-
-
-
-
-
-
     final static int numberOfTrials = 10;
     final static boolean scoring = false;
     private static int killsSum = 0;
@@ -39,29 +29,51 @@ public class GamePlayEvaluation
     private static int marioModeSum = 0;
     private static boolean detailedStats = false;
 
-
     public static void main(String[] args)
     {
         final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
 
         int levelLength = cmdLineOptions.getLevelLength();
 
-        final int[] timeLimits = new int[]{levelLength * MarioSystemOfValues.timeLengthMapping.TIGHT,
-                                           levelLength * MarioSystemOfValues.timeLengthMapping.MEDIUM,
-                                           levelLength * MarioSystemOfValues.timeLengthMapping.FLEXIBLE};
+        final int[] timeLimits = new int[]{levelLength / 10,
+                                           levelLength*2 / 10,
+                                           levelLength*4 / 10};
 
         final int[] levelDifficulties = new int[]{0, 1, 3, 5, 12, 16, 20};
         final int[] levelTypes = new int[]{0, 1, 2};
         final boolean[] creaturesEnables = new boolean[]{false, true};
         int levelSeed = cmdLineOptions.getLevelRandSeed();
-
-
+//        cmdLineOptions.setVisualization(false);
+        cmdLineOptions.setFPS(24);
 
         final Environment environment = new MarioEnvironment();
         final Agent agent = new ForwardAgent();
         final BasicTask basicTask = new BasicTask(environment, agent);
-        basicTask.reset(cmdLineOptions);
-        basicTask.runOneEpisode();
+        float fitness = 0;
+        for ( int i = 0; i < levelDifficulties.length; ++i)
+        {
+            for (int j = 0; j < levelTypes.length; ++j)
+            {
+                for  (int k = 0; k < creaturesEnables.length; ++k)
+                {
+                    for (int m = 0; m < timeLimits.length; ++m)
+                    {
+                        cmdLineOptions.setLevelDifficulty(levelDifficulties[i]);
+                        cmdLineOptions.setLevelType(levelTypes[j]);
+                        cmdLineOptions.setPauseWorld(!creaturesEnables[k]);
+                        System.out.println("timeLimits = " + timeLimits[m]);
+                        cmdLineOptions.setTimeLimit(timeLimits[m]);
+                        basicTask.reset(cmdLineOptions);
+                        basicTask.runOneEpisode();
+                        float f = environment.getEvaluationInfo().computeMultiObjectiveFitness();
+                        System.out.println("Intermediate score = " + f);
+                        fitness += f;
+                    }
+                }
+            }
+        }
+        System.out.println("GamePlayEvaluation final score = " + fitness);
+
 //        EvaluationInfo evaluationInfo = new EvaluationInfo(environment.getEvaluationInfoAsFloats());
 //        System.out.println("evaluationInfo = " + evaluationInfo);
         System.exit(0);

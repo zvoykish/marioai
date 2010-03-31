@@ -33,7 +33,14 @@ public final class AgentsPool
         }
         catch (ClassNotFoundException e) {
             System.out.println (name + " is not a class name; trying to load a wox definition with that name.");
+            try{
             agent = (Agent) Easy.load (name);
+            }catch(Exception ex)
+            {
+                System.err.println(name + " is not a wox definition");   
+                agent = null;
+            }
+
             if (agent == null)
             {
                 System.err.println("wox definition has not been found as well. Loading <HumanKeyboardAgent> instead");
