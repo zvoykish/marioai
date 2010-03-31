@@ -99,6 +99,23 @@ public class EvaluationInfo
         return ret;
     }
 
+    public String toStringSingleLine()
+    {
+        String ret = "##";
+        ret += " Status: " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss");
+        ret += "; Mode: " + Mario.MODES[marioMode];
+        ret += "; Passed (Cells, Phys): " + df.format((double)lengthOfLevelPassedCells ) + ", " +
+                                                            df.format(lengthOfLevelPassedPhys ) ;
+        ret += "; Time Spent: " + timeSpentOnLevel;
+        ret += "; Time Left: " + timeLeft;
+        ret += "; Coins: " + numberOfCoinsGained;
+        ret += "; kills: " + killsTotal;
+        ret += "; By Fire: " + killsByFire;
+        ret += "; By Shell: " + killsByShell;
+        ret += "; By Stomp: " + killsByStomp;
+        return ret;
+    }
+
 //    public int levelType = MagicNumberUnDef;
 //    public float totalLengthOfLevelCells = MagicNumberUnDef;
 //    public float totalLengthOfLevelPhys = MagicNumberUnDef;
