@@ -14,6 +14,7 @@ public class LevelGenerator
     private static Random levelSeedRandom = new Random();
     public static long lastSeed;
     public static final int LevelLengthMinThreshold = 50;
+    private int levelDifficulty;
 
     public static Level createLevel(int width, int height, long seed, int difficulty, int type)
     {
@@ -53,7 +54,8 @@ public class LevelGenerator
         odds[ODDS_STRAIGHT] = 20;
         odds[ODDS_HILL_STRAIGHT] = 10;
         odds[ODDS_TUBES] = 2 + 1 * difficulty;
-        odds[ODDS_JUMP] = 2 * difficulty;
+        this.levelDifficulty = difficulty;
+        odds[ODDS_JUMP] = 3 * difficulty;
         odds[ODDS_CANNONS] = -10 + 5 * difficulty;
 
 
@@ -143,7 +145,7 @@ public class LevelGenerator
             case ODDS_TUBES:
                 return buildTubes(x, maxLength);
             case ODDS_JUMP:
-                return buildJump(x, maxLength);
+                return buildJump(x, 12);
             case ODDS_CANNONS:
                 return buildCannons(x, maxLength);
         }
@@ -154,7 +156,9 @@ public class LevelGenerator
     {
         int js = random.nextInt(4) + 2;
         int jl = random.nextInt(2) + 2;
-        int length = js * 2 + jl;
+//        System.out.println("random.nextInt() % this.levelDifficulty+1 = " +
+        random.nextInt();
+        int length = js * 2 + jl + (random.nextInt() % this.levelDifficulty+1);
 
         boolean hasStairs = random.nextInt(3) == 0;
 
@@ -190,6 +194,9 @@ public class LevelGenerator
             }
         }
 
+        if (length < 0) length = 1;
+        if (length > maxLength) length = maxLength;
+//        System.out.println("length = " + length);
         return length;
     }
 

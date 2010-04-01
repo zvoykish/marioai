@@ -4,6 +4,8 @@ import ch.idsia.ai.agents.Agent;
 import ch.idsia.mario.environments.Environment;
 import ch.idsia.tools.CmdLineOptions;
 
+import java.util.Random;
+
 /**
  * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 14, 2010 Time: 4:47:33 PM
  * Package: ch.idsia.maibe.tasks
@@ -27,8 +29,11 @@ public class BasicTask
      * @return whether controller is disqualified or not
      */
 
+    final Random r = new Random();
+
     public boolean runOneEpisode()
     {
+        boolean tormoz = r.nextInt() < 10;
         while (!environment.isLevelFinished())
         {
             environment.tick();
@@ -37,7 +42,8 @@ public class BasicTask
             agent.integrateObservation(environment);
 //            try
 //            {
-//                Thread.sleep(45);
+//               if (tormoz)
+//                    Thread.sleep(41);
 //            } catch (InterruptedException e)
 //            {
 //                e.printStackTrace();
@@ -49,7 +55,7 @@ public class BasicTask
             {
 //                # controller disqualified on this level
                 System.out.println("Agent is disqualified on this level");
-                break;
+                return false;
             }
             environment.performAction(action);
         }

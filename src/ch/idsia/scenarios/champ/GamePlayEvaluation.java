@@ -50,6 +50,9 @@ public class GamePlayEvaluation
         final Agent agent = new ForwardAgent();
         final BasicTask basicTask = new BasicTask(environment, agent);
         float fitness = 0;
+        boolean verbose = true;
+        int trials = 0;
+        int disqualifications = 0;
         for (int levelDifficulty : levelDifficulties)
         {
             for (int levelType : levelTypes)
@@ -58,22 +61,34 @@ public class GamePlayEvaluation
                 {
                     for (int timeLimit : timeLimits)
                     {
+                        trials ++;
                         cmdLineOptions.setLevelDifficulty(levelDifficulty);
                         cmdLineOptions.setLevelType(levelType);
                         cmdLineOptions.setPauseWorld(!creaturesEnable);
                         cmdLineOptions.setTimeLimit(timeLimit);
                         basicTask.reset(cmdLineOptions);
-                        basicTask.runOneEpisode();
+                        if (!basicTask.runOneEpisode())
+                        {
+                            System.out.println("MarioAI: out of computational time per action!");
+                            disqualifications++;
+                            continue;
+                        }
                         EvaluationInfo evaluationInfo = environment.getEvaluationInfo();
                         float f = evaluationInfo.computeMultiObjectiveFitness();
-                        System.out.println("LEVEL OPTIONS: -ld " + levelDifficulty + " -lt " + levelType + " -pw " + !creaturesEnable +
-                            " -tl " + timeLimit);
-                        System.out.println("Intermediate SCORE = " + f + "; Details: " + evaluationInfo.toStringSingleLine());
+                        if (verbose)
+                        {
+                            System.out.println("LEVEL OPTIONS: -ld " + levelDifficulty + " -lt " + levelType + " -pw " + !creaturesEnable +
+                                " -tl " + timeLimit);
+                            System.out.println("Intermediate SCORE = " + f + "; Details: " + evaluationInfo.toStringSingleLine());
+                        }
                         fitness += f;
                     }
                 }
             }
         }
+
+        System.out.println("trials = " + trials);
+        System.out.println("disqualifications = " + disqualifications);
         System.out.println("GamePlayEvaluation final score = " + fitness);
 
 //        EvaluationInfo evaluationInfo = new EvaluationInfo(environment.getEvaluationInfoAsFloats());
