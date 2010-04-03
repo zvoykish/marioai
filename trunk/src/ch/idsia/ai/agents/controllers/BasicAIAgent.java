@@ -14,6 +14,7 @@ public class BasicAIAgent implements Agent
 {
     protected boolean action[] = new boolean[Environment.numberOfButtons];
     protected String name = "Instance_of_BasicAIAgent._Change_this_name";
+
     /*final*/ protected byte[][] levelScene;
     /*final */protected byte[][] enemies;
     protected byte[][] mergedObservation;
@@ -34,13 +35,12 @@ public class BasicAIAgent implements Agent
     protected int getKillsByStomp;
     protected int getKillsByShell;
 
-
-
     // values of these variables could be changed during the Agent-Environment interaction.
     // Use them to get more detailed or less detailed description of the level.
     // for information see documentation for the benchmark <link: marioai.org/marioaibenchmark/zLevels
     int zLevelScene = 1;
     int zLevelEnemies = 0;
+
 
     public BasicAIAgent(String s)
     {

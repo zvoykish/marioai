@@ -8,7 +8,6 @@ import ch.idsia.ai.ea.ES;
 import ch.idsia.maibe.tasks.MultiSeedProgressTask;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.CmdLineOptions;
-import ch.idsia.tools.EvaluationOptions;
 import wox.serial.Easy;
 
 /**
@@ -24,9 +23,9 @@ public class EvolveIncrementally {
 
 
     public static void main(String[] args) {
-        EvaluationOptions options = new CmdLineOptions(new String[0]);
+        CmdLineOptions options = new CmdLineOptions(new String[0]);
 //        options.setNumberOfTrials(1);
-        options.setPauseWorld(true);
+        options.setPauseWorld(false);
         Evolvable initial = new SimpleMLPAgent();
         if (args.length > 0) {
             initial = (Evolvable) AgentsPool.load (args[0]);

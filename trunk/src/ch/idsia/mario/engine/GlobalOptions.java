@@ -11,7 +11,7 @@ public abstract class GlobalOptions
 {
     public static final int primaryVerionUID = 0;
     public static final int minorVerionUID = 1;
-    public static final int minorSubVerionID = 3;
+    public static final int minorSubVerionID = 4;
 
     public static boolean Labels = false;
     public static boolean MarioAlwaysInCenter = false;
@@ -30,9 +30,9 @@ public abstract class GlobalOptions
     public static boolean GameVeiwerContinuousUpdatesOn = false;
     public static boolean PowerRestoration;
 
-    public static String MAIBeVersionStr = "0.1";
+//    public static String MAIBeVersionStr = "0.1";
     private static MarioVisualComponent marioVisualComponent;
-    public static final int VISUAL_COMPONENT_WIDTH = 320;
+    public static final int VISUAL_COMPONENT_WIDTH = 320*1;
     public static final int VISUAL_COMPONENT_HEIGHT = 240;
 
     public static int getPrimaryVersionUID()

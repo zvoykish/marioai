@@ -15,7 +15,7 @@ import ch.idsia.mario.environments.Environment;
 public class SmallMLPAgent extends BasicAIAgent implements Agent, Evolvable {
 
     private MLP mlp;
-    final int numberOfOutputs = 6;
+    final int numberOfOutputs = Environment.numberOfButtons;
     final int numberOfInputs = 21;
     static private final String name = "SmallMLPAgent";
 
@@ -39,7 +39,8 @@ public class SmallMLPAgent extends BasicAIAgent implements Agent, Evolvable {
 
     public boolean[] getAction()
     {
-        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
+//        System.out.println("mlp = " + mlp);
+        return this.getAction(null);
     }
 
     public void reset() {
@@ -51,15 +52,16 @@ public class SmallMLPAgent extends BasicAIAgent implements Agent, Evolvable {
     }
 
     public boolean[] getAction(Environment observation) {
-        byte[][] scene = observation.getLevelSceneObservation(/*1*/);
-        byte[][] enemies = observation.getEnemiesObservation(/*0*/);
+//        byte[][] scene = observation.getLevelSceneObservation(/*1*/);
+//        byte[][] enemies = observation.getEnemiesObservation(/*0*/);
+        byte[][] scene = levelScene;
         double[] inputs = new double[]{probe(-1, -1, scene), probe(0, -1, scene), probe(1, -1, scene),
                                 probe(-1, 0, scene), probe(0, 0, scene), probe(1, 0, scene),
                                 probe(-1, 1, scene), probe(0, 1, scene), probe(1, 1, scene),
                                 probe(-1, -1, enemies), probe(0, -1, enemies), probe(1, -1, enemies),
                                 probe(-1, 0, enemies), probe(0, 0, enemies), probe(1, 0, enemies),
                                 probe(-1, 1, enemies), probe(0, 1, enemies), probe(1, 1, enemies),
-                                observation.isMarioOnGround() ? 1 : 0, observation.isMarioAbleToJump() ? 1 : 0,
+                                isMarioOnGround ? 1 : 0, isMarioAbleToJump ? 1 : 0,
                                 1};
         double[] outputs = mlp.propagate (inputs);
         boolean[] action = new boolean[numberOfOutputs];

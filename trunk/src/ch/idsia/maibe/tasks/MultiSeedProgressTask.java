@@ -1,11 +1,7 @@
 package ch.idsia.maibe.tasks;
 
-import ch.idsia.tools.EvaluationOptions;
-import ch.idsia.tools.Evaluator;
-import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.ai.agents.Agent;
-
-import java.util.List;
+import ch.idsia.tools.CmdLineOptions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,13 +12,15 @@ import java.util.List;
 
 public class MultiSeedProgressTask implements Task
 {
-    private EvaluationOptions options;
+    private CmdLineOptions options;
     private int startingSeed = 0;
     private int numberOfSeeds = 3;
+    private BasicTask basicTask;
 
-    public MultiSeedProgressTask(EvaluationOptions evaluationOptions)
+    public MultiSeedProgressTask(CmdLineOptions evaluationOptions)
     {
         setOptions(evaluationOptions);
+        this.basicTask = new BasicTask(evaluationOptions.getAgent());
     }
 
     public double[] evaluate(Agent controller)
@@ -30,13 +28,17 @@ public class MultiSeedProgressTask implements Task
         double distanceTravelled = 0;
 
         options.setAgent(controller);
-        for (int i = 0; i < numberOfSeeds; i++) {
+
+        for (int i = 0; i < numberOfSeeds; i++)
+        {
             controller.reset();
+            options.setAgent(controller);
+            basicTask.setAgent(controller);
             options.setLevelRandSeed(startingSeed + i);
-            Evaluator evaluator = new Evaluator(options);
-            List<EvaluationInfo> results = evaluator.evaluate();     
-            EvaluationInfo result = results.get(0);
-            distanceTravelled += result.computeDistancePassed();
+            basicTask.reset(options);
+            basicTask.runOneEpisode();
+
+            distanceTravelled += basicTask.getEnvironment().getEvaluationInfo().computeDistancePassed();
         }
         distanceTravelled = distanceTravelled / numberOfSeeds;
         return new double[]{distanceTravelled};
@@ -52,28 +54,28 @@ public class MultiSeedProgressTask implements Task
         numberOfSeeds = number;
     }
 
-    public void setOptions(EvaluationOptions options)
+    public void setOptions(CmdLineOptions options)
     {
         this.options = options;
     }
 
-    public EvaluationOptions getOptions()
+    public CmdLineOptions getOptions()
     {
         return options;
     }
 
     public void doEpisodes(int amount)
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+
     }
 
     public boolean isFinished()
     {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return true;  
     }
 
     public void reset()
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+
     }
 }

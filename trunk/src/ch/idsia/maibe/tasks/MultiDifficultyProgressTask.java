@@ -1,9 +1,9 @@
 package ch.idsia.maibe.tasks;
 
-import ch.idsia.tools.EvaluationOptions;
-import ch.idsia.tools.Evaluator;
-import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.ai.agents.Agent;
+import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.EvaluationInfo;
+import ch.idsia.tools.Evaluator;
 
 import java.util.List;
 
@@ -13,13 +13,13 @@ import java.util.List;
  * Date: Jun 13, 2009
  * Time: 2:44:59 PM
  */
-public class MultiDifficultyProgressTask implements Task {
-
-    private EvaluationOptions options;
+public class MultiDifficultyProgressTask implements Task
+{
+    private CmdLineOptions options;
     private int startingSeed = 0;
     private int[] difficulties = {0, 3, 5, 10};
 
-    public MultiDifficultyProgressTask(EvaluationOptions evaluationOptions) {
+    public MultiDifficultyProgressTask(CmdLineOptions evaluationOptions) {
         setOptions(evaluationOptions);
     }
 
@@ -48,11 +48,11 @@ public class MultiDifficultyProgressTask implements Task {
         startingSeed = seed;
     }
 
-    public void setOptions(EvaluationOptions options) {
+    public void setOptions(CmdLineOptions options) {
         this.options = options;
     }
 
-    public EvaluationOptions getOptions() {
+    public CmdLineOptions getOptions() {
         return options;
     }
 

@@ -8,7 +8,6 @@ import ch.idsia.maibe.tasks.ProgressTask;
 import ch.idsia.maibe.tasks.Task;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.CmdLineOptions;
-import ch.idsia.tools.EvaluationOptions;
 import wox.serial.Easy;
 
 import java.text.DecimalFormat;
@@ -21,15 +20,15 @@ import java.util.List;
  * Date: May 4, 2009
  * Time: 4:33:25 PM
  */
-public class Evolve {
 
+public class Evolve
+{
     final static int generations = 100;
     final static int populationSize = 100;
 
-
-    public static void main(String[] args) {
-        EvaluationOptions options = new CmdLineOptions(args);
-//        options.setNumberOfTrials(1);
+    public static void main(String[] args)
+    {
+        CmdLineOptions options = new CmdLineOptions(args);
         options.setPauseWorld(true);
         List<Agent> bestAgents = new ArrayList<Agent>();
         DecimalFormat df = new DecimalFormat("0000");
@@ -47,7 +46,8 @@ public class Evolve {
             Task task = new ProgressTask(options);
             ES es = new ES (task, initial, populationSize);
 
-            for (int gen = 0; gen < generations; gen++) {
+            for (int gen = 0; gen < generations; gen++)
+            {
                 es.nextGeneration();
                 double bestResult = es.getBestFitnesses()[0];
 //                LOGGER.println("Generation " + gen + " best " + bestResult, LOGGER.VERBOSE_MODE.INFO);

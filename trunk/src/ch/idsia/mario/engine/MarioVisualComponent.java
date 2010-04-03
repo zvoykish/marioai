@@ -44,9 +44,10 @@ public class MarioVisualComponent extends JComponent
                                            "Castle(2)"};
 
     private long tm = System.currentTimeMillis();
+    private long tm0;
     int delay;
     private KeyAdapter prevHumanKeyBoardAgent;
-
+    private String agentNameStr;
 
     private MarioVisualComponent(int width, int height, LevelScene levelScene)
     {
@@ -110,14 +111,15 @@ public class MarioVisualComponent extends JComponent
 
     public void reset()
     {
+        adjustFPS();
         tm = System.currentTimeMillis();
+        this.tm0 = tm;
     }
 
     public void tick()
     {
         this.render(thisVolatileImageGraphics, 0);
-
-        String msg = "Agent: " + "no agent yet"; /*agent.getName();*/
+        String msg = "Agent: " + this.agentNameStr;
         drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 7, 5);
 
         msg = "Selected Actions: ";
@@ -133,10 +135,10 @@ public class MarioVisualComponent extends JComponent
             msg = "NULL";
         drawString(thisVolatileImageGraphics, msg, 6, 78, 1);
 
-        if (!this.hasFocus() && tm / 4 % 2 == 0) {
+        if (!this.hasFocus() && (tm - tm0)/delay % 42 < 20 ) {
             String msgClick = "CLICK TO PLAY";
-            drawString(thisVolatileImageGraphics, msgClick, 160 - msgClick.length() * 4, 110, 1);
-            drawString(thisVolatileImageGraphics, msgClick, 160 - msgClick.length() * 4, 110, 7);
+            drawString(thisVolatileImageGraphics, msgClick, 160 - msgClick.length() * 4, 110, 2);
+//            drawString(thisVolatileImageGraphics, msgClick, 160 - msgClick.length() * 4, 110, 7);
         }
 //        thisVolatileImageGraphics.setColor(Color.DARK_GRAY);
         drawStringDropShadow(thisVolatileImageGraphics, "FPS: ", 32, 2, 7); 
@@ -447,8 +449,9 @@ public class MarioVisualComponent extends JComponent
 
     // THis method here solely for the displaying information in order to reduce
     // amount of info passed between Env and VisComponent
-    public void setAgent(Agent agent) {
-//        this.agent = agent;
+    public void setAgent(Agent agent)
+    {
+        this.agentNameStr = agent.getName();
 //        System.out.println("agent = " + agent);
         if (agent instanceof KeyAdapter)
         {
@@ -458,8 +461,6 @@ public class MarioVisualComponent extends JComponent
             this.addKeyListener(this.prevHumanKeyBoardAgent);
         }
     }
-
-
     /// `huge` inheritance stuff from MarioComponent
 //    public void setGameViewer(GameViewer gameViewer)
 //    {

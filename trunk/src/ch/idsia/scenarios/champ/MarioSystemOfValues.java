@@ -40,5 +40,4 @@ public abstract class MarioSystemOfValues
         final public static int MEDIUM = 20;
         final public static int FLEXIBLE = 30;
     }
-
 }

@@ -2,7 +2,6 @@ package ch.idsia.scenarios.test;
 
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.scenarios.oldscenarios.Stats;
-import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.ai.Evolvable;
 import ch.idsia.ai.ea.ES;
@@ -24,7 +23,7 @@ public class EvolveWithChangingSeeds {
     final static int populationSize = 100;
 
     public static void main(String[] args) {
-        EvaluationOptions options = new CmdLineOptions(new String[0]);
+        CmdLineOptions options = new CmdLineOptions(new String[0]);
 //        options.setNumberOfTrials(1);
         options.setPauseWorld(false);
         Evolvable initial = new SmallMLPAgent();

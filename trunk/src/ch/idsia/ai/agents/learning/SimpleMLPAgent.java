@@ -11,12 +11,41 @@ import ch.idsia.mario.environments.Environment;
  * Date: Apr 28, 2009
  * Time: 2:09:42 PM
  */
-public class  SimpleMLPAgent implements Agent, Evolvable {
+public class  SimpleMLPAgent implements Agent, Evolvable
+{
 
     private MLP mlp;
     private String name = "SimpleMLPAgent";
     final int numberOfOutputs = 6;
     final int numberOfInputs = 10;
+    private Environment environment;
+
+    /*final*/ protected byte[][] levelScene;
+    /*final */protected byte[][] enemies;
+    protected byte[][] mergedObservation;
+
+    protected float[] marioFloatPos = null;
+    protected float[] enemiesFloatPos = null;
+
+    protected int[] marioState = null;
+
+    protected int marioStatus;
+    protected int marioMode;
+    protected boolean isMarioOnGround;
+    protected boolean isMarioAbleToJump;
+    protected boolean isMarioAbleToShoot;
+    protected boolean isMarioCarrying;
+    protected int getKillsTotal;
+    protected int getKillsByFire;
+    protected int getKillsByStomp;
+    protected int getKillsByShell;
+
+    // values of these variables could be changed during the Agent-Environment interaction.
+    // Use them to get more detailed or less detailed description of the level.
+    // for information see documentation for the benchmark <link: marioai.org/marioaibenchmark/zLevels
+    int zLevelScene = 1;
+    int zLevelEnemies = 0;
+    
 
     public SimpleMLPAgent () {
         mlp = new MLP (numberOfInputs, 10, numberOfOutputs);
@@ -34,44 +63,56 @@ public class  SimpleMLPAgent implements Agent, Evolvable {
         return new SimpleMLPAgent (mlp.copy ());
     }
 
-    public void integrateObservation(int[] serializedLevelSceneObservationZ, int[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
+    public void integrateObservation(Environment environment)
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+        this.environment = environment;
+        levelScene = environment.getLevelSceneObservationZ(zLevelScene);
+        enemies = environment.getEnemiesObservationZ(zLevelEnemies);
+        mergedObservation = environment.getMergedObservationZZ(1, 0);
+
+        this.marioFloatPos = environment.getMarioFloatPos();
+        this.enemiesFloatPos = environment.getEnemiesFloatPos();
+        this.marioState = environment.getMarioState();
+
+        // It also possible to use direct methods from Environment interface.
+        //
+        marioStatus = marioState[0];
+        marioMode = marioState[1];
+        isMarioOnGround = marioState[2] == 1;
+        isMarioAbleToJump = marioState[3] == 1;
+        isMarioAbleToShoot = marioState[4] == 1;
+        isMarioCarrying = marioState[5] == 1;
+        getKillsTotal = marioState[6];
+        getKillsByFire = marioState[7];
+        getKillsByStomp = marioState[8];
+        getKillsByShell = marioState[9];
     }
+
+    public void reset()
+    {   mlp.reset ();    }
+
+    public void mutate()
+    {   mlp.mutate ();    }
 
     public boolean[] getAction()
     {
-        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public void integrateObservation(Environment environment)
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public void reset() {
-        mlp.reset ();
-    }
-
-    public void mutate() {
-        mlp.mutate ();
-    }
-
-    public boolean[] getAction(Environment observation) {
-        byte[][] scene = observation.getLevelSceneObservation(/*1*/);
-        double[] inputs = new double[]{probe(-1, -1, scene), probe(0, -1, scene), probe(1, -1, scene),
-                              probe(-1, 0, scene), probe(0, 0, scene), probe(1, 0, scene),
-                                probe(-1, 1, scene), probe(0, 1, scene), probe(1, 1, scene),
+//        double[] inputs = new double[]{probe(-1, -1, levelScene), probe(0, -1, levelScene), probe(1, -1, levelScene),
+//                              probe(-1, 0, levelScene), probe(0, 0, levelScene), probe(1, 0, levelScene),
+//                                probe(-1, 1, levelScene), probe(0, 1, levelScene), probe(1, 1, levelScene),
+//                                1};
+        double[] inputs = new double[]{probe(-1, -1, mergedObservation), probe(0, -1, mergedObservation), probe(1, -1, mergedObservation),
+                              probe(-1, 0, mergedObservation), probe(0, 0, mergedObservation), probe(1, 0, mergedObservation),
+                                probe(-1, 1, mergedObservation), probe(0, 1, mergedObservation), probe(1, 1, mergedObservation),
                                 1};
         double[] outputs = mlp.propagate (inputs);
         boolean[] action = new boolean[numberOfOutputs];
-        for (int i = 0; i < action.length; i++) {
+        for (int i = 0; i < action.length; i++)
             action[i] = outputs[i] > 0;
-        }
         return action;
     }
 
-    public AGENT_TYPE getType() {
+    public AGENT_TYPE getType()
+    {
         return AGENT_TYPE.AI;
     }
 

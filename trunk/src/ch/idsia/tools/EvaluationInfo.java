@@ -12,24 +12,27 @@ import java.text.DecimalFormat;
  * Time: 12:44:51 AM
  * Package: .Tools
  */
-public class EvaluationInfo
+
+public final class EvaluationInfo
 {
     private static final int MagicNumberUnDef = -42;
 
     public static final int numberOfElements = 12;
 
-    public float marioStatus = MagicNumberUnDef;
-    public float lengthOfLevelPassedPhys = MagicNumberUnDef;
-    public int lengthOfLevelPassedCells = MagicNumberUnDef;
-    public float timeSpentOnLevel = MagicNumberUnDef;
-    public int timeLeft = MagicNumberUnDef;
-    public int marioMode = MagicNumberUnDef;
-    public int killsTotal = MagicNumberUnDef;
-    public float numberOfCoinsGained = MagicNumberUnDef;
-    public int numberOfHiddenCoinsGained = MagicNumberUnDef;
-    public int killsByFire = MagicNumberUnDef;
-    public int killsByShell = MagicNumberUnDef;
-    public int killsByStomp = MagicNumberUnDef;
+    // ordered in alphabetical order;
+    public int distancePassedCells =MagicNumberUnDef;
+    // TODO: migrate to all integers.
+    public float distancePassedPhys =MagicNumberUnDef;    
+    public int killsByFire=MagicNumberUnDef;
+    public int killsByShell=MagicNumberUnDef;
+    public int killsByStomp=MagicNumberUnDef;
+    public int killsTotal=MagicNumberUnDef;
+    public int marioMode=MagicNumberUnDef;
+    public int marioStatus=MagicNumberUnDef;
+    public int numberOfCoinsGained=MagicNumberUnDef;
+    public int numberOfHiddenItemsGained =MagicNumberUnDef;
+    public int timeLeft=MagicNumberUnDef;
+    public int timeSpent =MagicNumberUnDef;
 
     private static final float[] retFloatArray = new float[EvaluationInfo.numberOfElements];
     private static final float[] zeros = new float[EvaluationInfo.numberOfElements];
@@ -44,13 +47,13 @@ public class EvaluationInfo
 
     public float computeBasicFitness()
     {
-        return lengthOfLevelPassedPhys - timeSpentOnLevel + numberOfCoinsGained + marioStatus*MarioSystemOfValues.win;
+        return distancePassedPhys - timeSpent + numberOfCoinsGained + marioStatus*MarioSystemOfValues.win;
     }
 
     public float computeMultiObjectiveFitness()
     {
         return
-                lengthOfLevelPassedPhys * MarioSystemOfValues.distance +
+                distancePassedPhys * MarioSystemOfValues.distance +
                 marioStatus * MarioSystemOfValues.win +
                 marioMode * MarioSystemOfValues.mode  +
                 numberOfCoinsGained * MarioSystemOfValues.coins+
@@ -58,13 +61,13 @@ public class EvaluationInfo
                 killsByStomp * MarioSystemOfValues.killedByStomp +
                 killsByFire * MarioSystemOfValues.killedByFire +
                 killsByShell * MarioSystemOfValues.killedByShell +
-                numberOfHiddenCoinsGained * MarioSystemOfValues.hiddenCoins +
+                numberOfHiddenItemsGained * MarioSystemOfValues.hiddenCoins +
                 timeLeft * MarioSystemOfValues.timeLeft;
     }
 
     public double computeDistancePassed()
     {
-        return lengthOfLevelPassedPhys;
+        return distancePassedPhys;
     }
 
     public int computeKillsTotal()
@@ -72,48 +75,58 @@ public class EvaluationInfo
         return this.killsTotal;
     }
 
-    //TODO: possible fitnesses adjustments: penalize for collisions with creatures and especially for  suicide. It's a sin.
-
+    //TODO: possible fitnesses adjustments: penalize for collisions with creatures and especially for suicide. It's a sin.
     public float[] toFloatArray()
     {
+        retFloatArray[0] = this.distancePassedCells;
+        retFloatArray[1] = this.distancePassedPhys;
+        retFloatArray[2] = this.killsByFire;
+        retFloatArray[3] = this.killsByShell;
+        retFloatArray[4] = this.killsByStomp;
+        retFloatArray[5] = this.killsTotal;
+        retFloatArray[6] = this.marioMode;
+        retFloatArray[7] = this.marioStatus;
+        retFloatArray[8] = this.numberOfCoinsGained;
+        retFloatArray[9] = this.numberOfHiddenItemsGained;
+        retFloatArray[10] = this.timeLeft;
+        retFloatArray[11] = this.timeSpent;
+
         return retFloatArray;
     }
 
     public String toString()
     {
-        String ret = "\nEvaluation Information. Statistics and Score:";
-        ret += "\n                       Mario Status : " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss...");
-        ret += "\n                         Mario Mode : " + Mario.MODES[marioMode];
-        ret += "\n               Passed (Cells, Phys) : " + df.format((double)lengthOfLevelPassedCells ) + ", " +
-                                                            df.format(lengthOfLevelPassedPhys ) ;
-        ret += "\n           Time Spent(marioseconds) : " + timeSpentOnLevel;
-        ret += "\n            Time Left(marioseconds) : " + timeLeft;
-        ret += "\n                       Coins Gained : " + numberOfCoinsGained;
-        ret += "\n                 Hidden Items Found : " + numberOfHiddenCoinsGained;
-        ret += "\n                        kills Total : " + killsTotal;
-        ret += "\n                      kills By Fire : " + killsByFire;
-        ret += "\n                     kills By Shell : " + killsByShell;
-        ret += "\n                     kills By Stomp : " + killsByStomp;
-        ret += "\n               multiObjectiveFitness : " + df.format(computeMultiObjectiveFitness());
-        ret += ((Memo.equals("")) ? "" : "\nMemo: " + Memo);
-        return ret;
+        return "\nEvaluation Information. Statistics and Score:" +
+            "\n                       Mario Status : " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss...") +
+            "\n                         Mario Mode : " + Mario.MODES[marioMode] +
+            "\n               Passed (Cells, Phys) : " + df.format((double) distancePassedCells) + ", " +
+                                                         df.format(distancePassedPhys) +
+            "\n           Time Spent(marioseconds) : " + timeSpent +
+            "\n            Time Left(marioseconds) : " + timeLeft +
+            "\n                       Coins Gained : " + numberOfCoinsGained +
+            "\n                 Hidden Items Found : " + numberOfHiddenItemsGained +
+            "\n                        kills Total : " + killsTotal +
+            "\n                      kills By Fire : " + killsByFire +
+            "\n                     kills By Shell : " + killsByShell +
+            "\n                     kills By Stomp : " + killsByStomp +
+            "\n               multiObjectiveFitness : " + df.format(computeMultiObjectiveFitness()) +
+            ((Memo.equals("")) ? "" : "\nMemo: " + Memo);
     }
 
     public String toStringSingleLine()
     {
-        String ret = "##";
-        ret += " Status: " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss");
-        ret += "; Mode: " + Mario.MODES[marioMode];
-        ret += "; Passed (Cells, Phys): " + df.format((double)lengthOfLevelPassedCells ) + ", " +
-                                                            df.format(lengthOfLevelPassedPhys ) ;
-        ret += "; Time Spent: " + timeSpentOnLevel;
-        ret += "; Time Left: " + timeLeft;
-        ret += "; Coins: " + numberOfCoinsGained;
-        ret += "; kills: " + killsTotal;
-        ret += "; By Fire: " + killsByFire;
-        ret += "; By Shell: " + killsByShell;
-        ret += "; By Stomp: " + killsByStomp;
-        return ret;
+        return "##" +
+        " Status: " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss") +
+        "; Mode: " + Mario.MODES[marioMode] +
+        " +  Passed (Cells, Phys): " + df.format((double) distancePassedCells) + ", " +
+                                                            df.format(distancePassedPhys) +
+        "; Time Spent: " + timeSpent +
+        "; Time Left: " + timeLeft +
+        "; Coins: " + numberOfCoinsGained +
+        "; kills: " + killsTotal +
+        "; By Fire: " + killsByFire +
+        "; By Shell: " + killsByShell + 
+        "; By Stomp: " + killsByStomp;
     }
 
 //    public int levelType = MagicNumberUnDef;
@@ -138,15 +151,15 @@ public class EvaluationInfo
 //        assert (evaluationInfoArray.length == 11);
 //
 //        this.marioStatus = (int) evaluationInfoArray[0];
-//        this.lengthOfLevelPassedCells = (int) evaluationInfoArray[1];
-//        this.lengthOfLevelPassedPhys = evaluationInfoArray[2];
+//        this.distancePassedCells = (int) evaluationInfoArray[1];
+//        this.distancePassedPhys = evaluationInfoArray[2];
 //        this.totalLengthOfLevelCells = (int) evaluationInfoArray[3];
 //        this.totalLengthOfLevelPhys = evaluationInfoArray[4];
-//        this.timeSpentOnLevel = (int) evaluationInfoArray[5];
+//        this.timeSpent = (int) evaluationInfoArray[5];
 //        this.timeLeft = (int) evaluationInfoArray[6];
 //        this.totalTimeGiven = (int) evaluationInfoArray[7];
 //        this.numberOfCoinsGained = (int) evaluationInfoArray[8];
-//        this.numberOfHiddenCoinsGained = (int)evaluationInfoArray[9];
+//        this.numberOfHiddenItemsGained = (int)evaluationInfoArray[9];
 //        this.marioMode = (int) evaluationInfoArray[9];
 //        this.killsTotal = (int) evaluationInfoArray[10];
 //        this.killsByFire = (int) evaluationInfoArray[11];
@@ -166,10 +179,10 @@ public class EvaluationInfo
 ////        ret += "\n                    Level Rand Seed : " + levelRandSeed;
 //        ret += "\nTotal Length of Level (Phys, Cells) : " + "(" + totalLengthOfLevelPhys + "," + totalLengthOfLevelCells + ")";
 //        ret += "\n               Passed (Phys, Cells) : " +
-//               df.format(lengthOfLevelPassedPhys / totalLengthOfLevelPhys *100) +
-//               "% ( " + df.format(lengthOfLevelPassedPhys) + " of " + totalLengthOfLevelPhys + "), " +
-//               df.format((double)lengthOfLevelPassedCells / totalLengthOfLevelCells *100) + "% ( " + lengthOfLevelPassedCells + " of " + totalLengthOfLevelCells + ")";
-//        ret += "\n           Time Spent(marioseconds) : " + timeSpentOnLevel + " ( " + df.format((double)timeSpentOnLevel/totalTimeGiven*100) + "% )";
+//               df.format(distancePassedPhys / totalLengthOfLevelPhys *100) +
+//               "% ( " + df.format(distancePassedPhys) + " of " + totalLengthOfLevelPhys + "), " +
+//               df.format((double)distancePassedCells / totalLengthOfLevelCells *100) + "% ( " + distancePassedCells + " of " + totalLengthOfLevelCells + ")";
+//        ret += "\n           Time Spent(marioseconds) : " + timeSpent + " ( " + df.format((double)timeSpent/totalTimeGiven*100) + "% )";
 //        ret += "\n            Time Left(marioseconds) : " + timeLeft + " ( " + df.format((double)timeLeft/totalTimeGiven*100) + "% )";
 //        ret += "\n                   Total time given : " + totalTimeGiven;
 ////        ret += "\nCoins Gained: " + numberOfCoinsGained/totalNumberOfCoins*100 + "%. (" + numberOfCoinsGained + " of " + totalNumberOfCoins + ")";

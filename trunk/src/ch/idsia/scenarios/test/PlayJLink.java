@@ -15,10 +15,8 @@ import ch.idsia.tools.EvaluationInfo;
  * Time: 4:54:13 PM
  * To change this template use File | Settings | File Templates.
  */
-public class PlayJLink {
-
-
-
+public class PlayJLink
+{
     /** returns {in, rec, out} array. Just to make math and java codes fully independent. */
     public static int[] getDimension() {
         return new int[]{getInputSize()*getInputSize()*2+3, 6, 6};

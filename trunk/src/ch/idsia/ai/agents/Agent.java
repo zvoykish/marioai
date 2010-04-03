@@ -30,13 +30,13 @@ public interface Agent
 
 
 
-    @Deprecated
-    public boolean[] getAction(Environment observation);
+//    @Deprecated
+//    public boolean[] getAction(Environment observation);
         
-    @Deprecated
-    void integrateObservation(int[] serializedLevelSceneObservationZ,
-                              int[] serializedEnemiesObservationZ,
-                              float[] marioFloatPos,
-                              float[] enemiesFloatPos,
-                              int[] marioState);
+//    @Deprecated
+//    void integrateObservation(int[] serializedLevelSceneObservationZ,
+//                              int[] serializedEnemiesObservationZ,
+//                              float[] marioFloatPos,
+//                              float[] enemiesFloatPos,
+//                              int[] marioState);
 }

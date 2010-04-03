@@ -13,7 +13,7 @@ import ch.idsia.tools.EvaluationInfo;
  * Package: ch.idsia.mario.environments
  */
 
-public class MarioEnvironment implements Environment
+public final class MarioEnvironment implements Environment
 {
     final LevelScene levelScene;
     private int frame = 0;
@@ -160,7 +160,7 @@ public class MarioEnvironment implements Environment
         return levelScene.getMarioStatus();
     }
 
-    public double[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies)
+    public float[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies)
     {
         return levelScene.getSerializedFullObservationZZ(ZLevelScene, ZLevelEnemies);
     }
@@ -217,11 +217,11 @@ public class MarioEnvironment implements Environment
 //        evaluationInfo.agentType = agent.getClass().getSimpleName();
 //        evaluationInfo.agentName = agent.getName();
         evaluationInfo.marioStatus =         levelScene.getMarioStatus();
-        evaluationInfo.lengthOfLevelPassedPhys = levelScene.getMarioFloatPos()[0];
-     evaluationInfo.lengthOfLevelPassedCells = levelScene.mario.mapX;
+        evaluationInfo.distancePassedPhys = levelScene.getMarioFloatPos()[0];
+        evaluationInfo.distancePassedCells = levelScene.mario.mapX;
 //     evaluationInfo.totalLengthOfLevelCells = levelScene.level.getWidthCells();
 //     evaluationInfo.totalLengthOfLevelPhys = levelScene.level.getWidthPhys();
-        evaluationInfo.timeSpentOnLevel = levelScene.getTimeSpent();
+        evaluationInfo.timeSpent = levelScene.getTimeSpent();
         evaluationInfo.timeLeft = levelScene.getTimeLeft();
 //     evaluationInfo.totalTimeGiven = levelScene.getTimeLimit();
         evaluationInfo.numberOfCoinsGained = Mario.coins;
@@ -231,7 +231,7 @@ public class MarioEnvironment implements Environment
         evaluationInfo.killsByStomp = levelScene.getKillsByStomp();
         evaluationInfo.killsByFire = levelScene.getKillsByFire();
         evaluationInfo.killsByShell = levelScene.getKillsByShell();
-        evaluationInfo.numberOfHiddenCoinsGained = levelScene.getNumberOfHiddenCoinsGained();
+        evaluationInfo.numberOfHiddenItemsGained = levelScene.getNumberOfHiddenCoinsGained();
 
 //        evaluationInfo.Memo = "Number of attempt: " + Mario.numberOfAttempts;
         return evaluationInfo;

@@ -34,7 +34,8 @@ public class ES implements EA {
         for (int i = 0; i < elite; i++) {
             evaluate(i);
         }
-        for (int i = elite; i < population.length; i++) {
+        for (int i = elite; i < population.length; i++)
+        {
             population[i] = population[i - elite].copy();
             population[i].mutate();
             evaluate(i);
@@ -43,12 +44,14 @@ public class ES implements EA {
         sortPopulationByFitness();
     }
 
-    private void evaluate(int which) {
+    private void evaluate(int which)
+    {
         fitness[which] = 0;
-        for (int i = 0; i < evaluationRepetitions; i++) {
+        for (int i = 0; i < evaluationRepetitions; i++)
+        {
             population[which].reset();
             fitness[which] += task.evaluate((Agent) population[which])[0];
-//            LOGGER.println("which " + which + " fitness " + fitness[which], LOGGER.VERBOSE_MODE.INFO);
+//            System.out.println("which " + which + " fitness " + fitness[which]);
         }
         fitness[which] = fitness[which] / evaluationRepetitions;
     }
@@ -83,7 +86,7 @@ public class ES implements EA {
     }
 
     public double[] getBestFitnesses() {
-        return new double[]{fitness[0]};  //To change body of implemented methods use File | Settings | File Templates.
+        return new double[]{fitness[0]};
     }
 
 }

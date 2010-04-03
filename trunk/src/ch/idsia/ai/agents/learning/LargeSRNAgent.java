@@ -39,7 +39,7 @@ public class LargeSRNAgent extends BasicAIAgent implements Agent, Evolvable {
 
     public boolean[] getAction()
     {
-        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
+        return this.getAction(null);
     }
 
     public void reset() {
@@ -52,13 +52,13 @@ public class LargeSRNAgent extends BasicAIAgent implements Agent, Evolvable {
 
     public boolean[] getAction(Environment observation) {
         double[] inputs;// = new double[numberOfInputs];
-        byte[][] scene = observation.getLevelSceneObservation(/*1*/);
-        byte[][] enemies = observation.getEnemiesObservation(/*0*/);
+//        byte[][] scene = observation.getLevelSceneObservation(/*1*/);
+//        byte[][] enemies = observation.getEnemiesObservation(/*0*/);
         inputs = new double[numberOfInputs];
         int which = 0;
         for (int i = -3; i < 4; i++) {
             for (int j = -3; j < 4; j++) {
-                inputs[which++] = probe(i, j, scene);
+                inputs[which++] = probe(i, j, levelScene);
             }
         }
         for (int i = -3; i < 4; i++) {
@@ -66,8 +66,8 @@ public class LargeSRNAgent extends BasicAIAgent implements Agent, Evolvable {
                 inputs[which++] = probe(i, j, enemies);
             }
         }
-        inputs[inputs.length - 3] = observation.isMarioOnGround() ? 1 : 0;
-        inputs[inputs.length - 2] = observation.isMarioAbleToJump() ? 1 : 0;
+        inputs[inputs.length - 3] = isMarioOnGround ? 1 : 0;
+        inputs[inputs.length - 2] = isMarioAbleToJump ? 1 : 0;
         inputs[inputs.length - 1] = 1;
         double[] outputs = srn.propagate (inputs);
         boolean[] action = new boolean[numberOfOutputs];

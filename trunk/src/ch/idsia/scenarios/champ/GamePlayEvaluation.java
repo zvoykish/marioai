@@ -2,7 +2,6 @@ package ch.idsia.scenarios.champ;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
-import ch.idsia.ai.agents.controllers.ForwardAgent;
 import ch.idsia.ai.agents.controllers.TimingAgent;
 import ch.idsia.maibe.tasks.BasicTask;
 import ch.idsia.mario.environments.Environment;
@@ -12,6 +11,7 @@ import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.tools.Evaluator;
 import ch.idsia.utils.StatisticalSummary;
+import competition.evostar.robinbaumgarten.RobinBaumgarten_AStarAgent;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,7 +19,7 @@ import ch.idsia.utils.StatisticalSummary;
  * Date: Mar 17, 2010 Time: 8:33:43 AM
  * Package: ch.idsia.scenarios
  */
-public class GamePlayEvaluation
+public final class GamePlayEvaluation
 {
     final static int numberOfTrials = 10;
     final static boolean scoring = false;
@@ -43,16 +43,21 @@ public class GamePlayEvaluation
         final int[] levelTypes = new int[]{0, 1, 2};
         final boolean[] creaturesEnables = new boolean[]{false, true};
         int levelSeed = cmdLineOptions.getLevelRandSeed();
-        cmdLineOptions.setVisualization(false);
-//        cmdLineOptions.setFPS(24);
+        cmdLineOptions.setVisualization(true);
+        cmdLineOptions.setFPS(100);
 
         final Environment environment = new MarioEnvironment();
-        final Agent agent = new ForwardAgent();
-        final BasicTask basicTask = new BasicTask(environment, agent);
+//        final Agent agent = new ForwardJumpingAgent();
+        final Agent agent = new RobinBaumgarten_AStarAgent();
+//        final Agent agent = (SimpleCNAgent) Easy.load("sergeypolikarpov.xml");
+        assert (agent == null);
+        System.out.println("agent = " + agent);
+        final BasicTask basicTask = new BasicTask(agent);
         float fitness = 0;
         boolean verbose = true;
         int trials = 0;
         int disqualifications = 0;
+        
         for (int levelDifficulty : levelDifficulties)
         {
             for (int levelType : levelTypes)

@@ -1,11 +1,7 @@
 package ch.idsia.maibe.tasks;
 
 import ch.idsia.ai.agents.Agent;
-import ch.idsia.tools.EvaluationInfo;
-import ch.idsia.tools.EvaluationOptions;
-import ch.idsia.tools.Evaluator;
-
-import java.util.List;
+import ch.idsia.tools.CmdLineOptions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -14,35 +10,37 @@ import java.util.List;
  * Time: 11:26:43 AM
  * Package: ch.idsia.maibe.tasks
  */
-public class ProgressTask implements Task
+
+public final class ProgressTask extends BasicTask implements Task
 {
+    private CmdLineOptions options;
+    private int startingSeed;
 
-    private EvaluationOptions options;
 
-    public ProgressTask(EvaluationOptions evaluationOptions)
-    {        setOptions(evaluationOptions);    }
+    public ProgressTask(CmdLineOptions evaluationOptions)
+    {
+        super(evaluationOptions.getAgent());
+        setOptions(evaluationOptions);    }
 
     public double[] evaluate(Agent controller)
     {
         double distanceTravelled = 0;
-//        controller.reset();
+        controller.reset();
+//        options.setLevelRandSeed(startingSeed++);
+//        System.out.println("controller = " + controller);
         options.setAgent(controller);
-        Evaluator evaluator = new Evaluator(options);
-        List<EvaluationInfo> results = evaluator.evaluate();
-        for (EvaluationInfo result : results) {
-            //if (result.marioStatus == Mario.STATUS_WIN )
-            //    Easy.save(options.getAgent(), options.getAgent().getName() + ".xml");
-            distanceTravelled += result.computeDistancePassed();
-        }
-        distanceTravelled = distanceTravelled / results.size();
+        this.setAgent(controller);
+        this.reset(options);
+        this.runOneEpisode();
+        distanceTravelled += this.getEnvironment().getEvaluationInfo().computeDistancePassed();
         return new double[]{distanceTravelled};
     }
 
-    public void setOptions(EvaluationOptions options) {
+    public void setOptions(CmdLineOptions options) {
         this.options = options;
     }
 
-    public EvaluationOptions getOptions() {
+    public CmdLineOptions getOptions() {
         return options;
     }
 

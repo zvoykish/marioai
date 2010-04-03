@@ -3,8 +3,6 @@ package ch.idsia.scenarios;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.human.HumanKeyboardAgent;
 import ch.idsia.maibe.tasks.BasicTask;
-import ch.idsia.mario.environments.Environment;
-import ch.idsia.mario.environments.MarioEnvironment;
 import ch.idsia.tools.CmdLineOptions; /**
  * Created by IntelliJ IDEA.
  * User: julian
@@ -23,7 +21,7 @@ import ch.idsia.tools.CmdLineOptions; /**
 
  */
 
-public class Play
+public final class Play
 {
     /**
      * <p>An entry point of the class.</p>
@@ -40,15 +38,16 @@ public class Play
     public static void main(String[] args)
     {
         final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
-        final Environment environment = new MarioEnvironment();
         final Agent agent = new HumanKeyboardAgent();
-        final BasicTask basicTask = new BasicTask(environment, agent);
+        final BasicTask basicTask = new BasicTask(agent);
         cmdLineOptions.setVisualization(true);
         basicTask.reset(cmdLineOptions);
 //        basicTask.runOneEpisode();
         // run 1 episode with same options, each time giving output of Evaluation info.
+        
         basicTask.runEpisodes(1, false);
-        System.out.println("\nEvaluationInfo: \n" + environment.getEvaluationInfoAsString());
+        System.out.println("\nEvaluationInfo: \n" + basicTask.getEnvironment().getEvaluationInfoAsString());
+
         System.exit(0);
     }
 }
