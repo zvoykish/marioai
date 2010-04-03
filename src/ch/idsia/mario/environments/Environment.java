@@ -1,6 +1,7 @@
 package ch.idsia.mario.environments;
 
 import ch.idsia.ai.agents.Agent;
+import ch.idsia.mario.engine.sprites.Mario;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
 
@@ -19,17 +20,23 @@ public interface Environment
     public static final int HalfObsWidth = 11;
     public static final int HalfObsHeight = 11;
 
+    public static final int MARIO_KEY_DOWN = Mario.KEY_DOWN;
+    public static final int MARIO_KEY_JUMP = Mario.KEY_JUMP;
+    public static final int MARIO_KEY_LEFT = Mario.KEY_LEFT;
+    public static final int MARIO_KEY_RIGHT = Mario.KEY_RIGHT;
+    public static final int MARIO_KEY_SPEED = Mario.KEY_SPEED;
+    public static final int MARIO_STATUS_WIN = Mario.STATUS_WIN;
+    public static final int MARIO_STATUS_DEAD = Mario.STATUS_DEAD;
+    public static final int MARIO_STATUS_RUNNING = Mario.STATUS_RUNNING;
+
     // always the same dimensionality: 22x22
     // always centered on the agent 
-
-    // KILLS    
 
     // Chaning ZLevel during the game on-the-fly;
     // if your agent recieves too ambiguous observation, it might request for more precise one for the next step
 
 
     // ATAVIZMS for back compatibility! Strongly recommended to use new interface.
-
     @Deprecated
     public byte[][] getCompleteObservation();   // default: ZLevelScene = 1, ZLevelEnemies = 0
     @Deprecated
@@ -54,13 +61,13 @@ public interface Environment
     public boolean isMarioOnGround();
     public boolean isMarioAbleToJump();
     public boolean isMarioCarrying();
-    // Pilot (test) additions
     public boolean isMarioAbleToShoot();
 
     public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies);
     public byte[][] getLevelSceneObservationZ(int ZLevelScene);
     public byte[][] getEnemiesObservationZ(int ZLevelEnemies);
 
+    // KILLS
     public int getKillsTotal();
     public int getKillsByFire();
     public int getKillsByStomp();
@@ -69,8 +76,7 @@ public interface Environment
     int getMarioStatus();
 
     // FOR AmiCo
-
-    public double[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies);
+    public float[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies);
     /**
      * Serializes the LevelScene observation from 22x22 byte array to a 1x484 byte array
      * @param ZLevelScene
@@ -103,6 +109,7 @@ public interface Environment
      * getTimeLeft
     }
      */
+
     public int[] getMarioState();
 
     void performAction(boolean[] action);

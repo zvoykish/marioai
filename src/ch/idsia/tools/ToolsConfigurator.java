@@ -94,7 +94,7 @@ public class ToolsConfigurator extends JFrame
 //        frame.setLocation((screenSize.width-frame.getWidth())/2, (screenSize.height-frame.getHeight())/2);        
         if (marioComponentFrame == null)
         {
-            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentName() +*/ "Mario AI benchmark-" + GlobalOptions.MAIBeVersionStr);
+            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentName() +*/ "Mario AI benchmark-tools" + GlobalOptions.getVersionUID());
 //            marioComponent = new MarioComponent(320, 240);
 //            marioVisualComponent = new MarioVisualComponent(320, 240);
 //            marioComponentFrame.setContentPane(marioComponent);
@@ -504,7 +504,7 @@ public class ToolsConfigurator extends JFrame
 //        this.marioComponent = marioComponent;
 //        this.marioComponent.setGameViewer(gameViewer);
 //    }
-//    public MarioComponent getMarioComponent() {          return marioComponent;    }
+    public MarioVisualComponent getMarioVisualComponent() {          return marioVisualComponent;    }
 
     public void setConsoleText(String text)
     {

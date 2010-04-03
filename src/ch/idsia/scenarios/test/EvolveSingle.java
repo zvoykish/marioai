@@ -1,13 +1,12 @@
 package ch.idsia.scenarios.test;
 
-import ch.idsia.ai.agents.learning.SimpleMLPAgent;
-import ch.idsia.mario.engine.GlobalOptions;
-import ch.idsia.tools.CmdLineOptions;
-import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.ai.Evolvable;
+import ch.idsia.ai.agents.learning.SimpleMLPAgent;
 import ch.idsia.ai.ea.ES;
 import ch.idsia.maibe.tasks.ProgressTask;
+import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.scenarios.oldscenarios.Stats;
+import ch.idsia.tools.CmdLineOptions;
 import wox.serial.Easy;
 
 /**
@@ -16,14 +15,13 @@ import wox.serial.Easy;
  * Date: Jun 14, 2009
  * Time: 2:15:51 PM
  */
-public class EvolveSingle {
-
+public class EvolveSingle
+{
     final static int generations = 100;
     final static int populationSize = 100;
-    
 
     public static void main(String[] args) {
-        EvaluationOptions options = new CmdLineOptions(new String[0]);
+        CmdLineOptions options = new CmdLineOptions(new String[0]);
 //        options.setNumberOfTrials(1);
         options.setPauseWorld(false);
         Evolvable initial = new SimpleMLPAgent();
@@ -36,7 +34,8 @@ public class EvolveSingle {
         ES es = new ES (task, initial, populationSize);
         System.out.println("Evolving " + initial + " with task " + task);
         final String fileName = "evolved" + (int) (Math.random () * Integer.MAX_VALUE) + ".xml";
-        for (int gen = 0; gen < generations; gen++) {
+        for (int gen = 0; gen < generations; gen++)
+        {
             es.nextGeneration();
             double bestResult = es.getBestFitnesses()[0];
             System.out.println("Generation " + gen + " best " + bestResult);

@@ -1,7 +1,7 @@
 package ch.idsia.maibe.tasks;
 
 import ch.idsia.ai.agents.Agent;
-import ch.idsia.tools.EvaluationOptions;
+import ch.idsia.tools.CmdLineOptions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -15,9 +15,9 @@ public interface Task
 {
     public double[] evaluate (Agent controller);
 
-    public void setOptions (EvaluationOptions options);
+    public void setOptions (CmdLineOptions options);
 
-    public EvaluationOptions getOptions ();
+    public CmdLineOptions getOptions ();
 
     void doEpisodes(int amount);
 

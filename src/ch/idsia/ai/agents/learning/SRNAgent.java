@@ -15,8 +15,28 @@ public class SRNAgent implements Agent, Evolvable {
 
     private SRN srn;
     private String name;
-    final int numberOfOutputs = 6;
+    final int numberOfOutputs = Environment.numberOfButtons;
     final int numberOfInputs = 21;
+
+    /*final*/ protected byte[][] levelScene;
+    /*final */protected byte[][] enemies;
+    protected byte[][] mergedObservation;
+
+    protected float[] marioFloatPos = null;
+    protected float[] enemiesFloatPos = null;
+
+    protected int[] marioState = null;
+
+    protected int marioStatus;
+    protected int marioMode;
+    protected boolean isMarioOnGround;
+    protected boolean isMarioAbleToJump;
+    protected boolean isMarioAbleToShoot;
+    protected boolean isMarioCarrying;
+    protected int getKillsTotal;
+    protected int getKillsByFire;
+    protected int getKillsByStomp;
+    protected int getKillsByShell;
 
     public SRNAgent ()
     {
@@ -35,11 +55,6 @@ public class SRNAgent implements Agent, Evolvable {
         return new SRNAgent (srn.copy ());
     }
 
-    public void integrateObservation(int[] serializedLevelSceneObservationZ, int[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
     public boolean[] getAction()
     {
         return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
@@ -47,7 +62,7 @@ public class SRNAgent implements Agent, Evolvable {
 
     public void integrateObservation(Environment environment)
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+
     }
 
     public void reset() {
@@ -59,11 +74,9 @@ public class SRNAgent implements Agent, Evolvable {
     }
 
     public boolean[] getAction(Environment observation) {
-        byte[][] scene = observation.getLevelSceneObservation(/*1*/);
-        byte[][] enemies = observation.getEnemiesObservation(/*0*/);
-        double[] inputs = new double[]{probe(-1, -1, scene), probe(0, -1, scene), probe(1, -1, scene),
-                                probe(-1, 0, scene), probe(0, 0, scene), probe(1, 0, scene),
-                                probe(-1, 1, scene), probe(0, 1, scene), probe(1, 1, scene),
+        double[] inputs = new double[]{probe(-1, -1, levelScene), probe(0, -1, levelScene), probe(1, -1, levelScene),
+                                probe(-1, 0, levelScene), probe(0, 0, levelScene), probe(1, 0, levelScene),
+                                probe(-1, 1, levelScene), probe(0, 1, levelScene), probe(1, 1, levelScene),
                                 probe(-1, -1, enemies), probe(0, -1, enemies), probe(1, -1, enemies),
                                 probe(-1, 0, enemies), probe(0, 0, enemies), probe(1, 0, enemies),
                                 probe(-1, 1, enemies), probe(0, 1, enemies), probe(1, 1, enemies),

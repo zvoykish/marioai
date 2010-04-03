@@ -10,21 +10,6 @@ import ch.idsia.tools.Evaluator;
 import ch.idsia.utils.StatisticalSummary;
 import ch.idsia.mario.simulation.SimulationOptions;
 
-//import competition.icegic.peterlawford.SlowAgent;
-//import competition.icegic.rafael.RjAgent;
-//import competition.icegic.michal.TutchekAgent;
-//import competition.icegic.glenn.AIwesome;
-//import competition.icegic.sergiolopez.AdaptiveAgent;
-//import competition.icegic.perez.Perez;
-//import competition.icegic.robin.AStarAgent;
-
-//import competition.cig.trondellingsen.TrondEllingsen_LuckyAgent;
-//import competition.cig.sergeypolikarpov.SergeyPolikarpov_SimpleCyberNeuronAgent;
-//import competition.cig.spencerschumann.SpencerSchumann_SlideRule;
-//import competition.cig.andysloane.AndySloane_BestFirstAgent;
-//import competition.cig.alexandrupaler.PalerAgent;
-//import competition.cig.peterlawford.PeterLawford_SlowAgent;
-
 /**
  * Created by IntelliJ IDEA.
  * User: Sergey Karakovskiy, firstName_at_idsia_dot_ch
@@ -32,27 +17,6 @@ import ch.idsia.mario.simulation.SimulationOptions;
  * Time: 4:35:08 PM
  * Package: ch.idsia
  */
-
-
-/*
-	experimental setup :
-	C++ , glue, python, AmiCo, type of Machine
-Model Name:	MacBook Pro
-Model Identifier:	MacBookPro4,1
-Processor Name:	Intel Core 2 Duo
-Processor Speed:	2.4 GHz
-Number Of Processors:	1
-Total Number Of Cores:	2
-L2 Cache:	3 MB
-Memory:	4 GB
-Bus Speed:	800 MHz
-Boot ROM Version:	MBP41.00C1.B03
-SMC Version (system):	1.27f2
-Serial Number (system):	W88390K8YJZ
-Hardware UUID:	B08E5FEB-8575-528D-8A3A-54EF0832F4D4
-Sudden Motion Sensor:
-State:	Enabled
-*/
 
 public class MainRun 
 {

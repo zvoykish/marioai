@@ -108,23 +108,23 @@ public class LevelScene extends Scene implements SpriteContext
          else
          {*/
 //        level = LevelGenerator.createLevel(320, 15, levelSeed);
-        if (levelSeed != 152)
+//        if (levelSeed != -152)
             level = LevelGenerator.createLevel(levelLength, 15, levelSeed, levelDifficulty, levelType);
-        else
-        try
-        {
-            level = Level.load(new DataInputStream(LevelScene.class.getResourceAsStream("resources/test.lvl")));
+//        else
+//        try
+//        {
+//            level = Level.load(new DataInputStream(LevelScene.class.getResourceAsStream("resources/test.lvl")));
 //            System.out.println("level.getWidthCells() = " + level.getWidthCells());
-            level.xExit = level.width - 6;
-            level.yExit = 5;
+//            level.xExit = level.width - 6;
+//            level.yExit = 5;
 
 //            System.out.println("level.xExit = " + level.xExit);
 //            System.out.println("level.yExit = " + level.yExit);
-        } catch (IOException e)
-        {
-            System.err.println("OOPS! Sorry! Critical ERROR: \n " +
-                               "Generation of secret level failed. Please, contact sergey@idsia.ch");
-        }
+//        } catch (IOException e)
+//        {
+//            System.err.println("OOPS! Sorry! Critical ERROR: \n " +
+//                               "Generation of secret level failed. Please, contact sergey@idsia.ch");
+//        }
 //        Ssystem.out.println("\nJava:level created.");
         //        }
 
@@ -228,7 +228,11 @@ public class LevelScene extends Scene implements SpriteContext
                     case(-100):
                     case(-99):
                     case(-98):
-                    case(-97):
+//                    case(-97):
+//                    case(-96):
+//                    case(-95):
+//                    case(-94):
+                    case(-93):                        
                     case(-69):
                     case(-65):
                     case(-88):
@@ -254,7 +258,7 @@ public class LevelScene extends Scene implements SpriteContext
                     case(14): case(30): case(46): // canon
                         return 20;  // angry flower pot or cannon
                 }
-                System.err.println("Unknown value el = " + el + " ; Please, inform the developers");
+                System.err.println("ZLevelMapElementGeneralization: Unknown value el = " + el + " ; Please, inform the developers");
                 return el;
             case(2):
                 switch(el)
@@ -905,10 +909,10 @@ public class LevelScene extends Scene implements SpriteContext
         return mario.getStatus();
     }
         
-    public double[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies)
+    public float[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies)
     {
         // TODO:SK, serialize all data to a sole double[]
-        return new double[0];  //To change body of implemented methods use File | Settings | File Templates.
+        return new float[0];  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public int[] getSerializedLevelSceneObservationZ(int ZLevelScene)

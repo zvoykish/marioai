@@ -1,33 +1,32 @@
 package ch.idsia.maibe.tasks;
 
 import ch.idsia.ai.agents.Agent;
-import ch.idsia.tools.EvaluationOptions;
+import ch.idsia.tools.CmdLineOptions;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Sergey Karakovskiy
- * Date: Apr 8, 2009
- * Time: 11:28:56 AM
- * Package: ch.idsia.maibe.tasks;
+ * User: Sergey Karakovskiy, sergey at idsia dot ch
+ * Date: Apr 3, 2010 Time: 3:46:41 PM
+ * Package: ch.idsia.maibe.tasks
  */
-public class CoinTask implements Task {
 
-    private EvaluationOptions options = new EvaluationOptions ();
+public class MultiObjectiveFitnessTask extends BasicTask implements Task
+{
+    public MultiObjectiveFitnessTask(Agent agent)
+    {
+        super(agent);
+    }
 
     public double[] evaluate(Agent controller)
     {
         return new double[0];
     }
 
-    public void setOptions(EvaluationOptions options)
+    public void setOptions(CmdLineOptions options)
     {
-        this.options = options;
+
     }
 
-    public EvaluationOptions getOptions()
-    {
-        return options;
-    }
 
     public void doEpisodes(int amount)
     {

@@ -39,7 +39,7 @@ public class LargeMLPAgent extends BasicAIAgent implements Agent, Evolvable {
 
     public boolean[] getAction()
     {
-        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
+        return this.getAction(null);
     }
 
     public void reset() {
@@ -52,8 +52,7 @@ public class LargeMLPAgent extends BasicAIAgent implements Agent, Evolvable {
 
     public boolean[] getAction(Environment observation) {
         double[] inputs;// = new double[numberOfInputs];
-        byte[][] scene = observation.getLevelSceneObservation(/*1*/);
-        byte[][] enemies = observation.getEnemiesObservation(/*0*/);
+        byte[][] scene = levelScene;
         inputs = new double[numberOfInputs];
         int which = 0;
         for (int i = -3; i < 4; i++) {
@@ -66,8 +65,8 @@ public class LargeMLPAgent extends BasicAIAgent implements Agent, Evolvable {
                 inputs[which++] = probe(i, j, enemies);
             }
         }
-        inputs[inputs.length - 3] = observation.isMarioOnGround() ? 1 : 0;
-        inputs[inputs.length - 2] = observation.isMarioAbleToJump() ? 1 : 0;
+        inputs[inputs.length - 3] = isMarioOnGround ? 1 : 0;
+        inputs[inputs.length - 2] = isMarioAbleToJump ? 1 : 0;
         inputs[inputs.length - 1] = 1;
         double[] outputs = mlp.propagate (inputs);
         boolean[] action = new boolean[numberOfOutputs];

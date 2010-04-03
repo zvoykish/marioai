@@ -11,6 +11,8 @@ public class ChampGamePlayTask extends BasicTask
 {
     public ChampGamePlayTask(Environment environment, Agent agent)
     {
-        super(environment, agent);
+        super(agent);
     }
+
+    
 }

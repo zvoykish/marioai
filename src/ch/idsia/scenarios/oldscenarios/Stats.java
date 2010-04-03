@@ -10,20 +10,20 @@ import ch.idsia.tools.Evaluator;
 import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.utils.StatisticalSummary;
 
-public class Stats {
-
+public class Stats
+{
     final static int numberOfTrials = 100;
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args)
+    {
         Agent controller = AgentsPool.load (args[0]);
         final int startingSeed = Integer.parseInt (args[1]);
         doStats (controller, startingSeed);
         //System.exit(0);
-
     }
 
-    public static void doStats (Agent agent, int startingSeed) {
+    public static void doStats (Agent agent, int startingSeed)
+    {
         TimingAgent controller = new TimingAgent (agent);
 //        RegisterableAgent.registerAgent (controller);
         EvaluationOptions options = new CmdLineOptions(new String[0]);
