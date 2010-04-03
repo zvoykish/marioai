@@ -7,12 +7,16 @@ import ch.idsia.mario.engine.level.Level;
 import ch.idsia.mario.engine.sprites.Mario;
 import ch.idsia.mario.engine.sprites.Sprite;
 import ch.idsia.mario.environments.Environment;
+import ch.idsia.tools.GameViewer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.image.VolatileImage;
 import java.text.DecimalFormat;
+import java.util.List;
+
+
 
 /**
  * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Feb 26, 2010 Time: 3:54:52 PM
@@ -48,6 +52,7 @@ public class MarioVisualComponent extends JComponent
     int delay;
     private KeyAdapter prevHumanKeyBoardAgent;
     private String agentNameStr;
+    private GameViewer gameViewer;
 
     private MarioVisualComponent(int width, int height, LevelScene levelScene)
     {
@@ -75,6 +80,10 @@ public class MarioVisualComponent extends JComponent
 
 //        System.out.println("this (from constructor) = " + this);
         GlobalOptions.registerMarioVisualComponent(this);
+        this.setGameViewer(new GameViewer(null, null));
+        this.gameViewer.setMarioVisualComponent(this);
+        this.gameViewer.setVisible(true);
+
 //        System.out.println("\nJava: registered");
     }
 
@@ -155,11 +164,8 @@ public class MarioVisualComponent extends JComponent
 //            thisGraphics.drawImage(thisVolatileImage, 0, 0, null);
 //        }
 
-
-
-        
-
         thisGraphics.drawImage(thisVolatileImage, 0, 0, null);
+        this.gameViewer.tick();
         // Delay depending on how far we are behind.
         if (delay > 0)
         {
@@ -462,11 +468,15 @@ public class MarioVisualComponent extends JComponent
         }
     }
     /// `huge` inheritance stuff from MarioComponent
-//    public void setGameViewer(GameViewer gameViewer)
-//    {
-//        this.gameViewer = gameViewer;
-//    }
+    public void setGameViewer(GameViewer gameViewer)
+    {
+        this.gameViewer = gameViewer;
+    }
 
+    public List<String> getTextObservation(boolean showEnemies, boolean showLevelScene, boolean showMerged, int zLevelMapValue, int zLevelEnemiesValue)
+    {
+        return levelScene.LevelSceneAroundMarioASCII(showEnemies, showLevelScene, showMerged, zLevelMapValue, zLevelEnemiesValue);
+    }
 }
 
 

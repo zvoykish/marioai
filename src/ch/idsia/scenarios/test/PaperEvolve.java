@@ -8,6 +8,7 @@ import ch.idsia.ai.ea.ES;
 import ch.idsia.maibe.tasks.BasicTask;
 import ch.idsia.maibe.tasks.ProgressTask;
 import ch.idsia.mario.engine.GlobalOptions;
+import ch.idsia.mario.environments.Environment;
 import ch.idsia.tools.CmdLineOptions;
 import wox.serial.Easy;
 
@@ -53,6 +54,7 @@ public class PaperEvolve
 
         // start learning in mode 0
         System.out.println("options.getTimeLimit() = " + options.getTimeLimit());
+        options.setMarioMode(0);
         for (int gen = 0; gen < generations; gen++)
         {
             options.setLevelRandSeed(gen);
@@ -60,11 +62,12 @@ public class PaperEvolve
 
             double bestResult = es.getBestFitnesses()[0];
             System.out.print("Generation: " + gen + " ld: " + difficulty + "  best: " + bestResult + ";  ");
-            final String fileName = "evolved-" + gen + "-uid-" + uid + ".xml";
-            Easy.save (es.getBests()[0], fileName);
-            
-            if (bestResult > 4000)
+
+            int marioStatus = task.getEnvironment().getEvaluationInfo().marioStatus;
+            if (bestResult > 4000 && marioStatus == Environment.MARIO_STATUS_WIN)
             {
+                final String fileName = "evolved-" + gen + "-uid-" + uid + ".xml";
+                Easy.save (es.getBests()[0], fileName);
                 final Agent a = (Agent) es.getBests()[0];
                 c.setLevelRandSeed(options.getLevelRandSeed());
                 c.setLevelDifficulty(options.getLevelDifficulty());

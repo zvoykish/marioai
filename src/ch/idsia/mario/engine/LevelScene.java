@@ -198,7 +198,8 @@ public class LevelScene extends Scene implements SpriteContext
                         return 16; // prevents cheating
                     case 21:       // question brick, contains coin
                     case 22:       // question brick, contains flower/mushroom
-                        return 21; // question brick, contains something                    
+                        return 21; // question brick, contains something
+                    case(-111):
                     case(-108):
                     case(-107):
                     case(-106):
@@ -218,7 +219,6 @@ public class LevelScene extends Scene implements SpriteContext
                     case(-114):
                     case(-113):
                     case(-112):
-                    case(-111):
                     case(-110):
                     case(-109):
                     case(-104):
@@ -229,9 +229,9 @@ public class LevelScene extends Scene implements SpriteContext
                     case(-99):
                     case(-98):
 //                    case(-97):
-//                    case(-96):
-//                    case(-95):
-//                    case(-94):
+                    case(-96):
+                    case(-95):
+                    case(-94):
                     case(-93):                        
                     case(-69):
                     case(-65):
@@ -243,6 +243,7 @@ public class LevelScene extends Scene implements SpriteContext
                     case(-83):
                     case(-82):
                     case(-81):
+                    case(-77):
                     case(4):  // kicked hidden brick
                     case(9):
                         return -10;   // border, cannot pass through, can stand on
@@ -258,7 +259,8 @@ public class LevelScene extends Scene implements SpriteContext
                     case(14): case(30): case(46): // canon
                         return 20;  // angry flower pot or cannon
                 }
-                System.err.println("ZLevelMapElementGeneralization: Unknown value el = " + el + " ; Please, inform the developers");
+                System.err.println("ZLevelMapElementGeneralization: Unknown value el = " + el + " Possible Level tiles bug; " +
+                                   "Please, inform sergey@idsia.ch or julian@togelius.com. Thanks!");
                 return el;
             case(2):
                 switch(el)

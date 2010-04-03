@@ -130,9 +130,8 @@ public class SimulationOptions extends ParameterContainer
         return i(getParameterValue("-mm"));
     }
 
-    private void setMarioMode(int marioMode) {
-        setParameterValue("-mm", s(marioMode));
-    }
+    public void setMarioMode(int marioMode)
+    {   setParameterValue("-mm", s(marioMode));    }
 
     //ZLevelScene
     public int getZLevelScene() {
