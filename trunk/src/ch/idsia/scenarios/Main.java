@@ -2,7 +2,6 @@ package ch.idsia.scenarios;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.maibe.tasks.BasicTask;
-import ch.idsia.mario.environments.Environment;
 import ch.idsia.tools.CmdLineOptions;
 
 /**
@@ -21,18 +20,18 @@ public final class Main
         final Agent agent = cmdLineOptions.getAgent();
 //        final Agent a = AgentsPool.load("ch.idsia.controllers.agents.controllers.ForwardJumpingAgent");
         final BasicTask basicTask = new BasicTask(agent);
-        for (int i = 0; i < 10; ++i)
-        {
-            int seed = 0;
-            do
-            {
-                cmdLineOptions.setLevelDifficulty(i);
-                cmdLineOptions.setLevelRandSeed(seed++);
+//        for (int i = 0; i < 10; ++i)
+//        {
+//            int seed = 0;
+//            do
+//            {
+//                cmdLineOptions.setLevelDifficulty(i);
+//                cmdLineOptions.setLevelRandSeed(seed++);
                 basicTask.reset(cmdLineOptions);
                 basicTask.runOneEpisode();
                 System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-            } while (basicTask.getEnvironment().getEvaluationInfo().marioStatus != Environment.MARIO_STATUS_WIN);
-        }
+//            } while (basicTask.getEnvironment().getEvaluationInfo().marioStatus != Environment.MARIO_STATUS_WIN);
+//        }
 
         System.out.println("cmdLineOptions.getLevelLength() = " + cmdLineOptions.getLevelLength());
         System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());

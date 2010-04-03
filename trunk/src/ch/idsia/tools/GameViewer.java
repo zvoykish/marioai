@@ -1,6 +1,7 @@
 package ch.idsia.tools;
 
 import ch.idsia.mario.engine.GlobalOptions;
+import ch.idsia.mario.engine.MarioVisualComponent;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -18,6 +19,7 @@ import java.awt.event.ItemListener;
  * Time: 3:34:13 PM
  * Package: .Tools
  */
+
 public class GameViewer extends JFrame
 {
     Dimension defaultSize = new Dimension(900, 800);
@@ -27,6 +29,7 @@ public class GameViewer extends JFrame
     //    int frame;
     int delay;
     int FPS = 5;
+    private MarioVisualComponent marioVisualComponent;
 
     public void AdjustFPS()
     {
@@ -37,9 +40,16 @@ public class GameViewer extends JFrame
 
     GameViewerView gameViewerViewPanel = new GameViewerView();
 
+    public void setMarioVisualComponent(MarioVisualComponent marioVisualComponent)
+    {
+        this.marioVisualComponent = marioVisualComponent;
+    }
+
     private class GameViewerView extends JPanel implements Runnable
     {
         Thread animator;
+//        private MarioVisualComponent marioVisualComponent;
+
         public void start()
         {
             animator = new Thread(this);
@@ -58,18 +68,18 @@ public class GameViewer extends JFrame
             int y_dump = 0;
             g.drawString("Current GAME STATE: ", 320, y_dump += 11 );
             g.setColor(Color.GREEN);
-            if (toolsConfigurator.getMarioVisualComponent() != null)
+            if (this.getMarioVisualComponent() != null)
             {
-//                for (String s: toolsConfigurator.getMarioVisualComponent().getTextObservation(
-//                        ShowEnemiesObservation.getState(),
-//                        ShowLevelMapObservation.getState(),
-//                        ShowMergedObservation.getState(),
-//                        ZLevelMapValue,
-//                        ZLevelEnemiesValue) )
-//                {
-//                    g.setColor((s.charAt(0) == '~') ? Color.YELLOW : Color.GREEN);
-//                    g.drawString(s, 0, y_dump += 11);
-//                }
+                for (String s: this.getMarioVisualComponent().getTextObservation(
+                        ShowEnemiesObservation.getState(),
+                        ShowLevelMapObservation.getState(),
+                        ShowMergedObservation.getState(),
+                        ZLevelMapValue,
+                        ZLevelEnemiesValue) )
+                {
+                    g.setColor((s.charAt(0) == '~') ? Color.YELLOW : Color.GREEN);
+                    g.drawString(s, 0, y_dump += 11);
+                }
 
             }
 
@@ -97,6 +107,10 @@ public class GameViewer extends JFrame
             }
         }
 
+        public MarioVisualComponent getMarioVisualComponent()
+        {
+            return marioVisualComponent;
+        }
     }
 
     public void tick()
@@ -196,6 +210,7 @@ public class GameViewer extends JFrame
             }
             else if (ob == btnUpdate)
             {
+                System.out.println("ob = " + ob);
                 gameViewerViewPanel.repaint();
             }
 //            else
