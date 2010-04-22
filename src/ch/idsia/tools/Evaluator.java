@@ -213,7 +213,7 @@ public class Evaluator implements Runnable
 ////        {
 ////
 ////        }
-////        GlobalOptions.PauseWorld = evaluationOptions.isPauseWorld();
+////        GlobalOptions.isPauseWorld = evaluationOptions.isPauseWorld();
 ////        this.evaluationOptions = evaluationOptions;
 ////        if (thisThread == null)
 ////            thisThread = new Thread(this);

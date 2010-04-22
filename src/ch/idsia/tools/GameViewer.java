@@ -173,7 +173,7 @@ public class GameViewer extends JFrame
         GameViewerOptionsPanel.add(Z2_Map); GameViewerOptionsPanel.add(Z2_Enemies); GameViewerOptionsPanel.add(btnUpdate);
         GameViewerOptionsPanel.add(ShowLevelMapObservation); GameViewerOptionsPanel.add(ShowEnemiesObservation);
         GameViewerOptionsPanel.add(ShowMergedObservation); GameViewerOptionsPanel.add(ContinuousUpdates);
-        ContinuousUpdates.setState(GlobalOptions.GameVeiwerContinuousUpdatesOn);
+        ContinuousUpdates.setState(GlobalOptions.isGameVeiwerContinuousUpdates);
 
         GameViewerOptionsPanel.setBorder(new TitledBorder(new EtchedBorder(), "Game Viewer Options"));
 

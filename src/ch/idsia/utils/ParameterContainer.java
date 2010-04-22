@@ -162,7 +162,7 @@ public class ParameterContainer
             defaultOptionsHashMap.put("-m",""); //defaultOptionsHashMap.put("-matLabFile","DefaultMatlabFile");
             defaultOptionsHashMap.put("-mm","2"); //Mario Mode
 //            defaultOptionsHashMap.put("-not","1"); //defaultOptionsHashMap.put("-attemptsNumber","5");
-            defaultOptionsHashMap.put("-pw","off"); //defaultOptionsHashMap.put("-PauseWorld","off");
+            defaultOptionsHashMap.put("-pw","off"); //defaultOptionsHashMap.put("-isPauseWorld","off");
 //            defaultOptionsHashMap.put("-port","4242"); //defaultOptionsHashMap.put("-port","4242");
             defaultOptionsHashMap.put("-pr","off"); //defaultOptionsHashMap.put("-powerRestoration","off");
 //            defaultOptionsHashMap.put("-ssiw","off"); //defaultOptionsHashMap.put("-stopSimulationIfWin","off");

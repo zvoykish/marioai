@@ -46,12 +46,13 @@ public class EvaluateJLink
         options.setPauseWorld(false);
         agent.reset();
         options.setAgent(agent);
-        Evaluator evaluator = new Evaluator (options);
-        EvaluationInfo result = evaluator.evaluate().get(0);
+//        Evaluator evaluator = new Evaluator (options);
+//        EvaluationInfo result = evaluator.evaluate().get(0);
        // System.out.print(".");
-        double score = result.computeDistancePassed();
-         System.out.println("score: " +score);
-        return score;
+//        double score = result.computeDistancePassed();
+//         System.out.println("score: " +score);
+//        return score;
+        return -4242;
     }
 
 }

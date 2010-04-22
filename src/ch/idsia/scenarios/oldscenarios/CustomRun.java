@@ -19,7 +19,7 @@ public class CustomRun
     public static void main(String[] args)
     {
         CmdLineOptions options = new CmdLineOptions(args);
-        Evaluator evaluator = new Evaluator(options);
+//        Evaluator evaluator = new Evaluator(options);
 //        Agent agent = new ForwardAgent();
         options.setFPS(24);
 //        options.setVisualization(false);
@@ -29,8 +29,8 @@ public class CustomRun
         System.out.println("options.getAgentName() = " + options.getAgentName());
         Agent agent = new AmiCoAgent(amicoModuleName, options.getAgentName());
         options.setAgent(agent);
-        evaluator.evaluate();
-        System.out.println("evaluator = " + evaluator.getMeanEvaluationSummary());
+//        evaluator.evaluate();
+//        System.out.println("evaluator = " + evaluator.getMeanEvaluationSummary());
         System.exit(0);
     }
 }

@@ -79,7 +79,7 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
                 break;
             case KeyEvent.VK_V:
                 if (isPressed)
-                    GlobalOptions.VisualizationOn = !GlobalOptions.VisualizationOn;
+                    GlobalOptions.isVisualization = !GlobalOptions.isVisualization;
                 break;                        
             case KeyEvent.VK_U:
                 Action[Mario.KEY_LIFE_UP] = isPressed;
@@ -91,22 +91,22 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
                 if (isPressed)
                 {
 //                    LOGGER.println("Pause On/Off", LOGGER.VERBOSE_MODE.INFO);
-                    GlobalOptions.PauseWorld = !GlobalOptions.PauseWorld;
-                    Action[Mario.KEY_PAUSE] = GlobalOptions.PauseWorld;
+                    GlobalOptions.isPauseWorld = !GlobalOptions.isPauseWorld;
+                    Action[Mario.KEY_PAUSE] = GlobalOptions.isPauseWorld;
                 }
                 break;
             case KeyEvent.VK_L:
                 if (isPressed)
                 {
 //                    LOGGER.println("Labels On/Off", LOGGER.VERBOSE_MODE.INFO);
-                    GlobalOptions.Labels = !GlobalOptions.Labels;
+                    GlobalOptions.areLabels = !GlobalOptions.areLabels;
                 }
                 break;
             case KeyEvent.VK_C:
                 if (isPressed)
                 {
 //                    LOGGER.println("Center On/Off", LOGGER.VERBOSE_MODE.ALL);
-                    GlobalOptions.MarioAlwaysInCenter = !GlobalOptions.MarioAlwaysInCenter;
+                    GlobalOptions.isMarioAlwaysInCenter = !GlobalOptions.isMarioAlwaysInCenter;
                 }
                 break;
             case 61:

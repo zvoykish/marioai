@@ -121,12 +121,12 @@ public class ToolsConfigurator extends JFrame
 
     public Label LabelConsole = new Label("Console:");
     public TextArea TextAreaConsole = new TextArea("Console:"/*, 8,40*/);  // Verbose all, keys, events, actions, observations
-    public Checkbox CheckboxShowVizualization = new Checkbox("Enable Visualization", GlobalOptions.VisualizationOn);
+    public Checkbox CheckboxShowVizualization = new Checkbox("Enable Visualization", GlobalOptions.isVisualization);
     public Checkbox CheckboxMaximizeFPS = new Checkbox("Maximize FPS");
     public Choice ChoiceAgent = new Choice();
     public Choice ChoiceLevelType = new Choice();
     public JSpinner JSpinnerLevelRandomizationSeed = new JSpinner();
-    public Checkbox CheckboxEnableTimer = new Checkbox("Enable Timer", GlobalOptions.TimerOn);
+    public Checkbox CheckboxEnableTimer = new Checkbox("Enable Timer", GlobalOptions.isTimer);
     public JSpinner JSpinnerLevelDifficulty = new JSpinner();
     public Checkbox CheckboxPauseWorld = new Checkbox("Pause World");
     public Checkbox CheckboxPauseMario = new Checkbox("Pause Mario");
@@ -327,11 +327,11 @@ public class ToolsConfigurator extends JFrame
         //Simulate or Play!
         EvaluationOptions evaluationOptions = prepareEvaluatorOptions();
         assert(evaluationOptions != null);
-        if (evaluator == null)
-            evaluator = new Evaluator(evaluationOptions);
-        else
-            evaluator.init(evaluationOptions);
-        evaluator.start();
+//        if (evaluator == null)
+//            evaluator = new Evaluator(evaluationOptions);
+//        else
+//            evaluator.init(evaluationOptions);
+//        evaluator.start();
 //        LOGGER.println("Play/Simulation started!", LOGGER.VERBOSE_MODE.INFO);
     }
 
@@ -422,8 +422,8 @@ public class ToolsConfigurator extends JFrame
             {
 //                LOGGER.println("Vizualization " + (CheckboxShowVizualization.getState() ? "On" : "Off"),
 //                        LOGGER.VERBOSE_MODE.INFO );
-                GlobalOptions.VisualizationOn = CheckboxShowVizualization.getState();
-                marioComponentFrame.setVisible(GlobalOptions.VisualizationOn);
+                GlobalOptions.isVisualization = CheckboxShowVizualization.getState();
+                marioComponentFrame.setVisible(GlobalOptions.isVisualization);
             }
             else if (ob == CheckboxMaximizeFPS)
             {
@@ -435,16 +435,16 @@ public class ToolsConfigurator extends JFrame
             }
             else if (ob == CheckboxEnableTimer)
             {
-                GlobalOptions.TimerOn = CheckboxEnableTimer.getState();
-//                LOGGER.println("Timer " + (GlobalOptions.TimerOn ? "enabled" : "disabled"),
+                GlobalOptions.isTimer = CheckboxEnableTimer.getState();
+//                LOGGER.println("Timer " + (GlobalOptions.isTimer ? "enabled" : "disabled"),
 //                        LOGGER.VERBOSE_MODE.INFO);
             }
             else if (ob == CheckboxPauseWorld)
             {
-                GlobalOptions.PauseWorld = CheckboxPauseWorld.getState();
+                GlobalOptions.isPauseWorld = CheckboxPauseWorld.getState();
 
-//                marioComponent.setPaused(GlobalOptions.PauseWorld);
-//                LOGGER.println("World " + (GlobalOptions.PauseWorld ? "paused" : "unpaused"),
+//                marioComponent.setPaused(GlobalOptions.isPauseWorld);
+//                LOGGER.println("World " + (GlobalOptions.isPauseWorld ? "paused" : "unpaused"),
 //                        LOGGER.VERBOSE_MODE.INFO);
             }
             else if (ob == CheckboxPauseMario)
@@ -453,8 +453,8 @@ public class ToolsConfigurator extends JFrame
             }
             else if (ob == CheckboxPowerRestoration)
             {
-                GlobalOptions.PowerRestoration = CheckboxPowerRestoration.getState();
-//                LOGGER.println("Mario Power Restoration Turned " + (GlobalOptions.PowerRestoration ? "on" : "off"),
+                GlobalOptions.isPowerRestoration = CheckboxPowerRestoration.getState();
+//                LOGGER.println("Mario Power Restoration Turned " + (GlobalOptions.isPowerRestoration ? "on" : "off"),
 //                        LOGGER.VERBOSE_MODE.INFO);
             }
 //            else if (ob == CheckboxStopSimulationIfWin)

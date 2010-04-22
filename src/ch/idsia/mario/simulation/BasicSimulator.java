@@ -21,7 +21,7 @@ public class BasicSimulator implements Simulation
     @Deprecated
     public BasicSimulator(SimulationOptions simulationOptions)
     {
-        GlobalOptions.VisualizationOn = simulationOptions.isVisualization();
+        GlobalOptions.isVisualization = simulationOptions.isVisualization();
 //        this.marioComponent = GlobalOptions.getMarioComponent();
         this.setSimulationOptions(simulationOptions);
     }

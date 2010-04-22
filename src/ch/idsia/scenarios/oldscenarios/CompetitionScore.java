@@ -89,13 +89,13 @@ public class CompetitionScore {
             options.setLevelRandSeed(seed + i);
             controller.reset();
             options.setAgent(controller);
-            Evaluator evaluator = new Evaluator (options);
-            EvaluationInfo result = evaluator.evaluate().get(0);
-            ss.add (result.computeDistancePassed());
-            kills += result.computeKillsTotal();
-            timeLeft += result.timeLeft;
-            marioMode += result.marioMode;
-            marioStatus += result.marioStatus;
+//            Evaluator evaluator = new Evaluator (options);
+//            EvaluationInfo result = evaluator.evaluate().get(0);
+//            ss.add (result.computeDistancePassed());
+//            kills += result.computeKillsTotal();
+//            timeLeft += result.timeLeft;
+//            marioMode += result.marioMode;
+//            marioStatus += result.marioStatus;
         }
         killsSum += kills;
         marioStatusSum += marioStatus;

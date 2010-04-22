@@ -71,7 +71,7 @@ public class Sprite
         int yPixel = (int)y-yPicO;
 
         og.drawImage(sheet[xPic][yPic], xPixel+(xFlipPic?wPic:0), yPixel+(yFlipPic?hPic:0), xFlipPic?-wPic:wPic, yFlipPic?-hPic:hPic, null);
-        if (GlobalOptions.Labels)
+        if (GlobalOptions.areLabels)
             og.drawString("" + xPixel + "," + yPixel, xPixel, yPixel);
     }
     

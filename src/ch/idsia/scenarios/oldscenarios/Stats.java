@@ -69,9 +69,9 @@ public class Stats
             options.setLevelRandSeed(seed + i);
             controller.reset();
             options.setAgent(controller);
-            Evaluator evaluator = new Evaluator (options);
-            EvaluationInfo result = evaluator.evaluate().get(0);
-            ss.add (result.computeDistancePassed());
+//            Evaluator evaluator = new Evaluator (options);
+//            EvaluationInfo result = evaluator.evaluate().get(0);
+//            ss.add (result.computeDistancePassed());
         }
         return ss;
     }
