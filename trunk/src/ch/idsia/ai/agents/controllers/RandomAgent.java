@@ -22,18 +22,13 @@ public class RandomAgent extends BasicAIAgent implements Agent
 
     private Random R = null;
 
-    public boolean[] getAction()
-    {
-        return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
     public void reset()
     {
         // Dummy reset, of course, but meet formalities!
         R = new Random();
     }
 
-    public boolean[] getAction(Environment observation)
+    public boolean[] getAction()
     {
         boolean[] ret = new boolean[Environment.numberOfButtons];
 

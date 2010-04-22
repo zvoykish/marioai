@@ -2,10 +2,10 @@ package ch.idsia.maibe.tasks;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.tools.CmdLineOptions;
-import ch.idsia.tools.EvaluationInfo;
-import ch.idsia.tools.Evaluator;
+//import ch.idsia.tools.EvaluationInfo;
+//import ch.idsia.tools.Evaluator;
 
-import java.util.List;
+//import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,20 +23,20 @@ public class MultiDifficultyProgressTask implements Task
         setOptions(evaluationOptions);
     }
 
-    public double[] evaluate(final Agent controller) {
-        double distanceTravelled = 0;
-        double[] fitnesses = new double[difficulties.length + 1];
-        for (int i = 0; i < difficulties.length; i++) {
+    public float[] evaluate(final Agent controller) {
+        float distanceTravelled = 0;
+        float[] fitnesses = new float[difficulties.length + 1];
+        for (int difficulty : difficulties) {
             controller.reset();
             options.setLevelRandSeed(startingSeed);
-            options.setLevelDifficulty(difficulties[i]);
+            options.setLevelDifficulty(difficulty);
             options.setAgent(controller);
-            Evaluator evaluator = new Evaluator(options);
-            List<EvaluationInfo> results = evaluator.evaluate();
-            EvaluationInfo result = results.get(0);
-            double thisDistance = result.computeDistancePassed();
-            fitnesses[i + 1] = thisDistance;
-            distanceTravelled += thisDistance;
+//            Evaluator evaluator = new Evaluator(options);
+//            List<EvaluationInfo> results = evaluator.evaluate();
+//            EvaluationInfo result = results.get(0);
+//            float thisDistance = result.computeDistancePassed();
+//            fitnesses[i + 1] = thisDistance;
+//            distanceTravelled += thisDistance;
         }
         distanceTravelled = distanceTravelled / difficulties.length;
         fitnesses[0] = distanceTravelled;
@@ -56,18 +56,18 @@ public class MultiDifficultyProgressTask implements Task
         return options;
     }
 
-    public void doEpisodes(int amount)
+    public void doEpisodes(int amount, boolean verbose)
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+
     }
 
     public boolean isFinished()
     {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return false;
     }
 
     public void reset()
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+        
     }
 }

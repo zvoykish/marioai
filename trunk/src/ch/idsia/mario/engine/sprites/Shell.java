@@ -6,10 +6,8 @@ import ch.idsia.mario.engine.LevelScene;
 
 public class Shell extends Sprite
 {
-    private static float GROUND_INERTIA = 0.89f;
-    private static float AIR_INERTIA = 0.89f;
 
-    private float runTime;
+//    private float runTime;
     private boolean onGround = false;
 
     private int width = 4;
@@ -78,7 +76,7 @@ public class Shell extends Sprite
         float xMarioD = world.mario.x - x;
         float yMarioD = world.mario.y - y;
         float w = 16;
-        if (xMarioD > -16 && xMarioD < 16)
+        if (xMarioD > -w && xMarioD < w)
         {
             if (yMarioD > -height && yMarioD < world.mario.height)
             {
@@ -164,7 +162,7 @@ public class Shell extends Sprite
 
         xFlipPic = facing == -1;
 
-        runTime += (Math.abs(xa)) + 5;
+//        runTime += (Math.abs(xa)) + 5;
 
         xPic = (anim / 2) % 4 + 3;
 
@@ -180,11 +178,11 @@ public class Shell extends Sprite
         ya *= 0.85f;
         if (onGround)
         {
-            xa *= GROUND_INERTIA;
+            xa *= Sprite.GROUND_INERTIA;
         }
         else
         {
-            xa *= AIR_INERTIA;
+            xa *= Sprite.AIR_INERTIA;
         }
 
         if (!onGround)
@@ -287,7 +285,7 @@ public class Shell extends Sprite
 
         boolean blocking = world.level.isBlocking(x, y, xa, ya);
 
-        byte block = world.level.getBlock(x, y);
+//        byte block = world.level.getBlock(x, y);
         
         if (blocking && ya == 0 && xa!=0)
         {
@@ -331,6 +329,7 @@ public class Shell extends Sprite
                 if (world.mario.carried == shell || world.mario.carried == this)
                 {
                     world.mario.carried = null;
+                    world.mario.setRacoon(false);
                 }
 
                 die();

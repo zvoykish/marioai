@@ -52,39 +52,6 @@ public class ForwardAgent extends BasicAIAgent implements Agent
         return DangerOfGap(levelScene);
     }
 
-    public boolean[] getAction(Environment observation)
-    {
-        // this Agent requires observation.
-        assert(observation != null);
-
-        byte[][] levelScene = observation.getLevelSceneObservationZ(1);
-        float[] marioPos = observation.getMarioFloatPos();
-        float[] enemiesPos = observation.getEnemiesFloatPos();
-
-        if (levelScene[11][13] != 0 || levelScene[11][12] != 0 ||  DangerOfGap(levelScene))
-        {
-            if (observation.isMarioAbleToJump() || ( !observation.isMarioOnGround() && action[Mario.KEY_JUMP]))
-            {
-                action[Mario.KEY_JUMP] = true;
-            }
-            ++trueJumpCounter;
-        }
-        else
-        {
-            action[Mario.KEY_JUMP] = false;
-            trueJumpCounter = 0;
-        }
-
-        if (trueJumpCounter > 16)
-        {
-            trueJumpCounter = 0;
-            action[Mario.KEY_JUMP] = false;
-        }
-
-        action[Mario.KEY_SPEED] = DangerOfGap(levelScene);
-        return action;
-    }
-
     public boolean[] getAction()
     {
         // this Agent requires observation integrated in advance.

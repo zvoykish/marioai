@@ -1,9 +1,11 @@
 package ch.idsia.tools;
 
+import ch.idsia.maibe.tasks.MarioSystemOfValues;
+import ch.idsia.maibe.tasks.SystemOfValues;
 import ch.idsia.mario.engine.sprites.Mario;
-import ch.idsia.scenarios.champ.MarioSystemOfValues;
 
 import java.text.DecimalFormat;
+
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,18 +19,20 @@ public final class EvaluationInfo
 {
     private static final int MagicNumberUnDef = -42;
 
-    public static final int numberOfElements = 12;
+    public static final int numberOfElements = 14;
 
     // ordered in alphabetical order;
     public int distancePassedCells =MagicNumberUnDef;
     // TODO: migrate to all integers.
-    public float distancePassedPhys =MagicNumberUnDef;    
+    public float distancePassedPhys =MagicNumberUnDef;
+    public int flowersDevoured=MagicNumberUnDef;
     public int killsByFire=MagicNumberUnDef;
     public int killsByShell=MagicNumberUnDef;
     public int killsByStomp=MagicNumberUnDef;
     public int killsTotal=MagicNumberUnDef;
     public int marioMode=MagicNumberUnDef;
     public int marioStatus=MagicNumberUnDef;
+    public int mushroomsDevoured=MagicNumberUnDef;
     public int numberOfCoinsGained=MagicNumberUnDef;
     public int numberOfHiddenItemsGained =MagicNumberUnDef;
     public int timeLeft=MagicNumberUnDef;
@@ -39,6 +43,7 @@ public final class EvaluationInfo
     public String Memo = "";
     
     private static final DecimalFormat df = new DecimalFormat("0.00");
+    private static MarioSystemOfValues marioSystemOfValues = new MarioSystemOfValues();
 
     public EvaluationInfo()
     {
@@ -47,25 +52,32 @@ public final class EvaluationInfo
 
     public float computeBasicFitness()
     {
-        return distancePassedPhys - timeSpent + numberOfCoinsGained + marioStatus*MarioSystemOfValues.win;
+        return distancePassedPhys - timeSpent + numberOfCoinsGained + marioStatus*marioSystemOfValues.win;
+    }
+
+    public float computeMultiObjectiveFitness(SystemOfValues sov)
+    {
+        return
+                distancePassedPhys * sov.distance +
+                flowersDevoured * sov.flowerFire +
+                marioStatus * sov.win +
+                marioMode * sov.mode  +
+                mushroomsDevoured * sov.mushrooms +
+                numberOfCoinsGained * sov.coins+
+                killsTotal * sov.kills +
+                killsByStomp * sov.killedByStomp +
+                killsByFire * sov.killedByFire +
+                killsByShell * sov.killedByShell +
+                numberOfHiddenItemsGained * sov.hiddenItems +
+                timeLeft * sov.timeLeft;
     }
 
     public float computeMultiObjectiveFitness()
     {
-        return
-                distancePassedPhys * MarioSystemOfValues.distance +
-                marioStatus * MarioSystemOfValues.win +
-                marioMode * MarioSystemOfValues.mode  +
-                numberOfCoinsGained * MarioSystemOfValues.coins+
-                killsTotal * MarioSystemOfValues.kills +
-                killsByStomp * MarioSystemOfValues.killedByStomp +
-                killsByFire * MarioSystemOfValues.killedByFire +
-                killsByShell * MarioSystemOfValues.killedByShell +
-                numberOfHiddenItemsGained * MarioSystemOfValues.hiddenCoins +
-                timeLeft * MarioSystemOfValues.timeLeft;
+        return this.computeMultiObjectiveFitness(marioSystemOfValues);
     }
 
-    public double computeDistancePassed()
+    public float computeDistancePassed()
     {
         return distancePassedPhys;
     }
@@ -80,16 +92,18 @@ public final class EvaluationInfo
     {
         retFloatArray[0] = this.distancePassedCells;
         retFloatArray[1] = this.distancePassedPhys;
-        retFloatArray[2] = this.killsByFire;
-        retFloatArray[3] = this.killsByShell;
-        retFloatArray[4] = this.killsByStomp;
-        retFloatArray[5] = this.killsTotal;
-        retFloatArray[6] = this.marioMode;
-        retFloatArray[7] = this.marioStatus;
-        retFloatArray[8] = this.numberOfCoinsGained;
-        retFloatArray[9] = this.numberOfHiddenItemsGained;
-        retFloatArray[10] = this.timeLeft;
-        retFloatArray[11] = this.timeSpent;
+        retFloatArray[2] = this.flowersDevoured;
+        retFloatArray[3] = this.killsByFire;
+        retFloatArray[4] = this.killsByShell;
+        retFloatArray[5] = this.killsByStomp;
+        retFloatArray[6] = this.killsTotal;
+        retFloatArray[7] = this.marioMode;
+        retFloatArray[8] = this.marioStatus;
+        retFloatArray[9] = this.mushroomsDevoured;
+        retFloatArray[10] = this.numberOfCoinsGained;
+        retFloatArray[11] = this.numberOfHiddenItemsGained;
+        retFloatArray[12] = this.timeLeft;
+        retFloatArray[13] = this.timeSpent;
 
         return retFloatArray;
     }
@@ -105,6 +119,8 @@ public final class EvaluationInfo
             "\n            Time Left(marioseconds) : " + timeLeft +
             "\n                       Coins Gained : " + numberOfCoinsGained +
             "\n                 Hidden Items Found : " + numberOfHiddenItemsGained +
+            "\n                 Mushrooms Devoured : " + mushroomsDevoured +
+            "\n                   Flowers Devoured : " + flowersDevoured +
             "\n                        kills Total : " + killsTotal +
             "\n                      kills By Fire : " + killsByFire +
             "\n                     kills By Shell : " + killsByShell +
@@ -123,6 +139,8 @@ public final class EvaluationInfo
         "; Time Spent: " + timeSpent +
         "; Time Left: " + timeLeft +
         "; Coins: " + numberOfCoinsGained +
+        "; Mushrooms: " + mushroomsDevoured +
+        "; Flowers: " + flowersDevoured +        
         "; kills: " + killsTotal +
         "; By Fire: " + killsByFire +
         "; By Shell: " + killsByShell + 

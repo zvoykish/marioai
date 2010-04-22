@@ -17,9 +17,11 @@ public class MediumMLPAgent extends BasicAIAgent implements Agent, Evolvable {
     private static final String name = "MediumMLPAgent";
     private MLP mlp;
     final int numberOfOutputs = Environment.numberOfButtons;
-    final int numberOfInputs = 53;
+//    final int numberOfInputs = 53;
+    final int numberOfInputs = 28;
 
-    public MediumMLPAgent() {
+    public MediumMLPAgent()
+    {
         super (name);
         mlp = new MLP (numberOfInputs, 10, numberOfOutputs);
     }
@@ -37,11 +39,6 @@ public class MediumMLPAgent extends BasicAIAgent implements Agent, Evolvable {
         return new MediumMLPAgent(mlp.copy ());
     }
 
-    public boolean[] getAction()
-    {
-        return this.getAction(null);
-    }
-
     public void reset() {
         mlp.reset ();
     }
@@ -50,8 +47,9 @@ public class MediumMLPAgent extends BasicAIAgent implements Agent, Evolvable {
         mlp.mutate ();
     }
 
-    public boolean[] getAction(Environment observation) {
-        byte[][] scene = levelScene;
+    public boolean[] getAction() 
+    {
+        byte[][] scene = this.mergedObservation;
 //        byte[][] enemies = observation.getEnemiesObservation(/*0*/);
         double[] inputs = new double[numberOfInputs];
         int which = 0;
@@ -60,17 +58,18 @@ public class MediumMLPAgent extends BasicAIAgent implements Agent, Evolvable {
                 inputs[which++] = probe(i, j, scene);
             }
         }
-        for (int i = -2; i < 3; i++) {
-            for (int j = -2; j < 3; j++) {
-                inputs[which++] = probe(i, j, enemies);
-            }
-        }
+//        for (int i = -2; i < 3; i++) {
+//            for (int j = -2; j < 3; j++) {
+//                inputs[which++] = probe(i, j, enemies);
+//            }
+//        }
         inputs[inputs.length - 3] = isMarioOnGround ? 1 : 0;
         inputs[inputs.length - 2] = isMarioAbleToJump ? 1 : 0;
         inputs[inputs.length - 1] = 1;
         double[] outputs = mlp.propagate (inputs);
         boolean[] action = new boolean[numberOfOutputs];
-        for (int i = 0; i < action.length; i++) {
+        for (int i = 0; i < action.length; i++)
+        {
             action[i] = outputs[i] > 0;
         }
         return action;

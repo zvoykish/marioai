@@ -47,7 +47,7 @@ public class LevelScene extends Scene implements SpriteContext
     final private int[] marioState = new int[12];
     private int numberOfHiddenCoinsGained;
 
-    public int getTimeLimit() {  return timeLimit; }
+//    public int getTimeLimit() {  return timeLimit; }
     public void setTimeLimit(int timeLimit) {  this.timeLimit = timeLimit; }
 
     private int timeLimit = 200;
@@ -228,7 +228,7 @@ public class LevelScene extends Scene implements SpriteContext
                     case(-100):
                     case(-99):
                     case(-98):
-//                    case(-97):
+                    case(-97):
                     case(-96):
                     case(-95):
                     case(-94):
@@ -372,8 +372,6 @@ public class LevelScene extends Scene implements SpriteContext
                 }
                 else
                     levelSceneZ[obsX][obsY] = 0;
-//                if (x == MarioXInMap && y == MarioYInMap)
-//                    levelSceneZ[obsX][obsY] = mario.kind;
             }
         }
         return levelSceneZ;
@@ -645,9 +643,8 @@ public class LevelScene extends Scene implements SpriteContext
             tick++;
             level.tick();
 
-            boolean hasShotCannon = false;
-            int xCannon = 0;
-
+//            boolean hasShotCannon = false;
+//            int xCannon = 0;
 
             for (int x = (int) xCam / 16 - 1; x <= (int) (xCam + this.width) / 16 + 1; x++)
                 for (int y = (int) yCam / 16 - 1; y <= (int) (yCam + this.height) / 16 + 1; y++)
@@ -681,13 +678,13 @@ public class LevelScene extends Scene implements SpriteContext
                             {
                                 if ((tick - x * 2) % 100 == 0)
                                 {
-                                    xCannon = x;
+//                                    xCannon = x;
                                     for (int i = 0; i < 8; i++)
                                     {
                                         addSprite(new Sparkle(x * 16 + 8, y * 16 + (int) (Math.random() * 16), (float) Math.random() * dir, 0, 0, 1, 5));
                                     }
                                     addSprite(new BulletBill(this, x * 16 + 8 + dir * 8, y * 16 + 15, dir));
-                                    hasShotCannon = true;
+//                                    hasShotCannon = true;
                                 }
                             }
                         }
@@ -715,6 +712,8 @@ public class LevelScene extends Scene implements SpriteContext
                             if (mario.carried == shell && !shell.dead)
                             {
                                 mario.carried = null;
+                                mario.setRacoon(false);
+                                System.out.println("sprite = " + sprite);
                                 shell.die();
                                 ++this.killedCreaturesTotal;
                             }
@@ -758,22 +757,22 @@ public class LevelScene extends Scene implements SpriteContext
         spritesToRemove.add(sprite);
     }
 
-    public float getX(float alpha)
-    {
-        int xCam = (int) (mario.xOld + (mario.x - mario.xOld) * alpha) - 160;
-        //        int yCam = (int) (mario.yOld + (mario.y - mario.yOld) * alpha) - 120;
-        //int xCam = (int) (xCamO + (this.xCam - xCamO) * alpha);
-        //        int yCam = (int) (yCamO + (this.yCam - yCamO) * alpha);
-        if (xCam < 0) xCam = 0;
-        //        if (yCam < 0) yCam = 0;
-        //        if (yCam > 0) yCam = 0;
-        return xCam + 160;
-    }
+//    public float getX(float alpha)
+//    {
+//        int xCam = (int) (mario.xOld + (mario.x - mario.xOld) * alpha) - 160;
+//        //        int yCam = (int) (mario.yOld + (mario.y - mario.yOld) * alpha) - 120;
+//        //int xCam = (int) (xCamO + (this.xCam - xCamO) * alpha);
+//        //        int yCam = (int) (yCamO + (this.yCam - yCamO) * alpha);
+//        if (xCam < 0) xCam = 0;
+//        //        if (yCam < 0) yCam = 0;
+//        //        if (yCam > 0) yCam = 0;
+//        return xCam + 160;
+//    }
 
-    public float getY(float alpha)
-    {
-        return 0;
-    }
+//    public float getY(float alpha)
+//    {
+//        return 0;
+//    }
 
     public void bump(int x, int y, boolean canBreakBricks)
     {
@@ -914,6 +913,7 @@ public class LevelScene extends Scene implements SpriteContext
     public float[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies)
     {
         // TODO:SK, serialize all data to a sole double[]
+        assert false;
         return new float[0];  //To change body of implemented methods use File | Settings | File Templates.
     }
 
@@ -1036,14 +1036,14 @@ public class LevelScene extends Scene implements SpriteContext
     {   return mario.carried != null; }
 
 
-    public byte[][] getCompleteObservation()
-    {  return getMergedObservationZZ(1, 0);    }
-
-    public byte[][] getEnemiesObservation()
-    {        return getEnemiesObservationZ(0);    }
-
-    public byte[][] getLevelSceneObservation()
-    {         return getLevelSceneObservationZ(1);    }
+//    public byte[][] getCompleteObservation()
+//    {  return getMergedObservationZZ(1, 0);    }
+//
+//    public byte[][] getEnemiesObservation()
+//    {        return getEnemiesObservationZ(0);    }
+//
+//    public byte[][] getLevelSceneObservation()
+//    {         return getLevelSceneObservationZ(1);    }
 
     public int getLevelDifficulty()
     {         return levelDifficulty;    }

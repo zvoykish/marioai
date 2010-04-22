@@ -37,11 +37,6 @@ public class LargeMLPAgent extends BasicAIAgent implements Agent, Evolvable {
         return new LargeMLPAgent(mlp.copy ());
     }
 
-    public boolean[] getAction()
-    {
-        return this.getAction(null);
-    }
-
     public void reset() {
         mlp.reset ();
     }
@@ -50,7 +45,8 @@ public class LargeMLPAgent extends BasicAIAgent implements Agent, Evolvable {
         mlp.mutate ();
     }
 
-    public boolean[] getAction(Environment observation) {
+    public boolean[] getAction()
+    {
         double[] inputs;// = new double[numberOfInputs];
         byte[][] scene = levelScene;
         inputs = new double[numberOfInputs];

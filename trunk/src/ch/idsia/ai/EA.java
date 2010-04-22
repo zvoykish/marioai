@@ -45,7 +45,7 @@ public interface EA {
      *
      * @return array of <code>fitnesses</code> the array may have only one element.
      */
-    public double[] getBestFitnesses();
+    public float[] getBestFitnesses();
 
     /**
      * Steps the <code>EA</code> one generation forward  the full loop is executed:
@@ -60,7 +60,7 @@ public interface EA {
      * An exception is generated if the number of objective in the task
      * does not agree with the specific ea.
      *
-     * @throws Exception
+     * @throws Exception, any Exception, if anything goes wrong
      */
     public void nextGeneration() throws Exception;
 

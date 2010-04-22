@@ -37,11 +37,6 @@ public class LargeSRNAgent extends BasicAIAgent implements Agent, Evolvable {
         return new LargeSRNAgent(srn.copy ());
     }
 
-    public boolean[] getAction()
-    {
-        return this.getAction(null);
-    }
-
     public void reset() {
         srn.reset ();
     }
@@ -50,7 +45,8 @@ public class LargeSRNAgent extends BasicAIAgent implements Agent, Evolvable {
         srn.mutate ();
     }
 
-    public boolean[] getAction(Environment observation) {
+    public boolean[] getAction()
+    {
         double[] inputs;// = new double[numberOfInputs];
 //        byte[][] scene = observation.getLevelSceneObservation(/*1*/);
 //        byte[][] enemies = observation.getEnemiesObservation(/*0*/);

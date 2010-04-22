@@ -37,12 +37,6 @@ public class SmallMLPAgent extends BasicAIAgent implements Agent, Evolvable {
         return new SmallMLPAgent(mlp.copy ());
     }
 
-    public boolean[] getAction()
-    {
-//        System.out.println("mlp = " + mlp);
-        return this.getAction(null);
-    }
-
     public void reset() {
         mlp.reset ();
     }
@@ -51,7 +45,8 @@ public class SmallMLPAgent extends BasicAIAgent implements Agent, Evolvable {
         mlp.mutate ();
     }
 
-    public boolean[] getAction(Environment observation) {
+    public boolean[] getAction() 
+    {
 //        byte[][] scene = observation.getLevelSceneObservation(/*1*/);
 //        byte[][] enemies = observation.getEnemiesObservation(/*0*/);
         byte[][] scene = levelScene;

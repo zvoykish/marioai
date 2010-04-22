@@ -14,15 +14,12 @@ public class Enemy extends Sprite
     public static final int ENEMY_SPIKY = 3;
     public static final int ENEMY_FLOWER = 4;
 
-    private static float GROUND_INERTIA = 0.89f;
-    private static float AIR_INERTIA = 0.89f;
-
     private float runTime;
     private boolean onGround = false;
-    private boolean mayJump = false;
-    private int jumpTime = 0;
-    private float xJumpSpeed;
-    private float yJumpSpeed;
+//    private boolean mayJump = false;
+//    private int jumpTime = 0;
+//    private float xJumpSpeed;
+//    private float yJumpSpeed;
 
     int width = 4;
     int height = 24;
@@ -94,7 +91,7 @@ public class Enemy extends Sprite
 
         float xMarioD = world.mario.x - x;
         float yMarioD = world.mario.y - y;
-        float w = 16;
+//        float w = 16;
         if (xMarioD > -width*2-4 && xMarioD < width*2+4)
         {
             if (yMarioD > -height && yMarioD < world.mario.height)
@@ -178,7 +175,7 @@ public class Enemy extends Sprite
 
         xa = facing * sideWaysSpeed;
 
-        mayJump = (onGround);
+//        mayJump = (onGround);
 
         xFlipPic = facing == -1;
 
@@ -296,7 +293,7 @@ public class Enemy extends Sprite
             if (ya < 0)
             {
                 y = (int) ((y - height) / 16) * 16 + height;
-                jumpTime = 0;
+//                jumpTime = 0;
                 this.ya = 0;
             }
             if (ya > 0)
@@ -322,7 +319,7 @@ public class Enemy extends Sprite
 
         boolean blocking = world.level.isBlocking(x, y, xa, ya);
 
-        byte block = world.level.getBlock(x, y);
+//        byte block = world.level.getBlock(x, y);
 
         return blocking;
     }
@@ -399,7 +396,7 @@ public class Enemy extends Sprite
             winged = false;
             hPic = -hPic;
             yPicO = -yPicO + 16;
-            System.out.println("bumpCheck");
+            System.out.println("bumpCheck: mostelikely shell killed other creature");
         }
     }
 

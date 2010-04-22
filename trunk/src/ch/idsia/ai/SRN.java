@@ -70,18 +70,21 @@ public class SRN implements FA<double[], double[]>, Evolvable {
                 copy(secondConnectionLayer), hiddenNeurons.length, outputs.length);
     }
 
-    public void mutate() {
+    public void mutate()
+    {
         mutate(firstConnectionLayer);
         mutate(recurrentConnectionLayer);
         mutate(secondConnectionLayer);
     }
 
-    public void reset() {
+    public void reset()
+    {
         clear(hiddenNeurons);
         clear(hiddenNeuronsCopy);
     }
 
-    public double[] approximate(double[] doubles) {
+    public double[] approximate(double[] doubles)
+    {
         return propagate(doubles);
     }
 

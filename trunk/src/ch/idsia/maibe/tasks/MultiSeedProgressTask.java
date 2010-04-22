@@ -10,38 +10,35 @@ import ch.idsia.tools.CmdLineOptions;
  * Time: 11:37:47 PM
  */
 
-public class MultiSeedProgressTask implements Task
+public class MultiSeedProgressTask extends BasicTask implements Task
 {
     private CmdLineOptions options;
     private int startingSeed = 0;
     private int numberOfSeeds = 3;
-    private BasicTask basicTask;
 
     public MultiSeedProgressTask(CmdLineOptions evaluationOptions)
     {
+        super(evaluationOptions);
         setOptions(evaluationOptions);
-        this.basicTask = new BasicTask(evaluationOptions.getAgent());
     }
 
-    public double[] evaluate(Agent controller)
+    public float[] evaluate(Agent controller)
     {
-        double distanceTravelled = 0;
+        float distanceTravelled = 0;
 
         options.setAgent(controller);
+        this.setAgent(controller);
 
         for (int i = 0; i < numberOfSeeds; i++)
         {
             controller.reset();
-            options.setAgent(controller);
-            basicTask.setAgent(controller);
             options.setLevelRandSeed(startingSeed + i);
-            basicTask.reset(options);
-            basicTask.runOneEpisode();
-
-            distanceTravelled += basicTask.getEnvironment().getEvaluationInfo().computeDistancePassed();
+            this.reset(options);
+            this.runOneEpisode();
+            distanceTravelled += this.getEnvironment().getEvaluationInfo().computeDistancePassed();
         }
         distanceTravelled = distanceTravelled / numberOfSeeds;
-        return new double[]{distanceTravelled};
+        return new float[]{distanceTravelled};
     }
 
     public void setStartingSeed (int seed)
@@ -64,7 +61,7 @@ public class MultiSeedProgressTask implements Task
         return options;
     }
 
-    public void doEpisodes(int amount)
+    public void doEpisodes(int amount, boolean verbose)
     {
 
     }
