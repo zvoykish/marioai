@@ -38,10 +38,10 @@ public class EvolveWithChangingSeeds {
         for (int gen = 0; gen < generations; gen++) {
             task.setStartingSeed((int) (Math.random () * Integer.MAX_VALUE));
             es.nextGeneration();
-            double bestResult = es.getBestFitnesses()[0];
+            float bestResult = es.getBestFitnesses()[0];
             System.out.println("Generation " + gen + " best " + bestResult);
             Evolvable bestEvolvable = es.getBests()[0];
-            double[] fitnesses = task.evaluate((Agent) bestEvolvable);
+            float[] fitnesses = task.evaluate((Agent) bestEvolvable);
             System.out.printf("%.4f  %.4f  %.4f  %.4f  %.4f\n",
                     fitnesses[0], fitnesses[1], fitnesses[2], fitnesses[3], fitnesses[4]);
             Easy.save (es.getBests()[0], fileName);

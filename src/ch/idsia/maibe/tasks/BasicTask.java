@@ -5,8 +5,6 @@ import ch.idsia.mario.environments.Environment;
 import ch.idsia.mario.environments.MarioEnvironment;
 import ch.idsia.tools.CmdLineOptions;
 
-import java.util.Random;
-
 /**
  * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 14, 2010 Time: 4:47:33 PM
  * Package: ch.idsia.maibe.tasks
@@ -16,10 +14,10 @@ public class BasicTask implements Task
 {
     private final static Environment environment = new MarioEnvironment();
     private Agent agent;
-    private CmdLineOptions options;
-    private long COMPUTATIONAL_TIME_BOUND = 42; // stands for  FPS 24, prescribed FPS.
+    protected CmdLineOptions options;
+    private long COMPUTATION_TIME_BOUND = 42; // stands for  FPS 24, prescribed FPS.
 
-    public BasicTask(Agent agent)
+    public BasicTask(CmdLineOptions cmdLineOptions)
     {
         if (environment == null)
         {
@@ -28,15 +26,16 @@ public class BasicTask implements Task
         {
             System.out.println("MarioAI Environment has already been instantiated!");
         }
-        this.setAgent(agent);
+        this.setAgent(cmdLineOptions.getAgent());
+        this.setOptions(cmdLineOptions);
     }
-
+//    final Random r = new Random();
     /**
      *
      * @return boolean flat whether controller is disqualified or not
      */
 
-    final Random r = new Random();
+
 
     public boolean runOneEpisode()
     {
@@ -46,7 +45,7 @@ public class BasicTask implements Task
         {
             environment.tick();
 //            start timer
-//            long tm = System.currentTimeMillis();
+            long tm = System.currentTimeMillis();
             agent.integrateObservation(environment);
 //            try
 //            {
@@ -60,29 +59,16 @@ public class BasicTask implements Task
 //            System.out.println("agent = " + agent);
             boolean[] action = agent.getAction();
 
-//            System.out.println("System.currentTimeMillis() - tm > COMPUTATIONAL_TIME_BOUND = " + (System.currentTimeMillis() - tm ));
-//            if (System.currentTimeMillis() - tm > COMPUTATIONAL_TIME_BOUND)
-//            {
-////                # controller disqualified on this level
-//                System.out.println("Agent is disqualified on this level");
-//                return false;
-//            }
+//            System.out.println("System.currentTimeMillis() - tm > COMPUTATION_TIME_BOUND = " + (System.currentTimeMillis() - tm ));
+            if (System.currentTimeMillis() - tm > COMPUTATION_TIME_BOUND)
+            {
+//                # controller disqualified on this level
+                System.out.println("Agent is disqualified on this level");
+                return false;
+            }
             environment.performAction(action);
         }
         return true;
-    }
-
-    public void runEpisodes(int amount, boolean verbose)
-    {
-        for (int i = 0; i < amount; ++i)
-        {
-            this.reset(options);
-            this.runOneEpisode();
-            if (verbose)
-            {
-                System.out.println(environment.getEvaluationInfoAsString());
-            }
-        }
     }
 
     public final void setAgent(Agent agent)
@@ -103,33 +89,41 @@ public class BasicTask implements Task
         return environment;
     }
 
-    public double[] evaluate(Agent controller)
+    public float[] evaluate(Agent controller)
     {
-        return new double[0];  //To change body of implemented methods use File | Settings | File Templates.
+        return new float[0];  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public void setOptions(CmdLineOptions options)
     {
-        
+        this.options = options;
     }
 
     public CmdLineOptions getOptions()
     {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return options;
     }
 
-    public void doEpisodes(int amount)
+    public void doEpisodes(int amount, boolean verbose)
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+        for (int i = 0; i < amount; ++i)
+        {
+            this.reset(options);
+            this.runOneEpisode();
+            if (verbose)
+            {
+                System.out.println(environment.getEvaluationInfoAsString());
+            }
+        }
     }
 
     public boolean isFinished()
     {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return false;
     }
 
     public void reset()
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+        
     }
 }

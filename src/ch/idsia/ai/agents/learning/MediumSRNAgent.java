@@ -4,7 +4,7 @@ import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.Evolvable;
 import ch.idsia.ai.SRN;
 import ch.idsia.ai.agents.controllers.BasicAIAgent;
-import ch.idsia.mario.environments.Environment;
+//import ch.idsia.mario.environments.Environment;
 
 /**
  * Created by IntelliJ IDEA.
@@ -15,8 +15,8 @@ import ch.idsia.mario.environments.Environment;
 public class MediumSRNAgent extends BasicAIAgent implements Agent, Evolvable {
 
     private SRN srn;
-    final int numberOfOutputs = 6;
-    final int numberOfInputs = 53;
+    final int numberOfOutputs = 5;
+    final int numberOfInputs = /*53*/28;
     static private final String name = "MediumSRNAgent";
 
     public MediumSRNAgent() {
@@ -37,11 +37,6 @@ public class MediumSRNAgent extends BasicAIAgent implements Agent, Evolvable {
         return new MediumSRNAgent(srn.copy ());
     }
 
-    public boolean[] getAction()
-    {
-        return this.getAction(null);
-    }
-
     public void reset() {
         srn.reset ();
     }
@@ -50,8 +45,9 @@ public class MediumSRNAgent extends BasicAIAgent implements Agent, Evolvable {
         srn.mutate ();
     }
 
-    public boolean[] getAction(Environment observation) {
-        byte[][] scene = levelScene;
+    public boolean[] getAction()
+    {
+        byte[][] scene = mergedObservation;
 //        byte[][] enemies = observation.getEnemiesObservation(/*0*/);
         double[] inputs = new double[numberOfInputs];
 
@@ -61,11 +57,11 @@ public class MediumSRNAgent extends BasicAIAgent implements Agent, Evolvable {
                 inputs[which++] = probe(i, j, scene);
             }
         }
-        for (int i = -2; i < 3; i++) {
-            for (int j = -2; j < 3; j++) {
-                inputs[which++] = probe(i, j, enemies);
-            }
-        }
+//        for (int i = -2; i < 3; i++) {
+//            for (int j = -2; j < 3; j++) {
+//                inputs[which++] = probe(i, j, enemies);
+//            }
+//        }
         inputs[inputs.length - 3] = isMarioOnGround ? 1 : 0;
         inputs[inputs.length - 2] = isMarioAbleToJump ? 1 : 0;
         inputs[inputs.length - 1] = 1;
@@ -75,17 +71,6 @@ public class MediumSRNAgent extends BasicAIAgent implements Agent, Evolvable {
             action[i] = outputs[i] > 0;
         }
         return action;
-    }
-
-    public AGENT_TYPE getType() {
-        return AGENT_TYPE.AI;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
     }
 
     private double probe (int x, int y, byte[][] scene) {

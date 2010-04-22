@@ -14,20 +14,20 @@ import ch.idsia.maibe.tasks.Task;
 public class ES implements EA {
 
     private final Evolvable[] population;
-    private final double[] fitness;
+    private final float[] fitness;
     private final int elite;
     private final Task task;
     private final int evaluationRepetitions = 1;
 
-    public ES(Task task, Evolvable initial, int populationSize) {
+    public ES(Task task, Evolvable initial, int populationSize)
+    {
         this.population = new Evolvable[populationSize];
         for (int i = 0; i < population.length; i++) {
             population[i] = initial.getNewInstance();
         }
-        this.fitness = new double[populationSize];
+        this.fitness = new float[populationSize];
         this.elite = populationSize / 2;
         this.task = task;
-
     }
 
     public void nextGeneration() {
@@ -73,7 +73,7 @@ public class ES implements EA {
     }
 
     private void swap(int i, int j) {
-        double cache = fitness[i];
+        float cache = fitness[i];
         fitness[i] = fitness[j];
         fitness[j] = cache;
         Evolvable gcache = population[i];
@@ -85,8 +85,8 @@ public class ES implements EA {
         return new Evolvable[]{population[0]};
     }
 
-    public double[] getBestFitnesses() {
-        return new double[]{fitness[0]};
+    public float[] getBestFitnesses() {
+        return new float[]{fitness[0]};
     }
 
 }

@@ -11,7 +11,7 @@ public abstract class GlobalOptions
 {
     public static final int primaryVerionUID = 0;
     public static final int minorVerionUID = 1;
-    public static final int minorSubVerionID = 4;
+    public static final int minorSubVerionID = 5;
 
     public static boolean Labels = false;
     public static boolean MarioAlwaysInCenter = false;
@@ -32,7 +32,7 @@ public abstract class GlobalOptions
 
 //    public static String MAIBeVersionStr = "0.1";
     private static MarioVisualComponent marioVisualComponent;
-    public static final int VISUAL_COMPONENT_WIDTH = 320*1;
+    public static final int VISUAL_COMPONENT_WIDTH = 320;
     public static final int VISUAL_COMPONENT_HEIGHT = 240;
 
     public static int getPrimaryVersionUID()
@@ -96,5 +96,11 @@ public abstract class GlobalOptions
             dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
         Date date = (d == null) ? new Date() : new Date(d);
         return dateFormat.format(date);
+    }
+
+    final static private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+    public static String getTimeStamp()
+    {
+        return dateFormat.format(new Date());
     }
 }

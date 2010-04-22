@@ -11,7 +11,6 @@ public class LevelGenerator
     public static final int TYPE_UNDERGROUND = 1;
     public static final int TYPE_CASTLE = 2;
 
-    private static Random levelSeedRandom = new Random();
     public static long lastSeed;
     public static final int LevelLengthMinThreshold = 50;
     private int levelDifficulty;
@@ -28,7 +27,7 @@ public class LevelGenerator
     private int height;
 //    Level level = new Level(width, height);
     Level level;
-    Random random;
+    final static Random random = new Random();
 
     private static final int ODDS_STRAIGHT = 0;
     private static final int ODDS_HILL_STRAIGHT = 1;
@@ -73,7 +72,7 @@ public class LevelGenerator
 
         lastSeed = seed;
         level = new Level(width, height);
-        random = new Random(seed);
+        random.setSeed(seed);
 
         int length = 0;
         length += buildStraight(0, level.width, true);
@@ -81,6 +80,7 @@ public class LevelGenerator
         {
             length += buildZone(length, level.width - length);
         }
+        System.out.println("length1 = " + length);
 
         int floor = height - 1 - random.nextInt(4);
 
@@ -490,10 +490,10 @@ public class LevelGenerator
 
         int length = x1 - x0 - 2;
 
-        /*        if (length > 5 && rocks)
-         {
-         decorate(x0, x1, floor - 4);
-         }*/
+        if (length > 5 && rocks)
+        {
+            decorate(x0, x1, floor - 4);
+        }
     }
 
     private void fixWalls()

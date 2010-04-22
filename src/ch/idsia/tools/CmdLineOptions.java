@@ -56,6 +56,7 @@ public class CmdLineOptions extends EvaluationOptions
                 System.out.println(el.getKey() + ": " + el.getValue());
         }
         GlobalOptions.GameVeiwerContinuousUpdatesOn = isGameViewerContinuousUpdates();
+        GlobalOptions.GameVeiwerOn = isGameViewer();
     }
 
     public Boolean isToolsConfigurator() {

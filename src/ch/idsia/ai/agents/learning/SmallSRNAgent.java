@@ -4,7 +4,7 @@ import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.Evolvable;
 import ch.idsia.ai.SRN;
 import ch.idsia.ai.agents.controllers.BasicAIAgent;
-import ch.idsia.mario.environments.Environment;
+//import ch.idsia.mario.environments.Environment;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,7 +19,8 @@ public class SmallSRNAgent extends BasicAIAgent implements Agent, Evolvable {
     final int numberOfInputs = 21;
     static private final String name = "SmallSRNAgent";
 
-    public SmallSRNAgent() {
+    public SmallSRNAgent()
+    {
         super (name);
         srn = new SRN (numberOfInputs, 10, numberOfOutputs);
     }
@@ -37,11 +38,6 @@ public class SmallSRNAgent extends BasicAIAgent implements Agent, Evolvable {
         return new SmallSRNAgent(srn.copy ());
     }
 
-    public boolean[] getAction()
-    {
-        return this.getAction(null);
-    }
-
     public void reset() {
         srn.reset ();
     }
@@ -50,7 +46,8 @@ public class SmallSRNAgent extends BasicAIAgent implements Agent, Evolvable {
         srn.mutate ();
     }
 
-    public boolean[] getAction(Environment observation) {
+    public boolean[] getAction()
+    {
 //        byte[][] scene = observation.getLevelSceneObservation(/*1*/);
 //        byte[][] enemies = observation.getEnemiesObservation(/*0*/);
         byte[][] scene = levelScene;

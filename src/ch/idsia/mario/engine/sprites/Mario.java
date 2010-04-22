@@ -15,38 +15,39 @@ public class Mario extends Sprite
     public static int coins = 0;
     private int status = STATUS_RUNNING;
     private final int FractionalPowerUpTime = 0;
-    public static int gainedMushrooms;
-    public static int gainedFlowers;
+    public static int mushroomsDevoured;
+    public static int flowersDevoured;
     public static boolean isMarioInvulnerable;
     public static final String[] MODES = new String[]{"small", "Large", "FIRE"};
+
+    // for racoon when carrying the shell
+    private int prevWPic;
+    private int prevxPicO;
+    private int prevyPicO;
+    private int prevHPic;
+    private boolean isRacoon;
 
     public static void resetStatic(int marioMode)
     {
         large = marioMode > 0;
         fire = marioMode == 2;
         coins = 0;
-        gainedMushrooms = 0;
-        gainedFlowers = 0;
+        mushroomsDevoured = 0;
+        flowersDevoured = 0;
     }
 
-    public static void setMode(MODE mode)
-    {
-        large = (mode == MODE.MODE_LARGE);
-        fire = (mode == MODE.MODE_FIRE);
-    }
+//    public static void setMode(MODE mode)
+//    {
+//        large = (mode == MODE.MODE_LARGE);
+//        fire = (mode == MODE.MODE_FIRE);
+//    }
 
     public int getMode()
     {
         return ((large) ? 1 : 0) + ((fire) ? 1 : 0);
     }
 
-    public static enum MODE {MODE_SMALL, MODE_LARGE, MODE_FIRE}
-
-    public static void resetCoins()
-    {
-        coins = 0;
-//        ++numberOfAttempts;
-    }
+//    public static enum MODE {MODE_SMALL, MODE_LARGE, MODE_FIRE}
 
     public static final int KEY_LEFT = 0;
     public static final int KEY_RIGHT = 1;
@@ -64,8 +65,8 @@ public class Mario extends Sprite
     public static final int STATUS_DEAD = 0;
 
 
-    private static float GROUND_INERTIA = 0.89f;
-    private static float AIR_INERTIA = 0.89f;
+//    private static float GROUND_INERTIA = 0.89f;
+//    private static float AIR_INERTIA = 0.89f;
 
     public boolean[] keys;
     public boolean[] cheatKeys;
@@ -96,12 +97,12 @@ public class Mario extends Sprite
     private int invulnerableTime = 0;
 
     public Sprite carried = null;
-    private static Mario instance;
+//    private static Mario instance;
 
     public Mario(LevelScene world)
     {
         kind = KIND_MARIO;
-        Mario.instance = this;
+//        Mario.instance = this;
         this.world = world;
         keys = Scene.keys;      // SK: in fact, this is already redundant due to using Agent
         cheatKeys = Scene.keys; // SK: in fact, this is already redundant due to using Agent
@@ -121,7 +122,8 @@ public class Mario extends Sprite
     {
         Mario.large = on?newLarge:lastLarge;
         Mario.fire = on?newFire:lastFire;
-        
+
+//        System.out.println("on = " + on);
         if (large)
         {
             sheet = Art.mario;
@@ -140,12 +142,13 @@ public class Mario extends Sprite
             yPicO = 15;
             wPic = hPic = 16;
         }
-
+        savePrevState();
         calcPic();
     }
 
     void setLarge(boolean large, boolean fire)
     {
+//        System.out.println("large = " + large);
         if (fire) large = true;
         if (!large) fire = false;
         
@@ -159,6 +162,41 @@ public class Mario extends Sprite
         newFire = Mario.fire;
         
         blink(true);
+    }
+
+    public void setRacoon(boolean isRacoon)
+    {
+        this.isRacoon = isRacoon;
+//        this.setLarge(isRacoon, false);
+        System.out.println("isRacoon = " + isRacoon);
+        if (isRacoon)
+        {
+            savePrevState();
+
+            xPicO = 16;
+            yPicO = 31;
+            wPic = hPic = 32;
+            this.sheet = Art.racoonmario;
+        }
+        else
+        {
+
+            this.sheet = prevSheet;
+            this.xPicO = this.prevxPicO;
+            this.yPicO = this.prevyPicO;
+            wPic = prevWPic;
+            hPic = prevHPic;
+//            blink(false);
+        }
+    }
+
+    private void savePrevState()
+    {
+        this.prevSheet = this.sheet;
+        prevWPic = wPic;
+        prevHPic = hPic;
+        this.prevxPicO = xPicO;
+        this.prevyPicO = yPicO;
     }
 
     public void move()
@@ -222,14 +260,7 @@ public class Mario extends Sprite
 
         if (onGround)
         {
-            if (keys[KEY_DOWN] && large)
-            {
-                ducking = true;
-            }
-            else
-            {
-                ducking = false;
-            }
+            ducking = keys[KEY_DOWN] && large;
         }
 
         if (xa > 2)
@@ -397,15 +428,18 @@ public class Mario extends Sprite
             {
                 carried.release(this);
                 carried = null;
+                setRacoon(false);
+                System.out.println("carried = " + carried);
             }
+//            System.out.println("sideWaysSpeed = " + sideWaysSpeed);
         }
     }
 
     private void calcPic()
     {
-        int runFrame = 0;
+        int runFrame;
 
-        if (large)
+        if (large || isRacoon)
         {
             runFrame = ((int) (runTime / 20)) % 4;
             if (runFrame == 3) runFrame = 1;
@@ -599,6 +633,7 @@ public class Mario extends Sprite
         {
             carried = shell;
             shell.carried = true;
+            setRacoon(true);
         }
         else
         {
@@ -674,7 +709,7 @@ public class Mario extends Sprite
         {
             Mario.getCoin();
         }
-        ++gainedFlowers;
+        ++flowersDevoured;
     }
 
     public void getMushroom()
@@ -691,7 +726,7 @@ public class Mario extends Sprite
         {
             Mario.getCoin();
         }
-        ++gainedMushrooms;        
+        ++mushroomsDevoured;
     }
 
     public void kick(Shell shell)
@@ -702,6 +737,8 @@ public class Mario extends Sprite
         {
             carried = shell;
             shell.carried = true;
+            setRacoon(true);
+            System.out.println("shell = " + shell);
         }
         else
         {
@@ -725,24 +762,24 @@ public class Mario extends Sprite
         invulnerableTime = 1;
     }
 
-    public byte getKeyMask()
-    {
-        int mask = 0;
-        for (int i = 0; i < 7; i++)
-        {
-            if (keys[i]) mask |= (1 << i);
-        }
-        return (byte) mask;
-    }
+//    public byte getKeyMask()
+//    {
+//        int mask = 0;
+//        for (int i = 0; i < 7; i++)
+//        {
+//            if (keys[i]) mask |= (1 << i);
+//        }
+//        return (byte) mask;
+//    }
 
-    public void setKeys(byte mask)
-    {
-        for (int i = 0; i < 7; i++)
-        {
-            keys[i] = (mask & (1 << i)) > 0;
-        }
-    }
-
+//    public void setKeys(byte mask)
+//    {
+//        for (int i = 0; i < 7; i++)
+//        {
+//            keys[i] = (mask & (1 << i)) > 0;
+//        }
+//    }
+//
 //    public static void get1Up()
 //    {
 //        lives++;

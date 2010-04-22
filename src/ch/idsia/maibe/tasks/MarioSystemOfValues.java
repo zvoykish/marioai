@@ -1,4 +1,4 @@
-package ch.idsia.scenarios.champ;
+package ch.idsia.maibe.tasks;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,19 +20,19 @@ package ch.idsia.scenarios.champ;
  * stylish and of refined manners. 
  */
 
-public abstract class MarioSystemOfValues
+public class MarioSystemOfValues extends SystemOfValues
 {
-    final public static int distance = 1;
-    final public static int win = 1024;
-    final public static int mode = 32;
-    final public static int coins = 16;
-    final public static int hiddenCoins = 24;
-    final public static int flowerFire = 64;  // not used for now
-    final public static int kills = 42;
-    final public static int killedByFire = 4;
-    final public static int killedByShell = 17;
-    final public static int killedByStomp = 12;
-    final public static int timeLeft = 8;
+    final public int distance = 1;
+    final public int win = 1024;
+    final public int mode = 32;
+    final public int coins = 16;
+    final public int hiddenItems = 24;
+    final public int flowerFire = 64;  // not used for now
+    final public int kills = 42;
+    final public int killedByFire = 4;
+    final public int killedByShell = 17;
+    final public int killedByStomp = 12;
+    final public int timeLeft = 8;
 
     public interface timeLengthMapping 
     {

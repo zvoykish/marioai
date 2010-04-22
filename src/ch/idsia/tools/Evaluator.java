@@ -1,13 +1,9 @@
 package ch.idsia.tools;
 
-import ch.idsia.mario.engine.GlobalOptions;
-import ch.idsia.mario.simulation.BasicSimulator;
-import ch.idsia.mario.simulation.Simulation;
 
-import java.io.*;
+//import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+//import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -21,7 +17,7 @@ import java.util.List;
 public class Evaluator implements Runnable
 {
     Thread thisThread = null;
-    EvaluationOptions evaluationOptions;
+//    EvaluationOptions evaluationOptions;
 
     private List<EvaluationInfo> evaluationSummary = new ArrayList<EvaluationInfo>();
 
@@ -97,39 +93,39 @@ public class Evaluator implements Runnable
 //            return null;
 //        }
 
-        Simulation simulator = new BasicSimulator(evaluationOptions.getSimulationOptionsCopy());
+//        Simulation simulator = new BasicSimulator(evaluationOptions.getSimulationOptionsCopy());
         // Simulate One Level
 
-        EvaluationInfo evaluationInfo;
+//        EvaluationInfo evaluationInfo;
 
-        long startTime = System.currentTimeMillis();
-        String startMessage = "Evaluation started at " + GlobalOptions.getDateTime(null);
+//        long startTime = System.currentTimeMillis();
+//        String startMessage = "Evaluation started at " + GlobalOptions.getDateTime(null);
 //        LOGGER.println(startMessage, LOGGER.VERBOSE_MODE.ALL);
 //            LOGGER.println("Attempts left: " + (evaluationOptions.getNumberOfTrials() - ++i ), LOGGER.VERBOSE_MODE.ALL);
-            evaluationInfo = simulator.simulateOneLevel();
+//            evaluationInfo = simulator.simulateOneLevel();
                                                         
 //            evaluationInfo.levelType = evaluationOptions.getLevelType();
 //            evaluationInfo.levelDifficulty = evaluationOptions.getLevelDifficulty();
 //            evaluationInfo.levelRandSeed = evaluationOptions.getLevelRandSeed();
-            evaluationSummary.add(evaluationInfo);
+//            evaluationSummary.add(evaluationInfo);
 //            LOGGER.VERBOSE_MODE VM = (evaluationInfo.marioStatus == Mario.STATUS_WIN) ? LOGGER.VERBOSE_MODE.INFO : LOGGER.VERBOSE_MODE.ALL;
 //            LOGGER.println("run  finished with result : " + evaluationInfo, VM);
 //            continueCondition = !GlobalOptions.StopSimulationIfWin || !(evaluationInfo.marioStatus == Mario.STATUS_WIN);
 
 //        while ((evaluationOptions.getNumberOfTrials() > i || evaluationOptions.getNumberOfTrials() == -1 ) && continueCondition);
 
-        String fileName = "";
-        if (!this.evaluationOptions.getMatlabFileName().equals(""))
-           fileName = exportToMatLabFile();
-        Collections.sort(evaluationSummary, new evBasicFitnessComparator());
+//        String fileName = "";
+//        if (!this.evaluationOptions.getMatlabFileName().equals(""))
+//           fileName = exportToMatLabFile();
+//        Collections.sort(evaluationSummary, new evBasicFitnessComparator());
 
 //        LOGGER.println("Entire Evaluation Finished with results:", LOGGER.VERBOSE_MODE.ALL);
 //        for (EvaluationInfo ev : evaluationSummary)
 //        {
 //             LOGGER.println(ev.toString(), LOGGER.VERBOSE_MODE.ALL);
 //        }
-        long currentTime = System.currentTimeMillis();
-        long elapsed = currentTime - startTime;
+//        long currentTime = System.currentTimeMillis();
+//        long elapsed = currentTime - startTime;
 //        LOGGER.println(startMessage, LOGGER.VERBOSE_MODE.ALL);
 //        LOGGER.println("Evaluation Finished at " + GlobalOptions.getDateTime(null), LOGGER.VERBOSE_MODE.ALL);
 //        LOGGER.println("Total Evaluation Duration (HH:mm:ss:ms) " + GlobalOptions.getDateTime(elapsed), LOGGER.VERBOSE_MODE.ALL);
@@ -149,50 +145,50 @@ public class Evaluator implements Runnable
         return "\nEvaluation Summary:\n...\nEnd of Evaluation Summary\n";
     }
 
-    public String exportToMatLabFile()
-    {
-        FileOutputStream fos;
-        String fileName = this.evaluationOptions.getMatlabFileName() + ".m";
-        try {
+//    public String exportToMatLabFile()
+//    {
+//        FileOutputStream fos;
+//        String fileName = this.evaluationOptions.getMatlabFileName() + ".m";
+//        try {
+//
+//            fos = new FileOutputStream(fileName);
+//            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+//            bw.newLine();
+//            bw.write("%% " + this.evaluationOptions.getAgent().getName());
+//            bw.newLine();
+//            bw.write("% BasicFitness ");
+//            bw.newLine();
+//            bw.write("Attempts = [1:" + evaluationSummary.size() + "];");
+//            bw.newLine();
+//            bw.write("% BasicFitness ");
+//            bw.newLine();
+//            bw.write("BasicFitness = [");
+//            for (EvaluationInfo ev : evaluationSummary)
+//                bw.write(String.valueOf(ev.computeBasicFitness()) + " ");
+//            bw.write("];");
+//            bw.newLine();
+//            bw.write("plot(Attempts,BasicFitness, '.')");
+//            bw.close();
+//            return fileName;
+//        }
+//        catch (FileNotFoundException e)  {  e.printStackTrace(); return "Null" ;       }
+//        catch (IOException e) {     e.printStackTrace();  return "Null";      }
+//    }
 
-            fos = new FileOutputStream(fileName);              
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-            bw.newLine();
-            bw.write("%% " + this.evaluationOptions.getAgent().getName());
-            bw.newLine();
-            bw.write("% BasicFitness ");            
-            bw.newLine();
-            bw.write("Attempts = [1:" + evaluationSummary.size() + "];");
-            bw.newLine();
-            bw.write("% BasicFitness ");
-            bw.newLine();
-            bw.write("BasicFitness = [");
-            for (EvaluationInfo ev : evaluationSummary)
-                bw.write(String.valueOf(ev.computeBasicFitness()) + " ");
-            bw.write("];");
-            bw.newLine();
-            bw.write("plot(Attempts,BasicFitness, '.')");
-            bw.close();
-            return fileName;
-        }
-        catch (FileNotFoundException e)  {  e.printStackTrace(); return "Null" ;       }
-        catch (IOException e) {     e.printStackTrace();  return "Null";      }
-    }
-
-    public void exportToPyPlot(String fileName)
-    {
-        //TODO:SK
-    }
+//    public void exportToPyPlot(String fileName)
+//    {
+//        //TODO:SK
+//    }
 
     public void reset()
     {
         evaluationSummary = new ArrayList<EvaluationInfo>();
     }
 
-    public Evaluator(EvaluationOptions evaluationOptions)
-    {                      
-        init(evaluationOptions);
-    }
+//    public Evaluator(EvaluationOptions evaluationOptions)
+//    {
+////        init(evaluationOptions);
+//    }
 
     public void run()
     {
@@ -205,67 +201,67 @@ public class Evaluator implements Runnable
             thisThread.start();
     }
 
-    public void init(EvaluationOptions evaluationOptions)
-    {
-
-        if (evaluationOptions.isVisualization())
-        {
-            ToolsConfigurator.CreateMarioComponentFrame(
-                    evaluationOptions);
-        }
-        else
-        {
-
-        }
-        GlobalOptions.PauseWorld = evaluationOptions.isPauseWorld();
-        this.evaluationOptions = evaluationOptions;
-        if (thisThread == null)
-            thisThread = new Thread(this);
-    }
+//    public void init(EvaluationOptions evaluationOptions)
+//    {
+//
+////        if (evaluationOptions.isVisualization())
+////        {
+////            ToolsConfigurator.CreateMarioComponentFrame(
+////                    evaluationOptions);
+////        }
+////        else
+////        {
+////
+////        }
+////        GlobalOptions.PauseWorld = evaluationOptions.isPauseWorld();
+////        this.evaluationOptions = evaluationOptions;
+////        if (thisThread == null)
+////            thisThread = new Thread(this);
+//    }
 }
 
-class evBasicFitnessComparator implements Comparator
-{
-    public int compare(Object o, Object o1)
-    {
-        double ei1Fitness = ((EvaluationInfo)(o)).computeBasicFitness();
-        double ei2Fitness = ((EvaluationInfo)(o1)).computeBasicFitness();
-        if (ei1Fitness < ei2Fitness)
-            return 1;
-        else if (ei1Fitness > ei2Fitness)
-            return -1;
-        else
-            return 0;
-    }
-}
+//class evBasicFitnessComparator implements Comparator
+//{
+//    public int compare(Object o, Object o1)
+//    {
+//        double ei1Fitness = ((EvaluationInfo)(o)).computeBasicFitness();
+//        double ei2Fitness = ((EvaluationInfo)(o1)).computeBasicFitness();
+//        if (ei1Fitness < ei2Fitness)
+//            return 1;
+//        else if (ei1Fitness > ei2Fitness)
+//            return -1;
+//        else
+//            return 0;
+//    }
+//}
 
-class evCoinsFitnessComparator implements Comparator
-{
-    public int compare(Object o, Object o1)
-    {
-        float ei1Fitness = ((EvaluationInfo)(o)).numberOfCoinsGained;
+//class evCoinsFitnessComparator implements Comparator
+//{
+//    public int compare(Object o, Object o1)
+//    {
+//        float ei1Fitness = ((EvaluationInfo)(o)).numberOfCoinsGained;
+//
+//        float ei2Fitness = ((EvaluationInfo)(o1)).numberOfCoinsGained;
+//        if (ei1Fitness < ei2Fitness)
+//            return 1;
+//        else if (ei1Fitness > ei2Fitness)
+//            return -1;
+//        else
+//            return 0;
+//    }
+//}
 
-        float ei2Fitness = ((EvaluationInfo)(o1)).numberOfCoinsGained;
-        if (ei1Fitness < ei2Fitness)
-            return 1;
-        else if (ei1Fitness > ei2Fitness)
-            return -1;
-        else
-            return 0;
-    }
-}
-
-class evDistanceFitnessComparator implements Comparator
-{
-    public int compare(Object o, Object o1)
-    {
-        double ei1Fitness = ((EvaluationInfo)(o)).computeDistancePassed();
-        double ei2Fitness = ((EvaluationInfo)(o1)).computeDistancePassed();
-        if (ei1Fitness < ei2Fitness)
-            return 1;
-        else if (ei1Fitness > ei2Fitness)
-            return -1;
-        else
-            return 0;
-    }
-}
+//class evDistanceFitnessComparator implements Comparator
+//{
+//    public int compare(Object o, Object o1)
+//    {
+//        double ei1Fitness = ((EvaluationInfo)(o)).computeDistancePassed();
+//        double ei2Fitness = ((EvaluationInfo)(o1)).computeDistancePassed();
+//        if (ei1Fitness < ei2Fitness)
+//            return 1;
+//        else if (ei1Fitness > ei2Fitness)
+//            return -1;
+//        else
+//            return 0;
+//    }
+//}

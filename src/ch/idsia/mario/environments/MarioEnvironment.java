@@ -16,7 +16,7 @@ import ch.idsia.tools.EvaluationInfo;
 public final class MarioEnvironment implements Environment
 {
     final LevelScene levelScene;
-    private int frame = 0;
+//    private int frame = 0;
     private MarioVisualComponent marioVisualComponent;
     private Agent agent;
 
@@ -46,7 +46,7 @@ public final class MarioEnvironment implements Environment
         if (/*levelScene.visualization*/ setUpOptions[14] == 1)
         {
             if (marioVisualComponent == null)
-                marioVisualComponent = MarioVisualComponent.Create(GlobalOptions.VISUAL_COMPONENT_WIDTH,
+                marioVisualComponent = MarioVisualComponent.getInstance(GlobalOptions.VISUAL_COMPONENT_WIDTH,
                                                                    GlobalOptions.VISUAL_COMPONENT_HEIGHT,
                                                                    levelScene);
             levelScene.reset(setUpOptions);
@@ -67,23 +67,23 @@ public final class MarioEnvironment implements Environment
         if (levelScene.visualization)
             marioVisualComponent.tick();
         // Advance the frame
-        ++frame;
+//        ++frame;
     }
 
-    public byte[][] getCompleteObservation()
-    {
-        return levelScene.getCompleteObservation();
-    }
+//    public byte[][] getCompleteObservation()
+//    {
+//        return levelScene.getCompleteObservation();
+//    }
 
-    public byte[][] getEnemiesObservation()
-    {
-        return levelScene.getEnemiesObservation();
-    }
+//    public byte[][] getEnemiesObservation()
+//    {
+//        return levelScene.getEnemiesObservation();
+//    }
 
-    public byte[][] getLevelSceneObservation()
-    {
-        return levelScene.getLevelSceneObservation();
-    }
+//    public byte[][] getLevelSceneObservation()
+//    {
+//        return levelScene.getLevelSceneObservation();
+//    }
 
     public float[] getMarioFloatPos()
     {
@@ -212,11 +212,13 @@ public final class MarioEnvironment implements Environment
 
     public EvaluationInfo getEvaluationInfo()
     {
+        // TODO: make static field
         EvaluationInfo evaluationInfo = new EvaluationInfo();
 
 //        evaluationInfo.agentType = agent.getClass().getSimpleName();
 //        evaluationInfo.agentName = agent.getName();
         evaluationInfo.marioStatus =         levelScene.getMarioStatus();
+        evaluationInfo.flowersDevoured = Mario.flowersDevoured;
         evaluationInfo.distancePassedPhys = levelScene.getMarioFloatPos()[0];
         evaluationInfo.distancePassedCells = levelScene.mario.mapX;
 //     evaluationInfo.totalLengthOfLevelCells = levelScene.level.getWidthCells();
@@ -227,6 +229,7 @@ public final class MarioEnvironment implements Environment
         evaluationInfo.numberOfCoinsGained = Mario.coins;
 //        evaluationInfo.totalNumberOfCoins   = -1 ; // TODO: total Number of coins.
         evaluationInfo.marioMode = levelScene.getMarioMode();
+        evaluationInfo.mushroomsDevoured = Mario.mushroomsDevoured;
         evaluationInfo.killsTotal = levelScene.getKillsTotal();
         evaluationInfo.killsByStomp = levelScene.getKillsByStomp();
         evaluationInfo.killsByFire = levelScene.getKillsByFire();

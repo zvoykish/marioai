@@ -4,14 +4,13 @@ import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
 import ch.idsia.ai.agents.controllers.TimingAgent;
 import ch.idsia.maibe.tasks.BasicTask;
-import ch.idsia.mario.environments.Environment;
-import ch.idsia.mario.environments.MarioEnvironment;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.tools.Evaluator;
 import ch.idsia.utils.StatisticalSummary;
 import competition.evostar.robinbaumgarten.RobinBaumgarten_AStarAgent;
+
 
 /**
  * Created by IntelliJ IDEA.
@@ -41,22 +40,31 @@ public final class GamePlayEvaluation
 
         final int[] levelDifficulties = new int[]{0, 1, 3, 5, 12, 16, 20};
         final int[] levelTypes = new int[]{0, 1, 2};
+        final int[] levelLengths = new int[]{160, 320, 640};
         final boolean[] creaturesEnables = new boolean[]{false, true};
         int levelSeed = cmdLineOptions.getLevelRandSeed();
-        cmdLineOptions.setVisualization(true);
-        cmdLineOptions.setFPS(100);
+//        cmdLineOptions.setVisualization(false);
+//        cmdLineOptions.setFPS(100);
+        cmdLineOptions.setLevelRandSeed(6189642);
 
-        final Environment environment = new MarioEnvironment();
+//        final Environment environment = new MarioEnvironment();
 //        final Agent agent = new ForwardJumpingAgent();
         final Agent agent = new RobinBaumgarten_AStarAgent();
+//        final Agent agent = new  AJBAgent();
+//        final Agent agent = cmdLineOptions.getAgent();
+//        final Agent agent = (GPAgent) Easy.load("matthewerickson.xml");
 //        final Agent agent = (SimpleCNAgent) Easy.load("sergeypolikarpov.xml");
-        assert (agent == null);
+//        final Agent agent = cmdLineOptions.getAgent();
+//        assert (agent == null);
         System.out.println("agent = " + agent);
-        final BasicTask basicTask = new BasicTask(agent);
+        final BasicTask basicTask = new BasicTask(cmdLineOptions);
         float fitness = 0;
         boolean verbose = true;
         int trials = 0;
         int disqualifications = 0;
+
+
+        // todo: include level lengths.
         
         for (int levelDifficulty : levelDifficulties)
         {
@@ -78,7 +86,7 @@ public final class GamePlayEvaluation
                             disqualifications++;
                             continue;
                         }
-                        EvaluationInfo evaluationInfo = environment.getEvaluationInfo();
+                        EvaluationInfo evaluationInfo = basicTask.getEnvironment().getEvaluationInfo();
                         float f = evaluationInfo.computeMultiObjectiveFitness();
                         if (verbose)
                         {
@@ -116,8 +124,7 @@ public final class GamePlayEvaluation
     public static void score(Agent agent, int startingSeed, CmdLineOptions cmdLineOptions)
     {
         TimingAgent controller = new TimingAgent (agent);
-        EvaluationOptions options = cmdLineOptions;
-//        options.setNumberOfTrials(1);
+        //        options.setNumberOfTrials(1);
 //        options.setVisualization(false);
 //        options.setMaxFPS(true);
         System.out.println("\nScoring controller " + agent.getName() + " with starting seed " + startingSeed);
@@ -128,10 +135,10 @@ public final class GamePlayEvaluation
         timeLeftSum = 0;
         marioModeSum = 0;
 
-        competitionScore += testConfig (controller, options, startingSeed, 0, false);
-        competitionScore += testConfig (controller, options, startingSeed, 3, false);
-        competitionScore += testConfig (controller, options, startingSeed, 5, false);
-        competitionScore += testConfig (controller, options, startingSeed, 10, false);
+        competitionScore += testConfig (controller, cmdLineOptions, startingSeed, 0, false);
+        competitionScore += testConfig (controller, cmdLineOptions, startingSeed, 3, false);
+        competitionScore += testConfig (controller, cmdLineOptions, startingSeed, 5, false);
+        competitionScore += testConfig (controller, cmdLineOptions, startingSeed, 10, false);
 
         System.out.println("\nCompetition score: " + competitionScore + "\n");
         System.out.println("Number of levels cleared = " + marioStatusSum);
@@ -169,18 +176,18 @@ public final class GamePlayEvaluation
             options.setLevelType(i % 3);
             controller.reset();
             options.setAgent(controller);
-            Evaluator evaluator = new Evaluator (options);
-            EvaluationInfo result = evaluator.evaluate().get(0);
-            kills += result.computeKillsTotal();
-            timeLeft += result.timeLeft;
-            marioMode += result.marioMode;
-            marioStatus += result.marioStatus;
+//            Evaluator evaluator = new Evaluator (options);
+//            EvaluationInfo result = evaluator.evaluate().get(0);
+//            kills += result.computeKillsTotal();
+//            timeLeft += result.timeLeft;
+//            marioMode += result.marioMode;
+//            marioStatus += result.marioStatus;
 //            System.out.println("\ntrial # " + i);
 //            System.out.println("result.timeLeft = " + result.timeLeft);
 //            System.out.println("result.marioMode = " + result.marioMode);
 //            System.out.println("result.marioStatus = " + result.marioStatus);
 //            System.out.println("result.computeKillsTotal() = " + result.computeKillsTotal());
-            ss.add (result.computeDistancePassed());
+//            ss.add (result.computeDistancePassed());
         }
 
         if (detailedStats)

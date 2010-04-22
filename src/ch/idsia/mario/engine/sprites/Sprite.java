@@ -32,7 +32,10 @@ public class Sprite
 
     public static SpriteContext spriteContext;
     public byte kind = KIND_UNDEF;
-    
+
+    protected static float GROUND_INERTIA = 0.89f;
+    protected static float AIR_INERTIA = 0.89f;
+
     public float xOld, yOld, x, y, xa, ya;
     public int mapX, mapY;
     
@@ -43,6 +46,8 @@ public class Sprite
     public boolean xFlipPic = false;
     public boolean yFlipPic = false;
     public Image[][] sheet;
+    public Image[][] prevSheet;
+
     public boolean visible = true;
     
     public int layer = 1;
