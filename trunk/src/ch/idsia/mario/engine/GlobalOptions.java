@@ -13,24 +13,22 @@ public abstract class GlobalOptions
     public static final int minorVerionUID = 1;
     public static final int minorSubVerionID = 5;
 
-    public static boolean Labels = false;
-    public static boolean MarioAlwaysInCenter = false;
+    public static boolean areLabels = false;
+    public static boolean isMarioAlwaysInCenter = false;
     public static Integer FPS = 24;
     public static int MaxFPS = 100;
-    public static boolean PauseWorld = false;
+    public static boolean isPauseWorld = false;
 
-    public static boolean VisualizationOn = true;
-    public static boolean GameVeiwerOn = true;
+    public static boolean isVisualization = true;
+    public static boolean isGameVeiwer = true;
 
-//    private static MarioComponent marioComponent = null;
     private static GameViewer GameViewer = null;
-    public static boolean TimerOn = true;
+    public static boolean isTimer = true;
 
-    //    public static Defaults defaults = new Defaults();
-    public static boolean GameVeiwerContinuousUpdatesOn = false;
-    public static boolean PowerRestoration;
+    public static boolean isGameVeiwerContinuousUpdates = false;
+    public static boolean isPowerRestoration;
+    public static boolean isMarioVisualComponentGrid = false;
 
-//    public static String MAIBeVersionStr = "0.1";
     private static MarioVisualComponent marioVisualComponent;
     public static final int VISUAL_COMPONENT_WIDTH = 320;
     public static final int VISUAL_COMPONENT_HEIGHT = 240;
@@ -55,19 +53,10 @@ public abstract class GlobalOptions
         return " v-" + getPrimaryVersionUID() + "." + getMinorVersionUID() + "." + getMinorSubVerionID();
     }
 
-//    public static void registerMarioComponent(MarioComponent mc)
-//    {
-//        marioComponent = mc;
-//    }
-
     public static void registerMarioVisualComponent(MarioVisualComponent mc)
     {
         marioVisualComponent = mc;
     }
-
-//    public static MarioComponent getMarioComponent()
-//    {   return marioComponent;                       }
-    
 
     public static void registerGameViewer(GameViewer gv)
     {

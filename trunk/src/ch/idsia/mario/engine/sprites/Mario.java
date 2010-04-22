@@ -336,11 +336,11 @@ public class Mario extends Sprite
             world.addSprite(new Fireball(world, x+facing*6, y-20, facing));
         }
         // Cheats:
-        if (GlobalOptions.PowerRestoration && keys[KEY_SPEED] && (!Mario.large || !Mario.fire))
+        if (GlobalOptions.isPowerRestoration && keys[KEY_SPEED] && (!Mario.large || !Mario.fire))
             setLarge(true, true);
 //        if (cheatKeys[KEY_LIFE_UP])
 //            this.lives++;
-        world.paused = GlobalOptions.PauseWorld;
+        world.paused = GlobalOptions.isPauseWorld;
         if (cheatKeys[KEY_WIN])
             win();
 //        if (keys[KEY_DUMP_CURRENT_WORLD])

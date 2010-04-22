@@ -29,11 +29,11 @@ public class EvaluationOptions extends SimulationOptions
                 System.err.println("Error: Wrong number of input parameters");
 //                System.err.println("It is a perfect day to kill yourself with the yellow wall");
             }
-        GlobalOptions.VisualizationOn = isVisualization();
+        GlobalOptions.isVisualization = isVisualization();
         GlobalOptions.FPS = getFPS() /*GlobalOptions.FPS*/;
-        GlobalOptions.PauseWorld = isPauseWorld();
-        GlobalOptions.PowerRestoration = isPowerRestoration();
-        GlobalOptions.TimerOn = isTimer();
+        GlobalOptions.isPauseWorld = isPauseWorld();
+        GlobalOptions.isPowerRestoration = isPowerRestoration();
+        GlobalOptions.isTimer = isTimer();
     }
     
     public Boolean isExitProgramWhenFinished()    {

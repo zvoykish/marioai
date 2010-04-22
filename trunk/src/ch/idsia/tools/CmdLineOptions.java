@@ -55,8 +55,8 @@ public class CmdLineOptions extends EvaluationOptions
             for (Map.Entry<String,String> el : optionsHashMap.entrySet())
                 System.out.println(el.getKey() + ": " + el.getValue());
         }
-        GlobalOptions.GameVeiwerContinuousUpdatesOn = isGameViewerContinuousUpdates();
-        GlobalOptions.GameVeiwerOn = isGameViewer();
+        GlobalOptions.isGameVeiwerContinuousUpdates = isGameViewerContinuousUpdates();
+        GlobalOptions.isGameVeiwer = isGameViewer();
     }
 
     public Boolean isToolsConfigurator() {

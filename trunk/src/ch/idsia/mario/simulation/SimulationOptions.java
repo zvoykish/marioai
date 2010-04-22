@@ -107,14 +107,14 @@ public class SimulationOptions extends ParameterContainer
     public void setVisualization(boolean visualization) {
         setParameterValue("-vis", s(visualization));    }
 
-    //PauseWorld
+    //isPauseWorld
     public void setPauseWorld(boolean pauseWorld) {
         setParameterValue("-pw", s(pauseWorld));    }
 
     public Boolean isPauseWorld() {
         return b(getParameterValue("-pw"));     }
 
-    //PowerRestoration
+    //isPowerRestoration
     public Boolean isPowerRestoration() {
         return b(getParameterValue("-pr"));     }
 

@@ -37,13 +37,13 @@ public class MainRun
             scoreAllAgents(cmdLineOptions);
         else
         {
-            Evaluator evaluator = new Evaluator(evaluationOptions);
-            evaluationOptions.setAgent(AgentsPool.getCurrentAgent());
+//            Evaluator evaluator = new Evaluator(evaluationOptions);
+//            evaluationOptions.setAgent(AgentsPool.getCurrentAgent());
 //            evaluationOptions.setAgent(new AmiCoAgent(amicoModuleName, amicoAgentName));
 //            while (cmdLineOptions.getNumberOfTrials() >= SimulationOptions.currentTrial) {
 //                List<EvaluationInfo> evaluationSummary;
                 System.out.println("SimulationOptions.currentTrial = " + SimulationOptions.currentTrial);
-                evaluator.evaluate();
+//                evaluator.evaluate();
 //            }
 //        LOGGER.save("log.txt");
         }
@@ -153,18 +153,18 @@ public class MainRun
             options.setLevelType(i % 3);
             controller.reset();
             options.setAgent(controller);
-            Evaluator evaluator = new Evaluator (options);
-            EvaluationInfo result = evaluator.evaluate().get(0);
-            kills += result.computeKillsTotal();
-            timeLeft += result.timeLeft;
-            marioMode += result.marioMode;
-            marioStatus += result.marioStatus;
+//            Evaluator evaluator = new Evaluator (options);
+//            EvaluationInfo result = evaluator.evaluate().get(0);
+//            kills += result.computeKillsTotal();
+//            timeLeft += result.timeLeft;
+//            marioMode += result.marioMode;
+//            marioStatus += result.marioStatus;
 //            System.out.println("\ntrial # " + i);
 //            System.out.println("result.timeLeft = " + result.timeLeft);
 //            System.out.println("result.marioMode = " + result.marioMode);
 //            System.out.println("result.marioStatus = " + result.marioStatus);
 //            System.out.println("result.computeKillsTotal() = " + result.computeKillsTotal());
-            ss.add (result.computeDistancePassed());
+//            ss.add (result.computeDistancePassed());
         }
 
         if (detailedStats)

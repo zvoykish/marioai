@@ -570,7 +570,7 @@ public class LevelScene extends Scene implements SpriteContext
 
     public void tick()
     {
-        if (GlobalOptions.TimerOn)
+        if (GlobalOptions.isTimer)
                 timeLeft--;
         if (timeLeft==0)
         {
@@ -997,12 +997,12 @@ public class LevelScene extends Scene implements SpriteContext
 
         GlobalOptions.FPS = setUpOptions[7];
 //        System.out.println("GlobalOptions.FPS = " + GlobalOptions.FPS);
-        GlobalOptions.PowerRestoration = setUpOptions[8] == 1;
-//        System.out.println("GlobalOptions.PowerRestoration = " + GlobalOptions.PowerRestoration);
-        GlobalOptions.PauseWorld = setUpOptions[9] == 1;
-//        System.out.println("GlobalOptions = " + GlobalOptions.PauseWorld);
-        GlobalOptions.TimerOn = setUpOptions[10] == 1;
-//        System.out.println("GlobalOptions.TimerOn = " + GlobalOptions.TimerOn);
+        GlobalOptions.isPowerRestoration = setUpOptions[8] == 1;
+//        System.out.println("GlobalOptions.isPowerRestoration = " + GlobalOptions.isPowerRestoration);
+        GlobalOptions.isPauseWorld = setUpOptions[9] == 1;
+//        System.out.println("GlobalOptions = " + GlobalOptions.isPauseWorld);
+        GlobalOptions.isTimer = setUpOptions[10] == 1;
+//        System.out.println("GlobalOptions.isTimer = " + GlobalOptions.isTimer);
 //        isToolsConfigurator = setUpOptions[11] == 1;
         this.setTimeLimit(setUpOptions[12]);
 //        System.out.println("this.getTimeLimit() = " + this.getTimeLimit());

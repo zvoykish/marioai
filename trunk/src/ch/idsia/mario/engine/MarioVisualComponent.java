@@ -83,7 +83,7 @@ public class MarioVisualComponent extends JComponent
 
         GlobalOptions.registerMarioVisualComponent(this);
 
-        if (GlobalOptions.GameVeiwerOn )
+        if (GlobalOptions.isGameVeiwer)
         {
             if (this.gameViewer == null)
             {
@@ -194,7 +194,7 @@ public class MarioVisualComponent extends JComponent
         int xCam = (int) (mario.xOld + (mario.x - mario.xOld) * alpha) - 160;
         int yCam = (int) (mario.yOld + (mario.y - mario.yOld) * alpha) - 120;
 
-        if (GlobalOptions.MarioAlwaysInCenter)
+        if (GlobalOptions.isMarioAlwaysInCenter)
         {
         }
         else
@@ -269,7 +269,7 @@ public class MarioVisualComponent extends JComponent
 
         drawProgress(g);
 
-        if (GlobalOptions.Labels)
+        if (GlobalOptions.areLabels)
         {
             g.drawString("xCam: " + xCam + "yCam: " + yCam, 70, 40);
             g.drawString("x : " + mario.x + "y: " + mario.y, 70, 50);
