@@ -16,8 +16,8 @@ import ch.idsia.tools.EvaluationInfo;
 public interface Environment
 {
     public static final int numberOfButtons = 5;
-    public static final int HalfObsWidth = 11;
-    public static final int HalfObsHeight = 11;
+    public static final int HalfObsWidth = 2;
+    public static final int HalfObsHeight = 2;
 
     public static final int MARIO_KEY_DOWN = Mario.KEY_DOWN;
     public static final int MARIO_KEY_JUMP = Mario.KEY_JUMP;
@@ -28,7 +28,8 @@ public interface Environment
     public static final int MARIO_STATUS_DEAD = Mario.STATUS_DEAD;
     public static final int MARIO_STATUS_RUNNING = Mario.STATUS_RUNNING;
 
-    // always the same dimensionality: 22x22
+    // tunable dimensionality:
+    // default: 19x19 cells [0..18][0..18]
     // always centered on the agent 
 
     // Chaning ZLevel during the game on-the-fly;

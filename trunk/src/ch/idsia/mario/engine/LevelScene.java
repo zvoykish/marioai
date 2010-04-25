@@ -32,15 +32,15 @@ public class LevelScene extends Scene implements SpriteContext
 
     public boolean visualization = false;
 
-    final private int rows = Environment.HalfObsHeight*2;
-    final private int cols = Environment.HalfObsWidth*2;
+    final private int rows = Environment.HalfObsHeight*2+1;
+    final private int cols = Environment.HalfObsWidth*2+1;
     final private int[] serializedLevelScene = new int[rows * cols];
     final private int[] serializedEnemies = new int[rows * cols];
     final private int[] serializedMergedObservation = new int[rows * cols];
 
-    final private byte[][] levelSceneZ = new byte[Environment.HalfObsWidth*2][Environment.HalfObsHeight*2];
-    final private byte[][] enemiesZ = new byte[Environment.HalfObsWidth*2][Environment.HalfObsHeight*2];
-    final private byte[][] mergedZ = new byte[Environment.HalfObsWidth*2][Environment.HalfObsHeight*2];
+    final private byte[][] levelSceneZ = new byte[rows][cols];
+    final private byte[][] enemiesZ = new byte[rows][cols];
+    final private byte[][] mergedZ = new byte[rows][cols];
 
     final private List<Float> enemiesFloatsList = new ArrayList<Float>();
     final private float[] marioFloatPos = new float[2];
@@ -362,9 +362,9 @@ public class LevelScene extends Scene implements SpriteContext
         int MarioXInMap = (int)mario.x/16;
         int MarioYInMap = (int)mario.y/16;
 
-        for (int y = MarioYInMap - Environment.HalfObsHeight, obsX = 0; y < MarioYInMap + Environment.HalfObsHeight; y++, obsX++)
+        for (int y = MarioYInMap - Environment.HalfObsHeight, obsX = 0; y <= MarioYInMap + Environment.HalfObsHeight; y++, obsX++)
         {
-            for (int x = MarioXInMap - Environment.HalfObsWidth, obsY = 0; x < MarioXInMap + Environment.HalfObsWidth; x++, obsY++)
+            for (int x = MarioXInMap - Environment.HalfObsWidth, obsY = 0; x <= MarioXInMap + Environment.HalfObsWidth; x++, obsY++)
             {
                 if (x >=0 /*  && x <= level.xExit */ && y >= 0 && y < level.height)
                 {
@@ -392,11 +392,11 @@ public class LevelScene extends Scene implements SpriteContext
             if (sprite.kind == mario.kind)
                 continue;
             if (sprite.mapX >= 0 &&
-                sprite.mapX > MarioXInMap - Environment.HalfObsWidth &&
-                sprite.mapX < MarioXInMap + Environment.HalfObsWidth &&
+                sprite.mapX >= MarioXInMap - Environment.HalfObsWidth &&
+                sprite.mapX <= MarioXInMap + Environment.HalfObsWidth &&
                 sprite.mapY >= 0 &&
-                sprite.mapY > MarioYInMap - Environment.HalfObsHeight &&
-                sprite.mapY < MarioYInMap + Environment.HalfObsHeight )
+                sprite.mapY >= MarioYInMap - Environment.HalfObsHeight &&
+                sprite.mapY <= MarioYInMap + Environment.HalfObsHeight )
             {
                 int obsX = sprite.mapY - MarioYInMap + Environment.HalfObsHeight;
                 int obsY = sprite.mapX - MarioXInMap + Environment.HalfObsWidth;
@@ -437,9 +437,10 @@ public class LevelScene extends Scene implements SpriteContext
         int MarioXInMap = (int)mario.x/16;
         int MarioYInMap = (int)mario.y/16;
 
-        for (int y = MarioYInMap - Environment.HalfObsHeight, obsX = 0; y < MarioYInMap + Environment.HalfObsHeight; y++, obsX++)
+
+        for (int y = MarioYInMap - Environment.HalfObsHeight, obsX = 0; y <= MarioYInMap + Environment.HalfObsHeight; y++, obsX++)
         {
-            for (int x = MarioXInMap - Environment.HalfObsWidth, obsY = 0; x < MarioXInMap + Environment.HalfObsWidth; x++, obsY++)
+            for (int x = MarioXInMap - Environment.HalfObsWidth, obsY = 0; x <= MarioXInMap + Environment.HalfObsWidth; x++, obsY++)
             {
                 if (x >=0 /*&& x <= level.xExit*/ && y >= 0 && y < level.height)
                 {

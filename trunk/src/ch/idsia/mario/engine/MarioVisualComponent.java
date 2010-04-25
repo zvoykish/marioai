@@ -161,7 +161,7 @@ public class MarioVisualComponent extends JComponent
 //            drawString(thisVolatileImageGraphics, msgClick, 160 - msgClick.length() * 4, 110, 7);
         }
 //        thisVolatileImageGraphics.setColor(Color.DARK_GRAY);
-        drawStringDropShadow(thisVolatileImageGraphics, "FPS: ", 32, 2, 7); 
+        drawStringDropShadow(thisVolatileImageGraphics, "FPS: ", 32, 2, 7);
         drawStringDropShadow(thisVolatileImageGraphics, ((GlobalOptions.FPS > 99) ? "\\infty" : GlobalOptions.FPS.toString()), 32, 3, 7);
 
 //                msg = totalNumberOfTrials == -2 ? "" : currentTrial + "(" + ((totalNumberOfTrials == -1) ? "\\infty" : totalNumberOfTrials) + ")";
@@ -185,7 +185,7 @@ public class MarioVisualComponent extends JComponent
             try {
                 tm += delay;
                 Thread.sleep(Math.max(0, tm - System.currentTimeMillis()));
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException ignored) {}
         }
     }
 
@@ -271,9 +271,9 @@ public class MarioVisualComponent extends JComponent
 
         if (GlobalOptions.areLabels)
         {
-            g.drawString("xCam: " + xCam + "yCam: " + yCam, 70, 40);
-            g.drawString("x : " + mario.x + "y: " + mario.y, 70, 50);
-            g.drawString("xOld : " + mario.xOld + "yOld: " + mario.yOld, 70, 60);
+            g.drawString("xCam: " + xCam + "yCam: " + yCam, 10, 205);
+            g.drawString("x : " + mario.x + "y: " + mario.y, 10, 215);
+            g.drawString("xOld : " + mario.xOld + "yOld: " + mario.yOld, 10, 225);
         }
 
         if (levelScene.startTime > 0)
@@ -315,9 +315,12 @@ public class MarioVisualComponent extends JComponent
 
 //            renderBlackout(g, (int) (mario.xDeathPos - xCam), (int) (mario.yDeathPos - yCam), (int) (320 - t));
         }
+
+//        this.drawGrid(g, 5);
     }
 
-    private void drawProgress(Graphics g) {
+    private void drawProgress(Graphics g)
+    {
         String entirePathStr = "......................................>";
         double physLength = (levelScene.getLevelLength() - 53)*16;
         int progressInChars = (int) (mario.x * (entirePathStr.length()/physLength));
@@ -340,13 +343,31 @@ public class MarioVisualComponent extends JComponent
         drawString(g, text, x*8+4, y*8+4, c);
     }
 
-    private static void drawString(Graphics g, String text, int x, int y, int c)
+    public static void drawString(Graphics g, String text, int x, int y, int c)
     {
         char[] ch = text.toCharArray();
         for (int i = 0; i < ch.length; i++)
-        {
             g.drawImage(Art.font[ch[i] - 32][c], x + i * 8, y, null);
-        }
+    }
+
+    private void drawGrid(Graphics g, int length)
+    {
+        width = length*16;
+        height = length*16;
+        g.setColor(Color.GREEN);
+        
+        int rows = length;
+        int columns = length;
+
+        int htOfRow = height / (rows);
+        int k;
+        for (k = 0; k < rows; k++)
+            g.drawLine((int) mario.x, k * htOfRow , (int) (mario.x +  width), k * htOfRow );
+
+        int wdOfRow = width / (columns);
+        for (k = 0; k < columns; k++)
+            g.drawLine(k*wdOfRow , 0, k*wdOfRow , height);
+
     }
 
     private void renderBlackout(Graphics g, int x, int y, int radius)

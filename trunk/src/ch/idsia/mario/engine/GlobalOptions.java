@@ -27,11 +27,15 @@ public abstract class GlobalOptions
 
     public static boolean isGameVeiwerContinuousUpdates = false;
     public static boolean isPowerRestoration;
-    public static boolean isMarioVisualComponentGrid = false;
+    public static int observationGridWidth = -1;
+    public static int observationGridHeight = -1;
 
     private static MarioVisualComponent marioVisualComponent;
     public static final int VISUAL_COMPONENT_WIDTH = 320;
     public static final int VISUAL_COMPONENT_HEIGHT = 240;
+    public static boolean isMatrixView;
+
+    public static boolean isShowGrid = false;
 
     public static int getPrimaryVersionUID()
     {

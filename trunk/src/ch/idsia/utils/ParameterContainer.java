@@ -31,8 +31,10 @@ public class ParameterContainer
                     "-amico",
                     "-echo",
                     "-ewf",
+                    "-gh", // grid height (observation )
                     "-gv",
                     "-gvc",
+                    "-gw", // grid widht (observation )
                     "-i",
                     "-ld",
                     "-ll",
@@ -44,6 +46,7 @@ public class ParameterContainer
                     "-pr",
                     "-pw",
                     "-pym",
+                    "-sg", // show grid  (observation )
                     "-t",
                     "-tc",
                     "-tl",
@@ -150,8 +153,10 @@ public class ParameterContainer
             defaultOptionsHashMap.put("-amico","off");
             defaultOptionsHashMap.put("-echo","off"); //defaultOptionsHashMap.put("-echo","off");
             defaultOptionsHashMap.put("-ewf","on"); //defaultOptionsHashMap.put("-exitWhenFinished","off");
+            defaultOptionsHashMap.put("-gh","19");
             defaultOptionsHashMap.put("-gv","off"); //defaultOptionsHashMap.put("-gameViewer","off");
             defaultOptionsHashMap.put("-gvc","off"); //defaultOptionsHashMap.put("-gameViewerContinuousUpdates","off");
+            defaultOptionsHashMap.put("-gw","19");
             defaultOptionsHashMap.put("-i","off"); // Invulnerability
             defaultOptionsHashMap.put("-ld","0"); //defaultOptionsHashMap.put("-levelDifficulty","0");
             defaultOptionsHashMap.put("-ll","320"); //defaultOptionsHashMap.put("-levelLength","320");
@@ -167,6 +172,7 @@ public class ParameterContainer
             defaultOptionsHashMap.put("-pr","off"); //defaultOptionsHashMap.put("-powerRestoration","off");
 //            defaultOptionsHashMap.put("-ssiw","off"); //defaultOptionsHashMap.put("-stopSimulationIfWin","off");
 //            defaultOptionsHashMap.put("-server","off");
+            defaultOptionsHashMap.put("-sg","off");
             defaultOptionsHashMap.put("-t","on"); //defaultOptionsHashMap.put("-timer","on");
             defaultOptionsHashMap.put("-tl","200"); //Time Limit
             defaultOptionsHashMap.put("-tc","off"); //defaultOptionsHashMap.put("-toolsConfigurator","off");

@@ -20,6 +20,7 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
 
     private String Name = "Instance of CheaterKeyboardAgent";
     private Integer prevFPS = 24;
+    private int prevGridSize = 9;
 
     public CheaterKeyboardAgent()
     {
@@ -36,14 +37,12 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
         return Action;
     }
 
-    public void integrateObservation(Environment environment)
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+    public void integrateObservation(Environment environment)    {    }
 
     public void reset()
     {
         // Just check you keyboard.
+        prevGridSize = GlobalOptions.observationGridWidth;
         Action = new boolean[16];
     }
 
@@ -71,7 +70,8 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
 
     private void toggleKey(int keyCode, boolean isPressed)
     {
-        switch (keyCode) {
+        switch (keyCode)
+        {
             //Cheats;
             case KeyEvent.VK_D:
                 if (isPressed)
@@ -136,6 +136,15 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
                     GlobalOptions.AdjustMarioComponentFPS();
                 }
                 break;
+            case KeyEvent.VK_G:
+                if (isPressed)
+                {
+//                    boolean temp = prevGridSize;
+                    prevGridSize = GlobalOptions.observationGridWidth;
+//                    GlobalOptions.observationGridWidth = (GlobalOptions.observationGridWidth == -1) ? temp : -1;
+                    GlobalOptions.isShowGrid = !(GlobalOptions.isShowGrid);
+//                    System.out.println("GlobalOptions.observationGridWidth = " + GlobalOptions.observationGridWidth);
+                }
         }
     }
 }
