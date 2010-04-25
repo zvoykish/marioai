@@ -78,7 +78,6 @@ public class Sprite
         if (GlobalOptions.areLabels)
             og.drawString("" + xPixel + "," + yPixel, xPixel, yPixel);
 
-
         // Mario Grid Visualization Enable
         if (GlobalOptions.isShowGrid)
         {
@@ -104,7 +103,7 @@ public class Sprite
                 for (k = -columns/2 - 1; k < columns/2 + 1; k++)
                     og.drawLine((int) (x + k*wdOfRow + 8), (int) y - height/2 - 8, (int) (x + k*wdOfRow + 8), (int) (y + height/2 - 8));
             }
-                        og.setColor(Color.GREEN);
+            og.setColor(Color.GREEN);
             MarioVisualComponent.drawString(og, String.valueOf(this.kind), (int) x - 4, (int) y - 8, 2);            
         }
 
