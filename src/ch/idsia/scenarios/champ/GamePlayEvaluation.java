@@ -2,14 +2,13 @@ package ch.idsia.scenarios.champ;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
+import ch.idsia.ai.agents.controllers.ForwardJumpingAgent;
 import ch.idsia.ai.agents.controllers.TimingAgent;
 import ch.idsia.maibe.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.tools.EvaluationOptions;
-import ch.idsia.tools.Evaluator;
 import ch.idsia.utils.StatisticalSummary;
-import competition.evostar.robinbaumgarten.RobinBaumgarten_AStarAgent;
 
 
 /**
@@ -48,8 +47,8 @@ public final class GamePlayEvaluation
         cmdLineOptions.setLevelRandSeed(6189642);
 
 //        final Environment environment = new MarioEnvironment();
-//        final Agent agent = new ForwardJumpingAgent();
-        final Agent agent = new RobinBaumgarten_AStarAgent();
+        final Agent agent = new ForwardJumpingAgent();
+//        final Agent agent = new RobinBaumgarten_AStarAgent();
 //        final Agent agent = new  AJBAgent();
 //        final Agent agent = cmdLineOptions.getAgent();
 //        final Agent agent = (GPAgent) Easy.load("matthewerickson.xml");

@@ -7,7 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-public abstract class GlobalOptions
+public abstract class
+        GlobalOptions
 {
     public static final int primaryVerionUID = 0;
     public static final int minorVerionUID = 1;
