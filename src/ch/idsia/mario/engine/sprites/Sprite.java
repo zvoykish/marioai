@@ -1,6 +1,7 @@
 package ch.idsia.mario.engine.sprites;
 
 import ch.idsia.mario.engine.GlobalOptions;
+import ch.idsia.mario.engine.MarioVisualComponent;
 import ch.idsia.mario.engine.level.SpriteTemplate;
 
 import java.awt.*;
@@ -22,7 +23,7 @@ public class Sprite
     public static final int KIND_ENEMY_FLOWER = 12;
     public static final int KIND_SHELL = 13;
     public static final int KIND_MUSHROOM = 14;
-    public static final int KIND_FIRE_FLOWER = 15;    
+    public static final int KIND_FIRE_FLOWER = 15;
     public static final int KIND_PARTICLE = 21;
     public static final int KIND_SPARCLE = 22;
     public static final int KIND_COIN_ANIM = 20;
@@ -38,7 +39,7 @@ public class Sprite
 
     public float xOld, yOld, x, y, xa, ya;
     public int mapX, mapY;
-    
+
     public int xPic, yPic;
     public int wPic = 32;
     public int hPic = 32;
@@ -49,7 +50,7 @@ public class Sprite
     public Image[][] prevSheet;
 
     public boolean visible = true;
-    
+
     public int layer = 1;
 
     public SpriteTemplate spriteTemplate;
@@ -59,11 +60,11 @@ public class Sprite
         x+=xa;
         y+=ya;
     }
-    
+
     public void render(Graphics og, float alpha)
     {
         if (!visible) return;
-        
+
 //        int xPixel = (int)(xOld+(x-xOld)*alpha)-xPicO;
 //        int yPixel = (int)(yOld+(y-yOld)*alpha)-yPicO;
 
@@ -71,10 +72,47 @@ public class Sprite
         int yPixel = (int)y-yPicO;
 
         og.drawImage(sheet[xPic][yPic], xPixel+(xFlipPic?wPic:0), yPixel+(yFlipPic?hPic:0), xFlipPic?-wPic:wPic, yFlipPic?-hPic:hPic, null);
+
+
+        // Labels
         if (GlobalOptions.areLabels)
             og.drawString("" + xPixel + "," + yPixel, xPixel, yPixel);
+
+
+        // Mario Grid Visualization Enable
+        if (GlobalOptions.isShowGrid)
+        {
+            if (this.kind == KIND_MARIO)
+            {
+//                og.drawString("M", (int) x, (int) y);
+                int width = GlobalOptions.observationGridWidth *16;
+                int height = GlobalOptions.observationGridHeight *16;
+
+                int rows = GlobalOptions.observationGridHeight;
+                int columns = GlobalOptions.observationGridWidth;
+
+                int htOfRow = 16;//height / (columns);
+                int k;
+                // horizontal lines
+                og.setColor(Color.BLACK);
+                for (k = -rows/2 - 1; k <= rows/2; k++)
+                    og.drawLine((int) x - width/2, (int) (y + k * htOfRow), (int) (x +  width/2), (int) (y + k * htOfRow));
+
+//                og.setColor(Color.RED);
+                // vertical lines
+                int wdOfRow = 16;// width / (rows);
+                for (k = -columns/2 - 1; k < columns/2 + 1; k++)
+                    og.drawLine((int) (x + k*wdOfRow + 8), (int) y - height/2 - 8, (int) (x + k*wdOfRow + 8), (int) (y + height/2 - 8));
+            }
+                        og.setColor(Color.GREEN);
+            MarioVisualComponent.drawString(og, String.valueOf(this.kind), (int) x - 4, (int) y - 8, 2);            
+        }
+
+        if (GlobalOptions.isMatrixView)
+            og.drawString("Matrix View", xPixel, yPixel);
+
     }
-    
+
     public final void tick()
     {
         xOld = x;

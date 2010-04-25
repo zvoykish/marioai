@@ -24,7 +24,7 @@ public class BasicTask implements Task
             System.err.println("MarioAI Error: Environment is null");
         } else
         {
-            System.out.println("MarioAI Environment has already been instantiated!");
+//            System.out.println("MarioAI Environment has already been instantiated!");
         }
         this.setAgent(cmdLineOptions.getAgent());
         this.setOptions(cmdLineOptions);

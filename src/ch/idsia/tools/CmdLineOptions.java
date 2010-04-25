@@ -57,7 +57,13 @@ public class CmdLineOptions extends EvaluationOptions
         }
         GlobalOptions.isGameVeiwerContinuousUpdates = isGameViewerContinuousUpdates();
         GlobalOptions.isGameVeiwer = isGameViewer();
+        GlobalOptions.observationGridWidth = getObservationGridWidth();
+        GlobalOptions.observationGridHeight = getObservationGridHeight();
+//        Environment.HalfObsWidth = GlobalOptions.observationGridWidth/2;
+//        Environment.HalfObsHeight = GlobalOptions.observationGridHeight/2;
+        GlobalOptions.isShowGrid = isGridVisualized();
     }
+
 
     public Boolean isToolsConfigurator() {
         return b(getParameterValue("-tc"));      }
@@ -71,10 +77,37 @@ public class CmdLineOptions extends EvaluationOptions
     public Boolean isEcho() {
         return b(getParameterValue("-echo"));      }
 
-    public String getPyAmiCoModuleName()
+    public String getPyAmiCoModuleName()  {
+        return getParameterValue("-pym"); }
+
+    public Integer getObservationGridWidth()
     {
-        return getParameterValue("-pym");
+        int ret = i(getParameterValue("-gw"));
+
+        if (ret % 2 == 0)
+        {
+            System.err.println("\nWrong value for grid width: " + ret++ +
+            " ; grid width set to " + ret);
+        }
+        return ret;
     }
+
+    private Integer getObservationGridHeight()
+    {
+         int ret = i(getParameterValue("-gh"));
+        if (ret % 2 == 0)
+        {
+            System.err.println("\nWrong value for grid height: " + ret++ +
+            " ; grid height set to " + ret);
+        }
+        return ret;
+    }
+
+    public Boolean isGridVisualized()
+    {
+        return b(getParameterValue("-sg"));
+    }
+
 
     public int[] toIntArray()
     {

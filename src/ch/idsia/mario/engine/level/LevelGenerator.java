@@ -80,7 +80,7 @@ public class LevelGenerator
         {
             length += buildZone(length, level.width - length);
         }
-        System.out.println("length1 = " + length);
+//        System.out.println("length1 = " + length);
 
         int floor = height - 1 - random.nextInt(4);
 
