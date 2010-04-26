@@ -20,12 +20,14 @@ public final class MarioEnvironment implements Environment
     private MarioVisualComponent marioVisualComponent;
     private Agent agent;
 
+    // TODO : Singleton
     public MarioEnvironment()
     {
 //        System.out.println("System.getProperty(\"java.awt.headless\") = " + System.getProperty("java.awt.headless"));
 //        System.out.println("System.getProperty(\"verbose\") = " + System.getProperty("-verbose"));
 //        System.out.println("Java: JA ZDES'!!");
 //        System.out.flush();
+        System.out.println("MarioAI Benchmark" + GlobalOptions.getVersionUID());
         levelScene = new LevelScene(0, 0, 0, 0, 0, 0);
     }
 
