@@ -166,9 +166,13 @@ public class Mario extends Sprite
 
     public void setRacoon(boolean isRacoon)
     {
+//        if (true)
+//        return;
         this.isRacoon = isRacoon;
 //        this.setLarge(isRacoon, false);
-        System.out.println("isRacoon = " + isRacoon);
+//        System.out.println("isRacoon = " + isRacoon);
+//        System.out.println("Art.racoonmario.length = " + Art.racoonmario.length);
+//        System.out.println("Art.racoonmario[0].length = " + Art.racoonmario[0].length);
         if (isRacoon)
         {
             savePrevState();

@@ -71,9 +71,21 @@ public class Sprite
         int xPixel = (int)x-xPicO;
         int yPixel = (int)y-yPicO;
 
-        og.drawImage(sheet[xPic][yPic], xPixel+(xFlipPic?wPic:0), yPixel+(yFlipPic?hPic:0), xFlipPic?-wPic:wPic, yFlipPic?-hPic:hPic, null);
+//        System.out.print("xPic = " + xPic);
+//        System.out.print(", yPic = " + yPic);
+//        System.out.println(", kind = " + this.kind);
 
-
+        try
+        {
+            og.drawImage(sheet[xPic][yPic],
+                    xPixel+(xFlipPic?wPic:0),
+                    yPixel+(yFlipPic?hPic:0),
+                    xFlipPic?-wPic:wPic,
+                    yFlipPic?-hPic:hPic, null);
+        } catch (ArrayIndexOutOfBoundsException ex)
+        {
+            System.err.println("ok:" + this.kind + ", " + xPic);    
+        }
         // Labels
         if (GlobalOptions.areLabels)
             og.drawString("" + xPixel + "," + yPixel, xPixel, yPixel);
