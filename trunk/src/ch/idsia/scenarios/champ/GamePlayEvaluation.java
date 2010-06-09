@@ -48,13 +48,8 @@ public final class GamePlayEvaluation
 
 //        final Environment environment = new MarioEnvironment();
         final Agent agent = new ForwardJumpingAgent();
-//        final Agent agent = new RobinBaumgarten_AStarAgent();
-//        final Agent agent = new  AJBAgent();
 //        final Agent agent = cmdLineOptions.getAgent();
-//        final Agent agent = (GPAgent) Easy.load("matthewerickson.xml");
 //        final Agent agent = (SimpleCNAgent) Easy.load("sergeypolikarpov.xml");
-//        final Agent agent = cmdLineOptions.getAgent();
-//        assert (agent == null);
 //        System.out.println("agent = " + agent);
         cmdLineOptions.setAgent(agent);
         final BasicTask basicTask = new BasicTask(cmdLineOptions);
