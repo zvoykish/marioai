@@ -33,6 +33,7 @@ public class SimulationOptions extends ParameterContainer
         ret.setAgent(getAgent());
         ret.setLevelDifficulty(getLevelDifficulty());
         ret.setLevelLength(getLevelLength());
+        ret.setLevelHeight(getLevelHeight());
         ret.setLevelRandSeed(getLevelRandSeed());
         ret.setLevelType(getLevelType());
 //        ret.setMarioComponent(marioComponent);
@@ -44,6 +45,15 @@ public class SimulationOptions extends ParameterContainer
         ret.setZLevelEnemies(getZLevelEnemies());
         ret.setZLevelScene(getZLevelScene());
         ret.setMarioInvulnerable(isMarioInvulnerable());
+        ret.setDeadEndsCount(getDeadEndsCount());
+        ret.setCannonsCount(getCannonsCount());
+        ret.setHillStraightCount(getHillStraightCount());
+        ret.setTubesCount(getTubesCount());
+        ret.setBlocksCount(getBlocksCount());
+        ret.setCoinsCount(getCoinsCount());
+        ret.setGapsCount(getGapsCount());
+        ret.setHiddenBlocksCount(getHiddenBlocksCount());
+        ret.setEnemiesEnabled(isEnemiesEnabled());
 //        ret.setCurrentTrial(getCurrentTrial());
         return ret;
     }
@@ -92,6 +102,15 @@ public class SimulationOptions extends ParameterContainer
 
     public void setLevelLength(int levelLength) {
         setParameterValue("-ll", s(levelLength));    }
+
+    //LevelHeight
+    public int getLevelHeight() {
+        return i(getParameterValue("-lh"));
+    }
+
+    public void setLevelHeight( int levelHeight ) {
+        setParameterValue("-lh", s(levelHeight));
+    }
 
     //LevelRandSeed
     public int getLevelRandSeed() {
@@ -169,10 +188,107 @@ public class SimulationOptions extends ParameterContainer
     public void setMarioInvulnerable(boolean invulnerable)
     {         setParameterValue("-i", s(invulnerable));    }
 
-    // Trial tracking
+    // Level: dead ends count
+    public Boolean getDeadEndsCount()
+    {
+        return b(getParameterValue("-lde"));
+    }
 
+    public void setDeadEndsCount(boolean var)
+    {
+        setParameterValue("-lde", s(var));
+    }
+
+    // Level: cannons count
+    public Boolean getCannonsCount()
+    {
+        return b(getParameterValue("-lc"));
+    }
+
+    public void setCannonsCount(boolean var)
+    {
+        setParameterValue("-lc", s(var));
+    }
+
+    // Level: HillStraight count
+    public Boolean getHillStraightCount()
+    {
+        return b(getParameterValue("-lhs"));
+    }
+
+    public void setHillStraightCount(boolean var)
+    {
+        setParameterValue("-lhs", s(var));
+    }
+
+    // Level: Tubes count
+    public Boolean getTubesCount()
+    {
+        return b(getParameterValue("-ltb"));
+    }
+
+    public void setTubesCount(boolean var)
+    {
+        setParameterValue("-ltb", s(var));
+    }
+
+    // Level: blocks count
+    public Boolean getBlocksCount()
+    {
+        return b(getParameterValue("-lb"));
+    }
+
+    public void setBlocksCount(boolean var)
+    {
+        setParameterValue("-lb", s(var));
+    }
+
+    // Level: coins count
+    public Boolean getCoinsCount()
+    {
+        return b(getParameterValue("-lco"));
+    }
+
+    public void setCoinsCount(boolean var)
+    {
+        setParameterValue("-lco", s(var));
+    }
+
+    // Level: gaps count
+    public Boolean getGapsCount()
+    {
+        return b(getParameterValue("-lg"));
+    }
+
+    public void setGapsCount(boolean var)
+    {
+        setParameterValue("-lg", s(var));
+    }
+
+    public Boolean getHiddenBlocksCount()
+    {
+        return b(getParameterValue("-lhb"));
+    }
+
+    public void setHiddenBlocksCount(boolean var)
+    {
+        setParameterValue("-lhb", s(var));
+    }
+
+    public Boolean isEnemiesEnabled()
+    {
+        return b(getParameterValue("-le"));
+    }
+
+    public void setEnemiesEnabled(boolean var)
+    {
+        setParameterValue("-le", s(var));
+    }
+
+
+    // Trial tracking
     public void resetCurrentTrial()
     {
         currentTrial = 1;
-    }    
+    }
 }

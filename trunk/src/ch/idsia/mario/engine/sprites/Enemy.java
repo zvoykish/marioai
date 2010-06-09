@@ -396,7 +396,7 @@ public class Enemy extends Sprite
             winged = false;
             hPic = -hPic;
             yPicO = -yPicO + 16;
-            System.out.println("bumpCheck: mostelikely shell killed other creature");
+//            System.out.println("bumpCheck: mostelikely shell killed other creature");
         }
     }
 

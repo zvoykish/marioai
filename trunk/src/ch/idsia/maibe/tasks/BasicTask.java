@@ -45,7 +45,7 @@ public class BasicTask implements Task
         {
             environment.tick();
 //            start timer
-            long tm = System.currentTimeMillis();
+//            long tm = System.currentTimeMillis();
             agent.integrateObservation(environment);
 //            try
 //            {
@@ -60,12 +60,12 @@ public class BasicTask implements Task
             boolean[] action = agent.getAction();
 
 //            System.out.println("System.currentTimeMillis() - tm > COMPUTATION_TIME_BOUND = " + (System.currentTimeMillis() - tm ));
-            if (System.currentTimeMillis() - tm > COMPUTATION_TIME_BOUND)
-            {
-//                # controller disqualified on this level
-                System.out.println("Agent is disqualified on this level");
-                return false;
-            }
+//            if (System.currentTimeMillis() - tm > COMPUTATION_TIME_BOUND)
+//            {
+////                # controller disqualified on this level
+//                System.out.println("Agent is disqualified on this level");
+//                return false;
+//            }
             environment.performAction(action);
         }
         return true;

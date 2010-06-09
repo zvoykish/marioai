@@ -1,8 +1,9 @@
 package ch.idsia.mario.engine;
 
+import ch.idsia.mario.engine.level.Level;
+
 import java.awt.*;
 import java.util.Random;
-import ch.idsia.mario.engine.level.*;
 
 
 public class LevelRenderer
@@ -96,6 +97,16 @@ public class LevelRenderer
             {
                 byte b = level.getBlock(x, y);
 
+                //drawing of hidden block number
+                if (b == 1 && GlobalOptions.isShowGrid)
+                {
+                    g.setColor(Color.GREEN);
+                    int yo=0;
+                    if (x >= 0 && y >= 0 && x < level.width && y < level.height) yo = level.data[x][y];
+                    if (yo > 0) yo = (int) (Math.sin((yo - alpha) / 4.0f * Math.PI) * 8);
+                    g.drawString(String.valueOf(1), (x << 4) - xCam, (y << 4) - yCam-yo);
+                }
+                
                 if (((Level.TILE_BEHAVIORS[b & 0xff]) & Level.BIT_ANIMATED) > 0)
                 {
                     int animTime = (tick / 3) % 4;

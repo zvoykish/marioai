@@ -59,17 +59,21 @@ public class LevelScene extends Scene implements SpriteContext
     private int levelType;
     private int levelDifficulty;
     private int levelLength;
+    private int levelHeight;
     public static int killedCreaturesTotal;
     public static int killedCreaturesByFireBall;
     public static int killedCreaturesByStomp;
     public static int killedCreaturesByShell;
 
-    public LevelScene(long seed, int levelDifficulty, int type, int levelLength, int timeLimit, int visualization)
+    private int[] args; //passed to reset method. ATTENTION: not cloned.
+
+    public LevelScene(long seed, int levelDifficulty, int type, int levelLength, int levelHeight, int timeLimit, int visualization)
     {
         this.levelSeed = seed;
         this.levelDifficulty = levelDifficulty;
         this.levelType = type;
         this.levelLength = levelLength;
+        this.levelHeight = levelHeight;
         this.setTimeLimit(timeLimit);
         this.visualization = visualization == 1;
         killedCreaturesTotal = 0;
@@ -109,7 +113,7 @@ public class LevelScene extends Scene implements SpriteContext
          {*/
 //        level = LevelGenerator.createLevel(320, 15, levelSeed);
 //        if (levelSeed != -152)
-            level = LevelGenerator.createLevel(levelLength, 15, levelSeed, levelDifficulty, levelType);
+            level = LevelGenerator.createLevel(args);
 //        else
 //        try
 //        {
@@ -199,6 +203,8 @@ public class LevelScene extends Scene implements SpriteContext
                     case 21:       // question brick, contains coin
                     case 22:       // question brick, contains flower/mushroom
                         return 21; // question brick, contains something
+                    case 1:   // hidden block
+                        return 0; // prevents cheating
                     case(-111):
                     case(-108):
                     case(-107):
@@ -224,7 +230,7 @@ public class LevelScene extends Scene implements SpriteContext
                     case(-104):
                     case(-103):
                     case(-102):
-                    case(-101):                        
+                    case(-101):
                     case(-100):
                     case(-99):
                     case(-98):
@@ -232,7 +238,7 @@ public class LevelScene extends Scene implements SpriteContext
                     case(-96):
                     case(-95):
                     case(-94):
-                    case(-93):                        
+                    case(-93):
                     case(-69):
                     case(-65):
                     case(-88):
@@ -288,8 +294,8 @@ public class LevelScene extends Scene implements SpriteContext
             case(0):
                 switch(el)
                 {
-                    // cancell irrelevant sprite codes
-                    case(Sprite.KIND_COIN_ANIM): 
+                    // cancel irrelevant sprite codes
+                    case(Sprite.KIND_COIN_ANIM):
                     case(Sprite.KIND_PARTICLE):
                     case(Sprite.KIND_SPARCLE):
                     case(Sprite.KIND_MARIO):
@@ -309,7 +315,7 @@ public class LevelScene extends Scene implements SpriteContext
                     case (Sprite.KIND_MUSHROOM):
                         return Sprite.KIND_MUSHROOM;
                     case(Sprite.KIND_FIREBALL):
-                        return Sprite.KIND_FIREBALL;                    
+                        return Sprite.KIND_FIREBALL;
                     case(Sprite.KIND_BULLET_BILL):
                     case(Sprite.KIND_GOOMBA):
                     case(Sprite.KIND_GOOMBA_WINGED):
@@ -378,7 +384,7 @@ public class LevelScene extends Scene implements SpriteContext
     }
 
     public byte[][] getEnemiesObservationZ(int ZLevel)
-    {        
+    {
         //TODO: Move to constants 16
         int MarioXInMap = (int)mario.x/16;
         int MarioYInMap = (int)mario.y/16;
@@ -597,7 +603,7 @@ public class LevelScene extends Scene implements SpriteContext
          {
          recorder.addTick(mario.getKeyMask());
          }
-         
+
          if (replayer!=null)
          {
          mario.setKeys(replayer.nextTick());
@@ -910,7 +916,7 @@ public class LevelScene extends Scene implements SpriteContext
     {
         return mario.getStatus();
     }
-        
+
     public float[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies)
     {
         // TODO:SK, serialize all data to a sole double[]
@@ -1014,12 +1020,14 @@ public class LevelScene extends Scene implements SpriteContext
 //        this.getViewLocation().y, setUpOptions[16] == 1;
 //        this.getZLevelEnemies(),setUpOptions[17] ;
 //        this.getZLevelScene()   setUpOptions[18] ;
+        this.levelHeight = setUpOptions[19];
 
         killedCreaturesTotal = 0;
         killedCreaturesByFireBall = 0;
         killedCreaturesByStomp = 0;
         killedCreaturesByShell = 0;
 //        System.out.println("Call to init:");
+        args = setUpOptions;
         init();
     }
 

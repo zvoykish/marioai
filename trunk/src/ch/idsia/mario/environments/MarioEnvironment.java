@@ -28,7 +28,7 @@ public final class MarioEnvironment implements Environment
 //        System.out.println("Java: JA ZDES'!!");
 //        System.out.flush();
         System.out.println("MarioAI Benchmark" + GlobalOptions.getVersionUID());
-        levelScene = new LevelScene(0, 0, 0, 0, 0, 0);
+        levelScene = new LevelScene(0, 0, 0, 0, 0, 0, 0);
     }
 
     public void resetDefault()

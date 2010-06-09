@@ -118,7 +118,6 @@ public class GameViewer extends JFrame
         gameViewerViewPanel.repaint();
     }
 
-
     public TextField Console = new TextField();
     public Label LabelConsole = new Label("TextFieldConsole:");
     public Checkbox ShowLevelMapObservation = new Checkbox("Show Level Map Observation", true);

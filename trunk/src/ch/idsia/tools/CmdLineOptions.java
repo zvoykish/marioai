@@ -14,8 +14,8 @@ import java.util.Map;
  */
 
 /**
- * The <code>CmdLineOptions</code> class handles the commandline options received from actual
- * command line. It sets up parameters from command line if there are any.
+ * The <code>CmdLineOptions</code> class handles the command-line options
+ * It sets up parameters from command line if there are any.
  * Defaults are used otherwise.
  *
  * @author  Sergey Karakovskiy
@@ -29,7 +29,6 @@ import java.util.Map;
 
 public class CmdLineOptions extends EvaluationOptions
 {
-    // TODO: SK Move default options to xml, properties, beans, whatever..
     public CmdLineOptions(String[] args)
     {
         super();
@@ -141,28 +140,49 @@ public class CmdLineOptions extends EvaluationOptions
 //        "-vly",
 //        "-ze",
 //        "-zs"
+//        "-lh"
+//        "-lde"   level: dead ends count
+//        "-lc"    level: cannons count
+//        "-lhs"   level: HillStraight count
+//        "-ltb"   level: Tubes count
+//        "-lg"    level: gaps count
+//        "-lhb"   level: hidden blocks count
+//        "-le"    level: enemies enabled
+//        "-lb"    level: blocks count
+//        "-lco"   level: coins count
+
         return new int[]
                 {
-                        this.isGameViewer() ? 1 : 0,        /*0*/
-                        this.isMarioInvulnerable() ? 1 : 0, /*1*/
-                        this.getLevelDifficulty(),          /*2*/
-                        this.getLevelLength(),              /*3*/
-                        this.getLevelRandSeed(),            /*4*/
-                        this.getLevelType(),                /*5*/
-                        this.getMarioMode(),                /*6*/
-                        this.getFPS(),                      /*7*/
-                        this.isPowerRestoration() ? 1 : 0,  /*8*/
-                        this.isPauseWorld() ? 1 : 0,        /*9*/
-                        this.isTimer() ? 1 : 0,             /*10*/
+                        this.isGameViewer() ? 1 : 0,           /*0*/
+                        this.isMarioInvulnerable() ? 1 : 0,    /*1*/
+                        this.getLevelDifficulty(),             /*2*/
+                        this.getLevelLength(),                 /*3*/
+                        this.getLevelRandSeed(),               /*4*/
+                        this.getLevelType(),                   /*5*/
+                        this.getMarioMode(),                   /*6*/
+                        this.getFPS(),                         /*7*/
+                        this.isPowerRestoration() ? 1 : 0,     /*8*/
+                        this.isPauseWorld() ? 1 : 0,           /*9*/
+                        this.isTimer() ? 1 : 0,                /*10*/
                         // TODO:SK remove rudundancy (-1 -- no time limit)
-                        this.isToolsConfigurator() ? 1 : 0, /*11*/
-                        this.getTimeLimit(),                /*12*/
-                        this.isViewAlwaysOnTop() ? 1 : 0,   /*13*/
-                        this.isVisualization() ? 1 : 0,     /*14*/
-                        this.getViewLocation().x,           /*15*/
-                        this.getViewLocation().y,           /*16*/
-                        this.getZLevelEnemies(),            /*17*/
-                        this.getZLevelScene()               /*18*/
-                }; 
+                        this.isToolsConfigurator() ? 1 : 0,    /*11*/
+                        this.getTimeLimit(),                   /*12*/
+                        this.isViewAlwaysOnTop() ? 1 : 0,      /*13*/
+                        this.isVisualization() ? 1 : 0,        /*14*/
+                        this.getViewLocation().x,              /*15*/
+                        this.getViewLocation().y,              /*16*/
+                        this.getZLevelEnemies(),               /*17*/
+                        this.getZLevelScene(),                 /*18*/
+                        this.getLevelHeight(),                 /*19*/
+                        this.getDeadEndsCount() ? Integer.MAX_VALUE : 0,       /*20*/
+                        this.getCannonsCount()  ? Integer.MAX_VALUE : 0,       /*21*/
+                        this.getHillStraightCount() ? Integer.MAX_VALUE : 0,   /*22*/
+                        this.getTubesCount() ? Integer.MAX_VALUE : 0,          /*23*/
+                        this.getBlocksCount() ? Integer.MAX_VALUE : 0,         /*24*/
+                        this.getCoinsCount() ? Integer.MAX_VALUE : 0,          /*25*/
+                        this.getGapsCount() ? Integer.MAX_VALUE : 0,           /*26*/
+                        this.getHiddenBlocksCount() ? Integer.MAX_VALUE : 0,   /*27*/
+                        this.isEnemiesEnabled() ? 1 : 0                        /*28*/
+                };  /*== -1 ? Integer.MAX_VALUE : this.getGapsCount()*/
     }
 }
