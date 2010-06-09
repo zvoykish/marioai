@@ -433,7 +433,7 @@ public class Mario extends Sprite
                 carried.release(this);
                 carried = null;
                 setRacoon(false);
-                System.out.println("carried = " + carried);
+//                System.out.println("carried = " + carried);
             }
 //            System.out.println("sideWaysSpeed = " + sideWaysSpeed);
         }

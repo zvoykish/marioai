@@ -55,7 +55,17 @@ public class ParameterContainer
                     "-vlx",
                     "-vly",
                     "-ze",
-                    "-zs"
+                    "-zs",
+                    "-lh",  // level: height [16-20]
+                    "-lde", // level: dead ends count
+                    "-lc",  // level: cannons count
+                    "-lhs", // level: HillStraight count
+                    "-ltb", // level: Tubes count
+                    "-lb",  // level: blocks count
+                    "-lco", // level: coins count
+                    "-lg",  // level: gaps count
+                    "-lhb", // level: hidden blocks count
+                    "-le"   // level: enemies
             };
         if (allowedOptions == null)
         {
@@ -182,6 +192,17 @@ public class ParameterContainer
             defaultOptionsHashMap.put("-vis","on"); //defaultOptionsHashMap.put("-visual","on");
             defaultOptionsHashMap.put("-zs","1");  // ZoomLevel of LevelScene observation
             defaultOptionsHashMap.put("-ze","0"); //  ZoomLevel of Enemies observation
+            defaultOptionsHashMap.put("-lh","15"); //level height
+            defaultOptionsHashMap.put("-lde", "on"); //level: dead ends count
+            defaultOptionsHashMap.put("-lc", "on"); //level: cannons count
+            defaultOptionsHashMap.put("-lhs", "on"); //level: HillStraight count
+            defaultOptionsHashMap.put("-ltb", "on"); //level: tubes count
+            defaultOptionsHashMap.put("-lco", "on"); //level: coins count
+            defaultOptionsHashMap.put("-lb", "on"); //level: blocks count
+            defaultOptionsHashMap.put("-lco", "on"); //level: coins count
+            defaultOptionsHashMap.put("-lg", "on"); //level: blocks count
+            defaultOptionsHashMap.put("-lhb", "off"); //level: hidden blocks count
+            defaultOptionsHashMap.put("-le", "on"); //level: enemies enabled
         }
     }
 

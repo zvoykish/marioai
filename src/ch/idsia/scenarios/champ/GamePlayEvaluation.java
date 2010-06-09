@@ -37,9 +37,9 @@ public final class GamePlayEvaluation
                                            levelLength*2 / 10,
                                            levelLength*4 / 10};
 
-        final int[] levelDifficulties = new int[]{0, 1, 3, 5, 12, 16, 20};
+        final int[] levelDifficulties = new int[]{0, 1, 2, 3, 4, 5, 6, 12, 16, 20};
         final int[] levelTypes = new int[]{0, 1, 2};
-        final int[] levelLengths = new int[]{160, 320, 640};
+        final int[] levelLengths = new int[]{320, 320, 320, 320, 320, 320};
         final boolean[] creaturesEnables = new boolean[]{false, true};
         int levelSeed = cmdLineOptions.getLevelRandSeed();
 //        cmdLineOptions.setVisualization(false);
@@ -55,16 +55,19 @@ public final class GamePlayEvaluation
 //        final Agent agent = (SimpleCNAgent) Easy.load("sergeypolikarpov.xml");
 //        final Agent agent = cmdLineOptions.getAgent();
 //        assert (agent == null);
-        System.out.println("agent = " + agent);
+//        System.out.println("agent = " + agent);
+        cmdLineOptions.setAgent(agent);
         final BasicTask basicTask = new BasicTask(cmdLineOptions);
         float fitness = 0;
-        boolean verbose = true;
+        boolean verbose = false;
         int trials = 0;
         int disqualifications = 0;
 
 
         // todo: include level lengths.
-        
+
+        for (int ll : levelLengths)
+
         for (int levelDifficulty : levelDifficulties)
         {
             for (int levelType : levelTypes)
@@ -74,6 +77,7 @@ public final class GamePlayEvaluation
                     for (int timeLimit : timeLimits)
                     {
                         trials ++;
+                        cmdLineOptions.setLevelLength(ll);
                         cmdLineOptions.setLevelDifficulty(levelDifficulty);
                         cmdLineOptions.setLevelType(levelType);
                         cmdLineOptions.setPauseWorld(!creaturesEnable);
