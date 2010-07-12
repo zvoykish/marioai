@@ -45,7 +45,7 @@ public class PaperEvolve
         ProgressTask task = new ProgressTask(options);
 //        MultiSeedProgressTask task = new MultiSeedProgressTask(options);
 //        MushroomTask task = new MushroomTask(options);
-                options.setLevelRandSeed(6189642);
+        options.setLevelRandSeed(6189642);
 //        int seed = (int) (Math.random () * Integer.MAX_VALUE / 100000);
         int seed = options.getLevelRandSeed();
         ES es = new ES (task, initial, populationSize);
@@ -105,6 +105,7 @@ public class PaperEvolve
 //                options.setLevelDifficulty(difficulty);
             }
         }
+        
         System.out.println("\n\n\n\n\n\n\n\n\n");
         try
         {

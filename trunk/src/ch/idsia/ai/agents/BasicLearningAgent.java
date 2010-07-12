@@ -1,6 +1,7 @@
 package ch.idsia.ai.agents;
 
 import ch.idsia.ai.agents.learning.SimpleMLPAgent;
+import ch.idsia.ai.agents.learning.SmallMLPAgent;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,6 +12,19 @@ import ch.idsia.ai.agents.learning.SimpleMLPAgent;
  */
 public class BasicLearningAgent extends SimpleMLPAgent implements LearningAgent
 {
+    Agent agent;
+    Agent finalAgent;
+
+    public BasicLearningAgent(Agent agent)
+    {
+        this.agent = agent;
+    }
+
+    public BasicLearningAgent()
+    {
+        this.agent = new SmallMLPAgent();
+    }
+
     public void learn()
     {
 

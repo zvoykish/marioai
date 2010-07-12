@@ -185,4 +185,11 @@ public class CmdLineOptions extends EvaluationOptions
                         this.isEnemiesEnabled() ? 1 : 0                        /*28*/
                 };  /*== -1 ? Integer.MAX_VALUE : this.getGapsCount()*/
     }
+
+
+    public void setUpOptionsString(String s)
+    {
+        this.setUpOptions(s.split("\\s"));
+    }
+
 }
