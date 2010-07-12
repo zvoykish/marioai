@@ -83,33 +83,31 @@ public final class LearningEvaluation
         LearningAgent learningAgent = new BasicLearningAgent(new SmallMLPAgent()); // You Competition Entry goes here
 
         cmdLineOptions.setUpOptionsString("-lco on");
-        LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
+        float finalScore = LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);;
+
 //        ProgressTask task = new ProgressTask(options);
 //        ES es = new ES (task, initial, populationSize);
 
 //        Level 2
         cmdLineOptions.setUpOptionsString("-lco on");
-        LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
+        finalScore += LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
 
 //        Level 3
         cmdLineOptions.setUpOptionsString("-lco on");
-        LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
+        finalScore += LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
 
 //        Level 4
         cmdLineOptions.setUpOptionsString("-lco on");
-        LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
+        finalScore += LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
 
 //        Level 5
         cmdLineOptions.setUpOptionsString("-lco on");
-        LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
+        finalScore += LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
 
+        System.out.println("finalScore = " + finalScore);
         // learn on a particular level
         // create particular level
         // several
-
-
-
-                                                          `
 
 //        EvaluationInfo evaluationInfo = new EvaluationInfo(environment.getEvaluationInfoAsFloats());
 //        System.out.println("evaluationInfo = " + evaluationInfo);
