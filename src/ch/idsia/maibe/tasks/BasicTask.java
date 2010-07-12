@@ -12,7 +12,7 @@ import ch.idsia.tools.CmdLineOptions;
 
 public class BasicTask implements Task
 {
-    private final static Environment environment = new MarioEnvironment();
+    protected final static Environment environment = new MarioEnvironment();
     private Agent agent;
     protected CmdLineOptions options;
     private long COMPUTATION_TIME_BOUND = 42; // stands for  FPS 24, prescribed FPS.
