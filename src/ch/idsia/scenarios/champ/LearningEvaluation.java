@@ -33,8 +33,10 @@ public final class LearningEvaluation
         float fitness = 0;
         int disqualifications = 0;
 
+        cmdLineOptions.setVisualization(false);
         final LearningTask learningTask = new LearningTask(cmdLineOptions);
-
+        learningTask.setAgent(learningAgent);
+        
         for (int i = 0; i < numberOfTrials; ++i)
         {
             learningTask.reset(cmdLineOptions);
@@ -59,7 +61,10 @@ public final class LearningEvaluation
         // do some post processing if you need to. In general: select the Agent with highest score.
         learningAgent.learn();
         // perform the gameplay task on the same level
+        cmdLineOptions.setVisualization(true);
         BasicTask basicTask = new BasicTask(cmdLineOptions);
+        basicTask.reset(cmdLineOptions);
+        basicTask.setAgent(learningAgent);
         if (!basicTask.runOneEpisode())  // make evaluation on the same episode once
         {
             System.out.println("MarioAI: out of computational time per action!");

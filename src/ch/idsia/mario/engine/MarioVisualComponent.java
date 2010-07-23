@@ -463,6 +463,7 @@ public class MarioVisualComponent extends JComponent
             level =                                     levelScene.level;
 
             this.mario = levelScene.mario;
+            this.mario.cheatKeys = cheatAgent.getAction();
 //            System.out.println("mario = " + mario);
             this.level = levelScene.level;
             layer = new LevelRenderer(level, graphicsConfiguration, this.width, this.height);
