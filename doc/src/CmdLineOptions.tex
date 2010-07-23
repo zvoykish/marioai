@@ -1,0 +1,96 @@
+\documentclass{report}
+\usepackage[pdftex,unicode]{hyperref}
+\usepackage[margin=2cm]{geometry}
+\usepackage{indentfirst}
+\begin{document}
+\section*{MarioAI Benchmark \footnote{v-0.1.6 compliant}. Startup options.}
+
+\begin{table}[hp]
+
+\center{
+
+\begin{tabular}{| c | p{6cm} | p{3cm} | c | }
+
+   \hline
+   Option key & Description & Values range & Example \\
+   \hline \hline
+   -echo & Output all command line options to console after initialization & $<$on$|$off$>$ & {\texttt Main -echo on} \\ 
+   \hline
+   -ag & AgentName should extend RegisterableAgent in order for the native agent to be available from command line & AgentName or Agents implementations & {\texttt Main -ag ForwardAgent} \\
+   \hline
+   -zm & Observation Detalization for Map. 0 - the most detailed & $<$0$|$1$|$2$>$ & {\texttt Main -zm 0} \\
+   \hline
+   -ze & Observation Detalization for Enemies. 0 - The most detailed & $<$0$|$1$|$2$>$ & {\texttt Main -ze 0}\\
+    \hline
+   -vis & Enable Visualization & $<$on$|$off$>$ & {\texttt Main -vis on}\\
+    \hline
+   -vaot & Set main View to be on top of other windows & $<$on$|$off$>$ & {\texttt Main -vaot on}\\
+    \hline
+   -tl & Time limit. Option value: [1..MAXINT], units: marioseconds (1 MrSEC == 16 interactions with Environment)& $<$int$>$ & {\texttt Main -tl 42}\\
+    \hline
+   -t & World Timer. Gives the Agent the opportunity of infinite time per level & $<$on$|$off$>$ & {\texttt Main -t off}\\
+   \hline
+   -ssiw & Stop Simulation when first Win obtained & $<$on$|$off$>$ & {\texttt Main -ssiw on} \\
+   \hline
+   -pw & Pause of the World. Freezes animation all the sprites and disables Mario interaction with creatures. Mario still can run and get level observation  & $<$on$|$off$>$ & {\texttt Main -pw on}\\
+   \hline
+   -pr & Enable Power restoration. Enable Power restoration by pressing speed button (A on a keyboard) & $<$on$|$off$>$ & {\texttt Main -pr on} \\
+   \hline
+   -ewf & Exit program when simulation is over & $<$on$|$off$>$ & {\texttt Main -ewf off} \\
+   \hline
+   -gv & Enable Game Viewer & $<$on$|$off$>$ & {\texttt Main -gv on} \\
+   \hline
+   -gvc & Enable Continuous Updates in GameViewer & $<$on$|$off$>$ &  \\
+   \hline
+\end{tabular}
+}
+\end{table}
+\pagebreak
+\begin{table}[hp]
+\center{
+\begin{tabular} {| c | p{6cm} | p{3cm} | c | }
+   \hline
+   Option key & Description & Values range & Example \\
+   \hline \hline
+   -mm & Mario Mode. 0 -- small,1 - large, 2 - large, fire ability is available & $<$0$|$1$|$2$>$ & {\texttt Main -mm 1} \\
+   \hline
+   -fps & Change FPS. 100 enables max FPS & $<$integers in [1..100]$>$ & {\texttt Main -fps 50} \\
+   \hline
+   -m & Matlab file name for the report output & $<$[w+] $>$ & {\texttt Main -m iMarioReport} \\
+   \hline
+   -lt & Level type. 0 - Overground, 1 - Underground, 2 - Castle & $<$0$|$1$|$2$>$ & {\texttt Main -lt 1} \\
+   \hline
+   -ls & Level (Randomization) Seed & $<$integers in [1..maxInt]$>$ & {\texttt Main -ls 42} \\
+   \hline
+   -ll & Level length & $<$integers in [1..4096]$>$ & {\texttt Main -ll 550} \\
+   \hline
+   -lh & Level height & $<$integers in [1..4096]$>$ & {\texttt Main  -lh 18} \\
+   \hline
+   -ld & Level Difficulty & $<$integers in [0..maxInt]$>$ & {\texttt Main -ld 5} \\
+   \hline
+   -lde & Enable/disable dead ends on the level & $<$on$|$off$>$ & {\texttt Main -lde on} \\
+   \hline
+   -lc & Enable/disable cannons on the level & $<$on$|$off$>$ & {\texttt Main -lc off } \\
+   \hline
+   -lhs & Enable/Disable hills on the level & $<$on$|$off$>$ & {\texttt Main -lhs off } \\
+   \hline
+   -ltb & Enable/Disable tubes on the level & $<$on$|$off$>$ & {\texttt Main -ltb off } \\
+   \hline
+   -lg & Enable/Disable gaps on the level & $<$on$|$off$>$ & {\texttt Main -lg off } \\
+   \hline
+   -lhb & Enable/Disable hidden blocks on the level \footnote{If level is build with dead ends and without hidden blocks, then you will go out from dead end over visible blocks, e.g. hidden blocks are replaced with visible blocks.} & $<$on$|$off$>$ & {\texttt Main -lhb off } \\
+   \hline
+   -le & Enable/Disable enemies on the level & $<$on$|$off$>$ & {\texttt Main -le off } \\
+   \hline
+   -lb & Enable/Disable blocks on the level & $<$on$|$off$>$ & {\texttt Main -lb off } \\
+   \hline
+   -lco & Enable/Disable coins on the level & $<$on$|$off$>$ & {\texttt Main -lco off } \\
+   \hline
+   
+
+\end{tabular}
+
+} \caption{Generalization capacity. Performance of the } \label{table:generalization}
+
+\end{table}
+\end{document}
