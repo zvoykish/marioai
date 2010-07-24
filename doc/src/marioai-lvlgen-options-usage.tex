@@ -1,0 +1,40 @@
+\documentclass{report}
+\usepackage{indentfirst}
+\usepackage[margin=2cm]{geometry}
+\begin{document}
+\section*{MarioAI Benchmark \footnote{parameters are available since v-0.1.6}. Level Generator. Usage examples.}
+Here are some examples how to use combination of various options. \\
+Launch the benchmark as usual : \texttt{java~ch.idsia.scenarios.Main [params]}. \\ Short form is used further in the text: \texttt{Main -lco off}.
+\begin{enumerate}
+\item A flat level: \newline %1
+\texttt{~-lco~off~-lb~off~-le~off~-lhb~off~-lg~off~-ltb~off~-lhs~off~-lc~off~-lde~off}
+\item A flat level with blocks:\newline %2
+\texttt{Main~-lco~off~-lb~on~-le~off~-lhb~off~-lg~off~-ltb~off~-lhs~off~-lc~off~-lde~off}
+\item A flat level with blocks and coins:\newline %3
+\texttt{Main~-lco~on~-lb~on~-le~off~-lhb~off~-lg~off~-ltb~off~-lhs~off~-lc~off~-lde~off}
+\item A flat level with blocks, creatures and coins:\newline %4
+\texttt{Main~-lco~on~-lb~on~-le~on~-lhb~off~-lg~off~-ltb~off~-lhs~off~-lc~off~-lde~off}
+\item A flat level with blocks, hidden blocks and coins:\newline %5
+\texttt{Main~-lco~on~-lb~on~-le~off~-lhb~on~-lg~off~-ltb~off~-lhs~off~-lc~off~-lde~off}
+\item A flat level with blocks, hidden blocks, coins and creatures:\newline %6
+\texttt{Main~-lco~on~-lb~on~-le~on~-lhb~on~-lg~off~-ltb~off~-lhs~off~-lc~off~-lde~off}
+\item A level with deadends  and blocks:\newline %7
+\texttt{Main~-lco~off~-lb~on~-le~off~-lhb~off~-lg~off~-ltb~off~-lhs~off~-lc~off~-lde~on}
+\item A level with deadends, blocks and hidden blocks:\newline %8
+\texttt{Main~-lco~off~-lb~on~-le~off~-lhb~on~-lg~off~-ltb~off~-lhs~off~-lc~off~-lde~on}
+\item A level with deadends and hidden blocks:\newline %9
+\texttt{Main~-lco~off~-lb~off~-le~off~-lhb~on~-lg~off~-ltb~off~-lhs~off~-lc~off~-lde~on}
+\item A level with deadends, blocks, hidden blocks and creatures:\newline %10
+\texttt{Main~-lco~off~-lb~on~-le~on~-lhb~on~-lg~off~-ltb~off~-lhs~off~-lc~off~-lde~on}
+\item A flat level with tubes: \newline %11
+\texttt{Main~-lco~off~-lb~off~-le~off~-lhb~off~-lg~off~-ltb~on~-lhs~off~-lc~off~-lde~off}
+\item A flat level with gaps: \newline %12
+\texttt{Main~-lco~off~-lb~off~-le~off~-lhb~off~-lg~on~-ltb~off~-lhs~off~-lc~off~-lde~off}
+\item A flat level with tubes and gaps: \newline %13
+\texttt{Main~-lco~off~-lb~off~-le~off~-lhb~off~-lg~on~-ltb~on~-lhs~off~-lc~off~-lde~off}
+\item A flat level with cannons: \newline %14
+\texttt{Main~-lco~off~-lb~off~-le~off~-lhb~off~-lg~off~-ltb~off~-lhs~off~-lc~on~-lde~off}
+\item A flat level with tubes, gaps and cannons: \newline %15
+\texttt{Main~-lco~off~-lb~off~-le~off~-lhb~off~-lg~on~-ltb~on~-lhs~off~-lc~on~-lde~off}
+\end{enumerate}
+\end{document}

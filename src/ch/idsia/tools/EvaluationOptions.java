@@ -69,30 +69,6 @@ public class EvaluationOptions extends SimulationOptions
     public String getAgentName() {
         return getParameterValue("-ag");      }
 
-//    public Integer getServerAgentPort() {
-////        setNumberOfTrials(-1);
-//        String value = optionsHashMap.get("-port");
-//        if (value == null)
-//        {
-//            if (getAgentName().startsWith("ServerAgent"))
-//            {
-//                if ( getAgentName().split(":").length > 1)
-//                {
-//                    return Integer.parseInt(getAgentName().split(":")[1]);
-//                }
-//            }
-//        }
-//        return Integer.parseInt(defaultOptionsHashMap.get("-port"));
-//    }
-
-//    public boolean isServerAgentEnabled() {
-//        return getAgentName().startsWith("ServerAgent");
-//    }
-//
-//    public boolean isServerMode() {
-//        return b(getParameterValue("    -server"));
-//    }
-
     public boolean isTimer() {
         return b(getParameterValue("-t"));      }
 
