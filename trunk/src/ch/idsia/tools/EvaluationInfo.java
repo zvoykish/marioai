@@ -19,7 +19,7 @@ public final class EvaluationInfo
 {
     private static final int MagicNumberUnDef = -42;
 
-    public static final int numberOfElements = 14;
+    public static final int numberOfElements = 15;
 
     // ordered in alphabetical order;
     public int distancePassedCells =MagicNumberUnDef;
@@ -37,6 +37,7 @@ public final class EvaluationInfo
     public int numberOfHiddenItemsGained =MagicNumberUnDef;
     public int timeLeft=MagicNumberUnDef;
     public int timeSpent =MagicNumberUnDef;
+    public int hiddenblocksGained = MagicNumberUnDef;
 
     private static final float[] retFloatArray = new float[EvaluationInfo.numberOfElements];
     private static final float[] zeros = new float[EvaluationInfo.numberOfElements];
@@ -64,6 +65,7 @@ public final class EvaluationInfo
                 marioMode * sov.mode  +
                 mushroomsDevoured * sov.mushrooms +
                 numberOfCoinsGained * sov.coins+
+                hiddenblocksGained * sov.hiddenBlocks +
                 killsTotal * sov.kills +
                 killsByStomp * sov.killedByStomp +
                 killsByFire * sov.killedByFire +
@@ -104,6 +106,7 @@ public final class EvaluationInfo
         retFloatArray[11] = this.numberOfHiddenItemsGained;
         retFloatArray[12] = this.timeLeft;
         retFloatArray[13] = this.timeSpent;
+        retFloatArray[14] = this.hiddenblocksGained;
 
         return retFloatArray;
     }
@@ -119,6 +122,7 @@ public final class EvaluationInfo
             "\n            Time Left(marioseconds) : " + timeLeft +
             "\n                       Coins Gained : " + numberOfCoinsGained +
             "\n                 Hidden Items Found : " + numberOfHiddenItemsGained +
+            "\n                Hidden Blocks Found : " + hiddenblocksGained +
             "\n                 Mushrooms Devoured : " + mushroomsDevoured +
             "\n                   Flowers Devoured : " + flowersDevoured +
             "\n                        kills Total : " + killsTotal +
@@ -139,6 +143,7 @@ public final class EvaluationInfo
         "; Time Spent: " + timeSpent +
         "; Time Left: " + timeLeft +
         "; Coins: " + numberOfCoinsGained +
+        "; Hidden blocks: "+ hiddenblocksGained +
         "; Mushrooms: " + mushroomsDevoured +
         "; Flowers: " + flowersDevoured +        
         "; kills: " + killsTotal +

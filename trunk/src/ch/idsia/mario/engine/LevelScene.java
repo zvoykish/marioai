@@ -787,6 +787,10 @@ public class LevelScene extends Scene implements SpriteContext
 
         if ((Level.TILE_BEHAVIORS[block & 0xff] & Level.BIT_BUMPABLE) > 0)
         {
+            if (block == 1)
+            {
+                Mario.getHiddenBlock();
+            }
             bumpInto(x, y - 1);
             level.setBlock(x, y, (byte) 4);
             level.setBlockData(x, y, (byte) 4);

@@ -13,6 +13,7 @@ public class Mario extends Sprite
     public static boolean large = false;
     public static boolean fire = false;
     public static int coins = 0;
+    public static int hiddenBlocks = 0;
     private int status = STATUS_RUNNING;
     private final int FractionalPowerUpTime = 0;
     public static int mushroomsDevoured;
@@ -32,6 +33,7 @@ public class Mario extends Sprite
         large = marioMode > 0;
         fire = marioMode == 2;
         coins = 0;
+        hiddenBlocks = 0;
         mushroomsDevoured = 0;
         flowersDevoured = 0;
     }
@@ -794,6 +796,11 @@ public class Mario extends Sprite
         coins++;
 //        if (coins % 100 == 0)
 //            get1Up();
+    }
+
+    public static void getHiddenBlock()
+    {
+        hiddenBlocks++;
     }
 
     public int getStatus() {

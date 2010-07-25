@@ -237,7 +237,8 @@ public final class MarioEnvironment implements Environment
         evaluationInfo.killsByFire = levelScene.getKillsByFire();
         evaluationInfo.killsByShell = levelScene.getKillsByShell();
         evaluationInfo.numberOfHiddenItemsGained = levelScene.getNumberOfHiddenCoinsGained();
-
+        evaluationInfo.hiddenblocksGained = Mario.hiddenBlocks;
+        
 //        evaluationInfo.Memo = "Number of attempt: " + Mario.numberOfAttempts;
         return evaluationInfo;
     }

@@ -65,7 +65,7 @@ public class ParameterContainer
                     "-lco", // level: coins count
                     "-lg",  // level: gaps count
                     "-lhb", // level: hidden blocks count
-                    "-le"   // level: enemies
+                    "-le"   // level: enemies; set up with bit mask
             };
         if (allowedOptions == null)
         {
@@ -193,16 +193,25 @@ public class ParameterContainer
             defaultOptionsHashMap.put("-zs","1");  // ZoomLevel of LevelScene observation
             defaultOptionsHashMap.put("-ze","0"); //  ZoomLevel of Enemies observation
             defaultOptionsHashMap.put("-lh","15"); //level height
-            defaultOptionsHashMap.put("-lde", "on"); //level: dead ends count
+            defaultOptionsHashMap.put("-lde", "off"); //level: dead ends count
             defaultOptionsHashMap.put("-lc", "on"); //level: cannons count
             defaultOptionsHashMap.put("-lhs", "on"); //level: HillStraight count
             defaultOptionsHashMap.put("-ltb", "on"); //level: tubes count
             defaultOptionsHashMap.put("-lco", "on"); //level: coins count
             defaultOptionsHashMap.put("-lb", "on"); //level: blocks count
             defaultOptionsHashMap.put("-lco", "on"); //level: coins count
-            defaultOptionsHashMap.put("-lg", "on"); //level: blocks count
+            defaultOptionsHashMap.put("-lg", "on"); //level: gaps count
             defaultOptionsHashMap.put("-lhb", "off"); //level: hidden blocks count
-            defaultOptionsHashMap.put("-le", "on"); //level: enemies enabled
+            /*
+                0)goomba
+                1)green coopa
+                3)red coopa
+                5)spiky
+                2)winged green coopa
+                4)winged red coopa
+                6)winged spiky
+            */
+            defaultOptionsHashMap.put("-le", "1111111"); //level: enemies bit mask
         }
     }
 
