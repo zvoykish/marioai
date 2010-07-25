@@ -53,7 +53,7 @@ public class SimulationOptions extends ParameterContainer
         ret.setCoinsCount(getCoinsCount());
         ret.setGapsCount(getGapsCount());
         ret.setHiddenBlocksCount(getHiddenBlocksCount());
-        ret.setEnemiesEnabled(isEnemiesEnabled());
+        ret.setEnemies(getEnemies());
 //        ret.setCurrentTrial(getCurrentTrial());
         return ret;
     }
@@ -275,16 +275,15 @@ public class SimulationOptions extends ParameterContainer
         setParameterValue("-lhb", s(var));
     }
 
-    public Boolean isEnemiesEnabled()
+    public String getEnemies()
     {
-        return b(getParameterValue("-le"));
+        return getParameterValue("-le");
     }
 
-    public void setEnemiesEnabled(boolean var)
+    public void setEnemies(String var)
     {
-        setParameterValue("-le", s(var));
+        setParameterValue("-le", var);
     }
-
 
     // Trial tracking
     public void resetCurrentTrial()

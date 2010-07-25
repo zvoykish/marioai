@@ -182,7 +182,7 @@ public class CmdLineOptions extends EvaluationOptions
                         this.getCoinsCount() ? Integer.MAX_VALUE : 0,          /*25*/
                         this.getGapsCount() ? Integer.MAX_VALUE : 0,           /*26*/
                         this.getHiddenBlocksCount() ? Integer.MAX_VALUE : 0,   /*27*/
-                        this.isEnemiesEnabled() ? 1 : 0                        /*28*/
+                        Integer.valueOf(this.getEnemies())                     /*28*/
                 };  /*== -1 ? Integer.MAX_VALUE : this.getGapsCount()*/
     }
 
