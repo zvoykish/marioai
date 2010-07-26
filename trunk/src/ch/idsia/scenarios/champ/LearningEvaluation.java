@@ -26,7 +26,6 @@ public final class LearningEvaluation
 
     final static int populationSize = 100;
 
-
     private static float evaluateSubmission(CmdLineOptions cmdLineOptions, LearningAgent learningAgent)
     {
         boolean verbose = false;
