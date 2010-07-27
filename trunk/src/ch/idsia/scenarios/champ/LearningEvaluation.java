@@ -84,10 +84,10 @@ public final class LearningEvaluation
 //        Level 1
         // set up parameters
         final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
-        LearningAgent learningAgent = new BasicLearningAgent(new SmallMLPAgent()); // You Competition Entry goes here
+        LearningAgent learningAgent = new BasicLearningAgent(new SmallMLPAgent()); // Your Competition Entry goes here
 
         cmdLineOptions.setUpOptionsString("-lco on");
-        float finalScore = LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);;
+        float finalScore = LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
 
 //        ProgressTask task = new ProgressTask(options);
 //        ES es = new ES (task, initial, populationSize);

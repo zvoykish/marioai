@@ -15,6 +15,8 @@ public interface Agent
 
     void integrateObservation(Environment environment);
 
+    void giveIntermediateReward(float intermediateReward);
+
     public enum AGENT_TYPE {AI, HUMAN, TCP_SERVER }
 
     // clears all dynamic data, such as hidden layers in recurrent networks
