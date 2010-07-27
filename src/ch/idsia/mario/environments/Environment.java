@@ -125,4 +125,6 @@ public interface Environment
     void reset(CmdLineOptions cmdLineOptions);
 
     void setAgent(Agent agent);
+
+    public float getIntermediateReward();
 }

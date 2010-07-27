@@ -47,6 +47,7 @@ public class BasicTask implements Task
 //            start timer
 //            long tm = System.currentTimeMillis();
             agent.integrateObservation(environment);
+            agent.giveIntermediateReward(environment.getIntermediateReward());
 //            try
 //            {
 //               if (tormoz)
