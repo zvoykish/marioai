@@ -16,6 +16,7 @@ public class BasicTask implements Task
     private Agent agent;
     protected CmdLineOptions options;
     private long COMPUTATION_TIME_BOUND = 42; // stands for  FPS 24, prescribed FPS.
+    private int callsCounter = 0;
 
     public BasicTask(CmdLineOptions cmdLineOptions)
     {
@@ -41,6 +42,8 @@ public class BasicTask implements Task
     {
 //        System.out.println("agent = " + agent);
 //        boolean tormoz = r.nextInt() < 10;
+        ++callsCounter;
+//        System.out.println("callsCounter = " + callsCounter);
         while (!environment.isLevelFinished())
         {
             environment.tick();
@@ -48,16 +51,6 @@ public class BasicTask implements Task
 //            long tm = System.currentTimeMillis();
             agent.integrateObservation(environment);
             agent.giveIntermediateReward(environment.getIntermediateReward());
-//            try
-//            {
-//               if (tormoz)
-//                    Thread.sleep(41);
-//            } catch (InterruptedException e)
-//            {
-//                e.printStackTrace();
-//            }
-//            finish timer and check
-//            System.out.println("agent = " + agent);
             boolean[] action = agent.getAction();
 
 //            System.out.println("System.currentTimeMillis() - tm > COMPUTATION_TIME_BOUND = " + (System.currentTimeMillis() - tm ));

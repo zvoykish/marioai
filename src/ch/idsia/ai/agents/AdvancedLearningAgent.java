@@ -11,11 +11,6 @@ import ch.idsia.maibe.tasks.ProgressTask;
  * Time: 9:40:09 PM
  */
 
-/*
-Цикл статей на хабре о том, что это за проект, как им пользоватсья и тд и тп. В частности,
-очень интеренсы будут статьи о написании собственных агентов(в том числе и LearningAgent).
-Статьи в оригинале на сайте/блоге. В переводе - на хабре со ссылкой на оригинал.
-*/
 
 public class AdvancedLearningAgent extends MediumSRNAgent implements LearningAgent
 {

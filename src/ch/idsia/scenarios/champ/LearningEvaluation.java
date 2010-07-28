@@ -3,15 +3,11 @@ package ch.idsia.scenarios.champ;
 import ch.idsia.ai.agents.AdvancedLearningAgent;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.LearningAgent;
-import ch.idsia.ai.agents.learning.*;
+import ch.idsia.ai.agents.learning.MediumSRNAgent;
 import ch.idsia.maibe.tasks.BasicTask;
 import ch.idsia.maibe.tasks.ProgressTask;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,7 +18,7 @@ import java.io.InputStreamReader;
 
 public final class LearningEvaluation
 {
-    final static int numberOfTrials = 10000;
+    final static int numberOfTrials = 1;
     final static boolean scoring = false;
     private static int killsSum = 0;
     private static float marioStatusSum = 0;
@@ -35,7 +31,7 @@ public final class LearningEvaluation
     private static float evaluateSubmission(CmdLineOptions cmdLineOptions, LearningAgent learningAgent)
     {
         boolean verbose = false;
-        float fitness = 0; // с какой целью здесь присутствует?
+        float fitness = 0; 
         int disqualifications = 0;
 
         cmdLineOptions.setVisualization(false);
@@ -53,10 +49,10 @@ public final class LearningEvaluation
             System.out.println("-------------------------------");
             System.out.println(i+" trial");
             //learningTask.reset(cmdLineOptions);
-            task.reset(cmdLineOptions); //TODO: does nothing
+            task.reset(cmdLineOptions);
             // inform your agent that new episode is coming, pick up next representative in population.
             learningAgent.learn();
-            task.runOneEpisode(); //TODO: is it needed here?
+            task.runOneEpisode();
             /*if (!task.runOneEpisode())  // make evaluation on an episode once
             {
                 System.out.println("MarioAI: out of computational time per action!");
@@ -78,7 +74,7 @@ public final class LearningEvaluation
         learningAgent.learn();
         // perform the gameplay task on the same level
         cmdLineOptions.setVisualization(true);
-        BasicTask basicTask = new BasicTask(cmdLineOptions); //TODO: this and next lines are doubtful
+        BasicTask basicTask = new BasicTask(cmdLineOptions);
         basicTask.reset(cmdLineOptions);
         Agent bestAgent = learningAgent.getBestAgent();
         basicTask.setAgent(bestAgent);
