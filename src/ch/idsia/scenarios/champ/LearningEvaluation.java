@@ -1,6 +1,6 @@
 package ch.idsia.scenarios.champ;
 
-import ch.idsia.ai.agents.AdvancedLearningAgent;
+import ch.idsia.ai.agents.SRNESLearningAgent;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.LearningAgent;
 import ch.idsia.ai.agents.learning.MediumSRNAgent;
@@ -18,7 +18,7 @@ import ch.idsia.tools.EvaluationInfo;
 
 public final class LearningEvaluation
 {
-    final static int numberOfTrials = 1;
+    final static int numberOfTrials = 1000;
     final static boolean scoring = false;
     private static int killsSum = 0;
     private static float marioStatusSum = 0;
@@ -31,7 +31,7 @@ public final class LearningEvaluation
     private static float evaluateSubmission(CmdLineOptions cmdLineOptions, LearningAgent learningAgent)
     {
         boolean verbose = false;
-        float fitness = 0; 
+        float fitness = 0;
         int disqualifications = 0;
 
         cmdLineOptions.setVisualization(false);
@@ -51,7 +51,7 @@ public final class LearningEvaluation
             //learningTask.reset(cmdLineOptions);
             task.reset(cmdLineOptions);
             // inform your agent that new episode is coming, pick up next representative in population.
-            learningAgent.learn();
+//            learningAgent.learn();
             task.runOneEpisode();
             /*if (!task.runOneEpisode())  // make evaluation on an episode once
             {
@@ -98,7 +98,7 @@ public final class LearningEvaluation
 //        Level 1
         // set up parameters
         final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
-        LearningAgent learningAgent = new AdvancedLearningAgent(new MediumSRNAgent()); // You Competition Entry goes here
+        LearningAgent learningAgent = new SRNESLearningAgent(new MediumSRNAgent()); // Your Competition Entry goes here
 
         cmdLineOptions.setUpOptionsString("-lco on");
         float finalScore = LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
