@@ -2,6 +2,7 @@ package ch.idsia.ai.agents;
 
 import ch.idsia.ai.agents.learning.SimpleMLPAgent;
 import ch.idsia.ai.agents.learning.SmallMLPAgent;
+import ch.idsia.maibe.tasks.ProgressTask;
 
 /**
  * Created by IntelliJ IDEA.
@@ -36,6 +37,25 @@ public class BasicLearningAgent extends SimpleMLPAgent implements LearningAgent
     }
 
     public void newEpisode()
+    {
+        
+    }
+
+    public Agent getBestAgent()
+    {
+        return null;
+    }
+
+    public void setNumberOfTrials(int num)
+    {
+        
+    }
+
+    public void setTask(ProgressTask task)
+    {
+
+    }
+    public void init()
     {
         
     }

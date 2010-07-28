@@ -1,5 +1,7 @@
 package ch.idsia.ai.agents;
 
+import ch.idsia.maibe.tasks.ProgressTask;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Sergey Karakovskiy, sergey@idsia.ch
@@ -13,4 +15,9 @@ public interface LearningAgent extends Agent
     public void giveReward(float reward);
 
     public void newEpisode();
+
+    public void setTask(ProgressTask task);
+    public void setNumberOfTrials(int num);
+    public Agent getBestAgent();
+    public void init();
 }

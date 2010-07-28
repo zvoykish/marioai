@@ -39,6 +39,10 @@ public class AmiCoAgent implements Agent
         this.env = environment;
     }
 
+    public void giveIntermediateReward(float intermediateReward) {
+        
+    }
+
     public void reset()
     {
         if (javaCallsPython == null)

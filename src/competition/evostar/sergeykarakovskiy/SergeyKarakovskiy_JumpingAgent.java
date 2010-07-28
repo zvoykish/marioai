@@ -70,6 +70,10 @@ public class SergeyKarakovskiy_JumpingAgent implements Agent
         getKillsByShell = marioState[9];
     }
 
+    public void giveIntermediateReward(float intermediateReward) {
+        
+    }
+
     public void reset()
     {
         for (int i = 0; i < action.length; ++i)

@@ -39,6 +39,10 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
 
     public void integrateObservation(Environment environment)    {    }
 
+    public void giveIntermediateReward(float intermediateReward) {
+        
+    }
+
     public void reset()
     {
         // Just check you keyboard.

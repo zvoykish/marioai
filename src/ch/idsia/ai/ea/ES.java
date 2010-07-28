@@ -20,7 +20,7 @@ public class ES implements EA {
     private final int evaluationRepetitions = 1;
 
     public ES(Task task, Evolvable initial, int populationSize)
-    {
+    {                                                                                                    
         this.population = new Evolvable[populationSize];
         for (int i = 0; i < population.length; i++) {
             population[i] = initial.getNewInstance();

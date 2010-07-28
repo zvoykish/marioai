@@ -1,11 +1,17 @@
 package ch.idsia.scenarios.champ;
 
-import ch.idsia.ai.agents.BasicLearningAgent;
+import ch.idsia.ai.agents.AdvancedLearningAgent;
+import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.LearningAgent;
-import ch.idsia.ai.agents.learning.SmallMLPAgent;
+import ch.idsia.ai.agents.learning.*;
 import ch.idsia.maibe.tasks.BasicTask;
+import ch.idsia.maibe.tasks.ProgressTask;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Created by IntelliJ IDEA.
@@ -29,41 +35,53 @@ public final class LearningEvaluation
     private static float evaluateSubmission(CmdLineOptions cmdLineOptions, LearningAgent learningAgent)
     {
         boolean verbose = false;
-        float fitness = 0;
+        float fitness = 0; // с какой целью здесь присутствует?
         int disqualifications = 0;
 
         cmdLineOptions.setVisualization(false);
-        final LearningTask learningTask = new LearningTask(cmdLineOptions);
-        learningTask.setAgent(learningAgent);
+        //final LearningTask learningTask = new LearningTask(cmdLineOptions);
+        //learningTask.setAgent(learningAgent);
+        ProgressTask task = new ProgressTask(cmdLineOptions);
+
+        learningAgent.newEpisode();
+        learningAgent.setTask(task);
+        learningAgent.setNumberOfTrials(numberOfTrials);
+        learningAgent.init();
         
         for (int i = 0; i < numberOfTrials; ++i)
         {
-            learningTask.reset(cmdLineOptions);
+            System.out.println("-------------------------------");
+            System.out.println(i+" trial");
+            //learningTask.reset(cmdLineOptions);
+            task.reset(cmdLineOptions); //TODO: does nothing
             // inform your agent that new episode is coming, pick up next representative in population.
-            learningAgent.newEpisode();
-            if (!learningTask.runOneEpisode())  // make evaluation on an episode once
+            learningAgent.learn();
+            task.runOneEpisode(); //TODO: is it needed here?
+            /*if (!task.runOneEpisode())  // make evaluation on an episode once
             {
                 System.out.println("MarioAI: out of computational time per action!");
                 disqualifications++;
                 continue;
-            }
-            EvaluationInfo evaluationInfo = learningTask.getEnvironment().getEvaluationInfo();
+            }*/
+
+            EvaluationInfo evaluationInfo = task.getEnvironment().getEvaluationInfo();
             float f = evaluationInfo.computeMultiObjectiveFitness();
             if (verbose)
             {
                 System.out.println("Intermediate SCORE = " + f + "; Details: " + evaluationInfo.toStringSingleLine());
             }
             // learn the reward
-            learningAgent.giveReward(f);
+            //learningAgent.giveReward(f);
         }
 
         // do some post processing if you need to. In general: select the Agent with highest score.
         learningAgent.learn();
         // perform the gameplay task on the same level
         cmdLineOptions.setVisualization(true);
-        BasicTask basicTask = new BasicTask(cmdLineOptions);
+        BasicTask basicTask = new BasicTask(cmdLineOptions); //TODO: this and next lines are doubtful
         basicTask.reset(cmdLineOptions);
-        basicTask.setAgent(learningAgent);
+        Agent bestAgent = learningAgent.getBestAgent();
+        basicTask.setAgent(bestAgent);
         if (!basicTask.runOneEpisode())  // make evaluation on the same episode once
         {
             System.out.println("MarioAI: out of computational time per action!");
@@ -84,7 +102,7 @@ public final class LearningEvaluation
 //        Level 1
         // set up parameters
         final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
-        LearningAgent learningAgent = new BasicLearningAgent(new SmallMLPAgent()); // Your Competition Entry goes here
+        LearningAgent learningAgent = new AdvancedLearningAgent(new MediumSRNAgent()); // You Competition Entry goes here
 
         cmdLineOptions.setUpOptionsString("-lco on");
         float finalScore = LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);

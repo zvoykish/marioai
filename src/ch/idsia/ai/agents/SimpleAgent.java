@@ -30,6 +30,10 @@ public class SimpleAgent implements Agent
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    public void giveIntermediateReward(float intermediateReward) {
+        
+    }
+
     public void reset()
     {
         Action = new boolean[Environment.numberOfButtons];
