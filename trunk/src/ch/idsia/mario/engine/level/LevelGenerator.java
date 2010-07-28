@@ -198,7 +198,7 @@ public class LevelGenerator
                     return 0;
                 }
             case ODDS_GAPS:
-                if (floor > 2 && gapsCount < cmdArgs[26])
+                if ((floor > 2 || floor == ANY_HEIGHT) && gapsCount < cmdArgs[26])
                 {
                     gapsCount++;
                     return buildGap(x, 12, maxHeight, floor, floorHeight);
@@ -357,7 +357,7 @@ public class LevelGenerator
         int length = gs * 2 + gl + (globalRandom.nextInt() % this.levelDifficulty+1);
 
         boolean hasStairs = globalRandom.nextInt(3) == 0;
-        if(maxHeight <= 5) //TODO: gs must be smaller than maxHeigth
+        if(maxHeight <= 5 && maxHeight != ANY_HEIGHT) //TODO: gs must be smaller than maxHeigth
         {
             hasStairs = false;
         }
