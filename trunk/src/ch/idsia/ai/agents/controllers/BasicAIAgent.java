@@ -114,6 +114,10 @@ public class BasicAIAgent implements Agent
         getKillsByShell = marioState[9];
     }
 
+    public void giveIntermediateReward(float intermediateReward) {
+        
+    }
+
     public void reset()
     {
         action = new boolean[Environment.numberOfButtons];// Empty action
@@ -133,4 +137,6 @@ public class BasicAIAgent implements Agent
     public String getName() {        return name;    }
 
     public void setName(String Name) { this.name = Name;    }
+
+
 }

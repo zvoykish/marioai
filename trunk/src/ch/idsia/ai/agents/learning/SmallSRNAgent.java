@@ -83,4 +83,6 @@ public class SmallSRNAgent extends BasicAIAgent implements Agent, Evolvable {
         int realY = y + 11;
         return (scene[realX][realY] != 0) ? 1 : 0;
     }
+
+    
 }

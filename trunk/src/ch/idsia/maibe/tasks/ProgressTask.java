@@ -16,7 +16,7 @@ import java.io.IOException;
  * Package: ch.idsia.maibe.tasks
  */
 
-public final class ProgressTask extends BasicTask implements Task
+public final class ProgressTask extends BasicTask implements Task, Cloneable
 {
     private int uniqueSeed;
     private int fitnessEvaluations = 0;

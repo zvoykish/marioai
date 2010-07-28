@@ -88,6 +88,10 @@ public class  SimpleMLPAgent implements Agent, Evolvable
         getKillsByShell = marioState[9];
     }
 
+    public void giveIntermediateReward(float intermediateReward) {
+        
+    }
+
     public void reset()
     {   mlp.reset ();    }
 

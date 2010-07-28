@@ -252,4 +252,8 @@ public final class MarioEnvironment implements Environment
     {
         this.agent = agent;
     }
+
+    public float getIntermediateReward() {
+        return 0;
+    }
 }

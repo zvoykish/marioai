@@ -3,9 +3,11 @@ package ch.idsia.scenarios.test;
 import ch.idsia.ai.Evolvable;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.learning.MediumSRNAgent;
+import ch.idsia.ai.agents.learning.SmallMLPAgent;
 import ch.idsia.ai.ea.ES;
 import ch.idsia.maibe.tasks.ProgressTask;
 import ch.idsia.mario.engine.GlobalOptions;
+import ch.idsia.scenarios.champ.LearningEvaluation;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.utils.Stats;
 import wox.serial.Easy;
@@ -65,7 +67,7 @@ public class PaperEvolve
         DecimalFormat df = new DecimalFormat();
         float bestScore = 250;
 
-        options.setLevelDifficulty(16);
+        //options.setLevelDifficulty(16);
         
         for (int gen = 0; gen < generations; gen++)
         {

@@ -65,6 +65,10 @@ public class SRNAgent implements Agent, Evolvable {
 
     }
 
+    public void giveIntermediateReward(float intermediateReward) {
+        
+    }
+
     public void reset() {
         srn.reset ();
     }
