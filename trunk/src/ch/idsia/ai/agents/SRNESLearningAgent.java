@@ -12,7 +12,7 @@ import ch.idsia.maibe.tasks.ProgressTask;
  */
 
 
-public class AdvancedLearningAgent extends MediumSRNAgent implements LearningAgent
+public class SRNESLearningAgent extends MediumSRNAgent implements LearningAgent
 {
     private MediumSRNAgent agent;
     Agent bestAgent;
@@ -30,12 +30,12 @@ public class AdvancedLearningAgent extends MediumSRNAgent implements LearningAge
         es = new ES(task, agent, populationSize);
     }
 
-    public AdvancedLearningAgent(MediumSRNAgent agent)
+    public SRNESLearningAgent(MediumSRNAgent agent)
     {
         this.agent = agent;
     }
 
-    public AdvancedLearningAgent()
+    public SRNESLearningAgent()
     {
         this.agent = new MediumSRNAgent();
     }
