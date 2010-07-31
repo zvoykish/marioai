@@ -65,7 +65,8 @@ public class ParameterContainer
                     "-lco", // level: coins count
                     "-lg",  // level: gaps count
                     "-lhb", // level: hidden blocks count
-                    "-le"   // level: enemies; set up with bit mask
+                    "-le",  // level: enemies; set up with bit mask
+                    "-lf"   // level: flat level
             };
         if (allowedOptions == null)
         {
@@ -212,6 +213,7 @@ public class ParameterContainer
                 6)winged spiky
             */
             defaultOptionsHashMap.put("-le", "1111111"); //level: enemies bit mask
+            defaultOptionsHashMap.put("-lf", "off"); //level: flat level
         }
     }
 

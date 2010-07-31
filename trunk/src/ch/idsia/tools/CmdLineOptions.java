@@ -150,6 +150,7 @@ public class CmdLineOptions extends EvaluationOptions
 //        "-le"    level: enemies enabled
 //        "-lb"    level: blocks count
 //        "-lco"   level: coins count
+//        "-lf"    level: flat level
 
         return new int[]
                 {
@@ -182,7 +183,8 @@ public class CmdLineOptions extends EvaluationOptions
                         this.getCoinsCount() ? Integer.MAX_VALUE : 0,          /*25*/
                         this.getGapsCount() ? Integer.MAX_VALUE : 0,           /*26*/
                         this.getHiddenBlocksCount() ? Integer.MAX_VALUE : 0,   /*27*/
-                        Integer.valueOf(this.getEnemies())                     /*28*/
+                        Integer.valueOf(this.getEnemies()),                    /*28*/
+                        this.isFlatLevel() ? 1 : 0                             /*29*/
                 };  /*== -1 ? Integer.MAX_VALUE : this.getGapsCount()*/
     }
 

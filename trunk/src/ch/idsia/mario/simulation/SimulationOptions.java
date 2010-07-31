@@ -54,6 +54,7 @@ public class SimulationOptions extends ParameterContainer
         ret.setGapsCount(getGapsCount());
         ret.setHiddenBlocksCount(getHiddenBlocksCount());
         ret.setEnemies(getEnemies());
+        ret.setFlatLevel(isFlatLevel());
 //        ret.setCurrentTrial(getCurrentTrial());
         return ret;
     }
@@ -265,6 +266,7 @@ public class SimulationOptions extends ParameterContainer
         setParameterValue("-lg", s(var));
     }
 
+    // Level: hidden blocks count
     public Boolean getHiddenBlocksCount()
     {
         return b(getParameterValue("-lhb"));
@@ -275,6 +277,7 @@ public class SimulationOptions extends ParameterContainer
         setParameterValue("-lhb", s(var));
     }
 
+    // Level: enemies mask
     public String getEnemies()
     {
         return getParameterValue("-le");
@@ -283,6 +286,17 @@ public class SimulationOptions extends ParameterContainer
     public void setEnemies(String var)
     {
         setParameterValue("-le", var);
+    }
+
+    // Level: flat level
+    public boolean isFlatLevel()
+    {
+        return b(getParameterValue("-lf"));
+    }
+
+    public void setFlatLevel(boolean var)
+    {
+        setParameterValue("-lf", s(var));
     }
 
     // Trial tracking
