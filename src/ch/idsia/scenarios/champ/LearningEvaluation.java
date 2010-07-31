@@ -69,7 +69,6 @@ public final class LearningEvaluation
             // learn the reward
             //learningAgent.giveReward(f);
         }
-
         // do some post processing if you need to. In general: select the Agent with highest score.
         learningAgent.learn();
         // perform the gameplay task on the same level

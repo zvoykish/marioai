@@ -109,13 +109,23 @@ public class LevelGenerator
 
         int length = 0; //total level length
         //mario starts on straight
-        length += buildStraight(0, level.width, true, DEFAULT_FLOOR, INFINITY_FLOOR_HEIGHT);
-        while (length < level.width - 64)
+
+        int floor = DEFAULT_FLOOR;
+        if (cmdArgs[29] == 1)
         {
-            length += buildZone(length, level.width - length, ANY_HEIGHT, DEFAULT_FLOOR, INFINITY_FLOOR_HEIGHT);
+            floor = height - 1 - globalRandom.nextInt(4);
         }
 
-        int floor = height -1 - globalRandom.nextInt(4); //floor of the exit line
+        length += buildStraight(0, level.width, true, floor, INFINITY_FLOOR_HEIGHT);
+        while (length < level.width - 64)
+        {
+            length += buildZone(length, level.width - length, ANY_HEIGHT, floor, INFINITY_FLOOR_HEIGHT);
+        }
+
+        if (cmdArgs[29] == 0)
+        {
+            floor = height -1 - globalRandom.nextInt(4); //floor of the exit line
+        }
 
         //coordinates of finish
         level.xExit = length + 8;
