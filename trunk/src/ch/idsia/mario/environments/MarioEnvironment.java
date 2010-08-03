@@ -20,8 +20,14 @@ public final class MarioEnvironment implements Environment
     private MarioVisualComponent marioVisualComponent;
     private Agent agent;
 
-    // TODO : Singleton
-    public MarioEnvironment()
+    private static MarioEnvironment ourInstance = new MarioEnvironment();
+
+    public static MarioEnvironment getInstance()
+    {
+        return ourInstance;
+    }
+
+    private MarioEnvironment()
     {
 //        System.out.println("System.getProperty(\"java.awt.headless\") = " + System.getProperty("java.awt.headless"));
 //        System.out.println("System.getProperty(\"verbose\") = " + System.getProperty("-verbose"));

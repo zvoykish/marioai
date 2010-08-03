@@ -24,7 +24,7 @@ public class AmiCoSimulator
         {
             System.out.print(options[i] + ",");
         }
-        Environment environment = new MarioEnvironment();
+        Environment environment = MarioEnvironment.getInstance();
         Agent agent = new ForwardAgent();
 //        options = new int[]{0, 1, 0, 1500, 0, 2, 1, 100, 1, 0, 1, 0, 11024, 0, 0, 0, 0, 0, 1};
         options[17] = 1; //zLevelScene
