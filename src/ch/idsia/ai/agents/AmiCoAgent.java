@@ -1,6 +1,6 @@
 package ch.idsia.ai.agents;
 
-import ch.idsia.amico.JavaCallsPython;
+import ch.idsia.amico.JavaPy;
 import ch.idsia.mario.environments.Environment;
 
 /**
@@ -12,7 +12,7 @@ import ch.idsia.mario.environments.Environment;
  */
 public class AmiCoAgent implements Agent
 {
-    static JavaCallsPython javaCallsPython = null;
+    static JavaPy javaCallsPython = null;
     private final String moduleName;
     private final String agentName;
     private Environment env;
@@ -48,7 +48,7 @@ public class AmiCoAgent implements Agent
         if (javaCallsPython == null)
         {
             System.out.println("Java: Initialize AmiCo");
-            javaCallsPython = new JavaCallsPython(moduleName, agentName);
+            javaCallsPython = new JavaPy(moduleName, agentName);
         }
         else
         {

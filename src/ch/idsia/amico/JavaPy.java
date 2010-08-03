@@ -7,9 +7,9 @@ package ch.idsia.amico;
  * Time: 6:43:16 PM
  * Package: PACKAGE_NAME
  */
-public class JavaCallsPython
+public class JavaPy
 {
-    public JavaCallsPython(String moduleName, String agentName)
+    public JavaPy(String moduleName, String agentName)
     {
 //        System.out.println("Constructor");
         this.setModuleName(moduleName);

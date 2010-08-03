@@ -12,7 +12,7 @@ public abstract class
 {
     public static final int primaryVerionUID = 0;
     public static final int minorVerionUID = 1;
-    public static final int minorSubVerionID = 6;
+    public static final int minorSubVerionID = 7;
 
     public static boolean areLabels = false;
     public static boolean isMarioAlwaysInCenter = false;
