@@ -38,4 +38,5 @@ public final class Main
         System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
         System.exit(0);
     }
+    
 }

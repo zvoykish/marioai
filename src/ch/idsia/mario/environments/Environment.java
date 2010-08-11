@@ -16,8 +16,8 @@ import ch.idsia.tools.EvaluationInfo;
 public interface Environment
 {
     public static final int numberOfButtons = 5;
-    public static final int HalfObsWidth = 10;
-    public static final int HalfObsHeight = 10;
+    public static final int HalfObsWidth = 11;
+    public static final int HalfObsHeight = 11;
 
     public static final int MARIO_KEY_DOWN = Mario.KEY_DOWN;
     public static final int MARIO_KEY_JUMP = Mario.KEY_JUMP;
