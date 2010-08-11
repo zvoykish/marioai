@@ -45,9 +45,9 @@ public class BasicAIAgent implements Agent
     public BasicAIAgent(String s)
     {
         setName(s);
-        levelScene = new byte[Environment.HalfObsHeight * 2][Environment.HalfObsWidth * 2];
-        enemies = new byte[Environment.HalfObsHeight * 2][Environment.HalfObsWidth * 2];
-        mergedObservation = new byte[Environment.HalfObsHeight * 2][Environment.HalfObsWidth * 2];
+        levelScene = new byte[Environment.ObsHeight * 2][Environment.ObsWidth * 2];
+        enemies = new byte[Environment.ObsHeight * 2][Environment.ObsWidth * 2];
+        mergedObservation = new byte[Environment.ObsHeight * 2][Environment.ObsWidth * 2];
     }
 
     public void integrateObservation(int[] serializedLevelSceneObservationZ, int[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)

@@ -16,8 +16,8 @@ import ch.idsia.tools.EvaluationInfo;
 public interface Environment
 {
     public static final int numberOfButtons = 5;
-    public static final int HalfObsWidth = 11;
-    public static final int HalfObsHeight = 11;
+    public static final int ObsWidth = 21;
+    public static final int ObsHeight = 21;
 
     public static final int MARIO_KEY_DOWN = Mario.KEY_DOWN;
     public static final int MARIO_KEY_JUMP = Mario.KEY_JUMP;
@@ -29,23 +29,11 @@ public interface Environment
     public static final int MARIO_STATUS_RUNNING = Mario.STATUS_RUNNING;
 
     // tunable dimensionality:
-    // default: 19x19 cells [0..18][0..18]
+    // default: 21x21 cells [0..20][0..20]
     // always centered on the agent 
 
     // Chaning ZLevel during the game on-the-fly;
     // if your agent recieves too ambiguous observation, it might request for more precise one for the next step
-
-//    SUBJECT TO Be DELETED in next version
-//    // ATAVIZMS for back compatibility! Strongly recommended to use new interface.
-//    @Deprecated
-//    public byte[][] getCompleteObservation();   // default: ZLevelScene = 1, ZLevelEnemies = 0
-//    @Deprecated
-//    public byte[][] getEnemiesObservation();    // default: ZLevelEnemies = 0
-//    @Deprecated
-//    public byte[][] getLevelSceneObservation(); // default: ZLevelScene = 1
-
-    // NEW INTERFACE
-
     public void resetDefault();
 
     public void reset(int[] setUpOptions);
