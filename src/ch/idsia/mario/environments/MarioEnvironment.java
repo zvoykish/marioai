@@ -24,6 +24,7 @@ public final class MarioEnvironment implements Environment
 
     public static MarioEnvironment getInstance()
     {
+        System.out.println("ourInstance = " + ourInstance);
         return ourInstance;
     }
 
@@ -33,7 +34,7 @@ public final class MarioEnvironment implements Environment
 //        System.out.println("System.getProperty(\"verbose\") = " + System.getProperty("-verbose"));
 //        System.out.println("Java: JA ZDES'!!");
 //        System.out.flush();
-        System.out.println("MarioAI Benchmark" + GlobalOptions.getVersionUID());
+        System.out.println("J: MarioAI Benchmark" + GlobalOptions.getVersionUID());
         levelScene = new LevelScene(0, 0, 0, 0, 0, 0, 0);
     }
 
@@ -44,13 +45,13 @@ public final class MarioEnvironment implements Environment
 
     public void reset(int[] setUpOptions)
     {
-//        System.out.println("\nsetUpOptions = " + setUpOptions);
-//        for (int i = 0; i < setUpOptions.length; ++i)
-//        {
-//            System.out.print(" op[" + i +"] = " + setUpOptions[i]);
-//        }
-//        System.out.println("");
-//        System.out.flush();
+        System.out.println("\nsetUpOptions = " + setUpOptions);
+        for (int i = 0; i < setUpOptions.length; ++i)
+        {
+            System.out.print(" op[" + i +"] = " + setUpOptions[i]);
+        }
+        System.out.println("");
+        System.out.flush();
         if (/*levelScene.visualization*/ setUpOptions[14] == 1)
         {
             if (marioVisualComponent == null)

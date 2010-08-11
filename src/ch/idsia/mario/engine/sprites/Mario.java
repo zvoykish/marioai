@@ -103,6 +103,7 @@ public class Mario extends Sprite
 
     public Mario(LevelScene world)
     {
+        System.out.println("Mario1 = " + this);
         kind = KIND_MARIO;
 //        Mario.instance = this;
         this.world = world;
@@ -113,6 +114,7 @@ public class Mario extends Sprite
 
         facing = 1;
         setLarge(Mario.large, Mario.fire);
+        System.out.println("Mario = " + this);
     }
     
     private boolean lastLarge;

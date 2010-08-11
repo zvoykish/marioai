@@ -58,8 +58,8 @@ public class CmdLineOptions extends EvaluationOptions
         GlobalOptions.isGameVeiwer = isGameViewer();
         GlobalOptions.observationGridWidth = getObservationGridWidth();
         GlobalOptions.observationGridHeight = getObservationGridHeight();
-//        Environment.HalfObsWidth = GlobalOptions.observationGridWidth/2;
-//        Environment.HalfObsHeight = GlobalOptions.observationGridHeight/2;
+//        Environment.ObsWidth = GlobalOptions.observationGridWidth/2;
+//        Environment.ObsHeight = GlobalOptions.observationGridHeight/2;
         GlobalOptions.isShowGrid = isGridVisualized();
     }
 
