@@ -18,12 +18,10 @@ public class SimulationOptions extends ParameterContainer
     protected Agent agent;
 //    protected MarioComponent marioComponent = null;
 
-    public static int currentTrial = 1;
 
     protected SimulationOptions()
     {
         super();
-//        resetCurrentTrial();
     }
 
 
@@ -299,9 +297,4 @@ public class SimulationOptions extends ParameterContainer
         setParameterValue("-lf", s(var));
     }
 
-    // Trial tracking
-    public void resetCurrentTrial()
-    {
-        currentTrial = 1;
-    }
 }
