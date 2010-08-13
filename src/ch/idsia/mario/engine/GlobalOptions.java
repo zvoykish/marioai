@@ -84,11 +84,11 @@ public abstract class
 
     public static String getDateTime(Long d)
     {
-        DateFormat dateFormat = (d == null) ? new SimpleDateFormat("yyyy/MM/dd HH:mm:ss:ms") :
+        final DateFormat dateFormat = (d == null) ? new SimpleDateFormat("yyyy/MM/dd HH:mm:ss:ms") :
                 new SimpleDateFormat("HH:mm:ss:ms") ;
         if (d != null)
             dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-        Date date = (d == null) ? new Date() : new Date(d);
+        final Date date = (d == null) ? new Date() : new Date(d);
         return dateFormat.format(date);
     }
 
