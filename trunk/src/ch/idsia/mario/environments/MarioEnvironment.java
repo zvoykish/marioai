@@ -47,16 +47,13 @@ public final class MarioEnvironment implements Environment
         String[] tokens = args.trim().split("\\s+");
         CmdLineOptions opts = new CmdLineOptions(tokens);
         this.reset(opts);
+//        CmdLineOptions opts = new CmdLineOptions(setUpOptions);
+//        int[] intOpts = opts.toIntArray();
+//        this.reset(intOpts);
+        
     }
 
-    public void reset(String[] setUpOptions)
-    {
-        CmdLineOptions opts = new CmdLineOptions(setUpOptions);
-        int[] intOpts = opts.toIntArray();
-        this.reset(intOpts);
-    }
-
-    public void reset(int[] setUpOptions)
+    public void reset(CmdLineOptions setUpOptions)
     {
         /*System.out.println("\nsetUpOptions = " + setUpOptions);
         for (int i = 0; i < setUpOptions.length; ++i)
@@ -66,7 +63,7 @@ public final class MarioEnvironment implements Environment
         System.out.println("");
         System.out.flush();*/
 
-        if (/*levelScene.visualization*/ setUpOptions[14] == 1)
+        if (/*levelScene.visualization*/ setUpOptions.isVisualization())
         {
             if (marioVisualComponent == null)
                 marioVisualComponent = MarioVisualComponent.getInstance(GlobalOptions.VISUAL_COMPONENT_WIDTH,
@@ -76,7 +73,7 @@ public final class MarioEnvironment implements Environment
             marioVisualComponent.reset();
             marioVisualComponent.postInitGraphicsAndLevel();
             marioVisualComponent.setAgent(agent);
-            marioVisualComponent.setLocation(setUpOptions[15], setUpOptions[16]);
+            marioVisualComponent.setLocation(setUpOptions.getViewLocation().x, setUpOptions.getViewLocation().y);
         }
         else
             levelScene.reset(setUpOptions);
@@ -92,22 +89,6 @@ public final class MarioEnvironment implements Environment
         // Advance the frame
 //        ++frame;
     }
-
-
-//    public byte[][] getCompleteObservation()
-//    {
-//        return levelScene.getCompleteObservation();
-//    }
-
-//    public byte[][] getEnemiesObservation()
-//    {
-//        return levelScene.getEnemiesObservation();
-//    }
-
-//    public byte[][] getLevelSceneObservation()
-//    {
-//        return levelScene.getLevelSceneObservation();
-//    }
 
     public float[] getMarioFloatPos()
     {
@@ -142,6 +123,16 @@ public final class MarioEnvironment implements Environment
     public boolean isMarioAbleToShoot()
     {
         return levelScene.isMarioAbleToShoot();
+    }
+
+    public int getObservationWidth()
+    {
+        return LevelScene.ObsWidth;
+    }
+
+    public int getObservationHeight()
+    {
+        return LevelScene.ObsHeight;
     }
 
     public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
@@ -249,7 +240,6 @@ public final class MarioEnvironment implements Environment
 //     evaluationInfo.totalLengthOfLevelPhys = levelScene.level.getWidthPhys();
         evaluationInfo.timeSpent = levelScene.getTimeSpent();
         evaluationInfo.timeLeft = levelScene.getTimeLeft();
-//     evaluationInfo.totalTimeGiven = levelScene.getTimeLimit();
         evaluationInfo.numberOfCoinsGained = Mario.coins;
 //        evaluationInfo.totalNumberOfCoins   = -1 ; // TODO: total Number of coins.
         evaluationInfo.marioMode = levelScene.getMarioMode();
@@ -259,23 +249,19 @@ public final class MarioEnvironment implements Environment
         evaluationInfo.killsByFire = levelScene.getKillsByFire();
         evaluationInfo.killsByShell = levelScene.getKillsByShell();
         evaluationInfo.numberOfHiddenItemsGained = levelScene.getNumberOfHiddenCoinsGained();
-        evaluationInfo.hiddenblocksGained = Mario.hiddenBlocks;
-        
+        evaluationInfo.hiddenBlocksFound = Mario.hiddenBlocks;
 //        evaluationInfo.Memo = "Number of attempt: " + Mario.numberOfAttempts;
         return evaluationInfo;
     }
 
-    public void reset(CmdLineOptions cmdLineOptions)
-    {
-        this.reset(cmdLineOptions.toIntArray());
-    }
 
     public void setAgent(Agent agent)
     {
         this.agent = agent;
     }
 
-    public float getIntermediateReward() {
+    public float getIntermediateReward()
+    {
         return 0;
     }
 }

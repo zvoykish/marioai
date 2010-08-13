@@ -18,7 +18,7 @@ public class Mario extends Sprite
     private final int FractionalPowerUpTime = 0;
     public static int mushroomsDevoured;
     public static int flowersDevoured;
-    public static boolean isMarioInvulnerable;
+    private static boolean isMarioInvulnerable;
     public static final String[] MODES = new String[]{"small", "Large", "FIRE"};
 
     // for racoon when carrying the shell
@@ -818,5 +818,10 @@ public class Mario extends Sprite
     public boolean isCanShoot()
     {
         return canShoot;
-    }    
+    }
+
+    public void setMarioInvulnerable(boolean marioInvulnerable)
+    {
+        isMarioInvulnerable = marioInvulnerable;
+    }
 }

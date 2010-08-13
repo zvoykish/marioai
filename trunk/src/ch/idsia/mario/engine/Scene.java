@@ -13,7 +13,7 @@ public abstract class Scene
 //        keys[key] = isPressed;
 //    }
 
-    public abstract void init();
+//    public abstract void init();
 
     public abstract void tick();
 

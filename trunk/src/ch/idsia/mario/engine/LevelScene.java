@@ -4,7 +4,6 @@ import ch.idsia.mario.engine.level.Level;
 import ch.idsia.mario.engine.level.LevelGenerator;
 import ch.idsia.mario.engine.level.SpriteTemplate;
 import ch.idsia.mario.engine.sprites.*;
-import ch.idsia.mario.environments.Environment;
 import ch.idsia.tools.CmdLineOptions;
 
 import java.io.DataInputStream;
@@ -32,8 +31,11 @@ public class LevelScene extends Scene implements SpriteContext
 
     public boolean visualization = false;
 
-    final private int rows = Environment.ObsHeight *2+1;
-    final private int cols = Environment.ObsWidth *2+1;
+    public static int ObsWidth;
+    public static int ObsHeight;
+
+    final private int rows = ObsHeight ;
+    final private int cols = ObsWidth ;
     final private int[] serializedLevelScene = new int[rows * cols];
     final private int[] serializedEnemies = new int[rows * cols];
     final private int[] serializedMergedObservation = new int[rows * cols];
@@ -47,7 +49,7 @@ public class LevelScene extends Scene implements SpriteContext
     final private int[] marioState = new int[12];
     private int numberOfHiddenCoinsGained;
 
-//    public int getTimeLimit() {  return timeLimit; }
+    //    public int getTimeLimit() {  return timeLimit; }
     public void setTimeLimit(int timeLimit) {  this.timeLimit = timeLimit; }
 
     private int timeLimit = 200;
@@ -65,12 +67,10 @@ public class LevelScene extends Scene implements SpriteContext
     public static int killedCreaturesByStomp;
     public static int killedCreaturesByShell;
 
-    private int[] args; //passed to reset method. ATTENTION: not cloned.
+//    private int[] args; //passed to reset method. ATTENTION: not cloned.
 
     public LevelScene(long seed, int levelDifficulty, int type, int levelLength, int levelHeight, int timeLimit, int visualization)
     {
-        System.out.println("J: LEVEL SCENE 000 this = " + this);
-
         this.levelSeed = seed;
         this.levelDifficulty = levelDifficulty;
         this.levelType = type;
@@ -83,7 +83,6 @@ public class LevelScene extends Scene implements SpriteContext
         killedCreaturesByStomp = 0;
         killedCreaturesByShell = 0;
 
-        // moved from init;
         try
         {
 //            System.out.println("Java::LevelScene: loading tiles.dat...");
@@ -95,22 +94,17 @@ public class LevelScene extends Scene implements SpriteContext
             e.printStackTrace();
             System.exit(0);
         }
-        System.out.println("J: LEVEL SCENE 111 this = " + this);
-
     }
 
-    public void init()
+    public void init(CmdLineOptions args)
     {
-        System.out.println("\nJava:init() entered.");
         /*        if (replayer!=null)
          {                level = LevelGenerator.createLevel(2048, 15, replayer.nextLong());         }
          else
          {*/
 //        level = LevelGenerator.createLevel(320, 15, levelSeed);
 //        if (levelSeed != -152)
-        System.out.println("args = " + args);
             level = LevelGenerator.createLevel(args);
-        System.out.println("level = " + level);
 //        else
 //        try
 //        {
@@ -141,7 +135,6 @@ public class LevelScene extends Scene implements SpriteContext
 
 
         mario = new Mario(this);
-        System.out.println("mario = " + mario);
         sprites.add(mario);
 //        System.out.println("mario.sheet = " + mario.sheet);
         startTime = 1;
@@ -364,24 +357,22 @@ public class LevelScene extends Scene implements SpriteContext
     public byte[][] getLevelSceneObservationZ(int ZLevel)
     {
         //TODO: Move to constants 16
-        System.out.println("mario = " + mario);
         int MarioXInMap = (int)mario.x/16;
         int MarioYInMap = (int)mario.y/16;
 
-        System.out.println("MarioYInMap = " + MarioYInMap);
-        for (int y = MarioYInMap - Environment.ObsHeight/2, obsX = 0; y <= MarioYInMap + Environment.ObsHeight/2; y++, obsX++)
+        for (int y = MarioYInMap - ObsHeight/2, obsX = 0; y <= MarioYInMap + ObsHeight/2; y++, obsX++)
         {
-            for (int x = MarioXInMap - Environment.ObsWidth/2, obsY = 0; x <= MarioXInMap + Environment.ObsWidth/2; x++, obsY++)
+            for (int x = MarioXInMap - ObsWidth/2, obsY = 0; x <= MarioXInMap + ObsWidth/2; x++, obsY++)
             {
                 if (x >=0 /*  && x <= level.xExit */ && y >= 0 && y < level.height)
                 {
                     levelSceneZ[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevel);
-                    System.out.println("x = " + x);
+//                    System.out.println("x = " + x);
                 }
                 else
                 {
                     levelSceneZ[obsX][obsY] = 0;
-                    System.out.println("obsY = " + obsY);
+//                    System.out.println("obsY = " + obsY);
                 }
 
             }
@@ -404,14 +395,14 @@ public class LevelScene extends Scene implements SpriteContext
             if (sprite.kind == mario.kind)
                 continue;
             if (sprite.mapX >= 0 &&
-                sprite.mapX >= MarioXInMap - Environment.ObsWidth &&
-                sprite.mapX <= MarioXInMap + Environment.ObsWidth &&
+                sprite.mapX >= MarioXInMap - ObsWidth &&
+                sprite.mapX <= MarioXInMap + ObsWidth &&
                 sprite.mapY >= 0 &&
-                sprite.mapY >= MarioYInMap - Environment.ObsHeight &&
-                sprite.mapY <= MarioYInMap + Environment.ObsHeight)
+                sprite.mapY >= MarioYInMap - ObsHeight &&
+                sprite.mapY <= MarioYInMap + ObsHeight)
             {
-                int obsX = sprite.mapY - MarioYInMap + Environment.ObsHeight;
-                int obsY = sprite.mapX - MarioXInMap + Environment.ObsWidth;
+                int obsX = sprite.mapY - MarioYInMap + ObsHeight;
+                int obsY = sprite.mapX - MarioXInMap + ObsWidth;
                 enemiesZ[obsX][obsY] = ZLevelEnemyGeneralization(sprite.kind, ZLevel);
             }
         }
@@ -450,9 +441,9 @@ public class LevelScene extends Scene implements SpriteContext
         int MarioYInMap = (int)mario.y/16;
 
 
-        for (int y = MarioYInMap - Environment.ObsHeight, obsX = 0; y <= MarioYInMap + Environment.ObsHeight; y++, obsX++)
+        for (int y = MarioYInMap - ObsHeight, obsX = 0; y <= MarioYInMap + ObsHeight; y++, obsX++)
         {
-            for (int x = MarioXInMap - Environment.ObsWidth, obsY = 0; x <= MarioXInMap + Environment.ObsWidth; x++, obsY++)
+            for (int x = MarioXInMap - ObsWidth, obsY = 0; x <= MarioXInMap + ObsWidth; x++, obsY++)
             {
                 if (x >=0 /*&& x <= level.xExit*/ && y >= 0 && y < level.height)
                 {
@@ -474,14 +465,14 @@ public class LevelScene extends Scene implements SpriteContext
             if (sprite.kind == mario.kind)
                 continue;
             if (sprite.mapX >= 0 &&
-                sprite.mapX > MarioXInMap - Environment.ObsWidth &&
-                sprite.mapX < MarioXInMap + Environment.ObsWidth &&
+                sprite.mapX > MarioXInMap - ObsWidth &&
+                sprite.mapX < MarioXInMap + ObsWidth &&
                 sprite.mapY >= 0 &&
-                sprite.mapY > MarioYInMap - Environment.ObsHeight &&
-                sprite.mapY < MarioYInMap + Environment.ObsHeight)
+                sprite.mapY > MarioYInMap - ObsHeight &&
+                sprite.mapY < MarioYInMap + ObsHeight)
             {
-                int obsX = sprite.mapY - MarioYInMap + Environment.ObsHeight;
-                int obsY = sprite.mapX - MarioXInMap + Environment.ObsWidth;
+                int obsX = sprite.mapY - MarioYInMap + ObsHeight;
+                int obsY = sprite.mapX - MarioXInMap + ObsWidth;
                 // quick fix TODO: handle this in more general way.
                 if (mergedZ[obsX][obsY] != 14)
                 {
@@ -505,8 +496,8 @@ public class LevelScene extends Scene implements SpriteContext
             ret.add("Total world width = " + level.width);
             ret.add("Total world height = " + level.height);
             ret.add("Physical Mario Position (x,y): (" + mario.x + "," + mario.y + ")");
-            ret.add("Mario Observation Width " + Environment.ObsWidth *2);
-            ret.add("Mario Observation Height " + Environment.ObsHeight *2);
+            ret.add("Mario Observation Width " + ObsWidth *2);
+            ret.add("Mario Observation Height " + ObsHeight *2);
             ret.add("X Exit Position: " + level.xExit);
             int MarioXInMap = (int)mario.x/16;
             int MarioYInMap = (int)mario.y/16;
@@ -912,11 +903,6 @@ public class LevelScene extends Scene implements SpriteContext
     }
 
 
-    public void reset(CmdLineOptions cmdLineOptions)
-    {
-        reset(cmdLineOptions.toIntArray());
-    }
-
     public boolean isMarioAbleToShoot()
     {
         return mario.isCanShoot();
@@ -985,46 +971,40 @@ public class LevelScene extends Scene implements SpriteContext
 
     public void resetDefault()
     {
-        // TODO: set values ot defaults
-        init();
+        // TODO: set values to defaults
+        init(CmdLineOptions.getDefaultOptions());
     }
 
-    public void reset(int[] setUpOptions)
+    public void reset(CmdLineOptions cmdLineOptions)
     {
 //        this.gameViewer = setUpOptions[0] == 1;
 //        System.out.println("\nLevelScene RESET!");
 
-        System.out.println("\n setUpOptions::");
-        for (int i = 0; i < setUpOptions.length; ++i)
-        {
-            System.out.print(setUpOptions[i] + ",");
-        }
+        this.mario.setMarioInvulnerable(cmdLineOptions.isMarioInvulnerable());
+//        System.out.println("this.mario.isMarioInvulnerable = " + this.mario.isMarioInvulnerable);
+        this.levelDifficulty = cmdLineOptions.getLevelDifficulty();
+//        System.out.println("this.levelDifficulty = " + this.levelDifficulty);
+        this.levelLength = cmdLineOptions.getLevelLength();
+//        System.out.println("this.levelLength = " + this.levelLength);
+        this.levelSeed = cmdLineOptions.getLevelRandSeed();
+//        System.out.println("levelSeed = " + levelSeed);
+        this.levelType = cmdLineOptions.getLevelType();
+//        System.out.println("levelType = " + levelType);
+        Mario.resetStatic(cmdLineOptions.getMarioMode());
 
-        this.mario.isMarioInvulnerable = setUpOptions[1] == 1;
-        System.out.println("this.mario.isMarioInvulnerable = " + this.mario.isMarioInvulnerable);
-        this.levelDifficulty = setUpOptions[2];
-        System.out.println("this.levelDifficulty = " + this.levelDifficulty);
-        this.levelLength = setUpOptions[3];
-        System.out.println("this.levelLength = " + this.levelLength);
-        this.levelSeed = setUpOptions[4];
-        System.out.println("levelSeed = " + levelSeed);
-        this.levelType = setUpOptions[5];
-        System.out.println("levelType = " + levelType);
-        Mario.resetStatic(setUpOptions[6]);
-
-        GlobalOptions.FPS = setUpOptions[7];
-        System.out.println("GlobalOptions.FPS = " + GlobalOptions.FPS);
-        GlobalOptions.isPowerRestoration = setUpOptions[8] == 1;
-        System.out.println("GlobalOptions.isPowerRestoration = " + GlobalOptions.isPowerRestoration);
-        GlobalOptions.isPauseWorld = setUpOptions[9] == 1;
-        System.out.println("GlobalOptions = " + GlobalOptions.isPauseWorld);
-        GlobalOptions.isTimer = setUpOptions[10] == 1;
-        System.out.println("GlobalOptions.isTimer = " + GlobalOptions.isTimer);
+        GlobalOptions.FPS = cmdLineOptions.getFPS();
+//        System.out.println("GlobalOptions.FPS = " + GlobalOptions.FPS);
+        GlobalOptions.isPowerRestoration = cmdLineOptions.isPowerRestoration();
+//        System.out.println("GlobalOptions.isPowerRestoration = " + GlobalOptions.isPowerRestoration);
+        GlobalOptions.isPauseWorld = cmdLineOptions.isPauseWorld();
+//        System.out.println("GlobalOptions = " + GlobalOptions.isPauseWorld);
+        GlobalOptions.isTimer = cmdLineOptions.isTimer();
+//        System.out.println("GlobalOptions.isTimer = " + GlobalOptions.isTimer);
 //        isToolsConfigurator = setUpOptions[11] == 1;
-        this.setTimeLimit(setUpOptions[12]);
+        this.setTimeLimit(cmdLineOptions.getTimeLimit());
 //        System.out.println("this.getTimeLimit() = " + this.getTimeLimit());
 //        this.isViewAlwaysOnTop() ? 1 : 0, setUpOptions[13]
-        this.visualization = setUpOptions[14] == 1;
+        this.visualization = cmdLineOptions.isVisualization();
 //        System.out.println("visualization = " + visualization);
 //        this.getViewLocation().x, setUpOptions[15] == 1;
 //        this.getViewLocation().y, setUpOptions[16] == 1;
@@ -1037,8 +1017,7 @@ public class LevelScene extends Scene implements SpriteContext
         killedCreaturesByStomp = 0;
         killedCreaturesByShell = 0;
 //        System.out.println("Call to init:");
-        args = setUpOptions;
-        init();
+        init(cmdLineOptions);
     }
 
     public float[] getMarioFloatPos()
@@ -1054,30 +1033,20 @@ public class LevelScene extends Scene implements SpriteContext
     public boolean isMarioCarrying()
     {   return mario.carried != null; }
 
-
-//    public byte[][] getCompleteObservation()
-//    {  return getMergedObservationZZ(1, 0);    }
-//
-//    public byte[][] getEnemiesObservation()
-//    {        return getEnemiesObservationZ(0);    }
-//
-//    public byte[][] getLevelSceneObservation()
-//    {         return getLevelSceneObservationZ(1);    }
-
     public int getLevelDifficulty()
     {         return levelDifficulty;    }
 
     public long getLevelSeed()
-    {                                        return levelSeed;    }
+    { return levelSeed;    }
 
     public int getLevelLength()
-    {        return levelLength;    }
+    { return levelLength;    }
 
     public int getLevelType()
-    {        return levelType;    }
+    { return levelType;    }
 
     public int getNumberOfHiddenCoinsGained()
     {
-        return numberOfHiddenCoinsGained;
+      return numberOfHiddenCoinsGained;
     }
 }

@@ -55,7 +55,7 @@ public abstract class
 
     public static String getVersionUID()
     {
-        return " v-" + getPrimaryVersionUID() + "." + getMinorVersionUID() + "." + getMinorSubVerionID();
+        return " " + getPrimaryVersionUID() + "." + getMinorVersionUID() + "." + getMinorSubVerionID();
     }
 
     public static void registerMarioVisualComponent(MarioVisualComponent mc)
