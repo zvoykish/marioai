@@ -69,6 +69,8 @@ public class LevelScene extends Scene implements SpriteContext
 
     public LevelScene(long seed, int levelDifficulty, int type, int levelLength, int levelHeight, int timeLimit, int visualization)
     {
+        System.out.println("J: LEVEL SCENE 000 this = " + this);
+
         this.levelSeed = seed;
         this.levelDifficulty = levelDifficulty;
         this.levelType = type;
@@ -93,20 +95,22 @@ public class LevelScene extends Scene implements SpriteContext
             e.printStackTrace();
             System.exit(0);
         }
+        System.out.println("J: LEVEL SCENE 111 this = " + this);
+
     }
 
     public void init()
     {
-//        System.out.println("\nJava:init() entered.");
+        System.out.println("\nJava:init() entered.");
         /*        if (replayer!=null)
          {                level = LevelGenerator.createLevel(2048, 15, replayer.nextLong());         }
          else
          {*/
 //        level = LevelGenerator.createLevel(320, 15, levelSeed);
 //        if (levelSeed != -152)
-//        System.out.println("args = " + args);
+        System.out.println("args = " + args);
             level = LevelGenerator.createLevel(args);
-//        System.out.println("level = " + level);
+        System.out.println("level = " + level);
 //        else
 //        try
 //        {
@@ -137,7 +141,7 @@ public class LevelScene extends Scene implements SpriteContext
 
 
         mario = new Mario(this);
-//        System.out.println("mario = " + mario);
+        System.out.println("mario = " + mario);
         sprites.add(mario);
 //        System.out.println("mario.sheet = " + mario.sheet);
         startTime = 1;
@@ -360,11 +364,11 @@ public class LevelScene extends Scene implements SpriteContext
     public byte[][] getLevelSceneObservationZ(int ZLevel)
     {
         //TODO: Move to constants 16
-//        System.out.println("mario = " + mario);
+        System.out.println("mario = " + mario);
         int MarioXInMap = (int)mario.x/16;
         int MarioYInMap = (int)mario.y/16;
 
-//        System.out.println("MarioYInMap = " + MarioYInMap);
+        System.out.println("MarioYInMap = " + MarioYInMap);
         for (int y = MarioYInMap - Environment.ObsHeight/2, obsX = 0; y <= MarioYInMap + Environment.ObsHeight/2; y++, obsX++)
         {
             for (int x = MarioXInMap - Environment.ObsWidth/2, obsY = 0; x <= MarioXInMap + Environment.ObsWidth/2; x++, obsY++)
@@ -372,12 +376,12 @@ public class LevelScene extends Scene implements SpriteContext
                 if (x >=0 /*  && x <= level.xExit */ && y >= 0 && y < level.height)
                 {
                     levelSceneZ[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevel);
-//                    System.out.println("x = " + x);
+                    System.out.println("x = " + x);
                 }
                 else
                 {
                     levelSceneZ[obsX][obsY] = 0;
-//                    System.out.println("obsY = " + obsY);
+                    System.out.println("obsY = " + obsY);
                 }
 
             }
@@ -990,32 +994,32 @@ public class LevelScene extends Scene implements SpriteContext
 //        this.gameViewer = setUpOptions[0] == 1;
 //        System.out.println("\nLevelScene RESET!");
 
-//        System.out.println("\n setUpOptions::");
-//        for (int i = 0; i < setUpOptions.length; ++i)
-//        {
-//            System.out.print(setUpOptions[i] + ",");
-//        }
+        System.out.println("\n setUpOptions::");
+        for (int i = 0; i < setUpOptions.length; ++i)
+        {
+            System.out.print(setUpOptions[i] + ",");
+        }
 
         this.mario.isMarioInvulnerable = setUpOptions[1] == 1;
-//        System.out.println("this.mario.isMarioInvulnerable = " + this.mario.isMarioInvulnerable);
+        System.out.println("this.mario.isMarioInvulnerable = " + this.mario.isMarioInvulnerable);
         this.levelDifficulty = setUpOptions[2];
-//        System.out.println("this.levelDifficulty = " + this.levelDifficulty);
+        System.out.println("this.levelDifficulty = " + this.levelDifficulty);
         this.levelLength = setUpOptions[3];
-//        System.out.println("this.levelLength = " + this.levelLength);
+        System.out.println("this.levelLength = " + this.levelLength);
         this.levelSeed = setUpOptions[4];
-//        System.out.println("levelSeed = " + levelSeed);
+        System.out.println("levelSeed = " + levelSeed);
         this.levelType = setUpOptions[5];
-//        System.out.println("levelType = " + levelType);
+        System.out.println("levelType = " + levelType);
         Mario.resetStatic(setUpOptions[6]);
 
         GlobalOptions.FPS = setUpOptions[7];
-//        System.out.println("GlobalOptions.FPS = " + GlobalOptions.FPS);
+        System.out.println("GlobalOptions.FPS = " + GlobalOptions.FPS);
         GlobalOptions.isPowerRestoration = setUpOptions[8] == 1;
-//        System.out.println("GlobalOptions.isPowerRestoration = " + GlobalOptions.isPowerRestoration);
+        System.out.println("GlobalOptions.isPowerRestoration = " + GlobalOptions.isPowerRestoration);
         GlobalOptions.isPauseWorld = setUpOptions[9] == 1;
-//        System.out.println("GlobalOptions = " + GlobalOptions.isPauseWorld);
+        System.out.println("GlobalOptions = " + GlobalOptions.isPauseWorld);
         GlobalOptions.isTimer = setUpOptions[10] == 1;
-//        System.out.println("GlobalOptions.isTimer = " + GlobalOptions.isTimer);
+        System.out.println("GlobalOptions.isTimer = " + GlobalOptions.isTimer);
 //        isToolsConfigurator = setUpOptions[11] == 1;
         this.setTimeLimit(setUpOptions[12]);
 //        System.out.println("this.getTimeLimit() = " + this.getTimeLimit());
@@ -1026,7 +1030,7 @@ public class LevelScene extends Scene implements SpriteContext
 //        this.getViewLocation().y, setUpOptions[16] == 1;
 //        this.getZLevelEnemies(),setUpOptions[17] ;
 //        this.getZLevelScene()   setUpOptions[18] ;
-        this.levelHeight = setUpOptions[19];
+        this.levelHeight = 15;
 
         killedCreaturesTotal = 0;
         killedCreaturesByFireBall = 0;

@@ -20,7 +20,7 @@ public final class MarioEnvironment implements Environment
     private MarioVisualComponent marioVisualComponent;
     private Agent agent;
 
-    private static MarioEnvironment ourInstance = new MarioEnvironment();
+    private static final MarioEnvironment ourInstance = new MarioEnvironment();
 
     public static MarioEnvironment getInstance()
     {
