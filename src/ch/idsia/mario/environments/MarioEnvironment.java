@@ -24,7 +24,6 @@ public final class MarioEnvironment implements Environment
 
     public static MarioEnvironment getInstance()
     {
-        System.out.println("ourInstance = " + ourInstance);
         return ourInstance;
     }
 
@@ -34,7 +33,7 @@ public final class MarioEnvironment implements Environment
 //        System.out.println("System.getProperty(\"verbose\") = " + System.getProperty("-verbose"));
 //        System.out.println("Java: JA ZDES'!!");
 //        System.out.flush();
-        System.out.println("J: MarioAI Benchmark" + GlobalOptions.getVersionUID());
+        System.out.println("MarioAI Benchmark" + GlobalOptions.getVersionUID());
         levelScene = new LevelScene(0, 0, 0, 0, 0, 0, 0);
     }
 
@@ -43,15 +42,30 @@ public final class MarioEnvironment implements Environment
         levelScene.resetDefault();
     }
 
+    public void reset(String args)
+    {
+        String[] tokens = args.trim().split("\\s+");
+        CmdLineOptions opts = new CmdLineOptions(tokens);
+        this.reset(opts);
+    }
+
+    public void reset(String[] setUpOptions)
+    {
+        CmdLineOptions opts = new CmdLineOptions(setUpOptions);
+        int[] intOpts = opts.toIntArray();
+        this.reset(intOpts);
+    }
+
     public void reset(int[] setUpOptions)
     {
-        System.out.println("\nsetUpOptions = " + setUpOptions);
+        /*System.out.println("\nsetUpOptions = " + setUpOptions);
         for (int i = 0; i < setUpOptions.length; ++i)
         {
             System.out.print(" op[" + i +"] = " + setUpOptions[i]);
         }
         System.out.println("");
-        System.out.flush();
+        System.out.flush();*/
+
         if (/*levelScene.visualization*/ setUpOptions[14] == 1)
         {
             if (marioVisualComponent == null)
@@ -66,7 +80,7 @@ public final class MarioEnvironment implements Environment
         }
         else
             levelScene.reset(setUpOptions);
-        
+
     }
 
     public void tick()
@@ -78,6 +92,7 @@ public final class MarioEnvironment implements Environment
         // Advance the frame
 //        ++frame;
     }
+
 
 //    public byte[][] getCompleteObservation()
 //    {

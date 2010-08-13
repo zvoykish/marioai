@@ -37,18 +37,8 @@ public class LevelGenerator
 
     public static Level createLevel(int[] args)
     {
-        try
-        {
-            System.out.println("createLevel");
-            System.out.println("args.length = " + args.length);
-            LevelGenerator levelGenerator = new LevelGenerator(args);
-            System.out.println("levelGenerator = " + levelGenerator);
-            return levelGenerator.createLevel(args[4], args[2], args[5]);
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-            return null;
-        }
+        LevelGenerator levelGenerator = new LevelGenerator(args);
+        return levelGenerator.createLevel(args[4], args[2], args[5]);
     }
 
     private int width;
@@ -86,10 +76,17 @@ public class LevelGenerator
     private LevelGenerator(int[] args)
     {
         this.width = args[3];
-//        this.height = args[19];
-        this.height = 15;
+        if (args[19] < 15)
+        {
+            System.err.println("Minimal height of the level is 15! Setting up to 15.");
+            System.err.flush();
+            this.height = 15;
+        }
+        else
+        {
+            this.height = args[19];
+        }
         this.cmdArgs = args;
-        System.out.println("this.cmdArgs = " + this.cmdArgs);
     }
 
     private Level createLevel(long seed, int difficulty, int type)
@@ -179,7 +176,6 @@ public class LevelGenerator
 
         fixWalls();
 
-        System.out.println("length = " + length);
         return level;
     }
 
