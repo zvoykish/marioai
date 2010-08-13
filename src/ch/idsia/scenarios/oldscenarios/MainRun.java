@@ -1,14 +1,12 @@
 package ch.idsia.scenarios.oldscenarios;
 
-import ch.idsia.ai.agents.controllers.*;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
+import ch.idsia.ai.agents.controllers.ScaredAgent;
+import ch.idsia.ai.agents.controllers.TimingAgent;
 import ch.idsia.tools.CmdLineOptions;
-import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.tools.EvaluationOptions;
-import ch.idsia.tools.Evaluator;
 import ch.idsia.utils.StatisticalSummary;
-import ch.idsia.mario.simulation.SimulationOptions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -42,7 +40,6 @@ public class MainRun
 //            evaluationOptions.setAgent(new AmiCoAgent(amicoModuleName, amicoAgentName));
 //            while (cmdLineOptions.getNumberOfTrials() >= SimulationOptions.currentTrial) {
 //                List<EvaluationInfo> evaluationSummary;
-                System.out.println("SimulationOptions.currentTrial = " + SimulationOptions.currentTrial);
 //                evaluator.evaluate();
 //            }
 //        LOGGER.save("log.txt");
@@ -146,7 +143,6 @@ public class MainRun
         float marioStatus = 0;
 
 //        options.setNumberOfTrials(numberOfTrials);
-        options.resetCurrentTrial();
         for (int i = 0; i < numberOfTrials; i++) {
             options.setLevelRandSeed(seed + i);
             options.setLevelLength (200 + (i * 128) + (seed % (i + 1)));

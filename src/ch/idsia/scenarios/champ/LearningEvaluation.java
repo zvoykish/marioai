@@ -99,36 +99,31 @@ public final class LearningEvaluation
         final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
         LearningAgent learningAgent = new SRNESLearningAgent(new MediumSRNAgent()); // Your Competition Entry goes here
 
-        cmdLineOptions.setUpOptionsString("-lco on");
+        cmdLineOptions.setArgs("-lco off -lb off -le 0 -lhb off -lg off -ltb off -lhs off -lc off -lde off");
         float finalScore = LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
 
 //        ProgressTask task = new ProgressTask(options);
 //        ES es = new ES (task, initial, populationSize);
 
 //        Level 2
-        cmdLineOptions.setUpOptionsString("-lco on");
+        cmdLineOptions.setArgs("-lco on -lb on -le 1111111 -lhb off -lg off -ltb off -lhs off -lc off -lde off -ld 3");
         finalScore += LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
 
 //        Level 3
-        cmdLineOptions.setUpOptionsString("-lco on");
+        cmdLineOptions.setArgs("-lco off -lb off -le 0 -lhb off -lg on -ltb off -lhs off -lc off -lde off -ld 2");
         finalScore += LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
 
 //        Level 4
-        cmdLineOptions.setUpOptionsString("-lco on");
+        cmdLineOptions.setArgs("-lco off -lb off -le 0 -lhb off -lg on -ltb on -lhs off -lc on -lde off -ld 3");
         finalScore += LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
 
 //        Level 5
-        cmdLineOptions.setUpOptionsString("-lco on");
+        cmdLineOptions.setArgs("-lco on -lb off -le 1011000 -lhb on -lg off -ltb on -lhs off -lc off -lde off -ld 3");
         finalScore += LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
 
-        System.out.println("finalScore = " + finalScore);
-        // learn on a particular level
-        // create particular level
-        // several
+        
 
-//        EvaluationInfo evaluationInfo = new EvaluationInfo(environment.getEvaluationInfoAsFloats());
-//        System.out.println("evaluationInfo = " + evaluationInfo);
+        System.out.println("finalScore = " + finalScore);
         System.exit(0);
     }
-
 }

@@ -31,18 +31,16 @@ public class LevelScene extends Scene implements SpriteContext
 
     public boolean visualization = false;
 
-    public static int ObsWidth;
-    public static int ObsHeight;
 
-    final private int rows = ObsHeight ;
-    final private int cols = ObsWidth ;
-    final private int[] serializedLevelScene = new int[rows * cols];
-    final private int[] serializedEnemies = new int[rows * cols];
-    final private int[] serializedMergedObservation = new int[rows * cols];
+    static final private int ObsHeight = 19;
+    static final private int ObsWidth = 19;
+    final private int[] serializedLevelScene = new int[ObsHeight * ObsWidth];
+    final private int[] serializedEnemies = new int[ObsHeight * ObsWidth];
+    final private int[] serializedMergedObservation = new int[ObsHeight * ObsWidth];
 
-    final private byte[][] levelSceneZ = new byte[rows][cols];
-    final private byte[][] enemiesZ = new byte[rows][cols];
-    final private byte[][] mergedZ = new byte[rows][cols];
+    final private byte[][] levelSceneZ = new byte[ObsHeight][ObsWidth];
+    final private byte[][] enemiesZ = new byte[ObsHeight][ObsWidth];
+    final private byte[][] mergedZ = new byte[ObsHeight][ObsWidth];
 
     final private List<Float> enemiesFloatsList = new ArrayList<Float>();
     final private float[] marioFloatPos = new float[2];
@@ -367,12 +365,10 @@ public class LevelScene extends Scene implements SpriteContext
                 if (x >=0 /*  && x <= level.xExit */ && y >= 0 && y < level.height)
                 {
                     levelSceneZ[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevel);
-//                    System.out.println("x = " + x);
                 }
                 else
                 {
                     levelSceneZ[obsX][obsY] = 0;
-//                    System.out.println("obsY = " + obsY);
                 }
 
             }
@@ -395,14 +391,14 @@ public class LevelScene extends Scene implements SpriteContext
             if (sprite.kind == mario.kind)
                 continue;
             if (sprite.mapX >= 0 &&
-                sprite.mapX >= MarioXInMap - ObsWidth &&
-                sprite.mapX <= MarioXInMap + ObsWidth &&
+                sprite.mapX >= MarioXInMap - ObsWidth/2 &&
+                sprite.mapX <= MarioXInMap + ObsWidth/2 &&
                 sprite.mapY >= 0 &&
-                sprite.mapY >= MarioYInMap - ObsHeight &&
-                sprite.mapY <= MarioYInMap + ObsHeight)
+                sprite.mapY >= MarioYInMap - ObsHeight/2 &&
+                sprite.mapY <= MarioYInMap + ObsHeight/2)
             {
-                int obsX = sprite.mapY - MarioYInMap + ObsHeight;
-                int obsY = sprite.mapX - MarioXInMap + ObsWidth;
+                int obsX = sprite.mapY - MarioYInMap + ObsHeight/2;
+                int obsY = sprite.mapX - MarioXInMap + ObsWidth/2;
                 enemiesZ[obsX][obsY] = ZLevelEnemyGeneralization(sprite.kind, ZLevel);
             }
         }
@@ -441,9 +437,9 @@ public class LevelScene extends Scene implements SpriteContext
         int MarioYInMap = (int)mario.y/16;
 
 
-        for (int y = MarioYInMap - ObsHeight, obsX = 0; y <= MarioYInMap + ObsHeight; y++, obsX++)
+        for (int y = MarioYInMap - ObsHeight/2, obsX = 0; y <= MarioYInMap + ObsHeight/2; y++, obsX++)
         {
-            for (int x = MarioXInMap - ObsWidth, obsY = 0; x <= MarioXInMap + ObsWidth; x++, obsY++)
+            for (int x = MarioXInMap - ObsWidth/2, obsY = 0; x <= MarioXInMap + ObsWidth/2; x++, obsY++)
             {
                 if (x >=0 /*&& x <= level.xExit*/ && y >= 0 && y < level.height)
                 {
@@ -465,14 +461,14 @@ public class LevelScene extends Scene implements SpriteContext
             if (sprite.kind == mario.kind)
                 continue;
             if (sprite.mapX >= 0 &&
-                sprite.mapX > MarioXInMap - ObsWidth &&
-                sprite.mapX < MarioXInMap + ObsWidth &&
+                sprite.mapX > MarioXInMap - ObsWidth/2 &&
+                sprite.mapX < MarioXInMap + ObsWidth/2 &&
                 sprite.mapY >= 0 &&
-                sprite.mapY > MarioYInMap - ObsHeight &&
-                sprite.mapY < MarioYInMap + ObsHeight)
+                sprite.mapY > MarioYInMap - ObsHeight/2 &&
+                sprite.mapY < MarioYInMap + ObsHeight/2)
             {
-                int obsX = sprite.mapY - MarioYInMap + ObsHeight;
-                int obsY = sprite.mapX - MarioXInMap + ObsWidth;
+                int obsX = sprite.mapY - MarioYInMap + ObsHeight/2;
+                int obsY = sprite.mapX - MarioXInMap + ObsWidth/2;
                 // quick fix TODO: handle this in more general way.
                 if (mergedZ[obsX][obsY] != 14)
                 {
@@ -926,7 +922,7 @@ public class LevelScene extends Scene implements SpriteContext
         byte[][] levelScene = this.getLevelSceneObservationZ(ZLevelScene);
         for (int i = 0; i < serializedLevelScene.length; ++i)
         {
-            serializedLevelScene[i] = (int)levelScene[i / cols][i % rows];
+            serializedLevelScene[i] = (int)levelScene[i / ObsWidth][i % ObsHeight];
         }
         return serializedLevelScene;
     }
@@ -937,7 +933,7 @@ public class LevelScene extends Scene implements SpriteContext
         byte[][] enemies = this.getEnemiesObservationZ(ZLevelEnemies);
         for (int i = 0; i < serializedEnemies.length; ++i)
         {
-            serializedEnemies[i] = (int)enemies[i / cols][i % rows];
+            serializedEnemies[i] = (int)enemies[i / ObsWidth][i % ObsHeight];
         }
         return serializedEnemies;
     }
@@ -948,7 +944,7 @@ public class LevelScene extends Scene implements SpriteContext
         byte[][] merged = this.getMergedObservationZZ(ZLevelScene, ZLevelEnemies);
         for (int i = 0; i < serializedMergedObservation.length; ++i)
         {
-            serializedMergedObservation[i] = (int)merged[i / cols][i % rows];
+            serializedMergedObservation[i] = (int)merged[i / ObsWidth][i % ObsHeight];
         }
         return serializedMergedObservation;
     }
@@ -1048,5 +1044,16 @@ public class LevelScene extends Scene implements SpriteContext
     public int getNumberOfHiddenCoinsGained()
     {
       return numberOfHiddenCoinsGained;
+    }
+
+    public static int getObservationWidth()
+    {
+        return ObsWidth;
+    }
+
+    public static int getObservationHeight()
+    {
+
+        return ObsHeight;
     }
 }

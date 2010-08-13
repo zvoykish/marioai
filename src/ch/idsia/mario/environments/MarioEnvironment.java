@@ -125,12 +125,12 @@ public final class MarioEnvironment implements Environment
 
     public int getObservationWidth()
     {
-        return LevelScene.ObsWidth;
+        return LevelScene.getObservationWidth();
     }
 
     public int getObservationHeight()
     {
-        return LevelScene.ObsHeight;
+        return LevelScene.getObservationHeight();
     }
 
     public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)

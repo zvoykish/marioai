@@ -30,8 +30,7 @@ import java.util.Map;
 
 public final class CmdLineOptions extends EvaluationOptions
 {
-    private static HashMap<String, CmdLineOptions> OptionsMapString;
-    private static HashMap<String[], CmdLineOptions> OptionsMapStringArray;
+    private static final HashMap<String, CmdLineOptions> OptionsMapString = new HashMap<String, CmdLineOptions>();
     private String optionsString;
 
     public CmdLineOptions(String[] args)
@@ -67,9 +66,7 @@ public final class CmdLineOptions extends EvaluationOptions
 
         if (isEcho())
         {
-            System.out.println("\nOptions have been set to:");
-            for (Map.Entry<String,String> el : optionsHashMap.entrySet())
-                System.out.println(el.getKey() + ": " + el.getValue());
+            this.printOptions(false);
         }
         GlobalOptions.isGameVeiwerContinuousUpdates = isGameViewerContinuousUpdates();
         GlobalOptions.isGameVeiwer = isGameViewer();
@@ -80,6 +77,31 @@ public final class CmdLineOptions extends EvaluationOptions
         GlobalOptions.isShowGrid = isGridVisualized();
     }
 
+    public void printOptions(boolean singleLine)
+    {
+        System.out.println("\n[MarioAI] : Options have been set to:");
+        for (Map.Entry<String,String> el : optionsHashMap.entrySet())
+            if (singleLine)
+                System.out.print(el.getKey() + " " + el.getValue() + " ");
+            else
+                System.out.println(el.getKey() + " " + el.getValue() + " ");
+    }
+
+    public static CmdLineOptions getOptionsByString(String argString)
+    {
+        if (OptionsMapString.get(argString) == null)
+        {
+            final CmdLineOptions value = new CmdLineOptions(argString.trim().split("\\s+"));
+            OptionsMapString.put(argString, value);
+            return value;
+        }
+        return OptionsMapString.get(argString);
+    }
+
+    public static CmdLineOptions getDefaultOptions()
+    {
+        return getOptionsByString("");
+    }
 
     public Boolean isToolsConfigurator() {
         return b(getParameterValue("-tc"));      }
@@ -165,21 +187,7 @@ public final class CmdLineOptions extends EvaluationOptions
     }
 
 
-    public static CmdLineOptions getDefaultOptions()
-    {
-        return getOptionsByString("");
-    }
 
-    public static CmdLineOptions getOptionsByString(String argString)
-    {
-        if (OptionsMapString.get(argString) == null)
-        {
-            final CmdLineOptions value = new CmdLineOptions(argString.trim().split("\\s+"));
-            OptionsMapString.put(argString, value);
-            return value;
-        }
-        return OptionsMapString.get(argString);
-    }
 }
 
 //!!!        "-ag",    ?????? ??? ???????? ??????????? %,5^$#<>%
