@@ -397,7 +397,7 @@ public class Mario extends Sprite
             xa = 0;
         }
 
-        if (x > world.level.xExit * 16 - 16 &&
+        if (x > world.level.xExit * 16 - 8 &&
             x < world.level.xExit * 16 + 2 * 16 && 
             y < world.level.yExit * 16)
         {
@@ -820,7 +820,7 @@ public class Mario extends Sprite
         return canShoot;
     }
 
-    public void setMarioInvulnerable(boolean marioInvulnerable)
+    public static void setMarioInvulnerable(boolean marioInvulnerable)
     {
         isMarioInvulnerable = marioInvulnerable;
     }

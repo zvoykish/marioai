@@ -58,9 +58,6 @@ public final class GamePlayEvaluation
         int trials = 0;
         int disqualifications = 0;
 
-
-        // todo: include level lengths.
-
         for (int ll : levelLengths)
 
         for (int levelDifficulty : levelDifficulties)
@@ -80,7 +77,7 @@ public final class GamePlayEvaluation
                         basicTask.reset(cmdLineOptions);
                         if (!basicTask.runOneEpisode())
                         {
-                            System.out.println("MarioAI: out of computational time per action!");
+                            System.out.println("[MarioAI Evaluation] : out of computational time per action!");
                             disqualifications++;
                             continue;
                         }
@@ -167,7 +164,6 @@ public final class GamePlayEvaluation
         float marioStatus = 0;
 
 //        options.setNumberOfTrials(numberOfTrials);
-        options.resetCurrentTrial();
         for (int i = 0; i < numberOfTrials; i++) {
             options.setLevelRandSeed(seed + i);
             options.setLevelLength (200 + (i * 128) + (seed % (i + 1)));

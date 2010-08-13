@@ -46,7 +46,7 @@ public class Level
         this.width = width;
         this.height = height;
 
-        xExit = 10;
+        xExit = 50;
         yExit = 10;
 //        System.out.println("Java: Level: lots of news here...");
 //        System.out.println("width = " + width);
