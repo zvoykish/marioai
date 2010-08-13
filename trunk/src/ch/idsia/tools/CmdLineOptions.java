@@ -28,15 +28,29 @@ import java.util.Map;
  * @since   MarioAI0.1
  */
 
-public class CmdLineOptions extends EvaluationOptions
+public final class CmdLineOptions extends EvaluationOptions
 {
-    private static HashMap<String, CmdLineOptions> OptionsMap;
+    private static HashMap<String, CmdLineOptions> OptionsMapString;
+    private static HashMap<String[], CmdLineOptions> OptionsMapStringArray;
+    private String optionsString;
 
     public CmdLineOptions(String[] args)
     {
         super();
         this.setArgs(args);
     }
+
+    @Deprecated
+    private CmdLineOptions(String args)
+    {
+        //USE CmdLineOptions.getOptionsByString(String args) method
+    }
+
+    public void setArgs(String argString)
+    {
+        this.setArgs(argString.trim().split("\\s+"));
+    }
+    
 
     public void setArgs(String[] args)
     {
@@ -151,15 +165,20 @@ public class CmdLineOptions extends EvaluationOptions
     }
 
 
-    public void setUpOptionsString(String s)
-    {
-        this.setUpOptions(s.split("\\s"));
-    }
-
-
     public static CmdLineOptions getDefaultOptions()
     {
-        return OptionsMap.get("");
+        return getOptionsByString("");
+    }
+
+    public static CmdLineOptions getOptionsByString(String argString)
+    {
+        if (OptionsMapString.get(argString) == null)
+        {
+            final CmdLineOptions value = new CmdLineOptions(argString.trim().split("\\s+"));
+            OptionsMapString.put(argString, value);
+            return value;
+        }
+        return OptionsMapString.get(argString);
     }
 }
 

@@ -44,13 +44,11 @@ public final class MarioEnvironment implements Environment
 
     public void reset(String args)
     {
-        String[] tokens = args.trim().split("\\s+");
-        CmdLineOptions opts = new CmdLineOptions(tokens);
-        this.reset(opts);
+        CmdLineOptions cmdLineOptions = CmdLineOptions.getOptionsByString(args);        
+        this.reset(cmdLineOptions);
 //        CmdLineOptions opts = new CmdLineOptions(setUpOptions);
 //        int[] intOpts = opts.toIntArray();
 //        this.reset(intOpts);
-        
     }
 
     public void reset(CmdLineOptions setUpOptions)

@@ -50,9 +50,9 @@ public class ParameterContainer
                     "-pr",
                     "-pw",
                     "-pym",
-                    "-rfh", // receprtive field height (observation )
-                    "-rfw", // receprtive field widht (observation )
-                    "-sg", // show grid  (observation )
+                    "-rfh", // receptive field height (observation )
+                    "-rfw", // receptive field width (observation )
+                    "-srf", // show receptive field  (observation )
                     "-t",
                     "-tc",
                     "-tl",
