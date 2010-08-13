@@ -2,6 +2,7 @@ package ch.idsia.tools;
 
 import ch.idsia.mario.engine.GlobalOptions;
 
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -29,6 +30,8 @@ import java.util.Map;
 
 public class CmdLineOptions extends EvaluationOptions
 {
+    private static HashMap<String, CmdLineOptions> OptionsMap;
+
     public CmdLineOptions(String[] args)
     {
         super();
@@ -56,8 +59,8 @@ public class CmdLineOptions extends EvaluationOptions
         }
         GlobalOptions.isGameVeiwerContinuousUpdates = isGameViewerContinuousUpdates();
         GlobalOptions.isGameVeiwer = isGameViewer();
-        GlobalOptions.observationGridWidth = getObservationGridWidth();
-        GlobalOptions.observationGridHeight = getObservationGridHeight();
+        GlobalOptions.observationGridWidth = getReceptiveFieldWidth();
+        GlobalOptions.observationGridHeight = getReceptiveFieldHeight();
 //        Environment.ObsWidth = GlobalOptions.observationGridWidth/2;
 //        Environment.ObsHeight = GlobalOptions.observationGridHeight/2;
         GlobalOptions.isShowGrid = isGridVisualized();
@@ -79,25 +82,25 @@ public class CmdLineOptions extends EvaluationOptions
     public String getPyAmiCoModuleName()  {
         return getParameterValue("-pym"); }
 
-    public Integer getObservationGridWidth()
+    public Integer getReceptiveFieldWidth()
     {
-        int ret = i(getParameterValue("-gw"));
+        int ret = i(getParameterValue("-rfw"));
 
         if (ret % 2 == 0)
         {
-            System.err.println("\nWrong value for grid width: " + ret++ +
-            " ; grid width set to " + ret);
+            System.err.println("\nWrong value for receptive field width: " + ret++ +
+            " ; receptive field width set to " + ret);
         }
         return ret;
     }
 
-    private Integer getObservationGridHeight()
+    private Integer getReceptiveFieldHeight()
     {
-         int ret = i(getParameterValue("-gh"));
+        int ret = i(getParameterValue("-rfh"));
         if (ret % 2 == 0)
         {
-            System.err.println("\nWrong value for grid height: " + ret++ +
-            " ; grid height set to " + ret);
+            System.err.println("\nWrong value for receptive field height: " + ret++ +
+            " ; receptive field height set to " + ret);
         }
         return ret;
     }
@@ -108,8 +111,58 @@ public class CmdLineOptions extends EvaluationOptions
     }
 
 
+    @Deprecated
     public int[] toIntArray()
     {
+        return new int[]
+                {
+                        this.isGameViewer() ? 1 : 0,           /*0*/
+                        this.isMarioInvulnerable() ? 1 : 0,    /*1*/
+                        this.getLevelDifficulty(),             /*2*/
+                        this.getLevelLength(),                 /*3*/
+                        this.getLevelRandSeed(),               /*4*/
+                        this.getLevelType(),                   /*5*/
+                        this.getMarioMode(),                   /*6*/
+                        this.getFPS(),                         /*7*/
+                        this.isPowerRestoration() ? 1 : 0,     /*8*/
+                        this.isPauseWorld() ? 1 : 0,           /*9*/
+                        this.isTimer() ? 1 : 0,                /*10*/
+                        // TODO:SK remove rudundancy (-1 -- no time limit)
+                        this.isToolsConfigurator() ? 1 : 0,    /*11*/
+                        this.getTimeLimit(),                   /*12*/
+                        this.isViewAlwaysOnTop() ? 1 : 0,      /*13*/
+                        this.isVisualization() ? 1 : 0,        /*14*/
+                        this.getViewLocation().x,              /*15*/
+                        this.getViewLocation().y,              /*16*/
+                        this.getZLevelEnemies(),               /*17*/
+                        this.getZLevelScene(),                 /*18*/
+                        this.getLevelHeight(),                 /*19*/
+                        this.getDeadEndsCount() ? Integer.MAX_VALUE : 0,       /*20*/
+                        this.getCannonsCount()  ? Integer.MAX_VALUE : 0,       /*21*/
+                        this.getHillStraightCount() ? Integer.MAX_VALUE : 0,   /*22*/
+                        this.getTubesCount() ? Integer.MAX_VALUE : 0,          /*23*/
+                        this.getBlocksCount() ? Integer.MAX_VALUE : 0,         /*24*/
+                        this.getCoinsCount() ? Integer.MAX_VALUE : 0,          /*25*/
+                        this.getGapsCount() ? Integer.MAX_VALUE : 0,           /*26*/
+                        this.getHiddenBlocksCount() ? Integer.MAX_VALUE : 0,   /*27*/
+                        Integer.valueOf(this.getEnemies()),                    /*28*/
+                        this.isFlatLevel() ? 1 : 0                             /*29*/
+                };
+    }
+
+
+    public void setUpOptionsString(String s)
+    {
+        this.setUpOptions(s.split("\\s"));
+    }
+
+
+    public static CmdLineOptions getDefaultOptions()
+    {
+        return OptionsMap.get("");
+    }
+}
+
 //!!!        "-ag",    ?????? ??? ???????? ??????????? %,5^$#<>%
 // !!!       "-amico",
 //!!!        "-echo",
@@ -151,47 +204,3 @@ public class CmdLineOptions extends EvaluationOptions
 //        "-lb"    level: blocks count
 //        "-lco"   level: coins count
 //        "-lf"    level: flat level
-
-        return new int[]
-                {
-                        this.isGameViewer() ? 1 : 0,           /*0*/
-                        this.isMarioInvulnerable() ? 1 : 0,    /*1*/
-                        this.getLevelDifficulty(),             /*2*/
-                        this.getLevelLength(),                 /*3*/
-                        this.getLevelRandSeed(),               /*4*/
-                        this.getLevelType(),                   /*5*/
-                        this.getMarioMode(),                   /*6*/
-                        this.getFPS(),                         /*7*/
-                        this.isPowerRestoration() ? 1 : 0,     /*8*/
-                        this.isPauseWorld() ? 1 : 0,           /*9*/
-                        this.isTimer() ? 1 : 0,                /*10*/
-                        // TODO:SK remove rudundancy (-1 -- no time limit)
-                        this.isToolsConfigurator() ? 1 : 0,    /*11*/
-                        this.getTimeLimit(),                   /*12*/
-                        this.isViewAlwaysOnTop() ? 1 : 0,      /*13*/
-                        this.isVisualization() ? 1 : 0,        /*14*/
-                        this.getViewLocation().x,              /*15*/
-                        this.getViewLocation().y,              /*16*/
-                        this.getZLevelEnemies(),               /*17*/
-                        this.getZLevelScene(),                 /*18*/
-                        this.getLevelHeight(),                 /*19*/
-                        this.getDeadEndsCount() ? Integer.MAX_VALUE : 0,       /*20*/
-                        this.getCannonsCount()  ? Integer.MAX_VALUE : 0,       /*21*/
-                        this.getHillStraightCount() ? Integer.MAX_VALUE : 0,   /*22*/
-                        this.getTubesCount() ? Integer.MAX_VALUE : 0,          /*23*/
-                        this.getBlocksCount() ? Integer.MAX_VALUE : 0,         /*24*/
-                        this.getCoinsCount() ? Integer.MAX_VALUE : 0,          /*25*/
-                        this.getGapsCount() ? Integer.MAX_VALUE : 0,           /*26*/
-                        this.getHiddenBlocksCount() ? Integer.MAX_VALUE : 0,   /*27*/
-                        Integer.valueOf(this.getEnemies()),                    /*28*/
-                        this.isFlatLevel() ? 1 : 0                             /*29*/
-                };  /*== -1 ? Integer.MAX_VALUE : this.getGapsCount()*/
-    }
-
-
-    public void setUpOptionsString(String s)
-    {
-        this.setUpOptions(s.split("\\s"));
-    }
-
-}

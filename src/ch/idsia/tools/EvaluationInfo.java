@@ -37,7 +37,7 @@ public final class EvaluationInfo
     public int numberOfHiddenItemsGained =MagicNumberUnDef;
     public int timeLeft=MagicNumberUnDef;
     public int timeSpent =MagicNumberUnDef;
-    public int hiddenblocksGained = MagicNumberUnDef;
+    public int hiddenBlocksFound = MagicNumberUnDef;
 
     private static final float[] retFloatArray = new float[EvaluationInfo.numberOfElements];
     private static final float[] zeros = new float[EvaluationInfo.numberOfElements];
@@ -65,7 +65,7 @@ public final class EvaluationInfo
                 marioMode * sov.mode  +
                 mushroomsDevoured * sov.mushrooms +
                 numberOfCoinsGained * sov.coins+
-                hiddenblocksGained * sov.hiddenBlocks +
+                hiddenBlocksFound * sov.hiddenBlocks +
                 killsTotal * sov.kills +
                 killsByStomp * sov.killedByStomp +
                 killsByFire * sov.killedByFire +
@@ -106,7 +106,7 @@ public final class EvaluationInfo
         retFloatArray[11] = this.numberOfHiddenItemsGained;
         retFloatArray[12] = this.timeLeft;
         retFloatArray[13] = this.timeSpent;
-        retFloatArray[14] = this.hiddenblocksGained;
+        retFloatArray[14] = this.hiddenBlocksFound;
 
         return retFloatArray;
     }
@@ -122,7 +122,7 @@ public final class EvaluationInfo
             "\n            Time Left(marioseconds) : " + timeLeft +
             "\n                       Coins Gained : " + numberOfCoinsGained +
             "\n                 Hidden Items Found : " + numberOfHiddenItemsGained +
-            "\n                Hidden Blocks Found : " + hiddenblocksGained +
+            "\n                Hidden Blocks Found : " + hiddenBlocksFound +
             "\n                 Mushrooms Devoured : " + mushroomsDevoured +
             "\n                   Flowers Devoured : " + flowersDevoured +
             "\n                        kills Total : " + killsTotal +
@@ -143,7 +143,7 @@ public final class EvaluationInfo
         "; Time Spent: " + timeSpent +
         "; Time Left: " + timeLeft +
         "; Coins: " + numberOfCoinsGained +
-        "; Hidden blocks: "+ hiddenblocksGained +
+        "; Hidden blocks: "+ hiddenBlocksFound +
         "; Mushrooms: " + mushroomsDevoured +
         "; Flowers: " + flowersDevoured +        
         "; kills: " + killsTotal +

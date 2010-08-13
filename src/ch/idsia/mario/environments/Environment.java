@@ -16,8 +16,6 @@ import ch.idsia.tools.EvaluationInfo;
 public interface Environment
 {
     public static final int numberOfButtons = 5;
-    public static final int ObsWidth = 21;
-    public static final int ObsHeight = 21;
 
     public static final int MARIO_KEY_DOWN = Mario.KEY_DOWN;
     public static final int MARIO_KEY_JUMP = Mario.KEY_JUMP;
@@ -36,7 +34,7 @@ public interface Environment
     // if your agent recieves too ambiguous observation, it might request for more precise one for the next step
     public void resetDefault();
 
-    public void reset(int[] setUpOptions);
+    public void reset(String setUpOptions);
 
     public void tick();
 
@@ -50,6 +48,12 @@ public interface Environment
     public boolean isMarioAbleToJump();
     public boolean isMarioCarrying();
     public boolean isMarioAbleToShoot();
+
+    // OBSERVATION
+
+    public int getObservationWidth();
+    public int getObservationHeight();
+
 
     public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies);
     public byte[][] getLevelSceneObservationZ(int ZLevelScene);

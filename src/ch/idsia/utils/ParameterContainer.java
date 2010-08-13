@@ -21,41 +21,18 @@ public class ParameterContainer
     protected HashMap<String, String> optionsHashMap = new HashMap<String, String>();
     private static List<String> allowedOptions = null;
     protected static HashMap<String, String> defaultOptionsHashMap = null;
-    private String[] allowed = null;
-
-    public ParameterContainer()
-    {
-        if (allowed == null)
-            allowed = new String[]{
+    private static final String[] allowed = new String[]{
                     "-ag",
                     "-amico",
                     "-echo",
                     "-ewf",
-                    "-gh", // grid height (observation )
                     "-gv",
                     "-gvc",
-                    "-gw", // grid widht (observation )
                     "-i",
-                    "-ld",
-                    "-ll",
-                    "-ls",
-                    "-lt",
-                    "-m",
-                    "-mm",
-                    "-fps",
-                    "-pr",
-                    "-pw",
-                    "-pym",
-                    "-sg", // show grid  (observation )
-                    "-t",
-                    "-tc",
-                    "-tl",
-                    "-vaot",
-                    "-vis",
-                    "-vlx",
-                    "-vly",
-                    "-ze",
-                    "-zs",
+                    "-ld",  // level: difficulty
+                    "-ll",  // level: length
+                    "-ls",  // level: seed
+                    "-lt",  // level: type
                     "-lh",  // level: height [16-20]
                     "-lde", // level: dead ends count
                     "-lc",  // level: cannons count
@@ -66,8 +43,29 @@ public class ParameterContainer
                     "-lg",  // level: gaps count
                     "-lhb", // level: hidden blocks count
                     "-le",  // level: enemies; set up with bit mask
-                    "-lf"   // level: flat level
+                    "-lf",  // level: flat level
+                    "-m",
+                    "-mm",
+                    "-fps",
+                    "-pr",
+                    "-pw",
+                    "-pym",
+                    "-rfh", // receprtive field height (observation )
+                    "-rfw", // receprtive field widht (observation )
+                    "-sg", // show grid  (observation )
+                    "-t",
+                    "-tc",
+                    "-tl",
+                    "-vaot",
+                    "-vis",
+                    "-vlx",
+                    "-vly",
+                    "-ze",
+                    "-zs"
             };
+
+    public ParameterContainer()
+    {
         if (allowedOptions == null)
         {
             allowedOptions = new ArrayList<String>();
@@ -164,10 +162,8 @@ public class ParameterContainer
             defaultOptionsHashMap.put("-amico","off");
             defaultOptionsHashMap.put("-echo","off"); //defaultOptionsHashMap.put("-echo","off");
             defaultOptionsHashMap.put("-ewf","on"); //defaultOptionsHashMap.put("-exitWhenFinished","off");
-            defaultOptionsHashMap.put("-gh","19");
             defaultOptionsHashMap.put("-gv","off"); //defaultOptionsHashMap.put("-gameViewer","off");
             defaultOptionsHashMap.put("-gvc","off"); //defaultOptionsHashMap.put("-gameViewerContinuousUpdates","off");
-            defaultOptionsHashMap.put("-gw","19");
             defaultOptionsHashMap.put("-i","off"); // Invulnerability
             defaultOptionsHashMap.put("-ld","0"); //defaultOptionsHashMap.put("-levelDifficulty","0");
             defaultOptionsHashMap.put("-ll","320"); //defaultOptionsHashMap.put("-levelLength","320");
@@ -177,12 +173,10 @@ public class ParameterContainer
             defaultOptionsHashMap.put("-fps", "24"); //defaultOptionsHashMap.put("-maxFPS","off");
             defaultOptionsHashMap.put("-m",""); //defaultOptionsHashMap.put("-matLabFile","DefaultMatlabFile");
             defaultOptionsHashMap.put("-mm","2"); //Mario Mode
-//            defaultOptionsHashMap.put("-not","1"); //defaultOptionsHashMap.put("-attemptsNumber","5");
             defaultOptionsHashMap.put("-pw","off"); //defaultOptionsHashMap.put("-isPauseWorld","off");
-//            defaultOptionsHashMap.put("-port","4242"); //defaultOptionsHashMap.put("-port","4242");
             defaultOptionsHashMap.put("-pr","off"); //defaultOptionsHashMap.put("-powerRestoration","off");
-//            defaultOptionsHashMap.put("-ssiw","off"); //defaultOptionsHashMap.put("-stopSimulationIfWin","off");
-//            defaultOptionsHashMap.put("-server","off");
+            defaultOptionsHashMap.put("-rfh","19");
+            defaultOptionsHashMap.put("-rfw","19");
             defaultOptionsHashMap.put("-sg","off");
             defaultOptionsHashMap.put("-t","on"); //defaultOptionsHashMap.put("-timer","on");
             defaultOptionsHashMap.put("-tl","200"); //Time Limit

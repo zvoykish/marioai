@@ -29,16 +29,4 @@ public interface Agent
     public String getName();
 
     public void setName(String name);
-
-
-
-//    @Deprecated
-//    public boolean[] getAction(Environment observation);
-        
-//    @Deprecated
-//    void integrateObservation(int[] serializedLevelSceneObservationZ,
-//                              int[] serializedEnemiesObservationZ,
-//                              float[] marioFloatPos,
-//                              float[] enemiesFloatPos,
-//                              int[] marioState);
 }

@@ -8,7 +8,7 @@ import java.awt.*;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Sergey Karakovskiy
+ * User: Sergey Karakovskiy, sergey@idsia.ch
  * Date: Apr 12, 2009
  * Time: 7:49:07 PM
  * Package: .Tools
@@ -25,7 +25,7 @@ public class EvaluationOptions extends SimulationOptions
             }
             catch (ArrayIndexOutOfBoundsException e)
             {
-                // Basically we can push the red button to explaud the computer, since this case cannot' never happen.
+                // Basically we can push the red button to explaud the computer, since this case must happen never.
                 System.err.println("Error: Wrong number of input parameters");
 //                System.err.println("It is a perfect day to kill yourself with the yellow wall");
             }
@@ -58,7 +58,8 @@ public class EvaluationOptions extends SimulationOptions
     public Boolean isViewAlwaysOnTop() {
         return b(getParameterValue("-vaot"));      }
 
-    public void setFPS(int fps ) {
+    public void setFPS(int fps )
+    {
         setParameterValue("-fps", s(fps));
         GlobalOptions.FPS = getFPS();
     }

@@ -19,35 +19,22 @@ public class AmiCoSimulator
     {
         CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
         cmdLineOptions.setMarioInvulnerable(true);
-        int[] options = cmdLineOptions.toIntArray();
-        for (int i = 0; i < options.length; ++i)
-        {
-            System.out.print(options[i] + ",");
-        }
+        String options = "-lf on -zs 1 -ls 16 -vis 1";
+        System.out.print(options);
         Environment environment = MarioEnvironment.getInstance();
         Agent agent = new ForwardAgent();
-//        options = new int[]{0, 1, 0, 1500, 0, 2, 1, 100, 1, 0, 1, 0, 11024, 0, 0, 0, 0, 0, 1};
-        options[17] = 1; //zLevelScene
-//        for (int seed = 16; seed < 20; ++seed)
-//        for (int length = 4500; length < 100000; length += 500)
-//        {
-            options[4] = 16;  // seed
-//            options[3] = length;
-//            options[14] = seed % 2;    // visualization
-            options[14] = 1;    // visualization
-//        options[9] = 1;
-            environment.reset(options);
-            while (!environment.isLevelFinished())
-            {
-                environment.tick();
+        environment.reset(options);
+        while (!environment.isLevelFinished())
+        {
+            environment.tick();
 //                agent.integrateObservation(environment.getSerializedLevelSceneObservationZ(options[17]),
 //                                           environment.getSerializedEnemiesObservationZ(options[18]),
 //                                           environment.getMarioFloatPos(),
 //                                           environment.getEnemiesFloatPos(),
 //                                           environment.getMarioState());
-                agent.integrateObservation(environment);
-                environment.performAction(agent.getAction());
-            }
+            agent.integrateObservation(environment);
+            environment.performAction(agent.getAction());
+        }
         System.out.println("Evaluation Info:");
         float[] ev = environment.getEvaluationInfoAsFloats();
         for (float anEv : ev)
