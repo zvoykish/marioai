@@ -26,18 +26,122 @@ import java.util.Random;
 
 public class LevelGenerator
 {
+    static private class objCounters
+    {
+        int deadEndsCount = 0;
+        int cannonsCount = 0;
+        int hillStraightCount = 0;
+        int tubesCount = 0;
+        int blocksCount = 0;
+        int coinsCount = 0;
+        int gapsCount = 0;
+        int hiddenBlocksCount = 0;
+        int totalCannonsCount;
+        int totalGapsCount;
+        int totalDeadEndsCount;
+        int totalBlocksCount;
+        int totalHiddenBlocksCount;
+        int totalCoinsCount;
+        int totalHillStraightCount;
+        int totalTubesCount;
+    }
+
+    /*
+    From left to right:
+        0)goomba
+        1)green coopa
+        2)red coopa
+        3)spiky
+        4)winged green coopa
+        5)winged red coopa
+        6)winged spiky
+    */
+    static private class Creatures
+    {
+        private static boolean goomba = false;
+        private static boolean greenCoopa = false;
+        private static boolean redCoopa = false;
+        private static boolean spiky = false;
+        private static boolean wingedGreenCoopa = false;
+        private static boolean wingedRedCoopa = false;
+        private static boolean wingedSpiky = false;
+
+        private static boolean complete = false;
+
+        public Creatures(String creatures)
+        {
+            while (creatures.length() < 7)
+            {
+                creatures = "0"+creatures;
+            }
+
+            if (creatures.equals("1111111")){complete = true;}
+
+            if (creatures.charAt(0) == '1'){goomba = true;}
+            if (creatures.charAt(1) == '1'){greenCoopa = true;}
+            if (creatures.charAt(2) == '1'){redCoopa = true;}
+            if (creatures.charAt(3) == '1'){spiky = true;}
+            if (creatures.charAt(4) == '1'){wingedGreenCoopa = true;}
+            if (creatures.charAt(5) == '1'){wingedRedCoopa = true;}
+            if (creatures.charAt(6) == '1'){wingedSpiky = true;}
+        }
+
+        public static boolean isGoomba() {return goomba;}
+        public static void setGoomba(boolean goomba) {Creatures.goomba = goomba;}
+        public static boolean isGreenCoopa() {return greenCoopa;}
+        public static void setGreenCoopa(boolean greenCoopa) {Creatures.greenCoopa = greenCoopa;}
+        public static boolean isRedCoopa() {return redCoopa;}
+        public static void setRedCoopa(boolean redCoopa) {Creatures.redCoopa = redCoopa;}
+        public static boolean isSpiky() {return spiky;}
+        public static void setSpiky(boolean spiky) {Creatures.spiky = spiky;}
+        public static boolean isWingedGreenCoopa() {return wingedGreenCoopa;}
+        public static void setWingedGreenCoopa(boolean wingedGreenCoopa) {Creatures.wingedGreenCoopa = wingedGreenCoopa;}
+        public static boolean isWingedRedCoopa() {return wingedRedCoopa;}
+        public static void setWingedRedCoopa(boolean wingedRedCoopa) {Creatures.wingedRedCoopa = wingedRedCoopa;}
+        public static boolean isWingedSpiky() {return wingedSpiky;}
+        public static void setWingedSpiky(boolean wingedSpiky) {Creatures.wingedSpiky = wingedSpiky;}
+
+        public static boolean isComplete() {return complete;}
+        public static void setComplete(boolean complete) {Creatures.complete = complete;}
+
+        public static boolean isActive(int num)
+        {
+            switch (num)
+            {
+                case 0: return isGoomba();
+                case 1: return isGreenCoopa();
+                case 2: return isRedCoopa();
+                case 3: return isSpiky();
+                case 4: return isWingedGreenCoopa();
+                case 5: return isWingedRedCoopa();
+                case 6: return isWingedSpiky();                
+            }
+            return false;
+        }
+
+        public static boolean canAdd()
+        {
+            boolean flag = false;
+            if (isGoomba())              {flag = true;}
+            if (isGreenCoopa())          {flag = true;}
+            if (isRedCoopa())            {flag = true;}
+            if (isSpiky())               {flag = true;}
+            if (isWingedGreenCoopa())    {flag = true;}
+            if (isWingedRedCoopa())      {flag = true;}
+            if (isWingedSpiky())         {flag = true;}
+
+            return flag;
+        }
+    }
+
     public static final int TYPE_OVERGROUND = 0;
     public static final int TYPE_UNDERGROUND = 1;
     public static final int TYPE_CASTLE = 2;
-    public static final int DEFAULT_FLOOR = -1;
-//    private CmdLineOptions cmdArgs; //ATTENTION: not cloned.
 
-    //TODO: length of the level shouldn't be fewer than LevelLengthMinThreshold
+    public static final int DEFAULT_FLOOR = -1;
+
     public static final int LevelLengthMinThreshold = 50; // minimal length of the level. used in ToolsConfigurator
-//    private final int levelDifficulty;
     private static boolean isFlatLevel;
-    private static int totalHillStraightCount;
-    private static int totalTubesCount;
 
     private static int length;
     private static int height;
@@ -56,27 +160,14 @@ public class LevelGenerator
     private static int difficulty; //level difficulty
     private static int type;  //level type
 
-    //constants for dead ends
+    private static Creatures creatures;
+
     private static final boolean RIGHT_DIRECTION_BOTTOM = false;
     private static final int ANY_HEIGHT = -1;
     private static final int INFINITY_FLOOR_HEIGHT = Integer.MAX_VALUE;
 
     //Level customization counters
-    private static int deadEndsCount = 0;
-    private static int cannonsCount = 0;
-    private static int hillStraightCount = 0;
-    private static int tubesCount = 0;
-    private static int blocksCount = 0;
-    private static int coinsCount = 0;
-    private static int gapsCount = 0;
-    private static int hiddenBlocksCount = 0;
-    private static int totalCannonsCount;
-    private static String creaturesMask;
-    private static int totalGapsCount;
-    private static int totalDeadEndsCount;
-    private static int totalBlocksCount;
-    private static int totalHiddenBlocksCount;
-    private static int totalCoinsCount;
+    static objCounters counters = new objCounters();
 
     private LevelGenerator()
     {
@@ -92,14 +183,15 @@ public class LevelGenerator
             height = 15;
         }
         isFlatLevel = args.isFlatLevel();
-        totalHillStraightCount = args.getHillStraightCount() ? Integer.MAX_VALUE : 0;
-        totalCannonsCount = args.getCannonsCount()  ? Integer.MAX_VALUE : 0;
-        creaturesMask = args.getEnemies();
-        totalGapsCount = args.getGapsCount() ? Integer.MAX_VALUE : 0;
-        totalDeadEndsCount = args.getDeadEndsCount() ? Integer.MAX_VALUE : 0;
-        totalBlocksCount = args.getBlocksCount() ? Integer.MAX_VALUE : 0;
-        totalHiddenBlocksCount = args.getHiddenBlocksCount() ? Integer.MAX_VALUE : 0;
-        totalCoinsCount = args.getCoinsCount()  ? Integer.MAX_VALUE : 0;
+        counters.totalHillStraightCount = args.getHillStraightCount() ? Integer.MAX_VALUE : 0;
+        counters.totalCannonsCount = args.getCannonsCount()  ? Integer.MAX_VALUE : 0;
+        creatures = new Creatures(args.getEnemies());
+        counters.totalGapsCount = args.getGapsCount() ? Integer.MAX_VALUE : 0;
+        counters.totalDeadEndsCount = args.getDeadEndsCount() ? Integer.MAX_VALUE : 0;
+        counters.totalBlocksCount = args.getBlocksCount() ? Integer.MAX_VALUE : 0;
+        counters.totalHiddenBlocksCount = args.getHiddenBlocksCount() ? Integer.MAX_VALUE : 0;
+        counters.totalCoinsCount = args.getCoinsCount()  ? Integer.MAX_VALUE : 0;
+        counters.totalTubesCount = args.getTubesCount()  ? Integer.MAX_VALUE : 0;
 //        this.cmdArgs = args;
 
         type = args.getLevelType();
@@ -124,7 +216,7 @@ public class LevelGenerator
         }
 
         level = new Level(length, height);
-        globalRandom.setSeed(args.getLevelRandSeed());
+        globalRandom.setSeed(args.getLevelRandSeed() + type);
 
         int length = 0; //total level length
         //mario starts on straight
@@ -141,12 +233,12 @@ public class LevelGenerator
             length += buildZone(length, level.width - length, ANY_HEIGHT, floor, INFINITY_FLOOR_HEIGHT);
         }
 
-        if (isFlatLevel)
+        if (!isFlatLevel)  //NOT flat level
         {
             floor = height -1 - globalRandom.nextInt(4); //floor of the exit line
         }
 
-        //coordinates of finish
+        //coordinates of the exit
         level.xExit = length + 8;
         level.yExit = floor;
 
@@ -207,9 +299,9 @@ public class LevelGenerator
             case ODDS_STRAIGHT:
                 return buildStraight(x, maxLength, false, floor, floorHeight);
             case ODDS_HILL_STRAIGHT:
-                if( floor == DEFAULT_FLOOR && hillStraightCount < totalHillStraightCount )
+                if( floor == DEFAULT_FLOOR && counters.hillStraightCount < counters.totalHillStraightCount )
                 {
-                    hillStraightCount++;
+                    counters.hillStraightCount++;
                     return buildHillStraight(x, maxLength, floor);
                 }
                 else
@@ -217,19 +309,15 @@ public class LevelGenerator
                     return 0;
                 }
             case ODDS_TUBES:
-                if( tubesCount < totalTubesCount )
-                {
-                    //increment of tubesCount is inside of the method
+                //increment of tubesCount is inside of the method
+                if (counters.tubesCount < counters.totalTubesCount)
                     return buildTubes(x, maxLength, maxHeight, floor, floorHeight);
-                }
                 else
-                {
                     return 0;
-                }
             case ODDS_GAPS:
-                if ((floor > 2 || floor == ANY_HEIGHT) && gapsCount < totalGapsCount)
+                if ((floor > 2 || floor == ANY_HEIGHT) && counters.gapsCount < counters.totalGapsCount)
                 {
-                    gapsCount++;
+                    counters.gapsCount++;
                     return buildGap(x, 12, maxHeight, floor, floorHeight);
                 }
                 else
@@ -237,7 +325,7 @@ public class LevelGenerator
                     return 0;
                 }
             case ODDS_CANNONS:
-                if (cannonsCount < totalCannonsCount)
+                if (counters.cannonsCount < counters.totalCannonsCount)
                 {
                     //increment of cannons is inside of the method
                     return buildCannons(x, maxLength, maxHeight, floor, floorHeight);
@@ -248,9 +336,9 @@ public class LevelGenerator
                 }
             case ODDS_DEAD_ENDS:
             {
-               if (floor == DEFAULT_FLOOR && deadEndsCount < totalDeadEndsCount) //if method was not called from buildDeadEnds
+               if (floor == DEFAULT_FLOOR && counters.deadEndsCount < counters.totalDeadEndsCount) //if method was not called from buildDeadEnds
                {
-                   deadEndsCount++;
+                   counters.deadEndsCount++;
                    return buildDeadEnds(x, maxLength);
                }
             }
@@ -471,7 +559,7 @@ public class LevelGenerator
             if (x > xCannon)
             {
                 xCannon += 2 + globalRandom.nextInt(4);
-                cannonsCount++;
+                counters.cannonsCount++;
             }
             if (xCannon == xo + length - 1)
             {
@@ -501,7 +589,7 @@ public class LevelGenerator
                 {
                     level.setBlock(x, y, (byte) (1 + 9 * 16));
                 }
-                else if (cannonsCount <= totalCannonsCount)
+                else if (counters.cannonsCount <= counters.totalCannonsCount)
                 {
                     if (x == xCannon && y >= cannonHeight && y <= floor)// + floorHeight)
                     {
@@ -631,13 +719,6 @@ public class LevelGenerator
 
     private static void addEnemyLine(int x0, int x1, int y)
     {
-        String creatures = String.valueOf(creaturesMask);
-
-        while (creatures.length() < 7)
-        {
-            creatures = "0"+creatures;
-        }
-
         boolean canAdd = true;
         for (int x = x0; x < x1; x++)
         {
@@ -658,7 +739,7 @@ public class LevelGenerator
         {
             if (creaturesRandom.nextInt(35) < difficulty + 1)
             {
-                if (creatures.equals("1111111"))
+                if (creatures.isComplete())
                 { //difficulty of creatures on the level depends on the difficulty of the level
                     int type = creaturesRandom.nextInt(4);
                     if (difficulty < 1)
@@ -674,7 +755,7 @@ public class LevelGenerator
                 else
                 {
                     boolean allowable = false;
-                    int type = creaturesRandom.nextInt(4);
+                    int crType = creaturesRandom.nextInt(4);
                     if (difficulty < 3)
                     {
                         creaturesRandom.nextInt(3);
@@ -682,24 +763,24 @@ public class LevelGenerator
                     Random locRnd = new Random();
                     do
                     {
-                        type = locRnd.nextInt(7);
-                        if (type == 7)
+                        crType = locRnd.nextInt(7);
+                        if (crType == 7)
                         {
-                            type--;
+                            crType--;
                         }
-                        if (creatures.charAt(type) == '1')
+                        if (creatures.isActive(crType))
                         {
                             allowable = true;
                         }
                     }
                     while (!allowable);
 
-                    boolean winged = (type > 3);
-                    if (type > 3)
+                    boolean winged = (crType > 3);
+                    if (crType > 3)
                     {
-                        type -= 3;
+                        crType -= 3;
                     }
-                    level.setSpriteTemplate(x, y, new SpriteTemplate(type, winged));
+                    level.setSpriteTemplate(x, y, new SpriteTemplate(crType, winged));
                 }
             }
         }
@@ -722,11 +803,11 @@ public class LevelGenerator
         }
         int xTube = xo + 1 + globalRandom.nextInt(4);
 
-        int tubeHeight = floor - globalRandom.nextInt(3) - 1; //и здесь
+        int tubeHeight = floor - globalRandom.nextInt(3) - 1; 
 
         if (maxHeight != ANY_HEIGHT)
         {
-            //maxHeight -= 2;   //TODO: если че, то поправил здесь
+            //maxHeight -= 2;
             if (floor - tubeHeight > maxHeight)
             {
                 if (maxHeight > 4)
@@ -765,8 +846,8 @@ public class LevelGenerator
                 xTube += 10;
             }
 
-            if (x == xTube && globalRandom.nextInt(11) < difficulty + 1 && Integer.valueOf(creaturesMask) == 1)
-            // TODO: FIXME: Integer.valueOf(creaturesMask) == 1 make more elegant!
+            //TODO: add a flower and winged goomba in to the creatures mask
+            if (x == xTube && globalRandom.nextInt(11) < difficulty + 1)
             {
                 level.setSpriteTemplate(x, tubeHeight, new SpriteTemplate(Enemy.ENEMY_FLOWER, false));
             }
@@ -788,7 +869,7 @@ public class LevelGenerator
                             level.setBlock(x, y, (byte) (xPic + 0 * 16));
                             if (x == xTube)
                             {
-                                tubesCount++;
+                                counters.tubesCount++;
                             }
                         }
                         else
@@ -861,7 +942,7 @@ public class LevelGenerator
 
     private static boolean canBuildBlocks( int x0, int floor, boolean isHB )
     {
-        if ((blocksCount >= totalBlocksCount && !isHB))
+        if ((counters.blocksCount >= counters.totalBlocksCount && !isHB))
         {
             return false;
         }
@@ -887,7 +968,7 @@ public class LevelGenerator
 
     private static void buildBlocks(int x0, int x1, int floor, boolean pHB, int pS, int pE, boolean onlyHB)
     {
-        if (blocksCount > totalBlocksCount)
+        if (counters.blocksCount > counters.totalBlocksCount)
         {
             return;
         }
@@ -904,7 +985,7 @@ public class LevelGenerator
             {
                 for (int x = x0 + s; x < x1  - e; x++)
                 {
-                    if(hb && totalHiddenBlocksCount != 0) //if hidden blocks to be built
+                    if(hb && counters.totalHiddenBlocksCount != 0) //if hidden blocks to be built
                     {
                         boolean isBlock = globalRandom.nextInt(2) == 1;
                         if(isBlock && canBuildBlocks(x, floor-4, true))
@@ -920,7 +1001,7 @@ public class LevelGenerator
                         {
                             if (canBuildBlocks(x, floor-4, false))
                             {
-                                blocksCount++;
+                                counters.blocksCount++;
                                 if ((globalRandom.nextInt(4) == 0))
                                 {
                                     level.setBlock(x, floor - 4, (byte) (4 + 2 + 1 * 16)); //a rock with animated question symbol with flower. when broken becomes a rock
@@ -936,7 +1017,7 @@ public class LevelGenerator
                         {
                             if  (canBuildBlocks(x, floor-4, false))
                             {
-                                blocksCount++;
+                                counters.blocksCount++;
                                 if (globalRandom.nextInt(4) == 0)
                                 {
                                     level.setBlock(x, floor - 4, (byte) (2 + 1 * 16)); //a brick with a flower. when broken becomes a rock
@@ -950,7 +1031,7 @@ public class LevelGenerator
                         }
                         else if(globalRandom.nextInt(2)==1 && canBuildBlocks(x, floor-4, false))
                         {
-                            blocksCount++;
+                            counters.blocksCount++;
                             level.setBlock(x, floor - 4, (byte) (0 + 1 * 16)); //a break brick
                             canDeco = true;
                         }
@@ -985,13 +1066,13 @@ public class LevelGenerator
         {
             for (int x = x0 + 1 + s; x < x1 - 1 - e; x++)
             {
-                if (coinsCount >= totalCoinsCount)
+                if (counters.coinsCount >= counters.totalCoinsCount)
                 {
                     break;
                 }
                 if( level.getBlock( x, floor - 2 ) == 0 ) //if cell (x, floor-2) is empty
                 {
-                    coinsCount++;
+                    counters.coinsCount++;
                     level.setBlock(x, floor - 2, (byte) (2 + 2 * 16)); //coin
                 }
             }
@@ -1000,7 +1081,7 @@ public class LevelGenerator
 
     private static boolean canAddEnemyLine( int x0, int x1, int floor )
     {
-        if (Integer.valueOf(creaturesMask) == 0x0) //not one bit selected
+        if (!creatures.canAdd())
         {
             return false;
         }
