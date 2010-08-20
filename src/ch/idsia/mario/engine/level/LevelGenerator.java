@@ -315,7 +315,7 @@ public class LevelGenerator
                 else
                     return 0;
             case ODDS_GAPS:
-                if ((floor > 2 || floor == ANY_HEIGHT) && counters.gapsCount < counters.totalGapsCount)
+                if ((floor > 2 || floor == ANY_HEIGHT) && (counters.gapsCount < counters.totalGapsCount))
                 {
                     counters.gapsCount++;
                     return buildGap(x, 12, maxHeight, floor, floorHeight);
@@ -327,7 +327,7 @@ public class LevelGenerator
             case ODDS_CANNONS:
                 if (counters.cannonsCount < counters.totalCannonsCount)
                 {
-                    //increment of cannons is inside of the method
+                    //increment of cannonsCount is inside of the method
                     return buildCannons(x, maxLength, maxHeight, floor, floorHeight);
                 }
                 else
@@ -480,12 +480,13 @@ public class LevelGenerator
         }
 
         int floor = vfloor;
-        if( vfloor == DEFAULT_FLOOR)
+        if( vfloor == DEFAULT_FLOOR && !isFlatLevel)
         {
             floor = height - 1 - globalRandom.nextInt(4);
         }
-        else
+        else //code in this block is a magic. don't change it
         {
+            floor++;
             globalRandom.nextInt();
             if (floor > 1)
             {
