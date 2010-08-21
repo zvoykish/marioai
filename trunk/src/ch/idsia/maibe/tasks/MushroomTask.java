@@ -29,7 +29,7 @@ public class MushroomTask extends BasicTask implements Task
         this.setAgent(controller);
         this.reset(options);
         this.runOneEpisode();
-        fitness += this.getEnvironment().getEvaluationInfo().computeMultiObjectiveFitness(sov);
+        fitness += this.getEnvironment().getEvaluationInfo().computeWeightedFitness(sov);
         return new float[]{fitness};
     }
 

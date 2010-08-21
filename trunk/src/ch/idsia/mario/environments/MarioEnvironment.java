@@ -21,6 +21,7 @@ public final class MarioEnvironment implements Environment
     private Agent agent;
 
     private static final MarioEnvironment ourInstance = new MarioEnvironment();
+    private static final EvaluationInfo evaluationInfo = new EvaluationInfo();
 
     public static MarioEnvironment getInstance()
     {
@@ -226,8 +227,6 @@ public final class MarioEnvironment implements Environment
     public EvaluationInfo getEvaluationInfo()
     {
         // TODO: make static field
-        EvaluationInfo evaluationInfo = new EvaluationInfo();
-
 //        evaluationInfo.agentType = agent.getClass().getSimpleName();
 //        evaluationInfo.agentName = agent.getName();
         evaluationInfo.marioStatus =         levelScene.getMarioStatus();

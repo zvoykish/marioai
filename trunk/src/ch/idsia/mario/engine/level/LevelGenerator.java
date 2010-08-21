@@ -12,9 +12,9 @@ import java.util.Random;
  *  <li>height -- height of the level in cells. On the screen one cell has 16 pixels </li>
  *  <li>seed -- use this param to make a globalRandom level.
  *      On different machines with the same seed param there will be one level</li>
- *  <li>difficulty -- use this param to change difficult of the level.
+ *  <li>levelDifficulty -- use this param to change difficult of the level.
  *      On different machines with the same seed param there will be one level</li>
- *  <li>type -- type of the level. One of Overground, Underground, Castle.</li>
+ *  <li>levelType -- levelType of the level. One of Overground, Underground, Castle.</li>
  * </ul>
  *
  * @see #TYPE_OVERGROUND
@@ -157,8 +157,8 @@ public class LevelGenerator
     private static final int ODDS_DEAD_ENDS = 5;
     private static int[]  odds = new int[6];
     private static int totalOdds;
-    private static int difficulty; //level difficulty
-    private static int type;  //level type
+    private static int levelDifficulty;
+    private static int levelType;
 
     private static Creatures creatures;
 
@@ -194,19 +194,17 @@ public class LevelGenerator
         counters.totalTubesCount = args.getTubesCount()  ? Integer.MAX_VALUE : 0;
 //        this.cmdArgs = args;
 
-        type = args.getLevelType();
-        difficulty = args.getLevelDifficulty();
+        levelType = args.getLevelType();
+        levelDifficulty = args.getLevelDifficulty();
         odds[ODDS_STRAIGHT] = 20;
         odds[ODDS_HILL_STRAIGHT] = 1;
-        odds[ODDS_TUBES] = 2 + 1 * difficulty;
-        odds[ODDS_GAPS] = 3 * difficulty;
-        odds[ODDS_CANNONS] = -10 + 5 * difficulty;
-        odds[ODDS_DEAD_ENDS] = 2 + 2 * difficulty;
+        odds[ODDS_TUBES] = 2 + 1 * levelDifficulty;
+        odds[ODDS_GAPS] = 3 * levelDifficulty;
+        odds[ODDS_CANNONS] = -10 + 5 * levelDifficulty;
+        odds[ODDS_DEAD_ENDS] = 2 + 2 * levelDifficulty;
 
-        if (type != LevelGenerator.TYPE_OVERGROUND)
-        {
+        if (levelType != LevelGenerator.TYPE_OVERGROUND)
             odds[ODDS_HILL_STRAIGHT] = 0; //if not overground then there are no hill straight
-        }
 
         for (int i = 0; i < odds.length; i++)
         {
@@ -216,7 +214,7 @@ public class LevelGenerator
         }
 
         level = new Level(length, height);
-        globalRandom.setSeed(args.getLevelRandSeed() + type);
+        globalRandom.setSeed(args.getLevelRandSeed() + levelType);
 
         int length = 0; //total level length
         //mario starts on straight
@@ -255,7 +253,7 @@ public class LevelGenerator
         }
 
         //if underground or castle then built ceiling
-        if (type == LevelGenerator.TYPE_CASTLE || type == LevelGenerator.TYPE_UNDERGROUND)
+        if (levelType == LevelGenerator.TYPE_CASTLE || levelType == LevelGenerator.TYPE_UNDERGROUND)
         {
             int ceiling = 0;
             int run = 0;
@@ -405,7 +403,7 @@ public class LevelGenerator
         int separatorHeight = 2 + globalRandom.nextInt(2);
 
         int nx = x0 + length;
-        int depth = 12 + globalRandom.nextInt(15) + difficulty;
+        int depth = 12 + globalRandom.nextInt(15) + levelDifficulty;
         if (depth + length > maxLength)
         {
             while (depth + length > maxLength)
@@ -471,7 +469,7 @@ public class LevelGenerator
         int gl = globalRandom.nextInt(2) + 2; //GapLength
 //        System.out.println("globalRandom.nextInt() % this.levelDifficulty+1 = " +
         globalRandom.nextInt();
-        int length = gs * 2 + gl + (globalRandom.nextInt() % difficulty + 1);
+        int length = gs * 2 + gl + (globalRandom.nextInt() % levelDifficulty + 1);
 
         boolean hasStairs = globalRandom.nextInt(3) == 0;
         if(maxHeight <= 5 && maxHeight != ANY_HEIGHT) //TODO: gs must be smaller than maxHeigth
@@ -646,7 +644,7 @@ public class LevelGenerator
             }
         }
 
-        addEnemyLine(xo + 1, xo + length - 1, floor - 1);
+        addEnemiesLine(xo + 1, xo + length - 1, floor - 1);
 
         int h = floor;
 
@@ -674,7 +672,7 @@ public class LevelGenerator
                 {
                     occupied[xxo - xo] = true;
                     occupied[xxo - xo + l] = true;
-                    addEnemyLine(xxo, xxo + l, h - 1);
+                    addEnemiesLine(xxo, xxo + l, h - 1);
                     if (globalRandom.nextInt(4) == 0)
                     {
                         decorate(xxo - 1, xxo + l + 1, h, false);
@@ -718,7 +716,7 @@ public class LevelGenerator
     6)winged spiky
 */
 
-    private static void addEnemyLine(int x0, int x1, int y)
+    private static void addEnemiesLine(int x0, int x1, int y)
     {
         boolean canAdd = true;
         for (int x = x0; x < x1; x++)
@@ -738,26 +736,26 @@ public class LevelGenerator
 
         for (int x = x0; x < x1; x++)
         {
-            if (creaturesRandom.nextInt(35) < difficulty + 1)
+            if (creaturesRandom.nextInt(35) < levelDifficulty + 1)
             {
                 if (creatures.isComplete())
-                { //difficulty of creatures on the level depends on the difficulty of the level
+                { //levelDifficulty of creatures on the level depends on the levelDifficulty of the level
                     int type = creaturesRandom.nextInt(4);
-                    if (difficulty < 1)
+                    if (levelDifficulty < 1)
                     {
                         type = Enemy.ENEMY_GOOMBA;
                     }
-                    else if (difficulty < 3)
+                    else if (levelDifficulty < 3)
                     {
                         type = creaturesRandom.nextInt(3);
                     }
-                    level.setSpriteTemplate(x, y, new SpriteTemplate(type, creaturesRandom.nextInt(35) < difficulty));
+                    level.setSpriteTemplate(x, y, new SpriteTemplate(type, creaturesRandom.nextInt(35) < levelDifficulty));
                 }
                 else
                 {
                     boolean allowable = false;
                     int crType = creaturesRandom.nextInt(4);
-                    if (difficulty < 3)
+                    if (levelDifficulty < 3)
                     {
                         creaturesRandom.nextInt(3);
                     }
@@ -847,8 +845,8 @@ public class LevelGenerator
                 xTube += 10;
             }
 
-            //TODO: add a flower and winged goomba in to the creatures mask
-            if (x == xTube && globalRandom.nextInt(11) < difficulty + 1)
+            if (x == xTube && globalRandom.nextInt(11) < levelDifficulty + 1 && Integer.valueOf(creaturesMask) == 1)
+            // TODO: FIXME: Integer.valueOf(creaturesMask) == 1 make more elegant!
             {
                 level.setSpriteTemplate(x, tubeHeight, new SpriteTemplate(Enemy.ENEMY_FLOWER, false));
             }
@@ -1038,7 +1036,7 @@ public class LevelGenerator
                         }
                         if (canDeco)
                         {
-                            if( globalRandom.nextInt(4) == 2 ) addEnemyLine(x0 + 1, x1 - 1, floor - 1);
+                            if( globalRandom.nextInt(4) == 2 ) addEnemiesLine(x0 + 1, x1 - 1, floor - 1);
                             buildCoins( x0, x1, floor, s, e );                                
                         }
                     }
@@ -1108,11 +1106,11 @@ public class LevelGenerator
 
         int s = globalRandom.nextInt(4);
         int e = globalRandom.nextInt(4);
-        boolean hb = ((globalRandom.nextInt(difficulty+1) % (difficulty+ 1))) > 0.5;
+        boolean hb = ((globalRandom.nextInt(levelDifficulty +1) % (levelDifficulty + 1))) > 0.5;
 
         if (!hb)
         {
-            addEnemyLine(x0 + 1, x1 - 1, floor - 1);
+            addEnemiesLine(x0 + 1, x1 - 1, floor - 1);
         }
 
         if (floor - 2 > 0 && !hb )
@@ -1155,14 +1153,10 @@ public class LevelGenerator
     private static void blockify(Level level, boolean[][] blocks, int width, int height)
     {
         int to = 0;
-        if (type == LevelGenerator.TYPE_CASTLE)
-        {
+        if (levelType == LevelGenerator.TYPE_CASTLE)
             to = 4 * 2;
-        }
-        else if (type == LevelGenerator.TYPE_UNDERGROUND)
-        {
+        else if (levelType == LevelGenerator.TYPE_UNDERGROUND)
             to = 4 * 3;
-        }
 
         boolean[][] b = new boolean[2][2];
         for (int x = 0; x < width; x++)

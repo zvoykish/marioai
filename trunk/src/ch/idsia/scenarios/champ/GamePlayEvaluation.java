@@ -82,7 +82,7 @@ public final class GamePlayEvaluation
                             continue;
                         }
                         EvaluationInfo evaluationInfo = basicTask.getEnvironment().getEvaluationInfo();
-                        float f = evaluationInfo.computeMultiObjectiveFitness();
+                        float f = evaluationInfo.computeWeightedFitness();
                         if (verbose)
                         {
                             System.out.println("LEVEL OPTIONS: -ld " + levelDifficulty + " -lt " + levelType + " -pw " + !creaturesEnable +
