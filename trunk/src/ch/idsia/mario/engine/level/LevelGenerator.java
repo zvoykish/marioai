@@ -845,8 +845,7 @@ public class LevelGenerator
                 xTube += 10;
             }
 
-            if (x == xTube && globalRandom.nextInt(11) < levelDifficulty + 1 && Integer.valueOf(creaturesMask) == 1)
-            // TODO: FIXME: Integer.valueOf(creaturesMask) == 1 make more elegant!
+            if (x == xTube && globalRandom.nextInt(11) < levelDifficulty + 1)
             {
                 level.setSpriteTemplate(x, tubeHeight, new SpriteTemplate(Enemy.ENEMY_FLOWER, false));
             }
