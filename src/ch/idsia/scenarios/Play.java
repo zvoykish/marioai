@@ -47,7 +47,7 @@ public final class Play
         
         basicTask.doEpisodes(1, false);
         System.out.println("\nEvaluationInfo: \n" + basicTask.getEnvironment().getEvaluationInfoAsString());
-        System.out.println("\nCustom : \n" + basicTask.getEnvironment().getEvaluationInfo().computeMultiObjectiveFitness(m));
+        System.out.println("\nCustom : \n" + basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(m));
         System.exit(0);
     }
 }

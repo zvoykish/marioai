@@ -11,7 +11,7 @@ public class SystemOfValues
     public int mode = 32;
     public int coins = 16;
     public int hiddenItems = 24;    
-    public int flowerFire = 64;  // not used for now
+    public int flowerFire = 64; 
     public int kills = 42;
     public int killedByFire = 4;
     public int killedByShell = 17;

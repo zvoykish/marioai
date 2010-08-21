@@ -61,7 +61,7 @@ public final class LearningEvaluation
             }*/
 
             EvaluationInfo evaluationInfo = task.getEnvironment().getEvaluationInfo();
-            float f = evaluationInfo.computeMultiObjectiveFitness();
+            float f = evaluationInfo.computeWeightedFitness();
             if (verbose)
             {
                 System.out.println("Intermediate SCORE = " + f + "; Details: " + evaluationInfo.toStringSingleLine());
@@ -83,7 +83,7 @@ public final class LearningEvaluation
             disqualifications++;
         }
         EvaluationInfo evaluationInfo = basicTask.getEnvironment().getEvaluationInfo();
-        float f = evaluationInfo.computeMultiObjectiveFitness();
+        float f = evaluationInfo.computeWeightedFitness();
         if (verbose)
         {
             System.out.println("Intermediate SCORE = " + f + "; Details: " + evaluationInfo.toStringSingleLine());

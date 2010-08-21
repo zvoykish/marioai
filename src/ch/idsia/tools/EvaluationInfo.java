@@ -56,7 +56,7 @@ public final class EvaluationInfo
         return distancePassedPhys - timeSpent + numberOfCoinsGained + marioStatus*marioSystemOfValues.win;
     }
 
-    public float computeMultiObjectiveFitness(SystemOfValues sov)
+    public float computeWeightedFitness(SystemOfValues sov)
     {
         return
                 distancePassedPhys * sov.distance +
@@ -74,9 +74,9 @@ public final class EvaluationInfo
                 timeLeft * sov.timeLeft;
     }
 
-    public float computeMultiObjectiveFitness()
+    public float computeWeightedFitness()
     {
-        return this.computeMultiObjectiveFitness(marioSystemOfValues);
+        return this.computeWeightedFitness(marioSystemOfValues);
     }
 
     public float computeDistancePassed()
@@ -129,7 +129,7 @@ public final class EvaluationInfo
             "\n                      kills By Fire : " + killsByFire +
             "\n                     kills By Shell : " + killsByShell +
             "\n                     kills By Stomp : " + killsByStomp +
-            "\n               multiObjectiveFitness : " + df.format(computeMultiObjectiveFitness()) +
+            "\n               multiObjectiveFitness : " + df.format(computeWeightedFitness()) +
             ((Memo.equals("")) ? "" : "\nMemo: " + Memo);
     }
 
@@ -210,7 +210,7 @@ public final class EvaluationInfo
 //        ret += "\n                   Total time given : " + totalTimeGiven;
 ////        ret += "\nCoins Gained: " + numberOfCoinsGained/totalNumberOfCoins*100 + "%. (" + numberOfCoinsGained + " of " + totalNumberOfCoins + ")";
 //        ret += "\n                       Coins Gained : " + numberOfCoinsGained;
-//        ret += "\n               multiObjectiveFitness : " + df.format(computeMultiObjectiveFitness());
+//        ret += "\n               multiObjectiveFitness : " + df.format(computeWeightedFitness());
 //        ret += ((Memo.equals("")) ? "" : "\nMemo: " + Memo);
 //        return ret;
 //    }

@@ -74,7 +74,7 @@ public final class CmdLineOptions extends EvaluationOptions
         GlobalOptions.observationGridHeight = getReceptiveFieldHeight();
 //        Environment.ObsWidth = GlobalOptions.observationGridWidth/2;
 //        Environment.ObsHeight = GlobalOptions.observationGridHeight/2;
-        GlobalOptions.isShowGrid = isGridVisualized();
+        GlobalOptions.isShowGrid = isReceptiveFieldVisualized();
     }
 
     public void printOptions(boolean singleLine)
@@ -141,11 +141,10 @@ public final class CmdLineOptions extends EvaluationOptions
         return ret;
     }
 
-    public Boolean isGridVisualized()
+    public Boolean isReceptiveFieldVisualized()
     {
-        return b(getParameterValue("-sg"));
+        return b(getParameterValue("-srf"));
     }
-
 
     @Deprecated
     public int[] toIntArray()
