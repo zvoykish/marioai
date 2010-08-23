@@ -132,6 +132,36 @@ public class LevelGenerator
 
             return flag;
         }
+
+        public static boolean canBeWinged(int num)
+        {
+            switch (num)
+            {
+                case 0: return false; //goomba
+                case 1: return false; //green coopa
+                case 2: return false; //red coopa
+                case 3: return false; //spiky
+                case 4: return true; //winged green coopa
+                case 5: return true; //winged red coopa
+                case 6: return true; //winged spiky
+            }
+            return false;
+        }
+
+        public static int getNativeType(int num)
+        {
+            switch (num)
+            {
+                case 0: return Enemy.ENEMY_GOOMBA; //goomba
+                case 1: return Enemy.ENEMY_GREEN_KOOPA; //green coopa
+                case 2: return Enemy.ENEMY_RED_KOOPA; //red coopa
+                case 3: return Enemy.ENEMY_SPIKY; //spiky
+                case 4: return Enemy.ENEMY_GREEN_KOOPA; //winged green coopa
+                case 5: return Enemy.ENEMY_RED_KOOPA; //winged red coopa
+                case 6: return Enemy.ENEMY_SPIKY; //winged spiky
+            }
+            return -1;
+        }
     }
 
     public static final int TYPE_OVERGROUND = 0;
@@ -739,7 +769,7 @@ public class LevelGenerator
             if (creaturesRandom.nextInt(35) < levelDifficulty + 1)
             {
                 if (creatures.isComplete())
-                { //levelDifficulty of creatures on the level depends on the levelDifficulty of the level
+                { //Difficulty of creatures on the level depends on the levelDifficulty of the level
                     int type = creaturesRandom.nextInt(4);
                     if (levelDifficulty < 1)
                     {
@@ -760,6 +790,7 @@ public class LevelGenerator
                         creaturesRandom.nextInt(3);
                     }
                     Random locRnd = new Random();
+                    //TODO: locRnd.setSeed();
                     do
                     {
                         crType = locRnd.nextInt(7);
@@ -774,12 +805,9 @@ public class LevelGenerator
                     }
                     while (!allowable);
 
-                    boolean winged = (crType > 3);
-                    if (crType > 3)
-                    {
-                        crType -= 3;
-                    }
-                    level.setSpriteTemplate(x, y, new SpriteTemplate(crType, winged));
+                    boolean winged = (creatures.canBeWinged(crType));
+                    int t = creatures.getNativeType(crType);
+                    level.setSpriteTemplate(x, y, new SpriteTemplate(t, winged));
                 }
             }
         }

@@ -8,19 +8,19 @@ import java.awt.*;
 
 public class Enemy extends Sprite
 {
-    /*public static final int ENEMY_RED_KOOPA = 0;
+    public static final int ENEMY_RED_KOOPA = 0;
     public static final int ENEMY_GREEN_KOOPA = 1;
     public static final int ENEMY_GOOMBA = 2;
     public static final int ENEMY_SPIKY = 3;
-    public static final int ENEMY_FLOWER = 4*/
-    public static final int ENEMY_GOOMBA = 0;
+    public static final int ENEMY_FLOWER = 4;
+    /*public static final int ENEMY_GOOMBA = 0;
     public static final int ENEMY_GREEN_KOOPA = 1;
     public static final int ENEMY_RED_KOOPA = 2;
     public static final int ENEMY_SPIKY = 3;
     public static final int ENEMY_WINGED_GREEN_KOOPA = 1;
     public static final int ENEMY_WINGED_RED_KOOPA = 2;
     public static final int ENEMY_WINGED_SPIKY = 3;
-    public static final int ENEMY_FLOWER = 4;
+    public static final int ENEMY_FLOWER = 4;*/
 
     private float runTime;
     private boolean onGround = false;
