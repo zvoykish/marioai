@@ -33,15 +33,15 @@ public class ForwardAgent extends BasicAIAgent implements Agent
 
     private boolean DangerOfGap(byte[][] levelScene)
     {
-        for (int x = 9; x < 13; ++x)
+        for (int x = 7; x < 19; ++x)
         {
             boolean f = true;
-            for(int y = 12; y < 22; ++y)
+            for(int y = 9; y < 19; ++y)
             {
                 if  (levelScene[y][x] != 0)
                     f = false;
             }
-            if (f && levelScene[12][11] != 0)
+            if (f || levelScene[10][9] == 0 || (marioState[1] > 0 && (levelScene[10][8] != 0 || levelScene[10][9] != 0)) )
                 return true;
         }
         return false;
@@ -56,7 +56,7 @@ public class ForwardAgent extends BasicAIAgent implements Agent
     {
         // this Agent requires observation integrated in advance.
 
-        if (mergedObservation[11][13] != 0 || mergedObservation[11][12] != 0 ||  DangerOfGap())
+        if (mergedObservation[9][11] != 0 || mergedObservation[9][10] != 0 ||  DangerOfGap())
         {
             if (isMarioAbleToJump || ( !isMarioOnGround && action[Mario.KEY_JUMP]))
             {
