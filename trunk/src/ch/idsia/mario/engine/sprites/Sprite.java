@@ -10,7 +10,7 @@ public class Sprite
 {
     public static final int KIND_NONE = 0;
     public static final int KIND_MARIO = -31;
-    public static final int KIND_GOOMBA = 2;
+    public static final int KIND_GOOMBA = 80;
     public static final int KIND_GOOMBA_WINGED = 3;
     public static final int KIND_RED_KOOPA = 4;
     public static final int KIND_RED_KOOPA_WINGED = 5;
