@@ -67,7 +67,7 @@ public class EvaluationOptions extends SimulationOptions
     public Integer getFPS() {
         return i(getParameterValue("-fps"));      }
 
-    public String getAgentName() {
+    public String getAgentLoadFullName() {
         return getParameterValue("-ag");      }
 
     public boolean isTimer() {

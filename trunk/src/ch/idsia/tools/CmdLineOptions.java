@@ -30,7 +30,7 @@ import java.util.Map;
 
 public final class CmdLineOptions extends EvaluationOptions
 {
-    private static final HashMap<String, CmdLineOptions> OptionsMapString = new HashMap<String, CmdLineOptions>();
+    private static final HashMap<String, CmdLineOptions> CmdLineOptionsMapString = new HashMap<String, CmdLineOptions>();
     private String optionsString;
 
     public CmdLineOptions(String[] args)
@@ -39,10 +39,18 @@ public final class CmdLineOptions extends EvaluationOptions
         this.setArgs(args);
     }
 
-    @Deprecated
-    private CmdLineOptions(String args)
+//    @Deprecated
+    public CmdLineOptions(String args)
     {
-        //USE CmdLineOptions.getOptionsByString(String args) method
+        //USE CmdLineOptions.getCmdLineOptionsClassByString(String args) method
+        super();
+        this.setArgs(args);
+    }
+
+    public CmdLineOptions()
+    {
+        super();
+        this.setArgs("");
     }
 
     public void setArgs(String argString)
@@ -89,13 +97,13 @@ public final class CmdLineOptions extends EvaluationOptions
 
     public static CmdLineOptions getOptionsByString(String argString)
     {
-        if (OptionsMapString.get(argString) == null)
+        if (CmdLineOptionsMapString.get(argString) == null)
         {
             final CmdLineOptions value = new CmdLineOptions(argString.trim().split("\\s+"));
-            OptionsMapString.put(argString, value);
+            CmdLineOptionsMapString.put(argString, value);
             return value;
         }
-        return OptionsMapString.get(argString);
+        return CmdLineOptionsMapString.get(argString);
     }
 
     public static CmdLineOptions getDefaultOptions()
