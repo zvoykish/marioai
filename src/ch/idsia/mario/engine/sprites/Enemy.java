@@ -196,7 +196,6 @@ public class Enemy extends Sprite
             runFrame = 1;
         }
 
-
         if (!move(xa, 0)) facing = -facing;
         onGround = false;
         move(0, ya);
