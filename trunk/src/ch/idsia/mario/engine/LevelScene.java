@@ -31,6 +31,16 @@ public class LevelScene extends Scene implements SpriteContext
 
     public boolean visualization = false;
 
+    private static final int CANNON_MUZZLE = -82;
+    private static final int CANNON_TRUNK = -80;
+    private static final int COIN_ANIM = Sprite.KIND_COIN_ANIM;  //1
+    private static final int BREAKABLE_BRICK = -20;
+    private static final int UNBREAKABLE_BRICK = -22; //a rock with animated question symbol
+    private static final int BRICK = -24; //a rock with animated question symbol
+    private static final int FLOWER_POT = -90;
+    private static final int BORDER_CANNOT_PASS_THROUGH = -60;
+    private static final int BORDER_HILL = -62;
+    private static final int FLOWER_POT_OR_CANNON = -85;
 
     static final private int ObsHeight = 19;
     static final private int ObsWidth = 19;
@@ -177,10 +187,35 @@ public class LevelScene extends Scene implements SpriteContext
                     case 16:  // brick, simple, without any surprise.
                     case 17:  // brick with a hidden coin
                     case 18:  // brick with a hidden friendly flower
-                        return 16; // prevents cheating
+                        return BREAKABLE_BRICK;
                     case 21:       // question brick, contains coin
                     case 22:       // question brick, contains flower/mushroom
-                        return 21; // question brick, contains something
+                        return UNBREAKABLE_BRICK; // question brick, contains something
+                    case 34:
+                        return COIN_ANIM;
+                    case 4:
+                        return BORDER_CANNOT_PASS_THROUGH;
+                    case 14:
+                        return CANNON_MUZZLE;
+                    case 30:
+                    case 46:
+                        return CANNON_TRUNK;
+                    case 10:
+                    case 11:
+                    case 26:
+                    case 27:
+                        return FLOWER_POT;
+                    case 1:
+                        return 0; //hidden block
+                    case -124:
+                    case -123:
+                    case -122:
+                    case -74:
+                        return BORDER_HILL;
+                    case -108:
+                    case -107:
+                    case -106:
+                        return 0; //background of the hill. empty space
                 }
                 return el;
             case(1):
@@ -189,19 +224,18 @@ public class LevelScene extends Scene implements SpriteContext
                     case 16:  // brick, simple, without any surprise.
                     case 17:  // brick with a hidden coin
                     case 18:  // brick with a hidden flower
-                        return 16; // prevents cheating
                     case 21:       // question brick, contains coin
                     case 22:       // question brick, contains flower/mushroom
-                        return 21; // question brick, contains something
+                        return BRICK; // any brick
                     case 1:   // hidden block
-                        return 0; // prevents cheating
                     case(-111):
                     case(-108):
                     case(-107):
                     case(-106):
                     case(15): // Sparcle, irrelevant
-                    case(34): // Coin, irrelevant for the current contest
                         return 0;
+                    case(34):
+                        return COIN_ANIM;
                     case(-128):
                     case(-127):
                     case(-126):
@@ -242,7 +276,7 @@ public class LevelScene extends Scene implements SpriteContext
                     case(-77):
                     case(4):  // kicked hidden brick
                     case(9):
-                        return -10;   // border, cannot pass through, can stand on
+                        return BORDER_CANNOT_PASS_THROUGH;   // border, cannot pass through, can stand on
 //                    case(9):
 //                        return -12; // hard formation border. Pay attention!
                     case(-124):
@@ -250,10 +284,10 @@ public class LevelScene extends Scene implements SpriteContext
                     case(-122):
                     case(-76):
                     case(-74):
-                        return -11; // half-border, can jump through from bottom and can stand on
-                    case(10): case(11): case(26): case(27): // flower pot
+                        return BORDER_HILL; // half-border, can jump through from bottom and can stand on
+                    case(10): case(11): case(26): case(27): //flower pot
                     case(14): case(30): case(46): // canon
-                        return 20;  // angry flower pot or cannon
+                        return FLOWER_POT_OR_CANNON;  // angry flower pot or cannon
                 }
                 System.err.println("ZLevelMapElementGeneralization: Unknown value el = " + el + " Possible Level tiles bug; " +
                                    "Please, inform sergey@idsia.ch or julian@togelius.com. Thanks!");
@@ -266,9 +300,22 @@ public class LevelScene extends Scene implements SpriteContext
                     case(-108):
                     case(-107):
                     case(-106):
-                    case(34): // coins
+                    case 1:   //hidden block
                     case(15): // Sparcle, irrelevant
                         return 0;
+                    case(34): // coins
+                        return COIN_ANIM;
+                    case 16:  // brick, simple, without any surprise.
+                    case 17:  // brick with a hidden coin
+                    case 18:  // brick with a hidden flower
+                    case 21:       // question brick, contains coin
+                    case 22:       // question brick, contains flower/mushroom
+                                //here bricks are any objects cannot jump through and can stand on
+                    case 4: //kicked hidden block
+                    case 9:
+                    case(10): case(11): case(26): case(27): //flower pot
+                    case(14): case(30): case(46): // canon
+                        return BORDER_CANNOT_PASS_THROUGH; // question brick, contains something
                 }
                 return 1;  // everything else is "something", so it is 1
         }
