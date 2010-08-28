@@ -29,25 +29,47 @@ public class MarioAIBenchmarkTest extends TestCase
     @Test
     public void testAgentLoadAndName()
     {
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.ai.agents.controllers.ForwardJumpingAgent");
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -lc 0 -ag ch.idsia.ai.agents.controllers.ForwardJumpingAgent");
         assertNotNull(cmdLineOptions.getAgent());
         assertEquals(cmdLineOptions.getAgent().getName(), "ForwardJumpingAgent");
         assertEquals(cmdLineOptions.getAgentLoadFullName(), "ch.idsia.ai.agents.controllers.ForwardJumpingAgent");
     }
 
     @Test
-    public void testForwardJumpingAgentFitness()
+    public void testForwardJumpingAgentFitnessWithoutCreatures()
+    {
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -lc 0 -ag ch.idsia.ai.agents.controllers.ForwardJumpingAgent -echo on");
+        final BasicTask basicTask = new BasicTask(cmdLineOptions);
+        basicTask.reset(cmdLineOptions);
+        basicTask.runOneEpisode();
+        System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
+        assertEquals("Capacity", 7974, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+    }
+
+    @Test
+    public void testForwardAgentFitnessWithoutCreatures()
+    {
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -lc 0 -ag ch.idsia.ai.agents.controllers.ForwardAgent -echo on");
+        final BasicTask basicTask = new BasicTask(cmdLineOptions);
+        basicTask.reset(cmdLineOptions);
+        basicTask.runOneEpisode();
+        System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
+        assertEquals("Capacity", 7916, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+    }
+
+    @Test
+    public void testForwardJumpingAgentFitnessWithDefaultCreatures()
     {
         final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.ai.agents.controllers.ForwardJumpingAgent -echo on");
         final BasicTask basicTask = new BasicTask(cmdLineOptions);
         basicTask.reset(cmdLineOptions);
         basicTask.runOneEpisode();
         System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-        assertEquals(7414, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
+        assertEquals("Capacity", 7956, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
     }
 
     @Test
-    public void testForwardAgentFitness()
+    public void testForwardAgentFitnessWithDefaultCreatures()
     {
         final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.ai.agents.controllers.ForwardAgent -echo on");
         final BasicTask basicTask = new BasicTask(cmdLineOptions);

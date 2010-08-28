@@ -172,15 +172,14 @@ public class Level
         }
     }
 
+    /**
+     * Animates the unbreakable brick when smashed from below by Mario
+     */
     public void tick()
     {
         for (int x = 0; x < width; x++)
-        {
             for (int y = 0; y < height; y++)
-            {
                 if (data[x][y] > 0) data[x][y]--;
-            }
-        }
     }
 
     public byte getBlockCapped(int x, int y)
