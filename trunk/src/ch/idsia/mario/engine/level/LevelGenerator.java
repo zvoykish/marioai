@@ -1,7 +1,8 @@
 package ch.idsia.mario.engine.level;
 
-import ch.idsia.mario.engine.sprites.Enemy;
+import ch.idsia.mario.engine.sprites.Sprite;
 import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.CreaturesMaskParser;
 
 import java.util.Random;
 
@@ -49,120 +50,16 @@ public class LevelGenerator
     /*
     From left to right:
         0)goomba
-        1)green coopa
-        2)red coopa
+        1)green koopa
+        2)red koopa
         3)spiky
-        4)winged green coopa
-        5)winged red coopa
-        6)winged spiky
+        4)winged goomba
+        5)winged green koopa
+        6)winged red koopa
+        7)winged spiky
+        8)spiky flower
+        9)bullet
     */
-    static private class Creatures
-    {
-        private static boolean goomba = false;
-        private static boolean greenCoopa = false;
-        private static boolean redCoopa = false;
-        private static boolean spiky = false;
-        private static boolean wingedGreenCoopa = false;
-        private static boolean wingedRedCoopa = false;
-        private static boolean wingedSpiky = false;
-
-        private static boolean complete = false;
-
-        public Creatures(String creatures)
-        {
-            while (creatures.length() < 7)
-            {
-                creatures = "0"+creatures;
-            }
-
-            if (creatures.equals("1111111")){complete = true;}
-
-            if (creatures.charAt(0) == '1'){goomba = true;}
-            if (creatures.charAt(1) == '1'){greenCoopa = true;}
-            if (creatures.charAt(2) == '1'){redCoopa = true;}
-            if (creatures.charAt(3) == '1'){spiky = true;}
-            if (creatures.charAt(4) == '1'){wingedGreenCoopa = true;}
-            if (creatures.charAt(5) == '1'){wingedRedCoopa = true;}
-            if (creatures.charAt(6) == '1'){wingedSpiky = true;}
-        }
-
-        public static boolean isGoomba() {return goomba;}
-        public static void setGoomba(boolean goomba) {Creatures.goomba = goomba;}
-        public static boolean isGreenCoopa() {return greenCoopa;}
-        public static void setGreenCoopa(boolean greenCoopa) {Creatures.greenCoopa = greenCoopa;}
-        public static boolean isRedCoopa() {return redCoopa;}
-        public static void setRedCoopa(boolean redCoopa) {Creatures.redCoopa = redCoopa;}
-        public static boolean isSpiky() {return spiky;}
-        public static void setSpiky(boolean spiky) {Creatures.spiky = spiky;}
-        public static boolean isWingedGreenCoopa() {return wingedGreenCoopa;}
-        public static void setWingedGreenCoopa(boolean wingedGreenCoopa) {Creatures.wingedGreenCoopa = wingedGreenCoopa;}
-        public static boolean isWingedRedCoopa() {return wingedRedCoopa;}
-        public static void setWingedRedCoopa(boolean wingedRedCoopa) {Creatures.wingedRedCoopa = wingedRedCoopa;}
-        public static boolean isWingedSpiky() {return wingedSpiky;}
-        public static void setWingedSpiky(boolean wingedSpiky) {Creatures.wingedSpiky = wingedSpiky;}
-
-        public static boolean isComplete() {return complete;}
-        public static void setComplete(boolean complete) {Creatures.complete = complete;}
-
-        public static boolean isActive(int num)
-        {
-            switch (num)
-            {
-                case 0: return isGoomba();
-                case 1: return isGreenCoopa();
-                case 2: return isRedCoopa();
-                case 3: return isSpiky();
-                case 4: return isWingedGreenCoopa();
-                case 5: return isWingedRedCoopa();
-                case 6: return isWingedSpiky();                
-            }
-            return false;
-        }
-
-        public static boolean canAdd()
-        {
-            boolean flag = false;
-            if (isGoomba())              {flag = true;}
-            if (isGreenCoopa())          {flag = true;}
-            if (isRedCoopa())            {flag = true;}
-            if (isSpiky())               {flag = true;}
-            if (isWingedGreenCoopa())    {flag = true;}
-            if (isWingedRedCoopa())      {flag = true;}
-            if (isWingedSpiky())         {flag = true;}
-
-            return flag;
-        }
-
-        public static boolean canBeWinged(int num)
-        {
-            switch (num)
-            {
-                case 0: return false; //goomba
-                case 1: return false; //green coopa
-                case 2: return false; //red coopa
-                case 3: return false; //spiky
-                case 4: return true; //winged green coopa
-                case 5: return true; //winged red coopa
-                case 6: return true; //winged spiky
-            }
-            return false;
-        }
-
-        public static int getNativeType(int num)
-        {
-            switch (num)
-            {
-                case 0: return Enemy.ENEMY_GOOMBA; //goomba
-                case 1: return Enemy.ENEMY_GREEN_KOOPA; //green coopa
-                case 2: return Enemy.ENEMY_RED_KOOPA; //red coopa
-                case 3: return Enemy.ENEMY_SPIKY; //spiky
-                case 4: return Enemy.ENEMY_GREEN_KOOPA; //winged green coopa
-                case 5: return Enemy.ENEMY_RED_KOOPA; //winged red coopa
-                case 6: return Enemy.ENEMY_SPIKY; //winged spiky
-            }
-            return -1;
-        }
-    }
 
     public static final int TYPE_OVERGROUND = 0;
     public static final int TYPE_UNDERGROUND = 1;
@@ -190,7 +87,7 @@ public class LevelGenerator
     private static int levelDifficulty;
     private static int levelType;
 
-    private static Creatures creatures;
+    private static CreaturesMaskParser creatures;
 
     private static final boolean RIGHT_DIRECTION_BOTTOM = false;
     private static final int ANY_HEIGHT = -1;
@@ -215,14 +112,15 @@ public class LevelGenerator
         isFlatLevel = args.isFlatLevel();
         counters.totalHillStraightCount = args.getHillStraightCount() ? Integer.MAX_VALUE : 0;
         counters.totalCannonsCount = args.getCannonsCount()  ? Integer.MAX_VALUE : 0;
-        creatures = new Creatures(args.getEnemies());
         counters.totalGapsCount = args.getGapsCount() ? Integer.MAX_VALUE : 0;
         counters.totalDeadEndsCount = args.getDeadEndsCount() ? Integer.MAX_VALUE : 0;
         counters.totalBlocksCount = args.getBlocksCount() ? Integer.MAX_VALUE : 0;
         counters.totalHiddenBlocksCount = args.getHiddenBlocksCount() ? Integer.MAX_VALUE : 0;
         counters.totalCoinsCount = args.getCoinsCount()  ? Integer.MAX_VALUE : 0;
         counters.totalTubesCount = args.getTubesCount()  ? Integer.MAX_VALUE : 0;
-//        this.cmdArgs = args;
+
+        creatures = new CreaturesMaskParser(args.getEnemies());
+        level.setBulletsEnabled(creatures.isEnabled(CreaturesMaskParser.BULLET));
 
         levelType = args.getLevelType();
         levelDifficulty = args.getLevelDifficulty();
@@ -736,16 +634,6 @@ public class LevelGenerator
         return length;
     }
 
-/*
-    0)goomba
-    1)green coopa
-    2)winged green coopa
-    3)red coopa
-    4)winged red coopa
-    5)spiky
-    6)winged spiky
-*/
-
     private static void addEnemiesLine(int x0, int x1, int y)
     {
         boolean canAdd = true;
@@ -773,17 +661,20 @@ public class LevelGenerator
                     int type = creaturesRandom.nextInt(4);
                     if (levelDifficulty < 1)
                     {
-                        type = Enemy.ENEMY_GOOMBA;
+                        type = Sprite.KIND_GOOMBA;
                     }
                     else if (levelDifficulty < 3)
                     {
-                        type = creaturesRandom.nextInt(3);
+                        int type1 = creaturesRandom.nextInt(3);
+                        int type2 = creaturesRandom.nextInt(3) + 3;
+                        type = creaturesRandom.nextInt(2) == 1 ? type1 : type2;
                     }
-                    level.setSpriteTemplate(x, y, new SpriteTemplate(type, creaturesRandom.nextInt(35) < levelDifficulty));
+                    type = creatures.getNativeType (type);
+                    level.setSpriteTemplate(x, y, new SpriteTemplate(type));
                 }
                 else
                 {
-                    boolean allowable = false;
+                    boolean enabled = false;
                     int crType = creaturesRandom.nextInt(4);
                     if (levelDifficulty < 3)
                     {
@@ -793,21 +684,16 @@ public class LevelGenerator
                     //TODO: locRnd.setSeed();
                     do
                     {
-                        crType = locRnd.nextInt(7);
-                        if (crType == 7)
+                        crType = locRnd.nextInt(8);
+                        if (creatures.isEnabled(crType))
                         {
-                            crType--;
-                        }
-                        if (creatures.isActive(crType))
-                        {
-                            allowable = true;
+                            enabled = true;
                         }
                     }
-                    while (!allowable);
+                    while (!enabled);
 
-                    boolean winged = (creatures.canBeWinged(crType));
                     int t = creatures.getNativeType(crType);
-                    level.setSpriteTemplate(x, y, new SpriteTemplate(t, winged));
+                    level.setSpriteTemplate(x, y, new SpriteTemplate(t));
                 }
             }
         }
@@ -873,9 +759,9 @@ public class LevelGenerator
                 xTube += 10;
             }
 
-            if (x == xTube && globalRandom.nextInt(11) < levelDifficulty + 1)
+            if (x == xTube && globalRandom.nextInt(11) < levelDifficulty + 1 && creatures.isEnabled(CreaturesMaskParser.SPIKY_FLOWER))
             {
-                level.setSpriteTemplate(x, tubeHeight, new SpriteTemplate(Enemy.ENEMY_FLOWER, false));
+                level.setSpriteTemplate(x, tubeHeight, new SpriteTemplate(Sprite.KIND_ENEMY_FLOWER));
             }
 
             for (int y = 0; y < floor+floorHeight; y++)

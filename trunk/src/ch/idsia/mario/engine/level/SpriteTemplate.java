@@ -18,17 +18,49 @@ public class SpriteTemplate
 
     private int type;
     
-    public SpriteTemplate(int type, boolean winged)
+    public SpriteTemplate(int type)
     {
         this.type = type;
-        this.winged = winged;
+        switch (type)
+        {
+            case Sprite.KIND_GOOMBA:
+                this.winged = false;
+                break;
+            case Sprite.KIND_GREEN_KOOPA:
+                this.winged = false;
+                break;
+            case Sprite.KIND_RED_KOOPA:
+                this.winged = false;
+                break;
+            case Sprite.KIND_SPIKY:
+                this.winged = false;
+                break;
+            case Sprite.KIND_GOOMBA_WINGED:
+                this.winged = true;
+                break;
+            case Sprite.KIND_GREEN_KOOPA_WINGED:
+                this.winged = true;
+                break;
+            case Sprite.KIND_RED_KOOPA_WINGED:
+                this.winged = true;
+                break;
+            case Sprite.KIND_SPIKY_WINGED:
+                this.winged = true;
+                break;
+            case Sprite.KIND_ENEMY_FLOWER:
+                this.winged = false;
+                break;
+            case Sprite.KIND_BULLET_BILL:
+                this.winged = false;
+                break;
+        }
     }
     
     public void spawn(LevelScene world, int x, int y, int dir)
     {
         if (isDead) return;
 
-        if (type==Enemy.ENEMY_FLOWER)
+        if (type==Sprite.KIND_ENEMY_FLOWER)
         {
             sprite = new FlowerEnemy(world, x*16+15, y*16+24, x, y);
         }

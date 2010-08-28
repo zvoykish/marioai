@@ -40,6 +40,7 @@ public class Level
     public int xExit;
     public int yExit;
 
+    private static boolean bulletsEnabled;
 
     public Level(int width, int height)
     {
@@ -249,4 +250,14 @@ public class Level
     public int getWidthCells() {         return width;    }
 
     public float getWidthPhys() {         return width * 16;    }
+
+    public static boolean isBulletsEnabled()
+    {
+        return bulletsEnabled;
+    }
+
+    public static void setBulletsEnabled(boolean bulletsEnabled)
+    {
+        Level.bulletsEnabled = bulletsEnabled;
+    }
 }
