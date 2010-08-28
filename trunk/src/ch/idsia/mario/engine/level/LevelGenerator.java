@@ -86,6 +86,7 @@ public class LevelGenerator
     private static int totalOdds;
     private static int levelDifficulty;
     private static int levelType;
+    private static int levelSeed;
 
     private static CreaturesMaskParser creatures;
 
@@ -142,7 +143,9 @@ public class LevelGenerator
         }
 
         level = new Level(length, height);
-        globalRandom.setSeed(args.getLevelRandSeed() + levelType);
+        levelSeed = args.getLevelRandSeed() + levelType;
+        globalRandom.setSeed(levelSeed);
+        creaturesRandom.setSeed(levelSeed);
 
         int length = 0; //total level length
         //mario starts on straight
@@ -291,11 +294,11 @@ public class LevelGenerator
     6+8*16 --  right upper peice of a hill
     6+11*16 -- right upper peice of a hill on earth
     2+2*16 --  animated coin
-    4+2+1*16 -- animated cube with question mark
-    4+1+1*16 -- animated cube with question mark
-    2+1*16 -- animated brick
-    1+1*16 -- animated brick
-    0+1*16 -- animated brick
+    4+2+1*16 -- a rock with animated question symbol with power up
+    4+1+1*16 -- a rock with animated question symbol with coin
+    2+1*16 -- brick with power up. when broken becomes a rock
+    1+1*16 -- brick with power coin. when broken becomes a rock
+    0+1*16 -- break brick
     1+10*16 -- earth, bottom piece
     1+8*16 --  earth, upper piece
     3+10*16 -- piece of earth
@@ -522,15 +525,15 @@ public class LevelGenerator
                     {
                         if (y == cannonHeight)
                         {
-                            level.setBlock(x, y, (byte) (14 + 0 * 16));
+                            level.setBlock(x, y, (byte) (14 + 0 * 16));   // cannon barrel
                         }
                         else if (y == cannonHeight + 1)
                         {
-                            level.setBlock(x, y, (byte) (14 + 1 * 16));
+                            level.setBlock(x, y, (byte) (14 + 1 * 16));   // base for cannon barrel
                         }
                         else
                         {
-                            level.setBlock(x, y, (byte) (14 + 2 * 16));
+                            level.setBlock(x, y, (byte) (14 + 2 * 16));   // cannon pole
                         }
                     }
                 }
@@ -645,6 +648,8 @@ public class LevelGenerator
                 break;
             }
         }
+        Random locRnd = new Random();
+        locRnd.setSeed(levelSeed);
 
         if (!canAddEnemyLine(x0, x1, y))
         {
@@ -675,13 +680,11 @@ public class LevelGenerator
                 else
                 {
                     boolean enabled = false;
-                    int crType = creaturesRandom.nextInt(4);
+                    int crType;// = creaturesRandom.nextInt(4);
                     if (levelDifficulty < 3)
                     {
                         creaturesRandom.nextInt(3);
                     }
-                    Random locRnd = new Random();
-                    //TODO: locRnd.setSeed();
                     do
                     {
                         crType = locRnd.nextInt(8);
@@ -916,11 +919,11 @@ public class LevelGenerator
                                 counters.blocksCount++;
                                 if ((globalRandom.nextInt(4) == 0))
                                 {
-                                    level.setBlock(x, floor - 4, (byte) (4 + 2 + 1 * 16)); //a rock with animated question symbol with flower. when broken becomes a rock
+                                    level.setBlock(x, floor - 4, (byte) (4 + 2 + 1 * 16)); //a brick with animated question symbol with power up. when broken becomes a rock
                                 }
                                 else
                                 {
-                                   level.setBlock(x, floor - 4, (byte) (4 + 1 + 1 * 16)); //a brick with animated question symbol. when broken becomes a rock
+                                   level.setBlock(x, floor - 4, (byte) (4 + 1 + 1 * 16)); //a brick with animated question symbol with coin. when broken becomes a rock
                                 }
                                 canDeco = true;
                             }
@@ -932,7 +935,7 @@ public class LevelGenerator
                                 counters.blocksCount++;
                                 if (globalRandom.nextInt(4) == 0)
                                 {
-                                    level.setBlock(x, floor - 4, (byte) (2 + 1 * 16)); //a brick with a flower. when broken becomes a rock
+                                    level.setBlock(x, floor - 4, (byte) (2 + 1 * 16)); //a brick with a power up. when broken becomes a rock
                                 }
                                 else
                                 {
