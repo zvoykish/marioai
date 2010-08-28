@@ -4,11 +4,12 @@ import ch.idsia.mario.engine.sprites.Sprite;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Sergey Karakovskiy, firstname_at_idsia_dot_ch
+ * User: Sergey Karakovskiy, sergey@idsia.ch
  * Date: Aug 5, 2009
  * Time: 7:04:19 PM
  * Package: ch.idsia.mario.engine
  */
+
 public class GeneralizerEnemies implements Generalizer
 {
 

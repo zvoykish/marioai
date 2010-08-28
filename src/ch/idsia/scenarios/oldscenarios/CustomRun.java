@@ -4,7 +4,6 @@ package ch.idsia.scenarios.oldscenarios;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AmiCoAgent;
 import ch.idsia.tools.CmdLineOptions;
-import ch.idsia.tools.Evaluator;
 
 /**
  * Created by IntelliJ IDEA.
@@ -26,8 +25,8 @@ public class CustomRun
         String amicoModuleName = options.getPyAmiCoModuleName();
         System.out.println("amicoModuleName = " + amicoModuleName);
 //        String amicoAgentName = "ForwardAgent";
-        System.out.println("options.getAgentName() = " + options.getAgentName());
-        Agent agent = new AmiCoAgent(amicoModuleName, options.getAgentName());
+        System.out.println("options.getAgentLoadFullName() = " + options.getAgentLoadFullName());
+        Agent agent = new AmiCoAgent(amicoModuleName, options.getAgentLoadFullName());
         options.setAgent(agent);
 //        evaluator.evaluate();
 //        System.out.println("evaluator = " + evaluator.getMeanEvaluationSummary());

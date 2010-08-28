@@ -3,11 +3,9 @@ package ch.idsia.scenarios.test;
 import ch.idsia.ai.Evolvable;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.learning.MediumSRNAgent;
-import ch.idsia.ai.agents.learning.SmallMLPAgent;
 import ch.idsia.ai.ea.ES;
 import ch.idsia.maibe.tasks.ProgressTask;
 import ch.idsia.mario.engine.GlobalOptions;
-import ch.idsia.scenarios.champ.LearningEvaluation;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.utils.Stats;
 import wox.serial.Easy;
@@ -82,10 +80,10 @@ public class PaperEvolve
             if (fitn > bestScore /*&& marioStatus == Environment.MARIO_STATUS_WIN*/)
             {
                 bestScore = fitn;
-                fileName = "evolved-progress-" + options.getAgentName() + gen + "-uid-" + seed + ".xml";
+                fileName = "evolved-progress-" + options.getAgentLoadFullName() + gen + "-uid-" + seed + ".xml";
                 final Agent a = (Agent) es.getBests()[0];
                 Easy.save (a, fileName);
-                task.dumpFitnessEvaluation(bestScore, "fitnessImprovements-" + options.getAgentName() + ".txt");
+                task.dumpFitnessEvaluation(bestScore, "fitnessImprovements-" + options.getAgentLoadFullName() + ".txt");
 //                c.setLevelRandSeed(options.getLevelRandSeed());
 //                c.setLevelDifficulty(options.getLevelDifficulty());
 //                c.setTimeLimit(options.getTimeLimit());

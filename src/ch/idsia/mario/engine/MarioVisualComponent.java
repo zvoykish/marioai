@@ -111,7 +111,7 @@ public class MarioVisualComponent extends JComponent
     {
         if (marioComponentFrame == null)
         {
-            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentName() +*/ "Mario AI benchmark " + GlobalOptions.getVersionUID());
+            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentLoadFullName() +*/ "Mario AI benchmark " + GlobalOptions.getVersionUID());
             marioComponentFrame.setContentPane(m);
             m.init();
             marioComponentFrame.pack();
@@ -414,7 +414,7 @@ public class MarioVisualComponent extends JComponent
 ////        frame.setLocation((screenSize.width-frame.getWidth())/2, (screenSize.height-frame.getHeight())/2);
 //        if (marioComponentFrame == null)
 //        {
-//            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentName() +*/ "Mario AI benchmark-" + GlobalOptions.MAIBeVersionStr);
+//            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentLoadFullName() +*/ "Mario AI benchmark-" + GlobalOptions.MAIBeVersionStr);
 //            marioVisualComponent = new MarioVisualComponent(320, 240);
 //            marioComponentFrame.setContentPane(marioVisualComponent);
 //            marioVisualComponent.init();
