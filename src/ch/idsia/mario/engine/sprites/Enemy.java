@@ -8,19 +8,11 @@ import java.awt.*;
 
 public class Enemy extends Sprite
 {
-    public static final int ENEMY_RED_KOOPA = 0;
-    public static final int ENEMY_GREEN_KOOPA = 1;
-    public static final int ENEMY_GOOMBA = 2;
-    public static final int ENEMY_SPIKY = 3;
-    public static final int ENEMY_FLOWER = 4;
-    /*public static final int ENEMY_GOOMBA = 0;
-    public static final int ENEMY_GREEN_KOOPA = 1;
-    public static final int ENEMY_RED_KOOPA = 2;
-    public static final int ENEMY_SPIKY = 3;
-    public static final int ENEMY_WINGED_GREEN_KOOPA = 1;
-    public static final int ENEMY_WINGED_RED_KOOPA = 2;
-    public static final int ENEMY_WINGED_SPIKY = 3;
-    public static final int ENEMY_FLOWER = 4;*/
+    public static final int POSITION_RED_KOOPA = 0;
+    public static final int POSITION_GREEN_KOOPA = 1;
+    public static final int POSITION_GOOMBA = 2;
+    public static final int POSITION_SPIKY = 3;
+    public static final int POSITION_FLOWER = 4;
 
     private float runTime;
     private boolean onGround = false;
@@ -38,7 +30,6 @@ public class Enemy extends Sprite
     public boolean flyDeath = false;
 
     public boolean avoidCliffs = true;
-    private int type;
 
     public boolean winged = true;
     private int wingTime = 0;
@@ -47,26 +38,7 @@ public class Enemy extends Sprite
 
     public Enemy(LevelScene world, int x, int y, int dir, int type, boolean winged, int mapX, int mapY)
     {
-        byte k = KIND_UNDEF;
-        switch (type)
-        {
-            case ENEMY_RED_KOOPA:
-                k = (byte) (4 + ((winged) ? 1 : 0));
-                break;
-            case ENEMY_GREEN_KOOPA:
-                k = (byte) (6 + ((winged) ? 1 : 0));
-                break;
-            case ENEMY_GOOMBA:
-                k = (byte) (2 + ((winged) ? 1 : 0));
-                break;
-            case ENEMY_FLOWER:
-                k = (byte) (11);
-                break;
-            case ENEMY_SPIKY:
-                k = (byte) (9 + ((winged) ? 1 : 0));
-        }
-        kind = k;
-        this.type = type;
+        kind = (byte)type;
         sheet = Art.enemies;
         this.winged = winged;
 
@@ -79,11 +51,33 @@ public class Enemy extends Sprite
         xPicO = 8;
         yPicO = 31;
 
-        avoidCliffs = type == Enemy.ENEMY_RED_KOOPA;
-        
-        noFireballDeath = type == Enemy.ENEMY_SPIKY;
 
-        yPic = type;
+        switch(type)
+        {
+            case KIND_GOOMBA:
+            case KIND_GOOMBA_WINGED:
+                yPic = POSITION_GOOMBA;
+                break;
+            case KIND_RED_KOOPA:
+            case KIND_RED_KOOPA_WINGED:
+                yPic = POSITION_RED_KOOPA;
+                break;
+            case KIND_GREEN_KOOPA:
+            case KIND_GREEN_KOOPA_WINGED:
+                yPic = POSITION_GREEN_KOOPA;
+                break;
+            case KIND_SPIKY:
+            case KIND_SPIKY_WINGED:
+                yPic = POSITION_SPIKY;
+                break;
+            case KIND_ENEMY_FLOWER:
+                yPic = POSITION_FLOWER;
+                break;
+        }
+
+        avoidCliffs = kind == KIND_RED_KOOPA;
+
+        noFireballDeath = (kind == KIND_SPIKY || kind == KIND_SPIKY_WINGED);
         if (yPic > 1) height = 12;
         facing = dir;
         if (facing == 0) facing = 1;
@@ -104,7 +98,7 @@ public class Enemy extends Sprite
         {
             if (yMarioD > -height && yMarioD < world.mario.height)
             {
-                if (type != Enemy.ENEMY_SPIKY && world.mario.ya > 0 && yMarioD <= 0 && (!world.mario.onGround || !world.mario.wasOnGround))
+                if ((kind != KIND_SPIKY && kind != KIND_SPIKY_WINGED && kind != KIND_ENEMY_FLOWER) && world.mario.ya > 0 && yMarioD <= 0 && (!world.mario.onGround || !world.mario.wasOnGround))
                 {
                     world.mario.stomp(this);
                     if (winged)
@@ -120,11 +114,11 @@ public class Enemy extends Sprite
                         deadTime = 10;
                         winged = false;
 
-                        if (type == Enemy.ENEMY_RED_KOOPA)
+                        if (kind == KIND_RED_KOOPA || kind == KIND_RED_KOOPA_WINGED)
                         {
                             spriteContext.addSprite(new Shell(world, x, y, 0));
                         }
-                        else if (type == Enemy.ENEMY_GREEN_KOOPA)
+                        else if (kind == KIND_GREEN_KOOPA || kind == KIND_GREEN_KOOPA_WINGED)
                         {
                             spriteContext.addSprite(new Shell(world, x, y, 1));
                         }
@@ -414,7 +408,10 @@ public class Enemy extends Sprite
             int xPixel = (int) (xOld + (x - xOld) * alpha) - xPicO;
             int yPixel = (int) (yOld + (y - yOld) * alpha) - yPicO;
 
-            if (type == Enemy.ENEMY_GREEN_KOOPA || type == Enemy.ENEMY_RED_KOOPA)
+            if (kind == KIND_GREEN_KOOPA ||
+                kind == KIND_RED_KOOPA ||
+                kind == KIND_GREEN_KOOPA_WINGED ||
+                kind == KIND_RED_KOOPA_WINGED)
             {
             }
             else
@@ -432,7 +429,10 @@ public class Enemy extends Sprite
             int xPixel = (int) (xOld + (x - xOld) * alpha) - xPicO;
             int yPixel = (int) (yOld + (y - yOld) * alpha) - yPicO;
 
-            if (type == Enemy.ENEMY_GREEN_KOOPA || type == Enemy.ENEMY_RED_KOOPA)
+            if (kind == KIND_GREEN_KOOPA ||
+                kind == KIND_RED_KOOPA ||
+                kind == KIND_GREEN_KOOPA_WINGED ||
+                kind == KIND_RED_KOOPA_WINGED)
             {
                 og.drawImage(sheet[wingTime / 4 % 2][4], xPixel + (xFlipPic ? wPic : 0) + (xFlipPic ? 10 : -10), yPixel + (yFlipPic ? hPic : 0) - 10, xFlipPic ? -wPic : wPic, yFlipPic ? -hPic : hPic, null);
             }

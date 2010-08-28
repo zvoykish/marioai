@@ -197,16 +197,7 @@ public class ParameterContainer
             defaultOptionsHashMap.put("-lco", "on"); //level: coins count
             defaultOptionsHashMap.put("-lg", "on"); //level: gaps count
             defaultOptionsHashMap.put("-lhb", "off"); //level: hidden blocks count
-            /*
-                0)goomba
-                1)green coopa
-                3)red coopa
-                5)spiky
-                2)winged green coopa
-                4)winged red coopa
-                6)winged spiky
-            */
-            defaultOptionsHashMap.put("-le", "1111111"); //level: enemies bit mask
+            defaultOptionsHashMap.put("-le", "1111111111"); //level: enemies bit mask
             defaultOptionsHashMap.put("-lf", "off"); //level: flat level
         }
     }
