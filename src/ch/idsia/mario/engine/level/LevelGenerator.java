@@ -73,8 +73,8 @@ public class LevelGenerator
     private static int length;
     private static int height;
     private static Level level;
-    final static Random globalRandom = new Random();
-    final static Random creaturesRandom = new Random();
+    final static Random globalRandom = new Random(0);
+    final static Random creaturesRandom = new Random(0);
 
     private static final int ODDS_STRAIGHT = 0;
     private static final int ODDS_HILL_STRAIGHT = 1;
@@ -143,7 +143,8 @@ public class LevelGenerator
         }
 
         level = new Level(length, height);
-        levelSeed = args.getLevelRandSeed() + levelType;
+        levelSeed = args.getLevelRandSeed();// + levelType;
+//        System.out.println("Level seed: " + String.valueOf(levelSeed));
         globalRandom.setSeed(levelSeed);
         creaturesRandom.setSeed(levelSeed);
 
@@ -648,8 +649,7 @@ public class LevelGenerator
                 break;
             }
         }
-        Random locRnd = new Random();
-        locRnd.setSeed(levelSeed);
+        Random locRnd = new Random(levelSeed);
 
         if (!canAddEnemyLine(x0, x1, y))
         {
@@ -666,7 +666,7 @@ public class LevelGenerator
                     int type = creaturesRandom.nextInt(4);
                     if (levelDifficulty < 1)
                     {
-                        type = Sprite.KIND_GOOMBA;
+                        type = CreaturesMaskParser.GOOMBA;
                     }
                     else if (levelDifficulty < 3)
                     {
