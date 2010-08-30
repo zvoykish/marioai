@@ -99,21 +99,50 @@ public class ParameterContainer
 
     public String getParameterValue(String param)
     {
-        if (allowedOptions.contains(param))
-        {
-            if (optionsHashMap.get(param) == null)
-            {
-                //System.err.println("InfoWarning: Default value '" + defaultOptionsHashMap.get(param) + "' for " + param +
-                //        " used");
-                optionsHashMap.put(param, defaultOptionsHashMap.get(param));
-            }
-            return optionsHashMap.get(param);
-        }
-        else
+        String ret;
+        ret = optionsHashMap.get(param);
+        if (ret != null)
+            return ret;
+
+        if (!allowedOptions.contains(param))
         {
             System.err.println("Parameter " + param + " is not valid. Typo?");
             return "";
         }
+
+        ret = defaultOptionsHashMap.get(param);
+        System.err.println("[MarioAI INFO] ~ Default value '" + ret + "' for " + param +
+                " used");
+        optionsHashMap.put(param, ret);
+        return ret;
+//        try
+//        {
+//
+//        }catch (Exception ex)
+//        {
+//
+//        }finally
+//        {
+//            return ret;
+//        }
+
+//
+//
+//        if (allowedOptions.contains(param))
+//        {
+//            if (optionsHashMap.get(param) == null)
+//            {
+//                System.err.println("[MarioAI INFO] ~ Default value '" + defaultOptionsHashMap.get(param) + "' for " + param +
+//                        " used");
+//                optionsHashMap.put(param, defaultOptionsHashMap.get(param));
+//            }
+//            return optionsHashMap.get(param);
+//        }
+//        else
+//        {
+//            System.err.println("Parameter " + param + " is not valid. Typo?");
+//            return "";
+//        }
     }
 
     public int i(String s)
@@ -169,7 +198,6 @@ public class ParameterContainer
             defaultOptionsHashMap.put("-ll","320"); //defaultOptionsHashMap.put("-levelLength","320");
             defaultOptionsHashMap.put("-ls","0"); //defaultOptionsHashMap.put("-levelRandSeed","1");
             defaultOptionsHashMap.put("-lt","0"); //defaultOptionsHashMap.put("-levelType","1");
-            // TODO:SK turn out to just FPS, if FPS > 100 -> make it maximum
             defaultOptionsHashMap.put("-fps", "24"); //defaultOptionsHashMap.put("-maxFPS","off");
             defaultOptionsHashMap.put("-m",""); //defaultOptionsHashMap.put("-matLabFile","DefaultMatlabFile");
             defaultOptionsHashMap.put("-mm","2"); //Mario Mode
@@ -177,7 +205,7 @@ public class ParameterContainer
             defaultOptionsHashMap.put("-pr","off"); //defaultOptionsHashMap.put("-powerRestoration","off");
             defaultOptionsHashMap.put("-rfh","19");
             defaultOptionsHashMap.put("-rfw","19");
-            defaultOptionsHashMap.put("-sg","off");
+            defaultOptionsHashMap.put("-srf","off");
             defaultOptionsHashMap.put("-t","on"); //defaultOptionsHashMap.put("-timer","on");
             defaultOptionsHashMap.put("-tl","200"); //Time Limit
             defaultOptionsHashMap.put("-tc","off"); //defaultOptionsHashMap.put("-toolsConfigurator","off");
@@ -194,7 +222,6 @@ public class ParameterContainer
             defaultOptionsHashMap.put("-ltb", "on"); //level: tubes count
             defaultOptionsHashMap.put("-lco", "on"); //level: coins count
             defaultOptionsHashMap.put("-lb", "on"); //level: blocks count
-            defaultOptionsHashMap.put("-lco", "on"); //level: coins count
             defaultOptionsHashMap.put("-lg", "on"); //level: gaps count
             defaultOptionsHashMap.put("-lhb", "off"); //level: hidden blocks count
             defaultOptionsHashMap.put("-le", "1111111111"); //level: enemies bit mask

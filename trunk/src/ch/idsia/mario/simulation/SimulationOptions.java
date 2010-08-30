@@ -25,38 +25,6 @@ public class SimulationOptions extends ParameterContainer
     }
 
 
-    public SimulationOptions getSimulationOptionsCopy()
-    {
-        SimulationOptions ret = new SimulationOptions();
-        ret.setAgent(getAgent());
-        ret.setLevelDifficulty(getLevelDifficulty());
-        ret.setLevelLength(getLevelLength());
-        ret.setLevelHeight(getLevelHeight());
-        ret.setLevelRandSeed(getLevelRandSeed());
-        ret.setLevelType(getLevelType());
-//        ret.setMarioComponent(marioComponent);
-        ret.setVisualization(isVisualization());
-        ret.setPauseWorld(isPauseWorld());
-        ret.setPowerRestoration(isPowerRestoration());
-        ret.setMarioMode(getMarioMode());
-        ret.setTimeLimit(getTimeLimit());
-        ret.setZLevelEnemies(getZLevelEnemies());
-        ret.setZLevelScene(getZLevelScene());
-        ret.setMarioInvulnerable(isMarioInvulnerable());
-        ret.setDeadEndsCount(getDeadEndsCount());
-        ret.setCannonsCount(getCannonsCount());
-        ret.setHillStraightCount(getHillStraightCount());
-        ret.setTubesCount(getTubesCount());
-        ret.setBlocksCount(getBlocksCount());
-        ret.setCoinsCount(getCoinsCount());
-        ret.setGapsCount(getGapsCount());
-        ret.setHiddenBlocksCount(getHiddenBlocksCount());
-        ret.setEnemies(getEnemies());
-        ret.setFlatLevel(isFlatLevel());
-//        ret.setCurrentTrial(getCurrentTrial());
-        return ret;
-    }
-
     // Agent
     public Agent getAgent()
     {
@@ -79,7 +47,6 @@ public class SimulationOptions extends ParameterContainer
         this.agent = AgentsPool.load(agentWOXorClassName);
     }
 
-    // TODO? LEVEL_TYPE enum?
     // LevelType
     public int getLevelType() {
         return i(getParameterValue("-lt"));      }
@@ -138,10 +105,6 @@ public class SimulationOptions extends ParameterContainer
 
     public void setPowerRestoration(boolean powerRestoration) {
         setParameterValue("-pr", s(powerRestoration));    }
-
-    //StopSimulationIfWin
-//    public Boolean isStopSimulationIfWin() {
-//        return b(getParameterValue("-ssiw"));     }
 
     //MarioMode
     public int getMarioMode() {
