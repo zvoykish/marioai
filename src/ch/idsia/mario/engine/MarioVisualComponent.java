@@ -210,7 +210,7 @@ public class MarioVisualComponent extends JComponent
         }
         //      g.drawImage(Art.background, 0, 0, null);
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < bgLayer.length; i++)
         {
             bgLayer[i].setCam(xCam, yCam);
             bgLayer[i].render(g, levelScene.tick, alpha); //levelScene.
@@ -231,18 +231,18 @@ public class MarioVisualComponent extends JComponent
 
         g.translate(-xCam, -yCam);
 
-        // TODO: Dump out of render!
-        if (mario.cheatKeys[Mario.KEY_DUMP_CURRENT_WORLD])
-            for (int w = 0; w < level.width; w++)
-                for (int h = 0; h < level.height; h++)
-                    level.observation[w][h] = -1;
+//        TODO: Dump out of render!
+//        if (mario.cheatKeys[Mario.KEY_DUMP_CURRENT_WORLD])
+//            for (int w = 0; w < level.width; w++)
+//                for (int h = 0; h < level.height; h++)
+//                    level.observation[w][h] = -1;
 
         for (Sprite sprite : levelScene.sprites)
         {
             if (sprite.layer == 1) sprite.render(g, alpha);
-            if (mario.cheatKeys[Mario.KEY_DUMP_CURRENT_WORLD] && sprite.mapX >= 0 && sprite.mapX < level.observation.length &&
-                sprite.mapY >= 0 && sprite.mapY < level.observation[0].length)
-                level.observation[sprite.mapX][sprite.mapY] = sprite.kind;
+//            if (mario.cheatKeys[Mario.KEY_DUMP_CURRENT_WORLD] && sprite.mapX >= 0 && sprite.mapX < level.observation.length &&
+//                sprite.mapY >= 0 && sprite.mapY < level.observation[0].length)
+//                level.observation[sprite.mapX][sprite.mapY] = sprite.kind;
 
         }
 
@@ -467,7 +467,7 @@ public class MarioVisualComponent extends JComponent
 //            System.out.println("mario = " + mario);
             this.level = levelScene.level;
             layer = new LevelRenderer(level, graphicsConfiguration, this.width, this.height);
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < bgLayer.length; i++)
             {
                 int scrollSpeed = 4 >> i;
                 int w = ((level.width * 16) - GlobalOptions.VISUAL_COMPONENT_WIDTH) / scrollSpeed + GlobalOptions.VISUAL_COMPONENT_WIDTH;

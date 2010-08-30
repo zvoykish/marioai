@@ -33,7 +33,7 @@ public class Level
 
     public byte[][] map;
     public byte[][] data;
-    public byte[][] observation;
+//    public byte[][] observation;
 
     public SpriteTemplate[][] spriteTemplates;
 
@@ -49,9 +49,9 @@ public class Level
 
         xExit = 50;
         yExit = 10;
-//        System.out.println("Java: Level: lots of news here...");
-//        System.out.println("width = " + width);
-//        System.out.println("height = " + height);
+        System.out.println("Java: Level: lots of news here...");
+        System.out.println("width = " + width);
+        System.out.println("height = " + height);
         try{
         map = new byte[width][height];
 //        System.out.println("map = " + map);
@@ -66,7 +66,7 @@ public class Level
             System.exit(-3);
         }
 //        System.out.println("spriteTemplates = " + spriteTemplates);
-        observation = new byte[width][height];
+//        observation = new byte[width][height];
 //        System.out.println("observation = " + observation);
     }
 

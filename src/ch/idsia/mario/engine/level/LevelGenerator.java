@@ -121,7 +121,7 @@ public class LevelGenerator
         counters.totalTubesCount = args.getTubesCount()  ? Integer.MAX_VALUE : 0;
 
         creatures = new CreaturesMaskParser(args.getEnemies());
-        level.setBulletsEnabled(creatures.isEnabled(CreaturesMaskParser.BULLET));
+        level.setBulletsEnabled(CreaturesMaskParser.isEnabled(CreaturesMaskParser.BULLET));
 
         levelType = args.getLevelType();
         levelDifficulty = args.getLevelDifficulty();
@@ -169,7 +169,7 @@ public class LevelGenerator
         }
 
         //coordinates of the exit
-        level.xExit = length + 8;
+        level.xExit = length;
         level.yExit = floor;
 
         //fix floor

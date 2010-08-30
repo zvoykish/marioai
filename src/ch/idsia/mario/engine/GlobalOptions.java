@@ -32,29 +32,22 @@ public abstract class
     public static int observationGridHeight = -1;
 
     private static MarioVisualComponent marioVisualComponent;
-    public static final int VISUAL_COMPONENT_WIDTH = 320;
+    public static final int VISUAL_COMPONENT_WIDTH = 320*4;
     public static final int VISUAL_COMPONENT_HEIGHT = 240;
     public static boolean isMatrixView;
 
     public static boolean isShowGrid = false;
 
-    public static int getPrimaryVersionUID()
-    {
-        return primaryVerionUID;
-    }
+    public static int getPrimaryVersionUID()    {
+        return primaryVerionUID;                }
 
-    public static int getMinorVersionUID()
-    {
-        return minorVerionUID;
-    }
+    public static int getMinorVersionUID()    {
+        return minorVerionUID;                }
 
-    public static int getMinorSubVerionID()
-    {
-        return minorSubVerionID;
-    }
+    public static int getMinorSubVerionID()    {
+        return minorSubVerionID;               }
 
-    public static String getVersionUID()
-    {
+    public static String getVersionUID()    {
         return " " + getPrimaryVersionUID() + "." + getMinorVersionUID() + "." + getMinorSubVerionID();
     }
 
@@ -68,7 +61,7 @@ public abstract class
         GameViewer = gv;
     }
 
-    public static void AdjustMarioComponentFPS()
+    public static void AdjustMarioVisualComponentFPS()
     {
         if (marioVisualComponent != null)
             marioVisualComponent.adjustFPS();
@@ -78,8 +71,6 @@ public abstract class
     {
         if (GameViewer != null)
             GameViewer.tick();
-//        else
-//            LOGGER.println("GameViewer is not available. Request for dump ignored.", LOGGER.VERBOSE_MODE.ERROR);
     }
 
     public static String getDateTime(Long d)

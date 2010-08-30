@@ -118,7 +118,7 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
                 {
 //                    LOGGER.println("FPS increase by 1. Current FPS is " + ++GlobalOptions.FPS, LOGGER.VERBOSE_MODE.INFO);
                     ++GlobalOptions.FPS;
-                    GlobalOptions.AdjustMarioComponentFPS();
+                    GlobalOptions.AdjustMarioVisualComponentFPS();
                 }
                 break;
             case 45:
@@ -126,7 +126,7 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
                 {
 //                    LOGGER.println("FPS decrease . Current FPS is " + --GlobalOptions.FPS, LOGGER.VERBOSE_MODE.INFO);
                     --GlobalOptions.FPS;
-                    GlobalOptions.AdjustMarioComponentFPS();
+                    GlobalOptions.AdjustMarioVisualComponentFPS();
                 }
                 break;
             case 56:  // chr(56) = 8
@@ -137,7 +137,7 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent {
                     GlobalOptions.FPS = (GlobalOptions.FPS == GlobalOptions.MaxFPS) ? temp : GlobalOptions.MaxFPS;
 //                    LOGGER.println("FPS has been changed. Current FPS is " +
 //                            ((GlobalOptions.FPS == GlobalOptions.MaxFPS) ? "\\infty" : GlobalOptions.FPS), LOGGER.VERBOSE_MODE.INFO);
-                    GlobalOptions.AdjustMarioComponentFPS();
+                    GlobalOptions.AdjustMarioVisualComponentFPS();
                 }
                 break;
             case KeyEvent.VK_G:
