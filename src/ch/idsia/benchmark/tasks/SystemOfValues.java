@@ -1,4 +1,4 @@
-package ch.idsia.maibe.tasks;
+package ch.idsia.benchmark.tasks;
 
 /**
  * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Apr 4, 2010 Time: 11:50:43 AM
@@ -10,8 +10,8 @@ public class SystemOfValues
     public int win = 1024;
     public int mode = 32;
     public int coins = 16;
-    public int hiddenItems = 24;    
-    public int flowerFire = 64; 
+    public int hiddenItems = 24;
+    public int flowerFire = 64;
     public int kills = 42;
     public int killedByFire = 4;
     public int killedByShell = 17;

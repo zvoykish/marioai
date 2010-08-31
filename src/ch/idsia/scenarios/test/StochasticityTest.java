@@ -2,8 +2,8 @@ package ch.idsia.scenarios.test;
 
 import ch.idsia.agents.Agent;
 import ch.idsia.agents.AgentsPool;
-import ch.idsia.maibe.tasks.ProgressTask;
-import ch.idsia.maibe.tasks.Task;
+import ch.idsia.benchmark.tasks.ProgressTask;
+import ch.idsia.benchmark.tasks.Task;
 import ch.idsia.tools.CmdLineOptions;
 
 /**

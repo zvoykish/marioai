@@ -1,7 +1,7 @@
 package ch.idsia.scenarios;
 
-import ch.idsia.maibe.tasks.BasicTask;
-import ch.idsia.maibe.tasks.MarioCustomSystemOfValues;
+import ch.idsia.benchmark.tasks.BasicTask;
+import ch.idsia.benchmark.tasks.MarioCustomSystemOfValues;
 import ch.idsia.tools.CmdLineOptions; /**
  * Created by IntelliJ IDEA.
  * User: julian

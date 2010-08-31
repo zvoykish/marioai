@@ -1,8 +1,8 @@
 package ch.idsia.agents;
 
 import ch.idsia.agents.learning.MediumSRNAgent;
+import ch.idsia.benchmark.tasks.ProgressTask;
 import ch.idsia.evolution.ea.ES;
-import ch.idsia.maibe.tasks.ProgressTask;
 
 /**
  * Created by IntelliJ IDEA.

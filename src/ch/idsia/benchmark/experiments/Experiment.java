@@ -1,7 +1,7 @@
 package ch.idsia.benchmark.experiments;
 
 import ch.idsia.agents.Agent;
-import ch.idsia.maibe.tasks.Task;
+import ch.idsia.benchmark.tasks.Task;
 
 import java.util.List;
 

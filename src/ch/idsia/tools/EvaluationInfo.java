@@ -1,7 +1,7 @@
 package ch.idsia.tools;
 
-import ch.idsia.maibe.tasks.MarioSystemOfValues;
-import ch.idsia.maibe.tasks.SystemOfValues;
+import ch.idsia.benchmark.tasks.MarioSystemOfValues;
+import ch.idsia.benchmark.tasks.SystemOfValues;
 import ch.idsia.mario.engine.sprites.Mario;
 
 import java.text.DecimalFormat;

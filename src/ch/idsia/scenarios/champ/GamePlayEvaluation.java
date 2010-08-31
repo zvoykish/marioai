@@ -4,7 +4,7 @@ import ch.idsia.agents.Agent;
 import ch.idsia.agents.AgentsPool;
 import ch.idsia.agents.controllers.ForwardJumpingAgent;
 import ch.idsia.agents.controllers.TimingAgent;
-import ch.idsia.maibe.tasks.BasicTask;
+import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.tools.EvaluationOptions;

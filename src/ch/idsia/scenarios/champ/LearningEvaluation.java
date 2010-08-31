@@ -4,8 +4,8 @@ import ch.idsia.agents.Agent;
 import ch.idsia.agents.LearningAgent;
 import ch.idsia.agents.SRNESLearningAgent;
 import ch.idsia.agents.learning.MediumSRNAgent;
-import ch.idsia.maibe.tasks.BasicTask;
-import ch.idsia.maibe.tasks.ProgressTask;
+import ch.idsia.benchmark.tasks.BasicTask;
+import ch.idsia.benchmark.tasks.ProgressTask;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
 
