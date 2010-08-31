@@ -7,6 +7,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.util.Random;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Sergey Karakovskiy, sergey.karakovskiy@gmail.com
@@ -25,6 +27,30 @@ public class MarioAIBenchmarkTest extends TestCase
     public void tearDown()
     {
     }
+
+    @Test
+    public void testRandoms()
+    {
+        Random r1 = new Random(42);
+        Random r2 = new Random(42);
+        for (int i = 0; i < 1000; ++i)
+        {
+            assertEquals(r1.nextBoolean(), r2.nextBoolean());
+            assertEquals(r1.nextInt(), r2.nextInt());
+        }
+    }
+
+    @Test
+    public void testRandomPersistence()
+    {
+        Random r1 = new Random(42);
+        int seq[] = new int[]{2, 0, 2, 0, 1, 3, 1, 2, 2, 0, 3, 1, 1, 1, 1, 2, 1, 3, 3, 3, 3, 0, 1, 1, 2, 3, 1, 3, 0, 0, 2, 1, 0, 1, 3, 1, 0, 0, 2, 1, 3, 2};
+        for (int i = 0; i < 42; ++i)
+        {
+            assertEquals(r1.nextInt(4), seq[i]);
+        }
+    }
+
 
     @Test
     public void testAgentLoadAndName()
