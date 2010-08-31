@@ -22,7 +22,7 @@ public class LearningTask extends BasicTask implements Task
     {
         options = cmdLineOptions;
         environment.reset(cmdLineOptions);
-        
+
     }
-    
+
 }

@@ -22,27 +22,27 @@ public final class EvaluationInfo
     public static final int numberOfElements = 15;
 
     // ordered in alphabetical order;
-    public int distancePassedCells =MagicNumberUnDef;
+    public int distancePassedCells = MagicNumberUnDef;
     // TODO: migrate to all integers.
-    public float distancePassedPhys =MagicNumberUnDef;
-    public int flowersDevoured=MagicNumberUnDef;
-    public int killsByFire=MagicNumberUnDef;
-    public int killsByShell=MagicNumberUnDef;
-    public int killsByStomp=MagicNumberUnDef;
-    public int killsTotal=MagicNumberUnDef;
-    public int marioMode=MagicNumberUnDef;
-    public int marioStatus=MagicNumberUnDef;
-    public int mushroomsDevoured=MagicNumberUnDef;
-    public int numberOfCoinsGained=MagicNumberUnDef;
-    public int numberOfHiddenItemsGained =MagicNumberUnDef;
-    public int timeLeft=MagicNumberUnDef;
-    public int timeSpent =MagicNumberUnDef;
+    public float distancePassedPhys = MagicNumberUnDef;
+    public int flowersDevoured = MagicNumberUnDef;
+    public int killsByFire = MagicNumberUnDef;
+    public int killsByShell = MagicNumberUnDef;
+    public int killsByStomp = MagicNumberUnDef;
+    public int killsTotal = MagicNumberUnDef;
+    public int marioMode = MagicNumberUnDef;
+    public int marioStatus = MagicNumberUnDef;
+    public int mushroomsDevoured = MagicNumberUnDef;
+    public int numberOfCoinsGained = MagicNumberUnDef;
+    public int numberOfHiddenItemsGained = MagicNumberUnDef;
+    public int timeLeft = MagicNumberUnDef;
+    public int timeSpent = MagicNumberUnDef;
     public int hiddenBlocksFound = MagicNumberUnDef;
 
     private static final float[] retFloatArray = new float[EvaluationInfo.numberOfElements];
     private static final float[] zeros = new float[EvaluationInfo.numberOfElements];
     public String Memo = "";
-    
+
     private static final DecimalFormat df = new DecimalFormat("0.00");
     private static MarioSystemOfValues marioSystemOfValues = new MarioSystemOfValues();
 
@@ -53,25 +53,25 @@ public final class EvaluationInfo
 
     public float computeBasicFitness()
     {
-        return distancePassedPhys - timeSpent + numberOfCoinsGained + marioStatus*marioSystemOfValues.win;
+        return distancePassedPhys - timeSpent + numberOfCoinsGained + marioStatus * marioSystemOfValues.win;
     }
 
     public float computeWeightedFitness(SystemOfValues sov)
     {
         return
                 distancePassedPhys * sov.distance +
-                flowersDevoured * sov.flowerFire +
-                marioStatus * sov.win +
-                marioMode * sov.mode  +
-                mushroomsDevoured * sov.mushrooms +
-                numberOfCoinsGained * sov.coins+
-                hiddenBlocksFound * sov.hiddenBlocks +
-                killsTotal * sov.kills +
-                killsByStomp * sov.killedByStomp +
-                killsByFire * sov.killedByFire +
-                killsByShell * sov.killedByShell +
-                numberOfHiddenItemsGained * sov.hiddenItems +
-                timeLeft * sov.timeLeft;
+                        flowersDevoured * sov.flowerFire +
+                        marioStatus * sov.win +
+                        marioMode * sov.mode +
+                        mushroomsDevoured * sov.mushrooms +
+                        numberOfCoinsGained * sov.coins +
+                        hiddenBlocksFound * sov.hiddenBlocks +
+                        killsTotal * sov.kills +
+                        killsByStomp * sov.killedByStomp +
+                        killsByFire * sov.killedByFire +
+                        killsByShell * sov.killedByShell +
+                        numberOfHiddenItemsGained * sov.hiddenItems +
+                        timeLeft * sov.timeLeft;
     }
 
     public float computeWeightedFitness()
@@ -90,6 +90,7 @@ public final class EvaluationInfo
     }
 
     //TODO: possible fitnesses adjustments: penalize for collisions with creatures and especially for suicide. It's a sin.
+
     public float[] toFloatArray()
     {
         retFloatArray[0] = this.distancePassedCells;
@@ -114,42 +115,42 @@ public final class EvaluationInfo
     public String toString()
     {
         return "\nEvaluation Information. Statistics and Score:" +
-            "\n                       Mario Status : " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss...") +
-            "\n                         Mario Mode : " + Mario.MODES[marioMode] +
-            "\n               Passed (Cells, Phys) : " + df.format((double) distancePassedCells) + ", " +
-                                                         df.format(distancePassedPhys) +
-            "\n           Time Spent(marioseconds) : " + timeSpent +
-            "\n            Time Left(marioseconds) : " + timeLeft +
-            "\n                       Coins Gained : " + numberOfCoinsGained +
-            "\n                 Hidden Items Found : " + numberOfHiddenItemsGained +
-            "\n                Hidden Blocks Found : " + hiddenBlocksFound +
-            "\n                 Mushrooms Devoured : " + mushroomsDevoured +
-            "\n                   Flowers Devoured : " + flowersDevoured +
-            "\n                        kills Total : " + killsTotal +
-            "\n                      kills By Fire : " + killsByFire +
-            "\n                     kills By Shell : " + killsByShell +
-            "\n                     kills By Stomp : " + killsByStomp +
-            "\n               weighted Fitness : " + df.format(computeWeightedFitness()) +
-            ((Memo.equals("")) ? "" : "\nMemo: " + Memo);
+                "\n                       Mario Status : " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss...") +
+                "\n                         Mario Mode : " + Mario.MODES[marioMode] +
+                "\n               Passed (Cells, Phys) : " + df.format((double) distancePassedCells) + ", " +
+                df.format(distancePassedPhys) +
+                "\n           Time Spent(marioseconds) : " + timeSpent +
+                "\n            Time Left(marioseconds) : " + timeLeft +
+                "\n                       Coins Gained : " + numberOfCoinsGained +
+                "\n                 Hidden Items Found : " + numberOfHiddenItemsGained +
+                "\n                Hidden Blocks Found : " + hiddenBlocksFound +
+                "\n                 Mushrooms Devoured : " + mushroomsDevoured +
+                "\n                   Flowers Devoured : " + flowersDevoured +
+                "\n                        kills Total : " + killsTotal +
+                "\n                      kills By Fire : " + killsByFire +
+                "\n                     kills By Shell : " + killsByShell +
+                "\n                     kills By Stomp : " + killsByStomp +
+                "\n               weighted Fitness : " + df.format(computeWeightedFitness()) +
+                ((Memo.equals("")) ? "" : "\nMemo: " + Memo);
     }
 
     public String toStringSingleLine()
     {
         return "##" +
-        " Status: " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss") +
-        "; Mode: " + Mario.MODES[marioMode] +
-        " +  Passed (Cells, Phys): " + df.format((double) distancePassedCells) + ", " +
-                                                            df.format(distancePassedPhys) +
-        "; Time Spent: " + timeSpent +
-        "; Time Left: " + timeLeft +
-        "; Coins: " + numberOfCoinsGained +
-        "; Hidden blocks: "+ hiddenBlocksFound +
-        "; Mushrooms: " + mushroomsDevoured +
-        "; Flowers: " + flowersDevoured +        
-        "; kills: " + killsTotal +
-        "; By Fire: " + killsByFire +
-        "; By Shell: " + killsByShell + 
-        "; By Stomp: " + killsByStomp;
+                " Status: " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss") +
+                "; Mode: " + Mario.MODES[marioMode] +
+                " +  Passed (Cells, Phys): " + df.format((double) distancePassedCells) + ", " +
+                df.format(distancePassedPhys) +
+                "; Time Spent: " + timeSpent +
+                "; Time Left: " + timeLeft +
+                "; Coins: " + numberOfCoinsGained +
+                "; Hidden blocks: " + hiddenBlocksFound +
+                "; Mushrooms: " + mushroomsDevoured +
+                "; Flowers: " + flowersDevoured +
+                "; kills: " + killsTotal +
+                "; By Fire: " + killsByFire +
+                "; By Shell: " + killsByShell +
+                "; By Stomp: " + killsByStomp;
     }
 
 //    public int levelType = MagicNumberUnDef;
