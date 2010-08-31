@@ -33,6 +33,7 @@ public class ForwardAgent extends BasicAIAgent implements Agent
 
     private boolean DangerOfGap(byte[][] levelScene)
     {
+        // TODO: introduce variables instead of constants.
         for (int x = 7; x < 19; ++x)
         {
             boolean f = true;
