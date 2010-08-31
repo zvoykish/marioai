@@ -1,7 +1,7 @@
-package ch.idsia.ai.ea;
+package ch.idsia.evolution.ea;
 
-import ch.idsia.ai.EA;
-import ch.idsia.ai.Evolvable;
+import ch.idsia.evolution.EA;
+import ch.idsia.evolution.Evolvable;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.maibe.tasks.Task;
 

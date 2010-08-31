@@ -55,22 +55,23 @@ public final class CmdLineOptions extends EvaluationOptions
 
     public void setArgs(String argString)
     {
-        this.setArgs(argString.trim().split("\\s+"));
+        if (!"".equals(argString))
+            this.setArgs(argString.trim().split("\\s+"));
     }
     
 
     public void setArgs(String[] args)
     {
-        if (args.length > 0 && !args[0].startsWith("-") /*starts with a path to agent then*/)
-        {
-            this.setAgent(args[0]);
-
-            String[] shiftedargs = new String[args.length - 1];
-            System.arraycopy(args, 1, shiftedargs, 0, args.length - 1);
-            this.setUpOptions(shiftedargs);
-        }
-        else
-            this.setUpOptions(args);
+//        if (args.length > 0 && !args[0].startsWith("-") /*starts with a path to agent then*/)
+//        {
+//            this.setAgent(args[0]);
+//
+//            String[] shiftedargs = new String[args.length - 1];
+//            System.arraycopy(args, 1, shiftedargs, 0, args.length - 1);
+//            this.setUpOptions(shiftedargs);
+//        }
+//        else
+        this.setUpOptions(args);
 
         if (isEcho())
         {
@@ -154,47 +155,45 @@ public final class CmdLineOptions extends EvaluationOptions
         return b(getParameterValue("-srf"));
     }
 
-    @Deprecated
-    public int[] toIntArray()
-    {
-        return new int[]
-                {
-                        this.isGameViewer() ? 1 : 0,           /*0*/
-                        this.isMarioInvulnerable() ? 1 : 0,    /*1*/
-                        this.getLevelDifficulty(),             /*2*/
-                        this.getLevelLength(),                 /*3*/
-                        this.getLevelRandSeed(),               /*4*/
-                        this.getLevelType(),                   /*5*/
-                        this.getMarioMode(),                   /*6*/
-                        this.getFPS(),                         /*7*/
-                        this.isPowerRestoration() ? 1 : 0,     /*8*/
-                        this.isPauseWorld() ? 1 : 0,           /*9*/
-                        this.isTimer() ? 1 : 0,                /*10*/
-                        // TODO:SK remove rudundancy (-1 -- no time limit)
-                        this.isToolsConfigurator() ? 1 : 0,    /*11*/
-                        this.getTimeLimit(),                   /*12*/
-                        this.isViewAlwaysOnTop() ? 1 : 0,      /*13*/
-                        this.isVisualization() ? 1 : 0,        /*14*/
-                        this.getViewLocation().x,              /*15*/
-                        this.getViewLocation().y,              /*16*/
-                        this.getZLevelEnemies(),               /*17*/
-                        this.getZLevelScene(),                 /*18*/
-                        this.getLevelHeight(),                 /*19*/
-                        this.getDeadEndsCount() ? Integer.MAX_VALUE : 0,       /*20*/
-                        this.getCannonsCount()  ? Integer.MAX_VALUE : 0,       /*21*/
-                        this.getHillStraightCount() ? Integer.MAX_VALUE : 0,   /*22*/
-                        this.getTubesCount() ? Integer.MAX_VALUE : 0,          /*23*/
-                        this.getBlocksCount() ? Integer.MAX_VALUE : 0,         /*24*/
-                        this.getCoinsCount() ? Integer.MAX_VALUE : 0,          /*25*/
-                        this.getGapsCount() ? Integer.MAX_VALUE : 0,           /*26*/
-                        this.getHiddenBlocksCount() ? Integer.MAX_VALUE : 0,   /*27*/
-                        Integer.valueOf(this.getEnemies()),                    /*28*/
-                        this.isFlatLevel() ? 1 : 0                             /*29*/
-                };
-    }
-
-
-
+//    @Deprecated
+//    public int[] toIntArray()
+//    {
+//        return new int[]
+//                {
+//                        this.isGameViewer() ? 1 : 0,           /*0*/
+//                        this.isMarioInvulnerable() ? 1 : 0,    /*1*/
+//                        this.getLevelDifficulty(),             /*2*/
+//                        this.getLevelLength(),                 /*3*/
+//                        this.getLevelRandSeed(),               /*4*/
+//                        this.getLevelType(),                   /*5*/
+//                        this.getMarioMode(),                   /*6*/
+//                        this.getFPS(),                         /*7*/
+//                        this.isPowerRestoration() ? 1 : 0,     /*8*/
+//                        this.isPauseWorld() ? 1 : 0,           /*9*/
+//                        this.isTimer() ? 1 : 0,                /*10*/
+//                        // TODO:SK remove rudundancy (-1 -- no time limit)
+//                        this.isToolsConfigurator() ? 1 : 0,    /*11*/
+//                        this.getTimeLimit(),                   /*12*/
+//                        this.isViewAlwaysOnTop() ? 1 : 0,      /*13*/
+//                        this.isVisualization() ? 1 : 0,        /*14*/
+//                        this.getViewLocation().x,              /*15*/
+//                        this.getViewLocation().y,              /*16*/
+//                        this.getZLevelEnemies(),               /*17*/
+//                        this.getZLevelScene(),                 /*18*/
+//                        this.getLevelHeight(),                 /*19*/
+//                        this.getDeadEndsCount() ? Integer.MAX_VALUE : 0,       /*20*/
+//                        this.getCannonsCount()  ? Integer.MAX_VALUE : 0,       /*21*/
+//                        this.getHillStraightCount() ? Integer.MAX_VALUE : 0,   /*22*/
+//                        this.getTubesCount() ? Integer.MAX_VALUE : 0,          /*23*/
+//                        this.getBlocksCount() ? Integer.MAX_VALUE : 0,         /*24*/
+//                        this.getCoinsCount() ? Integer.MAX_VALUE : 0,          /*25*/
+//                        this.getGapsCount() ? Integer.MAX_VALUE : 0,           /*26*/
+//                        this.getHiddenBlocksCount() ? Integer.MAX_VALUE : 0,   /*27*/
+//                        Integer.valueOf(this.getEnemies()),                    /*28*/
+//                        this.isFlatLevel() ? 1 : 0                             /*29*/
+//                };
+//    }
+//
 }
 
 //!!!        "-ag",    ?????? ??? ???????? ??????????? %,5^$#<>%

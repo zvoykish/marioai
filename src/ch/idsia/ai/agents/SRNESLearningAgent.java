@@ -1,7 +1,7 @@
 package ch.idsia.ai.agents;
 
 import ch.idsia.ai.agents.learning.MediumSRNAgent;
-import ch.idsia.ai.ea.ES;
+import ch.idsia.evolution.ea.ES;
 import ch.idsia.maibe.tasks.ProgressTask;
 
 /**

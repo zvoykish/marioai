@@ -1,6 +1,6 @@
 package ch.idsia.scenarios.test;
 
-import ch.idsia.ai.SRN;
+import ch.idsia.evolution.SRN;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.learning.LargeSRNAgent;
 import ch.idsia.scenarios.oldscenarios.Stats;
@@ -17,7 +17,7 @@ public class StatsJLink {
         // 98 * 6
         // 6*6
         // 6*6
-        SRN srn = new SRN (inputs, recurrent, output, recurrent.length, output[0].length);
+        SRN srn = new SRN(inputs, recurrent, output, recurrent.length, output[0].length);
         Agent agent = new LargeSRNAgent(srn);
         Stats.doStats(agent, 0);
     }
