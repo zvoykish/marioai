@@ -1,6 +1,6 @@
 package ch.idsia.maibe.experiments;
 
-import ch.idsia.evolution.agents.Agent;
+import ch.idsia.agents.Agent;
 import ch.idsia.maibe.tasks.Task;
 
 import java.util.ArrayList;
@@ -21,6 +21,7 @@ public class EpisodicExperiment extends Experiment
     }
 
     // returns the rewards of each step as an array of doubles
+
     public List<List<Double>> doEpisodes(int amount)
     {
         List<List<Double>> allRewards = new ArrayList<List<Double>>();

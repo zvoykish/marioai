@@ -1,8 +1,8 @@
 package ch.idsia.scenarios.test;
 
+import ch.idsia.agents.Agent;
+import ch.idsia.agents.learning.LargeSRNAgent;
 import ch.idsia.evolution.SRN;
-import ch.idsia.evolution.agents.Agent;
-import ch.idsia.evolution.agents.learning.LargeSRNAgent;
 import ch.idsia.scenarios.oldscenarios.Stats;
 
 /**
@@ -11,9 +11,11 @@ import ch.idsia.scenarios.oldscenarios.Stats;
  * Date: Jul 30, 2009
  * Time: 5:26:01 PM
  */
-public class StatsJLink {
+public class StatsJLink
+{
 
-    public void evaluateLargeSRN (double[][] inputs, double[][] recurrent, double[][] output, int level) {
+    public void evaluateLargeSRN(double[][] inputs, double[][] recurrent, double[][] output, int level)
+    {
         // 98 * 6
         // 6*6
         // 6*6

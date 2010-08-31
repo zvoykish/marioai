@@ -1,7 +1,7 @@
 package competition.cig.sergeykarakovskiy;
 
-import ch.idsia.evolution.agents.Agent;
-import ch.idsia.evolution.agents.controllers.BasicAIAgent;
+import ch.idsia.agents.Agent;
+import ch.idsia.agents.controllers.BasicAIAgent;
 import ch.idsia.mario.engine.sprites.Mario;
 
 /**
@@ -21,7 +21,7 @@ public class SergeyKarakovskiy_JumpingAgent extends BasicAIAgent implements Agen
 
     public boolean[] getAction()
     {
-        action[Mario.KEY_SPEED] = action[Mario.KEY_JUMP] =  isMarioAbleToJump || !isMarioOnGround;
+        action[Mario.KEY_SPEED] = action[Mario.KEY_JUMP] = isMarioAbleToJump || !isMarioOnGround;
         return action;
     }
 
@@ -38,7 +38,7 @@ public class SergeyKarakovskiy_JumpingAgent extends BasicAIAgent implements Agen
         return Agent.AGENT_TYPE.AI;
     }
 
-    public String getName() {        return name;    }
+    public String getName() { return name; }
 
-    public void setName(String Name) { this.name = Name;    }
+    public void setName(String Name) { this.name = Name; }
 }

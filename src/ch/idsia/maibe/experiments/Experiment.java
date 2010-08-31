@@ -1,6 +1,6 @@
 package ch.idsia.maibe.experiments;
 
-import ch.idsia.evolution.agents.Agent;
+import ch.idsia.agents.Agent;
 import ch.idsia.maibe.tasks.Task;
 
 import java.util.List;

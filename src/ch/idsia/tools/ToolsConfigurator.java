@@ -1,7 +1,7 @@
 package ch.idsia.tools;
 
-import ch.idsia.evolution.agents.Agent;
-import ch.idsia.evolution.agents.AgentsPool;
+import ch.idsia.agents.Agent;
+import ch.idsia.agents.AgentsPool;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.mario.engine.MarioVisualComponent;
 import ch.idsia.mario.engine.level.LevelGenerator;
@@ -37,7 +37,7 @@ public class ToolsConfigurator extends JFrame
         cmdLineOptions = new CmdLineOptions(args);
         // Create an Agent here
         MainRun.createAgentsPool();
-         // TODO: more options:
+        // TODO: more options:
         // -agent wox name, like evolvable
         // -ll digit  range [5:15], increase if succeeds.
         // -vb nothing/all/keys
@@ -82,6 +82,7 @@ public class ToolsConfigurator extends JFrame
 
     private static JFrame marioComponentFrame = null;
     public static MarioVisualComponent marioVisualComponent = null;
+
     public static void CreateMarioComponentFrame()
     {
         CreateMarioComponentFrame(new EvaluationOptions());
@@ -112,7 +113,10 @@ public class ToolsConfigurator extends JFrame
         marioComponentFrame.setVisible(evaluationOptions.isVisualization());
     }
 
-    enum INTERFACE_TYPE {CONSOLE, GUI}
+    enum INTERFACE_TYPE
+    {
+        CONSOLE, GUI
+    }
 
     Dimension defaultSize = new Dimension(330, 100);
     Point defaultLocation = new Point(0, 320);
@@ -136,8 +140,8 @@ public class ToolsConfigurator extends JFrame
     public Checkbox CheckboxExitOnFinish = new Checkbox("Exit on finish");
     public TextField TextFieldMatLabFileName = new TextField("FileName of output for Matlab");
     public Choice ChoiceVerbose = new Choice();
-    private static final String strPlay        = "->  Play! ->";
-    private static final String strSimulate    = "Simulate! ->";
+    private static final String strPlay = "->  Play! ->";
+    private static final String strSimulate = "Simulate! ->";
 //    public Checkbox CheckboxStopSimulationIfWin = new Checkbox("Stop simulation If Win");
     public JButton JButtonPlaySimulate = new JButton(strPlay);
     public JButton JButtonResetEvaluationSummary = new JButton("Reset");
@@ -326,7 +330,7 @@ public class ToolsConfigurator extends JFrame
     {
         //Simulate or Play!
         EvaluationOptions evaluationOptions = prepareEvaluatorOptions();
-        assert(evaluationOptions != null);
+        assert (evaluationOptions != null);
 //        if (evaluator == null)
 //            evaluator = new Evaluator(evaluationOptions);
 //        else
@@ -353,7 +357,7 @@ public class ToolsConfigurator extends JFrame
         evaluationOptions.setPowerRestoration(CheckboxPowerRestoration.getState());
         evaluationOptions.setExitProgramWhenFinished(CheckboxExitOnFinish.getState());
         evaluationOptions.setMatlabFileName(TextFieldMatLabFileName.getText());
-        
+
         return evaluationOptions;
     }
 
@@ -366,10 +370,9 @@ public class ToolsConfigurator extends JFrame
             if (ob == JButtonPlaySimulate)
             {
                 simulateOrPlay();
-            }
-            else if (ob == upFPS)
+            } else if (ob == upFPS)
             {
-                if(++GlobalOptions.FPS >= GlobalOptions.MaxFPS)
+                if (++GlobalOptions.FPS >= GlobalOptions.MaxFPS)
                 {
                     GlobalOptions.FPS = GlobalOptions.MaxFPS;
                     CheckboxMaximizeFPS.setState(true);
@@ -377,17 +380,15 @@ public class ToolsConfigurator extends JFrame
 //                marioComponent.adjustFPS();
 //                LOGGER.println("FPS set to " + (CheckboxMaximizeFPS.getState() ? "infinity" : GlobalOptions.FPS),
 //                        LOGGER.VERBOSE_MODE.INFO );
-            }
-            else if (ob == downFPS)
+            } else if (ob == downFPS)
             {
-                if(--GlobalOptions.FPS < 1)
+                if (--GlobalOptions.FPS < 1)
                     GlobalOptions.FPS = 1;
                 CheckboxMaximizeFPS.setState(false);
 //                marioComponent.adjustFPS();
 //                LOGGER.println("FPS set to " + (CheckboxMaximizeFPS.getState() ? "infinity" : GlobalOptions.FPS),
 //                        LOGGER.VERBOSE_MODE.INFO );
-            }
-            else if (ob == JButtonResetEvaluationSummary)
+            } else if (ob == JButtonResetEvaluationSummary)
             {
                 evaluator = null;
             }
@@ -417,41 +418,35 @@ public class ToolsConfigurator extends JFrame
 //                LOGGER.println("Game Viewer " + (CheckboxShowGameViewer.getState() ? "Shown" : "Hidden"),
 //                        LOGGER.VERBOSE_MODE.INFO );
                 gameViewer.setVisible(CheckboxShowGameViewer.getState());
-            }
-            else if (ob == CheckboxShowVizualization)
+            } else if (ob == CheckboxShowVizualization)
             {
 //                LOGGER.println("Vizualization " + (CheckboxShowVizualization.getState() ? "On" : "Off"),
 //                        LOGGER.VERBOSE_MODE.INFO );
                 GlobalOptions.isVisualization = CheckboxShowVizualization.getState();
                 marioComponentFrame.setVisible(GlobalOptions.isVisualization);
-            }
-            else if (ob == CheckboxMaximizeFPS)
+            } else if (ob == CheckboxMaximizeFPS)
             {
                 prevFPS = (GlobalOptions.FPS == GlobalOptions.MaxFPS) ? prevFPS : GlobalOptions.FPS;
                 GlobalOptions.FPS = CheckboxMaximizeFPS.getState() ? 100 : prevFPS;
 //                marioComponent.adjustFPS();
 //                LOGGER.println("FPS set to " + (CheckboxMaximizeFPS.getState() ? "infinity" : GlobalOptions.FPS),
 //                        LOGGER.VERBOSE_MODE.INFO );
-            }
-            else if (ob == CheckboxEnableTimer)
+            } else if (ob == CheckboxEnableTimer)
             {
                 GlobalOptions.isTimer = CheckboxEnableTimer.getState();
 //                LOGGER.println("Timer " + (GlobalOptions.isTimer ? "enabled" : "disabled"),
 //                        LOGGER.VERBOSE_MODE.INFO);
-            }
-            else if (ob == CheckboxPauseWorld)
+            } else if (ob == CheckboxPauseWorld)
             {
                 GlobalOptions.isPauseWorld = CheckboxPauseWorld.getState();
 
 //                marioComponent.setPaused(GlobalOptions.isPauseWorld);
 //                LOGGER.println("World " + (GlobalOptions.isPauseWorld ? "paused" : "unpaused"),
 //                        LOGGER.VERBOSE_MODE.INFO);
-            }
-            else if (ob == CheckboxPauseMario)
+            } else if (ob == CheckboxPauseMario)
             {
                 TextAreaConsole.setText("1\n2\n3\n");
-            }
-            else if (ob == CheckboxPowerRestoration)
+            } else if (ob == CheckboxPowerRestoration)
             {
                 GlobalOptions.isPowerRestoration = CheckboxPowerRestoration.getState();
 //                LOGGER.println("Mario Power Restoration Turned " + (GlobalOptions.isPowerRestoration ? "on" : "off"),
@@ -468,12 +463,10 @@ public class ToolsConfigurator extends JFrame
             {
 //                LOGGER.println("Agent chosen: " + (ChoiceAgent.getSelectedItem()), LOGGER.VERBOSE_MODE.INFO);
                 JButtonPlaySimulate.setText(strSimulate);
-            }
-            else if (ob == ChoiceLevelType)
+            } else if (ob == ChoiceLevelType)
             {
 
-            }
-            else if (ob == ChoiceVerbose)
+            } else if (ob == ChoiceVerbose)
             {
 
             }
@@ -485,12 +478,10 @@ public class ToolsConfigurator extends JFrame
             if (ob == JSpinnerLevelRandomizationSeed)
             {
                 //Change random seed in Evaluator/ Simulator Options
-            }
-            else if (ob == JSpinnerLevelDifficulty)
+            } else if (ob == JSpinnerLevelDifficulty)
             {
 
-            }
-            else if (ob == JSpinnerLevelLength)
+            } else if (ob == JSpinnerLevelLength)
             {
                 if (Integer.parseInt(JSpinnerLevelLength.getValue().toString()) < LevelGenerator.LevelLengthMinThreshold)
                     JSpinnerLevelLength.setValue(LevelGenerator.LevelLengthMinThreshold);
@@ -498,13 +489,14 @@ public class ToolsConfigurator extends JFrame
         }
     }
 
-    public void setGameViewer(GameViewer gameViewer) {        this.gameViewer = gameViewer;    }
+    public void setGameViewer(GameViewer gameViewer) { this.gameViewer = gameViewer; }
 //    public void setMarioComponent(MarioComponent marioComponent)
 //    {
 //        this.marioComponent = marioComponent;
 //        this.marioComponent.setGameViewer(gameViewer);
 //    }
-    public MarioVisualComponent getMarioVisualComponent() {          return marioVisualComponent;    }
+
+    public MarioVisualComponent getMarioVisualComponent() { return marioVisualComponent; }
 
     public void setConsoleText(String text)
     {

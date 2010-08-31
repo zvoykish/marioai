@@ -1,9 +1,9 @@
 package ch.idsia.scenarios.oldscenarios;
 
-import ch.idsia.evolution.agents.Agent;
-import ch.idsia.evolution.agents.AgentsPool;
-import ch.idsia.evolution.agents.controllers.ScaredAgent;
-import ch.idsia.evolution.agents.controllers.TimingAgent;
+import ch.idsia.agents.Agent;
+import ch.idsia.agents.AgentsPool;
+import ch.idsia.agents.controllers.ScaredAgent;
+import ch.idsia.agents.controllers.TimingAgent;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.utils.StatisticalSummary;
@@ -16,7 +16,7 @@ import ch.idsia.utils.StatisticalSummary;
  * Package: ch.idsia
  */
 
-public class MainRun 
+public class MainRun
 {
     final static int numberOfTrials = 10;
     final static boolean scoring = false;
@@ -26,7 +26,8 @@ public class MainRun
     private static int marioModeSum = 0;
     private static boolean detailedStats = false;
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
         EvaluationOptions evaluationOptions = cmdLineOptions;  // if none options mentioned, all defalults are used.
         createAgentsPool();
@@ -50,6 +51,7 @@ public class MainRun
     }
 
     private static boolean calledBefore = false;
+
     public static void createAgentsPool()
     {
         if (!calledBefore)
@@ -96,8 +98,9 @@ public class MainRun
     }
 
 
-    public static void score(Agent agent, int startingSeed, CmdLineOptions cmdLineOptions) {
-        TimingAgent controller = new TimingAgent (agent);
+    public static void score(Agent agent, int startingSeed, CmdLineOptions cmdLineOptions)
+    {
+        TimingAgent controller = new TimingAgent(agent);
         EvaluationOptions options = cmdLineOptions;
 
 //        options.setNumberOfTrials(1);
@@ -111,10 +114,10 @@ public class MainRun
         timeLeftSum = 0;
         marioModeSum = 0;
 
-        competitionScore += testConfig (controller, options, startingSeed, 0, false);
-        competitionScore += testConfig (controller, options, startingSeed, 3, false);
-        competitionScore += testConfig (controller, options, startingSeed, 5, false);
-        competitionScore += testConfig (controller, options, startingSeed, 10, false);
+        competitionScore += testConfig(controller, options, startingSeed, 0, false);
+        competitionScore += testConfig(controller, options, startingSeed, 3, false);
+        competitionScore += testConfig(controller, options, startingSeed, 5, false);
+        competitionScore += testConfig(controller, options, startingSeed, 10, false);
 
         System.out.println("\nCompetition score: " + competitionScore + "\n");
         System.out.println("Number of levels cleared = " + marioStatusSum);
@@ -125,27 +128,30 @@ public class MainRun
         System.out.println("TOTAL SUM for " + agent.getName() + " = " + (competitionScore + killsSum + marioStatusSum + marioModeSum + timeLeftSum));
     }
 
-    public static double testConfig (TimingAgent controller, EvaluationOptions options, int seed, int levelDifficulty, boolean paused) {
+    public static double testConfig(TimingAgent controller, EvaluationOptions options, int seed, int levelDifficulty, boolean paused)
+    {
         options.setLevelDifficulty(levelDifficulty);
         options.setPauseWorld(paused);
-        StatisticalSummary ss = test (controller, options, seed);
+        StatisticalSummary ss = test(controller, options, seed);
         double averageTimeTaken = controller.averageTimeTaken();
         System.out.printf("Difficulty %d score %.4f (avg time %.4f)\n",
                 levelDifficulty, ss.mean(), averageTimeTaken);
         return ss.mean();
     }
 
-    public static StatisticalSummary test (Agent controller, EvaluationOptions options, int seed) {
-        StatisticalSummary ss = new StatisticalSummary ();
+    public static StatisticalSummary test(Agent controller, EvaluationOptions options, int seed)
+    {
+        StatisticalSummary ss = new StatisticalSummary();
         int kills = 0;
         int timeLeft = 0;
         int marioMode = 0;
         float marioStatus = 0;
 
 //        options.setNumberOfTrials(numberOfTrials);
-        for (int i = 0; i < numberOfTrials; i++) {
+        for (int i = 0; i < numberOfTrials; i++)
+        {
             options.setLevelRandSeed(seed + i);
-            options.setLevelLength (200 + (i * 128) + (seed % (i + 1)));
+            options.setLevelLength(200 + (i * 128) + (seed % (i + 1)));
             options.setLevelType(i % 3);
             controller.reset();
             options.setAgent(controller);

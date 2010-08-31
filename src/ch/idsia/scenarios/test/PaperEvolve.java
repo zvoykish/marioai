@@ -1,8 +1,8 @@
 package ch.idsia.scenarios.test;
 
+import ch.idsia.agents.Agent;
+import ch.idsia.agents.learning.MediumSRNAgent;
 import ch.idsia.evolution.Evolvable;
-import ch.idsia.evolution.agents.Agent;
-import ch.idsia.evolution.agents.learning.MediumSRNAgent;
 import ch.idsia.evolution.ea.ES;
 import ch.idsia.maibe.tasks.ProgressTask;
 import ch.idsia.mario.engine.GlobalOptions;
@@ -48,7 +48,7 @@ public class PaperEvolve
         options.setLevelRandSeed(6189642);
 //        int seed = (int) (Math.random () * Integer.MAX_VALUE / 100000);
         int seed = options.getLevelRandSeed();
-        ES es = new ES (task, initial, populationSize);
+        ES es = new ES(task, initial, populationSize);
         System.out.println("Evolving " + initial + " with task " + task);
 //        int difficulty = 0;
 //        System.out.println("seed = " + seed);
@@ -66,7 +66,7 @@ public class PaperEvolve
         float bestScore = 250;
 
         //options.setLevelDifficulty(16);
-        
+
         for (int gen = 0; gen < generations; gen++)
         {
 //            System.out.print("<a = " + options.getMarioMode() + "> ");
@@ -82,7 +82,7 @@ public class PaperEvolve
                 bestScore = fitn;
                 fileName = "evolved-progress-" + options.getAgentLoadFullName() + gen + "-uid-" + seed + ".xml";
                 final Agent a = (Agent) es.getBests()[0];
-                Easy.save (a, fileName);
+                Easy.save(a, fileName);
                 task.dumpFitnessEvaluation(bestScore, "fitnessImprovements-" + options.getAgentLoadFullName() + ".txt");
 //                c.setLevelRandSeed(options.getLevelRandSeed());
 //                c.setLevelDifficulty(options.getLevelDifficulty());
@@ -100,12 +100,12 @@ public class PaperEvolve
                 System.out.print("MODE: = " + task.getEnvironment().getEvaluationInfo().marioMode);
                 System.out.print("TIME LEFT: " + task.getEnvironment().getEvaluationInfo().timeLeft);
                 System.out.println(", STATUS = " + task.getEnvironment().getEvaluationInfo().marioStatus);
-                
+
 //                difficulty++;
 //                options.setLevelDifficulty(difficulty);
             }
         }
-        
+
         System.out.println("\n\n\n\n\n\n\n\n\n");
         try
         {

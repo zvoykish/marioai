@@ -1,6 +1,6 @@
 package competition.evostar.sergeykarakovskiy;
 
-import ch.idsia.evolution.agents.Agent;
+import ch.idsia.agents.Agent;
 import ch.idsia.mario.engine.sprites.Mario;
 import ch.idsia.mario.environments.Environment;
 
@@ -13,8 +13,10 @@ public class SergeyKarakovskiy_JumpingAgent implements Agent
     private String name;
     private boolean[] action;
 
-    /*final*/ protected byte[][] levelScene;
-    /*final */protected byte[][] enemies;
+    /*final*/
+    protected byte[][] levelScene;
+    /*final */
+    protected byte[][] enemies;
     protected byte[][] mergedObservation;
 
     protected float[] marioFloatPos = null;
@@ -38,11 +40,11 @@ public class SergeyKarakovskiy_JumpingAgent implements Agent
     // for information see documentation for the benchmark <link: marioai.org/marioaibenchmark/zLevels
     int zLevelScene = 1;
     int zLevelEnemies = 0;
-    
+
 
     public boolean[] getAction()
     {
-        action[Mario.KEY_SPEED] = action[Mario.KEY_JUMP] =  isMarioAbleToJump || !isMarioOnGround;
+        action[Mario.KEY_SPEED] = action[Mario.KEY_JUMP] = isMarioAbleToJump || !isMarioOnGround;
         return action;
     }
 
@@ -70,8 +72,9 @@ public class SergeyKarakovskiy_JumpingAgent implements Agent
         getKillsByShell = marioState[9];
     }
 
-    public void giveIntermediateReward(float intermediateReward) {
-        
+    public void giveIntermediateReward(float intermediateReward)
+    {
+
     }
 
     public void reset()
@@ -87,9 +90,9 @@ public class SergeyKarakovskiy_JumpingAgent implements Agent
         return Agent.AGENT_TYPE.AI;
     }
 
-    public String getName() {        return name;    }
+    public String getName() { return name; }
 
-    public void setName(String Name) { this.name = Name;    }
+    public void setName(String Name) { this.name = Name; }
 
     public boolean[] getAction(Environment observation)
     {

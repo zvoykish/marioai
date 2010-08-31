@@ -1,6 +1,6 @@
 package ch.idsia.mario.environments;
 
-import ch.idsia.evolution.agents.Agent;
+import ch.idsia.agents.Agent;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.mario.engine.LevelScene;
 import ch.idsia.mario.engine.MarioVisualComponent;
@@ -45,7 +45,7 @@ public final class MarioEnvironment implements Environment
 
     public void reset(String args)
     {
-        CmdLineOptions cmdLineOptions = CmdLineOptions.getOptionsByString(args);        
+        CmdLineOptions cmdLineOptions = CmdLineOptions.getOptionsByString(args);
         this.reset(cmdLineOptions);
 //        CmdLineOptions opts = new CmdLineOptions(setUpOptions);
 //        int[] intOpts = opts.toIntArray();
@@ -66,15 +66,14 @@ public final class MarioEnvironment implements Environment
         {
             if (marioVisualComponent == null)
                 marioVisualComponent = MarioVisualComponent.getInstance(GlobalOptions.VISUAL_COMPONENT_WIDTH,
-                                                                   GlobalOptions.VISUAL_COMPONENT_HEIGHT,
-                                                                   levelScene);
+                        GlobalOptions.VISUAL_COMPONENT_HEIGHT,
+                        levelScene);
             levelScene.reset(setUpOptions);
             marioVisualComponent.reset();
             marioVisualComponent.postInitGraphicsAndLevel();
             marioVisualComponent.setAgent(agent);
             marioVisualComponent.setLocation(setUpOptions.getViewLocation().x, setUpOptions.getViewLocation().y);
-        }
-        else
+        } else
             levelScene.reset(setUpOptions);
 
     }
@@ -229,7 +228,7 @@ public final class MarioEnvironment implements Environment
         // TODO: make static field
 //        evaluationInfo.agentType = agent.getClass().getSimpleName();
 //        evaluationInfo.agentName = agent.getName();
-        evaluationInfo.marioStatus =         levelScene.getMarioStatus();
+        evaluationInfo.marioStatus = levelScene.getMarioStatus();
         evaluationInfo.flowersDevoured = Mario.flowersDevoured;
         evaluationInfo.distancePassedPhys = levelScene.getMarioFloatPos()[0];
         evaluationInfo.distancePassedCells = levelScene.mario.mapX;

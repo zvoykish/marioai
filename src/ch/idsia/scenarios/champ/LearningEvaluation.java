@@ -1,9 +1,9 @@
 package ch.idsia.scenarios.champ;
 
-import ch.idsia.evolution.agents.SRNESLearningAgent;
-import ch.idsia.evolution.agents.Agent;
-import ch.idsia.evolution.agents.LearningAgent;
-import ch.idsia.evolution.agents.learning.MediumSRNAgent;
+import ch.idsia.agents.Agent;
+import ch.idsia.agents.LearningAgent;
+import ch.idsia.agents.SRNESLearningAgent;
+import ch.idsia.agents.learning.MediumSRNAgent;
 import ch.idsia.maibe.tasks.BasicTask;
 import ch.idsia.maibe.tasks.ProgressTask;
 import ch.idsia.tools.CmdLineOptions;
@@ -43,11 +43,11 @@ public final class LearningEvaluation
         learningAgent.setTask(task);
         learningAgent.setNumberOfTrials(numberOfTrials);
         learningAgent.init();
-        
+
         for (int i = 0; i < numberOfTrials; ++i)
         {
             System.out.println("-------------------------------");
-            System.out.println(i+" trial");
+            System.out.println(i + " trial");
             //learningTask.reset(cmdLineOptions);
             task.reset(cmdLineOptions);
             // inform your agent that new episode is coming, pick up next representative in population.
@@ -121,7 +121,6 @@ public final class LearningEvaluation
         cmdLineOptions.setArgs("-lco on -lb off -le 1011000 -lhb on -lg off -ltb on -lhs off -lc off -lde off -ld 3");
         finalScore += LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
 
-        
 
         System.out.println("finalScore = " + finalScore);
         System.exit(0);
