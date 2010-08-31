@@ -1,4 +1,4 @@
-package ch.idsia.ai;
+package ch.idsia.evolution;
 
 import java.util.Random;
 
@@ -11,7 +11,8 @@ import java.util.Random;
  * Simple Recurrent Network (a.k.a. Elman network, Recurrent MLP)
  *
  */
-public class SRN implements FA<double[], double[]>, Evolvable {
+public class SRN implements FA<double[], double[]>, Evolvable
+{
 
     protected double[][] firstConnectionLayer;
     protected double[][] recurrentConnectionLayer;

@@ -1,8 +1,8 @@
 package ch.idsia.ai.agents.learning;
 
 import ch.idsia.ai.agents.Agent;
-import ch.idsia.ai.Evolvable;
-import ch.idsia.ai.SRN;
+import ch.idsia.evolution.Evolvable;
+import ch.idsia.evolution.SRN;
 import ch.idsia.ai.agents.controllers.BasicAIAgent;
 //import ch.idsia.mario.environments.Environment;
 
@@ -22,7 +22,7 @@ public class SmallSRNAgent extends BasicAIAgent implements Agent, Evolvable {
     public SmallSRNAgent()
     {
         super (name);
-        srn = new SRN (numberOfInputs, 10, numberOfOutputs);
+        srn = new SRN(numberOfInputs, 10, numberOfOutputs);
     }
 
     private SmallSRNAgent(SRN srn) {

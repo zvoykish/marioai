@@ -1,4 +1,4 @@
-package ch.idsia.ai;
+package ch.idsia.evolution;
 
 
 /**

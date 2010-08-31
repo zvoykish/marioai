@@ -2,7 +2,6 @@ package ch.idsia.utils;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
-import ch.idsia.ai.agents.human.HumanKeyboardAgent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -186,7 +185,7 @@ public class ParameterContainer
         else
         {
             defaultOptionsHashMap = new HashMap<String, String>();
-            AgentsPool.setCurrentAgent(new HumanKeyboardAgent());
+//            AgentsPool.setCurrentAgent(new HumanKeyboardAgent());
             defaultOptionsHashMap.put("-ag","ch.idsia.ai.agents.human.HumanKeyboardAgent"); //defaultOptionsHashMap.put("-agentName","NoAgent");
             defaultOptionsHashMap.put("-amico","off");
             defaultOptionsHashMap.put("-echo","off"); //defaultOptionsHashMap.put("-echo","off");
@@ -227,6 +226,11 @@ public class ParameterContainer
             defaultOptionsHashMap.put("-le", "1111111111"); //level: enemies bit mask
             defaultOptionsHashMap.put("-lf", "off"); //level: flat level
         }
+    }
+
+    public int getTotalNumberOfOptions()
+    {
+        return this.optionsHashMap.size();
     }
 
     public static String getDefaultParameterValue(String param)

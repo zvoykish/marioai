@@ -1,8 +1,8 @@
 package ch.idsia.scenarios.test;
 
-import ch.idsia.ai.Evolvable;
+import ch.idsia.evolution.Evolvable;
 import ch.idsia.ai.agents.learning.SimpleMLPAgent;
-import ch.idsia.ai.ea.ES;
+import ch.idsia.evolution.ea.ES;
 import ch.idsia.maibe.tasks.ProgressTask;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.scenarios.oldscenarios.Stats;

@@ -1,4 +1,4 @@
-package ch.idsia.ai;
+package ch.idsia.evolution;
 
 import java.util.Random;
 
@@ -8,7 +8,8 @@ import java.util.Random;
  * Date: Apr 28, 2009
  * Time: 2:15:10 PM
  */
-public class MLP implements FA<double[], double[]>, Evolvable {
+public class MLP implements FA<double[], double[]>, Evolvable
+{
 
         private double[][] firstConnectionLayer;
     private double[][] secondConnectionLayer;

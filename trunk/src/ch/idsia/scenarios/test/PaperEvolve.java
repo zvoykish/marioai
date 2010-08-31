@@ -1,9 +1,9 @@
 package ch.idsia.scenarios.test;
 
-import ch.idsia.ai.Evolvable;
+import ch.idsia.evolution.Evolvable;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.learning.MediumSRNAgent;
-import ch.idsia.ai.ea.ES;
+import ch.idsia.evolution.ea.ES;
 import ch.idsia.maibe.tasks.ProgressTask;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.CmdLineOptions;

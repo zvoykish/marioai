@@ -1,7 +1,7 @@
 package ch.idsia.ai.agents.learning;
 
-import ch.idsia.ai.MLP;
-import ch.idsia.ai.Evolvable;
+import ch.idsia.evolution.MLP;
+import ch.idsia.evolution.Evolvable;
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.controllers.BasicAIAgent;
 import ch.idsia.mario.environments.Environment;
@@ -21,7 +21,7 @@ public class LargeMLPAgent extends BasicAIAgent implements Agent, Evolvable {
 
     public LargeMLPAgent() {
         super (name);
-        mlp = new MLP (numberOfInputs, 10, numberOfOutputs);
+        mlp = new MLP(numberOfInputs, 10, numberOfOutputs);
     }
 
     private LargeMLPAgent(MLP mlp) {

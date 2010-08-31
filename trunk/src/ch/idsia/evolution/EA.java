@@ -1,8 +1,8 @@
-package ch.idsia.ai;
+package ch.idsia.evolution;
 
 /**
  * Interface to a Generic Evolutionary Algorithm.<br>
- * The contructor simply needs an <code>{@link Evolvable}</code>,
+ * The contructor simply needs an <code>{@link ch.idsia.evolution.Evolvable}</code>,
  * a Task (depending on which the evaluations will run in series, in parallel or in different threads)
  * and possibly few other paremeters.
  * <p/>

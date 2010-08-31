@@ -1,5 +1,7 @@
 package ch.idsia.unittests;
 
+import ch.idsia.tools.CmdLineOptions;
+import junit.framework.TestCase;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -11,11 +13,15 @@ import org.testng.annotations.Test;
  * Time: 8:36:02 PM
  * Package: ch.idsia.unittests
  */
-public class CmdLineOptionsTest
+public class CmdLineOptionsTest extends TestCase
 {
+    CmdLineOptions cmdLineOptions;
+
     @BeforeTest
     public void setUp()
     {
+        cmdLineOptions = new CmdLineOptions();
+        assertEquals(11, cmdLineOptions.getTotalNumberOfOptions());
     }
 
     @AfterTest
@@ -26,6 +32,7 @@ public class CmdLineOptionsTest
     @Test
     public void testSetArgs() throws Exception
     {
+
     }
 
     @Test
