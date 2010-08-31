@@ -2,7 +2,7 @@ package ch.idsia.scenarios.oldscenarios;
 
 import ch.idsia.evolution.agents.Agent;
 import ch.idsia.evolution.agents.AgentsPool;
-import ch.idsia.evolution.agents.controllers.TimingAgent;
+import ch.idsia.evolution.controllers.TimingAgent;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.tools.CmdLineOptions;
