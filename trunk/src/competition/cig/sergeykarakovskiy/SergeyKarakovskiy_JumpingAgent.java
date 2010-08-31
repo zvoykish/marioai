@@ -1,7 +1,7 @@
 package competition.cig.sergeykarakovskiy;
 
-import ch.idsia.ai.agents.Agent;
-import ch.idsia.ai.controllers.BasicAIAgent;
+import ch.idsia.evolution.agents.Agent;
+import ch.idsia.evolution.controllers.BasicAIAgent;
 import ch.idsia.mario.engine.sprites.Mario;
 
 /**

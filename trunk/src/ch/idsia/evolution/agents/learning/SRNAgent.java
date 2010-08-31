@@ -1,8 +1,8 @@
-package ch.idsia.ai.agents.learning;
+package ch.idsia.evolution.agents.learning;
 
 import ch.idsia.evolution.Evolvable;
 import ch.idsia.evolution.SRN;
-import ch.idsia.ai.agents.Agent;
+import ch.idsia.evolution.agents.Agent;
 import ch.idsia.mario.environments.Environment;
 
 /**

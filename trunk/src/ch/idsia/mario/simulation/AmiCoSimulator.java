@@ -1,7 +1,7 @@
 package ch.idsia.mario.simulation;
 
-import ch.idsia.ai.agents.Agent;
-import ch.idsia.ai.controllers.ForwardAgent;
+import ch.idsia.evolution.agents.Agent;
+import ch.idsia.evolution.controllers.ForwardAgent;
 import ch.idsia.mario.environments.Environment;
 import ch.idsia.mario.environments.MarioEnvironment;
 import ch.idsia.tools.CmdLineOptions;

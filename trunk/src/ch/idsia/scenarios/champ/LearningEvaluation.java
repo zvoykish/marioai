@@ -1,9 +1,9 @@
 package ch.idsia.scenarios.champ;
 
-import ch.idsia.ai.agents.SRNESLearningAgent;
-import ch.idsia.ai.agents.Agent;
-import ch.idsia.ai.agents.LearningAgent;
-import ch.idsia.ai.agents.learning.MediumSRNAgent;
+import ch.idsia.evolution.agents.SRNESLearningAgent;
+import ch.idsia.evolution.agents.Agent;
+import ch.idsia.evolution.agents.LearningAgent;
+import ch.idsia.evolution.agents.learning.MediumSRNAgent;
 import ch.idsia.maibe.tasks.BasicTask;
 import ch.idsia.maibe.tasks.ProgressTask;
 import ch.idsia.tools.CmdLineOptions;

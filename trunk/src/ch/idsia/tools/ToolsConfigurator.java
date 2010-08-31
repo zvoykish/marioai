@@ -1,7 +1,7 @@
 package ch.idsia.tools;
 
-import ch.idsia.ai.agents.Agent;
-import ch.idsia.ai.agents.AgentsPool;
+import ch.idsia.evolution.agents.Agent;
+import ch.idsia.evolution.agents.AgentsPool;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.mario.engine.MarioVisualComponent;
 import ch.idsia.mario.engine.level.LevelGenerator;

@@ -129,7 +129,7 @@ public final class EvaluationInfo
             "\n                      kills By Fire : " + killsByFire +
             "\n                     kills By Shell : " + killsByShell +
             "\n                     kills By Stomp : " + killsByStomp +
-            "\n               multiObjectiveFitness : " + df.format(computeWeightedFitness()) +
+            "\n               weighted Fitness : " + df.format(computeWeightedFitness()) +
             ((Memo.equals("")) ? "" : "\nMemo: " + Memo);
     }
 

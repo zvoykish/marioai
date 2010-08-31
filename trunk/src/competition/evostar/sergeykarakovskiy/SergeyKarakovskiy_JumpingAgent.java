@@ -1,6 +1,6 @@
 package competition.evostar.sergeykarakovskiy;
 
-import ch.idsia.ai.agents.Agent;
+import ch.idsia.evolution.agents.Agent;
 import ch.idsia.mario.engine.sprites.Mario;
 import ch.idsia.mario.environments.Environment;
 

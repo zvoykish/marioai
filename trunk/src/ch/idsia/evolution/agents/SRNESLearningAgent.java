@@ -1,6 +1,6 @@
-package ch.idsia.ai.agents;
+package ch.idsia.evolution.agents;
 
-import ch.idsia.ai.agents.learning.MediumSRNAgent;
+import ch.idsia.evolution.agents.learning.MediumSRNAgent;
 import ch.idsia.evolution.ea.ES;
 import ch.idsia.maibe.tasks.ProgressTask;
 
