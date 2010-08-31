@@ -1,4 +1,4 @@
-package ch.idsia.ai.agents.controllers;
+package ch.idsia.ai.controllers;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.mario.engine.sprites.Mario;
@@ -9,7 +9,7 @@ import ch.idsia.mario.environments.Environment;
  * User: Sergey Karakovskiy
  * Date: Apr 25, 2009
  * Time: 12:27:07 AM
- * Package: ch.idsia.ai.agents.controllers;
+ * Package: ch.idsia.ai.controllers;
  */
 
 public class ForwardJumpingAgent extends BasicAIAgent implements Agent

@@ -56,16 +56,16 @@ public class MarioAIBenchmarkTest extends TestCase
     @Test
     public void testAgentLoadAndName()
     {
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -lc 0 -ag ch.idsia.ai.agents.controllers.ForwardJumpingAgent");
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -lc 0 -ag ch.idsia.ai.controllers.ForwardJumpingAgent");
         assertNotNull(cmdLineOptions.getAgent());
         assertEquals(cmdLineOptions.getAgent().getName(), "ForwardJumpingAgent");
-        assertEquals(cmdLineOptions.getAgentLoadFullName(), "ch.idsia.ai.agents.controllers.ForwardJumpingAgent");
+        assertEquals(cmdLineOptions.getAgentLoadFullName(), "ch.idsia.ai.controllers.ForwardJumpingAgent");
     }
 
     @Test
     public void testForwardJumpingAgentFitnessWithoutCreatures()
     {
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -le 0 -ag ch.idsia.ai.agents.controllers.ForwardJumpingAgent -echo on");
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -le 0 -ag ch.idsia.ai.controllers.ForwardJumpingAgent -echo on");
         final BasicTask basicTask = new BasicTask(cmdLineOptions);
         basicTask.reset(cmdLineOptions);
         basicTask.runOneEpisode();
@@ -76,7 +76,7 @@ public class MarioAIBenchmarkTest extends TestCase
     @Test
     public void testForwardAgentFitnessWithoutCreatures()
     {
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -le 0 -ag ch.idsia.ai.agents.controllers.ForwardAgent -echo on");
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -le 0 -ag ch.idsia.ai.controllers.ForwardAgent -echo on");
         final BasicTask basicTask = new BasicTask(cmdLineOptions);
         basicTask.reset(cmdLineOptions);
         basicTask.runOneEpisode();
@@ -87,7 +87,7 @@ public class MarioAIBenchmarkTest extends TestCase
     @Test
     public void testForwardJumpingAgentFitnessWithDefaultCreatures()
     {
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.ai.agents.controllers.ForwardJumpingAgent -echo on");
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.ai.controllers.ForwardJumpingAgent -echo on");
         final BasicTask basicTask = new BasicTask(cmdLineOptions);
         basicTask.reset(cmdLineOptions);
         basicTask.runOneEpisode();
@@ -98,7 +98,7 @@ public class MarioAIBenchmarkTest extends TestCase
     @Test
     public void testForwardAgentFitnessWithDefaultCreatures()
     {
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.ai.agents.controllers.ForwardAgent -echo on");
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.ai.controllers.ForwardAgent -echo on");
         final BasicTask basicTask = new BasicTask(cmdLineOptions);
         basicTask.reset(cmdLineOptions);
         basicTask.runOneEpisode();

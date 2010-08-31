@@ -3,7 +3,7 @@ package ch.idsia.ai.agents.learning;
 import ch.idsia.evolution.MLP;
 import ch.idsia.evolution.Evolvable;
 import ch.idsia.ai.agents.Agent;
-import ch.idsia.ai.agents.controllers.BasicAIAgent;
+import ch.idsia.ai.controllers.BasicAIAgent;
 import ch.idsia.mario.environments.Environment;
 
 /**
