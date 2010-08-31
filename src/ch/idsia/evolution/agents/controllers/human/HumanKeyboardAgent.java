@@ -1,4 +1,4 @@
-package ch.idsia.evolution.agents.human;
+package ch.idsia.evolution.agents.controllers.human;
 
 import ch.idsia.evolution.agents.Agent;
 import ch.idsia.mario.engine.sprites.Mario;
