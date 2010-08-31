@@ -1,6 +1,7 @@
 package ch.idsia.scenarios;
 
 //import ch.idsia.evolution.agents.Agent;
+
 import ch.idsia.maibe.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
 
@@ -28,9 +29,9 @@ public final class Main
 //            {
 //                cmdLineOptions.setLevelDifficulty(i);
 //                cmdLineOptions.setLevelRandSeed(seed++);
-                basicTask.reset(cmdLineOptions);
-                basicTask.runOneEpisode();
-                System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
+        basicTask.reset(cmdLineOptions);
+        basicTask.runOneEpisode();
+        System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
 //            } while (basicTask.getEnvironment().getEvaluationInfo().marioStatus != Environment.MARIO_STATUS_WIN);
 //        }
 //
@@ -38,5 +39,5 @@ public final class Main
         System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
         System.exit(0);
     }
-    
+
 }
