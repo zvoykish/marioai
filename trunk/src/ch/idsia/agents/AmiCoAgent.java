@@ -1,7 +1,7 @@
 package ch.idsia.agents;
 
-import ch.idsia.amico.JavaPy;
 import ch.idsia.mario.environments.Environment;
+import ch.idsia.tools.amico.JavaPy;
 
 /**
  * Created by IntelliJ IDEA.

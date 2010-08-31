@@ -1,4 +1,4 @@
-package ch.idsia.amico;
+package ch.idsia.tools.amico;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,9 +18,12 @@ public class JavaPy
     }
 
     public native int setModuleName(String moduleName);
+
     public native int setAgentName(String agentName);
+
     public native int[] getAction(int[] squashedObservation, int[] squashedEnemies,
                                   float[] marioPos, float[] enemiesPos, int[] marioState);
+
     static
     {
         System.out.println("Java: loading AmiCo...");
