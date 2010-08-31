@@ -2,12 +2,10 @@ package ch.idsia.scenarios.oldscenarios;
 
 import ch.idsia.ai.agents.Agent;
 import ch.idsia.ai.agents.AgentsPool;
-import ch.idsia.ai.agents.controllers.TimingAgent;
+import ch.idsia.ai.controllers.TimingAgent;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.tools.CmdLineOptions;
-import ch.idsia.tools.Evaluator;
-import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.utils.StatisticalSummary;
 
 public class Stats
