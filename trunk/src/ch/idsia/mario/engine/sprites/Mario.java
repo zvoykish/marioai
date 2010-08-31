@@ -4,7 +4,6 @@ package ch.idsia.mario.engine.sprites;
 import ch.idsia.mario.engine.Art;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.mario.engine.LevelScene;
-import ch.idsia.mario.engine.Scene;
 import ch.idsia.mario.engine.level.Level;
 
 
@@ -106,24 +105,24 @@ public class Mario extends Sprite
         kind = KIND_MARIO;
 //        Mario.instance = this;
         this.world = world;
-        keys = Scene.keys;      // SK: in fact, this is already redundant due to using Agent
-        cheatKeys = Scene.keys; // SK: in fact, this is already redundant due to using Agent
+        keys = LevelScene.keys;      // SK: in fact, this is already redundant due to using Agent
+        cheatKeys = LevelScene.keys; // SK: in fact, this is already redundant due to using Agent
         x = 32;
         y = 0;
 
         facing = 1;
         setLarge(Mario.large, Mario.fire);
     }
-    
+
     private boolean lastLarge;
     private boolean lastFire;
     private boolean newLarge;
     private boolean newFire;
-    
+
     private void blink(boolean on)
     {
-        Mario.large = on?newLarge:lastLarge;
-        Mario.fire = on?newFire:lastFire;
+        Mario.large = on ? newLarge : lastLarge;
+        Mario.fire = on ? newFire : lastFire;
 
 //        System.out.println("on = " + on);
         if (large)
@@ -135,8 +134,7 @@ public class Mario extends Sprite
             xPicO = 16;
             yPicO = 31;
             wPic = hPic = 32;
-        }
-        else
+        } else
         {
             sheet = Art.smallMario;
 
@@ -153,16 +151,16 @@ public class Mario extends Sprite
 //        System.out.println("large = " + large);
         if (fire) large = true;
         if (!large) fire = false;
-        
+
         lastLarge = Mario.large;
         lastFire = Mario.fire;
-        
+
         Mario.large = large;
         Mario.fire = fire;
 
         newLarge = Mario.large;
         newFire = Mario.fire;
-        
+
         blink(true);
     }
 
@@ -183,8 +181,7 @@ public class Mario extends Sprite
             yPicO = 31;
             wPic = hPic = 32;
             this.sheet = Art.racoonmario;
-        }
-        else
+        } else
         {
 
             this.sheet = prevSheet;
@@ -223,12 +220,10 @@ public class Mario extends Sprite
             {
                 xa = 0;
                 ya = 0;
-            }
-            else if (deathTime == 11)
+            } else if (deathTime == 11)
             {
                 ya = -15;
-            }
-            else
+            } else
             {
                 ya += 2;
             }
@@ -243,8 +238,7 @@ public class Mario extends Sprite
             {
                 powerUpTime--;
                 blink(((powerUpTime / 3) & 1) == 0);
-            }
-            else
+            } else
             {
                 powerUpTime++;
                 blink(((-powerUpTime / 3) & 1) == 0);
@@ -285,8 +279,7 @@ public class Mario extends Sprite
                 xa = xJumpSpeed;
                 ya = -jumpTime * yJumpSpeed;
                 jumpTime++;
-            }
-            else if (onGround && mayJump)
+            } else if (onGround && mayJump)
             {
                 xJumpSpeed = 0;
                 yJumpSpeed = -1.9f;
@@ -294,8 +287,7 @@ public class Mario extends Sprite
                 ya = jumpTime * yJumpSpeed;
                 onGround = false;
                 sliding = false;
-            }
-            else if (sliding && mayJump)
+            } else if (sliding && mayJump)
             {
                 xJumpSpeed = -facing * 6.0f;
                 yJumpSpeed = -2.0f;
@@ -305,15 +297,13 @@ public class Mario extends Sprite
                 onGround = false;
                 sliding = false;
                 facing = -facing;
-            }
-            else if (jumpTime > 0)
+            } else if (jumpTime > 0)
             {
                 xa += xJumpSpeed;
                 ya = jumpTime * yJumpSpeed;
                 jumpTime--;
             }
-        }
-        else
+        } else
         {
             jumpTime = 0;
         }
@@ -336,10 +326,10 @@ public class Mario extends Sprite
         {
             sliding = false;
         }
-        
-        if (keys[KEY_SPEED] && canShoot && Mario.fire && world.fireballsOnScreen<2)
+
+        if (keys[KEY_SPEED] && canShoot && Mario.fire && world.fireballsOnScreen < 2)
         {
-            world.addSprite(new Fireball(world, x+facing*6, y-20, facing));
+            world.addSprite(new Fireball(world, x + facing * 6, y - 20, facing));
         }
         // Cheats:
         if (GlobalOptions.isPowerRestoration && keys[KEY_SPEED] && (!Mario.large || !Mario.fire))
@@ -398,8 +388,8 @@ public class Mario extends Sprite
         }
 
         if (x > world.level.xExit * 16 - 8 &&
-            x < world.level.xExit * 16 + 2 * 16 && 
-            y < world.level.yExit * 16)
+                x < world.level.xExit * 16 + 2 * 16 &&
+                y < world.level.yExit * 16)
         {
             x = world.level.xExit * 16;
             win();
@@ -415,8 +405,7 @@ public class Mario extends Sprite
         if (onGround)
         {
             xa *= GROUND_INERTIA;
-        }
-        else
+        } else
         {
             xa *= AIR_INERTIA;
         }
@@ -457,8 +446,7 @@ public class Mario extends Sprite
                 else if (Math.abs(xa) > 10) runFrame = 7;
                 else runFrame = 6;
             }
-        }
-        else
+        } else
         {
             runFrame = ((int) (runTime / 20)) % 2;
             if (carried == null && Math.abs(xa) > 10) runFrame += 2;
@@ -488,8 +476,7 @@ public class Mario extends Sprite
         {
             if (ducking) runFrame = 14;
             height = ducking ? 12 : 24;
-        }
-        else
+        } else
         {
             height = 12;
         }
@@ -579,8 +566,7 @@ public class Mario extends Sprite
                 onGround = true;
             }
             return false;
-        }
-        else
+        } else
         {
             x += xa;
             y += ya;
@@ -640,8 +626,7 @@ public class Mario extends Sprite
             carried = shell;
             shell.carried = true;
             setRacoon(true);
-        }
-        else
+        } else
         {
             float targetY = shell.y - shell.height / 2;
             move(0, targetY - y);
@@ -669,14 +654,12 @@ public class Mario extends Sprite
             if (fire)
             {
                 world.mario.setLarge(true, false);
-            }
-            else
+            } else
             {
                 world.mario.setLarge(false, false);
             }
             invulnerableTime = 32;
-        }
-        else
+        } else
         {
             die();
         }
@@ -710,8 +693,7 @@ public class Mario extends Sprite
             world.paused = true;
             powerUpTime = 3 * FractionalPowerUpTime;
             world.mario.setLarge(true, true);
-        }
-        else
+        } else
         {
             Mario.getCoin();
         }
@@ -727,8 +709,7 @@ public class Mario extends Sprite
             world.paused = true;
             powerUpTime = 3 * FractionalPowerUpTime;
             world.mario.setLarge(true, false);
-        }
-        else
+        } else
         {
             Mario.getCoin();
         }
@@ -745,8 +726,7 @@ public class Mario extends Sprite
             shell.carried = true;
             setRacoon(true);
             System.out.println("shell = " + shell);
-        }
-        else
+        } else
         {
             invulnerableTime = 1;
         }
@@ -790,7 +770,7 @@ public class Mario extends Sprite
 //    {
 //        lives++;
 //    }
-    
+
     public static void getCoin()
     {
         coins++;
@@ -803,15 +783,18 @@ public class Mario extends Sprite
         hiddenBlocks++;
     }
 
-    public int getStatus() {
+    public int getStatus()
+    {
         return status;
     }
 
-    public boolean isOnGround() {
+    public boolean isOnGround()
+    {
         return onGround;
     }
 
-    public boolean mayJump() {
+    public boolean mayJump()
+    {
         return mayJump;
     }
 

@@ -11,8 +11,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LevelScene extends Scene implements SpriteContext
+public class LevelScene implements SpriteContext
 {
+    public static boolean[] keys = new boolean[16];
+    public static final String[] keysStr = {"LEFT  ", "RIGHT ", " DOWN ", " JUMP ", " SPEED"};
+
+
     final public List<Sprite> sprites = new ArrayList<Sprite>();
     final private List<Sprite> spritesToAdd = new ArrayList<Sprite>();
     final private List<Sprite> spritesToRemove = new ArrayList<Sprite>();
@@ -58,7 +62,8 @@ public class LevelScene extends Scene implements SpriteContext
     private int numberOfHiddenCoinsGained;
 
     //    public int getTimeLimit() {  return timeLimit; }
-    public void setTimeLimit(int timeLimit) {  this.timeLimit = timeLimit; }
+    public void setTimeLimit(int timeLimit)
+    { this.timeLimit = timeLimit; }
 
     private int timeLimit = 200;
 
@@ -112,7 +117,7 @@ public class LevelScene extends Scene implements SpriteContext
          {*/
 //        level = LevelGenerator.createLevel(320, 15, levelSeed);
 //        if (levelSeed != -152)
-            level = LevelGenerator.createLevel(args);
+        level = LevelGenerator.createLevel(args);
 //        else
 //        try
 //        {
@@ -148,7 +153,7 @@ public class LevelScene extends Scene implements SpriteContext
         startTime = 1;
 //        if (levelSeed == 152)
 //            mario.x = level.xExit * 16 - 17;
-        timeLeft = timeLimit *15;
+        timeLeft = timeLimit * 15;
 
         tick = 0;
     }
@@ -156,7 +161,7 @@ public class LevelScene extends Scene implements SpriteContext
     private String mapElToStr(int el)
     {
         String s = "";
-        if  (el == 0 || el == 1)
+        if (el == 0 || el == 1)
             s = "##";
         s += (el == mario.kind) ? "#M.#" : el;
         while (s.length() < 4)
@@ -165,15 +170,15 @@ public class LevelScene extends Scene implements SpriteContext
     }
 
     private String enemyToStr(int el)
-        {
-            String s = "";
-            if  (el == 0)
-                s = "";
-            s += (el == mario.kind) ? "-m" : el;
-            while (s.length() < 2)
-                s += "#";
-            return s + " ";
-        }
+    {
+        String s = "";
+        if (el == 0)
+            s = "";
+        s += (el == mario.kind) ? "-m" : el;
+        while (s.length() < 2)
+            s += "#";
+        return s + " ";
+    }
 
     private byte ZLevelMapElementGeneralization(byte el, int ZLevel)
     {
@@ -181,8 +186,8 @@ public class LevelScene extends Scene implements SpriteContext
             return 0;
         switch (ZLevel)
         {
-            case(0):
-                switch(el)
+            case (0):
+                switch (el)
                 {
                     case 16:  // brick, simple, without any surprise.
                     case 17:  // brick with a hidden coin
@@ -218,8 +223,8 @@ public class LevelScene extends Scene implements SpriteContext
                         return 0; //background of the hill. empty space
                 }
                 return el;
-            case(1):
-                switch(el)
+            case (1):
+                switch (el)
                 {
                     case 16:  // brick, simple, without any surprise.
                     case 17:  // brick with a hidden coin
@@ -228,93 +233,103 @@ public class LevelScene extends Scene implements SpriteContext
                     case 22:       // question brick, contains flower/mushroom
                         return BRICK; // any brick
                     case 1:   // hidden block
-                    case(-111):
-                    case(-108):
-                    case(-107):
-                    case(-106):
-                    case(15): // Sparcle, irrelevant
+                    case (-111):
+                    case (-108):
+                    case (-107):
+                    case (-106):
+                    case (15): // Sparcle, irrelevant
                         return 0;
-                    case(34):
+                    case (34):
                         return COIN_ANIM;
-                    case(-128):
-                    case(-127):
-                    case(-126):
-                    case(-125):
-                    case(-120):
-                    case(-119):
-                    case(-118):
-                    case(-117):
-                    case(-116):
-                    case(-115):
-                    case(-114):
-                    case(-113):
-                    case(-112):
-                    case(-110):
-                    case(-109):
-                    case(-104):
-                    case(-103):
-                    case(-102):
-                    case(-101):
-                    case(-100):
-                    case(-99):
-                    case(-98):
-                    case(-97):
-                    case(-96):
-                    case(-95):
-                    case(-94):
-                    case(-93):
-                    case(-69):
-                    case(-65):
-                    case(-88):
-                    case(-87):
-                    case(-86):
-                    case(-85):
-                    case(-84):
-                    case(-83):
-                    case(-82):
-                    case(-81):
-                    case(-77):
-                    case(4):  // kicked hidden brick
-                    case(9):
+                    case (-128):
+                    case (-127):
+                    case (-126):
+                    case (-125):
+                    case (-120):
+                    case (-119):
+                    case (-118):
+                    case (-117):
+                    case (-116):
+                    case (-115):
+                    case (-114):
+                    case (-113):
+                    case (-112):
+                    case (-110):
+                    case (-109):
+                    case (-104):
+                    case (-103):
+                    case (-102):
+                    case (-101):
+                    case (-100):
+                    case (-99):
+                    case (-98):
+                    case (-97):
+                    case (-96):
+                    case (-95):
+                    case (-94):
+                    case (-93):
+                    case (-69):
+                    case (-65):
+                    case (-88):
+                    case (-87):
+                    case (-86):
+                    case (-85):
+                    case (-84):
+                    case (-83):
+                    case (-82):
+                    case (-81):
+                    case (-77):
+                    case (4):  // kicked hidden brick
+                    case (9):
                         return BORDER_CANNOT_PASS_THROUGH;   // border, cannot pass through, can stand on
 //                    case(9):
 //                        return -12; // hard formation border. Pay attention!
-                    case(-124):
-                    case(-123):
-                    case(-122):
-                    case(-76):
-                    case(-74):
+                    case (-124):
+                    case (-123):
+                    case (-122):
+                    case (-76):
+                    case (-74):
                         return BORDER_HILL; // half-border, can jump through from bottom and can stand on
-                    case(10): case(11): case(26): case(27): //flower pot
-                    case(14): case(30): case(46): // canon
+                    case (10):
+                    case (11):
+                    case (26):
+                    case (27): //flower pot
+                    case (14):
+                    case (30):
+                    case (46): // canon
                         return FLOWER_POT_OR_CANNON;  // angry flower pot or cannon
                 }
                 System.err.println("ZLevelMapElementGeneralization: Unknown value el = " + el + " Possible Level tiles bug; " +
-                                   "Please, inform sergey@idsia.ch or julian@togelius.com. Thanks!");
+                        "Please, inform sergey@idsia.ch or julian@togelius.com. Thanks!");
                 return el;
-            case(2):
-                switch(el)
+            case (2):
+                switch (el)
                 {
                     //cancel out half-borders, that could be passed through
-                    case(0):
-                    case(-108):
-                    case(-107):
-                    case(-106):
+                    case (0):
+                    case (-108):
+                    case (-107):
+                    case (-106):
                     case 1:   //hidden block
-                    case(15): // Sparcle, irrelevant
+                    case (15): // Sparcle, irrelevant
                         return 0;
-                    case(34): // coins
+                    case (34): // coins
                         return COIN_ANIM;
                     case 16:  // brick, simple, without any surprise.
                     case 17:  // brick with a hidden coin
                     case 18:  // brick with a hidden flower
                     case 21:       // question brick, contains coin
                     case 22:       // question brick, contains flower/mushroom
-                                //here bricks are any objects cannot jump through and can stand on
+                        //here bricks are any objects cannot jump through and can stand on
                     case 4: //kicked hidden block
                     case 9:
-                    case(10): case(11): case(26): case(27): //flower pot
-                    case(14): case(30): case(46): // canon
+                    case (10):
+                    case (11):
+                    case (26):
+                    case (27): //flower pot
+                    case (14):
+                    case (30):
+                    case (46): // canon
                         return BORDER_CANNOT_PASS_THROUGH; // question brick, contains something
                 }
                 return 1;  // everything else is "something", so it is 1
@@ -328,69 +343,69 @@ public class LevelScene extends Scene implements SpriteContext
     {
         switch (ZLevel)
         {
-            case(0):
-                switch(el)
+            case (0):
+                switch (el)
                 {
                     // cancel irrelevant sprite codes
-                    case(Sprite.KIND_COIN_ANIM):
-                    case(Sprite.KIND_PARTICLE):
-                    case(Sprite.KIND_SPARCLE):
-                    case(Sprite.KIND_MARIO):
+                    case (Sprite.KIND_COIN_ANIM):
+                    case (Sprite.KIND_PARTICLE):
+                    case (Sprite.KIND_SPARCLE):
+                    case (Sprite.KIND_MARIO):
                         return Sprite.KIND_NONE;
                 }
                 return el;   // all the rest should go as is
-            case(1):
-                switch(el)
+            case (1):
+                switch (el)
                 {
-                    case(Sprite.KIND_COIN_ANIM):
-                    case(Sprite.KIND_PARTICLE):
-                    case(Sprite.KIND_SPARCLE):
-                    case(Sprite.KIND_MARIO):
+                    case (Sprite.KIND_COIN_ANIM):
+                    case (Sprite.KIND_PARTICLE):
+                    case (Sprite.KIND_SPARCLE):
+                    case (Sprite.KIND_MARIO):
                         return Sprite.KIND_NONE;
                     case (Sprite.KIND_FIRE_FLOWER):
                         return Sprite.KIND_FIRE_FLOWER;
                     case (Sprite.KIND_MUSHROOM):
                         return Sprite.KIND_MUSHROOM;
-                    case(Sprite.KIND_FIREBALL):
+                    case (Sprite.KIND_FIREBALL):
                         return Sprite.KIND_FIREBALL;
-                    case(Sprite.KIND_BULLET_BILL):
-                    case(Sprite.KIND_GOOMBA):
-                    case(Sprite.KIND_GOOMBA_WINGED):
-                    case(Sprite.KIND_GREEN_KOOPA):
-                    case(Sprite.KIND_GREEN_KOOPA_WINGED):
-                    case(Sprite.KIND_RED_KOOPA):
-                    case(Sprite.KIND_RED_KOOPA_WINGED):
-                    case(Sprite.KIND_SHELL):
+                    case (Sprite.KIND_BULLET_BILL):
+                    case (Sprite.KIND_GOOMBA):
+                    case (Sprite.KIND_GOOMBA_WINGED):
+                    case (Sprite.KIND_GREEN_KOOPA):
+                    case (Sprite.KIND_GREEN_KOOPA_WINGED):
+                    case (Sprite.KIND_RED_KOOPA):
+                    case (Sprite.KIND_RED_KOOPA_WINGED):
+                    case (Sprite.KIND_SHELL):
                         return Sprite.KIND_GOOMBA;
-                    case(Sprite.KIND_SPIKY):
-                    case(Sprite.KIND_ENEMY_FLOWER):
-                    case(Sprite.KIND_SPIKY_WINGED):
+                    case (Sprite.KIND_SPIKY):
+                    case (Sprite.KIND_ENEMY_FLOWER):
+                    case (Sprite.KIND_SPIKY_WINGED):
                         return Sprite.KIND_SPIKY;
                 }
                 System.err.println("Z1 UNKOWN el = " + el);
                 return el;
-            case(2):
-                switch(el)
+            case (2):
+                switch (el)
                 {
-                    case(Sprite.KIND_COIN_ANIM):
-                    case(Sprite.KIND_PARTICLE):
-                    case(Sprite.KIND_SPARCLE):
-                    case(Sprite.KIND_FIREBALL):
-                    case(Sprite.KIND_MARIO):
-                    case(Sprite.KIND_FIRE_FLOWER):
-                    case(Sprite.KIND_MUSHROOM):
+                    case (Sprite.KIND_COIN_ANIM):
+                    case (Sprite.KIND_PARTICLE):
+                    case (Sprite.KIND_SPARCLE):
+                    case (Sprite.KIND_FIREBALL):
+                    case (Sprite.KIND_MARIO):
+                    case (Sprite.KIND_FIRE_FLOWER):
+                    case (Sprite.KIND_MUSHROOM):
                         return Sprite.KIND_NONE;
-                    case(Sprite.KIND_BULLET_BILL):
-                    case(Sprite.KIND_GOOMBA):
-                    case(Sprite.KIND_GOOMBA_WINGED):
-                    case(Sprite.KIND_GREEN_KOOPA):
-                    case(Sprite.KIND_GREEN_KOOPA_WINGED):
-                    case(Sprite.KIND_RED_KOOPA):
-                    case(Sprite.KIND_RED_KOOPA_WINGED):
-                    case(Sprite.KIND_SHELL):
-                    case(Sprite.KIND_SPIKY):
-                    case(Sprite.KIND_ENEMY_FLOWER):
-                    case(Sprite.KIND_SPIKY_WINGED):
+                    case (Sprite.KIND_BULLET_BILL):
+                    case (Sprite.KIND_GOOMBA):
+                    case (Sprite.KIND_GOOMBA_WINGED):
+                    case (Sprite.KIND_GREEN_KOOPA):
+                    case (Sprite.KIND_GREEN_KOOPA_WINGED):
+                    case (Sprite.KIND_RED_KOOPA):
+                    case (Sprite.KIND_RED_KOOPA_WINGED):
+                    case (Sprite.KIND_SHELL):
+                    case (Sprite.KIND_SPIKY):
+                    case (Sprite.KIND_ENEMY_FLOWER):
+                    case (Sprite.KIND_SPIKY_WINGED):
                         return 1;
                 }
                 System.err.println("ERROR: Z2 UNKNOWNN el = " + el);
@@ -402,18 +417,17 @@ public class LevelScene extends Scene implements SpriteContext
     public byte[][] getLevelSceneObservationZ(int ZLevel)
     {
         //TODO: Move to constants 16
-        int MarioXInMap = (int)mario.x/16;
-        int MarioYInMap = (int)mario.y/16;
+        int MarioXInMap = (int) mario.x / 16;
+        int MarioYInMap = (int) mario.y / 16;
 
-        for (int y = MarioYInMap - ObsHeight/2, obsX = 0; y <= MarioYInMap + ObsHeight/2; y++, obsX++)
+        for (int y = MarioYInMap - ObsHeight / 2, obsX = 0; y <= MarioYInMap + ObsHeight / 2; y++, obsX++)
         {
-            for (int x = MarioXInMap - ObsWidth/2, obsY = 0; x <= MarioXInMap + ObsWidth/2; x++, obsY++)
+            for (int x = MarioXInMap - ObsWidth / 2, obsY = 0; x <= MarioXInMap + ObsWidth / 2; x++, obsY++)
             {
-                if (x >=0 && x <= level.xExit && y >= 0 && y < level.height)
+                if (x >= 0 && x <= level.xExit && y >= 0 && y < level.height)
                 {
                     levelSceneZ[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevel);
-                }
-                else
+                } else
                 {
                     levelSceneZ[obsX][obsY] = 0;
                 }
@@ -426,8 +440,8 @@ public class LevelScene extends Scene implements SpriteContext
     public byte[][] getEnemiesObservationZ(int ZLevel)
     {
         //TODO: Move to constants 16
-        int MarioXInMap = (int)mario.x/16;
-        int MarioYInMap = (int)mario.y/16;
+        int MarioXInMap = (int) mario.x / 16;
+        int MarioYInMap = (int) mario.y / 16;
 
         for (int w = 0; w < enemiesZ.length; w++)
             for (int h = 0; h < enemiesZ[0].length; h++)
@@ -438,14 +452,14 @@ public class LevelScene extends Scene implements SpriteContext
             if (sprite.kind == mario.kind)
                 continue;
             if (sprite.mapX >= 0 &&
-                sprite.mapX >= MarioXInMap - ObsWidth/2 &&
-                sprite.mapX <= MarioXInMap + ObsWidth/2 &&
-                sprite.mapY >= 0 &&
-                sprite.mapY >= MarioYInMap - ObsHeight/2 &&
-                sprite.mapY <= MarioYInMap + ObsHeight/2)
+                    sprite.mapX >= MarioXInMap - ObsWidth / 2 &&
+                    sprite.mapX <= MarioXInMap + ObsWidth / 2 &&
+                    sprite.mapY >= 0 &&
+                    sprite.mapY >= MarioYInMap - ObsHeight / 2 &&
+                    sprite.mapY <= MarioYInMap + ObsHeight / 2)
             {
-                int obsX = sprite.mapY - MarioYInMap + ObsHeight/2;
-                int obsY = sprite.mapX - MarioXInMap + ObsWidth/2;
+                int obsX = sprite.mapY - MarioYInMap + ObsHeight / 2;
+                int obsY = sprite.mapX - MarioXInMap + ObsWidth / 2;
                 enemiesZ[obsX][obsY] = ZLevelEnemyGeneralization(sprite.kind, ZLevel);
             }
         }
@@ -460,7 +474,7 @@ public class LevelScene extends Scene implements SpriteContext
             // check if is an influenceable creature
             if (sprite.kind >= Sprite.KIND_GOOMBA && sprite.kind <= Sprite.KIND_MUSHROOM)
             {
-                enemiesFloatsList.add((float)sprite.kind);
+                enemiesFloatsList.add((float) sprite.kind);
                 enemiesFloatsList.add(sprite.x);
                 enemiesFloatsList.add(sprite.y);
             }
@@ -470,7 +484,7 @@ public class LevelScene extends Scene implements SpriteContext
         float[] enemiesFloatsPosArray = new float[enemiesFloatsList.size()];
 
         int i = 0;
-        for (Float F: enemiesFloatsList)
+        for (Float F : enemiesFloatsList)
             enemiesFloatsPosArray[i++] = F;
 
         return enemiesFloatsPosArray;
@@ -480,19 +494,18 @@ public class LevelScene extends Scene implements SpriteContext
     {
 
         //TODO: Move to constants 16
-        int MarioXInMap = (int)mario.x/16;
-        int MarioYInMap = (int)mario.y/16;
+        int MarioXInMap = (int) mario.x / 16;
+        int MarioYInMap = (int) mario.y / 16;
 
 
-        for (int y = MarioYInMap - ObsHeight/2, obsX = 0; y <= MarioYInMap + ObsHeight/2; y++, obsX++)
+        for (int y = MarioYInMap - ObsHeight / 2, obsX = 0; y <= MarioYInMap + ObsHeight / 2; y++, obsX++)
         {
-            for (int x = MarioXInMap - ObsWidth/2, obsY = 0; x <= MarioXInMap + ObsWidth/2; x++, obsY++)
+            for (int x = MarioXInMap - ObsWidth / 2, obsY = 0; x <= MarioXInMap + ObsWidth / 2; x++, obsY++)
             {
-                if (x >=0 /*&& x <= level.xExit*/ && y >= 0 && y < level.height)
+                if (x >= 0 /*&& x <= level.xExit*/ && y >= 0 && y < level.height)
                 {
                     mergedZ[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevelScene);
-                }
-                else
+                } else
                     mergedZ[obsX][obsY] = 0;
 //                if (x == MarioXInMap && y == MarioYInMap)
 //                    mergedZ[obsX][obsY] = mario.kind;
@@ -508,14 +521,14 @@ public class LevelScene extends Scene implements SpriteContext
             if (sprite.kind == mario.kind)
                 continue;
             if (sprite.mapX >= 0 &&
-                sprite.mapX > MarioXInMap - ObsWidth/2 &&
-                sprite.mapX < MarioXInMap + ObsWidth/2 &&
-                sprite.mapY >= 0 &&
-                sprite.mapY > MarioYInMap - ObsHeight/2 &&
-                sprite.mapY < MarioYInMap + ObsHeight/2)
+                    sprite.mapX > MarioXInMap - ObsWidth / 2 &&
+                    sprite.mapX < MarioXInMap + ObsWidth / 2 &&
+                    sprite.mapY >= 0 &&
+                    sprite.mapY > MarioYInMap - ObsHeight / 2 &&
+                    sprite.mapY < MarioYInMap + ObsHeight / 2)
             {
-                int obsX = sprite.mapY - MarioYInMap + ObsHeight/2;
-                int obsY = sprite.mapX - MarioXInMap + ObsWidth/2;
+                int obsX = sprite.mapY - MarioYInMap + ObsHeight / 2;
+                int obsY = sprite.mapX - MarioXInMap + ObsWidth / 2;
                 // quick fix TODO: handle this in more general way.
                 if (mergedZ[obsX][obsY] != 14)
                 {
@@ -531,7 +544,8 @@ public class LevelScene extends Scene implements SpriteContext
 
     public List<String> LevelSceneAroundMarioASCII(boolean Enemies, boolean LevelMap,
                                                    boolean mergedObservationFlag,
-                                                   int ZLevelScene, int ZLevelEnemies){
+                                                   int ZLevelScene, int ZLevelEnemies)
+    {
 //        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));//        bw.write("\nTotal world width = " + level.width);
         List<String> ret = new ArrayList<String>();
         if (level != null && mario != null)
@@ -539,11 +553,11 @@ public class LevelScene extends Scene implements SpriteContext
             ret.add("Total world width = " + level.width);
             ret.add("Total world height = " + level.height);
             ret.add("Physical Mario Position (x,y): (" + mario.x + "," + mario.y + ")");
-            ret.add("Mario Observation Width " + ObsWidth *2);
-            ret.add("Mario Observation Height " + ObsHeight *2);
+            ret.add("Mario Observation Width " + ObsWidth * 2);
+            ret.add("Mario Observation Height " + ObsHeight * 2);
             ret.add("X Exit Position: " + level.xExit);
-            int MarioXInMap = (int)mario.x/16;
-            int MarioYInMap = (int)mario.y/16;
+            int MarioXInMap = (int) mario.x / 16;
+            int MarioYInMap = (int) mario.y / 16;
             ret.add("Calibrated Mario Position (x,y): (" + MarioXInMap + "," + MarioYInMap + ")\n");
 
             byte[][] levelScene = getLevelSceneObservationZ(ZLevelScene);
@@ -574,7 +588,7 @@ public class LevelScene extends Scene implements SpriteContext
                     for (int y = 0; y < enemiesObservation[0].length; y++)
                     {
 //                        if (x >=0 && x <= level.xExit)
-                            tmpData += enemyToStr(enemiesObservation[x][y]);
+                        tmpData += enemyToStr(enemiesObservation[x][y]);
                     }
                     ret.add(tmpData);
                 }
@@ -592,8 +606,7 @@ public class LevelScene extends Scene implements SpriteContext
                     ret.add(tmpData);
                 }
             }
-        }
-        else
+        } else
             ret.add("~level or mario is not available");
         return ret;
     }
@@ -618,8 +631,8 @@ public class LevelScene extends Scene implements SpriteContext
     public void tick()
     {
         if (GlobalOptions.isTimer)
-                timeLeft--;
-        if (timeLeft==0)
+            timeLeft--;
+        if (timeLeft == 0)
         {
             mario.die();
         }
@@ -660,8 +673,7 @@ public class LevelScene extends Scene implements SpriteContext
                 if (xd < -64 || xd > GlobalOptions.VISUAL_COMPONENT_WIDTH + 64 || yd < -64 || yd > GlobalOptions.VISUAL_COMPONENT_HEIGHT + 64)
                 {
                     removeSprite(sprite);
-                }
-                else
+                } else
                 {
                     if (sprite instanceof Fireball)
                     {
@@ -678,14 +690,12 @@ public class LevelScene extends Scene implements SpriteContext
                 if (sprite == mario)
                 {
                     sprite.tick();
-                }
-                else
+                } else
                 {
                     sprite.tickNoMove();
                 }
             }
-        }
-        else
+        } else
         {
             tick++;
             level.tick();
@@ -848,13 +858,11 @@ public class LevelScene extends Scene implements SpriteContext
                 if (!Mario.large)
                 {
                     addSprite(new Mushroom(this, x * 16 + 8, y * 16 + 8));
-                }
-                else
+                } else
                 {
                     addSprite(new FireFlower(this, x * 16 + 8, y * 16 + 8));
                 }
-            }
-            else
+            } else
             {
                 Mario.getCoin();
                 addSprite(new CoinAnim(x, y));
@@ -870,8 +878,7 @@ public class LevelScene extends Scene implements SpriteContext
                 for (int xx = 0; xx < 2; xx++)
                     for (int yy = 0; yy < 2; yy++)
                         addSprite(new Particle(x * 16 + xx * 8 + 4, y * 16 + yy * 8 + 4, (xx * 2 - 1) * 4, (yy * 2 - 1) * 4 - 8));
-            }
-            else
+            } else
             {
                 level.setBlockData(x, y, (byte) 4);
             }
@@ -899,9 +906,9 @@ public class LevelScene extends Scene implements SpriteContext
 //        System.arraycopy(action, 0, mario.keys, 0, 6);
 //    }
 
-    public int getTimeSpent() {  return startTime / 15;    }
+    public int getTimeSpent() { return startTime / 15; }
 
-    public int getTimeLeft() {        return timeLeft / 15;    }
+    public int getTimeLeft() { return timeLeft / 15; }
 
     public int getKillsTotal()
     {
@@ -926,19 +933,19 @@ public class LevelScene extends Scene implements SpriteContext
     public int[] getMarioState()
     {
 
-        marioState[0] =         this.getMarioStatus();
-        marioState[1] =         this.getMarioMode();
-        marioState[2] =         this.isMarioOnGround() ? 1 : 0;
-        marioState[3] =         this.isMarioAbleToJump() ? 1 : 0;
-        marioState[4] =         this.isMarioAbleToShoot() ? 1 : 0;
-        marioState[5] =         this.isMarioCarrying() ? 1 : 0;
-        marioState[6] =         this.getKillsTotal();
-        marioState[7] =         this.getKillsByFire();
-        marioState[8] =         this.getKillsByStomp();
-        marioState[9] =         this.getKillsByStomp();
-        marioState[10] =        this.getKillsByShell();
+        marioState[0] = this.getMarioStatus();
+        marioState[1] = this.getMarioMode();
+        marioState[2] = this.isMarioOnGround() ? 1 : 0;
+        marioState[3] = this.isMarioAbleToJump() ? 1 : 0;
+        marioState[4] = this.isMarioAbleToShoot() ? 1 : 0;
+        marioState[5] = this.isMarioCarrying() ? 1 : 0;
+        marioState[6] = this.getKillsTotal();
+        marioState[7] = this.getKillsByFire();
+        marioState[8] = this.getKillsByStomp();
+        marioState[9] = this.getKillsByStomp();
+        marioState[10] = this.getKillsByShell();
 //        marioState[11] =        this.getTimeLimit();
-        marioState[11] =        this.getTimeLeft();
+        marioState[11] = this.getTimeLeft();
         return marioState;
     }
 
@@ -977,7 +984,7 @@ public class LevelScene extends Scene implements SpriteContext
         byte[][] levelScene = this.getLevelSceneObservationZ(ZLevelScene);
         for (int i = 0; i < serializedLevelScene.length; ++i)
         {
-            serializedLevelScene[i] = (int)levelScene[i / ObsWidth][i % ObsHeight];
+            serializedLevelScene[i] = (int) levelScene[i / ObsWidth][i % ObsHeight];
         }
         return serializedLevelScene;
     }
@@ -988,7 +995,7 @@ public class LevelScene extends Scene implements SpriteContext
         byte[][] enemies = this.getEnemiesObservationZ(ZLevelEnemies);
         for (int i = 0; i < serializedEnemies.length; ++i)
         {
-            serializedEnemies[i] = (int)enemies[i / ObsWidth][i % ObsHeight];
+            serializedEnemies[i] = (int) enemies[i / ObsWidth][i % ObsHeight];
         }
         return serializedEnemies;
     }
@@ -999,7 +1006,7 @@ public class LevelScene extends Scene implements SpriteContext
         byte[][] merged = this.getMergedObservationZZ(ZLevelScene, ZLevelEnemies);
         for (int i = 0; i < serializedMergedObservation.length; ++i)
         {
-            serializedMergedObservation[i] = (int)merged[i / ObsWidth][i % ObsHeight];
+            serializedMergedObservation[i] = (int) merged[i / ObsWidth][i % ObsHeight];
         }
         return serializedMergedObservation;
     }
@@ -1014,10 +1021,10 @@ public class LevelScene extends Scene implements SpriteContext
     }
 
     public boolean isMarioOnGround()
-    {        return mario.isOnGround();    }
+    { return mario.isOnGround(); }
 
     public boolean isMarioAbleToJump()
-    {        return mario.mayJump();    }
+    { return mario.mayJump(); }
 
 
     public void resetDefault()
@@ -1074,31 +1081,31 @@ public class LevelScene extends Scene implements SpriteContext
     public float[] getMarioFloatPos()
     {
         marioFloatPos[0] = this.mario.x;
-        marioFloatPos[1]  = this.mario.y;
+        marioFloatPos[1] = this.mario.y;
         return marioFloatPos;
     }
 
     public int getMarioMode()
-    {   return mario.getMode();    }
+    { return mario.getMode(); }
 
     public boolean isMarioCarrying()
-    {   return mario.carried != null; }
+    { return mario.carried != null; }
 
     public int getLevelDifficulty()
-    {         return levelDifficulty;    }
+    { return levelDifficulty; }
 
     public long getLevelSeed()
-    { return levelSeed;    }
+    { return levelSeed; }
 
     public int getLevelLength()
-    { return levelLength;    }
+    { return levelLength; }
 
     public int getLevelType()
-    { return levelType;    }
+    { return levelType; }
 
     public int getNumberOfHiddenCoinsGained()
     {
-      return numberOfHiddenCoinsGained;
+        return numberOfHiddenCoinsGained;
     }
 
     public static int getObservationWidth()
