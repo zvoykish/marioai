@@ -1,6 +1,7 @@
 package ch.idsia.maibe.experiments;
 
 import ch.idsia.agents.Agent;
+import ch.idsia.benchmark.experiments.Experiment;
 import ch.idsia.maibe.tasks.Task;
 
 import java.util.ArrayList;
