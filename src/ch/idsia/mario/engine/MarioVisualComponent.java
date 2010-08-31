@@ -148,7 +148,7 @@ public class MarioVisualComponent extends JComponent
         if (mario.keys != null)
         {
             for (int i = 0; i < Environment.numberOfButtons; ++i)
-                msg += (mario.keys[i]) ? Scene.keysStr[i] : "      ";
+                msg += (mario.keys[i]) ? LevelScene.keysStr[i] : "      ";
         } else
             msg = "NULL";
         drawString(thisVolatileImageGraphics, msg, 6, 78, 1);
