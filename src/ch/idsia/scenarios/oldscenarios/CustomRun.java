@@ -1,8 +1,8 @@
 package ch.idsia.scenarios.oldscenarios;
 //https://marioai.googlecode.com/svn/trunk/src
 
-import ch.idsia.ai.agents.Agent;
-import ch.idsia.ai.agents.AmiCoAgent;
+import ch.idsia.evolution.agents.Agent;
+import ch.idsia.evolution.agents.AmiCoAgent;
 import ch.idsia.tools.CmdLineOptions;
 
 /**

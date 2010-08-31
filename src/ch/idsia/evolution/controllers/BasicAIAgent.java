@@ -1,6 +1,6 @@
-package ch.idsia.ai.controllers;
+package ch.idsia.evolution.controllers;
 
-import ch.idsia.ai.agents.Agent;
+import ch.idsia.evolution.agents.Agent;
 import ch.idsia.mario.environments.Environment;
 
 /**

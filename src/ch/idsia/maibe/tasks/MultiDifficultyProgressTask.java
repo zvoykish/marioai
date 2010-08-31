@@ -1,6 +1,6 @@
 package ch.idsia.maibe.tasks;
 
-import ch.idsia.ai.agents.Agent;
+import ch.idsia.evolution.agents.Agent;
 import ch.idsia.tools.CmdLineOptions;
 //import ch.idsia.tools.EvaluationInfo;
 //import ch.idsia.tools.Evaluator;

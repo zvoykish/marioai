@@ -1,4 +1,4 @@
-package ch.idsia.ai.agents;
+package ch.idsia.evolution.agents;
 
 import ch.idsia.maibe.tasks.ProgressTask;
 

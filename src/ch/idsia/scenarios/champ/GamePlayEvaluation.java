@@ -1,9 +1,9 @@
 package ch.idsia.scenarios.champ;
 
-import ch.idsia.ai.agents.Agent;
-import ch.idsia.ai.agents.AgentsPool;
-import ch.idsia.ai.controllers.ForwardJumpingAgent;
-import ch.idsia.ai.controllers.TimingAgent;
+import ch.idsia.evolution.agents.Agent;
+import ch.idsia.evolution.agents.AgentsPool;
+import ch.idsia.evolution.controllers.ForwardJumpingAgent;
+import ch.idsia.evolution.controllers.TimingAgent;
 import ch.idsia.maibe.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;

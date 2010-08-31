@@ -1,7 +1,7 @@
 package ch.idsia.mario.engine;
 
-import ch.idsia.ai.agents.Agent;
-import ch.idsia.ai.agents.human.CheaterKeyboardAgent;
+import ch.idsia.evolution.agents.Agent;
+import ch.idsia.evolution.agents.human.CheaterKeyboardAgent;
 import ch.idsia.mario.engine.level.BgLevelGenerator;
 import ch.idsia.mario.engine.level.Level;
 import ch.idsia.mario.engine.sprites.Mario;

@@ -1,6 +1,6 @@
 package ch.idsia.scenarios;
 
-//import ch.idsia.ai.agents.Agent;
+//import ch.idsia.evolution.agents.Agent;
 import ch.idsia.maibe.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
 

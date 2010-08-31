@@ -1,6 +1,6 @@
-package ch.idsia.ai.agents;
+package ch.idsia.evolution.agents;
 
-import ch.idsia.ai.agents.human.HumanKeyboardAgent;
+import ch.idsia.evolution.agents.human.HumanKeyboardAgent;
 import wox.serial.Easy;
 
 import java.util.*;

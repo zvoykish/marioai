@@ -1,7 +1,7 @@
 package ch.idsia.mario.engine;
 
-import ch.idsia.ai.agents.Agent;
-import ch.idsia.ai.agents.human.HumanKeyboardAgent;
+import ch.idsia.evolution.agents.Agent;
+import ch.idsia.evolution.agents.human.HumanKeyboardAgent;
 
 import javax.swing.*;
 

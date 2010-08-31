@@ -1,7 +1,7 @@
-package ch.idsia.ai.agents;
+package ch.idsia.evolution.agents;
 
-import ch.idsia.ai.agents.learning.SimpleMLPAgent;
-import ch.idsia.ai.agents.learning.SmallMLPAgent;
+import ch.idsia.evolution.agents.learning.SimpleMLPAgent;
+import ch.idsia.evolution.agents.learning.SmallMLPAgent;
 import ch.idsia.maibe.tasks.ProgressTask;
 
 /**
@@ -9,7 +9,7 @@ import ch.idsia.maibe.tasks.ProgressTask;
  * User: Sergey Karakovskiy, sergey.karakovskiy@gmail.com
  * Date: Jun 9, 2010
  * Time: 7:03:17 PM
- * Package: ch.idsia.ai.agents
+ * Package: ch.idsia.evolution.agents
  */
 public class BasicLearningAgent extends SimpleMLPAgent implements LearningAgent
 {

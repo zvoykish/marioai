@@ -1,8 +1,8 @@
 package ch.idsia.scenarios.test;
 
 import ch.idsia.evolution.SRN;
-import ch.idsia.ai.agents.Agent;
-import ch.idsia.ai.agents.learning.LargeSRNAgent;
+import ch.idsia.evolution.agents.Agent;
+import ch.idsia.evolution.agents.learning.LargeSRNAgent;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.tools.CmdLineOptions;

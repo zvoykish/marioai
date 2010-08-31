@@ -1,9 +1,9 @@
 package ch.idsia.scenarios.oldscenarios;
 
-import ch.idsia.ai.agents.Agent;
-import ch.idsia.ai.agents.AgentsPool;
-import ch.idsia.ai.controllers.ScaredAgent;
-import ch.idsia.ai.controllers.TimingAgent;
+import ch.idsia.evolution.agents.Agent;
+import ch.idsia.evolution.agents.AgentsPool;
+import ch.idsia.evolution.controllers.ScaredAgent;
+import ch.idsia.evolution.controllers.TimingAgent;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.utils.StatisticalSummary;

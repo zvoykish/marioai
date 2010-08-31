@@ -1,22 +1,19 @@
-package ch.idsia.ai.controllers;
+package ch.idsia.evolution.controllers;
 
-import ch.idsia.ai.agents.Agent;
+import ch.idsia.evolution.agents.Agent;
 import ch.idsia.mario.engine.sprites.Mario;
 //import ch.idsia.mario.environments.Environment;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Sergey Karakovskiy, sergey_at_idsia_dot_ch
+ * User: Sergey Karakovskiy, firstname_at_idsia_dot_ch
  * Date: May 9, 2009
- * Time: 1:42:03 PM
- * Package: ch.idsia.ai.controllers
+ * Time: 9:46:59 AM
+ * Package: ch.idsia.controllers.agents
  */
-
-public class ScaredSpeedyAgent extends BasicAIAgent implements Agent
-{
-    public ScaredSpeedyAgent()
-    {
-        super("ScaredSpeedyAgent");
+public class ScaredAgent extends BasicAIAgent implements Agent {
+    public ScaredAgent() {
+        super("ScaredAgent");
     }
 
     int trueJumpCounter = 0;
@@ -45,12 +42,11 @@ public class ScaredSpeedyAgent extends BasicAIAgent implements Agent
             action[Mario.KEY_JUMP] = false;
         }
 
-        return action;
+        return action;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public void reset()
-    {
+    public void reset() {
         action[Mario.KEY_RIGHT] = true;
-        action[Mario.KEY_SPEED] = true;
+        action[Mario.KEY_SPEED] = false;
     }
 }
