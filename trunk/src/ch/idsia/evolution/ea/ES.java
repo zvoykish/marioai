@@ -1,9 +1,9 @@
 package ch.idsia.evolution.ea;
 
 import ch.idsia.agents.Agent;
+import ch.idsia.benchmark.tasks.Task;
 import ch.idsia.evolution.EA;
 import ch.idsia.evolution.Evolvable;
-import ch.idsia.maibe.tasks.Task;
 
 /**
  * Created by IntelliJ IDEA.

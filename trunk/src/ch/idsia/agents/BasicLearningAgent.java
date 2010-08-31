@@ -2,7 +2,7 @@ package ch.idsia.agents;
 
 import ch.idsia.agents.learning.SimpleMLPAgent;
 import ch.idsia.agents.learning.SmallMLPAgent;
-import ch.idsia.maibe.tasks.ProgressTask;
+import ch.idsia.benchmark.tasks.ProgressTask;
 
 /**
  * Created by IntelliJ IDEA.

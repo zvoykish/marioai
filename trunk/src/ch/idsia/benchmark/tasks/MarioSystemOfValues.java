@@ -1,4 +1,4 @@
-package ch.idsia.maibe.tasks;
+package ch.idsia.benchmark.tasks;
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,7 +17,7 @@ package ch.idsia.maibe.tasks;
  * or
  * very high value of kills should produce a true `MARIONATOR`, making him a perfect killer.
  * By tuning killedByFire, killedByShell, killedByStomp you make the killer
- * stylish and of refined manners. 
+ * stylish and of refined manners.
  */
 
 public class MarioSystemOfValues extends SystemOfValues
@@ -34,7 +34,7 @@ public class MarioSystemOfValues extends SystemOfValues
     final public int killedByStomp = 12;
     final public int timeLeft = 8;
 
-    public interface timeLengthMapping 
+    public interface timeLengthMapping
     {
         final public static int TIGHT = 10;
         final public static int MEDIUM = 20;

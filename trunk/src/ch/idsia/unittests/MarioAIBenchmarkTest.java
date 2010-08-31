@@ -1,6 +1,6 @@
 package ch.idsia.unittests;
 
-import ch.idsia.maibe.tasks.BasicTask;
+import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
 import junit.framework.TestCase;
 import org.testng.annotations.AfterTest;

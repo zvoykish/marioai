@@ -1,7 +1,7 @@
 package ch.idsia.scenarios.champ;
 
-import ch.idsia.maibe.tasks.BasicTask;
-import ch.idsia.maibe.tasks.Task;
+import ch.idsia.benchmark.tasks.BasicTask;
+import ch.idsia.benchmark.tasks.Task;
 import ch.idsia.tools.CmdLineOptions;
 
 /**

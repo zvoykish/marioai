@@ -1,4 +1,4 @@
-package ch.idsia.maibe.tasks;
+package ch.idsia.benchmark.tasks;
 
 import ch.idsia.agents.Agent;
 import ch.idsia.mario.engine.GlobalOptions;

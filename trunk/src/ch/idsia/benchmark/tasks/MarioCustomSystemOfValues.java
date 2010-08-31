@@ -1,4 +1,4 @@
-package ch.idsia.maibe.tasks;
+package ch.idsia.benchmark.tasks;
 
 /**
  * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Apr 4, 2010 Time: 11:52:31 AM
@@ -21,5 +21,5 @@ public class MarioCustomSystemOfValues extends SystemOfValues
         this.killedByStomp = 1;
         this.timeLeft = 1;
     }
-    
+
 }

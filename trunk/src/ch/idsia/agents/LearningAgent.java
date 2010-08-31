@@ -1,6 +1,6 @@
 package ch.idsia.agents;
 
-import ch.idsia.maibe.tasks.ProgressTask;
+import ch.idsia.benchmark.tasks.ProgressTask;
 
 /**
  * Created by IntelliJ IDEA.

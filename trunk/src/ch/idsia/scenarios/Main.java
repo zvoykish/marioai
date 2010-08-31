@@ -2,7 +2,7 @@ package ch.idsia.scenarios;
 
 //import ch.idsia.evolution.agents.Agent;
 
-import ch.idsia.maibe.tasks.BasicTask;
+import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
 
 /**
