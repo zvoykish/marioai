@@ -20,11 +20,11 @@ echo "iMarioFramework: Starting ServerAgents..."
 # java -cp .:../../../trunk/lib/jdom.jar ch.idsia.scenarios.oldscenarios.MainRun -ag ServerAgent -vis on -ld 1 -pw on -maxFPS off -an 1 -vlx 400  -vaot on -ewf off
 while [ $I -le $LIM ]
 do
-	# echo $I $PORT $VLX $VLY	$(($I+3))
-	java -jar iMario.jar -m iMario$(($I+3)) -ag ServerAgent:${PORT} -vlx ${VLX} -vly ${VLY} -an ${ATTEMPTS} -ld 5 -pw on -echo on -gv off -tc off -vis on -maxFPS on -ewf on -vaot on &	
-	VLX=$(($VLX+330))
-	PORT=$(($PORT+1))
-	I=$(($I+1))
+    # echo $I $PORT $VLX $VLY	$(($I+3))
+    java -jar iMario.jar -m iMario$(( $I + 3 )) -ag ServerAgent:${PORT} -vlx ${VLX} -vly ${VLY} -an ${ATTEMPTS} -ld 5 -pw on -echo on -gv off -tc off -vis on -maxFPS on -ewf on -vaot on &
+    VLX=$(( $VLX + 330 ))
+    PORT=$(( $PORT + 1 ))
+    I=$(( $I + 1 ))
 done
 
 echo "iMarioFramework: Wait until all servers are ready..."

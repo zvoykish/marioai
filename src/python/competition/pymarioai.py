@@ -25,7 +25,7 @@ def main():
     task.env.initMarioMode = 1
     exp.doEpisodes(1)
     print 'mm 1:', task.reward
-    
+
     task.env.initMarioMode = 0
     exp.doEpisodes(1)
     print 'mm 0:', task.reward
@@ -33,12 +33,12 @@ def main():
     task.env.initMarioMode = 0
     exp.doEpisodes(1)
     print 'mm 0:', task.reward
-    
+
     task.env.initMarioMode = 0
     task.env.levelDifficulty = 5
     exp.doEpisodes(1)
     print 'mm 0, ld 5: ', task.reward
-    
+
     task.env.initMarioMode = 1
     task.env.levelDifficulty = 5
     exp.doEpisodes(1)
