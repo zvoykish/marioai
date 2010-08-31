@@ -17,8 +17,7 @@ public class PlayJLink
 {
     /** returns {in, rec, out} array. Just to make math and java codes fully independent. */
     public static int[] getDimension() {
-        return new int[]{getInputSize()*getInputSize()*2+3, 6, 6};
-    }
+        return new int[]{getInputSize()*getInputSize()*2+3, 6, 6};    }
 
     /** returns length of an edge of the input window square*/
     public static int getInputSize() {
