@@ -1,6 +1,6 @@
 package ch.idsia.maibe.tasks;
 
-import ch.idsia.evolution.agents.Agent;
+import ch.idsia.agents.Agent;
 import ch.idsia.tools.CmdLineOptions;
 //import ch.idsia.tools.EvaluationInfo;
 //import ch.idsia.tools.Evaluator;
@@ -19,14 +19,17 @@ public class MultiDifficultyProgressTask implements Task
     private int startingSeed = 0;
     private int[] difficulties = {0, 3, 5, 10};
 
-    public MultiDifficultyProgressTask(CmdLineOptions evaluationOptions) {
+    public MultiDifficultyProgressTask(CmdLineOptions evaluationOptions)
+    {
         setOptions(evaluationOptions);
     }
 
-    public float[] evaluate(final Agent controller) {
+    public float[] evaluate(final Agent controller)
+    {
         float distanceTravelled = 0;
         float[] fitnesses = new float[difficulties.length + 1];
-        for (int difficulty : difficulties) {
+        for (int difficulty : difficulties)
+        {
             controller.reset();
             options.setLevelRandSeed(startingSeed);
             options.setLevelDifficulty(difficulty);
@@ -44,15 +47,18 @@ public class MultiDifficultyProgressTask implements Task
         //return new double[]{distanceTravelled};
     }
 
-    public void setStartingSeed (int seed) {
+    public void setStartingSeed(int seed)
+    {
         startingSeed = seed;
     }
 
-    public void setOptions(CmdLineOptions options) {
+    public void setOptions(CmdLineOptions options)
+    {
         this.options = options;
     }
 
-    public CmdLineOptions getOptions() {
+    public CmdLineOptions getOptions()
+    {
         return options;
     }
 
@@ -68,6 +74,6 @@ public class MultiDifficultyProgressTask implements Task
 
     public void reset()
     {
-        
+
     }
 }

@@ -1,9 +1,9 @@
 package ch.idsia.scenarios.champ;
 
-import ch.idsia.evolution.agents.Agent;
-import ch.idsia.evolution.agents.AgentsPool;
-import ch.idsia.evolution.agents.controllers.ForwardJumpingAgent;
-import ch.idsia.evolution.agents.controllers.TimingAgent;
+import ch.idsia.agents.Agent;
+import ch.idsia.agents.AgentsPool;
+import ch.idsia.agents.controllers.ForwardJumpingAgent;
+import ch.idsia.agents.controllers.TimingAgent;
 import ch.idsia.maibe.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
@@ -16,6 +16,10 @@ import ch.idsia.utils.StatisticalSummary;
  * User: Sergey Karakovskiy, sergey at idsia dot ch
  * Date: Mar 17, 2010 Time: 8:33:43 AM
  * Package: ch.idsia.scenarios
+ */
+
+/**
+ * Class used for agent evaluation on GamePlay track
  */
 public final class GamePlayEvaluation
 {
@@ -34,8 +38,8 @@ public final class GamePlayEvaluation
         int levelLength = cmdLineOptions.getLevelLength();
 
         final int[] timeLimits = new int[]{levelLength / 10,
-                                           levelLength*2 / 10,
-                                           levelLength*4 / 10};
+                levelLength * 2 / 10,
+                levelLength * 4 / 10};
 
         final int[] levelDifficulties = new int[]{0, 1, 2, 3, 4, 5, 6, 12, 16, 20};
         final int[] levelTypes = new int[]{0, 1, 2};
@@ -60,40 +64,40 @@ public final class GamePlayEvaluation
 
         for (int ll : levelLengths)
 
-        for (int levelDifficulty : levelDifficulties)
-        {
-            for (int levelType : levelTypes)
+            for (int levelDifficulty : levelDifficulties)
             {
-                for (boolean creaturesEnable : creaturesEnables)
+                for (int levelType : levelTypes)
                 {
-                    for (int timeLimit : timeLimits)
+                    for (boolean creaturesEnable : creaturesEnables)
                     {
-                        trials ++;
-                        cmdLineOptions.setLevelLength(ll);
-                        cmdLineOptions.setLevelDifficulty(levelDifficulty);
-                        cmdLineOptions.setLevelType(levelType);
-                        cmdLineOptions.setPauseWorld(!creaturesEnable);
-                        cmdLineOptions.setTimeLimit(timeLimit);
-                        basicTask.reset(cmdLineOptions);
-                        if (!basicTask.runOneEpisode())
+                        for (int timeLimit : timeLimits)
                         {
-                            System.out.println("[MarioAI Evaluation] : out of computational time per action!");
-                            disqualifications++;
-                            continue;
+                            trials++;
+                            cmdLineOptions.setLevelLength(ll);
+                            cmdLineOptions.setLevelDifficulty(levelDifficulty);
+                            cmdLineOptions.setLevelType(levelType);
+                            cmdLineOptions.setPauseWorld(!creaturesEnable);
+                            cmdLineOptions.setTimeLimit(timeLimit);
+                            basicTask.reset(cmdLineOptions);
+                            if (!basicTask.runOneEpisode())
+                            {
+                                System.out.println("[MarioAI Evaluation] : out of computational time per action!");
+                                disqualifications++;
+                                continue;
+                            }
+                            EvaluationInfo evaluationInfo = basicTask.getEnvironment().getEvaluationInfo();
+                            float f = evaluationInfo.computeWeightedFitness();
+                            if (verbose)
+                            {
+                                System.out.println("LEVEL OPTIONS: -ld " + levelDifficulty + " -lt " + levelType + " -pw " + !creaturesEnable +
+                                        " -tl " + timeLimit);
+                                System.out.println("Intermediate SCORE = " + f + "; Details: " + evaluationInfo.toStringSingleLine());
+                            }
+                            fitness += f;
                         }
-                        EvaluationInfo evaluationInfo = basicTask.getEnvironment().getEvaluationInfo();
-                        float f = evaluationInfo.computeWeightedFitness();
-                        if (verbose)
-                        {
-                            System.out.println("LEVEL OPTIONS: -ld " + levelDifficulty + " -lt " + levelType + " -pw " + !creaturesEnable +
-                                " -tl " + timeLimit);
-                            System.out.println("Intermediate SCORE = " + f + "; Details: " + evaluationInfo.toStringSingleLine());
-                        }
-                        fitness += f;
                     }
                 }
             }
-        }
 
         System.out.println("trials = " + trials);
         System.out.println("disqualifications = " + disqualifications);
@@ -118,7 +122,7 @@ public final class GamePlayEvaluation
 
     public static void score(Agent agent, int startingSeed, CmdLineOptions cmdLineOptions)
     {
-        TimingAgent controller = new TimingAgent (agent);
+        TimingAgent controller = new TimingAgent(agent);
         //        options.setNumberOfTrials(1);
 //        options.setVisualization(false);
 //        options.setMaxFPS(true);
@@ -130,10 +134,10 @@ public final class GamePlayEvaluation
         timeLeftSum = 0;
         marioModeSum = 0;
 
-        competitionScore += testConfig (controller, cmdLineOptions, startingSeed, 0, false);
-        competitionScore += testConfig (controller, cmdLineOptions, startingSeed, 3, false);
-        competitionScore += testConfig (controller, cmdLineOptions, startingSeed, 5, false);
-        competitionScore += testConfig (controller, cmdLineOptions, startingSeed, 10, false);
+        competitionScore += testConfig(controller, cmdLineOptions, startingSeed, 0, false);
+        competitionScore += testConfig(controller, cmdLineOptions, startingSeed, 3, false);
+        competitionScore += testConfig(controller, cmdLineOptions, startingSeed, 5, false);
+        competitionScore += testConfig(controller, cmdLineOptions, startingSeed, 10, false);
 
         System.out.println("\nCompetition score: " + competitionScore + "\n");
         System.out.println("Number of levels cleared = " + marioStatusSum);
@@ -144,29 +148,30 @@ public final class GamePlayEvaluation
         System.out.println("TOTAL SUM for " + agent.getName() + " = " + (competitionScore + killsSum + marioStatusSum + marioModeSum + timeLeftSum));
     }
 
-    public static double testConfig (TimingAgent controller, EvaluationOptions options, int seed, int levelDifficulty, boolean paused)
+    public static double testConfig(TimingAgent controller, EvaluationOptions options, int seed, int levelDifficulty, boolean paused)
     {
         options.setLevelDifficulty(levelDifficulty);
         options.setPauseWorld(paused);
-        StatisticalSummary ss = test (controller, options, seed);
+        StatisticalSummary ss = test(controller, options, seed);
         double averageTimeTaken = controller.averageTimeTaken();
         System.out.printf("Difficulty %d score %.4f (avg time %.4f)\n",
                 levelDifficulty, ss.mean(), averageTimeTaken);
         return ss.mean();
     }
 
-    public static StatisticalSummary test (Agent controller, EvaluationOptions options, int seed)
+    public static StatisticalSummary test(Agent controller, EvaluationOptions options, int seed)
     {
-        StatisticalSummary ss = new StatisticalSummary ();
+        StatisticalSummary ss = new StatisticalSummary();
         int kills = 0;
         int timeLeft = 0;
         int marioMode = 0;
         float marioStatus = 0;
 
 //        options.setNumberOfTrials(numberOfTrials);
-        for (int i = 0; i < numberOfTrials; i++) {
+        for (int i = 0; i < numberOfTrials; i++)
+        {
             options.setLevelRandSeed(seed + i);
-            options.setLevelLength (200 + (i * 128) + (seed % (i + 1)));
+            options.setLevelLength(200 + (i * 128) + (seed % (i + 1)));
             options.setLevelType(i % 3);
             controller.reset();
             options.setAgent(controller);
@@ -201,5 +206,5 @@ public final class GamePlayEvaluation
 
         return ss;
     }
-    
+
 }

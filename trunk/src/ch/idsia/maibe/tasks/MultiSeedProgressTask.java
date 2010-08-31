@@ -1,6 +1,6 @@
 package ch.idsia.maibe.tasks;
 
-import ch.idsia.evolution.agents.Agent;
+import ch.idsia.agents.Agent;
 import ch.idsia.tools.CmdLineOptions;
 
 /**
@@ -41,12 +41,12 @@ public class MultiSeedProgressTask extends BasicTask implements Task
         return new float[]{distanceTravelled};
     }
 
-    public void setStartingSeed (int seed)
+    public void setStartingSeed(int seed)
     {
         startingSeed = seed;
     }
 
-    public void setNumberOfSeeds (int number)
+    public void setNumberOfSeeds(int number)
     {
         numberOfSeeds = number;
     }
@@ -68,7 +68,7 @@ public class MultiSeedProgressTask extends BasicTask implements Task
 
     public boolean isFinished()
     {
-        return true;  
+        return true;
     }
 
     public void reset()

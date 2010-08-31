@@ -1,6 +1,6 @@
 package ch.idsia.maibe.tasks;
 
-import ch.idsia.evolution.agents.Agent;
+import ch.idsia.agents.Agent;
 import ch.idsia.mario.environments.Environment;
 import ch.idsia.mario.environments.MarioEnvironment;
 import ch.idsia.tools.CmdLineOptions;
@@ -31,11 +31,10 @@ public class BasicTask implements Task
         this.setOptions(cmdLineOptions);
     }
 //    final Random r = new Random();
+
     /**
-     *
      * @return boolean flat whether controller is disqualified or not
      */
-
 
 
     public boolean runOneEpisode()
@@ -118,6 +117,6 @@ public class BasicTask implements Task
 
     public void reset()
     {
-        
+
     }
 }

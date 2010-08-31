@@ -1,7 +1,7 @@
 package ch.idsia.mario.engine;
 
-import ch.idsia.evolution.agents.Agent;
-import ch.idsia.evolution.agents.controllers.human.CheaterKeyboardAgent;
+import ch.idsia.agents.Agent;
+import ch.idsia.agents.controllers.human.CheaterKeyboardAgent;
 import ch.idsia.mario.engine.level.BgLevelGenerator;
 import ch.idsia.mario.engine.level.Level;
 import ch.idsia.mario.engine.sprites.Mario;
@@ -15,7 +15,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.image.VolatileImage;
 import java.text.DecimalFormat;
 import java.util.List;
-
 
 
 /**
@@ -44,8 +43,8 @@ public class MarioVisualComponent extends JComponent
     final private static DecimalFormat df2 = new DecimalFormat("000");
 
     private static String[] LEVEL_TYPES = {"Overground(0)",
-                                           "Underground(1)",
-                                           "Castle(2)"};
+            "Underground(1)",
+            "Castle(2)"};
 
     private long tm = System.currentTimeMillis();
     private long tm0;
@@ -150,12 +149,12 @@ public class MarioVisualComponent extends JComponent
         {
             for (int i = 0; i < Environment.numberOfButtons; ++i)
                 msg += (mario.keys[i]) ? Scene.keysStr[i] : "      ";
-        }
-        else
+        } else
             msg = "NULL";
         drawString(thisVolatileImageGraphics, msg, 6, 78, 1);
 
-        if (!this.hasFocus() && (tm - tm0)/(delay+1) % 42 < 20 ) {
+        if (!this.hasFocus() && (tm - tm0) / (delay + 1) % 42 < 20)
+        {
             String msgClick = "CLICK TO PLAY";
             drawString(thisVolatileImageGraphics, msgClick, 160 - msgClick.length() * 4, 110, 2);
 //            drawString(thisVolatileImageGraphics, msgClick, 160 - msgClick.length() * 4, 110, 7);
@@ -182,7 +181,8 @@ public class MarioVisualComponent extends JComponent
         if (delay > 0)
         {
 //            System.out.println("delay = " + delay);
-            try {
+            try
+            {
                 tm += delay;
                 Thread.sleep(Math.max(0, tm - System.currentTimeMillis()));
             } catch (InterruptedException ignored) {}
@@ -196,8 +196,7 @@ public class MarioVisualComponent extends JComponent
 
         if (GlobalOptions.isMarioAlwaysInCenter)
         {
-        }
-        else
+        } else
         {
             //int xCam = (int) (xCamO + (this.xCam - xCamO) * alpha);
             //        int yCam = (int) (yCamO + (this.yCam - yCamO) * alpha);
@@ -226,8 +225,8 @@ public class MarioVisualComponent extends JComponent
         g.translate(xCam, yCam);
 
         layer.setCam(xCam, yCam);
-        layer.render(g, levelScene.tick, levelScene.paused?0:alpha); //levelScene., levelScene.
-        layer.renderExit0(g, levelScene.tick, levelScene.paused?0:alpha, mario.winTime==0);
+        layer.render(g, levelScene.tick, levelScene.paused ? 0 : alpha); //levelScene., levelScene.
+        layer.renderExit0(g, levelScene.tick, levelScene.paused ? 0 : alpha, mario.winTime == 0);
 
         g.translate(-xCam, -yCam);
 
@@ -248,24 +247,29 @@ public class MarioVisualComponent extends JComponent
 
         g.translate(xCam, yCam);
         g.setColor(Color.BLACK);
-        layer.renderExit1(g, levelScene.tick, levelScene.paused?0:alpha);
+        layer.renderExit1(g, levelScene.tick, levelScene.paused ? 0 : alpha);
 
 //        drawStringDropShadow(g, "MARIO: " + df.format(Mario.lives), 0, 0, 7);
 //        drawStringDropShadow(g, "#########", 0, 1, 7);
 
 
-        drawStringDropShadow(g, "DIFFICULTY:   " + df.format(levelScene.getLevelDifficulty()), 0, 0, levelScene.getLevelDifficulty() > 6 ? 1 : levelScene.getLevelDifficulty() > 2 ? 4 : 7 ); drawStringDropShadow(g, "CREATURES:" + (mario.world.paused ? "OFF" : " ON"), 19, 0, 7);
+        drawStringDropShadow(g, "DIFFICULTY:   " + df.format(levelScene.getLevelDifficulty()), 0, 0, levelScene.getLevelDifficulty() > 6 ? 1 : levelScene.getLevelDifficulty() > 2 ? 4 : 7);
+        drawStringDropShadow(g, "CREATURES:" + (mario.world.paused ? "OFF" : " ON"), 19, 0, 7);
         drawStringDropShadow(g, "SEED:" + levelScene.getLevelSeed(), 0, 1, 7);
-        drawStringDropShadow(g, "TYPE:" + LEVEL_TYPES[levelScene.getLevelType()], 0, 2, 7);                  drawStringDropShadow(g, "ALL KILLS: " + levelScene.killedCreaturesTotal, 19, 1, 1);
-        drawStringDropShadow(g, "LENGTH:" + (int)mario.x/16 + " of " + levelScene.getLevelLength(), 0, 3, 7); drawStringDropShadow(g, "by Fire  : " + levelScene.killedCreaturesByFireBall, 19, 2, 1);
-        drawStringDropShadow(g,"COINS    : " + df.format(Mario.coins), 0, 4, 4);                      drawStringDropShadow(g, "by Shell : " + levelScene.killedCreaturesByShell, 19, 3, 1);
-        drawStringDropShadow(g, "MUSHROOMS: " + df.format(Mario.mushroomsDevoured), 0, 5, 4);                  drawStringDropShadow(g, "by Stomp : " + levelScene.killedCreaturesByStomp, 19, 4, 1);
+        drawStringDropShadow(g, "TYPE:" + LEVEL_TYPES[levelScene.getLevelType()], 0, 2, 7);
+        drawStringDropShadow(g, "ALL KILLS: " + levelScene.killedCreaturesTotal, 19, 1, 1);
+        drawStringDropShadow(g, "LENGTH:" + (int) mario.x / 16 + " of " + levelScene.getLevelLength(), 0, 3, 7);
+        drawStringDropShadow(g, "by Fire  : " + levelScene.killedCreaturesByFireBall, 19, 2, 1);
+        drawStringDropShadow(g, "COINS    : " + df.format(Mario.coins), 0, 4, 4);
+        drawStringDropShadow(g, "by Shell : " + levelScene.killedCreaturesByShell, 19, 3, 1);
+        drawStringDropShadow(g, "MUSHROOMS: " + df.format(Mario.mushroomsDevoured), 0, 5, 4);
+        drawStringDropShadow(g, "by Stomp : " + levelScene.killedCreaturesByStomp, 19, 4, 1);
         drawStringDropShadow(g, "FLOWERS  : " + df.format(Mario.flowersDevoured), 0, 6, 4);
 
         drawStringDropShadow(g, "TIME", 33, 0, 7);
-        int time = (levelScene.timeLeft+15-1)/15;
-        if (time<0) time = 0;
-        drawStringDropShadow(g, " "+df2.format(time), 33, 1, 7);
+        int time = (levelScene.timeLeft + 15 - 1) / 15;
+        if (time < 0) time = 0;
+        drawStringDropShadow(g, " " + df2.format(time), 33, 1, 7);
 
         drawProgress(g);
 
@@ -297,7 +301,7 @@ public class MarioVisualComponent extends JComponent
             }
 
             renderBlackout(g, mario.xDeathPos - xCam, mario.yDeathPos - yCam,
-                           (int) (GlobalOptions.VISUAL_COMPONENT_WIDTH - t));
+                    (int) (GlobalOptions.VISUAL_COMPONENT_WIDTH - t));
         }
 
         if (mario.deathTime > 0)
@@ -322,13 +326,14 @@ public class MarioVisualComponent extends JComponent
     private void drawProgress(Graphics g)
     {
         String entirePathStr = "......................................>";
-        double physLength = (levelScene.getLevelLength() - 53)*16;
-        int progressInChars = (int) (mario.x * (entirePathStr.length()/physLength));
+        double physLength = (levelScene.getLevelLength() - 53) * 16;
+        int progressInChars = (int) (mario.x * (entirePathStr.length() / physLength));
         String progress_str = "";
         for (int i = 0; i < progressInChars - 1; ++i)
             progress_str += ".";
         progress_str += "M";
-        try {
+        try
+        {
             drawStringDropShadow(g, entirePathStr.substring(progress_str.length()), progress_str.length(), 28, 0);
         } catch (StringIndexOutOfBoundsException e)
         {
@@ -339,8 +344,8 @@ public class MarioVisualComponent extends JComponent
 
     public static void drawStringDropShadow(Graphics g, String text, int x, int y, int c)
     {
-        drawString(g, text, x*8+5, y*8+5, 0);
-        drawString(g, text, x*8+4, y*8+4, c);
+        drawString(g, text, x * 8 + 5, y * 8 + 5, 0);
+        drawString(g, text, x * 8 + 4, y * 8 + 4, c);
     }
 
     public static void drawString(Graphics g, String text, int x, int y, int c)
@@ -352,21 +357,21 @@ public class MarioVisualComponent extends JComponent
 
     private void drawGrid(Graphics g, int length)
     {
-        width = length*16;
-        height = length*16;
+        width = length * 16;
+        height = length * 16;
         g.setColor(Color.GREEN);
-        
+
         int rows = length;
         int columns = length;
 
         int htOfRow = height / (rows);
         int k;
         for (k = 0; k < rows; k++)
-            g.drawLine((int) mario.x, k * htOfRow , (int) (mario.x +  width), k * htOfRow );
+            g.drawLine((int) mario.x, k * htOfRow, (int) (mario.x + width), k * htOfRow);
 
         int wdOfRow = width / (columns);
         for (k = 0; k < columns; k++)
-            g.drawLine(k*wdOfRow , 0, k*wdOfRow , height);
+            g.drawLine(k * wdOfRow, 0, k * wdOfRow, height);
 
     }
 
@@ -460,7 +465,7 @@ public class MarioVisualComponent extends JComponent
         {
 //            System.out.println("level = " + level);
 //            System.out.println("levelScene .level = " + levelScene.level);
-            level =                                     levelScene.level;
+            level = levelScene.level;
 
             this.mario = levelScene.mario;
             this.mario.cheatKeys = cheatAgent.getAction();
@@ -487,6 +492,7 @@ public class MarioVisualComponent extends JComponent
 
     // THis method here solely for the displaying information in order to reduce
     // amount of info passed between Env and VisComponent
+
     public void setAgent(Agent agent)
     {
         this.agentNameStr = agent.getName();
@@ -500,6 +506,7 @@ public class MarioVisualComponent extends JComponent
         }
     }
     /// `huge` inheritance stuff from MarioComponent
+
     public void setGameViewer(GameViewer gameViewer)
     {
         this.gameViewer = gameViewer;

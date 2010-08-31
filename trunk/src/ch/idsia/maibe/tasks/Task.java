@@ -1,6 +1,6 @@
 package ch.idsia.maibe.tasks;
 
-import ch.idsia.evolution.agents.Agent;
+import ch.idsia.agents.Agent;
 import ch.idsia.tools.CmdLineOptions;
 
 /**
@@ -13,11 +13,11 @@ import ch.idsia.tools.CmdLineOptions;
 
 public interface Task
 {
-    public float[] evaluate (Agent controller);
+    public float[] evaluate(Agent controller);
 
-    public void setOptions (CmdLineOptions options);
+    public void setOptions(CmdLineOptions options);
 
-    public CmdLineOptions getOptions ();
+    public CmdLineOptions getOptions();
 
     void doEpisodes(int amount, boolean verbose);
 

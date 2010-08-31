@@ -1,6 +1,6 @@
 package ch.idsia.maibe.tasks;
 
-import ch.idsia.evolution.agents.Agent;
+import ch.idsia.agents.Agent;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.CmdLineOptions;
 
@@ -24,6 +24,7 @@ public final class ProgressTask extends BasicTask implements Task, Cloneable
     private String fileTimeStamp = "-uid-" + uid + "-" + GlobalOptions.getTimeStamp();
 
 //    private int startingSeed;
+
     public ProgressTask(CmdLineOptions evaluationOptions)
     {
         super(evaluationOptions);
@@ -93,7 +94,7 @@ public final class ProgressTask extends BasicTask implements Task, Cloneable
             e.printStackTrace();
         }
     }
-    
+
     public void doEpisodes(int amount, boolean verbose)
     {
         System.out.println("amount = " + amount);

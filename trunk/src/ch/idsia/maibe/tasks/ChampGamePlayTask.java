@@ -1,6 +1,6 @@
 package ch.idsia.maibe.tasks;
 
-import ch.idsia.evolution.agents.Agent;
+import ch.idsia.agents.Agent;
 import ch.idsia.mario.environments.Environment;
 
 /**
@@ -14,5 +14,5 @@ public class ChampGamePlayTask extends BasicTask
         super(null);
     }
 
-    
+
 }

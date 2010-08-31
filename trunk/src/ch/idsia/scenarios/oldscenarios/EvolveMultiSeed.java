@@ -1,9 +1,9 @@
 package ch.idsia.scenarios.oldscenarios;
 
+import ch.idsia.agents.Agent;
+import ch.idsia.agents.AgentsPool;
+import ch.idsia.agents.learning.SimpleMLPAgent;
 import ch.idsia.evolution.Evolvable;
-import ch.idsia.evolution.agents.Agent;
-import ch.idsia.evolution.agents.AgentsPool;
-import ch.idsia.evolution.agents.learning.SimpleMLPAgent;
 import ch.idsia.evolution.ea.ES;
 import ch.idsia.maibe.tasks.MultiSeedProgressTask;
 import ch.idsia.mario.engine.GlobalOptions;
@@ -23,36 +23,40 @@ public class EvolveMultiSeed
     final static int generations = 100;
     final static int populationSize = 100;
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         CmdLineOptions options = new CmdLineOptions(new String[0]);
 //        options.setNumberOfTrials(1);
         options.setPauseWorld(true);
         Evolvable initial = new SimpleMLPAgent();
 
-        if (args.length > 0) {
-            initial = (Evolvable) AgentsPool.load (args[0]);
+        if (args.length > 0)
+        {
+            initial = (Evolvable) AgentsPool.load(args[0]);
         }
         options.setFPS(GlobalOptions.MaxFPS);
         options.setVisualization(false);
         MultiSeedProgressTask task = new MultiSeedProgressTask(options);
         task.setNumberOfSeeds(3);
         task.setStartingSeed(0);
-        ES es = new ES (task, initial, populationSize);
+        ES es = new ES(task, initial, populationSize);
         System.out.println("Evolving " + initial + " with task " + task);
-        for (int gen = 0; gen < generations; gen++) {
+        for (int gen = 0; gen < generations; gen++)
+        {
             //task.setStartingSeed((int)(Math.random () * Integer.MAX_VALUE));
             es.nextGeneration();
             double bestResult = es.getBestFitnesses()[0];
             System.out.println("Generation " + gen + " best " + bestResult);
             options.setVisualization(gen % 5 == 0 || bestResult > 4000);
             Agent a = (Agent) es.getBests()[0];
-            a.setName(((Agent)initial).getName() + gen);
+            a.setName(((Agent) initial).getName() + gen);
 //                RegisterableAgent.registerAgent(a);
 //                AgentsPool.setCurrentAgent(a);
             double result = task.evaluate(a)[0];
             options.setVisualization(false);
-            Easy.save (es.getBests()[0], "evolved-" + gen + ".xml");
-            if (result > 4000) {
+            Easy.save(es.getBests()[0], "evolved-" + gen + ".xml");
+            if (result > 4000)
+            {
                 break; //finished
             }
         }

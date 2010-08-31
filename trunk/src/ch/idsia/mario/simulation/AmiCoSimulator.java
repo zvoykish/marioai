@@ -1,7 +1,7 @@
 package ch.idsia.mario.simulation;
 
-import ch.idsia.evolution.agents.Agent;
-import ch.idsia.evolution.agents.controllers.ForwardAgent;
+import ch.idsia.agents.Agent;
+import ch.idsia.agents.controllers.ForwardAgent;
 import ch.idsia.mario.environments.Environment;
 import ch.idsia.mario.environments.MarioEnvironment;
 import ch.idsia.tools.CmdLineOptions;
@@ -47,6 +47,6 @@ public class AmiCoSimulator
 
     public void runEpisodes()
     {
-        
+
     }
 }

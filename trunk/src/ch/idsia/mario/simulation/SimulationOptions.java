@@ -1,7 +1,7 @@
 package ch.idsia.mario.simulation;
 
-import ch.idsia.evolution.agents.Agent;
-import ch.idsia.evolution.agents.AgentsPool;
+import ch.idsia.agents.Agent;
+import ch.idsia.agents.AgentsPool;
 import ch.idsia.utils.ParameterContainer;
 
 /**
@@ -26,6 +26,7 @@ public class SimulationOptions extends ParameterContainer
 
 
     // Agent
+
     public Agent getAgent()
     {
 //        return a(getParameterValue("-ag"));      }
@@ -37,7 +38,8 @@ public class SimulationOptions extends ParameterContainer
         return agent;
     }
 
-    public void setAgent(Agent agent) {
+    public void setAgent(Agent agent)
+    {
 //        setParameterValue("-ag", s(agent));
         this.agent = agent;
     }
@@ -48,74 +50,116 @@ public class SimulationOptions extends ParameterContainer
     }
 
     // LevelType
-    public int getLevelType() {
-        return i(getParameterValue("-lt"));      }
 
-    public void setLevelType(int levelType) {
-        setParameterValue("-lt", s(levelType));    }
+    public int getLevelType()
+    {
+        return i(getParameterValue("-lt"));
+    }
+
+    public void setLevelType(int levelType)
+    {
+        setParameterValue("-lt", s(levelType));
+    }
 
 
     // LevelDifficulty
-    public int getLevelDifficulty() {
-        return i(getParameterValue("-ld"));                           }
 
-    public void setLevelDifficulty(int levelDifficulty) {
-        setParameterValue("-ld", s(levelDifficulty));    }
+    public int getLevelDifficulty()
+    {
+        return i(getParameterValue("-ld"));
+    }
+
+    public void setLevelDifficulty(int levelDifficulty)
+    {
+        setParameterValue("-ld", s(levelDifficulty));
+    }
 
     //LevelLength
-    public int getLevelLength() {
-        return i(getParameterValue("-ll"));      }
 
-    public void setLevelLength(int levelLength) {
-        setParameterValue("-ll", s(levelLength));    }
+    public int getLevelLength()
+    {
+        return i(getParameterValue("-ll"));
+    }
+
+    public void setLevelLength(int levelLength)
+    {
+        setParameterValue("-ll", s(levelLength));
+    }
 
     //LevelHeight
-    public int getLevelHeight() {
+
+    public int getLevelHeight()
+    {
         return i(getParameterValue("-lh"));
     }
 
-    public void setLevelHeight( int levelHeight ) {
+    public void setLevelHeight(int levelHeight)
+    {
         setParameterValue("-lh", s(levelHeight));
     }
 
     //LevelRandSeed
-    public int getLevelRandSeed() {
-        return i(getParameterValue("-ls"));     }
 
-    public void setLevelRandSeed(int levelRandSeed) {
-        setParameterValue("-ls", s(levelRandSeed));    }
+    public int getLevelRandSeed()
+    {
+        return i(getParameterValue("-ls"));
+    }
+
+    public void setLevelRandSeed(int levelRandSeed)
+    {
+        setParameterValue("-ls", s(levelRandSeed));
+    }
 
     //Visualization
-    public boolean isVisualization() {
-        return b(getParameterValue("-vis"));     }
 
-    public void setVisualization(boolean visualization) {
-        setParameterValue("-vis", s(visualization));    }
+    public boolean isVisualization()
+    {
+        return b(getParameterValue("-vis"));
+    }
+
+    public void setVisualization(boolean visualization)
+    {
+        setParameterValue("-vis", s(visualization));
+    }
 
     //isPauseWorld
-    public void setPauseWorld(boolean pauseWorld) {
-        setParameterValue("-pw", s(pauseWorld));    }
 
-    public Boolean isPauseWorld() {
-        return b(getParameterValue("-pw"));     }
+    public void setPauseWorld(boolean pauseWorld)
+    {
+        setParameterValue("-pw", s(pauseWorld));
+    }
+
+    public Boolean isPauseWorld()
+    {
+        return b(getParameterValue("-pw"));
+    }
 
     //isPowerRestoration
-    public Boolean isPowerRestoration() {
-        return b(getParameterValue("-pr"));     }
 
-    public void setPowerRestoration(boolean powerRestoration) {
-        setParameterValue("-pr", s(powerRestoration));    }
+    public Boolean isPowerRestoration()
+    {
+        return b(getParameterValue("-pr"));
+    }
+
+    public void setPowerRestoration(boolean powerRestoration)
+    {
+        setParameterValue("-pr", s(powerRestoration));
+    }
 
     //MarioMode
-    public int getMarioMode() {
+
+    public int getMarioMode()
+    {
         return i(getParameterValue("-mm"));
     }
 
     public void setMarioMode(int marioMode)
-    {   setParameterValue("-mm", s(marioMode));    }
+    { setParameterValue("-mm", s(marioMode)); }
 
     //ZLevelScene
-    public int getZLevelScene() {
+
+    public int getZLevelScene()
+    {
         return i(getParameterValue("-zs"));
     }
 
@@ -125,7 +169,9 @@ public class SimulationOptions extends ParameterContainer
     }
 
     //ZLevelEnemies
-    public int getZLevelEnemies() {
+
+    public int getZLevelEnemies()
+    {
         return i(getParameterValue("-ze"));
     }
 
@@ -135,22 +181,29 @@ public class SimulationOptions extends ParameterContainer
     }
 
     // TimeLimit
-    public int getTimeLimit() {
+
+    public int getTimeLimit()
+    {
         return i(getParameterValue("-tl"));
     }
 
-    public void setTimeLimit(int timeLimit) {
+    public void setTimeLimit(int timeLimit)
+    {
         setParameterValue("-tl", s(timeLimit));
     }
 
     // Invulnerability
-    public boolean isMarioInvulnerable() {
-        return b(getParameterValue("-i"));  }
+
+    public boolean isMarioInvulnerable()
+    {
+        return b(getParameterValue("-i"));
+    }
 
     public void setMarioInvulnerable(boolean invulnerable)
-    {         setParameterValue("-i", s(invulnerable));    }
+    { setParameterValue("-i", s(invulnerable)); }
 
     // Level: dead ends count
+
     public Boolean getDeadEndsCount()
     {
         return b(getParameterValue("-lde"));
@@ -162,6 +215,7 @@ public class SimulationOptions extends ParameterContainer
     }
 
     // Level: cannons count
+
     public Boolean getCannonsCount()
     {
         return b(getParameterValue("-lc"));
@@ -173,6 +227,7 @@ public class SimulationOptions extends ParameterContainer
     }
 
     // Level: HillStraight count
+
     public Boolean getHillStraightCount()
     {
         return b(getParameterValue("-lhs"));
@@ -184,6 +239,7 @@ public class SimulationOptions extends ParameterContainer
     }
 
     // Level: Tubes count
+
     public Boolean getTubesCount()
     {
         return b(getParameterValue("-ltb"));
@@ -195,6 +251,7 @@ public class SimulationOptions extends ParameterContainer
     }
 
     // Level: blocks count
+
     public Boolean getBlocksCount()
     {
         return b(getParameterValue("-lb"));
@@ -206,6 +263,7 @@ public class SimulationOptions extends ParameterContainer
     }
 
     // Level: coins count
+
     public Boolean getCoinsCount()
     {
         return b(getParameterValue("-lco"));
@@ -217,6 +275,7 @@ public class SimulationOptions extends ParameterContainer
     }
 
     // Level: gaps count
+
     public Boolean getGapsCount()
     {
         return b(getParameterValue("-lg"));
@@ -228,6 +287,7 @@ public class SimulationOptions extends ParameterContainer
     }
 
     // Level: hidden blocks count
+
     public Boolean getHiddenBlocksCount()
     {
         return b(getParameterValue("-lhb"));
@@ -239,6 +299,7 @@ public class SimulationOptions extends ParameterContainer
     }
 
     // Level: enemies mask
+
     public String getEnemies()
     {
         return getParameterValue("-le");
@@ -250,6 +311,7 @@ public class SimulationOptions extends ParameterContainer
     }
 
     // Level: flat level
+
     public boolean isFlatLevel()
     {
         return b(getParameterValue("-lf"));

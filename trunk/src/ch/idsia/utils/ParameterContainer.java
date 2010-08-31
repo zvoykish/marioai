@@ -1,7 +1,8 @@
 package ch.idsia.utils;
 
-import ch.idsia.evolution.agents.Agent;
-import ch.idsia.evolution.agents.AgentsPool;
+
+import ch.idsia.agents.Agent;
+import ch.idsia.agents.AgentsPool;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,47 +22,47 @@ public class ParameterContainer
     private static List<String> allowedOptions = null;
     protected static HashMap<String, String> defaultOptionsHashMap = null;
     private static final String[] allowed = new String[]{
-                    "-ag",
-                    "-amico",
-                    "-echo",
-                    "-ewf",
-                    "-gv",
-                    "-gvc",
-                    "-i",
-                    "-ld",  // level: difficulty
-                    "-ll",  // level: length
-                    "-ls",  // level: seed
-                    "-lt",  // level: type
-                    "-lh",  // level: height [16-20]
-                    "-lde", // level: dead ends count
-                    "-lc",  // level: cannons count
-                    "-lhs", // level: HillStraight count
-                    "-ltb", // level: Tubes count
-                    "-lb",  // level: blocks count
-                    "-lco", // level: coins count
-                    "-lg",  // level: gaps count
-                    "-lhb", // level: hidden blocks count
-                    "-le",  // level: enemies; set up with bit mask
-                    "-lf",  // level: flat level
-                    "-m",
-                    "-mm",
-                    "-fps",
-                    "-pr",
-                    "-pw",
-                    "-pym",
-                    "-rfh", // receptive field height (observation )
-                    "-rfw", // receptive field width (observation )
-                    "-srf", // show receptive field  (observation )
-                    "-t",
-                    "-tc",
-                    "-tl",
-                    "-vaot",
-                    "-vis",
-                    "-vlx",
-                    "-vly",
-                    "-ze",
-                    "-zs"
-            };
+            "-ag",
+            "-amico",
+            "-echo",
+            "-ewf",
+            "-gv",
+            "-gvc",
+            "-i",
+            "-ld",  // level: difficulty
+            "-ll",  // level: length
+            "-ls",  // level: seed
+            "-lt",  // level: type
+            "-lh",  // level: height [16-20]
+            "-lde", // level: dead ends count
+            "-lc",  // level: cannons count
+            "-lhs", // level: HillStraight count
+            "-ltb", // level: Tubes count
+            "-lb",  // level: blocks count
+            "-lco", // level: coins count
+            "-lg",  // level: gaps count
+            "-lhb", // level: hidden blocks count
+            "-le",  // level: enemies; set up with bit mask
+            "-lf",  // level: flat level
+            "-m",
+            "-mm",
+            "-fps",
+            "-pr",
+            "-pw",
+            "-pym",
+            "-rfh", // receptive field height (observation )
+            "-rfw", // receptive field width (observation )
+            "-srf", // show receptive field  (observation )
+            "-t",
+            "-tc",
+            "-tl",
+            "-vaot",
+            "-vis",
+            "-vlx",
+            "-vly",
+            "-ze",
+            "-zs"
+    };
 
     public ParameterContainer()
     {
@@ -81,8 +82,7 @@ public class ParameterContainer
             if (allowedOptions.contains(param))
             {
                 optionsHashMap.put(param, value);
-            }
-            else
+            } else
             {
                 throw new IllegalArgumentException("Parameter " + param + " is not valid. Typo?");
             }
@@ -161,7 +161,7 @@ public class ParameterContainer
             if (AgentsPool.getAgentByName(a.getName()) == null)
                 AgentsPool.addAgent(a);
             return a.getName();
-        }catch(NullPointerException e)
+        } catch (NullPointerException e)
         {
             System.err.println("ERROR: Agent Not Found");
             return "";
@@ -186,35 +186,35 @@ public class ParameterContainer
         {
             defaultOptionsHashMap = new HashMap<String, String>();
 //            AgentsPool.setCurrentAgent(new HumanKeyboardAgent());
-            defaultOptionsHashMap.put("-ag","ch.idsia.evolution.agents.controllers.human.HumanKeyboardAgent"); //defaultOptionsHashMap.put("-agentName","NoAgent");
-            defaultOptionsHashMap.put("-amico","off");
-            defaultOptionsHashMap.put("-echo","off"); //defaultOptionsHashMap.put("-echo","off");
-            defaultOptionsHashMap.put("-ewf","on"); //defaultOptionsHashMap.put("-exitWhenFinished","off");
-            defaultOptionsHashMap.put("-gv","off"); //defaultOptionsHashMap.put("-gameViewer","off");
-            defaultOptionsHashMap.put("-gvc","off"); //defaultOptionsHashMap.put("-gameViewerContinuousUpdates","off");
-            defaultOptionsHashMap.put("-i","off"); // Invulnerability
-            defaultOptionsHashMap.put("-ld","0"); //defaultOptionsHashMap.put("-levelDifficulty","0");
-            defaultOptionsHashMap.put("-ll","320"); //defaultOptionsHashMap.put("-levelLength","320");
-            defaultOptionsHashMap.put("-ls","0"); //defaultOptionsHashMap.put("-levelRandSeed","1");
-            defaultOptionsHashMap.put("-lt","0"); //defaultOptionsHashMap.put("-levelType","1");
+            defaultOptionsHashMap.put("-ag", "ch.idsia.agents.controllers.human.HumanKeyboardAgent"); //defaultOptionsHashMap.put("-agentName","NoAgent");
+            defaultOptionsHashMap.put("-amico", "off");
+            defaultOptionsHashMap.put("-echo", "off"); //defaultOptionsHashMap.put("-echo","off");
+            defaultOptionsHashMap.put("-ewf", "on"); //defaultOptionsHashMap.put("-exitWhenFinished","off");
+            defaultOptionsHashMap.put("-gv", "off"); //defaultOptionsHashMap.put("-gameViewer","off");
+            defaultOptionsHashMap.put("-gvc", "off"); //defaultOptionsHashMap.put("-gameViewerContinuousUpdates","off");
+            defaultOptionsHashMap.put("-i", "off"); // Invulnerability
+            defaultOptionsHashMap.put("-ld", "0"); //defaultOptionsHashMap.put("-levelDifficulty","0");
+            defaultOptionsHashMap.put("-ll", "320"); //defaultOptionsHashMap.put("-levelLength","320");
+            defaultOptionsHashMap.put("-ls", "0"); //defaultOptionsHashMap.put("-levelRandSeed","1");
+            defaultOptionsHashMap.put("-lt", "0"); //defaultOptionsHashMap.put("-levelType","1");
             defaultOptionsHashMap.put("-fps", "24"); //defaultOptionsHashMap.put("-maxFPS","off");
-            defaultOptionsHashMap.put("-m",""); //defaultOptionsHashMap.put("-matLabFile","DefaultMatlabFile");
-            defaultOptionsHashMap.put("-mm","2"); //Mario Mode
-            defaultOptionsHashMap.put("-pw","off"); //defaultOptionsHashMap.put("-isPauseWorld","off");
-            defaultOptionsHashMap.put("-pr","off"); //defaultOptionsHashMap.put("-powerRestoration","off");
-            defaultOptionsHashMap.put("-rfh","19");
-            defaultOptionsHashMap.put("-rfw","19");
-            defaultOptionsHashMap.put("-srf","off");
-            defaultOptionsHashMap.put("-t","on"); //defaultOptionsHashMap.put("-timer","on");
-            defaultOptionsHashMap.put("-tl","200"); //Time Limit
-            defaultOptionsHashMap.put("-tc","off"); //defaultOptionsHashMap.put("-toolsConfigurator","off");
-            defaultOptionsHashMap.put("-vaot","off"); //defaultOptionsHashMap.put("-viewAlwaysOnTop","off");
-            defaultOptionsHashMap.put("-vlx","0"); //defaultOptionsHashMap.put("-viewLocationX","0");
-            defaultOptionsHashMap.put("-vly","0"); //defaultOptionsHashMap.put("-viewLocationY","0");
-            defaultOptionsHashMap.put("-vis","on"); //defaultOptionsHashMap.put("-visual","on");
-            defaultOptionsHashMap.put("-zs","1");  // ZoomLevel of LevelScene observation
-            defaultOptionsHashMap.put("-ze","0"); //  ZoomLevel of Enemies observation
-            defaultOptionsHashMap.put("-lh","15"); //level height
+            defaultOptionsHashMap.put("-m", ""); //defaultOptionsHashMap.put("-matLabFile","DefaultMatlabFile");
+            defaultOptionsHashMap.put("-mm", "2"); //Mario Mode
+            defaultOptionsHashMap.put("-pw", "off"); //defaultOptionsHashMap.put("-isPauseWorld","off");
+            defaultOptionsHashMap.put("-pr", "off"); //defaultOptionsHashMap.put("-powerRestoration","off");
+            defaultOptionsHashMap.put("-rfh", "19");
+            defaultOptionsHashMap.put("-rfw", "19");
+            defaultOptionsHashMap.put("-srf", "off");
+            defaultOptionsHashMap.put("-t", "on"); //defaultOptionsHashMap.put("-timer","on");
+            defaultOptionsHashMap.put("-tl", "200"); //Time Limit
+            defaultOptionsHashMap.put("-tc", "off"); //defaultOptionsHashMap.put("-toolsConfigurator","off");
+            defaultOptionsHashMap.put("-vaot", "off"); //defaultOptionsHashMap.put("-viewAlwaysOnTop","off");
+            defaultOptionsHashMap.put("-vlx", "0"); //defaultOptionsHashMap.put("-viewLocationX","0");
+            defaultOptionsHashMap.put("-vly", "0"); //defaultOptionsHashMap.put("-viewLocationY","0");
+            defaultOptionsHashMap.put("-vis", "on"); //defaultOptionsHashMap.put("-visual","on");
+            defaultOptionsHashMap.put("-zs", "1");  // ZoomLevel of LevelScene observation
+            defaultOptionsHashMap.put("-ze", "0"); //  ZoomLevel of Enemies observation
+            defaultOptionsHashMap.put("-lh", "15"); //level height
             defaultOptionsHashMap.put("-lde", "off"); //level: dead ends count
             defaultOptionsHashMap.put("-lc", "on"); //level: cannons count
             defaultOptionsHashMap.put("-lhs", "on"); //level: HillStraight count
@@ -239,8 +239,7 @@ public class ParameterContainer
         {
             assert (defaultOptionsHashMap.get(param) != null);
             return defaultOptionsHashMap.get(param);
-        }
-        else
+        } else
         {
             System.err.println("Requires for Default Parameter " + param + " Failed. Typo?");
             return "";
