@@ -1,4 +1,4 @@
-package ch.idsia.maibe.experiments;
+package ch.idsia.benchmark.experiments;
 
 import ch.idsia.agents.Agent;
 import ch.idsia.maibe.tasks.Task;

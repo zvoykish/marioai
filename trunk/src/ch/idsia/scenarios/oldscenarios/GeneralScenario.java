@@ -1,7 +1,7 @@
 package ch.idsia.scenarios.oldscenarios;
 
+import ch.idsia.benchmark.experiments.Experiment;
 import ch.idsia.maibe.experiments.EpisodicExperiment;
-import ch.idsia.maibe.experiments.Experiment;
 import ch.idsia.maibe.tasks.ProgressTask;
 import ch.idsia.maibe.tasks.Task;
 import ch.idsia.tools.CmdLineOptions;
