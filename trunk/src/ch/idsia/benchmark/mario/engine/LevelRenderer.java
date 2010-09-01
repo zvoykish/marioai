@@ -96,7 +96,7 @@ public class LevelRenderer
                 byte b = level.getBlock(x, y);
 
                 //drawing of hidden block number
-                if (b == 1 && GlobalOptions.isShowGrid)
+                if (b == 1 && GlobalOptions.isShowReceptiveField)
                 {
                     g.setColor(Color.GREEN);
                     int yo = 0;

@@ -148,7 +148,7 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent
 //                    boolean temp = prevGridSize;
                     prevGridSize = GlobalOptions.observationGridWidth;
 //                    GlobalOptions.observationGridWidth = (GlobalOptions.observationGridWidth == -1) ? temp : -1;
-                    GlobalOptions.isShowGrid = !(GlobalOptions.isShowGrid);
+                    GlobalOptions.isShowReceptiveField = !(GlobalOptions.isShowReceptiveField);
 //                    System.out.println("GlobalOptions.observationGridWidth = " + GlobalOptions.observationGridWidth);
                 }
         }

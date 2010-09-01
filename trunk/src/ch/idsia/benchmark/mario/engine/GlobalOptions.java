@@ -32,11 +32,11 @@ public abstract class
     public static int observationGridHeight = -1;
 
     private static MarioVisualComponent marioVisualComponent;
-    public static final int VISUAL_COMPONENT_WIDTH = 320 * 4;
-    public static final int VISUAL_COMPONENT_HEIGHT = 240;
+    public static int VISUAL_COMPONENT_WIDTH = 320;
+    public static int VISUAL_COMPONENT_HEIGHT = 240;
     public static boolean isMatrixView;
 
-    public static boolean isShowGrid = false;
+    public static boolean isShowReceptiveField = false;
 
     public static int getPrimaryVersionUID()
     {

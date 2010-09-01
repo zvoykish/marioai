@@ -56,6 +56,8 @@ public final class CmdLineOptions extends EvaluationOptions
     {
         if (!"".equals(argString))
             this.setArgs(argString.trim().split("\\s+"));
+        else
+            this.setArgs((String[]) null);
     }
 
 
@@ -80,9 +82,27 @@ public final class CmdLineOptions extends EvaluationOptions
         GlobalOptions.isGameVeiwer = isGameViewer();
         GlobalOptions.observationGridWidth = getReceptiveFieldWidth();
         GlobalOptions.observationGridHeight = getReceptiveFieldHeight();
+        GlobalOptions.VISUAL_COMPONENT_HEIGHT = getViewHeight();
+        GlobalOptions.VISUAL_COMPONENT_WIDTH = getViewWidth();
 //        Environment.ObsWidth = GlobalOptions.observationGridWidth/2;
 //        Environment.ObsHeight = GlobalOptions.observationGridHeight/2;
-        GlobalOptions.isShowGrid = isReceptiveFieldVisualized();
+        GlobalOptions.isShowReceptiveField = isReceptiveFieldVisualized();
+    }
+
+    public float getGravity()
+    {
+        return f(getParameterValue("-gr"));
+    }
+
+
+    private int getViewWidth()
+    {
+        return i(getParameterValue("-vw"));
+    }
+
+    private int getViewHeight()
+    {
+        return i(getParameterValue("-vh"));
     }
 
     public void printOptions(boolean singleLine)

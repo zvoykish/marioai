@@ -26,6 +26,7 @@ public class ParameterContainer
             "-amico",
             "-echo",
             "-ewf",
+            "-gr",  //level: Mario gravity
             "-gv",
             "-gvc",
             "-i",
@@ -49,7 +50,7 @@ public class ParameterContainer
             "-fps",
             "-pr",
             "-pw",
-            "-pym",
+//            "-pym",
             "-rfh", // receptive field height (observation )
             "-rfw", // receptive field width (observation )
             "-srf", // show receptive field  (observation )
@@ -60,6 +61,8 @@ public class ParameterContainer
             "-vis",
             "-vlx",
             "-vly",
+            "-vw",
+            "-vh",
             "-ze",
             "-zs"
     };
@@ -149,6 +152,12 @@ public class ParameterContainer
         return Integer.parseInt(s);
     }
 
+    public float f(String s)
+    {
+        return Float.parseFloat(s);
+    }
+
+
     public String s(Object i)
     {
         return String.valueOf(i);
@@ -190,6 +199,7 @@ public class ParameterContainer
             defaultOptionsHashMap.put("-amico", "off");
             defaultOptionsHashMap.put("-echo", "off"); //defaultOptionsHashMap.put("-echo","off");
             defaultOptionsHashMap.put("-ewf", "on"); //defaultOptionsHashMap.put("-exitWhenFinished","off");
+            defaultOptionsHashMap.put("-gr", "1.0"); //defaultOptionsHashMap.put("-exitWhenFinished","off");
             defaultOptionsHashMap.put("-gv", "off"); //defaultOptionsHashMap.put("-gameViewer","off");
             defaultOptionsHashMap.put("-gvc", "off"); //defaultOptionsHashMap.put("-gameViewerContinuousUpdates","off");
             defaultOptionsHashMap.put("-i", "off"); // Invulnerability
@@ -212,6 +222,8 @@ public class ParameterContainer
             defaultOptionsHashMap.put("-vlx", "0"); //defaultOptionsHashMap.put("-viewLocationX","0");
             defaultOptionsHashMap.put("-vly", "0"); //defaultOptionsHashMap.put("-viewLocationY","0");
             defaultOptionsHashMap.put("-vis", "on"); //defaultOptionsHashMap.put("-visual","on");
+            defaultOptionsHashMap.put("-vw", "320"); //defaultOptionsHashMap.put("-visual","on");
+            defaultOptionsHashMap.put("-vh", "240"); //defaultOptionsHashMap.put("-visual","on");            
             defaultOptionsHashMap.put("-zs", "1");  // ZoomLevel of LevelScene observation
             defaultOptionsHashMap.put("-ze", "0"); //  ZoomLevel of Enemies observation
             defaultOptionsHashMap.put("-lh", "15"); //level height
@@ -228,9 +240,14 @@ public class ParameterContainer
         }
     }
 
-    public int getTotalNumberOfOptions()
+    public static int getTotalNumberOfOptions()
     {
-        return this.optionsHashMap.size();
+        return defaultOptionsHashMap.size();
+    }
+
+    public static int getNumberOfAllowedOptions()
+    {
+        return allowed.length;
     }
 
     public static String getDefaultParameterValue(String param)
