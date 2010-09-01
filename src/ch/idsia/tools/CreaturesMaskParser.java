@@ -1,6 +1,6 @@
 package ch.idsia.tools;
 
-import ch.idsia.mario.engine.sprites.Sprite;
+import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 
 /**
  * Created by IntelliJ IDEA.
@@ -59,16 +59,16 @@ public class CreaturesMaskParser
 
         //TODO: use a cycle to fill an array?
 
-        if (creatures.charAt(GOOMBA)             == '1') {this.creatures[GOOMBA] = true;}
-        if (creatures.charAt(GREEN_KOOPA)        == '1') {this.creatures[GREEN_KOOPA] = true;}
-        if (creatures.charAt(RED_KOOPA)          == '1') {this.creatures[RED_KOOPA] = true;}
-        if (creatures.charAt(SPIKY)              == '1') {this.creatures[SPIKY] = true;}
-        if (creatures.charAt(WINGED_GOOMBA)      == '1') {this.creatures[WINGED_GOOMBA] = true;}
+        if (creatures.charAt(GOOMBA) == '1') {this.creatures[GOOMBA] = true;}
+        if (creatures.charAt(GREEN_KOOPA) == '1') {this.creatures[GREEN_KOOPA] = true;}
+        if (creatures.charAt(RED_KOOPA) == '1') {this.creatures[RED_KOOPA] = true;}
+        if (creatures.charAt(SPIKY) == '1') {this.creatures[SPIKY] = true;}
+        if (creatures.charAt(WINGED_GOOMBA) == '1') {this.creatures[WINGED_GOOMBA] = true;}
         if (creatures.charAt(WINGED_GREEN_KOOPA) == '1') {this.creatures[WINGED_GREEN_KOOPA] = true;}
-        if (creatures.charAt(WINGED_RED_KOOPA)   == '1') {this.creatures[WINGED_RED_KOOPA] = true;}
-        if (creatures.charAt(WINGED_SPIKY)       == '1') {this.creatures[WINGED_SPIKY] = true;}
-        if (creatures.charAt(SPIKY_FLOWER)       == '1') {this.creatures[SPIKY_FLOWER] = true;}
-        if (creatures.charAt(BULLET)             == '1') {this.creatures[BULLET] = true;}
+        if (creatures.charAt(WINGED_RED_KOOPA) == '1') {this.creatures[WINGED_RED_KOOPA] = true;}
+        if (creatures.charAt(WINGED_SPIKY) == '1') {this.creatures[WINGED_SPIKY] = true;}
+        if (creatures.charAt(SPIKY_FLOWER) == '1') {this.creatures[SPIKY_FLOWER] = true;}
+        if (creatures.charAt(BULLET) == '1') {this.creatures[BULLET] = true;}
     }
 
     public static boolean isEnabled(int type)
@@ -88,7 +88,8 @@ public class CreaturesMaskParser
 
     public static int getNativeType(int num)
     {
-        switch (num) {
+        switch (num)
+        {
             case GOOMBA:
                 return Sprite.KIND_GOOMBA;
             case GREEN_KOOPA:

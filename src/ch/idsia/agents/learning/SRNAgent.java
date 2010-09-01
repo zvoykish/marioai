@@ -1,9 +1,9 @@
 package ch.idsia.agents.learning;
 
 import ch.idsia.agents.Agent;
+import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.evolution.Evolvable;
 import ch.idsia.evolution.SRN;
-import ch.idsia.mario.environments.Environment;
 
 /**
  * Created by IntelliJ IDEA.

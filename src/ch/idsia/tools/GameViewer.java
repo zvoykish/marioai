@@ -1,7 +1,7 @@
 package ch.idsia.tools;
 
-import ch.idsia.mario.engine.GlobalOptions;
-import ch.idsia.mario.engine.MarioVisualComponent;
+import ch.idsia.benchmark.mario.engine.GlobalOptions;
+import ch.idsia.benchmark.mario.engine.MarioVisualComponent;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -66,16 +66,16 @@ public class GameViewer extends JFrame
             g.fillRect(0, 0, getWidth(), getHeight());
             g.setColor(Color.YELLOW);
             int y_dump = 0;
-            g.drawString("Current GAME STATE: ", 320, y_dump += 11 );
+            g.drawString("Current GAME STATE: ", 320, y_dump += 11);
             g.setColor(Color.GREEN);
             if (this.getMarioVisualComponent() != null)
             {
-                for (String s: this.getMarioVisualComponent().getTextObservation(
+                for (String s : this.getMarioVisualComponent().getTextObservation(
                         ShowEnemiesObservation.getState(),
                         ShowLevelMapObservation.getState(),
                         ShowMergedObservation.getState(),
                         ZLevelMapValue,
-                        ZLevelEnemiesValue) )
+                        ZLevelEnemiesValue))
                 {
                     g.setColor((s.charAt(0) == '~') ? Color.YELLOW : Color.GREEN);
                     g.drawString(s, 0, y_dump += 11);
@@ -84,7 +84,7 @@ public class GameViewer extends JFrame
             }
 
         }
-        
+
         public void run()
         {
             // Remember the starting time
@@ -95,10 +95,12 @@ public class GameViewer extends JFrame
                 repaint();
 
                 // Delay depending on how far we are behind.
-                try {
+                try
+                {
                     tm += delay;
                     Thread.sleep(Math.max(0, tm - System.currentTimeMillis()));
-                } catch (InterruptedException e) {
+                } catch (InterruptedException e)
+                {
                     break;
                 }
 
@@ -145,7 +147,7 @@ public class GameViewer extends JFrame
 
         setSize((size == null) ? defaultSize : size);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        defaultLocation.setLocation(screenSize.getWidth() - defaultSize.getWidth(), 0 );
+        defaultLocation.setLocation(screenSize.getWidth() - defaultSize.getWidth(), 0);
 
         setLocation((location == null) ? defaultLocation : location);
 
@@ -166,12 +168,20 @@ public class GameViewer extends JFrame
         Z2_Enemies.addItemListener(gameViewerActions);
 
 
-        JPanel GameViewerOptionsPanel = new JPanel(new GridLayout(0,3));
-        GameViewerOptionsPanel.add(Z0_Map); GameViewerOptionsPanel.add(Z0_Enemies); GameViewerOptionsPanel.add(LabelConsole);
-        GameViewerOptionsPanel.add(Z1_Map); GameViewerOptionsPanel.add(Z1_Enemies); GameViewerOptionsPanel.add(Console);
-        GameViewerOptionsPanel.add(Z2_Map); GameViewerOptionsPanel.add(Z2_Enemies); GameViewerOptionsPanel.add(btnUpdate);
-        GameViewerOptionsPanel.add(ShowLevelMapObservation); GameViewerOptionsPanel.add(ShowEnemiesObservation);
-        GameViewerOptionsPanel.add(ShowMergedObservation); GameViewerOptionsPanel.add(ContinuousUpdates);
+        JPanel GameViewerOptionsPanel = new JPanel(new GridLayout(0, 3));
+        GameViewerOptionsPanel.add(Z0_Map);
+        GameViewerOptionsPanel.add(Z0_Enemies);
+        GameViewerOptionsPanel.add(LabelConsole);
+        GameViewerOptionsPanel.add(Z1_Map);
+        GameViewerOptionsPanel.add(Z1_Enemies);
+        GameViewerOptionsPanel.add(Console);
+        GameViewerOptionsPanel.add(Z2_Map);
+        GameViewerOptionsPanel.add(Z2_Enemies);
+        GameViewerOptionsPanel.add(btnUpdate);
+        GameViewerOptionsPanel.add(ShowLevelMapObservation);
+        GameViewerOptionsPanel.add(ShowEnemiesObservation);
+        GameViewerOptionsPanel.add(ShowMergedObservation);
+        GameViewerOptionsPanel.add(ContinuousUpdates);
         ContinuousUpdates.setState(GlobalOptions.isGameVeiwerContinuousUpdates);
 
         GameViewerOptionsPanel.setBorder(new TitledBorder(new EtchedBorder(), "Game Viewer Options"));
@@ -192,7 +202,7 @@ public class GameViewer extends JFrame
         borderPanel.add(BorderLayout.NORTH, GameViewerOptionsPanel);
         borderPanel.add(BorderLayout.CENTER, new JScrollPane(gameViewerViewPanel));
         setContentPane(borderPanel);
-        
+
         GlobalOptions.registerGameViewer(this);
     }
 
@@ -206,8 +216,7 @@ public class GameViewer extends JFrame
             {
                 LabelConsole.setText("TextFieldConsole sent message:");
                 toolsConfigurator.setConsoleText(Console.getText());
-            }
-            else if (ob == btnUpdate)
+            } else if (ob == btnUpdate)
             {
                 System.out.println("ob = " + ob);
                 gameViewerViewPanel.repaint();
@@ -224,59 +233,50 @@ public class GameViewer extends JFrame
             Object ob = ie.getSource();
             if (ob == ShowEnemiesObservation)
             {
-                Console.setText("Enemies " + (ShowEnemiesObservation.getState() ? "Shown" : "Hidden") );
+                Console.setText("Enemies " + (ShowEnemiesObservation.getState() ? "Shown" : "Hidden"));
                 gameViewerViewPanel.repaint();
-            }
-            else if (ob == ShowLevelMapObservation)
+            } else if (ob == ShowLevelMapObservation)
             {
-                Console.setText("Level Map " + (ShowLevelMapObservation.getState() ? "Shown" : "Hidden") );
+                Console.setText("Level Map " + (ShowLevelMapObservation.getState() ? "Shown" : "Hidden"));
                 gameViewerViewPanel.repaint();
-            }
-            else if (ob == ShowMergedObservation)
+            } else if (ob == ShowMergedObservation)
             {
-                Console.setText("Merged Observation " + (ShowMergedObservation.getState() ? "Shown" : "Hidden") );
+                Console.setText("Merged Observation " + (ShowMergedObservation.getState() ? "Shown" : "Hidden"));
                 gameViewerViewPanel.repaint();
-            }
-            else if (ob == ContinuousUpdates)
+            } else if (ob == ContinuousUpdates)
             {
-                Console.setText("Continuous Updates " + (ContinuousUpdates.getState() ? "On" : "Off") );
-            }
-            else if (ob == Z0_Map)
+                Console.setText("Continuous Updates " + (ContinuousUpdates.getState() ? "On" : "Off"));
+            } else if (ob == Z0_Map)
             {
                 if (Z0_Map.getState())
                     ZLevelMapValue = 0;
                 Console.setText("Zoom Level Map: Z" + ZLevelMapValue);
                 gameViewerViewPanel.repaint();
-            }
-            else if (ob == Z1_Map)
+            } else if (ob == Z1_Map)
             {
                 if (Z1_Map.getState())
                     ZLevelMapValue = 1;
                 Console.setText("Zoom Level Map: Z" + ZLevelMapValue);
                 gameViewerViewPanel.repaint();
-            }
-            else if (ob == Z2_Map)
+            } else if (ob == Z2_Map)
             {
                 if (Z2_Map.getState())
                     ZLevelMapValue = 2;
                 Console.setText("Zoom Level Map: Z" + ZLevelMapValue);
                 gameViewerViewPanel.repaint();
-            }
-            else if (ob == Z0_Enemies)
+            } else if (ob == Z0_Enemies)
             {
                 if (Z0_Enemies.getState())
                     ZLevelEnemiesValue = 0;
                 Console.setText("Zoom Level Enemies: Z" + ZLevelEnemiesValue);
                 gameViewerViewPanel.repaint();
-            }
-            else if (ob == Z1_Enemies)
+            } else if (ob == Z1_Enemies)
             {
                 if (Z1_Enemies.getState())
                     ZLevelEnemiesValue = 1;
                 Console.setText("Zoom Level Enemies: Z" + ZLevelEnemiesValue);
                 gameViewerViewPanel.repaint();
-            }
-            else if (ob == Z2_Enemies)
+            } else if (ob == Z2_Enemies)
             {
                 if (Z2_Enemies.getState())
                     ZLevelEnemiesValue = 2;
@@ -286,7 +286,7 @@ public class GameViewer extends JFrame
         }
     }
 
-    public void setToolsConfigurator(ToolsConfigurator toolsConfigurator){this.toolsConfigurator = toolsConfigurator;}
+    public void setToolsConfigurator(ToolsConfigurator toolsConfigurator) {this.toolsConfigurator = toolsConfigurator;}
 
     public void setConsoleText(String text)
     {

@@ -2,9 +2,9 @@ package ch.idsia.tools;
 
 import ch.idsia.agents.Agent;
 import ch.idsia.agents.AgentsPool;
-import ch.idsia.mario.engine.GlobalOptions;
-import ch.idsia.mario.engine.MarioVisualComponent;
-import ch.idsia.mario.engine.level.LevelGenerator;
+import ch.idsia.benchmark.mario.engine.GlobalOptions;
+import ch.idsia.benchmark.mario.engine.MarioVisualComponent;
+import ch.idsia.benchmark.mario.engine.level.LevelGenerator;
 import ch.idsia.scenarios.oldscenarios.MainRun;
 
 import javax.swing.*;

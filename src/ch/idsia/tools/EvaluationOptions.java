@@ -1,7 +1,7 @@
 package ch.idsia.tools;
 
-import ch.idsia.mario.engine.GlobalOptions;
-import ch.idsia.mario.simulation.SimulationOptions;
+import ch.idsia.benchmark.mario.engine.GlobalOptions;
+import ch.idsia.benchmark.mario.simulation.SimulationOptions;
 
 import java.awt.*;
 
@@ -17,7 +17,8 @@ public class EvaluationOptions extends SimulationOptions
 {
     public EvaluationOptions() { super(); }
 
-    public void setUpOptions(String[] args) {
+    public void setUpOptions(String[] args)
+    {
         for (int i = 0; i < args.length - 1; i += 2)
             try
             {
@@ -35,18 +36,26 @@ public class EvaluationOptions extends SimulationOptions
         GlobalOptions.isPowerRestoration = isPowerRestoration();
         GlobalOptions.isTimer = isTimer();
     }
-    
-    public Boolean isExitProgramWhenFinished()    {
-        return b(getParameterValue("-ewf"));    }
 
-    public void setExitProgramWhenFinished(boolean exitProgramWhenFinished)    {
-        setParameterValue("-ewf", s(exitProgramWhenFinished));    }
+    public Boolean isExitProgramWhenFinished()
+    {
+        return b(getParameterValue("-ewf"));
+    }
 
-    public String getMatlabFileName() {
-        return getParameterValue("-m");      }
+    public void setExitProgramWhenFinished(boolean exitProgramWhenFinished)
+    {
+        setParameterValue("-ewf", s(exitProgramWhenFinished));
+    }
 
-    public void setMatlabFileName(String matlabFileName) {
-        setParameterValue("-m", matlabFileName);    }
+    public String getMatlabFileName()
+    {
+        return getParameterValue("-m");
+    }
+
+    public void setMatlabFileName(String matlabFileName)
+    {
+        setParameterValue("-m", matlabFileName);
+    }
 
     public Point getViewLocation()
     {
@@ -55,22 +64,30 @@ public class EvaluationOptions extends SimulationOptions
         return new Point(x, y);
     }
 
-    public Boolean isViewAlwaysOnTop() {
-        return b(getParameterValue("-vaot"));      }
+    public Boolean isViewAlwaysOnTop()
+    {
+        return b(getParameterValue("-vaot"));
+    }
 
-    public void setFPS(int fps )
+    public void setFPS(int fps)
     {
         setParameterValue("-fps", s(fps));
         GlobalOptions.FPS = getFPS();
     }
 
-    public Integer getFPS() {
-        return i(getParameterValue("-fps"));      }
+    public Integer getFPS()
+    {
+        return i(getParameterValue("-fps"));
+    }
 
-    public String getAgentLoadFullName() {
-        return getParameterValue("-ag");      }
+    public String getAgentLoadFullName()
+    {
+        return getParameterValue("-ag");
+    }
 
-    public boolean isTimer() {
-        return b(getParameterValue("-t"));      }
+    public boolean isTimer()
+    {
+        return b(getParameterValue("-t"));
+    }
 
 }
