@@ -18,8 +18,6 @@ import java.security.AccessController;
  */
 public class AccessTest
 {
-
-
     public static void main(String[] args) throws Exception
     {
 
