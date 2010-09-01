@@ -1,5 +1,5 @@
 #summary Comprehensive and always up-to-date getting started instructions.
-#labels Phase-Deploy,Phase-Implementation
+#labels Phase-Deploy,Phase-Implementation,Featured
 
 <wiki:toc max_depth="2" /> 
 
