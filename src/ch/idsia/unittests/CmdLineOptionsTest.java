@@ -1,6 +1,7 @@
 package ch.idsia.unittests;
 
 import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.utils.ParameterContainer;
 import junit.framework.TestCase;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -21,12 +22,18 @@ public class CmdLineOptionsTest extends TestCase
     public void setUp()
     {
         cmdLineOptions = new CmdLineOptions();
-        assertEquals(11, cmdLineOptions.getTotalNumberOfOptions());
+        assertEquals(42, cmdLineOptions.getTotalNumberOfOptions());
     }
 
     @AfterTest
     public void tearDown()
     {
+    }
+
+    @Test
+    public void testAllOptionsHaveDefaults()
+    {
+        assertEquals(ParameterContainer.getTotalNumberOfOptions(), ParameterContainer.getNumberOfAllowedOptions());
     }
 
     @Test

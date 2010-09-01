@@ -91,7 +91,7 @@ public class Sprite
             og.drawString("" + xPixel + "," + yPixel, xPixel, yPixel);
 
         // Mario Grid Visualization Enable
-        if (GlobalOptions.isShowGrid)
+        if (GlobalOptions.isShowReceptiveField)
         {
             if (this.kind == KIND_MARIO)
             {

@@ -19,17 +19,18 @@ public class EvaluationOptions extends SimulationOptions
 
     public void setUpOptions(String[] args)
     {
-        for (int i = 0; i < args.length - 1; i += 2)
-            try
-            {
-                setParameterValue(args[i], args[i + 1]);
-            }
-            catch (ArrayIndexOutOfBoundsException e)
-            {
-                // Basically we can push the red button to explaud the computer, since this case must happen never.
-                System.err.println("Error: Wrong number of input parameters");
+        if (args != null)
+            for (int i = 0; i < args.length - 1; i += 2)
+                try
+                {
+                    setParameterValue(args[i], args[i + 1]);
+                }
+                catch (ArrayIndexOutOfBoundsException e)
+                {
+                    // Basically we can push the red button to explaud the computer, since this case must happen never.
+                    System.err.println("Error: Wrong number of input parameters");
 //                System.err.println("It is a perfect day to kill yourself with the yellow wall");
-            }
+                }
         GlobalOptions.isVisualization = isVisualization();
         GlobalOptions.FPS = getFPS() /*GlobalOptions.FPS*/;
         GlobalOptions.isPauseWorld = isPauseWorld();
