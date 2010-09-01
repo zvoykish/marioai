@@ -1,15 +1,12 @@
-package wox.serial;
+package ch.idsia.utils.wox.serial;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
+import sun.reflect.ReflectionFactory;
+
 import java.io.ObjectStreamClass;
 import java.io.Serializable;
-
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.security.AccessController;
-import sun.reflect.ReflectionFactory;
 
 
 /**
@@ -19,10 +16,12 @@ import sun.reflect.ReflectionFactory;
  * Time: 13:11:21
  * To change this template use Options | File Templates.
  */
-public class AccessTest {
+public class AccessTest
+{
 
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception
+    {
 
         // getConstructor(Sub.class);
 
@@ -36,27 +35,34 @@ public class AccessTest {
     }
 
 
-    /** reflection factory for forcing default constructors */
+    /**
+     * reflection factory for forcing default constructors
+     */
     private static final ReflectionFactory reflFactory = (ReflectionFactory)
             AccessController.doPrivileged(
                     new ReflectionFactory.GetReflectionFactoryAction());
 
 
-    public static class Sub extends Super {
+    public static class Sub extends Super
+    {
         int y;
 
-        public Sub(double z) {
+        public Sub(double z)
+        {
         }
 
-        public String toString() {
+        public String toString()
+        {
             return x + " : " + y;
         }
     }
 
-    public static class Super {
+    public static class Super
+    {
         int x;
 
-        public Super() {
+        public Super()
+        {
             x = 100;
         }
 
@@ -64,7 +70,8 @@ public class AccessTest {
     }
 
 
-    private static Constructor getConstructor(Class cl) throws Exception {
+    private static Constructor getConstructor(Class cl) throws Exception
+    {
         Method getCons = ObjectStreamClass.class.getDeclaredMethod(
                 "getSerializableConstructor", new Class[]{Class.class});
         getCons.setAccessible(true);
@@ -79,7 +86,8 @@ public class AccessTest {
      * superclass, or null if none found.  Access checks are disabled on the
      * returned constructor (if any).
      */
-    private static Constructor forceDefaultConstructor(Class cl) throws Exception {
+    private static Constructor forceDefaultConstructor(Class cl) throws Exception
+    {
         Constructor cons = Object.class.getDeclaredConstructor(new Class[0]);
         cons = reflFactory.newConstructorForSerialization(cl, cons);
         cons.setAccessible(true);
@@ -87,14 +95,18 @@ public class AccessTest {
         return cons;
     }
 
-    private static Constructor getSerializableConstructorOld(Class cl) {
+    private static Constructor getSerializableConstructorOld(Class cl)
+    {
         Class initCl = cl;
-        while (Serializable.class.isAssignableFrom(initCl)) {
-            if ((initCl = initCl.getSuperclass()) == null) {
+        while (Serializable.class.isAssignableFrom(initCl))
+        {
+            if ((initCl = initCl.getSuperclass()) == null)
+            {
                 return null;
             }
         }
-        try {
+        try
+        {
             // Constructor cons = initCl.getDeclaredConstructor(new Class[0]);
             Constructor cons = Object.class.getDeclaredConstructor(new Class[0]);
             int mods = cons.getModifiers();
@@ -107,7 +119,8 @@ public class AccessTest {
             cons.setAccessible(true);
             System.out.println("Cons: " + cons);
             return cons;
-        } catch (NoSuchMethodException ex) {
+        } catch (NoSuchMethodException ex)
+        {
             System.out.println("Ex: " + ex);
             return null;
         }

@@ -1,7 +1,8 @@
-package wox.serial;
+package ch.idsia.utils.wox.serial;
 
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
+
 /**
  * Created by IntelliJ IDEA.
  * User: sml
@@ -9,8 +10,10 @@ import org.jdom.output.XMLOutputter;
  * Time: 10:00:32
  * To change this template use Options | File Templates.
  */
-public class ReadTest {
-    public static void main(String[] args) throws Exception {
+public class ReadTest
+{
+    public static void main(String[] args) throws Exception
+    {
         ObjectReader reader = new SimpleReader();
         ObjectWriter writer = new SimpleWriter();
 
@@ -26,17 +29,17 @@ public class ReadTest {
 //        ObjectInputStream ois = new ObjectInputStream(null);
 //        ois.readObject();
 
-        Element xob = writer.write( to );
+        Element xob = writer.write(to);
         XMLOutputter out = new XMLOutputter();
-        out.output( xob, System.out );
+        out.output(xob, System.out);
 
         System.out.println("");
-        Object ob = reader.read( xob );
+        Object ob = reader.read(xob);
 
-        System.out.println("Read: " + ob.getClass() );
+        System.out.println("Read: " + ob.getClass());
 
         xob = new SimpleWriter().write(ob);
-        out.output( xob, System.out );
+        out.output(xob, System.out);
 //        for (int i=0; i<a.length; i++) {
 //            System.out.println(a[i]);
 //        }

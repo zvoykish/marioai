@@ -1,7 +1,9 @@
-package wox.serial;
+package ch.idsia.utils.wox.serial;
 
-public class EasyTest {
-    public static void main(String[] args) {
+public class EasyTest
+{
+    public static void main(String[] args)
+    {
         TestObject ob = new TestObject(5);
         System.out.println(ob.inc());
         Easy.save(ob, "test.xml");

@@ -8,7 +8,7 @@ import ch.idsia.evolution.ea.ES;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.utils.Stats;
-import wox.serial.Easy;
+import ch.idsia.utils.wox.serial.Easy;
 
 import java.io.IOException;
 import java.text.DecimalFormat;

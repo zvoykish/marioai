@@ -1,4 +1,4 @@
-package wox.serial;
+package ch.idsia.utils.wox.serial;
 
 import org.jdom.Element;
 
@@ -9,6 +9,7 @@ import org.jdom.Element;
  * Time: 09:22:41
  * To change this template use Options | File Templates.
  */
-public interface ObjectReader extends Serial {
+public interface ObjectReader extends Serial
+{
     public Object read(Element xob);
 }

@@ -1,8 +1,7 @@
-package wox.serial;
+package ch.idsia.utils.wox.serial;
 
-import java.util.ArrayList;
-import java.util.AbstractList;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,23 +10,28 @@ import java.lang.reflect.Field;
  * Time: 23:22:56
  * To change this template use File | Settings | File Templates.
  */
-public class ArrayListTest {
-    public static void main(String[] args) throws Exception {
+public class ArrayListTest
+{
+    public static void main(String[] args) throws Exception
+    {
         ArrayList al = new ArrayList();
         al.add("Hello");
         al.add("Hello");
         al.add("Hello");
 
         Field[] fields = SimpleWriter.getFields(ArrayList.class);
-        for (int i=0; i<fields.length; i++) {
+        for (int i = 0; i < fields.length; i++)
+        {
             System.out.println(i + " : " + fields[i]);
-            try {
+            try
+            {
                 fields[i].setAccessible(true);
                 Object val = fields[i].get(al);
-                fields[i].set(al,val);
+                fields[i].set(al, val);
                 System.out.println("Set val: " + val);
 
-            }   catch(Exception e) {
+            } catch (Exception e)
+            {
                 System.out.println(e);
                 // e.printStackTrace();
             }

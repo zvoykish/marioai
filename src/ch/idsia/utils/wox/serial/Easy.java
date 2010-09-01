@@ -1,13 +1,13 @@
-package wox.serial;
+package ch.idsia.utils.wox.serial;
 
-import org.jdom.Element;
 import org.jdom.Document;
+import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
-import java.io.FileInputStream;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,9 +16,12 @@ import java.io.FileInputStream;
  * Time: 15:02:11
  * To change this template use Options | File Templates.
  */
-public class Easy {
-    public static void save(Object ob, String filename) {
-        try {
+public class Easy
+{
+    public static void save(Object ob, String filename)
+    {
+        try
+        {
             ObjectWriter writer = new SimpleWriter();
             Element el = writer.write(ob);
             XMLOutputter out = new XMLOutputter(); // ("  ", true);
@@ -26,14 +29,16 @@ public class Easy {
             out.output(el, file);
             file.close();
             System.out.println("Saved object to " + filename);
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
 
     public static Object load(String filename)
     {
-        try {
+        try
+        {
             SAXBuilder builder = new SAXBuilder();
             InputStream is = new FileInputStream(filename);
             Document doc = builder.build(is);
