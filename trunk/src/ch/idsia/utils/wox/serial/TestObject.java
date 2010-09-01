@@ -1,4 +1,4 @@
-package wox.serial;
+package ch.idsia.utils.wox.serial;
 
 import java.util.ArrayList;
 
@@ -8,12 +8,15 @@ import java.util.ArrayList;
  * Time: 11:33:26
  */
 
-public class TestObject  {
+public class TestObject
+{
 
-    public static class Inner {
+    public static class Inner
+    {
         int inx;
 
-        public Inner(int inx) {
+        public Inner(int inx)
+        {
             this.inx = inx;
         }
     }
@@ -23,7 +26,7 @@ public class TestObject  {
     int[] xb = xa;
     byte[] ba = {99, 12, (byte) 0xFF};
     TestObject to;
-    int[][] xxx = {{0,1},{2}};
+    int[][] xxx = {{0, 1}, {2}};
     int[] ia = {1, 2, 3};
     double[] dd = {4, 5, 6};
     Object[] objects;
@@ -35,9 +38,10 @@ public class TestObject  {
     // check we can handle Class variables
     // Class myClass = TestObject.class;
 
-    public TestObject(int x) {
+    public TestObject(int x)
+    {
         this.x = x;
-        objects = new Object[]{ this };
+        objects = new Object[]{this};
         alist = new ArrayList();
         alist.add(this);
         alist.add("Hello");
@@ -46,7 +50,8 @@ public class TestObject  {
         inner = new Inner(99);
     }
 
-    public synchronized int inc() {
+    public synchronized int inc()
+    {
         return x++;
     }
 

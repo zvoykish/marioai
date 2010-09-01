@@ -1,7 +1,7 @@
 package ch.idsia.agents;
 
 import ch.idsia.agents.controllers.human.HumanKeyboardAgent;
-import wox.serial.Easy;
+import ch.idsia.utils.wox.serial.Easy;
 
 import java.util.*;
 

@@ -1,9 +1,9 @@
-package wox.serial;
+package ch.idsia.utils.wox.serial;
 
 import sun.reflect.ReflectionFactory;
 
-import java.security.AccessController;
 import java.lang.reflect.Constructor;
+import java.security.AccessController;
 
 /**
  * Created by IntelliJ IDEA.
@@ -14,16 +14,19 @@ import java.lang.reflect.Constructor;
  * This class contains static functions that are common to
  * both SimpleWriter and SimpleReader
  */
-public class Util implements Serial {
+public class Util implements Serial
+{
 
-    /** reflection factory for forcing default constructors */
+    /**
+     * reflection factory for forcing default constructors
+     */
     private static final ReflectionFactory reflFactory = (ReflectionFactory)
             AccessController.doPrivileged(
                     new ReflectionFactory.GetReflectionFactoryAction());
 
 
-
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         String test = "Hello";
         System.out.println(stringable(test));
     }
@@ -33,7 +36,8 @@ public class Util implements Serial {
      * despite appearences can be used to construct objects
      * of the specified type!!!of first non-serializable
      */
-    public static Constructor forceDefaultConstructor(Class cl) throws Exception {
+    public static Constructor forceDefaultConstructor(Class cl) throws Exception
+    {
         Constructor cons = Object.class.getDeclaredConstructor(new Class[0]);
         cons = reflFactory.newConstructorForSerialization(cl, cons);
         cons.setAccessible(true);
@@ -41,9 +45,10 @@ public class Util implements Serial {
         return cons;
     }
 
-    public static boolean stringable(Object o) {
+    public static boolean stringable(Object o)
+    {
         // assume the following types go easily to strings...
-        boolean val =  (o instanceof Number) ||
+        boolean val = (o instanceof Number) ||
                 (o instanceof Boolean) ||
                 (o instanceof Class) ||
                 (o instanceof String);
@@ -51,9 +56,10 @@ public class Util implements Serial {
         return val;
     }
 
-    public static boolean stringable(Class type) {
+    public static boolean stringable(Class type)
+    {
         // assume the following types go easily to strings...
-        boolean val =  (Number.class.isAssignableFrom(type) ) ||
+        boolean val = (Number.class.isAssignableFrom(type)) ||
                 (Boolean.class.isAssignableFrom(type)) ||
                 (String.class.equals(type)) ||
                 (Class.class.equals(type));
@@ -61,20 +67,26 @@ public class Util implements Serial {
         return val;
     }
 
-    public static boolean stringable(String name) {
+    public static boolean stringable(String name)
+    {
         // assume the following types go easily to strings...
         // System.out.println("Called (String) version");
-        try {
+        try
+        {
             Class type = Class.forName(name);
             return stringable(type);
-        } catch(Exception e) {
+        } catch (Exception e)
+        {
             return false;
         }
     }
 
-    public static boolean primitive(Class type) {
-        for (int i=0; i<primitives.length; i++) {
-            if (primitives[i].equals(type)) {
+    public static boolean primitive(Class type)
+    {
+        for (int i = 0; i < primitives.length; i++)
+        {
+            if (primitives[i].equals(type))
+            {
                 return true;
             }
         }

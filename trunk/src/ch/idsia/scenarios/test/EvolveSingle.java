@@ -7,7 +7,7 @@ import ch.idsia.evolution.ea.ES;
 import ch.idsia.mario.engine.GlobalOptions;
 import ch.idsia.scenarios.oldscenarios.Stats;
 import ch.idsia.tools.CmdLineOptions;
-import wox.serial.Easy;
+import ch.idsia.utils.wox.serial.Easy;
 
 /**
  * Created by IntelliJ IDEA.

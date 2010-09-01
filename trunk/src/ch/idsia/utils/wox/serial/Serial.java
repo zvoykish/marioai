@@ -1,6 +1,4 @@
-package wox.serial;
-
-import java.util.HashSet;
+package ch.idsia.utils.wox.serial;
 
 /**
  * Created by IntelliJ IDEA.
@@ -9,7 +7,8 @@ import java.util.HashSet;
  * Time: 14:48:57
  * To change this template use Options | File Templates.
  */
-public interface Serial {
+public interface Serial
+{
     // use string constants to enforce consistency
     // between readers and writers
     public static final String OBJECT = "object";
@@ -28,14 +27,14 @@ public interface Serial {
 
     public static final Class[] primitiveArrays =
             new Class[]{
-                int[].class,
-                boolean[].class,
-                byte[].class,
-                short[].class,
-                long[].class,
-                char[].class,
-                float[].class,
-                double[].class
+                    int[].class,
+                    boolean[].class,
+                    byte[].class,
+                    short[].class,
+                    long[].class,
+                    char[].class,
+                    float[].class,
+                    double[].class
             };
 
     // now declare the wrapper classes for each primitive object type
@@ -50,25 +49,25 @@ public interface Serial {
     // about 900ms using reflection, versus 350ms hard-coded
     public static final Class[] primitiveWrappers =
             new Class[]{
-                Integer.class,
-                Boolean.class,
-                Byte.class,
-                Short.class,
-                Long.class,
-                Character.class,
-                Float.class,
-                Double.class
+                    Integer.class,
+                    Boolean.class,
+                    Byte.class,
+                    Short.class,
+                    Long.class,
+                    Character.class,
+                    Float.class,
+                    Double.class
             };
 
     public static final Class[] primitives =
             new Class[]{
-                int.class,
-                boolean.class,
-                byte.class,
-                short.class,
-                long.class,
-                char.class,
-                float.class,
-                double.class
+                    int.class,
+                    boolean.class,
+                    byte.class,
+                    short.class,
+                    long.class,
+                    char.class,
+                    float.class,
+                    double.class
             };
 }
