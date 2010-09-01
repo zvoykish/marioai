@@ -1,8 +1,8 @@
 package ch.idsia.tools;
 
+import ch.idsia.benchmark.mario.engine.sprites.Mario;
 import ch.idsia.benchmark.tasks.MarioSystemOfValues;
 import ch.idsia.benchmark.tasks.SystemOfValues;
-import ch.idsia.mario.engine.sprites.Mario;
 
 import java.text.DecimalFormat;
 

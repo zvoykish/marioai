@@ -1,8 +1,8 @@
 package competition.evostar.sergeykarakovskiy;
 
 import ch.idsia.agents.Agent;
-import ch.idsia.mario.engine.sprites.Mario;
-import ch.idsia.mario.environments.Environment;
+import ch.idsia.benchmark.mario.engine.sprites.Mario;
+import ch.idsia.benchmark.mario.environments.Environment;
 
 /**
  * Created by IntelliJ IDEA. \n User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 24, 2010 Time: 6:51:44 PM

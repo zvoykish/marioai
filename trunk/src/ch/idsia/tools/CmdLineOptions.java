@@ -1,6 +1,6 @@
 package ch.idsia.tools;
 
-import ch.idsia.mario.engine.GlobalOptions;
+import ch.idsia.benchmark.mario.engine.GlobalOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,13 +19,11 @@ import java.util.Map;
  * It sets up parameters from command line if there are any.
  * Defaults are used otherwise.
  *
- * @author  Sergey Karakovskiy
+ * @author Sergey Karakovskiy
  * @version 1.0, Apr 25, 2009
- *
  * @see ch.idsia.utils.ParameterContainer
  * @see ch.idsia.tools.EvaluationOptions
- *
- * @since   MarioAI0.1
+ * @since MarioAI0.1
  */
 
 public final class CmdLineOptions extends EvaluationOptions
@@ -40,6 +38,7 @@ public final class CmdLineOptions extends EvaluationOptions
     }
 
 //    @Deprecated
+
     public CmdLineOptions(String args)
     {
         //USE CmdLineOptions.getCmdLineOptionsClassByString(String args) method
@@ -58,7 +57,7 @@ public final class CmdLineOptions extends EvaluationOptions
         if (!"".equals(argString))
             this.setArgs(argString.trim().split("\\s+"));
     }
-    
+
 
     public void setArgs(String[] args)
     {
@@ -89,7 +88,7 @@ public final class CmdLineOptions extends EvaluationOptions
     public void printOptions(boolean singleLine)
     {
         System.out.println("\n[MarioAI] : Options have been set to:");
-        for (Map.Entry<String,String> el : optionsHashMap.entrySet())
+        for (Map.Entry<String, String> el : optionsHashMap.entrySet())
             if (singleLine)
                 System.out.print(el.getKey() + " " + el.getValue() + " ");
             else
@@ -112,20 +111,30 @@ public final class CmdLineOptions extends EvaluationOptions
         return getOptionsByString("");
     }
 
-    public Boolean isToolsConfigurator() {
-        return b(getParameterValue("-tc"));      }
+    public Boolean isToolsConfigurator()
+    {
+        return b(getParameterValue("-tc"));
+    }
 
-    public Boolean isGameViewer() {
-        return b(getParameterValue("-gv"));      }
+    public Boolean isGameViewer()
+    {
+        return b(getParameterValue("-gv"));
+    }
 
-    public Boolean isGameViewerContinuousUpdates() {
-        return b(getParameterValue("-gvc"));      }
+    public Boolean isGameViewerContinuousUpdates()
+    {
+        return b(getParameterValue("-gvc"));
+    }
 
-    public Boolean isEcho() {
-        return b(getParameterValue("-echo"));      }
+    public Boolean isEcho()
+    {
+        return b(getParameterValue("-echo"));
+    }
 
-    public String getPyAmiCoModuleName()  {
-        return getParameterValue("-pym"); }
+    public String getPyAmiCoModuleName()
+    {
+        return getParameterValue("-pym");
+    }
 
     public Integer getReceptiveFieldWidth()
     {
@@ -134,7 +143,7 @@ public final class CmdLineOptions extends EvaluationOptions
         if (ret % 2 == 0)
         {
             System.err.println("\nWrong value for receptive field width: " + ret++ +
-            " ; receptive field width set to " + ret);
+                    " ; receptive field width set to " + ret);
         }
         return ret;
     }
@@ -145,7 +154,7 @@ public final class CmdLineOptions extends EvaluationOptions
         if (ret % 2 == 0)
         {
             System.err.println("\nWrong value for receptive field height: " + ret++ +
-            " ; receptive field height set to " + ret);
+                    " ; receptive field height set to " + ret);
         }
         return ret;
     }

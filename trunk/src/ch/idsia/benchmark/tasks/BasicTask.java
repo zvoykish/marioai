@@ -1,8 +1,8 @@
 package ch.idsia.benchmark.tasks;
 
 import ch.idsia.agents.Agent;
-import ch.idsia.mario.environments.Environment;
-import ch.idsia.mario.environments.MarioEnvironment;
+import ch.idsia.benchmark.mario.environments.Environment;
+import ch.idsia.benchmark.mario.environments.MarioEnvironment;
 import ch.idsia.tools.CmdLineOptions;
 
 /**

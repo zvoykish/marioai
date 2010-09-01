@@ -1,7 +1,7 @@
 package ch.idsia.unittests;
 
-import ch.idsia.mario.engine.level.Level;
-import ch.idsia.mario.engine.level.LevelGenerator;
+import ch.idsia.benchmark.mario.engine.level.Level;
+import ch.idsia.benchmark.mario.engine.level.LevelGenerator;
 import ch.idsia.tools.CmdLineOptions;
 import junit.framework.TestCase;
 import org.testng.annotations.AfterTest;
@@ -18,22 +18,22 @@ import org.testng.annotations.Test;
 public class LevelGeneratorTest extends TestCase
 {
     @BeforeTest
-    public void setUp() 
+    public void setUp()
     {
-        
+
     }
 
     @AfterTest
-    public void tearDown() 
+    public void tearDown()
     {
-        
+
     }
 
     @Test
-    public void testCreateLevel() throws Exception 
+    public void testCreateLevel() throws Exception
     {
         final CmdLineOptions cmdLineOptions = new CmdLineOptions();
-        Level level1 = LevelGenerator.createLevel(cmdLineOptions); 
+        Level level1 = LevelGenerator.createLevel(cmdLineOptions);
         Level level2 = LevelGenerator.createLevel(cmdLineOptions);
         assertSame(level1, level2);
     }

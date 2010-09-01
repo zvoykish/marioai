@@ -4,7 +4,7 @@ import ch.idsia.agents.Agent;
 import ch.idsia.agents.controllers.BasicAIAgent;
 import ch.idsia.evolution.Evolvable;
 import ch.idsia.evolution.SRN;
-//import ch.idsia.mario.environments.Environment;
+//import ch.idsia.benchmark.mario.environments.Environment;
 
 /**
  * Created by IntelliJ IDEA.

@@ -2,7 +2,7 @@ package competition.cig.sergeykarakovskiy;
 
 import ch.idsia.agents.Agent;
 import ch.idsia.agents.controllers.BasicAIAgent;
-import ch.idsia.mario.engine.sprites.Mario;
+import ch.idsia.benchmark.mario.engine.sprites.Mario;
 
 /**
  * Created by IntelliJ IDEA.

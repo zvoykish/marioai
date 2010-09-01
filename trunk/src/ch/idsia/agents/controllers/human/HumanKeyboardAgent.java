@@ -1,8 +1,8 @@
 package ch.idsia.agents.controllers.human;
 
 import ch.idsia.agents.Agent;
-import ch.idsia.mario.engine.sprites.Mario;
-import ch.idsia.mario.environments.Environment;
+import ch.idsia.benchmark.mario.engine.sprites.Mario;
+import ch.idsia.benchmark.mario.environments.Environment;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

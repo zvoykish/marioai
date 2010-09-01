@@ -1,6 +1,6 @@
 package ch.idsia.agents;
 
-import ch.idsia.mario.environments.Environment;
+import ch.idsia.benchmark.mario.environments.Environment;
 
 /**
  * Created by IntelliJ IDEA.

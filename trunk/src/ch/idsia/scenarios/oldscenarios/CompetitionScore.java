@@ -3,7 +3,7 @@ package ch.idsia.scenarios.oldscenarios;
 import ch.idsia.agents.Agent;
 import ch.idsia.agents.AgentsPool;
 import ch.idsia.agents.controllers.TimingAgent;
-import ch.idsia.mario.engine.GlobalOptions;
+import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.utils.StatisticalSummary;
