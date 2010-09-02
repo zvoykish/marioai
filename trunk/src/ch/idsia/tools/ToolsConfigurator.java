@@ -92,7 +92,7 @@ public class ToolsConfigurator extends JFrame
     static void CreateMarioComponentFrame(EvaluationOptions evaluationOptions)
     {
 //        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-//        frame.setLocation((screenSize.width-frame.getWidth())/2, (screenSize.height-frame.getHeight())/2);        
+//        frame.setLocation((screenSize.length-frame.getWidth())/2, (screenSize.height-frame.getHeight())/2);
         if (marioComponentFrame == null)
         {
             marioComponentFrame = new JFrame(/*evaluationOptions.getAgentLoadFullName() +*/ "Mario AI benchmark-tools" + GlobalOptions.getVersionUID());

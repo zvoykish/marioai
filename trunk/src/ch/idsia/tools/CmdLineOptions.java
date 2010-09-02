@@ -160,8 +160,8 @@ public final class CmdLineOptions extends EvaluationOptions
 
         if (ret % 2 == 0)
         {
-            System.err.println("\nWrong value for receptive field width: " + ret++ +
-                    " ; receptive field width set to " + ret);
+            System.err.println("\nWrong value for receptive field length: " + ret++ +
+                    " ; receptive field length set to " + ret);
         }
         return ret;
     }

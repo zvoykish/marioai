@@ -155,10 +155,10 @@ public class LevelGenerator
             floor = height - 1 - globalRandom.nextInt(4);
         }
 
-        length += buildStraight(0, level.width, true, floor, INFINITY_FLOOR_HEIGHT);
-        while (length < level.width - 64)
+        length += buildStraight(0, level.length, true, floor, INFINITY_FLOOR_HEIGHT);
+        while (length < level.length - 64)
         {
-            length += buildZone(length, level.width - length, ANY_HEIGHT, floor, INFINITY_FLOOR_HEIGHT);
+            length += buildZone(length, level.length - length, ANY_HEIGHT, floor, INFINITY_FLOOR_HEIGHT);
         }
 
         if (!isFlatLevel)  //NOT flat level
@@ -171,7 +171,7 @@ public class LevelGenerator
         level.yExit = floor;
 
         //fix floor
-        for (int x = length; x < level.width; x++)
+        for (int x = length; x < level.length; x++)
         {
             for (int y = 0; y < height; y++)
             {
@@ -187,7 +187,7 @@ public class LevelGenerator
         {
             int ceiling = 0;
             int run = 0;
-            for (int x = 0; x < level.width; x++)
+            for (int x = 0; x < level.length; x++)
             {
                 if (run-- <= 0 && x > 4)
                 {

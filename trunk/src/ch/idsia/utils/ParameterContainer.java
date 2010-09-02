@@ -52,7 +52,7 @@ public class ParameterContainer
             "-pw",
 //            "-pym",
             "-rfh", // receptive field height (observation )
-            "-rfw", // receptive field width (observation )
+            "-rfw", // receptive field length (observation )
             "-srf", // show receptive field  (observation )
             "-t",
             "-tc",

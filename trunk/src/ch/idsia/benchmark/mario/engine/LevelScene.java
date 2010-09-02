@@ -123,7 +123,7 @@ public class LevelScene implements SpriteContext
 //        {
 //            level = Level.load(new DataInputStream(LevelScene.class.getResourceAsStream("resources/test.lvl")));
 //            System.out.println("level.getWidthCells() = " + level.getWidthCells());
-//            level.xExit = level.width - 6;
+//            level.xExit = level.length - 6;
 //            level.yExit = 5;
 
 //            System.out.println("level.xExit = " + level.xExit);
@@ -546,11 +546,11 @@ public class LevelScene implements SpriteContext
                                                    boolean mergedObservationFlag,
                                                    int ZLevelScene, int ZLevelEnemies)
     {
-//        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));//        bw.write("\nTotal world width = " + level.width);
+//        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));//        bw.write("\nTotal world length = " + level.length);
         List<String> ret = new ArrayList<String>();
         if (level != null && mario != null)
         {
-            ret.add("Total world width = " + level.width);
+            ret.add("Total world length = " + level.length);
             ret.add("Total world height = " + level.height);
             ret.add("Physical Mario Position (x,y): (" + mario.x + "," + mario.y + ")");
             ret.add("Mario Observation Width " + ObsWidth * 2);
@@ -649,8 +649,8 @@ public class LevelScene implements SpriteContext
         xCam = targetXCam;
 
         if (xCam < 0) xCam = 0;
-        if (xCam > level.width * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH)
-            xCam = level.width * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH;
+        if (xCam > level.length * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH)
+            xCam = level.length * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH;
 
         /*      if (recorder != null)
          {

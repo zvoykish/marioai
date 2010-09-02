@@ -30,7 +30,7 @@ public class Level
     public static final int BIT_ANIMATED = 1 << 7;
 
     private static final int FILE_HEADER = 0x271c4178;
-    public int width;
+    public int length;
     public int height;
 
     public byte[][] map;
@@ -44,24 +44,24 @@ public class Level
 
     private static boolean bulletsEnabled;
 
-    public Level(int width, int height)
+    public Level(int length, int height)
     {
-        this.width = width;
+        this.length = length;
         this.height = height;
 
         xExit = 50;
         yExit = 10;
         System.out.println("Java: Level: lots of news here...");
-        System.out.println("width = " + width);
+        System.out.println("length = " + length);
         System.out.println("height = " + height);
         try
         {
-            map = new byte[width][height];
+            map = new byte[length][height];
 //        System.out.println("map = " + map);
-            data = new byte[width][height];
+            data = new byte[length][height];
 //        System.out.println("data = " + data);
 
-            spriteTemplates = new SpriteTemplate[width][height];
+            spriteTemplates = new SpriteTemplate[length][height];
         } catch (OutOfMemoryError e)
         {
             System.err.println("Java: MarioAI MEMORY EXCEPTION: OutOfMemory exception. Exiting...");
@@ -69,19 +69,19 @@ public class Level
             System.exit(-3);
         }
 //        System.out.println("spriteTemplates = " + spriteTemplates);
-//        observation = new byte[width][height];
+//        observation = new byte[length][height];
 //        System.out.println("observation = " + observation);
     }
 
 //    public void ASCIIToOutputStream(OutputStream os) throws IOException {
 //        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
-//        bw.write("\nwidth = " + width);
+//        bw.write("\nlength = " + length);
 //        bw.write("\nheight = " + height);
 //        bw.write("\nMap:\n");
 //        for (int y = 0; y < height; y++)
 //
 //        {
-//                for (int x = 0; x < width; x++)
+//                for (int x = 0; x < length; x++)
 //
 //            {
 //                bw.write(map[x][y] + "\t");
@@ -93,7 +93,7 @@ public class Level
 //        for (int y = 0; y < height; y++)
 //
 //        {
-//                for (int x = 0; x < width; x++)
+//                for (int x = 0; x < length; x++)
 //
 //            {
 //                bw.write(data[x][y] + "\t");
@@ -105,7 +105,7 @@ public class Level
 //        for (int y = 0; y < height; y++)
 //
 //        {
-//                for (int x = 0; x < width; x++)
+//                for (int x = 0; x < length; x++)
 //
 //            {
 //                if                  (spriteTemplates[x][y] != null)
@@ -120,7 +120,7 @@ public class Level
 //        bw.write("\n==================\nAll objects: (Map[x,y], Data[x,y], Sprite[x,y])\n");
 //        for (int y = 0; y < height; y++)
 //        {
-//                for (int x = 0; x < width; x++)
+//                for (int x = 0; x < length; x++)
 //
 //            {
 //                bw.write("(" + map[x][y] + "," + data[x][y] + ", " + ((spriteTemplates[x][y] == null) ? "_" : spriteTemplates[x][y].getType()) + ")\t");
@@ -165,10 +165,10 @@ public class Level
         dos.writeLong(Level.FILE_HEADER);
         dos.write((byte) 0);
 
-        dos.writeShort((short) width);
+        dos.writeShort((short) length);
         dos.writeShort((short) height);
 
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < length; i++)
         {
             dos.write(map[i]);
             dos.write(data[i]);
@@ -180,7 +180,7 @@ public class Level
      */
     public void tick()
     {
-        for (int x = 0; x < width; x++)
+        for (int x = 0; x < length; x++)
             for (int y = 0; y < height; y++)
                 if (data[x][y] > 0) data[x][y]--;
     }
@@ -189,7 +189,7 @@ public class Level
     {
         if (x < 0) x = 0;
         if (y < 0) y = 0;
-        if (x >= width) x = width - 1;
+        if (x >= length) x = length - 1;
         if (y >= height) y = height - 1;
         return map[x][y];
     }
@@ -198,7 +198,7 @@ public class Level
     {
         if (x < 0) x = 0;
         if (y < 0) return 0;
-        if (x >= width) x = width - 1;
+        if (x >= length) x = length - 1;
         if (y >= height) y = height - 1;
         return map[x][y];
     }
@@ -207,7 +207,7 @@ public class Level
     {
         if (x < 0) return;
         if (y < 0) return;
-        if (x >= width) return;
+        if (x >= length) return;
         if (y >= height) return;
         map[x][y] = b;
     }
@@ -216,7 +216,7 @@ public class Level
     {
         if (x < 0) return;
         if (y < 0) return;
-        if (x >= width) return;
+        if (x >= length) return;
         if (y >= height) return;
         data[x][y] = b;
     }
@@ -235,7 +235,7 @@ public class Level
     {
         if (x < 0) return null;
         if (y < 0) return null;
-        if (x >= width) return null;
+        if (x >= length) return null;
         if (y >= height) return null;
         return spriteTemplates[x][y];
     }
@@ -244,14 +244,14 @@ public class Level
     {
         if (x < 0) return;
         if (y < 0) return;
-        if (x >= width) return;
+        if (x >= length) return;
         if (y >= height) return;
         spriteTemplates[x][y] = spriteTemplate;
     }
 
-    public int getWidthCells() { return width; }
+    public int getWidthCells() { return length; }
 
-    public float getWidthPhys() { return width * 16; }
+    public float getWidthPhys() { return length * 16; }
 
     public static boolean isBulletsEnabled()
     {
