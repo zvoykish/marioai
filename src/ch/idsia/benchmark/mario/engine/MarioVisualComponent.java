@@ -7,6 +7,7 @@ import ch.idsia.benchmark.mario.engine.level.Level;
 import ch.idsia.benchmark.mario.engine.sprites.Mario;
 import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 import ch.idsia.benchmark.mario.environments.Environment;
+import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.GameViewer;
 
 import javax.swing.*;
@@ -54,15 +55,15 @@ public class MarioVisualComponent extends JComponent
     private GameViewer gameViewer = null;
     private static MarioVisualComponent marioVisualComponent = null;
 
-    private MarioVisualComponent(int width, int height, LevelScene levelScene)
+    private MarioVisualComponent(CmdLineOptions cmdLineOptions, LevelScene levelScene)
     {
         this.levelScene = levelScene;
         adjustFPS();
 
         this.setFocusable(true);
         this.setEnabled(true);
-        this.width = width;
-        this.height = height;
+        this.width = cmdLineOptions.getViewWidth();
+        this.height = cmdLineOptions.getViewHeight();
 
         Dimension size = new Dimension(width, height);
 
@@ -82,23 +83,23 @@ public class MarioVisualComponent extends JComponent
 
         GlobalOptions.registerMarioVisualComponent(this);
 
-        if (GlobalOptions.isGameVeiwer)
+        if (cmdLineOptions.isGameViewer())
         {
             if (this.gameViewer == null)
             {
 
-                this.setGameViewer(new GameViewer(null, null));
+                this.setGameViewer(new GameViewer(cmdLineOptions));
                 this.gameViewer.setMarioVisualComponent(this);
                 this.gameViewer.setVisible(true);
             }
         }
     }
 
-    public static MarioVisualComponent getInstance(int width, int height, LevelScene levelScene)
+    public static MarioVisualComponent getInstance(CmdLineOptions cmdLineOptions, LevelScene levelScene)
     {
         if (marioVisualComponent == null)
         {
-            marioVisualComponent = new MarioVisualComponent(width, height, levelScene);
+            marioVisualComponent = new MarioVisualComponent(cmdLineOptions, levelScene);
             marioVisualComponent.CreateMarioComponentFrame(marioVisualComponent);
         }
         return marioVisualComponent;
@@ -123,9 +124,9 @@ public class MarioVisualComponent extends JComponent
         m.postInitGraphics();
     }
 
-    public void setLocation(int x, int y)
+    public void setLocation(Point location)
     {
-        marioComponentFrame.setLocation(x, y);
+        marioComponentFrame.setLocation(location.x, location.y);
     }
 
     public void reset()

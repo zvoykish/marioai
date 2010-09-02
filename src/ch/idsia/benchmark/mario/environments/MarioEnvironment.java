@@ -65,14 +65,12 @@ public final class MarioEnvironment implements Environment
         if (/*levelScene.visualization*/ setUpOptions.isVisualization())
         {
             if (marioVisualComponent == null)
-                marioVisualComponent = MarioVisualComponent.getInstance(GlobalOptions.VISUAL_COMPONENT_WIDTH,
-                        GlobalOptions.VISUAL_COMPONENT_HEIGHT,
-                        levelScene);
+                marioVisualComponent = MarioVisualComponent.getInstance(setUpOptions, levelScene);
             levelScene.reset(setUpOptions);
             marioVisualComponent.reset();
             marioVisualComponent.postInitGraphicsAndLevel();
             marioVisualComponent.setAgent(agent);
-            marioVisualComponent.setLocation(setUpOptions.getViewLocation().x, setUpOptions.getViewLocation().y);
+            marioVisualComponent.setLocation(setUpOptions.getViewLocation());
         } else
             levelScene.reset(setUpOptions);
 

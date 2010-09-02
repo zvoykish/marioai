@@ -50,5 +50,9 @@ public class CmdLineOptionsTest extends TestCase
     @Test
     public void testSetMarioInvulnerable() throws Exception
     {
+        cmdLineOptions.setMarioInvulnerable(true);
+        assertEquals(cmdLineOptions.isMarioInvulnerable(), true);
+        cmdLineOptions.setArgs("-i off");
+        assertEquals(cmdLineOptions.isMarioInvulnerable(), false);
     }
 }

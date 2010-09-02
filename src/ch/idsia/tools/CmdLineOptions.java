@@ -78,8 +78,6 @@ public final class CmdLineOptions extends EvaluationOptions
         {
             this.printOptions(false);
         }
-        GlobalOptions.isGameVeiwerContinuousUpdates = isGameViewerContinuousUpdates();
-        GlobalOptions.isGameVeiwer = isGameViewer();
         GlobalOptions.observationGridWidth = getReceptiveFieldWidth();
         GlobalOptions.observationGridHeight = getReceptiveFieldHeight();
         GlobalOptions.VISUAL_COMPONENT_HEIGHT = getViewHeight();
@@ -95,12 +93,12 @@ public final class CmdLineOptions extends EvaluationOptions
     }
 
 
-    private int getViewWidth()
+    public int getViewWidth()
     {
         return i(getParameterValue("-vw"));
     }
 
-    private int getViewHeight()
+    public int getViewHeight()
     {
         return i(getParameterValue("-vh"));
     }

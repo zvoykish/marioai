@@ -21,7 +21,6 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent
 
     private String Name = "Instance of CheaterKeyboardAgent";
     private Integer prevFPS = 24;
-    private int prevGridSize = 9;
 
     public CheaterKeyboardAgent()
     {
@@ -48,7 +47,6 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent
     public void reset()
     {
         // Just check you keyboard.
-        prevGridSize = GlobalOptions.observationGridWidth;
         Action = new boolean[16];
     }
 
@@ -145,9 +143,6 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent
             case KeyEvent.VK_G:
                 if (isPressed)
                 {
-//                    boolean temp = prevGridSize;
-                    prevGridSize = GlobalOptions.observationGridWidth;
-//                    GlobalOptions.observationGridWidth = (GlobalOptions.observationGridWidth == -1) ? temp : -1;
                     GlobalOptions.isShowReceptiveField = !(GlobalOptions.isShowReceptiveField);
 //                    System.out.println("GlobalOptions.observationGridWidth = " + GlobalOptions.observationGridWidth);
                 }
