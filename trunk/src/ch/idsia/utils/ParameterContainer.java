@@ -26,7 +26,8 @@ public class ParameterContainer
             "-amico",
             "-echo",
             "-ewf",
-            "-gr",  //level: Mario gravity
+            "-grc",  //level: Creatures gravity            
+            "-grm",  //level: Mario gravity
             "-gv",
             "-gvc",
             "-i",
@@ -45,7 +46,6 @@ public class ParameterContainer
             "-lhb", // level: hidden blocks count
             "-le",  // level: enemies; set up with bit mask
             "-lf",  // level: flat level
-            "-m",
             "-mm",
             "-fps",
             "-pr",
@@ -195,20 +195,20 @@ public class ParameterContainer
         {
             defaultOptionsHashMap = new HashMap<String, String>();
 //            AgentsPool.setCurrentAgent(new HumanKeyboardAgent());
-            defaultOptionsHashMap.put("-ag", "ch.idsia.agents.controllers.human.HumanKeyboardAgent"); //defaultOptionsHashMap.put("-agentName","NoAgent");
+            defaultOptionsHashMap.put("-ag", "ch.idsia.agents.controllers.human.HumanKeyboardAgent");
             defaultOptionsHashMap.put("-amico", "off");
             defaultOptionsHashMap.put("-echo", "off"); //defaultOptionsHashMap.put("-echo","off");
             defaultOptionsHashMap.put("-ewf", "on"); //defaultOptionsHashMap.put("-exitWhenFinished","off");
-            defaultOptionsHashMap.put("-gr", "1.0"); //defaultOptionsHashMap.put("-exitWhenFinished","off");
+            defaultOptionsHashMap.put("-grc", "1.0");
+            defaultOptionsHashMap.put("-grm", "1.0");
             defaultOptionsHashMap.put("-gv", "off"); //defaultOptionsHashMap.put("-gameViewer","off");
             defaultOptionsHashMap.put("-gvc", "off"); //defaultOptionsHashMap.put("-gameViewerContinuousUpdates","off");
-            defaultOptionsHashMap.put("-i", "off"); // Invulnerability
+            defaultOptionsHashMap.put("-i", "off"); // Mario Invulnerability
             defaultOptionsHashMap.put("-ld", "0"); //defaultOptionsHashMap.put("-levelDifficulty","0");
             defaultOptionsHashMap.put("-ll", "320"); //defaultOptionsHashMap.put("-levelLength","320");
             defaultOptionsHashMap.put("-ls", "0"); //defaultOptionsHashMap.put("-levelRandSeed","1");
             defaultOptionsHashMap.put("-lt", "0"); //defaultOptionsHashMap.put("-levelType","1");
-            defaultOptionsHashMap.put("-fps", "24"); //defaultOptionsHashMap.put("-maxFPS","off");
-            defaultOptionsHashMap.put("-m", ""); //defaultOptionsHashMap.put("-matLabFile","DefaultMatlabFile");
+            defaultOptionsHashMap.put("-fps", "24");
             defaultOptionsHashMap.put("-mm", "2"); //Mario Mode
             defaultOptionsHashMap.put("-pw", "off"); //defaultOptionsHashMap.put("-isPauseWorld","off");
             defaultOptionsHashMap.put("-pr", "off"); //defaultOptionsHashMap.put("-powerRestoration","off");

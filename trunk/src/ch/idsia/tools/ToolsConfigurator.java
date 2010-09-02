@@ -62,7 +62,7 @@ public class ToolsConfigurator extends JFrame
         toolsConfigurator.CheckboxExitOnFinish.setState(cmdLineOptions.isExitProgramWhenFinished());
         toolsConfigurator.TextFieldMatLabFileName.setText(cmdLineOptions.getMatlabFileName());
 
-        gameViewer = new GameViewer(null, null);
+        gameViewer = new GameViewer(cmdLineOptions);
 
         CreateMarioComponentFrame(cmdLineOptions);
 //        marioComponent.init();

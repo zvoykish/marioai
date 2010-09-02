@@ -141,9 +141,11 @@ public class GameViewer extends JFrame
     private int ZLevelMapValue = 0;
     private int ZLevelEnemiesValue = 0;
 
-    public GameViewer(Dimension size, Point location)
+    public GameViewer(CmdLineOptions cmdLineOptions)
     {
         super(" Game Viewer");
+        Dimension size = null;
+        Point location = null;
 
         setSize((size == null) ? defaultSize : size);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -182,7 +184,7 @@ public class GameViewer extends JFrame
         GameViewerOptionsPanel.add(ShowEnemiesObservation);
         GameViewerOptionsPanel.add(ShowMergedObservation);
         GameViewerOptionsPanel.add(ContinuousUpdates);
-        ContinuousUpdates.setState(GlobalOptions.isGameVeiwerContinuousUpdates);
+        ContinuousUpdates.setState(cmdLineOptions.isGameViewerContinuousUpdates());
 
         GameViewerOptionsPanel.setBorder(new TitledBorder(new EtchedBorder(), "Game Viewer Options"));
 

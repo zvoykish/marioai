@@ -21,13 +21,13 @@ public abstract class
     public static boolean isPauseWorld = false;
 
     public static boolean isVisualization = true;
-    public static boolean isGameVeiwer = true;
 
     private static GameViewer GameViewer = null;
     public static boolean isTimer = true;
 
-    public static boolean isGameVeiwerContinuousUpdates = false;
     public static boolean isPowerRestoration;
+
+    // required for rendering grid in ch/idsia/benchmark/mario/engine/sprites/Sprite.java
     public static int observationGridWidth = -1;
     public static int observationGridHeight = -1;
 
