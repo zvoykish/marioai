@@ -395,9 +395,9 @@ public class Mario extends Sprite
             win();
         }
 
-        if (x > world.level.width * 16)
+        if (x > world.level.length * 16)
         {
-            x = world.level.width * 16;
+            x = world.level.length * 16;
             xa = 0;
         }
 

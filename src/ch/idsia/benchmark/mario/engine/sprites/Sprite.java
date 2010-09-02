@@ -111,7 +111,7 @@ public class Sprite
 
 //                og.setColor(Color.RED);
                 // vertical lines
-                int wdOfRow = 16;// width / (rows);
+                int wdOfRow = 16;// length / (rows);
                 for (k = -columns / 2 - 1; k < columns / 2 + 1; k++)
                     og.drawLine((int) (x + k * wdOfRow + 8), (int) y - height / 2 - 8, (int) (x + k * wdOfRow + 8), (int) (y + height / 2 - 8));
             }

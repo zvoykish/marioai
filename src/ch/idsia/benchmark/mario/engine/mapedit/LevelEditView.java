@@ -26,7 +26,7 @@ public class LevelEditView extends JComponent implements MouseListener, MouseMot
     {
         this.tilePicker = tilePicker;
         level = new Level(256, 15);
-        Dimension size = new Dimension(level.width * 16, level.height * 16);
+        Dimension size = new Dimension(level.length * 16, level.height * 16);
         setPreferredSize(size);
         setMinimumSize(size);
         setMaximumSize(size);
@@ -38,7 +38,7 @@ public class LevelEditView extends JComponent implements MouseListener, MouseMot
     public void setLevel(Level level)
     {
         this.level = level;
-        Dimension size = new Dimension(level.width * 16, level.height * 16);
+        Dimension size = new Dimension(level.length * 16, level.height * 16);
         setPreferredSize(size);
         setMinimumSize(size);
         setMaximumSize(size);
@@ -55,14 +55,14 @@ public class LevelEditView extends JComponent implements MouseListener, MouseMot
     {
         super.addNotify();
         Art.init(getGraphicsConfiguration());
-        levelRenderer = new LevelRenderer(level, getGraphicsConfiguration(), level.width * 16, level.height * 16);
+        levelRenderer = new LevelRenderer(level, getGraphicsConfiguration(), level.length * 16, level.height * 16);
         levelRenderer.renderBehaviors = true;
     }
 
     public void paintComponent(Graphics g)
     {
         g.setColor(new Color(0x8090ff));
-        g.fillRect(0, 0, level.width * 16, level.height * 16);
+        g.fillRect(0, 0, level.length * 16, level.height * 16);
         levelRenderer.render(g, 0, 0);
         g.setColor(Color.BLACK);
         g.drawRect(xTile * 16 - 1, yTile * 16 - 1, 17, 17);

@@ -169,7 +169,7 @@ public class MarioVisualComponent extends JComponent
 //            drawStringDropShadow(thisVolatileImageGraphics, "Trial:", 33, 4, 7);
         drawStringDropShadow(thisVolatileImageGraphics, msg, 33, 5, 7);
 
-//        if (width != 320 || height != 240) {
+//        if (length != 320 || height != 240) {
 //            thisGraphics.drawImage(thisVolatileImage, 0, 0, 320 * 4, 240 * 4, null);
 //        } else {
 //            thisGraphics.drawImage(thisVolatileImage, 0, 0, null);
@@ -203,8 +203,8 @@ public class MarioVisualComponent extends JComponent
             //        int yCam = (int) (yCamO + (this.yCam - yCamO) * alpha);
             if (xCam < 0) xCam = 0;
             if (yCam < 0) yCam = 0;
-            if (xCam > level.width * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH)
-                xCam = level.width * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH;
+            if (xCam > level.length * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH)
+                xCam = level.length * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH;
             if (yCam > level.height * 16 - GlobalOptions.VISUAL_COMPONENT_HEIGHT)
                 yCam = level.height * 16 - GlobalOptions.VISUAL_COMPONENT_HEIGHT;
         }
@@ -233,7 +233,7 @@ public class MarioVisualComponent extends JComponent
 
 //        TODO: Dump out of render!
 //        if (mario.cheatKeys[Mario.KEY_DUMP_CURRENT_WORLD])
-//            for (int w = 0; w < level.width; w++)
+//            for (int w = 0; w < level.length; w++)
 //                for (int h = 0; h < level.height; h++)
 //                    level.observation[w][h] = -1;
 
@@ -417,7 +417,7 @@ public class MarioVisualComponent extends JComponent
 //    static GraphicsConfiguration CreateMarioComponentFrame(EvaluationOptions evaluationOptions)
 //    {
 ////        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-////        frame.setLocation((screenSize.width-frame.getWidth())/2, (screenSize.height-frame.getHeight())/2);
+////        frame.setLocation((screenSize.length-frame.getWidth())/2, (screenSize.height-frame.getHeight())/2);
 //        if (marioComponentFrame == null)
 //        {
 //            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentLoadFullName() +*/ "Mario AI benchmark-" + GlobalOptions.MAIBeVersionStr);
@@ -476,7 +476,7 @@ public class MarioVisualComponent extends JComponent
             for (int i = 0; i < bgLayer.length; i++)
             {
                 int scrollSpeed = 4 >> i;
-                int w = ((level.width * 16) - GlobalOptions.VISUAL_COMPONENT_WIDTH) / scrollSpeed + GlobalOptions.VISUAL_COMPONENT_WIDTH;
+                int w = ((level.length * 16) - GlobalOptions.VISUAL_COMPONENT_WIDTH) / scrollSpeed + GlobalOptions.VISUAL_COMPONENT_WIDTH;
                 int h = ((level.height * 16) - GlobalOptions.VISUAL_COMPONENT_HEIGHT) / scrollSpeed + GlobalOptions.VISUAL_COMPONENT_HEIGHT;
                 Level bgLevel = BgLevelGenerator.createLevel(w / 32 + 1, h / 32 + 1, i == 0, levelScene.getLevelType());
                 bgLayer[i] = new BgRenderer(bgLevel, graphicsConfiguration, GlobalOptions.VISUAL_COMPONENT_WIDTH, GlobalOptions.VISUAL_COMPONENT_HEIGHT, scrollSpeed);
