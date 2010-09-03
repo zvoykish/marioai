@@ -325,7 +325,7 @@ public class LevelGenerator
         int floor = height - 2 - kk;  //floor of pre dead end zone
         level.ints.add(kk);
         int length = 0; // total zone length
-        kk = globalRandom.nextInt(10); 
+        kk = globalRandom.nextInt(10);
         int preDeadEndLength = 7 + kk;
         level.ints.add(kk);
         int rHeight = floor - 1; //rest height
@@ -986,29 +986,35 @@ public class LevelGenerator
                                 }
                                 canDeco = true;
                             }
-                        } else if (((kk = globalRandom.nextInt(4)) == 0) && level.ints.add(kk)) //TODO: log_this
+                        } else
                         {
-                            if (canBuildBlocks(x, floor - 4, false))
+                            kk = globalRandom.nextInt(4);
+                            level.ints.add(kk);
+                            if (kk == 0)
+                            {
+                                if (canBuildBlocks(x, floor - 4, false))
+                                {
+                                    counters.blocksCount++;
+                                    if ((kk = globalRandom.nextInt(4)) == 0 && (level.ints.add(kk)))
+                                    {
+                                        level.setBlock(x, floor - 4, (byte) (2 + 1 * 16)); //a brick with a power up. when broken becomes a rock
+                                    } else
+                                    {
+                                        level.setBlock(x, floor - 4, (byte) (1 + 1 * 16)); //a brick with a coin. when broken becomes a rock
+                                    }
+                                    canDeco = true;
+                                }
+                            } else if ((kk = globalRandom.nextInt(2)) == 1 && level.ints.add(kk) && canBuildBlocks(x, floor - 4, false))
                             {
                                 counters.blocksCount++;
-                                if ((kk = globalRandom.nextInt(4)) == 0 && (level.ints.add(kk)))
-                                {
-                                    level.setBlock(x, floor - 4, (byte) (2 + 1 * 16)); //a brick with a power up. when broken becomes a rock
-                                } else
-                                {
-                                    level.setBlock(x, floor - 4, (byte) (1 + 1 * 16)); //a brick with a coin. when broken becomes a rock
-                                }
+                                level.setBlock(x, floor - 4, (byte) (0 + 1 * 16)); //a break brick
                                 canDeco = true;
                             }
-                        } else if ((kk = globalRandom.nextInt(2)) == 1 && level.ints.add(kk) && canBuildBlocks(x, floor - 4, false))
-                        {
-                            counters.blocksCount++;
-                            level.setBlock(x, floor - 4, (byte) (0 + 1 * 16)); //a break brick
-                            canDeco = true;
                         }
                         if (canDeco)
                         {
-                            if ((kk = globalRandom.nextInt(4)) == 2 && level.ints.add(kk)) addEnemiesLine(x0 + 1, x1 - 1, floor - 1);
+                            if ((kk = globalRandom.nextInt(4)) == 2 && level.ints.add(kk))
+                                addEnemiesLine(x0 + 1, x1 - 1, floor - 1);
                             buildCoins(x0, x1, floor, s, e);
                         }
                     }

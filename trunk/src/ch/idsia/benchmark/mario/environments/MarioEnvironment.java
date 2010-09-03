@@ -71,6 +71,7 @@ public final class MarioEnvironment implements Environment
             marioVisualComponent.postInitGraphicsAndLevel();
             marioVisualComponent.setAgent(agent);
             marioVisualComponent.setLocation(setUpOptions.getViewLocation());
+            marioVisualComponent.setAlwaysOnTop(setUpOptions.isViewAlwaysOnTop());
         } else
             levelScene.reset(setUpOptions);
 

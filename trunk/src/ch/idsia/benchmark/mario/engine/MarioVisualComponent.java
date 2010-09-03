@@ -23,7 +23,8 @@ import java.util.List;
  * Package: ch.idsia.benchmark.mario.engine
  */
 
-public class MarioVisualComponent extends JComponent
+public class
+        MarioVisualComponent extends JComponent
 {
     private CheaterKeyboardAgent cheatAgent = null;
 
@@ -118,8 +119,6 @@ public class MarioVisualComponent extends JComponent
             marioComponentFrame.setResizable(false);
             marioComponentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         }
-        marioComponentFrame.setAlwaysOnTop(true);
-//        marioComponentFrame.setLocation(new Point(42,42));
         marioComponentFrame.setVisible(true);
         m.postInitGraphics();
     }
@@ -127,6 +126,11 @@ public class MarioVisualComponent extends JComponent
     public void setLocation(Point location)
     {
         marioComponentFrame.setLocation(location.x, location.y);
+    }
+
+    public void setAlwaysOnTop(boolean b)
+    {
+        marioComponentFrame.setAlwaysOnTop(b);
     }
 
     public void reset()
