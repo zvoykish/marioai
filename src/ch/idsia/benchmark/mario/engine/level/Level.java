@@ -3,6 +3,7 @@ package ch.idsia.benchmark.mario.engine.level;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Vector;
 
 
 public class Level
@@ -35,6 +36,9 @@ public class Level
 
     public byte[][] map;
     public byte[][] data;
+
+    public Vector ints;
+    public Vector booleans;
 //    public byte[][] observation;
 
     public SpriteTemplate[][] spriteTemplates;
@@ -46,6 +50,8 @@ public class Level
 
     public Level(int length, int height)
     {
+        ints = new Vector();
+        booleans = new Vector();
         this.length = length;
         this.height = height;
 
