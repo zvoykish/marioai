@@ -34,14 +34,12 @@ public final class Play
     public static void main(String[] args)
     {
         final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
-//        final Agent agent = new HumanKeyboardAgent();
         final BasicTask basicTask = new BasicTask(cmdLineOptions);
         cmdLineOptions.setVisualization(true);
 //        basicTask.reset(cmdLineOptions);
         final MarioCustomSystemOfValues m = new MarioCustomSystemOfValues();
 //        basicTask.runOneEpisode();
         // run 1 episode with same options, each time giving output of Evaluation info.
-
         basicTask.doEpisodes(1, false);
         System.out.println("\nEvaluationInfo: \n" + basicTask.getEnvironment().getEvaluationInfoAsString());
         System.out.println("\nCustom : \n" + basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(m));
