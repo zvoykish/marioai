@@ -2,6 +2,7 @@ package ch.idsia.benchmark.mario.engine.level;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -178,6 +179,16 @@ public class Level
             dos.write(map[i]);
             dos.write(data[i]);
         }
+    }
+
+    public void save_rand(DataOutputStream dos) throws IOException
+    {
+        for (int i = 0; i < ints.size(); i++)
+            dos.writeInt(new Integer((Integer) ints.get(i)));
+
+        dos.writeChar('\n');
+        for (int i = 0; i < booleans.size(); i++)
+            dos.writeBoolean(new Boolean((Boolean) booleans.get(i)));
     }
 
     /**
