@@ -20,7 +20,9 @@ import ch.idsia.utils.StatisticalSummary;
 
 /**
  * Class used for agent evaluation on GamePlay track
+ * www.marioai.org/gameplay-track
  */
+
 public final class GamePlayEvaluation
 {
     final static int numberOfTrials = 10;

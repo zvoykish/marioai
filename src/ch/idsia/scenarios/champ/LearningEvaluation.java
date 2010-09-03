@@ -16,6 +16,11 @@ import ch.idsia.tools.EvaluationInfo;
  * Package: ch.idsia.scenarios
  */
 
+/**
+ * Class used for agent evaluation on GamePlay track
+ * www.marioai.org/learning-track
+ */
+
 public final class LearningEvaluation
 {
     final static int numberOfTrials = 1000;

@@ -4,7 +4,7 @@ import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Nikolay Sohryakov
+ * User: Sergey Karakovskiy, sergey@idsia.ch
  * Date: Aug 28, 2010
  * Time: 2:36:36 AM
  */
