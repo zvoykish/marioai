@@ -4,7 +4,10 @@ import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.CreaturesMaskParser;
 
+import java.io.*;
+import java.util.List;
 import java.util.Random;
+import java.util.Vector;
 
 /**
  * Using this class is very simple. Just call <b>createMethod</b> with params:
@@ -45,6 +48,69 @@ public class LevelGenerator
         int totalTubesCount;
     }
 
+    static private class LoggingRandom
+    {
+        private Random r = null;
+        public static final List<Integer> ints = new Vector<Integer>();
+        public static final List<Boolean> booleans = new Vector<Boolean>();
+
+        private static int i;
+        private static boolean b;
+
+        private LoggingRandom(int seed)
+        {
+            if (this.r == null)
+                this.r = new Random(seed);
+            else
+                System.err.println("WARNING! TRIED to initialized Random at least twice!");
+        }
+
+        public int nextInt(int max)
+        {
+            i = r.nextInt(max);
+            ints.add(i);
+            return i;
+        }
+
+        public int nextInt()
+        {
+            i = r.nextInt();
+            ints.add(i);
+            return i;
+        }
+
+        public boolean nextBoolean()
+        {
+            b = r.nextBoolean();
+            booleans.add(b);
+            return b;
+        }
+
+        public void setSeed(long seed)
+        {
+            this.r.setSeed(seed);
+        }
+
+        public void saveToFile(String fileName)
+        {
+            FileOutputStream fos;
+            try
+            {
+
+                fos = new FileOutputStream(fileName);
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+                bw.write("ints#");
+                for (Integer anInt : ints) bw.write(anInt);
+                bw.newLine();
+                bw.write("booleans#");
+                for (Boolean aBoolean : booleans) bw.write(aBoolean ? 1 : 0);
+                bw.close();
+                System.out.println("LogginRandom Output saved to " + fileName);
+            }
+            catch (FileNotFoundException e) { e.printStackTrace();}
+            catch (IOException e) { e.printStackTrace(); }
+        }
+    }
     /*
     From left to right:
         0)goomba
@@ -71,8 +137,8 @@ public class LevelGenerator
     private static int length;
     private static int height;
     private static Level level;
-    final static Random globalRandom = new Random(0);
-    final static Random creaturesRandom = new Random(0);
+    final static LoggingRandom globalRandom = new LoggingRandom(0);
+    final static LoggingRandom creaturesRandom = new LoggingRandom(0);
 
     private static final int ODDS_STRAIGHT = 0;
     private static final int ODDS_HILL_STRAIGHT = 1;
