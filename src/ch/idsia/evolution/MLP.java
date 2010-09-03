@@ -164,7 +164,7 @@ public class MLP implements FA<double[], double[]>, Evolvable
             System.arraycopy(inputIn, 0, this.inputs, 0, inputIn.length);
         }
         if (inputIn.length < inputs.length)
-            System.out.println("NOTE: only " + inputIn.length + " inputs out of " + inputs.length + " are used in the network");
+            System.out.println("MLP: NOTE: only " + inputIn.length + " inputs out of " + inputs.length + " are used in the network");
         propagateOneStep(inputs, hiddenNeurons, firstConnectionLayer);
         tanh(hiddenNeurons);
         propagateOneStep(hiddenNeurons, outputs, secondConnectionLayer);
@@ -372,7 +372,7 @@ public class MLP implements FA<double[], double[]>, Evolvable
         return "Straight mlp, mean connection weight " + (sum() / numberOfConnections);
     }
 
-    public void ssetLearningRate(double learningRate)
+    public void setLearningRate(double learningRate)
     {
         this.learningRate = learningRate;
     }

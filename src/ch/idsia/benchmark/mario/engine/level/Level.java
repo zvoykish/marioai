@@ -51,16 +51,15 @@ public class Level
 
         xExit = 50;
         yExit = 10;
-        System.out.println("Java: Level: lots of news here...");
-        System.out.println("length = " + length);
-        System.out.println("height = " + height);
+//        System.out.println("Java: Level: lots of news here...");
+//        System.out.println("length = " + length);
+//        System.out.println("height = " + height);
         try
         {
             map = new byte[length][height];
 //        System.out.println("map = " + map);
             data = new byte[length][height];
 //        System.out.println("data = " + data);
-
             spriteTemplates = new SpriteTemplate[length][height];
         } catch (OutOfMemoryError e)
         {
