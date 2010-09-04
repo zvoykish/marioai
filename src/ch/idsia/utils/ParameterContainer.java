@@ -64,7 +64,8 @@ public class ParameterContainer
             "-vw",
             "-vh",
             "-ze",
-            "-zs"
+            "-zs",
+            "-stop"
     };
 
     public ParameterContainer()
@@ -113,8 +114,8 @@ public class ParameterContainer
         }
 
         ret = defaultOptionsHashMap.get(param);
-        System.err.println("[MarioAI INFO] ~ Default value '" + ret + "' for " + param +
-                " used");
+//        System.err.println("[MarioAI INFO] ~ Default value '" + ret + "' for " + param +
+//                " used");
         optionsHashMap.put(param, ret);
         return ret;
 //        try
@@ -237,6 +238,7 @@ public class ParameterContainer
             defaultOptionsHashMap.put("-lhb", "off"); //level: hidden blocks count
             defaultOptionsHashMap.put("-le", "1111111111"); //level: enemies bit mask
             defaultOptionsHashMap.put("-lf", "off"); //level: flat level
+            defaultOptionsHashMap.put("-stop", "off"); //is gameplay stopped
         }
     }
 

@@ -1,6 +1,7 @@
 package ch.idsia.benchmark.tasks;
 
 import ch.idsia.agents.Agent;
+import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.benchmark.mario.environments.MarioEnvironment;
 import ch.idsia.tools.CmdLineOptions;
@@ -50,6 +51,10 @@ public class BasicTask implements Task
 //            long tm = System.currentTimeMillis();
             agent.integrateObservation(environment);
             agent.giveIntermediateReward(environment.getIntermediateReward());
+            
+            if (GlobalOptions.isGameplayStopped)
+                continue;
+
             boolean[] action = agent.getAction();
 
 //            System.out.println("System.currentTimeMillis() - tm > COMPUTATION_TIME_BOUND = " + (System.currentTimeMillis() - tm ));
