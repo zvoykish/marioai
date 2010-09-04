@@ -59,6 +59,8 @@ public class LevelGenerator
 
         private static int i;
         private static boolean b;
+        private List<Integer> intsToCompare = null;
+        private int compareCounter = 0;
 
         private LoggingRandom(int seed)
         {
@@ -71,6 +73,8 @@ public class LevelGenerator
         public int nextInt(int max)
         {
             i = r.nextInt(max);
+            if (intsToCompare != null && i != intsToCompare.get(compareCounter++))
+                System.err.println("DIFFERENCE FOUND: " + i + "!=" + intsToCompare.get(compareCounter - 1));
             ints.add(i);
             cnt++;
             return i;
@@ -79,6 +83,8 @@ public class LevelGenerator
         public int nextInt()
         {
             i = r.nextInt();
+            if (intsToCompare != null && i != intsToCompare.get(compareCounter++))
+                System.err.println("DIFFERENCE FOUND: " + i + "!=" + intsToCompare.get(compareCounter - 1));
             ints.add(i);
             cnt++;
             return i;
@@ -88,10 +94,10 @@ public class LevelGenerator
         {
             b = r.nextBoolean();
             booleans.add(b);
-            if (b)
-                ints.add(1);
-            else
-                ints.add(0);
+            i = b ? 1 : 0;
+            if (intsToCompare != null && i != intsToCompare.get(compareCounter++))
+                System.err.println("DIFFERENCE FOUND: " + i + "!=" + intsToCompare.get(compareCounter - 1));
+            ints.add(i);
 
             poss.add(cnt);
             cnt++;
@@ -129,6 +135,12 @@ public class LevelGenerator
             catch (FileNotFoundException e) { e.printStackTrace();}
             catch (IOException e) { e.printStackTrace(); }
         }
+
+        public void setIntsToCopmare(List<Integer> ints)
+        {
+            intsToCompare = ints;
+        }
+
     }
     /*
     From left to right:
@@ -186,10 +198,12 @@ public class LevelGenerator
 
     public static void printRandom(int i)
     {
-        if (i == 1)
-            globalRandom.saveToFile("first.txt");
-        else
-            globalRandom.saveToFile("second.txt");
+//        if (i == 1)
+//            globalRandom.saveToFile("first.txt");
+//        else
+//            globalRandom.saveToFile("second.txt");
+        globalRandom.saveToFile("level" + i + ".txt");
+
     }
 
     public static Level createLevel(CmdLineOptions args)
