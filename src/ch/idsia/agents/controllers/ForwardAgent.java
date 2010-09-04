@@ -15,6 +15,8 @@ public class ForwardAgent extends BasicAIAgent implements Agent
 {
     int trueJumpCounter = 0;
     int trueSpeedCounter = 0;
+    int marioCenterX = 9;
+    int marioCenterY = 9;
 
     public ForwardAgent()
     {
@@ -42,7 +44,11 @@ public class ForwardAgent extends BasicAIAgent implements Agent
                 if (levelScene[y][x] != 0)
                     f = false;
             }
-            if (f || levelScene[10][9] == 0 || (marioState[1] > 0 && (levelScene[10][8] != 0 || levelScene[10][9] != 0)))
+            if (f ||
+                levelScene[marioCenterX+1][marioCenterY] == 0 ||
+                (marioState[1] > 0 &&
+                        (levelScene[marioCenterX+1][marioCenterY-1] != 0 ||
+                        levelScene[marioCenterX+1][marioCenterY] != 0)))
                 return true;
         }
         return false;
@@ -57,7 +63,9 @@ public class ForwardAgent extends BasicAIAgent implements Agent
     {
         // this Agent requires observation integrated in advance.
 
-        if (mergedObservation[9][11] != 0 || mergedObservation[9][10] != 0 || DangerOfGap())
+        if (mergedObservation[marioCenterX][marioCenterY+2] != 0 ||
+            mergedObservation[marioCenterX][marioCenterY+1] != 0 ||
+            DangerOfGap())
         {
             if (isMarioAbleToJump || (!isMarioOnGround && action[Mario.KEY_JUMP]))
             {
