@@ -632,7 +632,7 @@ public class LevelScene implements SpriteContext
     {
         if (GlobalOptions.isGameplayStopped)
             return;
-        
+
         if (GlobalOptions.isTimer)
             timeLeft--;
         if (timeLeft == 0)
@@ -1071,7 +1071,7 @@ public class LevelScene implements SpriteContext
 //        this.getViewLocation().y, setUpOptions[16] == 1;
 //        this.getZLevelEnemies(),setUpOptions[17] ;
 //        this.getZLevelScene()   setUpOptions[18] ;
-        this.levelHeight = 15;
+        this.levelHeight = cmdLineOptions.getLevelHeight();
 
         killedCreaturesTotal = 0;
         killedCreaturesByFireBall = 0;
@@ -1107,9 +1107,7 @@ public class LevelScene implements SpriteContext
     { return levelType; }
 
     public int getNumberOfHiddenCoinsGained()
-    {
-        return numberOfHiddenCoinsGained;
-    }
+    { return numberOfHiddenCoinsGained; }
 
     public static int getObservationWidth()
     {
@@ -1118,7 +1116,6 @@ public class LevelScene implements SpriteContext
 
     public static int getObservationHeight()
     {
-
         return ObsHeight;
     }
 }

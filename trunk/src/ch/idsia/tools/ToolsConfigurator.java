@@ -38,16 +38,12 @@ public class ToolsConfigurator extends JFrame
         // Create an Agent here
         MainRun.createAgentsPool();
         // TODO: more options:
-        // -agent wox name, like evolvable
-        // -ll digit  range [5:15], increase if succeeds.
         // -vb nothing/all/keys
-        // -exit on finish simulating
         // run 9 windows.
 
         ToolsConfigurator toolsConfigurator = new ToolsConfigurator(null, null);
         toolsConfigurator.setVisible(cmdLineOptions.isToolsConfigurator());
 
-        //TODO: ReImplement MVC Concept better
         toolsConfigurator.ChoiceLevelType.select(cmdLineOptions.getLevelType());
         toolsConfigurator.JSpinnerLevelDifficulty.setValue(cmdLineOptions.getLevelDifficulty());
         toolsConfigurator.JSpinnerLevelRandomizationSeed.setValue(cmdLineOptions.getLevelRandSeed());
@@ -150,17 +146,15 @@ public class ToolsConfigurator extends JFrame
             upFPS = new BasicArrowButton(BasicArrowButton.NORTH),
             downFPS = new BasicArrowButton(BasicArrowButton.SOUTH);
 
-    // TODO            allowed time to use.
-    // TODO : change agent on the fly. Artificial Contender concept? Human shows how to complete this level? Fir 13:38.
-    // TODO Hot Agent PlugAndPlay.
-    // TODO: cmdLineOptions : gui, agents,
-    // TODO: time per level\    mean time per level
-    // TODO: competition
+    /*
+    TODO : change agent on the fly. Artificial Contender concept? Human shows how to complete this level? Fir 13:38.
+    TODO Hot Agent PlugAndPlay.
+    TODO: time per level\    mean time per level
+    */
 
     private int prevFPS = 24;
 
     private static GameViewer gameViewer = null; //new GameViewer(null, null);
-//    private static MarioComponent marioComponent;
 
     public ToolsConfigurator(Point location, Dimension size)
     {
@@ -208,7 +202,7 @@ public class ToolsConfigurator extends JFrame
         //      JSpinnerLevelRandomizationSeed
         JSpinnerLevelRandomizationSeed.setToolTipText("Hint: levels with same seed are identical for in observation");
         JSpinnerLevelRandomizationSeed.setValue(1);
-        JSpinnerLevelRandomizationSeed.addChangeListener(toolsConfiguratorActions); //TODO : Listener;
+        JSpinnerLevelRandomizationSeed.addChangeListener(toolsConfiguratorActions);
 
         //  CheckboxEnableTimer
         CheckboxEnableTimer.addItemListener(toolsConfiguratorActions);
