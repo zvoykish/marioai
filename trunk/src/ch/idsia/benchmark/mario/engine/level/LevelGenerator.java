@@ -5,9 +5,7 @@ import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.CreaturesMaskParser;
 
 import java.io.*;
-import java.util.List;
-import java.util.Random;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Using this class is very simple. Just call <b>createMethod</b> with params:
@@ -53,6 +51,8 @@ public class LevelGenerator
         private Random r = null;
         public static final List<Integer> ints = new Vector<Integer>();
         public static final List<Boolean> booleans = new Vector<Boolean>();
+        public static final HashSet<Integer> poss = new HashSet<Integer>();
+        private int cnt = 0;
 
         private static int i;
         private static boolean b;
@@ -69,6 +69,7 @@ public class LevelGenerator
         {
             i = r.nextInt(max);
             ints.add(i);
+            cnt++;
             return i;
         }
 
@@ -76,6 +77,7 @@ public class LevelGenerator
         {
             i = r.nextInt();
             ints.add(i);
+            cnt++;
             return i;
         }
 
@@ -83,6 +85,13 @@ public class LevelGenerator
         {
             b = r.nextBoolean();
             booleans.add(b);
+            if (b)
+                ints.add(1);
+            else
+                ints.add(0);
+
+            poss.add(cnt);
+            cnt++;
             return b;
         }
 
@@ -100,10 +109,17 @@ public class LevelGenerator
                 fos = new FileOutputStream(fileName);
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
                 bw.write("ints#");
-                for (Integer anInt : ints) bw.write(anInt);
                 bw.newLine();
-                bw.write("booleans#");
-                for (Boolean aBoolean : booleans) bw.write(aBoolean ? 1 : 0);
+                int i = 0;
+                for (Integer anInt : ints)
+                {
+                    bw.write(anInt.toString() + "   " + (poss.contains(i) ? "-----" : "-") + "\n");
+                    i++;
+                }
+//                bw.newLine();
+//                bw.write("booleans#");
+//                bw.newLine();
+//                for (Boolean aBoolean : booleans) bw.write(aBoolean ? "1\n" : "0\n");
                 bw.close();
                 System.out.println("LogginRandom Output saved to " + fileName);
             }
@@ -163,6 +179,14 @@ public class LevelGenerator
 
     private LevelGenerator()
     {
+    }
+
+    public static void printRandom(int i)
+    {
+        if (i == 1)
+            globalRandom.saveToFile("first.txt");
+        else
+            globalRandom.saveToFile("second.txt");
     }
 
     public static Level createLevel(CmdLineOptions args)
@@ -233,7 +257,7 @@ public class LevelGenerator
         }
 
         //coordinates of the exit
-        level.xExit = length;
+        level.xExit = length + 8;
         level.yExit = floor;
 
         //fix floor
@@ -384,7 +408,7 @@ public class LevelGenerator
         int rHeight = floor - 1; //rest height
 
         length += buildStraight(x0, preDeadEndLength, true, floor, INFINITY_FLOOR_HEIGHT);//buildZone( x0, x0+preDeadEndLength, floor ); //build pre dead end zone
-        buildBlocks(x0, x0 + preDeadEndLength, floor, true, 0, 0, true);
+//        buildBlocks(x0, x0 + preDeadEndLength, floor, true, 0, 0, true);
 
         //correct direction
         //true - top, false = bottom

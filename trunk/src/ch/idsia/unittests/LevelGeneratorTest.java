@@ -8,6 +8,9 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Sergey Karakovskiy, sergey.karakovskiy@gmail.com
@@ -43,7 +46,9 @@ public class LevelGeneratorTest extends TestCase
     {
         final CmdLineOptions cmdLineOptions = new CmdLineOptions();
         Level level1 = LevelGenerator.createLevel(cmdLineOptions);
+        LevelGenerator.printRandom(1);
         Level level2 = LevelGenerator.createLevel(cmdLineOptions);
+        LevelGenerator.printRandom(2);
 
         System.out.println("Size of the first  level: " + level1.length + " " + level1.height);
         System.out.println("Size of the second level: " + level2.length + " " + level2.height);

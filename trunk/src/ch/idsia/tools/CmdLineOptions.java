@@ -85,6 +85,7 @@ public final class CmdLineOptions extends EvaluationOptions
 //        Environment.ObsWidth = GlobalOptions.observationGridWidth/2;
 //        Environment.ObsHeight = GlobalOptions.observationGridHeight/2;
         GlobalOptions.isShowReceptiveField = isReceptiveFieldVisualized();
+        GlobalOptions.isGameplayStopped = isGameplayStopped();
     }
 
     public float getGravity()
@@ -147,6 +148,11 @@ public final class CmdLineOptions extends EvaluationOptions
     public Boolean isEcho()
     {
         return b(getParameterValue("-echo"));
+    }
+
+    public Boolean isGameplayStopped()
+    {
+        return b(getParameterValue("-stop"));
     }
 
     public String getPyAmiCoModuleName()

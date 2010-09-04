@@ -117,6 +117,8 @@ public class GameViewer extends JFrame
 
     public void tick()
     {
+        if (GlobalOptions.isGameplayStopped)
+            return;
         gameViewerViewPanel.repaint();
     }
 

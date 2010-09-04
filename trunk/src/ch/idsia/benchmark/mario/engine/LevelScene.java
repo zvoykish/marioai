@@ -630,6 +630,9 @@ public class LevelScene implements SpriteContext
 
     public void tick()
     {
+        if (GlobalOptions.isGameplayStopped)
+            return;
+        
         if (GlobalOptions.isTimer)
             timeLeft--;
         if (timeLeft == 0)
