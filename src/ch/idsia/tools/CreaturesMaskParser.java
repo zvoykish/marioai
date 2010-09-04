@@ -57,7 +57,7 @@ public class CreaturesMaskParser
             canAdd = false;
         }
 
-        //TODO: use a cycle to fill an array?
+        //TODO: turn to a cycle
 
         if (creatures.charAt(GOOMBA) == '1') {this.creatures[GOOMBA] = true;}
         if (creatures.charAt(GREEN_KOOPA) == '1') {this.creatures[GREEN_KOOPA] = true;}

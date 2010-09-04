@@ -33,8 +33,10 @@ public class MarioAIBenchmarkTest extends TestCase
     {
         Random r1 = new Random(42);
         Random r2 = new Random(23);
+        r2.nextBoolean();
+        r2.nextInt();
         r2.setSeed(42);
-        for (int i = 0; i < 1000; ++i)
+        for (long i = 0; i < 211000; ++i)
         {
             assertEquals(r1.nextBoolean(), r2.nextBoolean());
             assertEquals(r1.nextInt(), r2.nextInt());

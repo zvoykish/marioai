@@ -5,7 +5,10 @@ import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.CreaturesMaskParser;
 
 import java.io.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Vector;
 
 /**
  * Using this class is very simple. Just call <b>createMethod</b> with params:
@@ -168,7 +171,7 @@ public class LevelGenerator
     private static int levelType;
     private static int levelSeed;
 
-    private static CreaturesMaskParser creatures;
+    private static CreaturesMaskParser creaturesMaskParser;
 
     private static final boolean RIGHT_DIRECTION_BOTTOM = false;
     private static final int ANY_HEIGHT = -1;
@@ -208,7 +211,7 @@ public class LevelGenerator
         counters.totalCoinsCount = args.getCoinsCount() ? Integer.MAX_VALUE : 0;
         counters.totalTubesCount = args.getTubesCount() ? Integer.MAX_VALUE : 0;
 
-        creatures = new CreaturesMaskParser(args.getEnemies());
+        creaturesMaskParser = new CreaturesMaskParser(args.getEnemies());
         level.setBulletsEnabled(CreaturesMaskParser.isEnabled(CreaturesMaskParser.BULLET));
 
         levelType = args.getLevelType();
@@ -737,7 +740,7 @@ public class LevelGenerator
         {
             if (creaturesRandom.nextInt(35) < levelDifficulty + 1)
             {
-                if (creatures.isComplete())
+                if (creaturesMaskParser.isComplete())
                 { //Difficulty of creatures on the level depends on the levelDifficulty of the level
                     int type = creaturesRandom.nextInt(4);
                     if (levelDifficulty < 1)
@@ -749,7 +752,7 @@ public class LevelGenerator
                         int type2 = creaturesRandom.nextInt(3) + 3;
                         type = creaturesRandom.nextInt(2) == 1 ? type1 : type2;
                     }
-                    type = creatures.getNativeType(type);
+                    type = creaturesMaskParser.getNativeType(type);
                     level.setSpriteTemplate(x, y, new SpriteTemplate(type));
                 } else
                 {
@@ -762,14 +765,14 @@ public class LevelGenerator
                     do
                     {
                         crType = locRnd.nextInt(8);
-                        if (creatures.isEnabled(crType))
+                        if (creaturesMaskParser.isEnabled(crType))
                         {
                             enabled = true;
                         }
                     }
                     while (!enabled);
 
-                    int t = creatures.getNativeType(crType);
+                    int t = creaturesMaskParser.getNativeType(crType);
                     level.setSpriteTemplate(x, y, new SpriteTemplate(t));
                 }
             }
@@ -835,7 +838,7 @@ public class LevelGenerator
                 xTube += 10;
             }
 
-            if (x == xTube && globalRandom.nextInt(11) < levelDifficulty + 1 && creatures.isEnabled(CreaturesMaskParser.SPIKY_FLOWER))
+            if (x == xTube && globalRandom.nextInt(11) < levelDifficulty + 1 && creaturesMaskParser.isEnabled(CreaturesMaskParser.SPIKY_FLOWER))
             {
                 level.setSpriteTemplate(x, tubeHeight, new SpriteTemplate(Sprite.KIND_ENEMY_FLOWER));
             }
@@ -1060,7 +1063,7 @@ public class LevelGenerator
 
     private static boolean canAddEnemyLine(int x0, int x1, int floor)
     {
-        if (!creatures.canAdd())
+        if (!creaturesMaskParser.canAdd())
         {
             return false;
         }

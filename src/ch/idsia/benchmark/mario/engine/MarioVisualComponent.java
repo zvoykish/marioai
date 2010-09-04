@@ -235,19 +235,9 @@ public class
 
         g.translate(-xCam, -yCam);
 
-//        TODO: Dump out of render!
-//        if (mario.cheatKeys[Mario.KEY_DUMP_CURRENT_WORLD])
-//            for (int w = 0; w < level.length; w++)
-//                for (int h = 0; h < level.height; h++)
-//                    level.observation[w][h] = -1;
-
         for (Sprite sprite : levelScene.sprites)
         {
             if (sprite.layer == 1) sprite.render(g, alpha);
-//            if (mario.cheatKeys[Mario.KEY_DUMP_CURRENT_WORLD] && sprite.mapX >= 0 && sprite.mapX < level.observation.length &&
-//                sprite.mapY >= 0 && sprite.mapY < level.observation[0].length)
-//                level.observation[sprite.mapX][sprite.mapY] = sprite.kind;
-
         }
 
         g.translate(xCam, yCam);

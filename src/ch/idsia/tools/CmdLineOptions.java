@@ -204,7 +204,7 @@ public final class CmdLineOptions extends EvaluationOptions
 //                        this.isPowerRestoration() ? 1 : 0,     /*8*/
 //                        this.isPauseWorld() ? 1 : 0,           /*9*/
 //                        this.isTimer() ? 1 : 0,                /*10*/
-//                        // TODO:SK remove rudundancy (-1 -- no time limit)
+//                        // TODO:SK remove redundant opts(-1 -- no time limit)
 //                        this.isToolsConfigurator() ? 1 : 0,    /*11*/
 //                        this.getTimeLimit(),                   /*12*/
 //                        this.isViewAlwaysOnTop() ? 1 : 0,      /*13*/
