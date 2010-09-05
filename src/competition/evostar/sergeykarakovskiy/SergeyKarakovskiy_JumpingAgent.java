@@ -85,11 +85,6 @@ public class SergeyKarakovskiy_JumpingAgent implements Agent
         action[Mario.KEY_SPEED] = true;
     }
 
-    public AGENT_TYPE getType()
-    {
-        return Agent.AGENT_TYPE.AI;
-    }
-
     public String getName() { return name; }
 
     public void setName(String Name) { this.name = Name; }

@@ -84,11 +84,6 @@ public class LargeMLPAgent extends BasicAIAgent implements Agent, Evolvable
         return action;
     }
 
-    public Agent.AGENT_TYPE getType()
-    {
-        return Agent.AGENT_TYPE.AI;
-    }
-
     public String getName()
     {
         return name;

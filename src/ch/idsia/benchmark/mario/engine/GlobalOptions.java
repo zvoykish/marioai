@@ -24,7 +24,7 @@ public abstract class
     public static boolean isGameplayStopped = false;
 
     private static GameViewer GameViewer = null;
-    public static boolean isTimer = true;
+//    public static boolean isTimer = true;
 
     public static boolean isPowerRestoration;
 

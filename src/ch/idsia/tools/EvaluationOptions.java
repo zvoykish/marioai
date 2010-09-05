@@ -35,7 +35,7 @@ public class EvaluationOptions extends SimulationOptions
         GlobalOptions.FPS = getFPS() /*GlobalOptions.FPS*/;
         GlobalOptions.isPauseWorld = isPauseWorld();
         GlobalOptions.isPowerRestoration = isPowerRestoration();
-        GlobalOptions.isTimer = isTimer();
+//        GlobalOptions.isTimer = isTimer();
     }
 
     public Boolean isExitProgramWhenFinished()
@@ -46,16 +46,6 @@ public class EvaluationOptions extends SimulationOptions
     public void setExitProgramWhenFinished(boolean exitProgramWhenFinished)
     {
         setParameterValue("-ewf", s(exitProgramWhenFinished));
-    }
-
-    public String getMatlabFileName()
-    {
-        return getParameterValue("-m");
-    }
-
-    public void setMatlabFileName(String matlabFileName)
-    {
-        setParameterValue("-m", matlabFileName);
     }
 
     public Point getViewLocation()
@@ -81,14 +71,14 @@ public class EvaluationOptions extends SimulationOptions
         return i(getParameterValue("-fps"));
     }
 
-    public String getAgentLoadFullName()
+    public String getAgentFullLoadName()
     {
         return getParameterValue("-ag");
     }
 
-    public boolean isTimer()
-    {
-        return b(getParameterValue("-t"));
-    }
+//    public boolean isTimer()
+//    {
+//        return b(getParameterValue("-t"));
+//    }
 
 }

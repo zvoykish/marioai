@@ -22,9 +22,9 @@ public class ParameterContainer
     private static List<String> allowedOptions = null;
     protected static HashMap<String, String> defaultOptionsHashMap = null;
     private static final String[] allowed = new String[]{
-            "-ag",
+            "-ag",   // path to agent
             "-amico",
-            "-echo",
+            "-echo", // echo options
             "-ewf",
             "-grc",  //level: Creatures gravity            
             "-grm",  //level: Mario gravity
@@ -54,7 +54,7 @@ public class ParameterContainer
             "-rfh", // receptive field height (observation )
             "-rfw", // receptive field length (observation )
             "-srf", // show receptive field  (observation )
-            "-t",
+//            "-t",
             "-tc",
             "-tl",
             "-vaot",
@@ -185,7 +185,14 @@ public class ParameterContainer
 
     public boolean b(String s)
     {
-        return "on".equals(s) || Boolean.valueOf(s);
+        if ("on".equals(s))
+            return true;
+        else if ("off".equals(s))
+            return false;
+        else
+        {
+            throw new Error("[MarioAI] : Wrong parameter value got <" + s + "> whereas expected 'on' or 'off'");
+        }
     }
 
     public static void InitDefaults()
@@ -216,7 +223,7 @@ public class ParameterContainer
             defaultOptionsHashMap.put("-rfh", "19");
             defaultOptionsHashMap.put("-rfw", "19");
             defaultOptionsHashMap.put("-srf", "off");
-            defaultOptionsHashMap.put("-t", "on"); //defaultOptionsHashMap.put("-timer","on");
+//            defaultOptionsHashMap.put("-t", "on"); //defaultOptionsHashMap.put("-timer","on");
             defaultOptionsHashMap.put("-tl", "200"); //Time Limit
             defaultOptionsHashMap.put("-tc", "off"); //defaultOptionsHashMap.put("-toolsConfigurator","off");
             defaultOptionsHashMap.put("-vaot", "off"); //defaultOptionsHashMap.put("-viewAlwaysOnTop","off");

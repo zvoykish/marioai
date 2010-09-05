@@ -99,11 +99,6 @@ public class AmiCoAgent implements Agent
         return ret;
     }
 
-    public AGENT_TYPE getType()
-    {
-        return AGENT_TYPE.AI;
-    }
-
     public String getName()
     {
         return this.agentName;

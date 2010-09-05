@@ -25,17 +25,13 @@ public class SergeyKarakovskiy_JumpingAgent extends BasicAIAgent implements Agen
         return action;
     }
 
+    @Override
     public void reset()
     {
         for (int i = 0; i < action.length; ++i)
             action[i] = false;
         action[Mario.KEY_RIGHT] = true;
         action[Mario.KEY_SPEED] = true;
-    }
-
-    public Agent.AGENT_TYPE getType()
-    {
-        return Agent.AGENT_TYPE.AI;
     }
 
     public String getName() { return name; }

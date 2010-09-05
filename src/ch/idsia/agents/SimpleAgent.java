@@ -48,11 +48,6 @@ public class SimpleAgent implements Agent
         return Action;
     }
 
-    public AGENT_TYPE getType()
-    {
-        return AGENT_TYPE.AI;
-    }
-
     public String getName() { return Name; }
 
     public void setName(String Name) { this.Name = Name; }

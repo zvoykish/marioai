@@ -102,8 +102,6 @@ public class HumanKeyboardAgent extends KeyAdapter implements Agent
         return Action;
     }
 
-    public AGENT_TYPE getType() { return AGENT_TYPE.HUMAN; }
-
     public String getName() { return Name; }
 
     public void setName(String name) { Name = name; }

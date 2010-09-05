@@ -103,22 +103,20 @@ public interface Environment
     public float[] getCreaturesFloatPos();
 
     /**
-     * @return array filled with various data about Mario : {
-     *         getMarioStatus(),
-     *         getMarioMode(),
-     *         isMarioOnGround() ? 1 : 0,
-     *         isMarioAbleToJump() ? 1 : 0,
-     *         isMarioAbleToShoot() ? 1 : 0,
-     *         isMarioCarrying() ? 1 : 0,
-     *         getKillsTotal(),
-     *         getKillsByFire(),
-     *         getKillsByStomp(),
-     *         getKillsByShell(),
-     *         getTimeLimit(),
-     *         getTimeLeft
-     *         }
+     * @return int array filled with data about Mario :
+     *         marioState[0] = this.getMarioStatus();
+     *         marioState[1] = this.getMarioMode();
+     *         marioState[2] = this.isMarioOnGround() ? 1 : 0;
+     *         marioState[3] = this.isMarioAbleToJump() ? 1 : 0;
+     *         marioState[4] = this.isMarioAbleToShoot() ? 1 : 0;
+     *         marioState[5] = this.isMarioCarrying() ? 1 : 0;
+     *         marioState[6] = this.getKillsTotal();
+     *         marioState[7] = this.getKillsByFire();
+     *         marioState[8] = this.getKillsByStomp();
+     *         marioState[9] = this.getKillsByStomp();
+     *         marioState[10] = this.getKillsByShell();
+     *         marioState[11] = this.getTimeLeft();
      */
-
     public int[] getMarioState();
 
     void performAction(boolean[] action);

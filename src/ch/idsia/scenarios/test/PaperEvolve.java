@@ -80,10 +80,10 @@ public class PaperEvolve
             if (fitn > bestScore /*&& marioStatus == Environment.MARIO_STATUS_WIN*/)
             {
                 bestScore = fitn;
-                fileName = "evolved-progress-" + options.getAgentLoadFullName() + gen + "-uid-" + seed + ".xml";
+                fileName = "evolved-progress-" + options.getAgentFullLoadName() + gen + "-uid-" + seed + ".xml";
                 final Agent a = (Agent) es.getBests()[0];
                 Easy.save(a, fileName);
-                task.dumpFitnessEvaluation(bestScore, "fitnessImprovements-" + options.getAgentLoadFullName() + ".txt");
+                task.dumpFitnessEvaluation(bestScore, "fitnessImprovements-" + options.getAgentFullLoadName() + ".txt");
 //                c.setLevelRandSeed(options.getLevelRandSeed());
 //                c.setLevelDifficulty(options.getLevelDifficulty());
 //                c.setTimeLimit(options.getTimeLimit());

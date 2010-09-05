@@ -257,6 +257,7 @@ public final class MarioEnvironment implements Environment
 
     public float getIntermediateReward()
     {
-        return 0;
+        // TODO: reward for coins, killed creatures, cleared dead-ends, bypassed gaps, hidden blocks found
+        return -1;
     }
 }
