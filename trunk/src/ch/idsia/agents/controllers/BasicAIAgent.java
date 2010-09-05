@@ -132,11 +132,6 @@ public class BasicAIAgent implements Agent
         return new boolean[Environment.numberOfButtons]; // Empty action
     }
 
-    public AGENT_TYPE getType()
-    {
-        return Agent.AGENT_TYPE.AI;
-    }
-
     public String getName() { return name; }
 
     public void setName(String Name) { this.name = Name; }

@@ -25,8 +25,8 @@ public class CustomRun
         String amicoModuleName = options.getPyAmiCoModuleName();
         System.out.println("amicoModuleName = " + amicoModuleName);
 //        String amicoAgentName = "ForwardAgent";
-        System.out.println("options.getAgentLoadFullName() = " + options.getAgentLoadFullName());
-        Agent agent = new AmiCoAgent(amicoModuleName, options.getAgentLoadFullName());
+        System.out.println("options.getAgentFullLoadName() = " + options.getAgentFullLoadName());
+        Agent agent = new AmiCoAgent(amicoModuleName, options.getAgentFullLoadName());
         options.setAgent(agent);
 //        evaluator.evaluate();
 //        System.out.println("evaluator = " + evaluator.getMeanEvaluationSummary());

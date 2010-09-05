@@ -56,7 +56,7 @@ public class ToolsConfigurator extends JFrame
         toolsConfigurator.CheckboxPowerRestoration.setState(cmdLineOptions.isPowerRestoration());
 //        toolsConfigurator.CheckboxStopSimulationIfWin.setState(cmdLineOptions.isStopSimulationIfWin());
         toolsConfigurator.CheckboxExitOnFinish.setState(cmdLineOptions.isExitProgramWhenFinished());
-        toolsConfigurator.TextFieldMatLabFileName.setText(cmdLineOptions.getMatlabFileName());
+//        toolsConfigurator.TextFieldMatLabFileName.setText(cmdLineOptions.getMatlabFileName());
 
         gameViewer = new GameViewer(cmdLineOptions);
 
@@ -91,7 +91,7 @@ public class ToolsConfigurator extends JFrame
 //        frame.setLocation((screenSize.length-frame.getWidth())/2, (screenSize.height-frame.getHeight())/2);
         if (marioComponentFrame == null)
         {
-            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentLoadFullName() +*/ "Mario AI benchmark-tools" + GlobalOptions.getVersionUID());
+            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentFullLoadName() +*/ "Mario AI benchmark-tools" + GlobalOptions.getVersionUID());
 //            marioComponent = new MarioComponent(320, 240);
 //            marioVisualComponent = new MarioVisualComponent(320, 240);
 //            marioComponentFrame.setContentPane(marioComponent);
@@ -126,7 +126,7 @@ public class ToolsConfigurator extends JFrame
     public Choice ChoiceAgent = new Choice();
     public Choice ChoiceLevelType = new Choice();
     public JSpinner JSpinnerLevelRandomizationSeed = new JSpinner();
-    public Checkbox CheckboxEnableTimer = new Checkbox("Enable Timer", GlobalOptions.isTimer);
+//    public Checkbox CheckboxEnableTimer = new Checkbox("Enable Timer", GlobalOptions.isTimer);
     public JSpinner JSpinnerLevelDifficulty = new JSpinner();
     public Checkbox CheckboxPauseWorld = new Checkbox("Pause World");
     public Checkbox CheckboxPauseMario = new Checkbox("Pause Mario");
@@ -205,7 +205,7 @@ public class ToolsConfigurator extends JFrame
         JSpinnerLevelRandomizationSeed.addChangeListener(toolsConfiguratorActions);
 
         //  CheckboxEnableTimer
-        CheckboxEnableTimer.addItemListener(toolsConfiguratorActions);
+//        CheckboxEnableTimer.addItemListener(toolsConfiguratorActions);
         JSpinnerLevelDifficulty.addChangeListener(toolsConfiguratorActions);
 
         //     CheckboxPauseWorld
@@ -268,7 +268,7 @@ public class ToolsConfigurator extends JFrame
         JPanelLevelOptions.add(JSpinnerLevelDifficulty);
         JPanelLevelOptions.add(new Label("Level Length:"));
         JPanelLevelOptions.add(JSpinnerLevelLength);
-        JPanelLevelOptions.add(CheckboxEnableTimer);
+//        JPanelLevelOptions.add(CheckboxEnableTimer);
         JPanelLevelOptions.add(CheckboxPauseWorld);
         JPanelLevelOptions.add(CheckboxPauseMario);
         JPanelLevelOptions.add(CheckboxPowerRestoration);
@@ -350,7 +350,7 @@ public class ToolsConfigurator extends JFrame
         evaluationOptions.setPauseWorld(CheckboxPauseWorld.getState());
         evaluationOptions.setPowerRestoration(CheckboxPowerRestoration.getState());
         evaluationOptions.setExitProgramWhenFinished(CheckboxExitOnFinish.getState());
-        evaluationOptions.setMatlabFileName(TextFieldMatLabFileName.getText());
+//        evaluationOptions.setMatlabFileName(TextFieldMatLabFileName.getText());
 
         return evaluationOptions;
     }
@@ -425,11 +425,12 @@ public class ToolsConfigurator extends JFrame
 //                marioComponent.adjustFPS();
 //                LOGGER.println("FPS set to " + (CheckboxMaximizeFPS.getState() ? "infinity" : GlobalOptions.FPS),
 //                        LOGGER.VERBOSE_MODE.INFO );
-            } else if (ob == CheckboxEnableTimer)
+/*            } else if (ob == CheckboxEnableTimer)
             {
                 GlobalOptions.isTimer = CheckboxEnableTimer.getState();
 //                LOGGER.println("Timer " + (GlobalOptions.isTimer ? "enabled" : "disabled"),
 //                        LOGGER.VERBOSE_MODE.INFO);
+            */
             } else if (ob == CheckboxPauseWorld)
             {
                 GlobalOptions.isPauseWorld = CheckboxPauseWorld.getState();

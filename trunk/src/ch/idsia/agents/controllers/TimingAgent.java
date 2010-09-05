@@ -11,10 +11,9 @@ import ch.idsia.agents.Agent;
 
 public class TimingAgent extends BasicAIAgent implements Agent
 {
-
     private Agent agent;
     private long timeTaken = 0;
-    private int evaluations = 0;
+    private int actionsPerformed = 0;
 
     public TimingAgent(Agent agent)
     {
@@ -27,18 +26,13 @@ public class TimingAgent extends BasicAIAgent implements Agent
         long start = System.currentTimeMillis();
         boolean[] action = agent.getAction();
         timeTaken += (System.currentTimeMillis() - start);
-        evaluations++;
+        actionsPerformed++;
         return action;
     }
 
     public void reset()
     {
         agent.reset();
-    }
-
-    public AGENT_TYPE getType()
-    {
-        return agent.getType();
     }
 
     public String getName()
@@ -53,9 +47,9 @@ public class TimingAgent extends BasicAIAgent implements Agent
 
     public double averageTimeTaken()
     {
-        double average = ((double) timeTaken) / evaluations;
+        double average = ((double) timeTaken) / actionsPerformed;
         timeTaken = 0;
-        evaluations = 0;
+        actionsPerformed = 0;
         return average;
     }
 }

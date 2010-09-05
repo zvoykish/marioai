@@ -122,11 +122,6 @@ public class SimpleMLPAgent implements Agent, Evolvable
         return action;
     }
 
-    public AGENT_TYPE getType()
-    {
-        return AGENT_TYPE.AI;
-    }
-
     public String getName()
     {
         return name;

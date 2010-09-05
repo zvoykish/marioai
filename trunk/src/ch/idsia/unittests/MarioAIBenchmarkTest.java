@@ -3,8 +3,6 @@ package ch.idsia.unittests;
 import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
 import junit.framework.TestCase;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.Random;
@@ -16,18 +14,17 @@ import java.util.Random;
  * Time: 8:39:30 PM
  * Package: ch.idsia.unittests
  */
-public class MarioAIBenchmarkTest extends TestCase
+public final class MarioAIBenchmarkTest extends TestCase
 {
-    @BeforeTest
+    @org.testng.annotations.BeforeTest
     public void setUp()
     {
     }
 
-    @AfterTest
+    @org.testng.annotations.AfterTest
     public void tearDown()
     {
     }
-
 
     @Test
     public void testRandomPersistence()
@@ -40,13 +37,14 @@ public class MarioAIBenchmarkTest extends TestCase
         }
     }
 
+
     @Test
     public void testAgentLoadAndName()
     {
         final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -lc 0 -ag ch.idsia.agents.controllers.ForwardJumpingAgent");
         assertNotNull(cmdLineOptions.getAgent());
         assertEquals(cmdLineOptions.getAgent().getName(), "ForwardJumpingAgent");
-        assertEquals(cmdLineOptions.getAgentLoadFullName(), "ch.idsia.agents.controllers.ForwardJumpingAgent");
+        assertEquals(cmdLineOptions.getAgentFullLoadName(), "ch.idsia.agents.controllers.ForwardJumpingAgent");
     }
 
     @Test
@@ -92,4 +90,29 @@ public class MarioAIBenchmarkTest extends TestCase
         System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
         assertEquals(7702.0, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
     }
+
+    @Test
+    public void testForwardAgentFitnessWithDefaultCreaturesVisual()
+    {
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -fps 100 -ag ch.idsia.agents.controllers.ForwardAgent -echo on");
+        final BasicTask basicTask = new BasicTask(cmdLineOptions);
+        basicTask.reset(cmdLineOptions);
+        basicTask.runOneEpisode();
+        System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
+        assertEquals(7702.0, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+    }
+
+    @Test
+    public void testForwardAgentCoinsCollected()
+    {
+
+    }
+
+    @Test
+    public void testForwardJumpingAgentCoinsCollected()
+    {
+
+    }
+
+
 }

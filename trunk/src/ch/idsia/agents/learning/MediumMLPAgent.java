@@ -83,11 +83,6 @@ public class MediumMLPAgent extends BasicAIAgent implements Agent, Evolvable
         return action;
     }
 
-    public AGENT_TYPE getType()
-    {
-        return AGENT_TYPE.AI;
-    }
-
     public String getName()
     {
         return name;

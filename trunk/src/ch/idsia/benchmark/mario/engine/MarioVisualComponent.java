@@ -112,7 +112,7 @@ public class
     {
         if (marioComponentFrame == null)
         {
-            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentLoadFullName() +*/ "Mario AI benchmark " + GlobalOptions.getVersionUID());
+            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentFullLoadName() +*/ "Mario AI benchmark " + GlobalOptions.getVersionUID());
             marioComponentFrame.setContentPane(m);
             m.init();
             marioComponentFrame.pack();
@@ -414,7 +414,7 @@ public class
 ////        frame.setLocation((screenSize.length-frame.getWidth())/2, (screenSize.height-frame.getHeight())/2);
 //        if (marioComponentFrame == null)
 //        {
-//            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentLoadFullName() +*/ "Mario AI benchmark-" + GlobalOptions.MAIBeVersionStr);
+//            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentFullLoadName() +*/ "Mario AI benchmark-" + GlobalOptions.MAIBeVersionStr);
 //            marioVisualComponent = new MarioVisualComponent(320, 240);
 //            marioComponentFrame.setContentPane(marioVisualComponent);
 //            marioVisualComponent.init();
@@ -500,7 +500,6 @@ public class
             this.addKeyListener(this.prevHumanKeyBoardAgent);
         }
     }
-    /// `huge` inheritance stuff from MarioComponent
 
     public void setGameViewer(GameViewer gameViewer)
     {

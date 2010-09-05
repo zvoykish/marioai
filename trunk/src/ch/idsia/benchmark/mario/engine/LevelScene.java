@@ -633,12 +633,10 @@ public class LevelScene implements SpriteContext
         if (GlobalOptions.isGameplayStopped)
             return;
 
-        if (GlobalOptions.isTimer)
-            timeLeft--;
+//        if (GlobalOptions.isTimer)
+        timeLeft--;
         if (timeLeft == 0)
-        {
             mario.die();
-        }
         xCamO = xCam;
         yCamO = yCam;
 
@@ -825,23 +823,6 @@ public class LevelScene implements SpriteContext
         spritesToRemove.add(sprite);
     }
 
-//    public float getX(float alpha)
-//    {
-//        int xCam = (int) (mario.xOld + (mario.x - mario.xOld) * alpha) - 160;
-//        //        int yCam = (int) (mario.yOld + (mario.y - mario.yOld) * alpha) - 120;
-//        //int xCam = (int) (xCamO + (this.xCam - xCamO) * alpha);
-//        //        int yCam = (int) (yCamO + (this.yCam - yCamO) * alpha);
-//        if (xCam < 0) xCam = 0;
-//        //        if (yCam < 0) yCam = 0;
-//        //        if (yCam > 0) yCam = 0;
-//        return xCam + 160;
-//    }
-
-//    public float getY(float alpha)
-//    {
-//        return 0;
-//    }
-
     public void bump(int x, int y, boolean canBreakBricks)
     {
         byte block = level.getBlock(x, y);
@@ -904,10 +885,6 @@ public class LevelScene implements SpriteContext
         }
     }
 
-//    public void update(boolean[] action)
-//    {
-//        System.arraycopy(action, 0, mario.keys, 0, 6);
-//    }
 
     public int getTimeSpent() { return startTime / 15; }
 
@@ -935,7 +912,6 @@ public class LevelScene implements SpriteContext
 
     public int[] getMarioState()
     {
-
         marioState[0] = this.getMarioStatus();
         marioState[1] = this.getMarioMode();
         marioState[2] = this.isMarioOnGround() ? 1 : 0;
@@ -947,7 +923,6 @@ public class LevelScene implements SpriteContext
         marioState[8] = this.getKillsByStomp();
         marioState[9] = this.getKillsByStomp();
         marioState[10] = this.getKillsByShell();
-//        marioState[11] =        this.getTimeLimit();
         marioState[11] = this.getTimeLeft();
         return marioState;
     }
@@ -1059,7 +1034,7 @@ public class LevelScene implements SpriteContext
 //        System.out.println("GlobalOptions.isPowerRestoration = " + GlobalOptions.isPowerRestoration);
         GlobalOptions.isPauseWorld = cmdLineOptions.isPauseWorld();
 //        System.out.println("GlobalOptions = " + GlobalOptions.isPauseWorld);
-        GlobalOptions.isTimer = cmdLineOptions.isTimer();
+//        GlobalOptions.isTimer = cmdLineOptions.isTimer();
 //        System.out.println("GlobalOptions.isTimer = " + GlobalOptions.isTimer);
 //        isToolsConfigurator = setUpOptions[11] == 1;
         this.setTimeLimit(cmdLineOptions.getTimeLimit());
@@ -1118,4 +1093,10 @@ public class LevelScene implements SpriteContext
     {
         return ObsHeight;
     }
+
+//    public void update(boolean[] action)
+    //    {
+    //        System.arraycopy(action, 0, mario.keys, 0, 6);
+//    }
+
 }

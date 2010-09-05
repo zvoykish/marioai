@@ -23,12 +23,17 @@ public class CmdLineOptionsTest extends TestCase
     public void setUp()
     {
         cmdLineOptions = new CmdLineOptions();
-        assertEquals(42, cmdLineOptions.getTotalNumberOfOptions());
     }
 
     @AfterTest
     public void tearDown()
     {
+    }
+
+    @Test
+    public void testTotalNumberOfOptions() throws Exception
+    {
+        assertEquals(42, cmdLineOptions.getTotalNumberOfOptions());
     }
 
     @Test
