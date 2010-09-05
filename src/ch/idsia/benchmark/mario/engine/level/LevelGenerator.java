@@ -4,11 +4,7 @@ import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.CreaturesMaskParser;
 
-import java.io.*;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
-import java.util.Vector;
 
 /**
  * Using this class is very simple. Just call <b>createMethod</b> with params:
@@ -101,23 +97,13 @@ public class LevelGenerator
 
     private LevelGenerator() {}
 
-    public static void printRandom(int i)
-    {
-//        if (i == 1)
-//            globalRandom.saveToFile("first.txt");
-//        else
-//            globalRandom.saveToFile("second.txt");
-        //globalRandom.saveToFile("level" + i + ".txt");
-
-    }
-
     public static Level createLevel(CmdLineOptions args)
     {
         length = args.getLevelLength();
         height = args.getLevelHeight();
         if (height < 15)
         {
-            System.err.println("[MarioAI Warning] : Minimal height of the level must be 15! Changed to 15");
+            System.err.println("[MarioAI WARNING] : Minimal height of the level must be 15! Changed to 15");
             height = 15;
         }
         isFlatLevel = args.isFlatLevel();
@@ -346,7 +332,7 @@ public class LevelGenerator
         int depth = globalRandom.nextInt(levelDifficulty) + levelDifficulty;
         if (depth + length > maxLength)
         {
-            while (depth + length > maxLength-1)
+            while (depth + length > maxLength - 1)
             {
                 depth--;
             }
@@ -700,7 +686,6 @@ public class LevelGenerator
 
     private static int buildTubes(int xo, int maxLength, int maxHeight, int vfloor, int floorHeight)
     {
-        int tubes = 0;
         int length = globalRandom.nextInt(10) + 5;
         if (length > maxLength) length = maxLength;
 
