@@ -15,8 +15,7 @@ import ch.idsia.tools.EvaluationInfo;
 
 public final class MarioEnvironment implements Environment
 {
-    private int marioCenterPosX = 9;
-    private int marioCenterPosY = 9;
+    private int[] marioCenterPos = new int[2];
 
     private final LevelScene levelScene;
 //    private int frame = 0;
@@ -65,10 +64,10 @@ public final class MarioEnvironment implements Environment
         System.out.println("");
         System.out.flush();*/
         this.setAgent(setUpOptions.getAgent());
-        marioCenterPosX = setUpOptions.getReceptiveFieldWidth() / 2;
-        marioCenterPosY = setUpOptions.getReceptiveFieldHeight() / 2;
-        System.out.println("marioCenterPosX = " + marioCenterPosX);
-        System.out.println("marioCenterPosY = " + marioCenterPosY);
+        marioCenterPos[0] = setUpOptions.getReceptiveFieldWidth() / 2;
+        marioCenterPos[1] = setUpOptions.getReceptiveFieldHeight() / 2;
+//        System.out.println("marioCenterPosX = " + marioCenterPos[0]);
+//        System.out.println("marioCenterPosY = " + marioCenterPos[1]);
 
         if (/*levelScene.visualization*/ setUpOptions.isVisualization())
         {
@@ -271,6 +270,6 @@ public final class MarioEnvironment implements Environment
 
     public int[] getMarioCenterPos()
     {
-        return new int[]{marioCenterPosX, marioCenterPosY};
+        return marioCenterPos;
     }
 }

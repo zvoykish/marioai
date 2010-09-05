@@ -78,12 +78,12 @@ public final class CmdLineOptions extends EvaluationOptions
         {
             this.printOptions(false);
         }
-        GlobalOptions.observationGridWidth = getReceptiveFieldWidth();
-        GlobalOptions.observationGridHeight = getReceptiveFieldHeight();
+        GlobalOptions.receptiveFieldWidth = getReceptiveFieldWidth();
+        GlobalOptions.receptiveFieldHeight = getReceptiveFieldHeight();
         GlobalOptions.VISUAL_COMPONENT_HEIGHT = getViewHeight();
         GlobalOptions.VISUAL_COMPONENT_WIDTH = getViewWidth();
-//        Environment.ObsWidth = GlobalOptions.observationGridWidth/2;
-//        Environment.ObsHeight = GlobalOptions.observationGridHeight/2;
+//        Environment.ObsWidth = GlobalOptions.receptiveFieldWidth/2;
+//        Environment.ObsHeight = GlobalOptions.receptiveFieldHeight/2;
         GlobalOptions.isShowReceptiveField = isReceptiveFieldVisualized();
         GlobalOptions.isGameplayStopped = isStopGameplay();
     }

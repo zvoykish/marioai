@@ -96,11 +96,11 @@ public class Sprite
             if (this.kind == KIND_MARIO)
             {
 //                og.drawString("M", (int) x, (int) y);
-                int width = GlobalOptions.observationGridWidth * 16;
-                int height = GlobalOptions.observationGridHeight * 16;
+                int width = GlobalOptions.receptiveFieldWidth * 16;
+                int height = GlobalOptions.receptiveFieldHeight * 16;
 
-                int rows = GlobalOptions.observationGridHeight;
-                int columns = GlobalOptions.observationGridWidth;
+                int rows = GlobalOptions.receptiveFieldHeight;
+                int columns = GlobalOptions.receptiveFieldWidth;
 
                 int htOfRow = 16;//height / (columns);
                 int k;

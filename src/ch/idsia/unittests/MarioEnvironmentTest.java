@@ -1,6 +1,7 @@
 package ch.idsia.unittests;
 
 import ch.idsia.benchmark.mario.environments.MarioEnvironment;
+import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
 import junit.framework.TestCase;
 import org.testng.annotations.AfterTest;
@@ -209,5 +210,25 @@ public class MarioEnvironmentTest extends TestCase
         int[] pos = env.getMarioCenterPos();
         assertEquals(2, pos[0]);
         assertEquals(3, pos[1]);
+    }
+
+    @Test
+    public void testMarioCenterPos_1() throws Exception
+    {
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -rfw 5 -rfh 7 -le 0 -srf on -gv on");
+        final BasicTask basicTask = new BasicTask(cmdLineOptions);
+        basicTask.reset(cmdLineOptions);
+        basicTask.runOneEpisode();
+        System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
+    }
+
+    @Test
+    public void testMarioCenterPos_2() throws Exception
+    {
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -rfw 9 -rfh 9 -le 0 -srf on");
+        final BasicTask basicTask = new BasicTask(cmdLineOptions);
+        basicTask.reset(cmdLineOptions);
+        basicTask.runOneEpisode();
+        System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
     }
 }
