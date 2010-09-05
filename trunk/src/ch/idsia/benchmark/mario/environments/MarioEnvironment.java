@@ -18,7 +18,7 @@ public final class MarioEnvironment implements Environment
     private int marioCenterPosX = 9;
     private int marioCenterPosY = 9;
 
-    final LevelScene levelScene;
+    private final LevelScene levelScene;
 //    private int frame = 0;
     private MarioVisualComponent marioVisualComponent;
     private Agent agent;

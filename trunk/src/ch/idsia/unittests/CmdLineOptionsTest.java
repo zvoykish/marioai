@@ -121,4 +121,6 @@ public class CmdLineOptionsTest extends TestCase
         this.cmdLineOptions.setArgs("-stop on");
         assertEquals(true, this.cmdLineOptions.isStopGameplay().booleanValue());
     }
+
+
 }
