@@ -586,7 +586,7 @@ public class Mario extends Sprite
 
         if (((Level.TILE_BEHAVIORS[block & 0xff]) & Level.BIT_PICKUPABLE) > 0)
         {
-            Mario.getCoin();
+            Mario.gainCoin();
             world.level.setBlock(x, y, (byte) 0);
             for (int xx = 0; xx < 2; xx++)
                 for (int yy = 0; yy < 2; yy++)
@@ -695,7 +695,7 @@ public class Mario extends Sprite
             world.mario.setLarge(true, true);
         } else
         {
-            Mario.getCoin();
+            Mario.gainCoin();
         }
         ++flowersDevoured;
     }
@@ -711,7 +711,7 @@ public class Mario extends Sprite
             world.mario.setLarge(true, false);
         } else
         {
-            Mario.getCoin();
+            Mario.gainCoin();
         }
         ++mushroomsDevoured;
     }
@@ -771,14 +771,14 @@ public class Mario extends Sprite
 //        lives++;
 //    }
 
-    public static void getCoin()
+    public static void gainCoin()
     {
         coins++;
 //        if (coins % 100 == 0)
 //            get1Up();
     }
 
-    public static void getHiddenBlock()
+    public static void gainHiddenBlock()
     {
         hiddenBlocks++;
     }

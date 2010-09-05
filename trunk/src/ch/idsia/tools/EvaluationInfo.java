@@ -153,66 +153,6 @@ public final class EvaluationInfo
                 "; By Stomp: " + killsByStomp;
     }
 
-//    public int levelType = MagicNumberUnDef;
-//    public float totalLengthOfLevelCells = MagicNumberUnDef;
-//    public float totalLengthOfLevelPhys = MagicNumberUnDef;
-//    public int totalTimeGiven = MagicNumberUnDef;
-//    public int totalNumberOfCoins = MagicNumberUnDef;
-    // Number Of collisions with creatures
-    // if large
-    // if fire
-
-
-//    public String agentName = "undefinedAgentName";
-//    public String agentType = "undefinedAgentType";
-//    public int levelDifficulty = MagicNumberUnDef;
-//    public int levelRandSeed = MagicNumberUnDef;
-
-
-//    public EvaluationInfo(float[] evaluationInfoArray)
-//    {
-//        // Turn double[] into a plausible form!
-//        assert (evaluationInfoArray.length == 11);
-//
-//        this.marioStatus = (int) evaluationInfoArray[0];
-//        this.distancePassedCells = (int) evaluationInfoArray[1];
-//        this.distancePassedPhys = evaluationInfoArray[2];
-//        this.totalLengthOfLevelCells = (int) evaluationInfoArray[3];
-//        this.totalLengthOfLevelPhys = evaluationInfoArray[4];
-//        this.timeSpent = (int) evaluationInfoArray[5];
-//        this.timeLeft = (int) evaluationInfoArray[6];
-//        this.totalTimeGiven = (int) evaluationInfoArray[7];
-//        this.numberOfCoinsGained = (int) evaluationInfoArray[8];
-//        this.numberOfHiddenItemsGained = (int)evaluationInfoArray[9];
-//        this.marioMode = (int) evaluationInfoArray[9];
-//        this.killsTotal = (int) evaluationInfoArray[10];
-//        this.killsByFire = (int) evaluationInfoArray[11];
-//        this.killsByShell = (int) evaluationInfoArray[12];
-//        this.killsByStomp = (int) evaluationInfoArray[13];
-//
-//    }
-
-//    public String toString()
-//    {
-//        String ret = "\nStatistics. Score:";
-//        ret += "\n                  Player/Agent type : " + agentType;
-//        ret += "\n                  Player/Agent name : " + agentName;
-//        ret += "\n                       Mario Status : " + ((marioStatus == Mario.STATUS_WIN) ? "Win!" : "Loss...");
-////        ret += "\n                         Level Type : " + levelType;
-////        ret += "\n                   Level Difficulty : " + levelDifficulty;
-////        ret += "\n                    Level Rand Seed : " + levelRandSeed;
-//        ret += "\nTotal Length of Level (Phys, Cells) : " + "(" + totalLengthOfLevelPhys + "," + totalLengthOfLevelCells + ")";
-//        ret += "\n               Passed (Phys, Cells) : " +
-//               df.format(distancePassedPhys / totalLengthOfLevelPhys *100) +
-//               "% ( " + df.format(distancePassedPhys) + " of " + totalLengthOfLevelPhys + "), " +
-//               df.format((double)distancePassedCells / totalLengthOfLevelCells *100) + "% ( " + distancePassedCells + " of " + totalLengthOfLevelCells + ")";
-//        ret += "\n           Time Spent(marioseconds) : " + timeSpent + " ( " + df.format((double)timeSpent/totalTimeGiven*100) + "% )";
-//        ret += "\n            Time Left(marioseconds) : " + timeLeft + " ( " + df.format((double)timeLeft/totalTimeGiven*100) + "% )";
-//        ret += "\n                   Total time given : " + totalTimeGiven;
-////        ret += "\nCoins Gained: " + numberOfCoinsGained/totalNumberOfCoins*100 + "%. (" + numberOfCoinsGained + " of " + totalNumberOfCoins + ")";
-//        ret += "\n                       Coins Gained : " + numberOfCoinsGained;
-//        ret += "\n               multiObjectiveFitness : " + df.format(computeWeightedFitness());
-//        ret += ((Memo.equals("")) ? "" : "\nMemo: " + Memo);
-//        return ret;
-//    }
+    public int totalNumberOfCoins = MagicNumberUnDef;
+    // TODO: Number Of collisions with creatures    // if large // if fire
 }
