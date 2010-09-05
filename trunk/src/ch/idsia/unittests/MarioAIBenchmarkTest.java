@@ -28,48 +28,6 @@ public class MarioAIBenchmarkTest extends TestCase
     {
     }
 
-    @Test
-    public void testRandoms()
-    {
-        Random r1 = new Random(42);
-        r1.nextBoolean();
-        r1.nextInt();
-        r1.nextInt();
-        r1.setSeed(2342);
-        r1.setSeed(3);
-        r1.nextBoolean();
-        r1.nextInt();
-        r1.nextInt();
-        r1.setSeed(42);
-        Random r2 = new Random(23);
-        r2.nextBoolean();
-        r2.nextInt();
-        r2.setSeed(42);
-        for (long i = 0; i < 211000; ++i)
-        {
-            assertEquals(r1.nextBoolean(), r2.nextBoolean());
-            assertEquals(r1.nextInt(), r2.nextInt());
-        }
-        Random r3 = new Random(42);
-        r1.nextBoolean();
-        r1.nextInt();
-        r1.nextInt();
-        r1.setSeed(2342);
-        r1.setSeed(3);
-        r1.nextBoolean();
-        r1.nextInt();
-        r1.nextInt();
-        r1.setSeed(42);
-        Random r4 = new Random(23);
-        r2.nextBoolean();
-        r2.nextInt();
-        r2.setSeed(42);
-        for (long i = 0; i < 211000; ++i)
-        {
-            assertEquals(r1.nextBoolean(), r2.nextBoolean());
-            assertEquals(r1.nextInt(), r2.nextInt());
-        }
-    }
 
     @Test
     public void testRandomPersistence()
@@ -81,7 +39,6 @@ public class MarioAIBenchmarkTest extends TestCase
             assertEquals(r1.nextInt(4), seq[i]);
         }
     }
-
 
     @Test
     public void testAgentLoadAndName()
@@ -100,7 +57,7 @@ public class MarioAIBenchmarkTest extends TestCase
         basicTask.reset(cmdLineOptions);
         basicTask.runOneEpisode();
         System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-        assertEquals("Capacity", 7704.0, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+        assertEquals("Fitness", 7704.0, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
     }
 
     @Test
@@ -111,7 +68,7 @@ public class MarioAIBenchmarkTest extends TestCase
         basicTask.reset(cmdLineOptions);
         basicTask.runOneEpisode();
         System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-        assertEquals("Capacity", 7648.0, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+        assertEquals("Fitness", 7648.0, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
     }
 
     @Test
@@ -122,7 +79,7 @@ public class MarioAIBenchmarkTest extends TestCase
         basicTask.reset(cmdLineOptions);
         basicTask.runOneEpisode();
         System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-        assertEquals("Capacity", 7956, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+        assertEquals("Fitness", 7704.0, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
     }
 
     @Test
@@ -133,6 +90,6 @@ public class MarioAIBenchmarkTest extends TestCase
         basicTask.reset(cmdLineOptions);
         basicTask.runOneEpisode();
         System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-        assertEquals(7478, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
+        assertEquals(7702.0, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
     }
 }

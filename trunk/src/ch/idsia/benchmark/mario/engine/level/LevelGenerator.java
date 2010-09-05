@@ -192,9 +192,7 @@ public class LevelGenerator
     //Level customization counters
     static objCounters counters = new objCounters();
 
-    private LevelGenerator()
-    {
-    }
+    private LevelGenerator() {}
 
     public static void printRandom(int i)
     {
@@ -240,6 +238,7 @@ public class LevelGenerator
         if (levelType != LevelGenerator.TYPE_OVERGROUND)
             odds[ODDS_HILL_STRAIGHT] = 0; //if not overground then there are no hill straight
 
+        totalOdds = 0;
         for (int i = 0; i < odds.length; i++)
         {
             if (odds[i] < 0) odds[i] = 0;
@@ -289,7 +288,7 @@ public class LevelGenerator
             }
         }
 
-        //if underground or castle then built ceiling
+        //if underground or castle then build ceiling
         if (levelType == LevelGenerator.TYPE_CASTLE || levelType == LevelGenerator.TYPE_UNDERGROUND)
         {
             int ceiling = 0;
