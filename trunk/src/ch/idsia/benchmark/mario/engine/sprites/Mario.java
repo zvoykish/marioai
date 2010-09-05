@@ -342,7 +342,7 @@ public class Mario extends Sprite
 //        if (keys[KEY_DUMP_CURRENT_WORLD])
 //            try {
 //                System.out.println("DUMP:");
-////                world.LevelSceneAroundMarioASCII(System.out);
+////                world.getTextObservationAroundMario(System.out);
 //                //world.level.save(System.out);
 //                System.out.println("DUMPED:");
 //            } catch (IOException e) {
