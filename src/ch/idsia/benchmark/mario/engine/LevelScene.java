@@ -529,19 +529,17 @@ public class LevelScene implements SpriteContext
         return mergedZ;
     }
 
-    public List<String> LevelSceneAroundMarioASCII(boolean Enemies, boolean LevelMap,
-                                                   boolean mergedObservationFlag,
-                                                   int ZLevelScene, int ZLevelEnemies)
+    public List<String> getTextObservationAroundMario(boolean Enemies, boolean LevelMap,
+                                                      boolean mergedObservationFlag,
+                                                      int ZLevelScene, int ZLevelEnemies)
     {
-//        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));//        bw.write("\nTotal world length = " + level.length);
         List<String> ret = new ArrayList<String>();
         if (level != null && mario != null)
         {
             ret.add("Total world length = " + level.length);
             ret.add("Total world height = " + level.height);
             ret.add("Physical Mario Position (x,y): (" + mario.x + "," + mario.y + ")");
-            ret.add("Mario Observation Width " + receptiveFiledWidth * 2);
-            ret.add("Mario Observation Height " + receptiveFiledHeight * 2);
+            ret.add("Mario Observation (Receptive Field)   Width: " + receptiveFiledWidth + " Height: " + receptiveFiledHeight);
             ret.add("X Exit Position: " + level.xExit);
             int MarioXInMap = (int) mario.x / 16;
             int MarioYInMap = (int) mario.y / 16;
@@ -562,9 +560,7 @@ public class LevelScene implements SpriteContext
 
             byte[][] enemiesObservation = null;
             if (Enemies || mergedObservationFlag)
-            {
                 enemiesObservation = getEnemiesObservationZ(ZLevelEnemies);
-            }
 
             if (Enemies)
             {
@@ -594,7 +590,7 @@ public class LevelScene implements SpriteContext
                 }
             }
         } else
-            ret.add("~level or mario is not available");
+            ret.add("~[MarioAI ERROR] level : " + level + " mario : " + mario);
         return ret;
     }
 

@@ -461,8 +461,8 @@ public class
 
     public void setAgent(Agent agent)
     {
-        this.agentNameStr = agent.getName();
 //        System.out.println("agent = " + agent);
+        this.agentNameStr = agent.getName();
         if (agent instanceof KeyAdapter)
         {
             if (prevHumanKeyBoardAgent != null)
@@ -479,7 +479,7 @@ public class
 
     public List<String> getTextObservation(boolean showEnemies, boolean showLevelScene, boolean showMerged, int zLevelMapValue, int zLevelEnemiesValue)
     {
-        return levelScene.LevelSceneAroundMarioASCII(showEnemies, showLevelScene, showMerged, zLevelMapValue, zLevelEnemiesValue);
+        return levelScene.getTextObservationAroundMario(showEnemies, showLevelScene, showMerged, zLevelMapValue, zLevelEnemiesValue);
     }
 }
 
