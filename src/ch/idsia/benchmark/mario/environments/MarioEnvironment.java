@@ -38,7 +38,7 @@ public final class MarioEnvironment implements Environment
 //        System.out.println("Java: JA ZDES'!!");
 //        System.out.flush();
         System.out.println("MarioAI Benchmark" + GlobalOptions.getVersionUID());
-        levelScene = new LevelScene(0, 0, 0, 0, 0, 0, 0);
+        levelScene = new LevelScene();
     }
 
     public void resetDefault()
@@ -130,14 +130,14 @@ public final class MarioEnvironment implements Environment
         return levelScene.isMarioAbleToShoot();
     }
 
-    public int getObservationWidth()
+    public int getReceptiveFieldWidth()
     {
-        return LevelScene.getObservationWidth();
+        return levelScene.getReceptiveFieldWidth();
     }
 
-    public int getObservationHeight()
+    public int getReceptiveFieldHeight()
     {
-        return LevelScene.getObservationHeight();
+        return levelScene.getReceptiveFieldHeight();
     }
 
     public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
