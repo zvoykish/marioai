@@ -179,7 +179,7 @@ public class LevelGenerator
         }
 
         //coordinates of the exit
-        level.xExit = length + 8;
+        level.xExit = length + 16;
         level.yExit = floor;
 
         //fix floor
@@ -343,10 +343,10 @@ public class LevelGenerator
         int separatorHeight = 2 + globalRandom.nextInt(2);
 
         int nx = x0 + length;
-        int depth = 12 + globalRandom.nextInt(15) + levelDifficulty;
+        int depth = globalRandom.nextInt(levelDifficulty) + levelDifficulty;
         if (depth + length > maxLength)
         {
-            while (depth + length > maxLength)
+            while (depth + length > maxLength-1)
             {
                 depth--;
             }
