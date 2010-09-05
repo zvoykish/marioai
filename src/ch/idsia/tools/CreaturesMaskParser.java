@@ -20,11 +20,12 @@ From left to right:
     6)winged red koopa
     7)winged spiky
     8)spiky flower
-    9)bullet
 */
 
 public class CreaturesMaskParser
 {
+    final private static int totalCreaturesCount = 9;
+
     private static boolean[] creatures;
     public static final int GOOMBA = 0;
     public static final int GREEN_KOOPA = 1;
@@ -35,24 +36,23 @@ public class CreaturesMaskParser
     public static final int WINGED_RED_KOOPA = 6;
     public static final int WINGED_SPIKY = 7;
     public static final int SPIKY_FLOWER = 8;
-    public static final int BULLET = 9;
 
-    private static boolean complete = false;
+    private static boolean complete = true;
     private static boolean canAdd = true; //true if at least one creature enabled
 
     public CreaturesMaskParser(String creatures)
     {
-        this.creatures = new boolean[10];
-        while (creatures.length() < 10)
+        this.creatures = new boolean[totalCreaturesCount];
+        while (creatures.length() < totalCreaturesCount)
         {
             creatures = "0" + creatures;
         }
 
-        if (creatures.equals("1111111111"))
+        if (creatures.substring (0, 7).equals ("11111111"))
         {
             complete = true;
         }
-        if (creatures.equals("0000000000"))
+        if (creatures.substring (0, 7).equals ("00000000"))
         {
             canAdd = false;
         }
@@ -68,7 +68,6 @@ public class CreaturesMaskParser
         if (creatures.charAt(WINGED_RED_KOOPA) == '1') {this.creatures[WINGED_RED_KOOPA] = true;}
         if (creatures.charAt(WINGED_SPIKY) == '1') {this.creatures[WINGED_SPIKY] = true;}
         if (creatures.charAt(SPIKY_FLOWER) == '1') {this.creatures[SPIKY_FLOWER] = true;}
-        if (creatures.charAt(BULLET) == '1') {this.creatures[BULLET] = true;}
     }
 
     public static boolean isEnabled(int type)
@@ -108,8 +107,6 @@ public class CreaturesMaskParser
                 return Sprite.KIND_SPIKY_WINGED;
             case SPIKY_FLOWER:
                 return Sprite.KIND_ENEMY_FLOWER;
-            case BULLET:
-                return Sprite.KIND_BULLET_BILL;
         }
         return Sprite.KIND_UNDEF;
     }

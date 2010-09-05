@@ -4,7 +4,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-
 public class Level
 {
     public static final String[] BIT_DESCRIPTIONS = {//
@@ -266,14 +265,4 @@ public class Level
     public int getWidthCells() { return length; }
 
     public float getWidthPhys() { return length * 16; }
-
-    public static boolean isBulletsEnabled()
-    {
-        return bulletsEnabled;
-    }
-
-    public static void setBulletsEnabled(boolean bulletsEnabled)
-    {
-        Level.bulletsEnabled = bulletsEnabled;
-    }
 }

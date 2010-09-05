@@ -26,9 +26,7 @@
     \hline
    -vaot & Set main View to be on top of other windows & $<$on$|$off$>$ & {\texttt Main -vaot on}\\
     \hline
-   -tl & Time limit. Option value: [1..MAXINT], units: marioseconds (1 MrSEC == 16 interactions with Environment)& $<$int$>$ & {\texttt Main -tl 42}\\
-    \hline
-   -t & World Timer. Gives the Agent the opportunity of infinite time per level & $<$on$|$off$>$ & {\texttt Main -t off}\\
+   -tl & Time limit. Option value: [1..MAXINT], units: marioseconds (1 MrSEC == 16 interactions with Environment). To give to the Agent the opportunity of infinitie time per level use Option value $= -1$ & $<$int$>$ & {\texttt Main -tl 42}\\
    \hline
    -ssiw & Stop Simulation when first Win obtained & $<$on$|$off$>$ & {\texttt Main -ssiw on} \\
    \hline
@@ -86,21 +84,23 @@
 \item green koopa
 \item red koopa
 \item spiky
+\item winged goomba
 \item winged green koopa
 \item winged red koopa
 \item winged spiky 
+\item spiky flower
 \end {enumerate} 
 
-Replace \emph{x} with 1 if you want creature to be on the level, otherwise 0. For more details and examples see \texttt{marioai-lvlgen-options-usage.pdf}& $<$xxxxxxx$>$ & {\texttt Main -le off } \\
+Replace \emph{x} with 1 if you want creature to be on the level, otherwise 0. For more details and examples see \texttt{marioai-lvlgen-options-usage.pdf}& $<$xxxxxxxxx$>$ & {\texttt Main -le 0 } \\
    \hline
-   -lb & Enable/Disable blocks on the level & $<$on$|$off$>$ & {\texttt Main -lb off } \\
+   -lb & Enable/Disable visible blocks on the level & $<$on$|$off$>$ & {\texttt Main -lb off } \\
    \hline
    -lco & Enable/Disable coins on the level & $<$on$|$off$>$ & {\texttt Main -lco off } \\
    \hline
    -lf & Create flat level & $<$on$|$off$>$  & {\texttt Main -lf on} \\
    \hline
    -stop & Run benchmark and stop a gameplay. To continue a gameplay press a \texttt{SPACEBAR} key. & {\texttt Main -stop on} \\
-\hline
+    \hline
    
 
 \end{tabular}

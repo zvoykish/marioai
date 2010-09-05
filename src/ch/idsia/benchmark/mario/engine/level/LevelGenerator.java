@@ -49,99 +49,6 @@ public class LevelGenerator
         int totalTubesCount;
     }
 
-    static private class LoggingRandom
-    {
-        private Random r = null;
-        public static final List<Integer> ints = new Vector<Integer>();
-        public static final List<Boolean> booleans = new Vector<Boolean>();
-        public static final HashSet<Integer> poss = new HashSet<Integer>();
-        private int cnt = 0;
-
-        private static int i;
-        private static boolean b;
-        private List<Integer> intsToCompare = null;
-        private int compareCounter = 0;
-
-        private LoggingRandom(int seed)
-        {
-            if (this.r == null)
-                this.r = new Random(seed);
-            else
-                System.err.println("WARNING! TRIED to initialized Random at least twice!");
-        }
-
-        public int nextInt(int max)
-        {
-            i = r.nextInt(max);
-            if (intsToCompare != null && i != intsToCompare.get(compareCounter++))
-                System.err.println("DIFFERENCE FOUND: " + i + "!=" + intsToCompare.get(compareCounter - 1));
-            ints.add(i);
-            cnt++;
-            return i;
-        }
-
-        public int nextInt()
-        {
-            i = r.nextInt();
-            if (intsToCompare != null && i != intsToCompare.get(compareCounter++))
-                System.err.println("DIFFERENCE FOUND: " + i + "!=" + intsToCompare.get(compareCounter - 1));
-            ints.add(i);
-            cnt++;
-            return i;
-        }
-
-        public boolean nextBoolean()
-        {
-            b = r.nextBoolean();
-            booleans.add(b);
-            i = b ? 1 : 0;
-            if (intsToCompare != null && i != intsToCompare.get(compareCounter++))
-                System.err.println("DIFFERENCE FOUND: " + i + "!=" + intsToCompare.get(compareCounter - 1));
-            ints.add(i);
-
-            poss.add(cnt);
-            cnt++;
-            return b;
-        }
-
-        public void setSeed(long seed)
-        {
-            this.r.setSeed(seed);
-        }
-
-        public void saveToFile(String fileName)
-        {
-            FileOutputStream fos;
-            try
-            {
-
-                fos = new FileOutputStream(fileName);
-                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-                bw.write("ints#");
-                bw.newLine();
-                int i = 0;
-                for (Integer anInt : ints)
-                {
-                    bw.write(anInt.toString() + "   " + (poss.contains(i) ? "-----" : "-") + "\n");
-                    i++;
-                }
-//                bw.newLine();
-//                bw.write("booleans#");
-//                bw.newLine();
-//                for (Boolean aBoolean : booleans) bw.write(aBoolean ? "1\n" : "0\n");
-                bw.close();
-                System.out.println("LogginRandom Output saved to " + fileName);
-            }
-            catch (FileNotFoundException e) { e.printStackTrace();}
-            catch (IOException e) { e.printStackTrace(); }
-        }
-
-        public void setIntsToCopmare(List<Integer> ints)
-        {
-            intsToCompare = ints;
-        }
-
-    }
     /*
     From left to right:
         0)goomba
@@ -168,8 +75,8 @@ public class LevelGenerator
     private static int length;
     private static int height;
     private static Level level;
-    final static LoggingRandom globalRandom = new LoggingRandom(0);
-    final static LoggingRandom creaturesRandom = new LoggingRandom(0);
+    private static Random globalRandom = new Random(0);
+    private static Random creaturesRandom = new Random(0);
 
     private static final int ODDS_STRAIGHT = 0;
     private static final int ODDS_HILL_STRAIGHT = 1;
@@ -200,7 +107,7 @@ public class LevelGenerator
 //            globalRandom.saveToFile("first.txt");
 //        else
 //            globalRandom.saveToFile("second.txt");
-        globalRandom.saveToFile("level" + i + ".txt");
+        //globalRandom.saveToFile("level" + i + ".txt");
 
     }
 
@@ -224,7 +131,6 @@ public class LevelGenerator
         counters.totalTubesCount = args.getTubesCount() ? Integer.MAX_VALUE : 0;
 
         creaturesMaskParser = new CreaturesMaskParser(args.getEnemies());
-        level.setBulletsEnabled(CreaturesMaskParser.isEnabled(CreaturesMaskParser.BULLET));
 
         levelType = args.getLevelType();
         levelDifficulty = args.getLevelDifficulty();
@@ -424,7 +330,7 @@ public class LevelGenerator
         int rHeight = floor - 1; //rest height
 
         length += buildStraight(x0, preDeadEndLength, true, floor, INFINITY_FLOOR_HEIGHT);//buildZone( x0, x0+preDeadEndLength, floor ); //build pre dead end zone
-//        buildBlocks(x0, x0 + preDeadEndLength, floor, true, 0, 0, true);
+        buildBlocks(x0, x0 + preDeadEndLength, floor, true, 0, 0, true);
 
         //correct direction
         //true - top, false = bottom
