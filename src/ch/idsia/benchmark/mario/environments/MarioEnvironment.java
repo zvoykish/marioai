@@ -64,7 +64,8 @@ public final class MarioEnvironment implements Environment
         }
         System.out.println("");
         System.out.flush();*/
-        marioCenterPosX = (Integer) setUpOptions.getReceptiveFieldWidth() / 2;
+        this.setAgent(setUpOptions.getAgent());
+        marioCenterPosX = setUpOptions.getReceptiveFieldWidth() / 2;
         marioCenterPosY = setUpOptions.getReceptiveFieldHeight() / 2;
         System.out.println("marioCenterPosX = " + marioCenterPosX);
         System.out.println("marioCenterPosY = " + marioCenterPosY);
@@ -268,7 +269,8 @@ public final class MarioEnvironment implements Environment
         return -1;
     }
 
-    public int[] getMarioCenterPos() {
+    public int[] getMarioCenterPos()
+    {
         return new int[]{marioCenterPosX, marioCenterPosY};
     }
 }
