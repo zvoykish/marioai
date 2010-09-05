@@ -55,9 +55,9 @@ public interface Environment
 
     // OBSERVATION
 
-    public int getObservationWidth();
+    public int getReceptiveFieldWidth();
 
-    public int getObservationHeight();
+    public int getReceptiveFieldHeight();
 
 
     public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies);

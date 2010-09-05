@@ -64,8 +64,8 @@ public class AmiCoAgent implements Agent
         // Will use extra values from int[] action in future to tailor the representation of levels
         byte[][] levelScene = observation.getLevelSceneObservationZ(ZLevelScene);
         byte[][] enemies = observation.getEnemiesObservationZ(ZLevelEnemies);
-        int rows = observation.getObservationHeight();
-        int cols = observation.getObservationWidth();
+        int rows = observation.getReceptiveFieldHeight();
+        int cols = observation.getReceptiveFieldWidth();
         int[] squashedLevelScene = new int[rows * cols];
         int[] squashedEnemies = new int[enemies.length * enemies[0].length];
 
