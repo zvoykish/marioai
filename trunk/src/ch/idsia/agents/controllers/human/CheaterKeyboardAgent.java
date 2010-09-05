@@ -142,7 +142,7 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent
                 if (isPressed)
                 {
                     GlobalOptions.isShowReceptiveField = !(GlobalOptions.isShowReceptiveField);
-//                    System.out.println("GlobalOptions.observationGridWidth = " + GlobalOptions.observationGridWidth);
+//                    System.out.println("GlobalOptions.receptiveFieldWidth = " + GlobalOptions.receptiveFieldWidth);
                 }
                 break;
             case KeyEvent.VK_SPACE:

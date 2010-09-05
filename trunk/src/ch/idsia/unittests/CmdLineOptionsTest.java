@@ -65,7 +65,6 @@ public class CmdLineOptionsTest extends TestCase
                 " -rfh 19" +
                 " -rfw 19" +
                 " -srf off" +
-                " -t on" +
                 " -tl 200" +
                 " -tc off" +
                 " -vaot off" +

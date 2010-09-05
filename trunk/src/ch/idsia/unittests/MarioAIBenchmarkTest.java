@@ -50,6 +50,16 @@ public final class MarioAIBenchmarkTest extends TestCase
     }
 
     @Test
+    public void testAgentLoadHumanKeyboardAgent()
+    {
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -lc 0");
+        assertNotNull(cmdLineOptions.getAgent());
+        assertEquals(cmdLineOptions.getAgent().getName(), "HumanKeyboardAgent");
+        assertEquals(cmdLineOptions.getAgentFullLoadName(), "ch.idsia.agents.controllers.human.HumanKeyboardAgent");
+    }
+
+
+    @Test
     public void testForwardJumpingAgentFitnessWithoutCreatures()
     {
         final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -le 0 -ag ch.idsia.agents.controllers.ForwardJumpingAgent -echo on");
