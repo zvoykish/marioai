@@ -1,7 +1,7 @@
 package ch.idsia.agents.learning;
 
 import ch.idsia.agents.Agent;
-import ch.idsia.agents.controllers.BasicAIAgent;
+import ch.idsia.agents.controllers.BasicMarioAIAgent;
 import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.evolution.Evolvable;
 import ch.idsia.evolution.SRN;
@@ -12,7 +12,7 @@ import ch.idsia.evolution.SRN;
  * Date: Jun 17, 2009
  * Time: 2:50:49 PM
  */
-public class LargeSRNAgent extends BasicAIAgent implements Agent, Evolvable
+public class LargeSRNAgent extends BasicMarioAIAgent implements Agent, Evolvable
 {
 
     private SRN srn;

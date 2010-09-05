@@ -11,12 +11,10 @@ import ch.idsia.benchmark.mario.environments.Environment;
  * Time: 4:03:46 AM
  * Package: ch.idsia.controllers.agents.controllers;
  */
-public class ForwardAgent extends BasicAIAgent implements Agent
+public class ForwardAgent extends BasicMarioAIAgent implements Agent
 {
     int trueJumpCounter = 0;
     int trueSpeedCounter = 0;
-    int marioCenterX = 9;
-    int marioCenterY = 9;
 
     public ForwardAgent()
     {
@@ -45,10 +43,10 @@ public class ForwardAgent extends BasicAIAgent implements Agent
                     f = false;
             }
             if (f ||
-                levelScene[marioCenterX+1][marioCenterY] == 0 ||
-                (marioState[1] > 0 &&
-                        (levelScene[marioCenterX+1][marioCenterY-1] != 0 ||
-                        levelScene[marioCenterX+1][marioCenterY] != 0)))
+                    levelScene[marioCenterPos[0] + 1][marioCenterPos[1]] == 0 ||
+                    (marioState[1] > 0 &&
+                            (levelScene[marioCenterPos[0] + 1][marioCenterPos[1] - 1] != 0 ||
+                                    levelScene[marioCenterPos[0] + 1][marioCenterPos[1]] != 0)))
                 return true;
         }
         return false;
@@ -63,9 +61,9 @@ public class ForwardAgent extends BasicAIAgent implements Agent
     {
         // this Agent requires observation integrated in advance.
 
-        if (mergedObservation[marioCenterX][marioCenterY+2] != 0 ||
-            mergedObservation[marioCenterX][marioCenterY+1] != 0 ||
-            DangerOfGap())
+        if (mergedObservation[marioCenterPos[0]][marioCenterPos[1] + 2] != 0 ||
+                mergedObservation[marioCenterPos[0]][marioCenterPos[1] + 1] != 0 ||
+                DangerOfGap())
         {
             if (isMarioAbleToJump || (!isMarioOnGround && action[Mario.KEY_JUMP]))
             {

@@ -8,9 +8,9 @@ import ch.idsia.benchmark.mario.environments.Environment;
  * User: Sergey Karakovskiy
  * Date: Apr 25, 2009
  * Time: 12:30:41 AM
- * Package: ch.idsia.controllers.agents.controllers;
+ * Package: ch.idsia.agents.controllers;
  */
-public class BasicAIAgent implements Agent
+public class BasicMarioAIAgent implements Agent
 {
     protected boolean action[] = new boolean[Environment.numberOfButtons];
     protected String name = "Instance_of_BasicAIAgent._Change_this_name";
@@ -23,6 +23,8 @@ public class BasicAIAgent implements Agent
 
     protected float[] marioFloatPos = null;
     protected float[] enemiesFloatPos = null;
+
+    int[] marioCenterPos = null;
 
     protected int[] marioState = null;
 
@@ -44,52 +46,16 @@ public class BasicAIAgent implements Agent
     int zLevelEnemies = 0;
 
 
-    public BasicAIAgent(String s)
+    public BasicMarioAIAgent(String s)
     {
         setName(s);
-//        levelScene = new byte[Environment.ObsHeight * 2][Environment.ObsWidth * 2];
-//        enemies = new byte[Environment.ObsHeight * 2][Environment.ObsWidth * 2];
-//        mergedObservation = new byte[Environment.ObsHeight * 2][Environment.ObsWidth * 2];
     }
 
-//    public void integrateObservation(int[] serializedLevelSceneObservationZ, int[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
-//    {
-//        int k = 0;
-//        for (int i = 0; i < levelScene.length; ++i)
-//        {
-//            for (int j = 0; j < levelScene[0].length; ++j)
-//            {
-//                levelScene[i][j] = (byte)serializedLevelSceneObservationZ[k];
-//                enemies[i][j] = (byte)serializedEnemiesObservationZ[k++];
-//                mergedObservation[i][j] = levelScene[i][j];
-//                // Simulating merged observation!
-//                if (enemies[i][j] != 0)
-//                {
-//                    mergedObservation[i][j] = enemies[i][j];
-//                }
-////                System.out.print(observation[i][j] + "\t");
-//            }
-////            System.out.println();
-//        }
-//        this.marioFloatPos = marioFloatPos;
-//        this.enemiesFloatPos = enemiesFloatPos;
-//        this.marioState = marioState;
-//
-//        marioStatus = marioState[0];
-//        marioMode = marioState[1];
-//        isMarioOnGround = marioState[2] == 1 ;
-//        isMarioAbleToJump = marioState[3] == 1;
-//        isMarioAbleToShoot = marioState[4] == 1;
-//        isMarioCarrying = marioState[5] == 1;
-//        getKillsTotal = marioState[6];
-//        getKillsByFire = marioState[7];
-//        getKillsByStomp = marioState[8];
-//        getKillsByShell = marioState[9];
-//    }
 
     public boolean[] getAction()
     {
         return new boolean[Environment.numberOfButtons];
+
     }
 
     public void integrateObservation(Environment environment)
@@ -101,6 +67,8 @@ public class BasicAIAgent implements Agent
         this.marioFloatPos = environment.getMarioFloatPos();
         this.enemiesFloatPos = environment.getEnemiesFloatPos();
         this.marioState = environment.getMarioState();
+
+        this.marioCenterPos = environment.getMarioCenterPos();
 
         // It also possible to use direct methods from Environment interface.
         //
@@ -136,5 +104,38 @@ public class BasicAIAgent implements Agent
 
     public void setName(String Name) { this.name = Name; }
 
-
+//    public void integrateObservation(int[] serializedLevelSceneObservationZ, int[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
+//    {
+//        int k = 0;
+//        for (int i = 0; i < levelScene.length; ++i)
+//        {
+//            for (int j = 0; j < levelScene[0].length; ++j)
+//            {
+//                levelScene[i][j] = (byte)serializedLevelSceneObservationZ[k];
+//                enemies[i][j] = (byte)serializedEnemiesObservationZ[k++];
+//                mergedObservation[i][j] = levelScene[i][j];
+//                // Simulating merged observation!
+//                if (enemies[i][j] != 0)
+//                {
+//                    mergedObservation[i][j] = enemies[i][j];
+//                }
+////                System.out.print(observation[i][j] + "\t");
+//            }
+////            System.out.println();
+//        }
+//        this.marioFloatPos = marioFloatPos;
+//        this.enemiesFloatPos = enemiesFloatPos;
+//        this.marioState = marioState;
+//
+//        marioStatus = marioState[0];
+//        marioMode = marioState[1];
+//        isMarioOnGround = marioState[2] == 1 ;
+//        isMarioAbleToJump = marioState[3] == 1;
+//        isMarioAbleToShoot = marioState[4] == 1;
+//        isMarioCarrying = marioState[5] == 1;
+//        getKillsTotal = marioState[6];
+//        getKillsByFire = marioState[7];
+//        getKillsByStomp = marioState[8];
+//        getKillsByShell = marioState[9];
+//    }
 }

@@ -12,7 +12,7 @@ import ch.idsia.benchmark.mario.engine.sprites.Mario;
  * Package: ch.idsia.agents.controllers
  */
 
-public class ScaredSpeedyAgent extends BasicAIAgent implements Agent
+public class ScaredSpeedyAgent extends BasicMarioAIAgent implements Agent
 {
     public ScaredSpeedyAgent()
     {

@@ -12,7 +12,7 @@ import java.util.Random;
  * Time: 10:37:18 PM
  * Package: ch.idsia.controllers.agents.controllers;
  */
-public class RandomAgent extends BasicAIAgent implements Agent
+public class RandomAgent extends BasicMarioAIAgent implements Agent
 {
     public RandomAgent()
     {
