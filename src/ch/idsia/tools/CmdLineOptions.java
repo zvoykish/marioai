@@ -85,7 +85,7 @@ public final class CmdLineOptions extends EvaluationOptions
 //        Environment.ObsWidth = GlobalOptions.observationGridWidth/2;
 //        Environment.ObsHeight = GlobalOptions.observationGridHeight/2;
         GlobalOptions.isShowReceptiveField = isReceptiveFieldVisualized();
-        GlobalOptions.isGameplayStopped = isGameplayStopped();
+        GlobalOptions.isGameplayStopped = isStopGameplay();
     }
 
     public float getGravity()
@@ -150,7 +150,7 @@ public final class CmdLineOptions extends EvaluationOptions
         return b(getParameterValue("-echo"));
     }
 
-    public Boolean isGameplayStopped()
+    public Boolean isStopGameplay()
     {
         return b(getParameterValue("-stop"));
     }

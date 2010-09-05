@@ -3,6 +3,8 @@ package ch.idsia.unittests;
 import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
 import junit.framework.TestCase;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.Random;
@@ -16,12 +18,12 @@ import java.util.Random;
  */
 public final class MarioAIBenchmarkTest extends TestCase
 {
-    @org.testng.annotations.BeforeTest
+    @BeforeTest
     public void setUp()
     {
     }
 
-    @org.testng.annotations.AfterTest
+    @AfterTest
     public void tearDown()
     {
     }
@@ -105,14 +107,26 @@ public final class MarioAIBenchmarkTest extends TestCase
     @Test
     public void testForwardAgentCoinsCollected()
     {
-
+        //TODo: testForwardAgentCoinsCollected
     }
 
     @Test
     public void testForwardJumpingAgentCoinsCollected()
     {
-
+        //TODo: testForwardJumpingAgentCoinsCollected
     }
 
-
+    /**
+     * In this test benchmark in launched and stopped. Press "SPACE" key to resume the game.
+     * You can press "SPACE" to stop and resume the gameplay.
+     */
+    @Test
+    public void testStopGameplay()
+    {
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -stop on -ll 100 -ag ch.idsia.agents.controllers.ForwardAgent -echo on");
+        assertEquals(true, cmdLineOptions.isStopGameplay().booleanValue());
+        final BasicTask basicTask = new BasicTask(cmdLineOptions);
+        basicTask.reset(cmdLineOptions);
+        basicTask.runOneEpisode();
+    }
 }

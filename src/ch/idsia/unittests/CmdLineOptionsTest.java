@@ -114,4 +114,11 @@ public class CmdLineOptionsTest extends TestCase
         assertEquals("ch.idsia.agents.controllers.human.HumanKeyboardAgent", cmdLineOptions.getAgentFullLoadName());
         assertEquals("HumanKeyboardAgent", cmdLineOptions.getAgent().getName());
     }
+
+    @Test
+    public void testStop()
+    {
+        this.cmdLineOptions.setArgs("-stop on");
+        assertEquals(true, this.cmdLineOptions.isStopGameplay().booleanValue());
+    }
 }

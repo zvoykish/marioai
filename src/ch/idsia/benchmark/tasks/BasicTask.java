@@ -28,6 +28,7 @@ public class BasicTask implements Task
         {
 //            System.out.println("MarioAI Environment has already been instantiated!");
         }
+        // TODO: remove this crutch
         this.setAgent(cmdLineOptions.getAgent());
         this.setOptions(cmdLineOptions);
     }
@@ -51,7 +52,7 @@ public class BasicTask implements Task
 //            long tm = System.currentTimeMillis();
             agent.integrateObservation(environment);
             agent.giveIntermediateReward(environment.getIntermediateReward());
-            
+
             if (GlobalOptions.isGameplayStopped)
                 continue;
 
@@ -69,9 +70,12 @@ public class BasicTask implements Task
         return true;
     }
 
+    // TODO: remove this crutch
+
     public final void setAgent(Agent agent)
     {
         this.agent = agent;
+        // TODO: remove this crutch
         environment.setAgent(agent);
     }
 
