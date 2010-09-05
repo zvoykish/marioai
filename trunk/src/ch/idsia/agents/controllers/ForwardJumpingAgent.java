@@ -12,7 +12,7 @@ import ch.idsia.benchmark.mario.environments.Environment;
  * Package: ch.idsia.agents.controllers;
  */
 
-public class ForwardJumpingAgent extends BasicAIAgent implements Agent
+public class ForwardJumpingAgent extends BasicMarioAIAgent implements Agent
 {
     public ForwardJumpingAgent()
     {

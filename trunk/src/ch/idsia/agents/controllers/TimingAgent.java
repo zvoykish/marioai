@@ -9,7 +9,7 @@ import ch.idsia.agents.Agent;
  * Time: 6:41:42 PM
  */
 
-public class TimingAgent extends BasicAIAgent implements Agent
+public class TimingAgent extends BasicMarioAIAgent implements Agent
 {
     private Agent agent;
     private long timeTaken = 0;

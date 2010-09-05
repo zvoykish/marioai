@@ -1,7 +1,7 @@
 package ch.idsia.agents.learning;
 
 import ch.idsia.agents.Agent;
-import ch.idsia.agents.controllers.BasicAIAgent;
+import ch.idsia.agents.controllers.BasicMarioAIAgent;
 import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.evolution.Evolvable;
 import ch.idsia.evolution.MLP;
@@ -12,7 +12,7 @@ import ch.idsia.evolution.MLP;
  * Date: May 13, 2009
  * Time: 11:11:33 AM
  */
-public class MediumMLPAgent extends BasicAIAgent implements Agent, Evolvable
+public class MediumMLPAgent extends BasicMarioAIAgent implements Agent, Evolvable
 {
 
     private static final String name = "MediumMLPAgent";

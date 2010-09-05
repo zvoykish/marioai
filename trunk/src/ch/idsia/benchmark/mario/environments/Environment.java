@@ -135,5 +135,9 @@ public interface Environment
 
     public float getIntermediateReward();
 
+    /**
+     * @return pos[0] = ReceptiveFieldWidth/2
+     *         pos[1] = ReceptiveFieldHeight/2
+     */
     public int[] getMarioCenterPos();
 }

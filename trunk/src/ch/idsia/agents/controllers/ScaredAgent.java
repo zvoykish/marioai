@@ -11,7 +11,7 @@ import ch.idsia.benchmark.mario.engine.sprites.Mario;
  * Time: 9:46:59 AM
  * Package: ch.idsia.controllers.agents
  */
-public class ScaredAgent extends BasicAIAgent implements Agent
+public class ScaredAgent extends BasicMarioAIAgent implements Agent
 {
     public ScaredAgent()
     {
