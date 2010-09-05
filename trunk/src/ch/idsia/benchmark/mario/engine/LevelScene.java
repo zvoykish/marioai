@@ -739,17 +739,10 @@ public class LevelScene implements SpriteContext
 //                                    xCannon = x;
                                     for (int i = 0; i < 8; i++)
                                     {
-                                        // if block is a muzzle of the cannon and bullets are not enabled
-                                        if ((b == (byte) (14 + 0 * 16)) && (!level.isBulletsEnabled()))
-                                        {
-                                            continue;
-                                        }
                                         addSprite(new Sparkle(x * 16 + 8, y * 16 + (int) (Math.random() * 16), (float) Math.random() * dir, 0, 0, 1, 5));
                                     }
-                                    if (level.isBulletsEnabled())
-                                    {
-                                        addSprite(new BulletBill(this, x * 16 + 8 + dir * 8, y * 16 + 15, dir));
-                                    }
+                                    addSprite(new BulletBill(this, x * 16 + 8 + dir * 8, y * 16 + 15, dir));
+                                    
 //                                    hasShotCannon = true;
                                 }
                             }

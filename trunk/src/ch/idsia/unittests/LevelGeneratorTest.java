@@ -2,6 +2,7 @@ package ch.idsia.unittests;
 
 import ch.idsia.benchmark.mario.engine.level.Level;
 import ch.idsia.benchmark.mario.engine.level.LevelGenerator;
+import ch.idsia.benchmark.mario.engine.level.SpriteTemplate;
 import ch.idsia.tools.CmdLineOptions;
 import junit.framework.TestCase;
 import org.testng.annotations.AfterTest;
@@ -10,6 +11,7 @@ import org.testng.annotations.Test;
 
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -32,52 +34,45 @@ public class LevelGeneratorTest extends TestCase
 
     }
 
-    String format( int k )
-    {
-        String s = String.valueOf (k);
-        while (s.length() < 4)
-            s += " ";
-
-        return s;
-    }
-
     @Test
     public void testCreateLevel() throws Exception
     {
         final CmdLineOptions cmdLineOptions = new CmdLineOptions();
         Level level1 = LevelGenerator.createLevel(cmdLineOptions);
-        LevelGenerator.printRandom(1);
         Level level2 = LevelGenerator.createLevel(cmdLineOptions);
-        LevelGenerator.printRandom(2);
-
-        System.out.println("Size of the first  level: " + level1.length + " " + level1.height);
-        System.out.println("Size of the second level: " + level2.length + " " + level2.height);
-
-        for (int i = 0; i < level1.height; i++)
-        {
-            for (int j = 0; j < level1.length; j++)
-                System.out.print(format(level1.getBlock (j, i)) + " ");
-            System.out.print("\n");
-        }
-
-        for (int i = 0; i < level1.length; i++)
-            System.out.print(format(i) + " ");
-        System.out.println();
-            
-
-        for (int i = 0; i < level2.height; i++)
-        {
-            for (int j = 0; j < level2.length; j++)
-                System.out.print(format(level2.getBlock (j, i)) + " ");
-            System.out.print("\n");
-        }
-
-        for (int i = 0; i < level1.length; i++)
-            System.out.print(format(i) + " ");
-        System.out.println();
 
         for (int i = 0; i < level1.length; i++)
             for (int j = 0; j < level1.height; j++)
                 assertEquals (level1.getBlock (i, j), level2.getBlock (i, j));
+    }
+
+    @Test
+    public void testSpriteTemplates() throws Exception
+    {
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions();
+        Level level1 = LevelGenerator.createLevel(cmdLineOptions);
+        Level level2 = LevelGenerator.createLevel(cmdLineOptions);
+
+        for (int i = 0; i < level1.length; i++)
+            for (int j = 0; j < level1.height; j++)
+            {
+                int t1 = 0;
+                int t2 = 0;
+                SpriteTemplate st1 = level1.getSpriteTemplate (i, j);
+                SpriteTemplate st2 = level2.getSpriteTemplate (i, j);
+
+                if (st1 != null)
+                    t1 = st1.getType();
+
+                if (st2 != null)
+                {
+                    t2 = st2.getType();
+                } else if (st1 != null)
+                {
+                    throw new AssertionError("st1 is not null, st2 is null!");
+                }
+
+                assertEquals (t1, t2);
+            }
     }
 }

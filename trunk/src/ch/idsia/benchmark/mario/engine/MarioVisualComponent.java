@@ -168,10 +168,10 @@ public class
         drawStringDropShadow(thisVolatileImageGraphics, "FPS: ", 32, 2, 7);
         drawStringDropShadow(thisVolatileImageGraphics, ((GlobalOptions.FPS > 99) ? "\\infty" : GlobalOptions.FPS.toString()), 32, 3, 7);
 
-//                msg = totalNumberOfTrials == -2 ? "" : currentTrial + "(" + ((totalNumberOfTrials == -1) ? "\\infty" : totalNumberOfTrials) + ")";
+//        msg = totalNumberOfTrials == -2 ? "" : currentTrial + "(" + ((totalNumberOfTrials == -1) ? "\\infty" : totalNumberOfTrials) + ")";
 
-//            drawStringDropShadow(thisVolatileImageGraphics, "Trial:", 33, 4, 7);
-        drawStringDropShadow(thisVolatileImageGraphics, msg, 33, 5, 7);
+//        drawStringDropShadow(thisVolatileImageGraphics, "Trial:", 33, 4, 7);
+//        drawStringDropShadow(thisVolatileImageGraphics, msg, 33, 5, 7);
 
 //        if (length != 320 || height != 240) {
 //            thisGraphics.drawImage(thisVolatileImage, 0, 0, 320 * 4, 240 * 4, null);

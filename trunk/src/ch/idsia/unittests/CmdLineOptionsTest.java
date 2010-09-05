@@ -46,47 +46,47 @@ public class CmdLineOptionsTest extends TestCase
     public void testSetArgs() throws Exception
     {
         String args = "-ag ch.idsia.agents.controllers.human.HumanKeyboardAgent" +
-                "-amico off" +
-                "-echo off" +
-                "-ewf on" +
-                "-grc 1.0" +
-                "-grm 1.0" +
-                "-gv off" +
-                "-gvc off" +
-                "-i off" +
-                "-ld 0" +
-                "-ll 320" +
-                "-ls 0" +
-                "-lt 0" +
-                "-fps 24" +
-                "-mm 2" +
-                "-pw off" +
-                "-pr off" +
-                "-rfh 19" +
-                "-rfw 19" +
-                "-srf off" +
-                "-t on" +
-                "-tl 200" +
-                "-tc off" +
-                "-vaot off" +
-                "-vlx 0" +
-                "-vly 0" +
-                "-vis on" +
-                "-vw 320" +
-                "-vh 240" +
-                "-zs 1" +
-                "-ze 0" +
-                "-lh 15" +
-                "-lde off" +
-                "-lc on" +
-                "-lhs on" +
-                "-ltb on" +
-                "-lco on" +
-                "-lb on" +
-                "-lg on" +
-                "-lhb off" +
-                "-le 1111111111" +
-                "-lf off";
+                " -amico off" +
+                " -echo off" +
+                " -ewf on" +
+                " -grc 1.0" +
+                " -grm 1.0" +
+                " -gv off" +
+                " -gvc off" +
+                " -i off" +
+                " -ld 0" +
+                " -ll 320" +
+                " -ls 0" +
+                " -lt 0" +
+                " -fps 24" +
+                " -mm 2" +
+                " -pw off" +
+                " -pr off" +
+                " -rfh 19" +
+                " -rfw 19" +
+                " -srf off" +
+                " -t on" +
+                " -tl 200" +
+                " -tc off" +
+                " -vaot off" +
+                " -vlx 0" +
+                " -vly 0" +
+                " -vis on" +
+                " -vw 320" +
+                " -vh 240" +
+                " -zs 1" +
+                " -ze 0" +
+                " -lh 15" +
+                " -lde off" +
+                " -lc on" +
+                " -lhs on" +
+                " -ltb on" +
+                " -lco on" +
+                " -lb on" +
+                " -lg on" +
+                " -lhb off" +
+                " -le 1111111111" +
+                " -lf off";
         cmdLineOptions.setArgs(args);
         // TODO: test all occurences
     }
