@@ -106,4 +106,12 @@ public class CmdLineOptionsTest extends TestCase
         cmdLineOptions.setArgs("-i off");
         assertEquals(cmdLineOptions.isMarioInvulnerable(), false);
     }
+
+    @Test
+    public void testDefaultAgent()
+    {
+        assertNotNull(cmdLineOptions.getAgent());
+        assertEquals("ch.idsia.agents.controllers.human.HumanKeyboardAgent", cmdLineOptions.getAgentFullLoadName());
+        assertEquals("HumanKeyboardAgent", cmdLineOptions.getAgent().getName());
+    }
 }

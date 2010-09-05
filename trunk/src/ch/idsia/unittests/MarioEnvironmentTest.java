@@ -1,6 +1,5 @@
 package ch.idsia.unittests;
 
-import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.benchmark.mario.environments.MarioEnvironment;
 import ch.idsia.tools.CmdLineOptions;
 import junit.framework.TestCase;
@@ -15,156 +14,192 @@ import org.testng.annotations.Test;
  * Time: 8:43:51 PM
  * Package: ch.idsia.unittests
  */
-public class MarioEnvironmentTest  extends TestCase
+public class MarioEnvironmentTest extends TestCase
 {
     @BeforeTest
-    public void setUp() {
+    public void setUp()
+    {
     }
 
     @AfterTest
-    public void tearDown() {
+    public void tearDown()
+    {
     }
 
     @Test
-    public void testGetInstance() throws Exception {
+    public void testGetInstance() throws Exception
+    {
     }
 
     @Test
-    public void testResetDefault() throws Exception {
+    public void testResetDefault() throws Exception
+    {
     }
 
     @Test
-    public void testReset() throws Exception {
+    public void testReset() throws Exception
+    {
     }
 
     @Test
-    public void testTick() throws Exception {
+    public void testTick() throws Exception
+    {
     }
 
     @Test
-    public void testGetMarioFloatPos() throws Exception {
+    public void testGetMarioFloatPos() throws Exception
+    {
     }
 
     @Test
-    public void testGetMarioMode() throws Exception {
+    public void testGetMarioMode() throws Exception
+    {
     }
 
     @Test
-    public void testGetEnemiesFloatPos() throws Exception {
+    public void testGetEnemiesFloatPos() throws Exception
+    {
     }
 
     @Test
-    public void testIsMarioOnGround() throws Exception {
+    public void testIsMarioOnGround() throws Exception
+    {
     }
 
     @Test
-    public void testIsMarioAbleToJump() throws Exception {
+    public void testIsMarioAbleToJump() throws Exception
+    {
     }
 
     @Test
-    public void testIsMarioCarrying() throws Exception {
+    public void testIsMarioCarrying() throws Exception
+    {
     }
 
     @Test
-    public void testIsMarioAbleToShoot() throws Exception {
+    public void testIsMarioAbleToShoot() throws Exception
+    {
     }
 
     @Test
-    public void testGetObservationWidth() throws Exception {
+    public void testGetObservationWidth() throws Exception
+    {
     }
 
     @Test
-    public void testGetObservationHeight() throws Exception {
+    public void testGetObservationHeight() throws Exception
+    {
     }
 
     @Test
-    public void testGetMergedObservationZZ() throws Exception {
+    public void testGetMergedObservationZZ() throws Exception
+    {
     }
 
     @Test
-    public void testGetLevelSceneObservationZ() throws Exception {
+    public void testGetLevelSceneObservationZ() throws Exception
+    {
     }
 
     @Test
-    public void testGetEnemiesObservationZ() throws Exception {
+    public void testGetEnemiesObservationZ() throws Exception
+    {
     }
 
     @Test
-    public void testGetKillsTotal() throws Exception {
+    public void testGetKillsTotal() throws Exception
+    {
     }
 
     @Test
-    public void testGetKillsByFire() throws Exception {
+    public void testGetKillsByFire() throws Exception
+    {
     }
 
     @Test
-    public void testGetKillsByStomp() throws Exception {
+    public void testGetKillsByStomp() throws Exception
+    {
     }
 
     @Test
-    public void testGetKillsByShell() throws Exception {
+    public void testGetKillsByShell() throws Exception
+    {
     }
 
     @Test
-    public void testGetMarioStatus() throws Exception {
+    public void testGetMarioStatus() throws Exception
+    {
     }
 
     @Test
-    public void testGetSerializedFullObservationZZ() throws Exception {
+    public void testGetSerializedFullObservationZZ() throws Exception
+    {
     }
 
     @Test
-    public void testGetSerializedLevelSceneObservationZ() throws Exception {
+    public void testGetSerializedLevelSceneObservationZ() throws Exception
+    {
     }
 
     @Test
-    public void testGetSerializedEnemiesObservationZ() throws Exception {
+    public void testGetSerializedEnemiesObservationZ() throws Exception
+    {
     }
 
     @Test
-    public void testGetSerializedMergedObservationZZ() throws Exception {
+    public void testGetSerializedMergedObservationZZ() throws Exception
+    {
     }
 
     @Test
-    public void testGetCreaturesFloatPos() throws Exception {
+    public void testGetCreaturesFloatPos() throws Exception
+    {
     }
 
     @Test
-    public void testGetMarioState() throws Exception {
+    public void testGetMarioState() throws Exception
+    {
     }
 
     @Test
-    public void testPerformAction() throws Exception {
+    public void testPerformAction() throws Exception
+    {
     }
 
     @Test
-    public void testIsLevelFinished() throws Exception {
+    public void testIsLevelFinished() throws Exception
+    {
     }
 
     @Test
-    public void testGetEvaluationInfoAsFloats() throws Exception {
+    public void testGetEvaluationInfoAsFloats() throws Exception
+    {
     }
 
     @Test
-    public void testGetEvaluationInfoAsString() throws Exception {
+    public void testGetEvaluationInfoAsString() throws Exception
+    {
     }
 
     @Test
-    public void testGetEvaluationInfo() throws Exception {
+    public void testGetEvaluationInfo() throws Exception
+    {
     }
 
     @Test
-    public void testSetAgent() throws Exception {
+    public void testSetAgent() throws Exception
+    {
     }
 
     @Test
-    public void testGetIntermediateReward() throws Exception {
+    public void testGetIntermediateReward() throws Exception
+    {
     }
 
     @Test
     public void testMarioCenterPos() throws Exception
     {
-        CmdLineOptions cmdLineOptions = new CmdLineOptions("-rfw 5 -rfh 7");
+        CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -rfw 5 -rfh 7");
         MarioEnvironment env = MarioEnvironment.getInstance();
 
         assertNotNull(env);

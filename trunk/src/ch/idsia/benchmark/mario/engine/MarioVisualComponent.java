@@ -222,10 +222,8 @@ public class
 
         g.translate(-xCam, -yCam);
 
-        for (Sprite sprite : levelScene.sprites)          // levelScene.
-        {
-            if (sprite.layer == 0) sprite.render(g, alpha);
-        }
+//        for (Sprite sprite : levelScene.sprites)          // levelScene.
+//            if (sprite.layer == 0) sprite.render(g, alpha);
 
         g.translate(xCam, yCam);
 
@@ -235,10 +233,8 @@ public class
 
         g.translate(-xCam, -yCam);
 
-        for (Sprite sprite : levelScene.sprites)
-        {
+        for (Sprite sprite : levelScene.sprites)  // Mario, creatures
             if (sprite.layer == 1) sprite.render(g, alpha);
-        }
 
         g.translate(xCam, yCam);
         g.setColor(Color.BLACK);
@@ -311,11 +307,8 @@ public class
             //              replayer = new Replayer(recorder.getBytes());
 //                init();
 //            }
-
 //            renderBlackout(g, (int) (mario.xDeathPos - xCam), (int) (mario.yDeathPos - yCam), (int) (320 - t));
         }
-
-//        this.drawGrid(g, 5);
     }
 
     private void drawProgress(Graphics g)
