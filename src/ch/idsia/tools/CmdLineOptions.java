@@ -172,7 +172,7 @@ public final class CmdLineOptions extends EvaluationOptions
         return ret;
     }
 
-    private Integer getReceptiveFieldHeight()
+    public Integer getReceptiveFieldHeight()
     {
         int ret = i(getParameterValue("-rfh"));
         if (ret % 2 == 0)

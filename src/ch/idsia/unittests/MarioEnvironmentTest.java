@@ -1,5 +1,9 @@
 package ch.idsia.unittests;
 
+import ch.idsia.benchmark.mario.environments.Environment;
+import ch.idsia.benchmark.mario.environments.MarioEnvironment;
+import ch.idsia.tools.CmdLineOptions;
+import junit.framework.TestCase;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -11,7 +15,7 @@ import org.testng.annotations.Test;
  * Time: 8:43:51 PM
  * Package: ch.idsia.unittests
  */
-public class MarioEnvironmentTest
+public class MarioEnvironmentTest  extends TestCase
 {
     @BeforeTest
     public void setUp() {
@@ -155,5 +159,20 @@ public class MarioEnvironmentTest
 
     @Test
     public void testGetIntermediateReward() throws Exception {
+    }
+
+    @Test
+    public void testMarioCenterPos() throws Exception
+    {
+        CmdLineOptions cmdLineOptions = new CmdLineOptions("-rfw 5 -rfh 7");
+        MarioEnvironment env = MarioEnvironment.getInstance();
+
+        assertNotNull(env);
+
+        env.reset(cmdLineOptions);
+
+        int[] pos = env.getMarioCenterPos();
+        assertEquals(2, pos[0]);
+        assertEquals(3, pos[1]);
     }
 }
