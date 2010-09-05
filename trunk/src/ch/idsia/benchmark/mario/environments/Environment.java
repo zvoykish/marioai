@@ -134,4 +134,6 @@ public interface Environment
     void setAgent(Agent agent);
 
     public float getIntermediateReward();
+
+    public int[] getMarioCenterPos();
 }

@@ -15,6 +15,9 @@ import ch.idsia.tools.EvaluationInfo;
 
 public final class MarioEnvironment implements Environment
 {
+    private int marioCenterPosX = 9;
+    private int marioCenterPosY = 9;
+
     final LevelScene levelScene;
 //    private int frame = 0;
     private MarioVisualComponent marioVisualComponent;
@@ -61,6 +64,10 @@ public final class MarioEnvironment implements Environment
         }
         System.out.println("");
         System.out.flush();*/
+        marioCenterPosX = (Integer) setUpOptions.getReceptiveFieldWidth() / 2;
+        marioCenterPosY = setUpOptions.getReceptiveFieldHeight() / 2;
+        System.out.println("marioCenterPosX = " + marioCenterPosX);
+        System.out.println("marioCenterPosY = " + marioCenterPosY);
 
         if (/*levelScene.visualization*/ setUpOptions.isVisualization())
         {
@@ -259,5 +266,9 @@ public final class MarioEnvironment implements Environment
     {
         // TODO: reward for coins, killed creatures, cleared dead-ends, bypassed gaps, hidden blocks found
         return -1;
+    }
+
+    public int[] getMarioCenterPos() {
+        return new int[]{marioCenterPosX, marioCenterPosY};
     }
 }
