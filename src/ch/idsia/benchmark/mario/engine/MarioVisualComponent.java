@@ -262,7 +262,7 @@ public class
         drawStringDropShadow(g, "FLOWERS  : " + df.format(Mario.flowersDevoured), 0, 6, 4);
 
         drawStringDropShadow(g, "TIME", 33, 0, 7);
-        int time = (levelScene.timeLeft + 15 - 1) / 15;
+        int time = levelScene.getTimeLeft();
         if (time < 0) time = 0;
         drawStringDropShadow(g, " " + df2.format(time), 33, 1, 7);
 
@@ -408,37 +408,15 @@ public class
         g.fillPolygon(xp, yp, xp.length);
     }
 
-//    static GraphicsConfiguration CreateMarioComponentFrame(EvaluationOptions evaluationOptions)
-//    {
 ////        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 ////        frame.setLocation((screenSize.length-frame.getWidth())/2, (screenSize.height-frame.getHeight())/2);
-//        if (marioComponentFrame == null)
-//        {
-//            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentFullLoadName() +*/ "Mario AI benchmark-" + GlobalOptions.MAIBeVersionStr);
-//            marioVisualComponent = new MarioVisualComponent(320, 240);
-//            marioComponentFrame.setContentPane(marioVisualComponent);
-//            marioVisualComponent.init();
-//            marioComponentFrame.pack();
-//            marioComponentFrame.setResizable(false);
-//            marioComponentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        }
-////        marioComponentFrame.setTitle(evaluationOptions.getAgent().getName() + " - Mario Intelligent 2.0");
-//        marioComponentFrame.setAlwaysOnTop(evaluationOptions.isViewAlwaysOnTop());
-//        marioComponentFrame.setLocation(evaluationOptions.getViewLocation());
-//        marioComponentFrame.setVisible(evaluationOptions.isVisualization());
-//        return graphicsConfiguration;
-//    }
-
     private static GraphicsConfiguration graphicsConfiguration;
 
     public void init()
     {
         graphicsConfiguration = getGraphicsConfiguration();
 //        System.out.println("!!HRUYA: graphicsConfiguration = " + graphicsConfiguration);
-//        assert (graphicsConfiguration == null);
-//        if (graphicsConfiguration != null) {
         Art.init(graphicsConfiguration);
-//        }
 
 
     }
@@ -475,7 +453,7 @@ public class
                 Level bgLevel = BgLevelGenerator.createLevel(w / 32 + 1, h / 32 + 1, i == 0, levelScene.getLevelType());
                 bgLayer[i] = new BgRenderer(bgLevel, graphicsConfiguration, GlobalOptions.VISUAL_COMPONENT_WIDTH, GlobalOptions.VISUAL_COMPONENT_HEIGHT, scrollSpeed);
             }
-        }
+        } else throw new Error("[MarioAI] ERROR: Graphics Configuration is null. Graphics initialization failed");
     }
 
     public void adjustFPS()

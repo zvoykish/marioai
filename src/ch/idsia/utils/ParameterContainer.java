@@ -158,14 +158,14 @@ public class ParameterContainer
         return Float.parseFloat(s);
     }
 
+    public String s(boolean b)
+    {
+        return b ? "on" : "off";
+    }
+
     public String s(Object i)
     {
         return String.valueOf(i);
-    }
-
-    public String s(Boolean b)
-    {
-        return b ? "on" : "off";
     }
 
     public String s(Agent a)

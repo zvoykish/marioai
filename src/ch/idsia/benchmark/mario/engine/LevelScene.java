@@ -29,7 +29,7 @@ public class LevelScene implements SpriteContext
 
     public boolean paused = false;
     public int startTime = 0;
-    public int timeLeft;
+    private int timeLeft;
     private int width;
     private int height;
 
@@ -653,6 +653,7 @@ public class LevelScene implements SpriteContext
         if (xCam > level.length * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH)
             xCam = level.length * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH;
 
+        // TODO: reincarnate recordings
         /*      if (recorder != null)
          {
          recorder.addTick(mario.getKeyMask());
@@ -677,9 +678,7 @@ public class LevelScene implements SpriteContext
                 } else
                 {
                     if (sprite instanceof Fireball)
-                    {
                         fireballsOnScreen++;
-                    }
                 }
             }
         }
@@ -719,9 +718,7 @@ public class LevelScene implements SpriteContext
                         if (st.lastVisibleTick != tick - 1)
                         {
                             if (st.sprite == null || !sprites.contains(st.sprite))
-                            {
                                 st.spawn(this, x, y, dir);
-                            }
                         }
 
                         st.lastVisibleTick = tick;
@@ -742,7 +739,7 @@ public class LevelScene implements SpriteContext
                                         addSprite(new Sparkle(x * 16 + 8, y * 16 + (int) (Math.random() * 16), (float) Math.random() * dir, 0, 0, 1, 5));
                                     }
                                     addSprite(new BulletBill(this, x * 16 + 8 + dir * 8, y * 16 + 15, dir));
-                                    
+
 //                                    hasShotCannon = true;
                                 }
                             }
@@ -751,14 +748,10 @@ public class LevelScene implements SpriteContext
                 }
 
             for (Sprite sprite : sprites)
-            {
                 sprite.tick();
-            }
 
             for (Sprite sprite : sprites)
-            {
                 sprite.collideCheck();
-            }
 
             for (Shell shell : shellsToCheck)
             {
@@ -783,18 +776,10 @@ public class LevelScene implements SpriteContext
             shellsToCheck.clear();
 
             for (Fireball fireball : fireballsToCheck)
-            {
                 for (Sprite sprite : sprites)
-                {
                     if (sprite != fireball && !fireball.dead)
-                    {
                         if (sprite.fireballCollideCheck(fireball))
-                        {
                             fireball.die();
-                        }
-                    }
-                }
-            }
             fireballsToCheck.clear();
         }
 
@@ -823,9 +808,7 @@ public class LevelScene implements SpriteContext
         if ((Level.TILE_BEHAVIORS[block & 0xff] & Level.BIT_BUMPABLE) > 0)
         {
             if (block == 1)
-            {
-                Mario.getHiddenBlock();
-            }
+                Mario.gainHiddenBlock();
             bumpInto(x, y - 1);
             level.setBlock(x, y, (byte) 4);
             level.setBlockData(x, y, (byte) 4);
@@ -841,7 +824,7 @@ public class LevelScene implements SpriteContext
                 }
             } else
             {
-                Mario.getCoin();
+                Mario.gainCoin();
                 addSprite(new CoinAnim(x, y));
             }
         }
@@ -867,7 +850,7 @@ public class LevelScene implements SpriteContext
         byte block = level.getBlock(x, y);
         if (((Level.TILE_BEHAVIORS[block & 0xff]) & Level.BIT_PICKUPABLE) > 0)
         {
-            Mario.getCoin();
+            Mario.gainCoin();
             level.setBlock(x, y, (byte) 0);
             addSprite(new CoinAnim(x, y + 1));
         }
