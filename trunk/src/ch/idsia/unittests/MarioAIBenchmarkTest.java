@@ -134,7 +134,7 @@ public final class MarioAIBenchmarkTest extends TestCase
     public void testStopGameplay()
     {
         final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -rfw 9 -rfh 5 -stop on -ll 100 -ag ch.idsia.agents.controllers.ForwardAgent -echo on");
-        assertEquals(true, cmdLineOptions.isStopGameplay().booleanValue());
+        assertEquals(true, cmdLineOptions.isStopGamePlay().booleanValue());
         final BasicTask basicTask = new BasicTask(cmdLineOptions);
         basicTask.reset(cmdLineOptions);
         basicTask.runOneEpisode();

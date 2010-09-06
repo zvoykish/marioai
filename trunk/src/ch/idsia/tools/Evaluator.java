@@ -2,8 +2,8 @@ package ch.idsia.tools;
 
 
 //import java.io.*;
+
 import java.util.ArrayList;
-//import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -103,7 +103,7 @@ public class Evaluator implements Runnable
 //        LOGGER.println(startMessage, LOGGER.VERBOSE_MODE.ALL);
 //            LOGGER.println("Attempts left: " + (evaluationOptions.getNumberOfTrials() - ++i ), LOGGER.VERBOSE_MODE.ALL);
 //            evaluationInfo = simulator.simulateOneLevel();
-                                                        
+
 //            evaluationInfo.levelType = evaluationOptions.getLevelType();
 //            evaluationInfo.levelDifficulty = evaluationOptions.getLevelDifficulty();
 //            evaluationInfo.levelRandSeed = evaluationOptions.getLevelRandSeed();
@@ -239,9 +239,9 @@ public class Evaluator implements Runnable
 //{
 //    public int compare(Object o, Object o1)
 //    {
-//        float ei1Fitness = ((EvaluationInfo)(o)).numberOfCoinsGained;
+//        float ei1Fitness = ((EvaluationInfo)(o)).coinsGained;
 //
-//        float ei2Fitness = ((EvaluationInfo)(o1)).numberOfCoinsGained;
+//        float ei2Fitness = ((EvaluationInfo)(o1)).coinsGained;
 //        if (ei1Fitness < ei2Fitness)
 //            return 1;
 //        else if (ei1Fitness > ei2Fitness)
