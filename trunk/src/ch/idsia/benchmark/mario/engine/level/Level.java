@@ -6,6 +6,26 @@ import java.io.IOException;
 
 public class Level
 {
+    static public class objCounters
+    {
+        public int deadEndsCount = 0;
+        public int cannonsCount = 0;
+        public int hillStraightCount = 0;
+        public int tubesCount = 0;
+        public int blocksCount = 0;
+        public int coinsCount = 0;
+        public int gapsCount = 0;
+        public int hiddenBlocks = 0;
+        public int totalCannons;
+        public int totalGaps;
+        public int totalDeadEnds;
+        public int totalBlocks;
+        public int totalHiddenBlocks;
+        public int totalCoins;
+        public int totalHillStraight;
+        public int totalTubes;
+    }
+
     public static final String[] BIT_DESCRIPTIONS = {//
             "BLOCK UPPER", //
             "BLOCK ALL", //
@@ -27,6 +47,8 @@ public class Level
     public static final int BIT_BREAKABLE = 1 << 5;
     public static final int BIT_PICKUPABLE = 1 << 6;
     public static final int BIT_ANIMATED = 1 << 7;
+
+    public static objCounters counters;
 
     private static final int FILE_HEADER = 0x271c4178;
     public int length;

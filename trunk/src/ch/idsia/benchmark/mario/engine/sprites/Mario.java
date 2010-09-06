@@ -13,6 +13,7 @@ public class Mario extends Sprite
     public static boolean fire = false;
     public static int coins = 0;
     public static int hiddenBlocks = 0;
+    public static int collisionsWithCreatures = 0;
     private int status = STATUS_RUNNING;
     private final int FractionalPowerUpTime = 0;
     public static int mushroomsDevoured;
@@ -651,6 +652,7 @@ public class Mario extends Sprite
         {
             world.paused = true;
             powerUpTime = -3 * FractionalPowerUpTime;
+            ++collisionsWithCreatures;
             if (fire)
             {
                 world.mario.setLarge(true, false);

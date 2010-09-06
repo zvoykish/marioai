@@ -126,6 +126,7 @@ public final class EvaluationInfo
                 "\n                Hidden Blocks Found : " + hiddenBlocksFound +
                 "\n                 Mushrooms Devoured : " + mushroomsDevoured +
                 "\n                   Flowers Devoured : " + flowersDevoured +
+                "\n          Collisions with creatures : " + numberOfCollisionsWithCreatures +
                 "\n                        kills Total : " + killsTotal +
                 "\n                      kills By Fire : " + killsByFire +
                 "\n                     kills By Shell : " + killsByShell +
@@ -147,6 +148,7 @@ public final class EvaluationInfo
                 "; Hidden blocks: " + hiddenBlocksFound +
                 "; Mushrooms: " + mushroomsDevoured +
                 "; Flowers: " + flowersDevoured +
+                "; Collisions: " + numberOfCollisionsWithCreatures +
                 "; kills: " + killsTotal +
                 "; By Fire: " + killsByFire +
                 "; By Shell: " + killsByShell +
@@ -154,5 +156,6 @@ public final class EvaluationInfo
     }
 
     public int totalNumberOfCoins = MagicNumberUnDef;
+    public int numberOfCollisionsWithCreatures = MagicNumberUnDef;
     // TODO: Number Of collisions with creatures    // if large // if fire
 }

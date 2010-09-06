@@ -25,25 +25,7 @@ import java.util.Random;
 
 public class LevelGenerator
 {
-    static private class objCounters
-    {
-        int deadEndsCount = 0;
-        int cannonsCount = 0;
-        int hillStraightCount = 0;
-        int tubesCount = 0;
-        int blocksCount = 0;
-        int coinsCount = 0;
-        int gapsCount = 0;
-        int hiddenBlocksCount = 0;
-        int totalCannonsCount;
-        int totalGapsCount;
-        int totalDeadEndsCount;
-        int totalBlocksCount;
-        int totalHiddenBlocksCount;
-        int totalCoinsCount;
-        int totalHillStraightCount;
-        int totalTubesCount;
-    }
+
 
     /*
     From left to right:
@@ -93,7 +75,7 @@ public class LevelGenerator
     private static final int INFINITY_FLOOR_HEIGHT = Integer.MAX_VALUE;
 
     //Level customization counters
-    static objCounters counters = new objCounters();
+    static Level.objCounters counters = new Level.objCounters();
 
     private LevelGenerator() {}
 
@@ -107,14 +89,14 @@ public class LevelGenerator
             height = 15;
         }
         isFlatLevel = args.isFlatLevel();
-        counters.totalHillStraightCount = args.getHillStraightCount() ? Integer.MAX_VALUE : 0;
-        counters.totalCannonsCount = args.getCannonsCount() ? Integer.MAX_VALUE : 0;
-        counters.totalGapsCount = args.getGapsCount() ? Integer.MAX_VALUE : 0;
-        counters.totalDeadEndsCount = args.getDeadEndsCount() ? Integer.MAX_VALUE : 0;
-        counters.totalBlocksCount = args.getBlocksCount() ? Integer.MAX_VALUE : 0;
-        counters.totalHiddenBlocksCount = args.getHiddenBlocksCount() ? Integer.MAX_VALUE : 0;
-        counters.totalCoinsCount = args.getCoinsCount() ? Integer.MAX_VALUE : 0;
-        counters.totalTubesCount = args.getTubesCount() ? Integer.MAX_VALUE : 0;
+        counters.totalHillStraight = args.getHillStraightCount() ? Integer.MAX_VALUE : 0;
+        counters.totalCannons = args.getCannonsCount() ? Integer.MAX_VALUE : 0;
+        counters.totalGaps = args.getGapsCount() ? Integer.MAX_VALUE : 0;
+        counters.totalDeadEnds = args.getDeadEndsCount() ? Integer.MAX_VALUE : 0;
+        counters.totalBlocks = args.getBlocksCount() ? Integer.MAX_VALUE : 0;
+        counters.totalHiddenBlocks = args.getHiddenBlocksCount() ? Integer.MAX_VALUE : 0;
+        counters.totalCoins = args.getCoinsCount() ? Integer.MAX_VALUE : 0;
+        counters.totalTubes = args.getTubesCount() ? Integer.MAX_VALUE : 0;
 
         creaturesMaskParser = new CreaturesMaskParser(args.getEnemies());
 
@@ -204,6 +186,26 @@ public class LevelGenerator
 
         fixWalls();
 
+//        System.out.println("deadEndsCount = " + counters.deadEndsCount);
+//        System.out.println("cannonsCount = " + counters.cannonsCount);
+//        System.out.println("hillStraightCount = " + counters.hillStraightCount);
+//        System.out.println("tubesCount = " + counters.tubesCount);
+//        System.out.println("blocksCount = " + counters.blocksCount);
+//        System.out.println("coinsCount = " + counters.coinsCount);
+//        System.out.println("gapsCount = " + counters.gapsCount);
+//        System.out.println("hiddenBlocksCount = " + counters.hiddenBlocks);
+//
+//        System.out.println("total deadEndsCount = " + counters.totalDeadEnds);
+//        System.out.println("total cannonsCount = " + counters.totalCannons);
+//        System.out.println("total hillStraightCount = " + counters.totalHillStraight);
+//        System.out.println("total tubesCount = " + counters.totalTubes);
+//        System.out.println("total blocksCount = " + counters.totalBlocks);
+//        System.out.println("total coinsCount = " + counters.totalCannons);
+//        System.out.println("total gapsCount = " + counters.totalGaps);
+//        System.out.println("total hiddenBlocksCount = " + counters.totalHiddenBlocks);
+
+        level.counters = counters;
+
         return level;
     }
 
@@ -225,7 +227,7 @@ public class LevelGenerator
             case ODDS_STRAIGHT:
                 return buildStraight(x, maxLength, false, floor, floorHeight);
             case ODDS_HILL_STRAIGHT:
-                if (floor == DEFAULT_FLOOR && counters.hillStraightCount < counters.totalHillStraightCount)
+                if (floor == DEFAULT_FLOOR && counters.hillStraightCount < counters.totalHillStraight)
                 {
                     counters.hillStraightCount++;
                     return buildHillStraight(x, maxLength, floor);
@@ -235,12 +237,12 @@ public class LevelGenerator
                 }
             case ODDS_TUBES:
                 //increment of tubesCount is inside of the method
-                if (counters.tubesCount < counters.totalTubesCount)
+                if (counters.tubesCount < counters.totalTubes)
                     return buildTubes(x, maxLength, maxHeight, floor, floorHeight);
                 else
                     return 0;
             case ODDS_GAPS:
-                if ((floor > 2 || floor == ANY_HEIGHT) && (counters.gapsCount < counters.totalGapsCount))
+                if ((floor > 2 || floor == ANY_HEIGHT) && (counters.gapsCount < counters.totalGaps))
                 {
                     counters.gapsCount++;
                     return buildGap(x, 12, maxHeight, floor, floorHeight);
@@ -249,7 +251,7 @@ public class LevelGenerator
                     return 0;
                 }
             case ODDS_CANNONS:
-                if (counters.cannonsCount < counters.totalCannonsCount)
+                if (counters.cannonsCount < counters.totalCannons)
                 {
                     //increment of cannonsCount is inside of the method
                     return buildCannons(x, maxLength, maxHeight, floor, floorHeight);
@@ -259,7 +261,7 @@ public class LevelGenerator
                 }
             case ODDS_DEAD_ENDS:
             {
-                if (floor == DEFAULT_FLOOR && counters.deadEndsCount < counters.totalDeadEndsCount) //if method was not called from buildDeadEnds
+                if (floor == DEFAULT_FLOOR && counters.deadEndsCount < counters.totalDeadEnds) //if method was not called from buildDeadEnds
                 {
                     counters.deadEndsCount++;
                     return buildDeadEnds(x, maxLength);
@@ -508,7 +510,7 @@ public class LevelGenerator
                 if (y >= floor && y <= floor + floorHeight)
                 {
                     level.setBlock(x, y, (byte) (1 + 9 * 16));
-                } else if (counters.cannonsCount <= counters.totalCannonsCount)
+                } else if (counters.cannonsCount <= counters.totalCannons)
                 {
                     if (x == xCannon && y >= cannonHeight && y <= floor)// + floorHeight)
                     {
@@ -834,7 +836,7 @@ public class LevelGenerator
 
     private static boolean canBuildBlocks(int x0, int floor, boolean isHB)
     {
-        if ((counters.blocksCount >= counters.totalBlocksCount && !isHB))
+        if ((counters.blocksCount >= counters.totalBlocks && !isHB))
         {
             return false;
         }
@@ -860,7 +862,7 @@ public class LevelGenerator
 
     private static void buildBlocks(int x0, int x1, int floor, boolean pHB, int pS, int pE, boolean onlyHB)
     {
-        if (counters.blocksCount > counters.totalBlocksCount)
+        if (counters.blocksCount > counters.totalBlocks)
         {
             return;
         }
@@ -877,12 +879,13 @@ public class LevelGenerator
             {
                 for (int x = x0 + s; x < x1 - e; x++)
                 {
-                    if (hb && counters.totalHiddenBlocksCount != 0) //if hidden blocks to be built
+                    if (hb && counters.totalHiddenBlocks != 0) //if hidden blocks to be built
                     {
                         boolean isBlock = globalRandom.nextInt(2) == 1;
                         if (isBlock && canBuildBlocks(x, floor - 4, true))
                         {
                             level.setBlock(x, floor - 4, (byte) (1)); //hidden block
+                            counters.hiddenBlocks++;
                         }
                     } else
                     {
@@ -952,7 +955,7 @@ public class LevelGenerator
         {
             for (int x = x0 + 1 + s; x < x1 - 1 - e; x++)
             {
-                if (counters.coinsCount >= counters.totalCoinsCount)
+                if (counters.coinsCount >= counters.totalCoins)
                 {
                     break;
                 }
