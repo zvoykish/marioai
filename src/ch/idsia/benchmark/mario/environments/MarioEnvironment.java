@@ -244,7 +244,7 @@ public final class MarioEnvironment implements Environment
         evaluationInfo.timeSpent = levelScene.getTimeSpent();
         evaluationInfo.timeLeft = levelScene.getTimeLeft();
         evaluationInfo.coinsGained = Mario.coins;
-//        evaluationInfo.totalNumberOfCoins   = -1 ; // TODO: total Number of coins.
+        evaluationInfo.totalNumberOfCoins   = levelScene.level.counters.totalCoins;
         evaluationInfo.marioMode = levelScene.getMarioMode();
         evaluationInfo.mushroomsDevoured = Mario.mushroomsDevoured;
         evaluationInfo.killsTotal = levelScene.getKillsTotal();
@@ -253,6 +253,7 @@ public final class MarioEnvironment implements Environment
         evaluationInfo.killsByShell = levelScene.getKillsByShell();
         evaluationInfo.numberOfHiddenItemsGained = levelScene.getNumberOfHiddenCoinsGained();
         evaluationInfo.hiddenBlocksFound = Mario.hiddenBlocks;
+        evaluationInfo.numberOfCollisionsWithCreatures = Mario.collisionsWithCreatures;
 //        evaluationInfo.Memo = "Number of attempt: " + Mario.numberOfAttempts;
         return evaluationInfo;
     }
