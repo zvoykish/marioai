@@ -85,7 +85,7 @@ public final class CmdLineOptions extends EvaluationOptions
 //        Environment.ObsWidth = GlobalOptions.receptiveFieldWidth/2;
 //        Environment.ObsHeight = GlobalOptions.receptiveFieldHeight/2;
         GlobalOptions.isShowReceptiveField = isReceptiveFieldVisualized();
-        GlobalOptions.isGameplayStopped = isStopGameplay();
+        GlobalOptions.isGameplayStopped = isStopGamePlay();
     }
 
     public float getGravity()
@@ -150,7 +150,7 @@ public final class CmdLineOptions extends EvaluationOptions
         return b(getParameterValue("-echo"));
     }
 
-    public Boolean isStopGameplay()
+    public Boolean isStopGamePlay()
     {
         return b(getParameterValue("-stop"));
     }
@@ -165,10 +165,8 @@ public final class CmdLineOptions extends EvaluationOptions
         int ret = i(getParameterValue("-rfw"));
 
         if (ret % 2 == 0)
-        {
-            System.err.println("\nWrong value for receptive field length: " + ret++ +
-                    " ; receptive field length set to " + ret);
-        }
+            System.err.println("\n[MarioAI WARNING] : Wrong value for receptive field width: " + ret++ +
+                    " ; receptive field width set to " + ret);
         return ret;
     }
 
@@ -176,10 +174,8 @@ public final class CmdLineOptions extends EvaluationOptions
     {
         int ret = i(getParameterValue("-rfh"));
         if (ret % 2 == 0)
-        {
-            System.err.println("\nWrong value for receptive field height: " + ret++ +
+            System.err.println("\n[MarioAI WARNING] : Wrong value for receptive field height: " + ret++ +
                     " ; receptive field height set to " + ret);
-        }
         return ret;
     }
 

@@ -30,6 +30,7 @@ public class MarioEnvironmentTest extends TestCase
     @Test
     public void testGetInstance() throws Exception
     {
+        assertNotNull(MarioEnvironment.getInstance());
     }
 
     @Test

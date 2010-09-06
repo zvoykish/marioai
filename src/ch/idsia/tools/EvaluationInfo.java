@@ -33,7 +33,7 @@ public final class EvaluationInfo
     public int marioMode = MagicNumberUnDef;
     public int marioStatus = MagicNumberUnDef;
     public int mushroomsDevoured = MagicNumberUnDef;
-    public int numberOfCoinsGained = MagicNumberUnDef;
+    public int coinsGained = MagicNumberUnDef;
     public int numberOfHiddenItemsGained = MagicNumberUnDef;
     public int timeLeft = MagicNumberUnDef;
     public int timeSpent = MagicNumberUnDef;
@@ -53,7 +53,7 @@ public final class EvaluationInfo
 
     public float computeBasicFitness()
     {
-        return distancePassedPhys - timeSpent + numberOfCoinsGained + marioStatus * marioSystemOfValues.win;
+        return distancePassedPhys - timeSpent + coinsGained + marioStatus * marioSystemOfValues.win;
     }
 
     public float computeWeightedFitness(SystemOfValues sov)
@@ -64,7 +64,7 @@ public final class EvaluationInfo
                         marioStatus * sov.win +
                         marioMode * sov.mode +
                         mushroomsDevoured * sov.mushrooms +
-                        numberOfCoinsGained * sov.coins +
+                        coinsGained * sov.coins +
                         hiddenBlocksFound * sov.hiddenBlocks +
                         killsTotal * sov.kills +
                         killsByStomp * sov.killedByStomp +
@@ -103,7 +103,7 @@ public final class EvaluationInfo
         retFloatArray[7] = this.marioMode;
         retFloatArray[8] = this.marioStatus;
         retFloatArray[9] = this.mushroomsDevoured;
-        retFloatArray[10] = this.numberOfCoinsGained;
+        retFloatArray[10] = this.coinsGained;
         retFloatArray[11] = this.numberOfHiddenItemsGained;
         retFloatArray[12] = this.timeLeft;
         retFloatArray[13] = this.timeSpent;
@@ -121,7 +121,7 @@ public final class EvaluationInfo
                 df.format(distancePassedPhys) +
                 "\n           Time Spent(marioseconds) : " + timeSpent +
                 "\n            Time Left(marioseconds) : " + timeLeft +
-                "\n                       Coins Gained : " + numberOfCoinsGained +
+                "\n                       Coins Gained : " + coinsGained +
                 "\n                 Hidden Items Found : " + numberOfHiddenItemsGained +
                 "\n                Hidden Blocks Found : " + hiddenBlocksFound +
                 "\n                 Mushrooms Devoured : " + mushroomsDevoured +
@@ -143,7 +143,7 @@ public final class EvaluationInfo
                 df.format(distancePassedPhys) +
                 "; Time Spent: " + timeSpent +
                 "; Time Left: " + timeLeft +
-                "; Coins: " + numberOfCoinsGained +
+                "; Coins: " + coinsGained +
                 "; Hidden blocks: " + hiddenBlocksFound +
                 "; Mushrooms: " + mushroomsDevoured +
                 "; Flowers: " + flowersDevoured +

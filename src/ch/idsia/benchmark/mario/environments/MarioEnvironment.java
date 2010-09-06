@@ -9,7 +9,9 @@ import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
 
 /**
- * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 3, 2010 Time: 10:08:13 PM
+ * Created by IntelliJ IDEA.
+ * User: Sergey Karakovskiy, sergey@idsia.ch
+ * Date: Mar 3, 2010 Time: 10:08:13 PM
  * Package: ch.idsia.benchmark.mario.environments
  */
 
@@ -231,7 +233,6 @@ public final class MarioEnvironment implements Environment
 
     public EvaluationInfo getEvaluationInfo()
     {
-        // TODO: make static field
 //        evaluationInfo.agentType = agent.getClass().getSimpleName();
 //        evaluationInfo.agentName = agent.getName();
         evaluationInfo.marioStatus = levelScene.getMarioStatus();
@@ -242,7 +243,7 @@ public final class MarioEnvironment implements Environment
 //     evaluationInfo.totalLengthOfLevelPhys = levelScene.level.getWidthPhys();
         evaluationInfo.timeSpent = levelScene.getTimeSpent();
         evaluationInfo.timeLeft = levelScene.getTimeLeft();
-        evaluationInfo.numberOfCoinsGained = Mario.coins;
+        evaluationInfo.coinsGained = Mario.coins;
 //        evaluationInfo.totalNumberOfCoins   = -1 ; // TODO: total Number of coins.
         evaluationInfo.marioMode = levelScene.getMarioMode();
         evaluationInfo.mushroomsDevoured = Mario.mushroomsDevoured;
