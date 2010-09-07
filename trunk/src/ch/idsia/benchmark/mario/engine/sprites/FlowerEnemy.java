@@ -35,6 +35,7 @@ public class FlowerEnemy extends Enemy
 
     public void move()
     {
+        //TODO: check this
         if (deadTime > 0)
         {
             deadTime--;

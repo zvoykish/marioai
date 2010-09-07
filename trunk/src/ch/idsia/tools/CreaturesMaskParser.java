@@ -37,7 +37,7 @@ public class CreaturesMaskParser
     public static final int WINGED_SPIKY = 7;
     public static final int SPIKY_FLOWER = 8;
 
-    private static boolean complete = true;
+    private static boolean complete = false;
     private static boolean canAdd = true; //true if at least one creature enabled
 
     public CreaturesMaskParser(String creatures)
@@ -48,11 +48,12 @@ public class CreaturesMaskParser
             creatures = "0" + creatures;
         }
 
-        if (creatures.substring (0, 7).equals ("11111111"))
+        if (creatures.substring (0, 8).equals ("11111111"))
         {
             complete = true;
         }
-        if (creatures.substring (0, 7).equals ("00000000"))
+        String s = creatures.substring (0, 8);
+        if (creatures.substring (0, 8).equals ("00000000"))
         {
             canAdd = false;
         }
