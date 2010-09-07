@@ -13,76 +13,76 @@ import ch.idsia.benchmark.mario.environments.Environment;
  */
 public class ForwardAgent extends BasicMarioAIAgent implements Agent
 {
-    int trueJumpCounter = 0;
-    int trueSpeedCounter = 0;
+int trueJumpCounter = 0;
+int trueSpeedCounter = 0;
 
-    public ForwardAgent()
+public ForwardAgent()
+{
+    super("ForwardAgent");
+    reset();
+}
+
+public void reset()
+{
+    action = new boolean[Environment.numberOfButtons];
+    action[Mario.KEY_RIGHT] = true;
+    action[Mario.KEY_SPEED] = true;
+    trueJumpCounter = 0;
+    trueSpeedCounter = 0;
+}
+
+private boolean DangerOfGap(byte[][] levelScene)
+{
+    // TODO: introduce variables instead of constants.
+    for (int x = 7; x < 19; ++x)
     {
-        super("ForwardAgent");
-        reset();
+        boolean f = true;
+        for (int y = 9; y < 19; ++y)
+        {
+            if (levelScene[y][x] != 0)
+                f = false;
+        }
+        if (f ||
+                levelScene[marioCenter[0] + 1][marioCenter[1]] == 0 ||
+                (marioState[1] > 0 &&
+                        (levelScene[marioCenter[0] + 1][marioCenter[1] - 1] != 0 ||
+                                levelScene[marioCenter[0] + 1][marioCenter[1]] != 0)))
+            return true;
     }
+    return false;
+}
 
-    public void reset()
+private boolean DangerOfGap()
+{
+    return DangerOfGap(levelScene);
+}
+
+public boolean[] getAction()
+{
+    // this Agent requires observation integrated in advance.
+
+    if (mergedObservation[marioCenter[0]][marioCenter[1] + 2] != 0 ||
+            mergedObservation[marioCenter[0]][marioCenter[1] + 1] != 0 ||
+            DangerOfGap())
     {
-        action = new boolean[Environment.numberOfButtons];
-        action[Mario.KEY_RIGHT] = true;
-        action[Mario.KEY_SPEED] = true;
+        if (isMarioAbleToJump || (!isMarioOnGround && action[Mario.KEY_JUMP]))
+        {
+            action[Mario.KEY_JUMP] = true;
+        }
+        ++trueJumpCounter;
+    } else
+    {
+        action[Mario.KEY_JUMP] = false;
         trueJumpCounter = 0;
-        trueSpeedCounter = 0;
     }
 
-    private boolean DangerOfGap(byte[][] levelScene)
+    if (trueJumpCounter > 16)
     {
-        // TODO: introduce variables instead of constants.
-        for (int x = 7; x < 19; ++x)
-        {
-            boolean f = true;
-            for (int y = 9; y < 19; ++y)
-            {
-                if (levelScene[y][x] != 0)
-                    f = false;
-            }
-            if (f ||
-                    levelScene[marioCenterPos[0] + 1][marioCenterPos[1]] == 0 ||
-                    (marioState[1] > 0 &&
-                            (levelScene[marioCenterPos[0] + 1][marioCenterPos[1] - 1] != 0 ||
-                                    levelScene[marioCenterPos[0] + 1][marioCenterPos[1]] != 0)))
-                return true;
-        }
-        return false;
+        trueJumpCounter = 0;
+        action[Mario.KEY_JUMP] = false;
     }
 
-    private boolean DangerOfGap()
-    {
-        return DangerOfGap(levelScene);
-    }
-
-    public boolean[] getAction()
-    {
-        // this Agent requires observation integrated in advance.
-
-        if (mergedObservation[marioCenterPos[0]][marioCenterPos[1] + 2] != 0 ||
-                mergedObservation[marioCenterPos[0]][marioCenterPos[1] + 1] != 0 ||
-                DangerOfGap())
-        {
-            if (isMarioAbleToJump || (!isMarioOnGround && action[Mario.KEY_JUMP]))
-            {
-                action[Mario.KEY_JUMP] = true;
-            }
-            ++trueJumpCounter;
-        } else
-        {
-            action[Mario.KEY_JUMP] = false;
-            trueJumpCounter = 0;
-        }
-
-        if (trueJumpCounter > 16)
-        {
-            trueJumpCounter = 0;
-            action[Mario.KEY_JUMP] = false;
-        }
-
-        action[Mario.KEY_SPEED] = DangerOfGap();
-        return action;
-    }
+    action[Mario.KEY_SPEED] = DangerOfGap();
+    return action;
+}
 }

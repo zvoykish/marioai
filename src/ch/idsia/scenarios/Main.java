@@ -1,7 +1,5 @@
 package ch.idsia.scenarios;
 
-//import ch.idsia.evolution.agents.Agent;
-
 import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
 
@@ -11,17 +9,15 @@ import ch.idsia.tools.CmdLineOptions;
  */
 public final class Main
 {
-    public static void main(String[] args)
-    {
+public static void main(String[] args)
+{
 //        final String argsString = "-vis on";
-//        args = argsString.split("\\s");
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
+    final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
 //        final Environment environment = new MarioEnvironment();
 //        final Agent agent = new ForwardAgent();
 //        final Agent agent = cmdLineOptions.getAgent();
-//        final Agent agent = new RobinBaumgarten_AStarAgent();
 //        final Agent a = AgentsPool.load("ch.idsia.controllers.agents.controllers.ForwardJumpingAgent");
-        final BasicTask basicTask = new BasicTask(cmdLineOptions);
+    final BasicTask basicTask = new BasicTask(cmdLineOptions);
 //        for (int i = 0; i < 10; ++i)
 //        {
 //            int seed = 0;
@@ -29,15 +25,13 @@ public final class Main
 //            {
 //                cmdLineOptions.setLevelDifficulty(i);
 //                cmdLineOptions.setLevelRandSeed(seed++);
-        basicTask.reset(cmdLineOptions);
-        basicTask.runOneEpisode();
-        System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
+    basicTask.reset(cmdLineOptions);
+    basicTask.runOneEpisode();
+    System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
 //            } while (basicTask.getEnvironment().getEvaluationInfo().marioStatus != Environment.MARIO_STATUS_WIN);
 //        }
 //
-        System.out.println("cmdLineOptions.getLevelLength() = " + cmdLineOptions.getLevelLength());
-        System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-        System.exit(0);
-    }
+    System.exit(0);
+}
 
 }
