@@ -23,150 +23,149 @@ import java.util.List;
  * Package: ch.idsia.benchmark.mario.engine
  */
 
-public class
-        MarioVisualComponent extends JComponent
+public class MarioVisualComponent extends JComponent
 {
-    private CheaterKeyboardAgent cheatAgent = null;
+private CheaterKeyboardAgent cheatAgent = null;
 
-    public int width, height;
+public int width, height;
 
-    public VolatileImage thisVolatileImage;
-    public Graphics thisVolatileImageGraphics;
-    public Graphics thisGraphics;
+public VolatileImage thisVolatileImage;
+public Graphics thisVolatileImageGraphics;
+public Graphics thisGraphics;
 
-    public LevelScene levelScene;
-    private LevelRenderer layer;
-    private BgRenderer[] bgLayer = new BgRenderer[2];
+public LevelScene levelScene;
+private LevelRenderer layer;
+private BgRenderer[] bgLayer = new BgRenderer[2];
 
-    private Mario mario;
-    private Level level;
+private Mario mario;
+private Level level;
 
-    final private static DecimalFormat df = new DecimalFormat("00");
-    final private static DecimalFormat df2 = new DecimalFormat("000");
+final private static DecimalFormat df = new DecimalFormat("00");
+final private static DecimalFormat df2 = new DecimalFormat("000");
 
-    private static String[] LEVEL_TYPES = {"Overground(0)",
-            "Underground(1)",
-            "Castle(2)"};
+private static String[] LEVEL_TYPES = {"Overground(0)",
+        "Underground(1)",
+        "Castle(2)"};
 
-    private long tm = System.currentTimeMillis();
-    private long tm0;
-    int delay;
-    private KeyAdapter prevHumanKeyBoardAgent;
-    private String agentNameStr;
-    private GameViewer gameViewer = null;
-    private static MarioVisualComponent marioVisualComponent = null;
+private long tm = System.currentTimeMillis();
+private long tm0;
+int delay;
+private KeyAdapter prevHumanKeyBoardAgent;
+private String agentNameStr;
+private GameViewer gameViewer = null;
+private static MarioVisualComponent marioVisualComponent = null;
 
-    private MarioVisualComponent(CmdLineOptions cmdLineOptions, LevelScene levelScene)
+private MarioVisualComponent(CmdLineOptions cmdLineOptions, LevelScene levelScene)
+{
+    this.levelScene = levelScene;
+    adjustFPS();
+
+    this.setFocusable(true);
+    this.setEnabled(true);
+    this.width = cmdLineOptions.getViewWidth();
+    this.height = cmdLineOptions.getViewHeight();
+
+    Dimension size = new Dimension(width, height);
+
+    setPreferredSize(size);
+    setMinimumSize(size);
+    setMaximumSize(size);
+
+    setFocusable(true);
+
+    if (this.cheatAgent == null)
     {
-        this.levelScene = levelScene;
-        adjustFPS();
-
-        this.setFocusable(true);
-        this.setEnabled(true);
-        this.width = cmdLineOptions.getViewWidth();
-        this.height = cmdLineOptions.getViewHeight();
-
-        Dimension size = new Dimension(width, height);
-
-        setPreferredSize(size);
-        setMinimumSize(size);
-        setMaximumSize(size);
-
-        setFocusable(true);
-
-        if (this.cheatAgent == null)
-        {
-            this.cheatAgent = new CheaterKeyboardAgent();
-            this.addKeyListener(cheatAgent);
-        }
+        this.cheatAgent = new CheaterKeyboardAgent();
+        this.addKeyListener(cheatAgent);
+    }
 
 //        System.out.println("this (from constructor) = " + this);
 
-        GlobalOptions.registerMarioVisualComponent(this);
+    GlobalOptions.registerMarioVisualComponent(this);
 
-        if (cmdLineOptions.isGameViewer())
+    if (cmdLineOptions.isGameViewer())
+    {
+        if (this.gameViewer == null)
         {
-            if (this.gameViewer == null)
-            {
 
-                this.setGameViewer(new GameViewer(cmdLineOptions));
-                this.gameViewer.setMarioVisualComponent(this);
-                this.gameViewer.setVisible(true);
-            }
+            this.setGameViewer(new GameViewer(cmdLineOptions));
+            this.gameViewer.setMarioVisualComponent(this);
+            this.gameViewer.setVisible(true);
         }
     }
+}
 
-    public static MarioVisualComponent getInstance(CmdLineOptions cmdLineOptions, LevelScene levelScene)
+public static MarioVisualComponent getInstance(CmdLineOptions cmdLineOptions, LevelScene levelScene)
+{
+    if (marioVisualComponent == null)
     {
-        if (marioVisualComponent == null)
-        {
-            marioVisualComponent = new MarioVisualComponent(cmdLineOptions, levelScene);
-            marioVisualComponent.CreateMarioComponentFrame(marioVisualComponent);
-        }
-        return marioVisualComponent;
+        marioVisualComponent = new MarioVisualComponent(cmdLineOptions, levelScene);
+        marioVisualComponent.CreateMarioComponentFrame(marioVisualComponent);
     }
+    return marioVisualComponent;
+}
 
-    private static JFrame marioComponentFrame = null;
+private static JFrame marioComponentFrame = null;
 
-    public void CreateMarioComponentFrame(MarioVisualComponent m)
+public void CreateMarioComponentFrame(MarioVisualComponent m)
+{
+    if (marioComponentFrame == null)
     {
-        if (marioComponentFrame == null)
-        {
-            marioComponentFrame = new JFrame(/*evaluationOptions.getAgentFullLoadName() +*/ "Mario AI benchmark " + GlobalOptions.getVersionUID());
-            marioComponentFrame.setContentPane(m);
-            m.init();
-            marioComponentFrame.pack();
-            marioComponentFrame.setResizable(false);
-            marioComponentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        }
-        marioComponentFrame.setVisible(true);
-        m.postInitGraphics();
+        marioComponentFrame = new JFrame(/*evaluationOptions.getAgentFullLoadName() +*/ "Mario AI benchmark " + GlobalOptions.getVersionUID());
+        marioComponentFrame.setContentPane(m);
+        m.init();
+        marioComponentFrame.pack();
+        marioComponentFrame.setResizable(false);
+        marioComponentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+    marioComponentFrame.setVisible(true);
+    m.postInitGraphics();
+}
 
-    public void setLocation(Point location)
+public void setLocation(Point location)
+{
+    marioComponentFrame.setLocation(location.x, location.y);
+}
+
+public void setAlwaysOnTop(boolean b)
+{
+    marioComponentFrame.setAlwaysOnTop(b);
+}
+
+public void reset()
+{
+    adjustFPS();
+    tm = System.currentTimeMillis();
+    this.tm0 = tm;
+}
+
+public void tick()
+{
+    this.render(thisVolatileImageGraphics, 0);
+    String msg = "Agent: " + this.agentNameStr;
+    drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 7, 5);
+
+    msg = "Selected Actions: ";
+    drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 8, 6);
+
+    msg = "";
+    if (mario.keys != null)
     {
-        marioComponentFrame.setLocation(location.x, location.y);
-    }
+        for (int i = 0; i < Environment.numberOfButtons; ++i)
+            msg += (mario.keys[i]) ? LevelScene.keysStr[i] : "      ";
+    } else
+        msg = "NULL";
+    drawString(thisVolatileImageGraphics, msg, 6, 78, 1);
 
-    public void setAlwaysOnTop(boolean b)
+    if (!this.hasFocus() && (tm - tm0) / (delay + 1) % 42 < 20)
     {
-        marioComponentFrame.setAlwaysOnTop(b);
-    }
-
-    public void reset()
-    {
-        adjustFPS();
-        tm = System.currentTimeMillis();
-        this.tm0 = tm;
-    }
-
-    public void tick()
-    {
-        this.render(thisVolatileImageGraphics, 0);
-        String msg = "Agent: " + this.agentNameStr;
-        drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 7, 5);
-
-        msg = "Selected Actions: ";
-        drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 8, 6);
-
-        msg = "";
-        if (mario.keys != null)
-        {
-            for (int i = 0; i < Environment.numberOfButtons; ++i)
-                msg += (mario.keys[i]) ? LevelScene.keysStr[i] : "      ";
-        } else
-            msg = "NULL";
-        drawString(thisVolatileImageGraphics, msg, 6, 78, 1);
-
-        if (!this.hasFocus() && (tm - tm0) / (delay + 1) % 42 < 20)
-        {
-            String msgClick = "CLICK TO PLAY";
-            drawString(thisVolatileImageGraphics, msgClick, 160 - msgClick.length() * 4, 110, 2);
+        String msgClick = "CLICK TO PLAY";
+        drawString(thisVolatileImageGraphics, msgClick, 160 - msgClick.length() * 4, 110, 2);
 //            drawString(thisVolatileImageGraphics, msgClick, 160 - msgClick.length() * 4, 110, 7);
-        }
+    }
 //        thisVolatileImageGraphics.setColor(Color.DARK_GRAY);
-        drawStringDropShadow(thisVolatileImageGraphics, "FPS: ", 32, 2, 7);
-        drawStringDropShadow(thisVolatileImageGraphics, ((GlobalOptions.FPS > 99) ? "\\infty" : GlobalOptions.FPS.toString()), 32, 3, 7);
+    drawStringDropShadow(thisVolatileImageGraphics, "FPS: ", 32, 2, 7);
+    drawStringDropShadow(thisVolatileImageGraphics, ((GlobalOptions.FPS > 99) ? "\\infty" : GlobalOptions.FPS.toString()), 32, 3, 7);
 
 //        msg = totalNumberOfTrials == -2 ? "" : currentTrial + "(" + ((totalNumberOfTrials == -1) ? "\\infty" : totalNumberOfTrials) + ")";
 
@@ -179,308 +178,308 @@ public class
 //            thisGraphics.drawImage(thisVolatileImage, 0, 0, null);
 //        }
 
-        thisGraphics.drawImage(thisVolatileImage, 0, 0, null);
-        if (this.gameViewer != null)
-            this.gameViewer.tick();
-        // Delay depending on how far we are behind.
-        if (delay > 0)
-        {
+    thisGraphics.drawImage(thisVolatileImage, 0, 0, null);
+    if (this.gameViewer != null)
+        this.gameViewer.tick();
+    // Delay depending on how far we are behind.
+    if (delay > 0)
+    {
 //            System.out.println("delay = " + delay);
-            try
-            {
-                tm += delay;
-                Thread.sleep(Math.max(0, tm - System.currentTimeMillis()));
-            } catch (InterruptedException ignored) {}
-        }
+        try
+        {
+            tm += delay;
+            Thread.sleep(Math.max(0, tm - System.currentTimeMillis()));
+        } catch (InterruptedException ignored) {}
+    }
+}
+
+public void render(Graphics g, float alpha)
+{
+    int xCam = (int) (mario.xOld + (mario.x - mario.xOld) * alpha) - 160;
+    int yCam = (int) (mario.yOld + (mario.y - mario.yOld) * alpha) - 120;
+
+    if (GlobalOptions.isMarioAlwaysInCenter)
+    {
+    } else
+    {
+        //int xCam = (int) (xCamO + (this.xCam - xCamO) * alpha);
+        //        int yCam = (int) (yCamO + (this.yCam - yCamO) * alpha);
+        if (xCam < 0) xCam = 0;
+        if (yCam < 0) yCam = 0;
+        if (xCam > level.length * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH)
+            xCam = level.length * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH;
+        if (yCam > level.height * 16 - GlobalOptions.VISUAL_COMPONENT_HEIGHT)
+            yCam = level.height * 16 - GlobalOptions.VISUAL_COMPONENT_HEIGHT;
+    }
+    //      g.drawImage(Art.background, 0, 0, null);
+
+    for (int i = 0; i < bgLayer.length; i++)
+    {
+        bgLayer[i].setCam(xCam, yCam);
+        bgLayer[i].render(g, levelScene.tick, alpha); //levelScene.
     }
 
-    public void render(Graphics g, float alpha)
-    {
-        int xCam = (int) (mario.xOld + (mario.x - mario.xOld) * alpha) - 160;
-        int yCam = (int) (mario.yOld + (mario.y - mario.yOld) * alpha) - 120;
-
-        if (GlobalOptions.isMarioAlwaysInCenter)
-        {
-        } else
-        {
-            //int xCam = (int) (xCamO + (this.xCam - xCamO) * alpha);
-            //        int yCam = (int) (yCamO + (this.yCam - yCamO) * alpha);
-            if (xCam < 0) xCam = 0;
-            if (yCam < 0) yCam = 0;
-            if (xCam > level.length * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH)
-                xCam = level.length * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH;
-            if (yCam > level.height * 16 - GlobalOptions.VISUAL_COMPONENT_HEIGHT)
-                yCam = level.height * 16 - GlobalOptions.VISUAL_COMPONENT_HEIGHT;
-        }
-        //      g.drawImage(Art.background, 0, 0, null);
-
-        for (int i = 0; i < bgLayer.length; i++)
-        {
-            bgLayer[i].setCam(xCam, yCam);
-            bgLayer[i].render(g, levelScene.tick, alpha); //levelScene.
-        }
-
-        g.translate(-xCam, -yCam);
+    g.translate(-xCam, -yCam);
 
 //        for (Sprite sprite : levelScene.sprites)          // levelScene.
 //            if (sprite.layer == 0) sprite.render(g, alpha);
 
-        g.translate(xCam, yCam);
+    g.translate(xCam, yCam);
 
-        layer.setCam(xCam, yCam);
-        layer.render(g, levelScene.tick, levelScene.paused ? 0 : alpha); //levelScene., levelScene.
-        layer.renderExit0(g, levelScene.tick, levelScene.paused ? 0 : alpha, mario.winTime == 0);
+    layer.setCam(xCam, yCam);
+    layer.render(g, levelScene.tick, levelScene.paused ? 0 : alpha); //levelScene., levelScene.
+    layer.renderExit0(g, levelScene.tick, levelScene.paused ? 0 : alpha, mario.winTime == 0);
 
-        g.translate(-xCam, -yCam);
+    g.translate(-xCam, -yCam);
 
-        for (Sprite sprite : levelScene.sprites)  // Mario, creatures
-            if (sprite.layer == 1) sprite.render(g, alpha);
+    for (Sprite sprite : levelScene.sprites)  // Mario, creatures
+        if (sprite.layer == 1) sprite.render(g, alpha);
 
-        g.translate(xCam, yCam);
-        g.setColor(Color.BLACK);
-        layer.renderExit1(g, levelScene.tick, levelScene.paused ? 0 : alpha);
+    g.translate(xCam, yCam);
+    g.setColor(Color.BLACK);
+    layer.renderExit1(g, levelScene.tick, levelScene.paused ? 0 : alpha);
 
 //        drawStringDropShadow(g, "MARIO: " + df.format(Mario.lives), 0, 0, 7);
 //        drawStringDropShadow(g, "#########", 0, 1, 7);
 
 
-        drawStringDropShadow(g, "DIFFICULTY:   " + df.format(levelScene.getLevelDifficulty()), 0, 0, levelScene.getLevelDifficulty() > 6 ? 1 : levelScene.getLevelDifficulty() > 2 ? 4 : 7);
-        drawStringDropShadow(g, "CREATURES:" + (mario.world.paused ? "OFF" : " ON"), 19, 0, 7);
-        drawStringDropShadow(g, "SEED:" + levelScene.getLevelSeed(), 0, 1, 7);
-        drawStringDropShadow(g, "TYPE:" + LEVEL_TYPES[levelScene.getLevelType()], 0, 2, 7);
-        drawStringDropShadow(g, "ALL KILLS: " + levelScene.killedCreaturesTotal, 19, 1, 1);
-        drawStringDropShadow(g, "LENGTH:" + (int) mario.x / 16 + " of " + levelScene.getLevelLength(), 0, 3, 7);
-        drawStringDropShadow(g, "by Fire  : " + levelScene.killedCreaturesByFireBall, 19, 2, 1);
-        drawStringDropShadow(g, "COINS    : " + df.format(Mario.coins), 0, 4, 4);
-        drawStringDropShadow(g, "by Shell : " + levelScene.killedCreaturesByShell, 19, 3, 1);
-        drawStringDropShadow(g, "MUSHROOMS: " + df.format(Mario.mushroomsDevoured), 0, 5, 4);
-        drawStringDropShadow(g, "by Stomp : " + levelScene.killedCreaturesByStomp, 19, 4, 1);
-        drawStringDropShadow(g, "FLOWERS  : " + df.format(Mario.flowersDevoured), 0, 6, 4);
+    drawStringDropShadow(g, "DIFFICULTY:   " + df.format(levelScene.getLevelDifficulty()), 0, 0, levelScene.getLevelDifficulty() > 6 ? 1 : levelScene.getLevelDifficulty() > 2 ? 4 : 7);
+    drawStringDropShadow(g, "CREATURES:" + (mario.world.paused ? "OFF" : " ON"), 19, 0, 7);
+    drawStringDropShadow(g, "SEED:" + levelScene.getLevelSeed(), 0, 1, 7);
+    drawStringDropShadow(g, "TYPE:" + LEVEL_TYPES[levelScene.getLevelType()], 0, 2, 7);
+    drawStringDropShadow(g, "ALL KILLS: " + levelScene.killedCreaturesTotal, 19, 1, 1);
+    drawStringDropShadow(g, "LENGTH:" + (int) mario.x / 16 + " of " + levelScene.getLevelLength(), 0, 3, 7);
+    drawStringDropShadow(g, "by Fire  : " + levelScene.killedCreaturesByFireBall, 19, 2, 1);
+    drawStringDropShadow(g, "COINS    : " + df.format(Mario.coins), 0, 4, 4);
+    drawStringDropShadow(g, "by Shell : " + levelScene.killedCreaturesByShell, 19, 3, 1);
+    drawStringDropShadow(g, "MUSHROOMS: " + df.format(Mario.mushroomsDevoured), 0, 5, 4);
+    drawStringDropShadow(g, "by Stomp : " + levelScene.killedCreaturesByStomp, 19, 4, 1);
+    drawStringDropShadow(g, "FLOWERS  : " + df.format(Mario.flowersDevoured), 0, 6, 4);
 
-        drawStringDropShadow(g, "TIME", 33, 0, 7);
-        int time = levelScene.getTimeLeft();
-        if (time < 0) time = 0;
-        drawStringDropShadow(g, " " + df2.format(time), 33, 1, 7);
+    drawStringDropShadow(g, "TIME", 33, 0, 7);
+    int time = levelScene.getTimeLeft();
+    if (time < 0) time = 0;
+    drawStringDropShadow(g, " " + df2.format(time), 33, 1, 7);
 
-        drawProgress(g);
+    drawProgress(g);
 
-        if (GlobalOptions.areLabels)
-        {
-            g.drawString("xCam: " + xCam + "yCam: " + yCam, 10, 205);
-            g.drawString("x : " + mario.x + "y: " + mario.y, 10, 215);
-            g.drawString("xOld : " + mario.xOld + "yOld: " + mario.yOld, 10, 225);
-        }
+    if (GlobalOptions.areLabels)
+    {
+        g.drawString("xCam: " + xCam + "yCam: " + yCam, 10, 205);
+        g.drawString("x : " + mario.x + "y: " + mario.y, 10, 215);
+        g.drawString("xOld : " + mario.xOld + "yOld: " + mario.yOld, 10, 225);
+    }
 
-        if (levelScene.startTime > 0)
-        {
-            float t = levelScene.startTime + alpha - 2;
-            t = t * t * 0.6f;
-            renderBlackout(g, 160, 120, (int) (t));
-        }
+    if (levelScene.startTime > 0)
+    {
+        float t = levelScene.startTime + alpha - 2;
+        t = t * t * 0.6f;
+        renderBlackout(g, 160, 120, (int) (t));
+    }
 //        mario.x>level.xExit*16
-        if (mario.winTime > 0)
+    if (mario.winTime > 0)
+    {
+        float t = mario.winTime + alpha;
+        t = t * t * 0.2f;
+
+        if (t > 900)
         {
-            float t = mario.winTime + alpha;
-            t = t * t * 0.2f;
-
-            if (t > 900)
-            {
 //                renderer.levelWon();
-                mario.win();
-                //              replayer = new Replayer(recorder.getBytes());
+            mario.win();
+            //              replayer = new Replayer(recorder.getBytes());
 //                init();
-            }
-
-            renderBlackout(g, mario.xDeathPos - xCam, mario.yDeathPos - yCam,
-                    (int) (GlobalOptions.VISUAL_COMPONENT_WIDTH - t));
         }
 
-        if (mario.deathTime > 0)
-        {
+        renderBlackout(g, mario.xDeathPos - xCam, mario.yDeathPos - yCam,
+                (int) (GlobalOptions.VISUAL_COMPONENT_WIDTH - t));
+    }
+
+    if (mario.deathTime > 0)
+    {
 //            float t = mario.deathTime + alpha;
 //            t = t * t * 0.4f;
 //
 //            if (t > 1800)
 //            {
 //                renderer.levelFailed();
-            mario.die();
-            //              replayer = new Replayer(recorder.getBytes());
+        mario.die();
+        //              replayer = new Replayer(recorder.getBytes());
 //                init();
 //            }
 //            renderBlackout(g, (int) (mario.xDeathPos - xCam), (int) (mario.yDeathPos - yCam), (int) (320 - t));
-        }
     }
+}
 
-    private void drawProgress(Graphics g)
+private void drawProgress(Graphics g)
+{
+    String entirePathStr = "......................................>";
+    double physLength = (levelScene.getLevelLength() - 53) * 16;
+    int progressInChars = (int) (mario.x * (entirePathStr.length() / physLength));
+    String progress_str = "";
+    for (int i = 0; i < progressInChars - 1; ++i)
+        progress_str += ".";
+    progress_str += "M";
+    try
     {
-        String entirePathStr = "......................................>";
-        double physLength = (levelScene.getLevelLength() - 53) * 16;
-        int progressInChars = (int) (mario.x * (entirePathStr.length() / physLength));
-        String progress_str = "";
-        for (int i = 0; i < progressInChars - 1; ++i)
-            progress_str += ".";
-        progress_str += "M";
-        try
-        {
-            drawStringDropShadow(g, entirePathStr.substring(progress_str.length()), progress_str.length(), 28, 0);
-        } catch (StringIndexOutOfBoundsException e)
-        {
+        drawStringDropShadow(g, entirePathStr.substring(progress_str.length()), progress_str.length(), 28, 0);
+    } catch (StringIndexOutOfBoundsException e)
+    {
 //            System.err.println("warning: progress line inaccuracy");
-        }
-        drawStringDropShadow(g, progress_str, 0, 28, 2);
     }
+    drawStringDropShadow(g, progress_str, 0, 28, 2);
+}
 
-    public static void drawStringDropShadow(Graphics g, String text, int x, int y, int c)
+public static void drawStringDropShadow(Graphics g, String text, int x, int y, int c)
+{
+    drawString(g, text, x * 8 + 5, y * 8 + 5, 0);
+    drawString(g, text, x * 8 + 4, y * 8 + 4, c);
+}
+
+public static void drawString(Graphics g, String text, int x, int y, int c)
+{
+    char[] ch = text.toCharArray();
+    for (int i = 0; i < ch.length; i++)
+        g.drawImage(Art.font[ch[i] - 32][c], x + i * 8, y, null);
+}
+
+private void drawGrid(Graphics g, int length)
+{
+    width = length * 16;
+    height = length * 16;
+    g.setColor(Color.GREEN);
+
+    int rows = length;
+    int columns = length;
+
+    int htOfRow = height / (rows);
+    int k;
+    for (k = 0; k < rows; k++)
+        g.drawLine((int) mario.x, k * htOfRow, (int) (mario.x + width), k * htOfRow);
+
+    int wdOfRow = width / (columns);
+    for (k = 0; k < columns; k++)
+        g.drawLine(k * wdOfRow, 0, k * wdOfRow, height);
+
+}
+
+private void renderBlackout(Graphics g, int x, int y, int radius)
+{
+    if (radius > GlobalOptions.VISUAL_COMPONENT_WIDTH) return;
+
+    int[] xp = new int[20];
+    int[] yp = new int[20];
+    for (int i = 0; i < 16; i++)
     {
-        drawString(g, text, x * 8 + 5, y * 8 + 5, 0);
-        drawString(g, text, x * 8 + 4, y * 8 + 4, c);
+        xp[i] = x + (int) (Math.cos(i * Math.PI / 15) * radius);
+        yp[i] = y + (int) (Math.sin(i * Math.PI / 15) * radius);
     }
+    xp[16] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
+    yp[16] = y;
+    xp[17] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
+    yp[17] = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
+    xp[18] = 0;
+    yp[18] = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
+    xp[19] = 0;
+    yp[19] = y;
+    g.fillPolygon(xp, yp, xp.length);
 
-    public static void drawString(Graphics g, String text, int x, int y, int c)
+    for (int i = 0; i < 16; i++)
     {
-        char[] ch = text.toCharArray();
-        for (int i = 0; i < ch.length; i++)
-            g.drawImage(Art.font[ch[i] - 32][c], x + i * 8, y, null);
+        xp[i] = x - (int) (Math.cos(i * Math.PI / 15) * radius);
+        yp[i] = y - (int) (Math.sin(i * Math.PI / 15) * radius);
     }
+    xp[16] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
+    yp[16] = y;
+    xp[17] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
+    yp[17] = 0;
+    xp[18] = 0;
+    yp[18] = 0;
+    xp[19] = 0;
+    yp[19] = y;
 
-    private void drawGrid(Graphics g, int length)
-    {
-        width = length * 16;
-        height = length * 16;
-        g.setColor(Color.GREEN);
-
-        int rows = length;
-        int columns = length;
-
-        int htOfRow = height / (rows);
-        int k;
-        for (k = 0; k < rows; k++)
-            g.drawLine((int) mario.x, k * htOfRow, (int) (mario.x + width), k * htOfRow);
-
-        int wdOfRow = width / (columns);
-        for (k = 0; k < columns; k++)
-            g.drawLine(k * wdOfRow, 0, k * wdOfRow, height);
-
-    }
-
-    private void renderBlackout(Graphics g, int x, int y, int radius)
-    {
-        if (radius > GlobalOptions.VISUAL_COMPONENT_WIDTH) return;
-
-        int[] xp = new int[20];
-        int[] yp = new int[20];
-        for (int i = 0; i < 16; i++)
-        {
-            xp[i] = x + (int) (Math.cos(i * Math.PI / 15) * radius);
-            yp[i] = y + (int) (Math.sin(i * Math.PI / 15) * radius);
-        }
-        xp[16] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
-        yp[16] = y;
-        xp[17] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
-        yp[17] = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
-        xp[18] = 0;
-        yp[18] = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
-        xp[19] = 0;
-        yp[19] = y;
-        g.fillPolygon(xp, yp, xp.length);
-
-        for (int i = 0; i < 16; i++)
-        {
-            xp[i] = x - (int) (Math.cos(i * Math.PI / 15) * radius);
-            yp[i] = y - (int) (Math.sin(i * Math.PI / 15) * radius);
-        }
-        xp[16] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
-        yp[16] = y;
-        xp[17] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
-        yp[17] = 0;
-        xp[18] = 0;
-        yp[18] = 0;
-        xp[19] = 0;
-        yp[19] = y;
-
-        g.fillPolygon(xp, yp, xp.length);
-    }
+    g.fillPolygon(xp, yp, xp.length);
+}
 
 ////        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 ////        frame.setLocation((screenSize.length-frame.getWidth())/2, (screenSize.height-frame.getHeight())/2);
-    private static GraphicsConfiguration graphicsConfiguration;
+private static GraphicsConfiguration graphicsConfiguration;
 
-    public void init()
-    {
-        graphicsConfiguration = getGraphicsConfiguration();
+public void init()
+{
+    graphicsConfiguration = getGraphicsConfiguration();
 //        System.out.println("!!HRUYA: graphicsConfiguration = " + graphicsConfiguration);
-        Art.init(graphicsConfiguration);
+    Art.init(graphicsConfiguration);
 
 
-    }
+}
 
-    public void postInitGraphics()
-    {
+public void postInitGraphics()
+{
 //        System.out.println("this = " + this);
-        this.thisVolatileImage = this.createVolatileImage(GlobalOptions.VISUAL_COMPONENT_WIDTH, GlobalOptions.VISUAL_COMPONENT_HEIGHT);
-        this.thisGraphics = getGraphics();
-        this.thisVolatileImageGraphics = this.thisVolatileImage.getGraphics();
+    this.thisVolatileImage = this.createVolatileImage(GlobalOptions.VISUAL_COMPONENT_WIDTH, GlobalOptions.VISUAL_COMPONENT_HEIGHT);
+    this.thisGraphics = getGraphics();
+    this.thisVolatileImageGraphics = this.thisVolatileImage.getGraphics();
 //        System.out.println("thisGraphics = " + thisGraphics);
 //        System.out.println("thisVolatileImageGraphics = " + thisVolatileImageGraphics);
-    }
+}
 
 
-    public void postInitGraphicsAndLevel()
+public void postInitGraphicsAndLevel()
+{
+    if (graphicsConfiguration != null)
     {
-        if (graphicsConfiguration != null)
-        {
 //            System.out.println("level = " + level);
 //            System.out.println("levelScene .level = " + levelScene.level);
-            level = levelScene.level;
+        level = levelScene.level;
 
-            this.mario = levelScene.mario;
-            this.mario.cheatKeys = cheatAgent.getAction();
+        this.mario = levelScene.mario;
+        this.mario.cheatKeys = cheatAgent.getAction();
 //            System.out.println("mario = " + mario);
-            this.level = levelScene.level;
-            layer = new LevelRenderer(level, graphicsConfiguration, this.width, this.height);
-            for (int i = 0; i < bgLayer.length; i++)
-            {
-                int scrollSpeed = 4 >> i;
-                int w = ((level.length * 16) - GlobalOptions.VISUAL_COMPONENT_WIDTH) / scrollSpeed + GlobalOptions.VISUAL_COMPONENT_WIDTH;
-                int h = ((level.height * 16) - GlobalOptions.VISUAL_COMPONENT_HEIGHT) / scrollSpeed + GlobalOptions.VISUAL_COMPONENT_HEIGHT;
-                Level bgLevel = BgLevelGenerator.createLevel(w / 32 + 1, h / 32 + 1, i == 0, levelScene.getLevelType());
-                bgLayer[i] = new BgRenderer(bgLevel, graphicsConfiguration, GlobalOptions.VISUAL_COMPONENT_WIDTH, GlobalOptions.VISUAL_COMPONENT_HEIGHT, scrollSpeed);
-            }
-        } else throw new Error("[MarioAI] ERROR: Graphics Configuration is null. Graphics initialization failed");
-    }
-
-    public void adjustFPS()
-    {
-        int fps = GlobalOptions.FPS;
-        delay = (fps > 0) ? (fps >= GlobalOptions.MaxFPS) ? 0 : (1000 / fps) : 100;
-//        System.out.println("Delay: " + delay);
-    }
-
-    // THis method here solely for the displaying information in order to reduce
-    // amount of info passed between Env and VisComponent
-
-    public void setAgent(Agent agent)
-    {
-//        System.out.println("agent = " + agent);
-        this.agentNameStr = agent.getName();
-        if (agent instanceof KeyAdapter)
+        this.level = levelScene.level;
+        layer = new LevelRenderer(level, graphicsConfiguration, this.width, this.height);
+        for (int i = 0; i < bgLayer.length; i++)
         {
-            if (prevHumanKeyBoardAgent != null)
-                this.removeKeyListener(prevHumanKeyBoardAgent);
-            this.prevHumanKeyBoardAgent = (KeyAdapter) agent;
-            this.addKeyListener(this.prevHumanKeyBoardAgent);
+            int scrollSpeed = 4 >> i;
+            int w = ((level.length * 16) - GlobalOptions.VISUAL_COMPONENT_WIDTH) / scrollSpeed + GlobalOptions.VISUAL_COMPONENT_WIDTH;
+            int h = ((level.height * 16) - GlobalOptions.VISUAL_COMPONENT_HEIGHT) / scrollSpeed + GlobalOptions.VISUAL_COMPONENT_HEIGHT;
+            Level bgLevel = BgLevelGenerator.createLevel(w / 32 + 1, h / 32 + 1, i == 0, levelScene.getLevelType());
+            bgLayer[i] = new BgRenderer(bgLevel, graphicsConfiguration, GlobalOptions.VISUAL_COMPONENT_WIDTH, GlobalOptions.VISUAL_COMPONENT_HEIGHT, scrollSpeed);
         }
-    }
+    } else throw new Error("[MarioAI] ERROR: Graphics Configuration is null. Graphics initialization failed");
+}
 
-    public void setGameViewer(GameViewer gameViewer)
-    {
-        this.gameViewer = gameViewer;
-    }
+public void adjustFPS()
+{
+    int fps = GlobalOptions.FPS;
+    delay = (fps > 0) ? (fps >= GlobalOptions.MaxFPS) ? 0 : (1000 / fps) : 100;
+//        System.out.println("Delay: " + delay);
+}
 
-    public List<String> getTextObservation(boolean showEnemies, boolean showLevelScene, boolean showMerged, int zLevelMapValue, int zLevelEnemiesValue)
+// THis method here solely for the displaying information in order to reduce
+// amount of info passed between Env and VisComponent
+
+public void setAgent(Agent agent)
+{
+//        System.out.println("agent = " + agent);
+    this.agentNameStr = agent.getName();
+    if (agent instanceof KeyAdapter)
     {
-        return levelScene.getTextObservationAroundMario(showEnemies, showLevelScene, showMerged, zLevelMapValue, zLevelEnemiesValue);
+        if (prevHumanKeyBoardAgent != null)
+            this.removeKeyListener(prevHumanKeyBoardAgent);
+        this.prevHumanKeyBoardAgent = (KeyAdapter) agent;
+        this.addKeyListener(this.prevHumanKeyBoardAgent);
     }
+}
+
+public void setGameViewer(GameViewer gameViewer)
+{
+    this.gameViewer = gameViewer;
+}
+
+public List<String> getTextObservation(boolean showEnemies, boolean showLevelScene, boolean showMerged, int zLevelMapValue, int zLevelEnemiesValue)
+{
+    return levelScene.getTextObservationAroundMario(showEnemies, showLevelScene, showMerged, zLevelMapValue, zLevelEnemiesValue);
+}
 }
 
 
