@@ -19,7 +19,7 @@ public final class EvaluationInfo
 {
 private static final int MagicNumberUnDef = -42;
 
-public static final int numberOfElements = 15;
+public static final int numberOfElements = 14;
 
 // ordered in alphabetical order;
 public int distancePassedCells = MagicNumberUnDef;
@@ -34,7 +34,6 @@ public int marioMode = MagicNumberUnDef;
 public int marioStatus = MagicNumberUnDef;
 public int mushroomsDevoured = MagicNumberUnDef;
 public int coinsGained = MagicNumberUnDef;
-public int numberOfHiddenItemsGained = MagicNumberUnDef;
 public int timeLeft = MagicNumberUnDef;
 public int timeSpent = MagicNumberUnDef;
 public int hiddenBlocksFound = MagicNumberUnDef;
@@ -103,10 +102,9 @@ public float[] toFloatArray()
     retFloatArray[8] = this.marioStatus;
     retFloatArray[9] = this.mushroomsDevoured;
     retFloatArray[10] = this.coinsGained;
-    retFloatArray[11] = this.numberOfHiddenItemsGained;
-    retFloatArray[12] = this.timeLeft;
-    retFloatArray[13] = this.timeSpent;
-    retFloatArray[14] = this.hiddenBlocksFound;
+    retFloatArray[11] = this.timeLeft;
+    retFloatArray[12] = this.timeSpent;
+    retFloatArray[13] = this.hiddenBlocksFound;
 
     return retFloatArray;
 }
@@ -123,7 +121,6 @@ public String toString()
             "\n Time Spent(marioseconds) : " + timeSpent +
             "\n  Time Left(marioseconds) : " + timeLeft +
             "\n             Coins Gained : " + coinsGained +
-            "\n       Hidden Items Found : " + numberOfHiddenItemsGained +
             "\n      Hidden Blocks Found : " + hiddenBlocksFound +
             "\n       Mushrooms Devoured : " + mushroomsDevoured +
             "\n         Flowers Devoured : " + flowersDevoured +

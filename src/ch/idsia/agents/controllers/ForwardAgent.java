@@ -34,19 +34,27 @@ public void reset()
 private boolean DangerOfGap(byte[][] levelScene)
 {
     // TODO: introduce variables instead of constants.
-    for (int x = 7; x < 19; ++x)
+    int fromX = receptiveFieldWidth / 2;
+    int fromY = receptiveFieldHeight / 2;
+
+    if (fromX > 3)
+    {
+        fromX -= 2;
+    }
+
+    for (int x = fromX; x < receptiveFieldWidth; ++x)
     {
         boolean f = true;
-        for (int y = 9; y < 19; ++y)
+        for (int y = fromY; y < receptiveFieldHeight; ++y)
         {
             if (levelScene[y][x] != 0)
                 f = false;
         }
         if (f ||
-                levelScene[marioCenter[0] + 1][marioCenter[1]] == 0 ||
+                getReceptiveFieldCellValue(marioCenter[0] + 1, marioCenter[1]) == 0 ||
                 (marioState[1] > 0 &&
-                        (levelScene[marioCenter[0] + 1][marioCenter[1] - 1] != 0 ||
-                                levelScene[marioCenter[0] + 1][marioCenter[1]] != 0)))
+                        (getReceptiveFieldCellValue(marioCenter[0] + 1, marioCenter[1] - 1) != 0 ||
+                                getReceptiveFieldCellValue(marioCenter[0] + 1, marioCenter[1]) != 0)))
             return true;
     }
     return false;
@@ -61,8 +69,8 @@ public boolean[] getAction()
 {
     // this Agent requires observation integrated in advance.
 
-    if (mergedObservation[marioCenter[0]][marioCenter[1] + 2] != 0 ||
-            mergedObservation[marioCenter[0]][marioCenter[1] + 1] != 0 ||
+    if (getReceptiveFieldCellValue(marioCenter[0], marioCenter[1] + 2) != 0 ||
+            getReceptiveFieldCellValue(marioCenter[0], marioCenter[1] + 1) != 0 ||
             DangerOfGap())
     {
         if (isMarioAbleToJump || (!isMarioOnGround && action[Mario.KEY_JUMP]))
