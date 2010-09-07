@@ -63,6 +63,9 @@ public class Sprite
 
     public void render(Graphics og, float alpha)
     {
+        //if (kind == Sprite.KIND_GOOMBA)
+            //System.out.println("here");
+        
         if (!visible) return;
 
 //        int xPixel = (int)(xOld+(x-xOld)*alpha)-xPicO;

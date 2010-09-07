@@ -10,7 +10,6 @@ public class SystemOfValues
     public int win = 1024;
     public int mode = 32;
     public int coins = 16;
-    public int hiddenItems = 24;
     public int flowerFire = 64;
     public int kills = 42;
     public int killedByFire = 4;

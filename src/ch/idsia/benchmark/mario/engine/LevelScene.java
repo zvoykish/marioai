@@ -16,6 +16,7 @@ public class LevelScene implements SpriteContext
     public static boolean[] keys = new boolean[16];
     public static final String[] keysStr = {"LEFT  ", "RIGHT ", " DOWN ", " JUMP ", " SPEED"};
 
+    public static final int cellSize = 16;
 
     final public List<Sprite> sprites = new ArrayList<Sprite>();
     final private List<Sprite> spritesToAdd = new ArrayList<Sprite>();
@@ -405,9 +406,8 @@ public class LevelScene implements SpriteContext
 
     public byte[][] getLevelSceneObservationZ(int ZLevel)
     {
-        //TODO: Move to constants 16
-        int MarioXInMap = (int) mario.x / 16;
-        int MarioYInMap = (int) mario.y / 16;
+        int MarioXInMap = (int) mario.x / cellSize;
+        int MarioYInMap = (int) mario.y / cellSize;
 
         for (int y = MarioYInMap - receptiveFiledHeight / 2, obsX = 0; y <= MarioYInMap + receptiveFiledHeight / 2; y++, obsX++)
         {
@@ -428,9 +428,8 @@ public class LevelScene implements SpriteContext
 
     public byte[][] getEnemiesObservationZ(int ZLevel)
     {
-        //TODO: Move to constants 16
-        int MarioXInMap = (int) mario.x / 16;
-        int MarioYInMap = (int) mario.y / 16;
+        int MarioXInMap = (int) mario.x / cellSize;
+        int MarioYInMap = (int) mario.y / cellSize;
 
         for (int w = 0; w < enemiesZ.length; w++)
             for (int h = 0; h < enemiesZ[0].length; h++)
@@ -480,10 +479,8 @@ public class LevelScene implements SpriteContext
 
     public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
     {
-
-        //TODO: Move to constants 16
-        int MarioXInMap = (int) mario.x / 16;
-        int MarioYInMap = (int) mario.y / 16;
+        int MarioXInMap = (int) mario.x / cellSize;
+        int MarioYInMap = (int) mario.y / cellSize;
 
 
         for (int y = MarioYInMap - receptiveFiledHeight / 2, obsX = 0; y <= MarioYInMap + receptiveFiledHeight / 2; y++, obsX++)
@@ -698,6 +695,11 @@ public class LevelScene implements SpriteContext
 
                     if (st != null)
                     {
+                        if (st.getType() == Sprite.KIND_SPIKY)
+                        {
+//                            System.out.println("here");
+                        }
+
                         if (st.lastVisibleTick != tick - 1)
                         {
                             if (st.sprite == null || !sprites.contains(st.sprite))
@@ -748,9 +750,9 @@ public class LevelScene implements SpriteContext
                             {
                                 mario.carried = null;
                                 mario.setRacoon(false);
-                                System.out.println("sprite = " + sprite);
+                                //System.out.println("sprite = " + sprite);
                                 shell.die();
-                                ++this.killedCreaturesTotal;
+//                                ++this.killedCreaturesTotal; //TODO: check this
                             }
                         }
                     }

@@ -33,6 +33,7 @@ public class MarioSystemOfValues extends SystemOfValues
     final public int killedByShell = 17;
     final public int killedByStomp = 12;
     final public int timeLeft = 8;
+    final public int hiddenBlocks = 24;
 
     public interface timeLengthMapping
     {

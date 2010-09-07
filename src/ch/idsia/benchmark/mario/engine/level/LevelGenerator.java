@@ -147,7 +147,7 @@ public class LevelGenerator
         }
 
         //coordinates of the exit
-        level.xExit = length + 16;
+        level.xExit = length + 8;
         level.yExit = floor;
 
         //fix floor

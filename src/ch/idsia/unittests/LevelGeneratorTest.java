@@ -3,6 +3,7 @@ package ch.idsia.unittests;
 import ch.idsia.benchmark.mario.engine.level.Level;
 import ch.idsia.benchmark.mario.engine.level.LevelGenerator;
 import ch.idsia.benchmark.mario.engine.level.SpriteTemplate;
+import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 import ch.idsia.tools.CmdLineOptions;
 import junit.framework.TestCase;
 import org.testng.annotations.AfterTest;
@@ -74,5 +75,45 @@ public class LevelGeneratorTest extends TestCase
 
                 assertEquals (t1, t2);
             }
+    }
+
+    @Test
+    public void testCreateLevelWithoutCreatures() throws Exception
+    {
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-le 0");
+        Level level = LevelGenerator.createLevel(cmdLineOptions);
+
+        for (int i = 0; i < level.length; i++)
+            for (int j = 0; j < level.height; j++)
+                assertNull(level.getSpriteTemplate (i, j));
+    }
+
+    @Test
+    public void testCreateLevelWithTubesWithoutFlowers()
+    {
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-ltb on -le 111111110");
+        Level level = LevelGenerator.createLevel(cmdLineOptions);
+
+        assertEquals(true, level.counters.tubesCount > 0);
+        assertEquals(true, level.counters.totalTubes == Integer.MAX_VALUE);
+    }
+
+    @Test
+    public void testCreateLevelWithTubesWithFlowers()
+    {
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-ltb on -le 111111111 -ld 5");
+        Level level = LevelGenerator.createLevel(cmdLineOptions);
+
+        boolean fl = false;
+
+        for (int i = 0; i < level.length; i++)
+            for (int j = 0; j < level.height; j++)
+                if ((level.getSpriteTemplate (i, j) != null) && (level.getSpriteTemplate (i, j).getType() == Sprite.KIND_ENEMY_FLOWER))
+                {
+                    fl = true;
+                    break;
+                }
+
+        assertEquals(true, fl);
     }
 }
