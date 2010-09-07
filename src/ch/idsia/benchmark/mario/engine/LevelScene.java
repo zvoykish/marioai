@@ -695,10 +695,10 @@ public class LevelScene implements SpriteContext
 
                     if (st != null)
                     {
-                        if (st.getType() == Sprite.KIND_SPIKY)
-                        {
+//                        if (st.getType() == Sprite.KIND_SPIKY)
+//                        {
 //                            System.out.println("here");
-                        }
+//                        }
 
                         if (st.lastVisibleTick != tick - 1)
                         {
