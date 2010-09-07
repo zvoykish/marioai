@@ -538,8 +538,8 @@ public class LevelScene implements SpriteContext
             ret.add("Physical Mario Position (x,y): (" + mario.x + "," + mario.y + ")");
             ret.add("Mario Observation (Receptive Field)   Width: " + receptiveFiledWidth + " Height: " + receptiveFiledHeight);
             ret.add("X Exit Position: " + level.xExit);
-            int MarioXInMap = (int) mario.x / 16;
-            int MarioYInMap = (int) mario.y / 16;
+            int MarioXInMap = (int) mario.x / cellSize;
+            int MarioYInMap = (int) mario.y / cellSize;
             ret.add("Calibrated Mario Position (x,y): (" + MarioXInMap + "," + MarioYInMap + ")\n");
 
             byte[][] levelScene = getLevelSceneObservationZ(ZLevelScene);
@@ -630,8 +630,8 @@ public class LevelScene implements SpriteContext
         xCam = targetXCam;
 
         if (xCam < 0) xCam = 0;
-        if (xCam > level.length * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH)
-            xCam = level.length * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH;
+        if (xCam > level.length * cellSize - GlobalOptions.VISUAL_COMPONENT_WIDTH)
+            xCam = level.length * cellSize - GlobalOptions.VISUAL_COMPONENT_WIDTH;
 
         // TODO: reincarnate recordings
         /*      if (recorder != null)
@@ -683,13 +683,13 @@ public class LevelScene implements SpriteContext
 //            boolean hasShotCannon = false;
 //            int xCannon = 0;
 
-            for (int x = (int) xCam / 16 - 1; x <= (int) (xCam + this.width) / 16 + 1; x++)
-                for (int y = (int) yCam / 16 - 1; y <= (int) (yCam + this.height) / 16 + 1; y++)
+            for (int x = (int) xCam / cellSize - 1; x <= (int) (xCam + this.width) / cellSize + 1; x++)
+                for (int y = (int) yCam / cellSize - 1; y <= (int) (yCam + this.height) / cellSize + 1; y++)
                 {
                     int dir = 0;
 
-                    if (x * 16 + 8 > mario.x + 16) dir = -1;
-                    if (x * 16 + 8 < mario.x - 16) dir = 1;
+                    if (x * cellSize + 8 > mario.x + cellSize) dir = -1;
+                    if (x * cellSize + 8 < mario.x - cellSize) dir = 1;
 
                     SpriteTemplate st = level.getSpriteTemplate(x, y);
 
@@ -714,16 +714,16 @@ public class LevelScene implements SpriteContext
                         byte b = level.getBlock(x, y);
                         if (((Level.TILE_BEHAVIORS[b & 0xff]) & Level.BIT_ANIMATED) > 0)
                         {
-                            if ((b % 16) / 4 == 3 && b / 16 == 0)
+                            if ((b % cellSize) / 4 == 3 && b / cellSize == 0)
                             {
                                 if ((tick - x * 2) % 100 == 0)
                                 {
 //                                    xCannon = x;
                                     for (int i = 0; i < 8; i++)
                                     {
-                                        addSprite(new Sparkle(x * 16 + 8, y * 16 + (int) (Math.random() * 16), (float) Math.random() * dir, 0, 0, 1, 5));
+                                        addSprite(new Sparkle(x * cellSize + 8, y * cellSize + (int) (Math.random() * cellSize), (float) Math.random() * dir, 0, 0, 1, 5));
                                     }
-                                    addSprite(new BulletBill(this, x * 16 + 8 + dir * 8, y * 16 + 15, dir));
+                                    addSprite(new BulletBill(this, x * cellSize + 8 + dir * 8, y * cellSize + 15, dir));
 
 //                                    hasShotCannon = true;
                                 }
@@ -802,10 +802,10 @@ public class LevelScene implements SpriteContext
             {
                 if (!Mario.large)
                 {
-                    addSprite(new Mushroom(this, x * 16 + 8, y * 16 + 8));
+                    addSprite(new Mushroom(this, x * cellSize + 8, y * cellSize + 8));
                 } else
                 {
-                    addSprite(new FireFlower(this, x * 16 + 8, y * 16 + 8));
+                    addSprite(new FireFlower(this, x * cellSize + 8, y * cellSize + 8));
                 }
             } else
             {
@@ -822,7 +822,7 @@ public class LevelScene implements SpriteContext
                 level.setBlock(x, y, (byte) 0);
                 for (int xx = 0; xx < 2; xx++)
                     for (int yy = 0; yy < 2; yy++)
-                        addSprite(new Particle(x * 16 + xx * 8 + 4, y * 16 + yy * 8 + 4, (xx * 2 - 1) * 4, (yy * 2 - 1) * 4 - 8));
+                        addSprite(new Particle(x * cellSize + xx * 8 + 4, y * cellSize + yy * 8 + 4, (xx * 2 - 1) * 4, (yy * 2 - 1) * 4 - 8));
             } else
             {
                 level.setBlockData(x, y, (byte) 4);

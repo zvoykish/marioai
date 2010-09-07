@@ -39,6 +39,9 @@ protected int getKillsByFire;
 protected int getKillsByStomp;
 protected int getKillsByShell;
 
+protected int receptiveFieldWidth;
+protected int receptiveFieldHeight;
+
 // values of these variables could be changed during the Agent-Environment interaction.
 // Use them to get more detailed or less detailed description of the level.
 // for information see documentation for the benchmark <link: marioai.org/marioaibenchmark/zLevels
@@ -69,6 +72,8 @@ public void integrateObservation(Environment environment)
     this.marioState = environment.getMarioState();
 
     this.marioCenter = environment.getMarioReceptiveFieldCenter();
+    receptiveFieldWidth = environment.getReceptiveFieldWidth();
+    receptiveFieldHeight = environment.getReceptiveFieldHeight();
 
     // It also possible to use direct methods from Environment interface.
     //
@@ -103,6 +108,14 @@ public boolean[] getAction(Environment observation)
 public String getName() { return name; }
 
 public void setName(String Name) { this.name = Name; }
+
+public int getReceptiveFieldCellValue(int x, int y)
+{
+    if (x < 0 || x >= levelScene.length || y < 0 || y >= levelScene[0].length)
+        return 0;
+
+    return levelScene[x][y];
+}
 
 //    public void integrateObservation(int[] serializedLevelSceneObservationZ, int[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
 //    {

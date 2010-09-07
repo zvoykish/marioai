@@ -248,7 +248,6 @@ public EvaluationInfo getEvaluationInfo()
     evaluationInfo.killsByStomp = levelScene.getKillsByStomp();
     evaluationInfo.killsByFire = levelScene.getKillsByFire();
     evaluationInfo.killsByShell = levelScene.getKillsByShell();
-    evaluationInfo.numberOfHiddenItemsGained = levelScene.getNumberOfHiddenCoinsGained();
     evaluationInfo.hiddenBlocksFound = Mario.hiddenBlocks;
     evaluationInfo.collisionsWithCreatures = Mario.collisionsWithCreatures;
 //        evaluationInfo.Memo = "Number of attempt: " + Mario.numberOfAttempts;
