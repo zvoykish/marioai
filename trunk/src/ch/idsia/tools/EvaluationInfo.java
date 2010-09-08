@@ -38,6 +38,9 @@ public int timeLeft = MagicNumberUnDef;
 public int timeSpent = MagicNumberUnDef;
 public int hiddenBlocksFound = MagicNumberUnDef;
 
+public int totalNumberOfCoins = MagicNumberUnDef;
+public int collisionsWithCreatures = MagicNumberUnDef;
+
 private static final float[] retFloatArray = new float[EvaluationInfo.numberOfElements];
 private static final float[] zeros = new float[EvaluationInfo.numberOfElements];
 public String Memo = "";
@@ -120,7 +123,7 @@ public String toString()
             df.format(distancePassedPhys) +
             "\n Time Spent(marioseconds) : " + timeSpent +
             "\n  Time Left(marioseconds) : " + timeLeft +
-            "\n             Coins Gained : " + coinsGained +
+            "\n             Coins Gained : " + coinsGained + " of " + totalNumberOfCoins + "(" +coinsGained*100/totalNumberOfCoins + "% collected)" +
             "\n      Hidden Blocks Found : " + hiddenBlocksFound +
             "\n       Mushrooms Devoured : " + mushroomsDevoured +
             "\n         Flowers Devoured : " + flowersDevoured +
@@ -150,7 +153,4 @@ public String toStringSingleLine()
             "; By Shell: " + killsByShell +
             "; By Stomp: " + killsByStomp;
 }
-
-public int totalNumberOfCoins = MagicNumberUnDef;
-public int collisionsWithCreatures = MagicNumberUnDef;
 }

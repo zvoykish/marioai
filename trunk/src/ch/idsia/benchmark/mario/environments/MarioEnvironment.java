@@ -241,7 +241,7 @@ public EvaluationInfo getEvaluationInfo()
     evaluationInfo.timeSpent = levelScene.getTimeSpent();
     evaluationInfo.timeLeft = levelScene.getTimeLeft();
     evaluationInfo.coinsGained = Mario.coins;
-    evaluationInfo.totalNumberOfCoins = levelScene.level.counters.totalCoins;
+    evaluationInfo.totalNumberOfCoins = levelScene.level.counters.coinsCount;
     evaluationInfo.marioMode = levelScene.getMarioMode();
     evaluationInfo.mushroomsDevoured = Mario.mushroomsDevoured;
     evaluationInfo.killsTotal = levelScene.getKillsTotal();

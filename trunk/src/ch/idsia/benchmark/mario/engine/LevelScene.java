@@ -752,7 +752,7 @@ public class LevelScene implements SpriteContext
                                 mario.setRacoon(false);
                                 //System.out.println("sprite = " + sprite);
                                 shell.die();
-//                                ++this.killedCreaturesTotal; //TODO: check this
+                                ++this.killedCreaturesTotal;
                             }
                         }
                     }
@@ -923,7 +923,7 @@ public class LevelScene implements SpriteContext
         byte[][] levelScene = this.getLevelSceneObservationZ(ZLevelScene);
         for (int i = 0; i < serializedLevelScene.length; ++i)
         {
-            serializedLevelScene[i] = (int) levelScene[i / receptiveFiledWidth][i % receptiveFiledHeight];
+            serializedLevelScene[i] = (int) levelScene[i / receptiveFiledWidth][i % receptiveFiledHeight]; //TODO: fix it. crashes if -rfw and -rfh are 1x3 and 3x1 
         }
         return serializedLevelScene;
     }
