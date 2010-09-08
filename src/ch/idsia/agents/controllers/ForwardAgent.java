@@ -47,7 +47,7 @@ private boolean DangerOfGap(byte[][] levelScene)
         boolean f = true;
         for (int y = fromY; y < receptiveFieldHeight; ++y)
         {
-            if (levelScene[y][x] != 0)
+            if (getReceptiveFieldCellValue(x, y) != 0)
                 f = false;
         }
         if (f ||

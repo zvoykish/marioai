@@ -1,5 +1,7 @@
 package ch.idsia.unittests;
 
+import ch.idsia.benchmark.mario.engine.LevelScene;
+import ch.idsia.tools.CmdLineOptions;
 import junit.framework.TestCase;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -14,17 +16,58 @@ import org.testng.annotations.Test;
  */
 public class LevelSceneTest extends TestCase
 {
-    @BeforeTest
-    public void setUp()
-    {
-    }
+@BeforeTest
+public void setUp()
+{
+}
 
-    @AfterTest
-    public void tearDown()
-    {
-    }
+@AfterTest
+public void tearDown()
+{
+}
 
-    @Test
-    public void testSetArgs() throws Exception {
-    }
+@Test
+public void testSetArgs() throws Exception
+{
+}
+
+@Test
+public void testGetSerializedLevelSceneObservationZ_1x3() throws Exception
+{
+    CmdLineOptions cmd = new CmdLineOptions("-rfw 1 -rfh 3");
+    LevelScene levelScene = new LevelScene();
+    //levelScene.init(cmd);
+    levelScene.reset(cmd);
+    int[] obs = levelScene.getSerializedLevelSceneObservationZ(1);
+}
+
+@Test
+public void testGetSerializedLevelSceneObservationZ_3x1() throws Exception
+{
+    CmdLineOptions cmd = new CmdLineOptions("-rfw 3 -rfh 1");
+    LevelScene levelScene = new LevelScene();
+    //levelScene.init(cmd);
+    levelScene.reset(cmd);
+    int[] obs = levelScene.getSerializedLevelSceneObservationZ(1);
+}
+
+@Test
+public void testGetSerializedLevelSceneObservationZ_1x1() throws Exception
+{
+    CmdLineOptions cmd = new CmdLineOptions("-rfw 1 -rfh 1");
+    LevelScene levelScene = new LevelScene();
+    //levelScene.init(cmd);
+    levelScene.reset(cmd);
+    int[] obs = levelScene.getSerializedLevelSceneObservationZ(1);
+}
+
+@Test
+public void testGetSerializedLevelSceneObservationZ_3x3() throws Exception
+{
+    CmdLineOptions cmd = new CmdLineOptions("-rfw 3 -rfh 3");
+    LevelScene levelScene = new LevelScene();
+    //levelScene.init(cmd);
+    levelScene.reset(cmd);
+    int[] obs = levelScene.getSerializedLevelSceneObservationZ(1);
+}
 }
