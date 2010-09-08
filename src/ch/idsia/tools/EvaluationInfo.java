@@ -114,6 +114,8 @@ public float[] toFloatArray()
 
 public String toString()
 {
+    if (totalNumberOfCoins == 0) //quick fix. remove this crutch
+        ++totalNumberOfCoins;
     return "\n[MarioAI] ~ Evaluation Results:" +
             "\n         Weighted Fitness : " + df.format(computeWeightedFitness()) +
             "\n             Mario Status : " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss...") +
