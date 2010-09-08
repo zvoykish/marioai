@@ -1061,9 +1061,6 @@ public class LevelScene implements SpriteContext
     public int getLevelType()
     { return levelType; }
 
-    public int getNumberOfHiddenCoinsGained()
-    { return numberOfHiddenCoinsGained; }
-
     public int getReceptiveFieldWidth()
     {
         return receptiveFiledWidth;

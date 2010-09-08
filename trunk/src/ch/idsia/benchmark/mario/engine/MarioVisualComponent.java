@@ -221,8 +221,8 @@ public void render(Graphics g, float alpha)
 
     g.translate(-xCam, -yCam);
 
-//        for (Sprite sprite : levelScene.sprites)          // levelScene.
-//            if (sprite.layer == 0) sprite.render(g, alpha);
+    for (Sprite sprite : levelScene.sprites)          // levelScene.
+        if (sprite.layer == 0) sprite.render(g, alpha);
 
     g.translate(xCam, yCam);
 
