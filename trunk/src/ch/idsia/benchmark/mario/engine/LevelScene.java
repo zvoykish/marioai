@@ -13,103 +13,104 @@ import java.util.List;
 
 public class LevelScene implements SpriteContext
 {
-    public static boolean[] keys = new boolean[16];
-    public static final String[] keysStr = {"LEFT  ", "RIGHT ", " DOWN ", " JUMP ", " SPEED"};
+public static boolean[] keys = new boolean[16];
+public static final String[] keysStr = {"LEFT  ", "RIGHT ", " DOWN ", " JUMP ", " SPEED"};
 
-    public static final int cellSize = 16;
+public static final int cellSize = 16;
 
-    final public List<Sprite> sprites = new ArrayList<Sprite>();
-    final private List<Sprite> spritesToAdd = new ArrayList<Sprite>();
-    final private List<Sprite> spritesToRemove = new ArrayList<Sprite>();
+final public List<Sprite> sprites = new ArrayList<Sprite>();
+final private List<Sprite> spritesToAdd = new ArrayList<Sprite>();
+final private List<Sprite> spritesToRemove = new ArrayList<Sprite>();
 
-    public Level level;
-    public Mario mario;
-    public float xCam, yCam, xCamO, yCamO;
+public Level level;
+public Mario mario;
+public float xCam, yCam, xCamO, yCamO;
 
-    public int tick;
+public int tick;
 
-    public boolean paused = false;
-    public int startTime = 0;
-    private int timeLeft;
-    private int width;
-    private int height;
+public boolean paused = false;
+public int startTime = 0;
+private int timeLeft;
+private int width;
+private int height;
 
-    public boolean visualization = false;
+public boolean visualization = false;
 
-    private static final int CANNON_MUZZLE = -82;
-    private static final int CANNON_TRUNK = -80;
-    private static final int COIN_ANIM = Sprite.KIND_COIN_ANIM;  //1
-    private static final int BREAKABLE_BRICK = -20;
-    private static final int UNBREAKABLE_BRICK = -22; //a rock with animated question symbol
-    private static final int BRICK = -24; //a rock with animated question symbol
-    private static final int FLOWER_POT = -90;
-    private static final int BORDER_CANNOT_PASS_THROUGH = -60;
-    private static final int BORDER_HILL = -62;
-    private static final int FLOWER_POT_OR_CANNON = -85;
+private static final int CANNON_MUZZLE = -82;
+private static final int CANNON_TRUNK = -80;
+private static final int COIN_ANIM = Sprite.KIND_COIN_ANIM;  //1
+private static final int BREAKABLE_BRICK = -20;
+private static final int UNBREAKABLE_BRICK = -22; //a rock with animated question symbol
+private static final int BRICK = -24; //a rock with animated question symbol
+private static final int FLOWER_POT = -90;
+private static final int BORDER_CANNOT_PASS_THROUGH = -60;
+private static final int BORDER_HILL = -62;
+private static final int FLOWER_POT_OR_CANNON = -85;
 
-    private int receptiveFiledHeight = -1; // to be setup via CmdLineOptions
-    private int receptiveFiledWidth = -1; // to be setup via CmdLineOptions
-    private int prevRFH = -1;
-    private int prevRFW = -1;
-    private int[] serializedLevelScene;   // memory is allocated in reset
-    private int[] serializedEnemies;      // memory is allocated in reset
-    private int[] serializedMergedObservation; // memory is allocated in reset
+private int receptiveFiledHeight = -1; // to be setup via CmdLineOptions
+private int receptiveFiledWidth = -1; // to be setup via CmdLineOptions
+private int prevRFH = -1;
+private int prevRFW = -1;
+private int[] serializedLevelScene;   // memory is allocated in reset
+private int[] serializedEnemies;      // memory is allocated in reset
+private int[] serializedMergedObservation; // memory is allocated in reset
 
-    private byte[][] levelSceneZ;     // memory is allocated in reset
-    private byte[][] enemiesZ;      // memory is allocated in reset
-    private byte[][] mergedZ;      // memory is allocated in reset
+private byte[][] levelSceneZ;     // memory is allocated in reset
+private byte[][] enemiesZ;      // memory is allocated in reset
+private byte[][] mergedZ;      // memory is allocated in reset
 
-    final private List<Float> enemiesFloatsList = new ArrayList<Float>();
-    final private float[] marioFloatPos = new float[2];
-    final private int[] marioState = new int[12];
-    private int numberOfHiddenCoinsGained = 0;
+final private List<Float> enemiesFloatsList = new ArrayList<Float>();
+final private float[] marioFloatPos = new float[2];
+final private int[] marioState = new int[12];
+private int numberOfHiddenCoinsGained = 0;
+public String memo;
 
-    //    public int getTimeLimit() {  return timeLimit; }
-    public void setTimeLimit(int timeLimit)
-    { this.timeLimit = timeLimit; }
+//    public int getTimeLimit() {  return timeLimit; }
+public void setTimeLimit(int timeLimit)
+{ this.timeLimit = timeLimit; }
 
-    private int timeLimit = 200;
+private int timeLimit = 200;
 
-    //    private Recorder recorder = new Recorder();
-    //    private Replayer replayer = null;
+//    private Recorder recorder = new Recorder();
+//    private Replayer replayer = null;
 
-    private long levelSeed;
-    private int levelType;
-    private int levelDifficulty;
-    private int levelLength;
-    private int levelHeight;
-    public static int killedCreaturesTotal;
-    public static int killedCreaturesByFireBall;
-    public static int killedCreaturesByStomp;
-    public static int killedCreaturesByShell;
+private long levelSeed;
+private int levelType;
+private int levelDifficulty;
+private int levelLength;
+private int levelHeight;
+public static int killedCreaturesTotal;
+public static int killedCreaturesByFireBall;
+public static int killedCreaturesByStomp;
+public static int killedCreaturesByShell;
 
 //    private int[] args; //passed to reset method. ATTENTION: not cloned.
 
-    public LevelScene()
+public LevelScene()
+{
+    try
     {
-        try
-        {
 //            System.out.println("Java::LevelScene: loading tiles.dat...");
 //            System.out.println("LS: System.getProperty(\"user.dir()\") = " + System.getProperty("user.dir"));
-            Level.loadBehaviors(new DataInputStream(LevelScene.class.getResourceAsStream("resources/tiles.dat")));
-        }
-        catch (IOException e)
-        {
-            System.err.println("[MarioAI ERROR] : error loading file resources/tiles.dat ; ensure this file exists in ch/idsia/benchmark/mario/engine ");
-            e.printStackTrace();
-            System.exit(0);
-        }
+        Level.loadBehaviors(new DataInputStream(LevelScene.class.getResourceAsStream("resources/tiles.dat")));
     }
-
-    public void init(CmdLineOptions args)
+    catch (IOException e)
     {
-        /*        if (replayer!=null)
-         {                level = LevelGenerator.createLevel(2048, 15, replayer.nextLong());         }
-         else
-         {*/
+        System.err.println("[MarioAI ERROR] : error loading file resources/tiles.dat ; ensure this file exists in ch/idsia/benchmark/mario/engine ");
+        e.printStackTrace();
+        System.exit(0);
+    }
+}
+
+public void init(CmdLineOptions args)
+{
+    /*        if (replayer!=null)
+    {                level = LevelGenerator.createLevel(2048, 15, replayer.nextLong());         }
+    else
+    {*/
 //        level = LevelGenerator.createLevel(320, 15, levelSeed);
 //        if (levelSeed != -152)
-        level = LevelGenerator.createLevel(args);
+    level = LevelGenerator.createLevel(args);
 //        else
 //        try
 //        {
@@ -124,955 +125,959 @@ public class LevelScene implements SpriteContext
 //        {
 //        }
 //        Ssystem.out.println("\nJava:level created.");
-        //        }
+    //        }
 
-        /*        if (recorder != null)
-         {
-         recorder.addLong(LevelGenerator.lastSeed);
-         }*/
-        paused = false;
-        Sprite.spriteContext = this;
-        sprites.clear();
-        this.width = GlobalOptions.VISUAL_COMPONENT_WIDTH;
-        this.height = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
+    /*        if (recorder != null)
+    {
+    recorder.addLong(LevelGenerator.lastSeed);
+    }*/
+    paused = false;
+    Sprite.spriteContext = this;
+    sprites.clear();
+    this.width = GlobalOptions.VISUAL_COMPONENT_WIDTH;
+    this.height = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
 
 
-        mario = new Mario(this);
-        sprites.add(mario);
+    mario = new Mario(this);
+    sprites.add(mario);
 //        System.out.println("mario.sheet = " + mario.sheet);
-        startTime = 1;
+    startTime = 1;
 //        if (levelSeed == 152)
 //            mario.x = level.xExit * 16 - 17;
-        timeLeft = timeLimit * 15;
+    timeLeft = timeLimit * 15;
 
-        tick = 0;
-    }
+    tick = 0;
+}
 
-    private String mapElToStr(int el)
+private String mapElToStr(int el)
+{
+    String s = "";
+    if (el == 0 || el == 1)
+        s = "##";
+    s += (el == mario.kind) ? "#M.#" : el;
+    while (s.length() < 4)
+        s += "#";
+    return s + " ";
+}
+
+private String enemyToStr(int el)
+{
+    String s = "";
+    if (el == 0)
+        s = "";
+    s += (el == mario.kind) ? "-m" : el;
+    while (s.length() < 2)
+        s += "#";
+    return s + " ";
+}
+
+private byte ZLevelMapElementGeneralization(byte el, int ZLevel)
+{
+    if (el == 0)
+        return 0;
+    switch (ZLevel)
     {
-        String s = "";
-        if (el == 0 || el == 1)
-            s = "##";
-        s += (el == mario.kind) ? "#M.#" : el;
-        while (s.length() < 4)
-            s += "#";
-        return s + " ";
-    }
-
-    private String enemyToStr(int el)
-    {
-        String s = "";
-        if (el == 0)
-            s = "";
-        s += (el == mario.kind) ? "-m" : el;
-        while (s.length() < 2)
-            s += "#";
-        return s + " ";
-    }
-
-    private byte ZLevelMapElementGeneralization(byte el, int ZLevel)
-    {
-        if (el == 0)
-            return 0;
-        switch (ZLevel)
-        {
-            case (0):
-                switch (el)
-                {
-                    case 16:  // brick, simple, without any surprise.
-                    case 17:  // brick with a hidden coin
-                    case 18:  // brick with a hidden friendly flower
-                        return BREAKABLE_BRICK;
-                    case 21:       // question brick, contains coin
-                    case 22:       // question brick, contains flower/mushroom
-                        return UNBREAKABLE_BRICK; // question brick, contains something
-                    case 34:
-                        return COIN_ANIM;
-                    case 4:
-                        return BORDER_CANNOT_PASS_THROUGH;
-                    case 14:
-                        return CANNON_MUZZLE;
-                    case 30:
-                    case 46:
-                        return CANNON_TRUNK;
-                    case 10:
-                    case 11:
-                    case 26:
-                    case 27:
-                        return FLOWER_POT;
-                    case 1:
-                        return 0; //hidden block
-                    case -124:
-                    case -123:
-                    case -122:
-                    case -74:
-                        return BORDER_HILL;
-                    case -108:
-                    case -107:
-                    case -106:
-                        return 0; //background of the hill. empty space
-                }
-                return el;
-            case (1):
-                switch (el)
-                {
-                    case 16:  // brick, simple, without any surprise.
-                    case 17:  // brick with a hidden coin
-                    case 18:  // brick with a hidden flower
-                    case 21:       // question brick, contains coin
-                    case 22:       // question brick, contains flower/mushroom
-                        return BRICK; // any brick
-                    case 1:   // hidden block
-                    case (-111):
-                    case (-108):
-                    case (-107):
-                    case (-106):
-                    case (15): // Sparcle, irrelevant
-                        return 0;
-                    case (34):
-                        return COIN_ANIM;
-                    case (-128):
-                    case (-127):
-                    case (-126):
-                    case (-125):
-                    case (-120):
-                    case (-119):
-                    case (-118):
-                    case (-117):
-                    case (-116):
-                    case (-115):
-                    case (-114):
-                    case (-113):
-                    case (-112):
-                    case (-110):
-                    case (-109):
-                    case (-104):
-                    case (-103):
-                    case (-102):
-                    case (-101):
-                    case (-100):
-                    case (-99):
-                    case (-98):
-                    case (-97):
-                    case (-96):
-                    case (-95):
-                    case (-94):
-                    case (-93):
-                    case (-69):
-                    case (-65):
-                    case (-88):
-                    case (-87):
-                    case (-86):
-                    case (-85):
-                    case (-84):
-                    case (-83):
-                    case (-82):
-                    case (-81):
-                    case (-77):
-                    case (4):  // kicked hidden brick
-                    case (9):
-                        return BORDER_CANNOT_PASS_THROUGH;   // border, cannot pass through, can stand on
+        case (0):
+            switch (el)
+            {
+                case 16:  // brick, simple, without any surprise.
+                case 17:  // brick with a hidden coin
+                case 18:  // brick with a hidden friendly flower
+                    return BREAKABLE_BRICK;
+                case 21:       // question brick, contains coin
+                case 22:       // question brick, contains flower/mushroom
+                    return UNBREAKABLE_BRICK; // question brick, contains something
+                case 34:
+                    return COIN_ANIM;
+                case 4:
+                    return BORDER_CANNOT_PASS_THROUGH;
+                case 14:
+                    return CANNON_MUZZLE;
+                case 30:
+                case 46:
+                    return CANNON_TRUNK;
+                case 10:
+                case 11:
+                case 26:
+                case 27:
+                    return FLOWER_POT;
+                case 1:
+                    return 0; //hidden block
+                case -124:
+                case -123:
+                case -122:
+                case -74:
+                    return BORDER_HILL;
+                case -108:
+                case -107:
+                case -106:
+                    return 0; //background of the hill. empty space
+            }
+            return el;
+        case (1):
+            switch (el)
+            {
+                case 16:  // brick, simple, without any surprise.
+                case 17:  // brick with a hidden coin
+                case 18:  // brick with a hidden flower
+                case 21:       // question brick, contains coin
+                case 22:       // question brick, contains flower/mushroom
+                    return BRICK; // any brick
+                case 1:   // hidden block
+                case (-111):
+                case (-108):
+                case (-107):
+                case (-106):
+                case (15): // Sparcle, irrelevant
+                    return 0;
+                case (34):
+                    return COIN_ANIM;
+                case (-128):
+                case (-127):
+                case (-126):
+                case (-125):
+                case (-120):
+                case (-119):
+                case (-118):
+                case (-117):
+                case (-116):
+                case (-115):
+                case (-114):
+                case (-113):
+                case (-112):
+                case (-110):
+                case (-109):
+                case (-104):
+                case (-103):
+                case (-102):
+                case (-101):
+                case (-100):
+                case (-99):
+                case (-98):
+                case (-97):
+                case (-96):
+                case (-95):
+                case (-94):
+                case (-93):
+                case (-69):
+                case (-65):
+                case (-88):
+                case (-87):
+                case (-86):
+                case (-85):
+                case (-84):
+                case (-83):
+                case (-82):
+                case (-81):
+                case (-77):
+                case (4):  // kicked hidden brick
+                case (9):
+                    return BORDER_CANNOT_PASS_THROUGH;   // border, cannot pass through, can stand on
 //                    case(9):
 //                        return -12; // hard formation border. Pay attention!
-                    case (-124):
-                    case (-123):
-                    case (-122):
-                    case (-76):
-                    case (-74):
-                        return BORDER_HILL; // half-border, can jump through from bottom and can stand on
-                    case (10):
-                    case (11):
-                    case (26):
-                    case (27): //flower pot
-                    case (14):
-                    case (30):
-                    case (46): // canon
-                        return FLOWER_POT_OR_CANNON;  // angry flower pot or cannon
-                }
-                System.err.println("ZLevelMapElementGeneralization: Unknown value el = " + el + " Possible Level tiles bug; " +
-                        "Please, inform sergey@idsia.ch or julian@togelius.com. Thanks!");
-                return el;
-            case (2):
-                switch (el)
-                {
-                    //cancel out half-borders, that could be passed through
-                    case (0):
-                    case (-108):
-                    case (-107):
-                    case (-106):
-                    case 1:   //hidden block
-                    case (15): // Sparcle, irrelevant
-                        return 0;
-                    case (34): // coins
-                        return COIN_ANIM;
-                    case 16:  // brick, simple, without any surprise.
-                    case 17:  // brick with a hidden coin
-                    case 18:  // brick with a hidden flower
-                    case 21:       // question brick, contains coin
-                    case 22:       // question brick, contains flower/mushroom
-                        //here bricks are any objects cannot jump through and can stand on
-                    case 4: //kicked hidden block
-                    case 9:
-                    case (10):
-                    case (11):
-                    case (26):
-                    case (27): //flower pot
-                    case (14):
-                    case (30):
-                    case (46): // canon
-                        return BORDER_CANNOT_PASS_THROUGH; // question brick, contains something
-                }
-                return 1;  // everything else is "something", so it is 1
-        }
-        System.err.println("Unkown ZLevel Z" + ZLevel);
-        return el; //TODO: Throw unknown ZLevel exception
-    }
-
-
-    private byte ZLevelEnemyGeneralization(byte el, int ZLevel)
-    {
-        switch (ZLevel)
-        {
-            case (0):
-                switch (el)
-                {
-                    // cancel irrelevant sprite codes
-                    case (Sprite.KIND_COIN_ANIM):
-                    case (Sprite.KIND_PARTICLE):
-                    case (Sprite.KIND_SPARCLE):
-                    case (Sprite.KIND_MARIO):
-                        return Sprite.KIND_NONE;
-                }
-                return el;   // all the rest should go as is
-            case (1):
-                switch (el)
-                {
-                    case (Sprite.KIND_COIN_ANIM):
-                    case (Sprite.KIND_PARTICLE):
-                    case (Sprite.KIND_SPARCLE):
-                    case (Sprite.KIND_MARIO):
-                        return Sprite.KIND_NONE;
-                    case (Sprite.KIND_FIRE_FLOWER):
-                        return Sprite.KIND_FIRE_FLOWER;
-                    case (Sprite.KIND_MUSHROOM):
-                        return Sprite.KIND_MUSHROOM;
-                    case (Sprite.KIND_FIREBALL):
-                        return Sprite.KIND_FIREBALL;
-                    case (Sprite.KIND_BULLET_BILL):
-                    case (Sprite.KIND_GOOMBA):
-                    case (Sprite.KIND_GOOMBA_WINGED):
-                    case (Sprite.KIND_GREEN_KOOPA):
-                    case (Sprite.KIND_GREEN_KOOPA_WINGED):
-                    case (Sprite.KIND_RED_KOOPA):
-                    case (Sprite.KIND_RED_KOOPA_WINGED):
-                    case (Sprite.KIND_SHELL):
-                        return Sprite.KIND_GOOMBA;
-                    case (Sprite.KIND_SPIKY):
-                    case (Sprite.KIND_ENEMY_FLOWER):
-                    case (Sprite.KIND_SPIKY_WINGED):
-                        return Sprite.KIND_SPIKY;
-                }
-                System.err.println("Z1 UNKOWN el = " + el);
-                return el;
-            case (2):
-                switch (el)
-                {
-                    case (Sprite.KIND_COIN_ANIM):
-                    case (Sprite.KIND_PARTICLE):
-                    case (Sprite.KIND_SPARCLE):
-                    case (Sprite.KIND_FIREBALL):
-                    case (Sprite.KIND_MARIO):
-                    case (Sprite.KIND_FIRE_FLOWER):
-                    case (Sprite.KIND_MUSHROOM):
-                        return Sprite.KIND_NONE;
-                    case (Sprite.KIND_BULLET_BILL):
-                    case (Sprite.KIND_GOOMBA):
-                    case (Sprite.KIND_GOOMBA_WINGED):
-                    case (Sprite.KIND_GREEN_KOOPA):
-                    case (Sprite.KIND_GREEN_KOOPA_WINGED):
-                    case (Sprite.KIND_RED_KOOPA):
-                    case (Sprite.KIND_RED_KOOPA_WINGED):
-                    case (Sprite.KIND_SHELL):
-                    case (Sprite.KIND_SPIKY):
-                    case (Sprite.KIND_ENEMY_FLOWER):
-                    case (Sprite.KIND_SPIKY_WINGED):
-                        return 1;
-                }
-                System.err.println("ERROR: Z2 UNKNOWNN el = " + el);
-                return 1;
-        }
-        return el; //TODO: Throw unknown ZLevel exception
-    }
-
-    public byte[][] getLevelSceneObservationZ(int ZLevel)
-    {
-        int MarioXInMap = (int) mario.x / cellSize;
-        int MarioYInMap = (int) mario.y / cellSize;
-
-        for (int y = MarioYInMap - receptiveFiledHeight / 2, obsX = 0; y <= MarioYInMap + receptiveFiledHeight / 2; y++, obsX++)
-        {
-            for (int x = MarioXInMap - receptiveFiledWidth / 2, obsY = 0; x <= MarioXInMap + receptiveFiledWidth / 2; x++, obsY++)
-            {
-                if (x >= 0 && x <= level.xExit && y >= 0 && y < level.height)
-                {
-                    levelSceneZ[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevel);
-                } else
-                {
-                    levelSceneZ[obsX][obsY] = 0;
-                }
-
+                case (-124):
+                case (-123):
+                case (-122):
+                case (-76):
+                case (-74):
+                    return BORDER_HILL; // half-border, can jump through from bottom and can stand on
+                case (10):
+                case (11):
+                case (26):
+                case (27): //flower pot
+                case (14):
+                case (30):
+                case (46): // canon
+                    return FLOWER_POT_OR_CANNON;  // angry flower pot or cannon
             }
-        }
-        return levelSceneZ;
-    }
-
-    public byte[][] getEnemiesObservationZ(int ZLevel)
-    {
-        int MarioXInMap = (int) mario.x / cellSize;
-        int MarioYInMap = (int) mario.y / cellSize;
-
-        for (int w = 0; w < enemiesZ.length; w++)
-            for (int h = 0; h < enemiesZ[0].length; h++)
-                enemiesZ[w][h] = 0;
-        for (Sprite sprite : sprites)
-        {
-            if (sprite.kind == mario.kind)
-                continue;
-            if (sprite.mapX >= 0 &&
-                    sprite.mapX >= MarioXInMap - receptiveFiledWidth / 2 &&
-                    sprite.mapX <= MarioXInMap + receptiveFiledWidth / 2 &&
-                    sprite.mapY >= 0 &&
-                    sprite.mapY >= MarioYInMap - receptiveFiledHeight / 2 &&
-                    sprite.mapY <= MarioYInMap + receptiveFiledHeight / 2)
+            System.err.println("ZLevelMapElementGeneralization: Unknown value el = " + el + " Possible Level tiles bug; " +
+                    "Please, inform sergey@idsia.ch or julian@togelius.com. Thanks!");
+            return el;
+        case (2):
+            switch (el)
             {
-                int obsX = sprite.mapY - MarioYInMap + receptiveFiledHeight / 2;
-                int obsY = sprite.mapX - MarioXInMap + receptiveFiledWidth / 2;
-                enemiesZ[obsX][obsY] = ZLevelEnemyGeneralization(sprite.kind, ZLevel);
+                //cancel out half-borders, that could be passed through
+                case (0):
+                case (-108):
+                case (-107):
+                case (-106):
+                case 1:   //hidden block
+                case (15): // Sparcle, irrelevant
+                    return 0;
+                case (34): // coins
+                    return COIN_ANIM;
+                case 16:  // brick, simple, without any surprise.
+                case 17:  // brick with a hidden coin
+                case 18:  // brick with a hidden flower
+                case 21:       // question brick, contains coin
+                case 22:       // question brick, contains flower/mushroom
+                    //here bricks are any objects cannot jump through and can stand on
+                case 4: //kicked hidden block
+                case 9:
+                case (10):
+                case (11):
+                case (26):
+                case (27): //flower pot
+                case (14):
+                case (30):
+                case (46): // canon
+                    return BORDER_CANNOT_PASS_THROUGH; // question brick, contains something
             }
-        }
-        return enemiesZ;
+            return 1;  // everything else is "something", so it is 1
     }
+    System.err.println("Unkown ZLevel Z" + ZLevel);
+    return el; //TODO: Throw unknown ZLevel exception
+}
 
-    public float[] getEnemiesFloatPos()
+
+private byte ZLevelEnemyGeneralization(byte el, int ZLevel)
+{
+    switch (ZLevel)
     {
-        enemiesFloatsList.clear();
-        for (Sprite sprite : sprites)
-        {
-            // check if is an influenceable creature
-            if (sprite.kind >= Sprite.KIND_GOOMBA && sprite.kind <= Sprite.KIND_MUSHROOM)
+        case (0):
+            switch (el)
             {
-                enemiesFloatsList.add((float) sprite.kind);
-                enemiesFloatsList.add(sprite.x);
-                enemiesFloatsList.add(sprite.y);
+                // cancel irrelevant sprite codes
+                case (Sprite.KIND_COIN_ANIM):
+                case (Sprite.KIND_PARTICLE):
+                case (Sprite.KIND_SPARCLE):
+                case (Sprite.KIND_MARIO):
+                    return Sprite.KIND_NONE;
             }
+            return el;   // all the rest should go as is
+        case (1):
+            switch (el)
+            {
+                case (Sprite.KIND_COIN_ANIM):
+                case (Sprite.KIND_PARTICLE):
+                case (Sprite.KIND_SPARCLE):
+                case (Sprite.KIND_MARIO):
+                    return Sprite.KIND_NONE;
+                case (Sprite.KIND_FIRE_FLOWER):
+                    return Sprite.KIND_FIRE_FLOWER;
+                case (Sprite.KIND_MUSHROOM):
+                    return Sprite.KIND_MUSHROOM;
+                case (Sprite.KIND_FIREBALL):
+                    return Sprite.KIND_FIREBALL;
+                case (Sprite.KIND_BULLET_BILL):
+                case (Sprite.KIND_GOOMBA):
+                case (Sprite.KIND_GOOMBA_WINGED):
+                case (Sprite.KIND_GREEN_KOOPA):
+                case (Sprite.KIND_GREEN_KOOPA_WINGED):
+                case (Sprite.KIND_RED_KOOPA):
+                case (Sprite.KIND_RED_KOOPA_WINGED):
+                case (Sprite.KIND_SHELL):
+                    return Sprite.KIND_GOOMBA;
+                case (Sprite.KIND_SPIKY):
+                case (Sprite.KIND_ENEMY_FLOWER):
+                case (Sprite.KIND_SPIKY_WINGED):
+                    return Sprite.KIND_SPIKY;
+            }
+            System.err.println("Z1 UNKOWN el = " + el);
+            return el;
+        case (2):
+            switch (el)
+            {
+                case (Sprite.KIND_COIN_ANIM):
+                case (Sprite.KIND_PARTICLE):
+                case (Sprite.KIND_SPARCLE):
+                case (Sprite.KIND_FIREBALL):
+                case (Sprite.KIND_MARIO):
+                case (Sprite.KIND_FIRE_FLOWER):
+                case (Sprite.KIND_MUSHROOM):
+                    return Sprite.KIND_NONE;
+                case (Sprite.KIND_BULLET_BILL):
+                case (Sprite.KIND_GOOMBA):
+                case (Sprite.KIND_GOOMBA_WINGED):
+                case (Sprite.KIND_GREEN_KOOPA):
+                case (Sprite.KIND_GREEN_KOOPA_WINGED):
+                case (Sprite.KIND_RED_KOOPA):
+                case (Sprite.KIND_RED_KOOPA_WINGED):
+                case (Sprite.KIND_SHELL):
+                case (Sprite.KIND_SPIKY):
+                case (Sprite.KIND_ENEMY_FLOWER):
+                case (Sprite.KIND_SPIKY_WINGED):
+                    return 1;
+            }
+            System.err.println("ERROR: Z2 UNKNOWNN el = " + el);
+            return 1;
+    }
+    return el; //TODO: Throw unknown ZLevel exception
+}
+
+public byte[][] getLevelSceneObservationZ(int ZLevel)
+{
+    int MarioXInMap = (int) mario.x / cellSize;
+    int MarioYInMap = (int) mario.y / cellSize;
+
+    for (int y = MarioYInMap - receptiveFiledHeight / 2, obsX = 0; y <= MarioYInMap + receptiveFiledHeight / 2; y++, obsX++)
+    {
+        for (int x = MarioXInMap - receptiveFiledWidth / 2, obsY = 0; x <= MarioXInMap + receptiveFiledWidth / 2; x++, obsY++)
+        {
+            if (x >= 0 && x <= level.xExit && y >= 0 && y < level.height)
+            {
+                levelSceneZ[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevel);
+            } else
+            {
+                levelSceneZ[obsX][obsY] = 0;
+            }
+
         }
+    }
+    return levelSceneZ;
+}
 
-        // potential memory leak while using through JNI, careful!
-        float[] enemiesFloatsPosArray = new float[enemiesFloatsList.size()];
+public byte[][] getEnemiesObservationZ(int ZLevel)
+{
+    int MarioXInMap = (int) mario.x / cellSize;
+    int MarioYInMap = (int) mario.y / cellSize;
 
-        int i = 0;
-        for (Float F : enemiesFloatsList)
-            enemiesFloatsPosArray[i++] = F;
+    for (int w = 0; w < enemiesZ.length; w++)
+        for (int h = 0; h < enemiesZ[0].length; h++)
+            enemiesZ[w][h] = 0;
+    for (Sprite sprite : sprites)
+    {
+        if (sprite.kind == mario.kind)
+            continue;
+        if (sprite.mapX >= 0 &&
+                sprite.mapX >= MarioXInMap - receptiveFiledWidth / 2 &&
+                sprite.mapX <= MarioXInMap + receptiveFiledWidth / 2 &&
+                sprite.mapY >= 0 &&
+                sprite.mapY >= MarioYInMap - receptiveFiledHeight / 2 &&
+                sprite.mapY <= MarioYInMap + receptiveFiledHeight / 2)
+        {
+            int obsX = sprite.mapY - MarioYInMap + receptiveFiledHeight / 2;
+            int obsY = sprite.mapX - MarioXInMap + receptiveFiledWidth / 2;
+            enemiesZ[obsX][obsY] = ZLevelEnemyGeneralization(sprite.kind, ZLevel);
+        }
+    }
+    return enemiesZ;
+}
 
-        return enemiesFloatsPosArray;
+public float[] getEnemiesFloatPos()
+{
+    enemiesFloatsList.clear();
+    for (Sprite sprite : sprites)
+    {
+        // check if is an influenceable creature
+        if (sprite.kind >= Sprite.KIND_GOOMBA && sprite.kind <= Sprite.KIND_MUSHROOM)
+        {
+            enemiesFloatsList.add((float) sprite.kind);
+            enemiesFloatsList.add(sprite.x);
+            enemiesFloatsList.add(sprite.y);
+        }
     }
 
-    public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
+    // potential memory leak while using through JNI, careful!
+    float[] enemiesFloatsPosArray = new float[enemiesFloatsList.size()];
+
+    int i = 0;
+    for (Float F : enemiesFloatsList)
+        enemiesFloatsPosArray[i++] = F;
+
+    return enemiesFloatsPosArray;
+}
+
+public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
+{
+    int MarioXInMap = (int) mario.x / cellSize;
+    int MarioYInMap = (int) mario.y / cellSize;
+
+
+    for (int y = MarioYInMap - receptiveFiledHeight / 2, obsX = 0; y <= MarioYInMap + receptiveFiledHeight / 2; y++, obsX++)
     {
-        int MarioXInMap = (int) mario.x / cellSize;
-        int MarioYInMap = (int) mario.y / cellSize;
-
-
-        for (int y = MarioYInMap - receptiveFiledHeight / 2, obsX = 0; y <= MarioYInMap + receptiveFiledHeight / 2; y++, obsX++)
+        for (int x = MarioXInMap - receptiveFiledWidth / 2, obsY = 0; x <= MarioXInMap + receptiveFiledWidth / 2; x++, obsY++)
         {
-            for (int x = MarioXInMap - receptiveFiledWidth / 2, obsY = 0; x <= MarioXInMap + receptiveFiledWidth / 2; x++, obsY++)
+            if (x >= 0 /*&& x <= level.xExit*/ && y >= 0 && y < level.height)
             {
-                if (x >= 0 /*&& x <= level.xExit*/ && y >= 0 && y < level.height)
-                {
-                    mergedZ[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevelScene);
-                } else
-                    mergedZ[obsX][obsY] = 0;
+                mergedZ[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevelScene);
+            } else
+                mergedZ[obsX][obsY] = 0;
 //                if (x == MarioXInMap && y == MarioYInMap)
 //                    mergedZ[obsX][obsY] = mario.kind;
-            }
         }
+    }
 
 //        for (int w = 0; w < mergedZ.length; w++)
 //            for (int h = 0; h < mergedZ[0].length; h++)
 //                mergedZ[w][h] = -1;
-        for (Sprite sprite : sprites)
+    for (Sprite sprite : sprites)
+    {
+        if (sprite.kind == mario.kind)
+            continue;
+        if (sprite.mapX >= 0 &&
+                sprite.mapX > MarioXInMap - receptiveFiledWidth / 2 &&
+                sprite.mapX < MarioXInMap + receptiveFiledWidth / 2 &&
+                sprite.mapY >= 0 &&
+                sprite.mapY > MarioYInMap - receptiveFiledHeight / 2 &&
+                sprite.mapY < MarioYInMap + receptiveFiledHeight / 2)
         {
-            if (sprite.kind == mario.kind)
-                continue;
-            if (sprite.mapX >= 0 &&
-                    sprite.mapX > MarioXInMap - receptiveFiledWidth / 2 &&
-                    sprite.mapX < MarioXInMap + receptiveFiledWidth / 2 &&
-                    sprite.mapY >= 0 &&
-                    sprite.mapY > MarioYInMap - receptiveFiledHeight / 2 &&
-                    sprite.mapY < MarioYInMap + receptiveFiledHeight / 2)
+            int obsX = sprite.mapY - MarioYInMap + receptiveFiledHeight / 2;
+            int obsY = sprite.mapX - MarioXInMap + receptiveFiledWidth / 2;
+            // quick fix TODO: handle this in more general way.
+            if (mergedZ[obsX][obsY] != 14)
             {
-                int obsX = sprite.mapY - MarioYInMap + receptiveFiledHeight / 2;
-                int obsY = sprite.mapX - MarioXInMap + receptiveFiledWidth / 2;
-                // quick fix TODO: handle this in more general way.
-                if (mergedZ[obsX][obsY] != 14)
-                {
-                    byte tmp = ZLevelEnemyGeneralization(sprite.kind, ZLevelEnemies);
-                    if (tmp != Sprite.KIND_NONE)
-                        mergedZ[obsX][obsY] = tmp;
-                }
+                byte tmp = ZLevelEnemyGeneralization(sprite.kind, ZLevelEnemies);
+                if (tmp != Sprite.KIND_NONE)
+                    mergedZ[obsX][obsY] = tmp;
+            }
+        }
+    }
+
+    return mergedZ;
+}
+
+public List<String> getTextObservationAroundMario(boolean Enemies, boolean LevelMap,
+                                                  boolean mergedObservationFlag,
+                                                  int ZLevelScene, int ZLevelEnemies)
+{
+    List<String> ret = new ArrayList<String>();
+    if (level != null && mario != null)
+    {
+        ret.add("Total world length = " + level.length);
+        ret.add("Total world height = " + level.height);
+        ret.add("Physical Mario Position (x,y): (" + mario.x + "," + mario.y + ")");
+        ret.add("Mario Observation (Receptive Field)   Width: " + receptiveFiledWidth + " Height: " + receptiveFiledHeight);
+        ret.add("X Exit Position: " + level.xExit);
+        int MarioXInMap = (int) mario.x / cellSize;
+        int MarioYInMap = (int) mario.y / cellSize;
+        ret.add("Calibrated Mario Position (x,y): (" + MarioXInMap + "," + MarioYInMap + ")\n");
+
+        byte[][] levelScene = getLevelSceneObservationZ(ZLevelScene);
+        if (LevelMap)
+        {
+            ret.add("~ZLevel: Z" + ZLevelScene + " map:\n");
+            for (int x = 0; x < levelScene.length; ++x)
+            {
+                String tmpData = "";
+                for (int y = 0; y < levelScene[0].length; ++y)
+                    tmpData += mapElToStr(levelScene[x][y]);
+                ret.add(tmpData);
             }
         }
 
-        return mergedZ;
-    }
+        byte[][] enemiesObservation = null;
+        if (Enemies || mergedObservationFlag)
+            enemiesObservation = getEnemiesObservationZ(ZLevelEnemies);
 
-    public List<String> getTextObservationAroundMario(boolean Enemies, boolean LevelMap,
-                                                      boolean mergedObservationFlag,
-                                                      int ZLevelScene, int ZLevelEnemies)
-    {
-        List<String> ret = new ArrayList<String>();
-        if (level != null && mario != null)
+        if (Enemies)
         {
-            ret.add("Total world length = " + level.length);
-            ret.add("Total world height = " + level.height);
-            ret.add("Physical Mario Position (x,y): (" + mario.x + "," + mario.y + ")");
-            ret.add("Mario Observation (Receptive Field)   Width: " + receptiveFiledWidth + " Height: " + receptiveFiledHeight);
-            ret.add("X Exit Position: " + level.xExit);
-            int MarioXInMap = (int) mario.x / cellSize;
-            int MarioYInMap = (int) mario.y / cellSize;
-            ret.add("Calibrated Mario Position (x,y): (" + MarioXInMap + "," + MarioYInMap + ")\n");
-
-            byte[][] levelScene = getLevelSceneObservationZ(ZLevelScene);
-            if (LevelMap)
+            ret.add("~ZLevel: Z" + ZLevelScene + " Enemies Observation:\n");
+            for (int x = 0; x < enemiesObservation.length; x++)
             {
-                ret.add("~ZLevel: Z" + ZLevelScene + " map:\n");
-                for (int x = 0; x < levelScene.length; ++x)
+                String tmpData = "";
+                for (int y = 0; y < enemiesObservation[0].length; y++)
                 {
-                    String tmpData = "";
-                    for (int y = 0; y < levelScene[0].length; ++y)
-                        tmpData += mapElToStr(levelScene[x][y]);
-                    ret.add(tmpData);
-                }
-            }
-
-            byte[][] enemiesObservation = null;
-            if (Enemies || mergedObservationFlag)
-                enemiesObservation = getEnemiesObservationZ(ZLevelEnemies);
-
-            if (Enemies)
-            {
-                ret.add("~ZLevel: Z" + ZLevelScene + " Enemies Observation:\n");
-                for (int x = 0; x < enemiesObservation.length; x++)
-                {
-                    String tmpData = "";
-                    for (int y = 0; y < enemiesObservation[0].length; y++)
-                    {
 //                        if (x >=0 && x <= level.xExit)
-                        tmpData += enemyToStr(enemiesObservation[x][y]);
-                    }
-                    ret.add(tmpData);
+                    tmpData += enemyToStr(enemiesObservation[x][y]);
                 }
+                ret.add(tmpData);
             }
+        }
 
-            if (mergedObservationFlag)
+        if (mergedObservationFlag)
+        {
+            byte[][] mergedObs = getMergedObservationZZ(ZLevelScene, ZLevelEnemies);
+            ret.add("~ZLevelScene: Z" + ZLevelScene + " ZLevelEnemies: Z" + ZLevelEnemies + " ; Merged observation /* Mario ~> #M.# */");
+            for (int x = 0; x < levelScene.length; ++x)
             {
-                byte[][] mergedObs = getMergedObservationZZ(ZLevelScene, ZLevelEnemies);
-                ret.add("~ZLevelScene: Z" + ZLevelScene + " ZLevelEnemies: Z" + ZLevelEnemies + " ; Merged observation /* Mario ~> #M.# */");
-                for (int x = 0; x < levelScene.length; ++x)
-                {
-                    String tmpData = "";
-                    for (int y = 0; y < levelScene[0].length; ++y)
-                        tmpData += mapElToStr(mergedObs[x][y]);
-                    ret.add(tmpData);
-                }
+                String tmpData = "";
+                for (int y = 0; y < levelScene[0].length; ++y)
+                    tmpData += mapElToStr(mergedObs[x][y]);
+                ret.add(tmpData);
             }
-        } else
-            ret.add("~[MarioAI ERROR] level : " + level + " mario : " + mario);
-        return ret;
-    }
+        }
+    } else
+        ret.add("~[MarioAI ERROR] level : " + level + " mario : " + mario);
+    return ret;
+}
 
 
-    public int fireballsOnScreen = 0;
+public int fireballsOnScreen = 0;
 
-    List<Shell> shellsToCheck = new ArrayList<Shell>();
+List<Shell> shellsToCheck = new ArrayList<Shell>();
 
-    public void checkShellCollide(Shell shell)
-    {
-        shellsToCheck.add(shell);
-    }
+public void checkShellCollide(Shell shell)
+{
+    shellsToCheck.add(shell);
+}
 
-    List<Fireball> fireballsToCheck = new ArrayList<Fireball>();
+List<Fireball> fireballsToCheck = new ArrayList<Fireball>();
 
-    public void checkFireballCollide(Fireball fireball)
-    {
-        fireballsToCheck.add(fireball);
-    }
+public void checkFireballCollide(Fireball fireball)
+{
+    fireballsToCheck.add(fireball);
+}
 
-    public void tick()
-    {
-        if (GlobalOptions.isGameplayStopped)
-            return;
+public void tick()
+{
+    if (GlobalOptions.isGameplayStopped)
+        return;
 
 //        if (GlobalOptions.isTimer)
-        timeLeft--;
-        if (timeLeft == 0)
-            mario.die();
-        xCamO = xCam;
-        yCamO = yCam;
+    timeLeft--;
+    if (timeLeft == 0)
+        mario.die("Reason: Time out!");
+    xCamO = xCam;
+    yCamO = yCam;
 
-        if (startTime > 0)
+    if (startTime > 0)
+    {
+        startTime++;
+    }
+
+    float targetXCam = mario.x - 160;
+
+    xCam = targetXCam;
+
+    if (xCam < 0) xCam = 0;
+    if (xCam > level.length * cellSize - GlobalOptions.VISUAL_COMPONENT_WIDTH)
+        xCam = level.length * cellSize - GlobalOptions.VISUAL_COMPONENT_WIDTH;
+
+    // TODO: reincarnate recordings
+    /*      if (recorder != null)
+    {
+    recorder.addTick(mario.getKeyMask());
+    }
+
+    if (replayer!=null)
+    {
+    mario.setKeys(replayer.nextTick());
+    }*/
+
+    fireballsOnScreen = 0;
+
+    for (Sprite sprite : sprites)
+    {
+        if (sprite != mario)
         {
-            startTime++;
+            float xd = sprite.x - xCam;
+            float yd = sprite.y - yCam;
+            if (xd < -64 || xd > GlobalOptions.VISUAL_COMPONENT_WIDTH + 64 || yd < -64 || yd > GlobalOptions.VISUAL_COMPONENT_HEIGHT + 64)
+            {
+                removeSprite(sprite);
+            } else
+            {
+                if (sprite instanceof Fireball)
+                    fireballsOnScreen++;
+            }
         }
+    }
 
-        float targetXCam = mario.x - 160;
-
-        xCam = targetXCam;
-
-        if (xCam < 0) xCam = 0;
-        if (xCam > level.length * cellSize - GlobalOptions.VISUAL_COMPONENT_WIDTH)
-            xCam = level.length * cellSize - GlobalOptions.VISUAL_COMPONENT_WIDTH;
-
-        // TODO: reincarnate recordings
-        /*      if (recorder != null)
-         {
-         recorder.addTick(mario.getKeyMask());
-         }
-
-         if (replayer!=null)
-         {
-         mario.setKeys(replayer.nextTick());
-         }*/
-
-        fireballsOnScreen = 0;
-
+    if (paused)
+    {
         for (Sprite sprite : sprites)
         {
-            if (sprite != mario)
+            if (sprite == mario)
             {
-                float xd = sprite.x - xCam;
-                float yd = sprite.y - yCam;
-                if (xd < -64 || xd > GlobalOptions.VISUAL_COMPONENT_WIDTH + 64 || yd < -64 || yd > GlobalOptions.VISUAL_COMPONENT_HEIGHT + 64)
-                {
-                    removeSprite(sprite);
-                } else
-                {
-                    if (sprite instanceof Fireball)
-                        fireballsOnScreen++;
-                }
+                sprite.tick();
+            } else
+            {
+                sprite.tickNoMove();
             }
         }
-
-        if (paused)
-        {
-            for (Sprite sprite : sprites)
-            {
-                if (sprite == mario)
-                {
-                    sprite.tick();
-                } else
-                {
-                    sprite.tickNoMove();
-                }
-            }
-        } else
-        {
-            tick++;
-            level.tick();
+    } else
+    {
+        tick++;
+        level.tick();
 
 //            boolean hasShotCannon = false;
 //            int xCannon = 0;
 
-            for (int x = (int) xCam / cellSize - 1; x <= (int) (xCam + this.width) / cellSize + 1; x++)
-                for (int y = (int) yCam / cellSize - 1; y <= (int) (yCam + this.height) / cellSize + 1; y++)
+        for (int x = (int) xCam / cellSize - 1; x <= (int) (xCam + this.width) / cellSize + 1; x++)
+            for (int y = (int) yCam / cellSize - 1; y <= (int) (yCam + this.height) / cellSize + 1; y++)
+            {
+                int dir = 0;
+
+                if (x * cellSize + 8 > mario.x + cellSize) dir = -1;
+                if (x * cellSize + 8 < mario.x - cellSize) dir = 1;
+
+                SpriteTemplate st = level.getSpriteTemplate(x, y);
+
+                if (st != null)
                 {
-                    int dir = 0;
-
-                    if (x * cellSize + 8 > mario.x + cellSize) dir = -1;
-                    if (x * cellSize + 8 < mario.x - cellSize) dir = 1;
-
-                    SpriteTemplate st = level.getSpriteTemplate(x, y);
-
-                    if (st != null)
-                    {
 //                        if (st.getType() == Sprite.KIND_SPIKY)
 //                        {
 //                            System.out.println("here");
 //                        }
 
-                        if (st.lastVisibleTick != tick - 1)
-                        {
-                            if (st.sprite == null || !sprites.contains(st.sprite))
-                                st.spawn(this, x, y, dir);
-                        }
-
-                        st.lastVisibleTick = tick;
+                    if (st.lastVisibleTick != tick - 1)
+                    {
+                        if (st.sprite == null || !sprites.contains(st.sprite))
+                            st.spawn(this, x, y, dir);
                     }
 
-                    if (dir != 0)
+                    st.lastVisibleTick = tick;
+                }
+
+                if (dir != 0)
+                {
+                    byte b = level.getBlock(x, y);
+                    if (((Level.TILE_BEHAVIORS[b & 0xff]) & Level.BIT_ANIMATED) > 0)
                     {
-                        byte b = level.getBlock(x, y);
-                        if (((Level.TILE_BEHAVIORS[b & 0xff]) & Level.BIT_ANIMATED) > 0)
+                        if ((b % cellSize) / 4 == 3 && b / cellSize == 0)
                         {
-                            if ((b % cellSize) / 4 == 3 && b / cellSize == 0)
+                            if ((tick - x * 2) % 100 == 0)
                             {
-                                if ((tick - x * 2) % 100 == 0)
-                                {
 //                                    xCannon = x;
-                                    for (int i = 0; i < 8; i++)
-                                    {
-                                        addSprite(new Sparkle(x * cellSize + 8, y * cellSize + (int) (Math.random() * cellSize), (float) Math.random() * dir, 0, 0, 1, 5));
-                                    }
-                                    addSprite(new BulletBill(this, x * cellSize + 8 + dir * 8, y * cellSize + 15, dir));
+                                for (int i = 0; i < 8; i++)
+                                {
+                                    addSprite(new Sparkle(x * cellSize + 8, y * cellSize + (int) (Math.random() * cellSize), (float) Math.random() * dir, 0, 0, 1, 5));
+                                }
+                                addSprite(new BulletBill(this, x * cellSize + 8 + dir * 8, y * cellSize + 15, dir));
 
 //                                    hasShotCannon = true;
-                                }
-                            }
-                        }
-                    }
-                }
-
-            for (Sprite sprite : sprites)
-                sprite.tick();
-
-            for (Sprite sprite : sprites)
-                sprite.collideCheck();
-
-            for (Shell shell : shellsToCheck)
-            {
-                for (Sprite sprite : sprites)
-                {
-                    if (sprite != shell && !shell.dead)
-                    {
-                        if (sprite.shellCollideCheck(shell))
-                        {
-                            if (mario.carried == shell && !shell.dead)
-                            {
-                                mario.carried = null;
-                                mario.setRacoon(false);
-                                //System.out.println("sprite = " + sprite);
-                                shell.die();
-                                ++this.killedCreaturesTotal;
                             }
                         }
                     }
                 }
             }
-            shellsToCheck.clear();
-
-            for (Fireball fireball : fireballsToCheck)
-                for (Sprite sprite : sprites)
-                    if (sprite != fireball && !fireball.dead)
-                        if (sprite.fireballCollideCheck(fireball))
-                            fireball.die();
-            fireballsToCheck.clear();
-        }
-
-        sprites.addAll(0, spritesToAdd);
-        sprites.removeAll(spritesToRemove);
-        spritesToAdd.clear();
-        spritesToRemove.clear();
-    }
-
-
-    public void addSprite(Sprite sprite)
-    {
-        spritesToAdd.add(sprite);
-        sprite.tick();
-    }
-
-    public void removeSprite(Sprite sprite)
-    {
-        spritesToRemove.add(sprite);
-    }
-
-    public void bump(int x, int y, boolean canBreakBricks)
-    {
-        byte block = level.getBlock(x, y);
-
-        if ((Level.TILE_BEHAVIORS[block & 0xff] & Level.BIT_BUMPABLE) > 0)
-        {
-            if (block == 1)
-                Mario.gainHiddenBlock();
-            bumpInto(x, y - 1);
-            level.setBlock(x, y, (byte) 4);
-            level.setBlockData(x, y, (byte) 4);
-
-            if (((Level.TILE_BEHAVIORS[block & 0xff]) & Level.BIT_SPECIAL) > 0)
-            {
-                if (!Mario.large)
-                {
-                    addSprite(new Mushroom(this, x * cellSize + 8, y * cellSize + 8));
-                } else
-                {
-                    addSprite(new FireFlower(this, x * cellSize + 8, y * cellSize + 8));
-                }
-            } else
-            {
-                Mario.gainCoin();
-                addSprite(new CoinAnim(x, y));
-            }
-        }
-
-        if ((Level.TILE_BEHAVIORS[block & 0xff] & Level.BIT_BREAKABLE) > 0)
-        {
-            bumpInto(x, y - 1);
-            if (canBreakBricks)
-            {
-                level.setBlock(x, y, (byte) 0);
-                for (int xx = 0; xx < 2; xx++)
-                    for (int yy = 0; yy < 2; yy++)
-                        addSprite(new Particle(x * cellSize + xx * 8 + 4, y * cellSize + yy * 8 + 4, (xx * 2 - 1) * 4, (yy * 2 - 1) * 4 - 8));
-            } else
-            {
-                level.setBlockData(x, y, (byte) 4);
-            }
-        }
-    }
-
-    public void bumpInto(int x, int y)
-    {
-        byte block = level.getBlock(x, y);
-        if (((Level.TILE_BEHAVIORS[block & 0xff]) & Level.BIT_PICKUPABLE) > 0)
-        {
-            Mario.gainCoin();
-            level.setBlock(x, y, (byte) 0);
-            addSprite(new CoinAnim(x, y + 1));
-        }
 
         for (Sprite sprite : sprites)
+            sprite.tick();
+
+        for (Sprite sprite : sprites)
+            sprite.collideCheck();
+
+        for (Shell shell : shellsToCheck)
         {
-            sprite.bumpCheck(x, y);
+            for (Sprite sprite : sprites)
+            {
+                if (sprite != shell && !shell.dead)
+                {
+                    if (sprite.shellCollideCheck(shell))
+                    {
+                        if (mario.carried == shell && !shell.dead)
+                        {
+                            mario.carried = null;
+                            mario.setRacoon(false);
+                            //System.out.println("sprite = " + sprite);
+                            shell.die();
+                            ++this.killedCreaturesTotal;
+                        }
+                    }
+                }
+            }
+        }
+        shellsToCheck.clear();
+
+        for (Fireball fireball : fireballsToCheck)
+            for (Sprite sprite : sprites)
+                if (sprite != fireball && !fireball.dead)
+                    if (sprite.fireballCollideCheck(fireball))
+                        fireball.die();
+        fireballsToCheck.clear();
+    }
+
+    sprites.addAll(0, spritesToAdd);
+    sprites.removeAll(spritesToRemove);
+    spritesToAdd.clear();
+    spritesToRemove.clear();
+}
+
+
+public void addSprite(Sprite sprite)
+{
+    spritesToAdd.add(sprite);
+    sprite.tick();
+}
+
+public void removeSprite(Sprite sprite)
+{
+    spritesToRemove.add(sprite);
+}
+
+public void bump(int x, int y, boolean canBreakBricks)
+{
+    byte block = level.getBlock(x, y);
+
+    if ((Level.TILE_BEHAVIORS[block & 0xff] & Level.BIT_BUMPABLE) > 0)
+    {
+        if (block == 1)
+            Mario.gainHiddenBlock();
+        bumpInto(x, y - 1);
+        level.setBlock(x, y, (byte) 4);
+        level.setBlockData(x, y, (byte) 4);
+
+        if (((Level.TILE_BEHAVIORS[block & 0xff]) & Level.BIT_SPECIAL) > 0)
+        {
+            if (!Mario.large)
+            {
+                addSprite(new Mushroom(this, x * cellSize + 8, y * cellSize + 8));
+            } else
+            {
+                addSprite(new FireFlower(this, x * cellSize + 8, y * cellSize + 8));
+            }
+        } else
+        {
+            Mario.gainCoin();
+            addSprite(new CoinAnim(x, y));
         }
     }
 
-
-    public int getTimeSpent() { return startTime / 15; }
-
-    public int getTimeLeft() { return timeLeft / 15; }
-
-    public int getKillsTotal()
+    if ((Level.TILE_BEHAVIORS[block & 0xff] & Level.BIT_BREAKABLE) > 0)
     {
-        return mario.world.killedCreaturesTotal;
-    }
-
-    public int getKillsByFire()
-    {
-        return mario.world.killedCreaturesByFireBall;
-    }
-
-    public int getKillsByStomp()
-    {
-        return mario.world.killedCreaturesByStomp;
-    }
-
-    public int getKillsByShell()
-    {
-        return mario.world.killedCreaturesByShell;
-    }
-
-    public int[] getMarioState()
-    {
-        marioState[0] = this.getMarioStatus();
-        marioState[1] = this.getMarioMode();
-        marioState[2] = this.isMarioOnGround() ? 1 : 0;
-        marioState[3] = this.isMarioAbleToJump() ? 1 : 0;
-        marioState[4] = this.isMarioAbleToShoot() ? 1 : 0;
-        marioState[5] = this.isMarioCarrying() ? 1 : 0;
-        marioState[6] = this.getKillsTotal();
-        marioState[7] = this.getKillsByFire();
-        marioState[8] = this.getKillsByStomp();
-        marioState[9] = this.getKillsByStomp();
-        marioState[10] = this.getKillsByShell();
-        marioState[11] = this.getTimeLeft();
-        return marioState;
-    }
-
-    public void performAction(boolean[] action)
-    {
-        // might look ugly , but arrayCopy is not necessary here:
-        this.mario.keys = action;
-    }
-
-    public boolean isLevelFinished()
-    {
-        return mario.getStatus() != Mario.STATUS_RUNNING;
-    }
-
-
-    public boolean isMarioAbleToShoot()
-    {
-        return mario.isCanShoot();
-    }
-
-    public int getMarioStatus()
-    {
-        return mario.getStatus();
-    }
-
-    public float[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies)
-    {
-        // TODO:SK, serialize all data to a sole double[]
-        assert false;
-        return new float[0];  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public int[] getSerializedLevelSceneObservationZ(int ZLevelScene)
-    {
-        // serialization into arrays of primitive types to speed up the data transfer.
-        byte[][] levelScene = this.getLevelSceneObservationZ(ZLevelScene);
-        for (int i = 0; i < serializedLevelScene.length; ++i)
+        bumpInto(x, y - 1);
+        if (canBreakBricks)
         {
-            serializedLevelScene[i] = (int) levelScene[i / receptiveFiledWidth][i % receptiveFiledHeight]; //TODO: fix it. crashes if -rfw and -rfh are 1x3 and 3x1 
-        }
-        return serializedLevelScene;
-    }
-
-    public int[] getSerializedEnemiesObservationZ(int ZLevelEnemies)
-    {
-        // serialization into arrays of primitive types to speed up the data transfer.
-        byte[][] enemies = this.getEnemiesObservationZ(ZLevelEnemies);
-        for (int i = 0; i < serializedEnemies.length; ++i)
+            level.setBlock(x, y, (byte) 0);
+            for (int xx = 0; xx < 2; xx++)
+                for (int yy = 0; yy < 2; yy++)
+                    addSprite(new Particle(x * cellSize + xx * 8 + 4, y * cellSize + yy * 8 + 4, (xx * 2 - 1) * 4, (yy * 2 - 1) * 4 - 8));
+        } else
         {
-            serializedEnemies[i] = (int) enemies[i / receptiveFiledWidth][i % receptiveFiledHeight];
+            level.setBlockData(x, y, (byte) 4);
         }
-        return serializedEnemies;
+    }
+}
+
+public void bumpInto(int x, int y)
+{
+    byte block = level.getBlock(x, y);
+    if (((Level.TILE_BEHAVIORS[block & 0xff]) & Level.BIT_PICKUPABLE) > 0)
+    {
+        Mario.gainCoin();
+        level.setBlock(x, y, (byte) 0);
+        addSprite(new CoinAnim(x, y + 1));
     }
 
-    public int[] getSerializedMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
+    for (Sprite sprite : sprites)
     {
-        // serialization into arrays of primitive types to speed up the data transfer.
-        byte[][] merged = this.getMergedObservationZZ(ZLevelScene, ZLevelEnemies);
-        for (int i = 0; i < serializedMergedObservation.length; ++i)
-        {
-            serializedMergedObservation[i] = (int) merged[i / receptiveFiledWidth][i % receptiveFiledHeight];
-        }
-        return serializedMergedObservation;
+        sprite.bumpCheck(x, y);
     }
+}
 
-    public float[] getCreaturesFloatPos()
+
+public int getTimeSpent() { return startTime / 15; }
+
+public int getTimeLeft() { return timeLeft / 15; }
+
+public int getKillsTotal()
+{
+    return mario.world.killedCreaturesTotal;
+}
+
+public int getKillsByFire()
+{
+    return mario.world.killedCreaturesByFireBall;
+}
+
+public int getKillsByStomp()
+{
+    return mario.world.killedCreaturesByStomp;
+}
+
+public int getKillsByShell()
+{
+    return mario.world.killedCreaturesByShell;
+}
+
+public int[] getMarioState()
+{
+    marioState[0] = this.getMarioStatus();
+    marioState[1] = this.getMarioMode();
+    marioState[2] = this.isMarioOnGround() ? 1 : 0;
+    marioState[3] = this.isMarioAbleToJump() ? 1 : 0;
+    marioState[4] = this.isMarioAbleToShoot() ? 1 : 0;
+    marioState[5] = this.isMarioCarrying() ? 1 : 0;
+    marioState[6] = this.getKillsTotal();
+    marioState[7] = this.getKillsByFire();
+    marioState[8] = this.getKillsByStomp();
+    marioState[9] = this.getKillsByStomp();
+    marioState[10] = this.getKillsByShell();
+    marioState[11] = this.getTimeLeft();
+    return marioState;
+}
+
+public void performAction(boolean[] action)
+{
+    // might look ugly , but arrayCopy is not necessary here:
+    this.mario.keys = action;
+}
+
+public boolean isLevelFinished()
+{
+    return mario.getStatus() != Mario.STATUS_RUNNING;
+}
+
+
+public boolean isMarioAbleToShoot()
+{
+    return mario.isCanShoot();
+}
+
+public int getMarioStatus()
+{
+    return mario.getStatus();
+}
+
+public float[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies)
+{
+    // TODO:SK, serialize all data to a sole double[]
+    assert false;
+    return new float[0];  //To change body of implemented methods use File | Settings | File Templates.
+}
+
+public int[] getSerializedLevelSceneObservationZ(int ZLevelScene)
+{
+    // serialization into arrays of primitive types to speed up the data transfer.
+    byte[][] levelScene = this.getLevelSceneObservationZ(ZLevelScene);
+    for (int i = 0; i < serializedLevelScene.length; ++i)
     {
-        float[] enemies = this.getEnemiesFloatPos();
-        float ret[] = new float[enemies.length + 2];
-        System.arraycopy(this.getMarioFloatPos(), 0, ret, 0, 2);
-        System.arraycopy(enemies, 0, ret, 2, enemies.length);
-        return ret;
+        serializedLevelScene[i] = (int) levelScene[i / receptiveFiledWidth][i % receptiveFiledHeight]; //TODO: fix it. crashes if -rfw and -rfh are 1x3 and 3x1
     }
+    return serializedLevelScene;
+}
 
-    public boolean isMarioOnGround()
-    { return mario.isOnGround(); }
-
-    public boolean isMarioAbleToJump()
-    { return mario.mayJump(); }
-
-
-    public void resetDefault()
+public int[] getSerializedEnemiesObservationZ(int ZLevelEnemies)
+{
+    // serialization into arrays of primitive types to speed up the data transfer.
+    byte[][] enemies = this.getEnemiesObservationZ(ZLevelEnemies);
+    for (int i = 0; i < serializedEnemies.length; ++i)
     {
-        // TODO: set values to defaults
-        init(CmdLineOptions.getDefaultOptions());
+        serializedEnemies[i] = (int) enemies[i / receptiveFiledWidth][i % receptiveFiledHeight];
     }
+    return serializedEnemies;
+}
 
-    public void reset(CmdLineOptions cmdLineOptions)
+public int[] getSerializedMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
+{
+    // serialization into arrays of primitive types to speed up the data transfer.
+    byte[][] merged = this.getMergedObservationZZ(ZLevelScene, ZLevelEnemies);
+    for (int i = 0; i < serializedMergedObservation.length; ++i)
     {
+        serializedMergedObservation[i] = (int) merged[i / receptiveFiledWidth][i % receptiveFiledHeight];
+    }
+    return serializedMergedObservation;
+}
+
+public float[] getCreaturesFloatPos()
+{
+    float[] enemies = this.getEnemiesFloatPos();
+    float ret[] = new float[enemies.length + 2];
+    System.arraycopy(this.getMarioFloatPos(), 0, ret, 0, 2);
+    System.arraycopy(enemies, 0, ret, 2, enemies.length);
+    return ret;
+}
+
+public boolean isMarioOnGround()
+{ return mario.isOnGround(); }
+
+public boolean isMarioAbleToJump()
+{ return mario.mayJump(); }
+
+
+public void resetDefault()
+{
+    // TODO: set values to defaults
+    init(CmdLineOptions.getDefaultOptions());
+}
+
+public void reset(CmdLineOptions cmdLineOptions)
+{
 
 //        System.out.println("\nLevelScene RESET!");
 
 
 //        this.gameViewer = setUpOptions[0] == 1;
 
-        this.mario.setMarioInvulnerable(cmdLineOptions.isMarioInvulnerable());
+    this.mario.setMarioInvulnerable(cmdLineOptions.isMarioInvulnerable());
 //        System.out.println("this.mario.isMarioInvulnerable = " + this.mario.isMarioInvulnerable);
-        this.levelDifficulty = cmdLineOptions.getLevelDifficulty();
+    this.levelDifficulty = cmdLineOptions.getLevelDifficulty();
 //        System.out.println("this.levelDifficulty = " + this.levelDifficulty);
-        this.levelLength = cmdLineOptions.getLevelLength();
+    this.levelLength = cmdLineOptions.getLevelLength();
 //        System.out.println("this.levelLength = " + this.levelLength);
-        this.levelSeed = cmdLineOptions.getLevelRandSeed();
+    this.levelSeed = cmdLineOptions.getLevelRandSeed();
 //        System.out.println("levelSeed = " + levelSeed);
-        this.levelType = cmdLineOptions.getLevelType();
+    this.levelType = cmdLineOptions.getLevelType();
 //        System.out.println("levelType = " + levelType);
-        Mario.resetStatic(cmdLineOptions.getMarioMode());
+    Mario.resetStatic(cmdLineOptions.getMarioMode());
 
-        GlobalOptions.FPS = cmdLineOptions.getFPS();
+    GlobalOptions.FPS = cmdLineOptions.getFPS();
 //        System.out.println("GlobalOptions.FPS = " + GlobalOptions.FPS);
-        GlobalOptions.isPowerRestoration = cmdLineOptions.isPowerRestoration();
+    GlobalOptions.isPowerRestoration = cmdLineOptions.isPowerRestoration();
 //        System.out.println("GlobalOptions.isPowerRestoration = " + GlobalOptions.isPowerRestoration);
-        GlobalOptions.isPauseWorld = cmdLineOptions.isPauseWorld();
+    GlobalOptions.isPauseWorld = cmdLineOptions.isPauseWorld();
 //        System.out.println("GlobalOptions = " + GlobalOptions.isPauseWorld);
 //        GlobalOptions.isTimer = cmdLineOptions.isTimer();
 //        System.out.println("GlobalOptions.isTimer = " + GlobalOptions.isTimer);
 //        isToolsConfigurator = setUpOptions[11] == 1;
-        this.setTimeLimit(cmdLineOptions.getTimeLimit());
+    this.setTimeLimit(cmdLineOptions.getTimeLimit());
 //        System.out.println("this.getTimeLimit() = " + this.getTimeLimit());
 //        this.isViewAlwaysOnTop() ? 1 : 0, setUpOptions[13]
-        this.visualization = cmdLineOptions.isVisualization();
+    this.visualization = cmdLineOptions.isVisualization();
 //        System.out.println("visualization = " + visualization);
 //        this.getViewLocation().x, setUpOptions[15] == 1;
 //        this.getViewLocation().y, setUpOptions[16] == 1;
 //        this.getZLevelEnemies(),setUpOptions[17] ;
 //        this.getZLevelScene()   setUpOptions[18] ;
-        this.levelHeight = cmdLineOptions.getLevelHeight();
+    this.levelHeight = cmdLineOptions.getLevelHeight();
 
-        receptiveFiledWidth = cmdLineOptions.getReceptiveFieldWidth();
-        receptiveFiledHeight = cmdLineOptions.getReceptiveFieldHeight();
-        killedCreaturesTotal = 0;
-        killedCreaturesByFireBall = 0;
-        killedCreaturesByStomp = 0;
-        killedCreaturesByShell = 0;
+    receptiveFiledWidth = cmdLineOptions.getReceptiveFieldWidth();
+    receptiveFiledHeight = cmdLineOptions.getReceptiveFieldHeight();
+    killedCreaturesTotal = 0;
+    killedCreaturesByFireBall = 0;
+    killedCreaturesByStomp = 0;
+    killedCreaturesByShell = 0;
 
-        if (receptiveFiledHeight != this.prevRFH || receptiveFiledWidth != this.prevRFW)
-        {
-            serializedLevelScene = new int[receptiveFiledHeight * receptiveFiledWidth];
-            serializedEnemies = new int[receptiveFiledHeight * receptiveFiledWidth];
-            serializedMergedObservation = new int[receptiveFiledHeight * receptiveFiledWidth];
+    if (receptiveFiledHeight != this.prevRFH || receptiveFiledWidth != this.prevRFW)
+    {
+        serializedLevelScene = new int[receptiveFiledHeight * receptiveFiledWidth];
+        serializedEnemies = new int[receptiveFiledHeight * receptiveFiledWidth];
+        serializedMergedObservation = new int[receptiveFiledHeight * receptiveFiledWidth];
 
-            levelSceneZ = new byte[receptiveFiledHeight][receptiveFiledWidth];
-            enemiesZ = new byte[receptiveFiledHeight][receptiveFiledWidth];
-            mergedZ = new byte[receptiveFiledHeight][receptiveFiledWidth];
-            this.prevRFH = this.receptiveFiledHeight;
-            this.prevRFW = this.receptiveFiledWidth;
-        }
+        levelSceneZ = new byte[receptiveFiledHeight][receptiveFiledWidth];
+        enemiesZ = new byte[receptiveFiledHeight][receptiveFiledWidth];
+        mergedZ = new byte[receptiveFiledHeight][receptiveFiledWidth];
+        this.prevRFH = this.receptiveFiledHeight;
+        this.prevRFW = this.receptiveFiledWidth;
+    }
 
 //        System.out.println("Call to init:");
-        init(cmdLineOptions);
-    }
+    init(cmdLineOptions);
+}
 
-    public float[] getMarioFloatPos()
-    {
-        marioFloatPos[0] = this.mario.x;
-        marioFloatPos[1] = this.mario.y;
-        return marioFloatPos;
-    }
+public float[] getMarioFloatPos()
+{
+    marioFloatPos[0] = this.mario.x;
+    marioFloatPos[1] = this.mario.y;
+    return marioFloatPos;
+}
 
-    public int getMarioMode()
-    { return mario.getMode(); }
+public int getMarioMode()
+{ return mario.getMode(); }
 
-    public boolean isMarioCarrying()
-    { return mario.carried != null; }
+public boolean isMarioCarrying()
+{ return mario.carried != null; }
 
-    public int getLevelDifficulty()
-    { return levelDifficulty; }
+public int getLevelDifficulty()
+{ return levelDifficulty; }
 
-    public long getLevelSeed()
-    { return levelSeed; }
+public long getLevelSeed()
+{ return levelSeed; }
 
-    public int getLevelLength()
-    { return levelLength; }
+public int getLevelLength()
+{ return levelLength; }
 
-    public int getLevelType()
-    { return levelType; }
+public int getLevelType()
+{ return levelType; }
 
-    public int getReceptiveFieldWidth()
-    {
-        return receptiveFiledWidth;
-    }
+public int getReceptiveFieldWidth()
+{
+    return receptiveFiledWidth;
+}
 
-    public int getReceptiveFieldHeight()
-    {
-        return receptiveFiledHeight;
-    }
+public int getReceptiveFieldHeight()
+{
+    return receptiveFiledHeight;
+}
 //    public void update(boolean[] action)
-    //    {
-    //        System.arraycopy(action, 0, mario.keys, 0, 6);
+//    {
+//        System.arraycopy(action, 0, mario.keys, 0, 6);
 //    }
 
+public void addMemoMessage(final String reasonOfDeath)
+{
+    memo += "reasonOfDeath\n";
+}
 }

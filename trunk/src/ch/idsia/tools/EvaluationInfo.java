@@ -125,7 +125,7 @@ public String toString()
             df.format(distancePassedPhys) +
             "\n Time Spent(marioseconds) : " + timeSpent +
             "\n  Time Left(marioseconds) : " + timeLeft +
-            "\n             Coins Gained : " + coinsGained + " of " + totalNumberOfCoins + "(" +coinsGained*100/totalNumberOfCoins + "% collected)" +
+            "\n             Coins Gained : " + coinsGained + " of " + totalNumberOfCoins + "(" + coinsGained * 100 / totalNumberOfCoins + "% collected)" +
             "\n      Hidden Blocks Found : " + hiddenBlocksFound +
             "\n       Mushrooms Devoured : " + mushroomsDevoured +
             "\n         Flowers Devoured : " + flowersDevoured +

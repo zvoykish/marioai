@@ -250,7 +250,7 @@ public EvaluationInfo getEvaluationInfo()
     evaluationInfo.killsByShell = levelScene.getKillsByShell();
     evaluationInfo.hiddenBlocksFound = Mario.hiddenBlocks;
     evaluationInfo.collisionsWithCreatures = Mario.collisionsWithCreatures;
-//        evaluationInfo.Memo = "Number of attempt: " + Mario.numberOfAttempts;
+    evaluationInfo.Memo = levelScene.memo;
     return evaluationInfo;
 }
 
