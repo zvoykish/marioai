@@ -39,6 +39,12 @@ public int timeSpent = MagicNumberUnDef;
 public int hiddenBlocksFound = MagicNumberUnDef;
 
 public int totalNumberOfCoins = MagicNumberUnDef;
+public int totalNumberOfHiddenBlocks = MagicNumberUnDef;
+public int totalNumberOfMushrooms = MagicNumberUnDef;
+public int totalNumberOfFlowers = MagicNumberUnDef;
+
+public int levelLength = MagicNumberUnDef;
+
 public int collisionsWithCreatures = MagicNumberUnDef;
 
 private static final float[] retFloatArray = new float[EvaluationInfo.numberOfElements];
@@ -114,21 +120,18 @@ public float[] toFloatArray()
 
 public String toString()
 {
-    if (totalNumberOfCoins == 0) //quick fix. remove this crutch
-        ++totalNumberOfCoins;
     return "\n[MarioAI] ~ Evaluation Results:" +
             "\n         Weighted Fitness : " + df.format(computeWeightedFitness()) +
             "\n             Mario Status : " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss...") +
             "\n               Mario Mode : " + Mario.MODES[marioMode] +
             "\nCollisions with creatures : " + collisionsWithCreatures +
-            "\n     Passed (Cells, Phys) : " + distancePassedCells + ", " +
-            df.format(distancePassedPhys) +
+            "\n     Passed (Cells, Phys) : " + distancePassedCells + ", " + df.format(distancePassedPhys) + " (" +distancePassedCells * 100 / levelLength + "% passed)" +
             "\n Time Spent(marioseconds) : " + timeSpent +
             "\n  Time Left(marioseconds) : " + timeLeft +
-            "\n             Coins Gained : " + coinsGained + " of " + totalNumberOfCoins + "(" + coinsGained * 100 / totalNumberOfCoins + "% collected)" +
-            "\n      Hidden Blocks Found : " + hiddenBlocksFound +
-            "\n       Mushrooms Devoured : " + mushroomsDevoured +
-            "\n         Flowers Devoured : " + flowersDevoured +
+            "\n             Coins Gained : " + coinsGained + " of " + totalNumberOfCoins + "(" + coinsGained * 100 / (totalNumberOfCoins == 0 ? 1 : totalNumberOfCoins) + "% collected)" +
+            "\n      Hidden Blocks Found : " + hiddenBlocksFound + " of " + totalNumberOfHiddenBlocks + "(" + hiddenBlocksFound * 100 / (totalNumberOfHiddenBlocks == 0 ? 1 : totalNumberOfHiddenBlocks) + "% found)" +
+            "\n       Mushrooms Devoured : " + mushroomsDevoured + " of " + totalNumberOfMushrooms + "appeared (" + mushroomsDevoured * 100 / (totalNumberOfMushrooms == 0 ? 1 : totalNumberOfMushrooms) + "% collected)" +
+            "\n         Flowers Devoured : " + flowersDevoured + " of " + totalNumberOfFlowers + "appeared (" + flowersDevoured * 100 / (totalNumberOfFlowers == 0 ? 1 : totalNumberOfFlowers) + "% collected)" +
             "\n              kills Total : " + killsTotal +
             "\n            kills By Fire : " + killsByFire +
             "\n           kills By Shell : " + killsByShell +

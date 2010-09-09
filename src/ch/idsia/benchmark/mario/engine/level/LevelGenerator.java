@@ -25,8 +25,6 @@ import java.util.Random;
 
 public class LevelGenerator
 {
-
-
     /*
     From left to right:
         0)goomba
@@ -661,6 +659,7 @@ public class LevelGenerator
                     }
                     type = creaturesMaskParser.getNativeType(type);
                     level.setSpriteTemplate(x, y, new SpriteTemplate(type));
+                    ++counters.creatures;
                 } else
                 {
                     boolean enabled = false;
@@ -681,6 +680,7 @@ public class LevelGenerator
 
                     int t = creaturesMaskParser.getNativeType(crType);
                     level.setSpriteTemplate(x, y, new SpriteTemplate(t));
+                    ++counters.creatures;
                 }
             }
         }
@@ -747,6 +747,7 @@ public class LevelGenerator
             if (x == xTube && globalRandom.nextInt(11) < levelDifficulty + 1 && creaturesMaskParser.isEnabled(CreaturesMaskParser.SPIKY_FLOWER))
             {
                 level.setSpriteTemplate(x, tubeHeight, new SpriteTemplate(Sprite.KIND_ENEMY_FLOWER));
+                ++counters.creatures;
             }
 
             for (int y = 0; y < floor + floorHeight; y++)
@@ -884,8 +885,9 @@ public class LevelGenerator
                         boolean isBlock = globalRandom.nextInt(2) == 1;
                         if (isBlock && canBuildBlocks(x, floor - 4, true))
                         {
-                            level.setBlock(x, floor - 4, (byte) (1)); //hidden block
+                            level.setBlock(x, floor - 4, (byte) (1)); //a hidden block with a coin
                             counters.hiddenBlocks++;
+                            ++counters.coinsCount;
                         }
                     } else
                     {
@@ -902,6 +904,7 @@ public class LevelGenerator
                                 } else
                                 {
                                     level.setBlock(x, floor - 4, (byte) (4 + 1 + 1 * 16)); //a brick with animated question symbol with coin. when broken becomes a rock
+                                    ++counters.coinsCount;
                                 }
                                 canDeco = true;
                             }
@@ -916,6 +919,7 @@ public class LevelGenerator
                                 } else
                                 {
                                     level.setBlock(x, floor - 4, (byte) (1 + 1 * 16)); //a brick with a coin. when broken becomes a rock
+                                    ++counters.coinsCount;
                                 }
                                 canDeco = true;
                             }

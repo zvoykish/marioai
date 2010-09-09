@@ -672,6 +672,7 @@ public void win()
     world.paused = true;
     winTime = 1;
     status = Mario.STATUS_WIN;
+    world.addMemoMessage("");
 }
 
 public void die(String reasonOfDeath)
