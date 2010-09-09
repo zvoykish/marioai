@@ -302,7 +302,7 @@ public void render(Graphics g, float alpha)
 //            if (t > 1800)
 //            {
 //                renderer.levelFailed();
-        mario.die();
+        mario.die("Reason: <TODO>");
         //              replayer = new Replayer(recorder.getBytes());
 //                init();
 //            }
