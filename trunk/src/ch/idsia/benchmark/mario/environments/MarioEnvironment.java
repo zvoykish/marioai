@@ -242,6 +242,9 @@ public EvaluationInfo getEvaluationInfo()
     evaluationInfo.timeLeft = levelScene.getTimeLeft();
     evaluationInfo.coinsGained = Mario.coins;
     evaluationInfo.totalNumberOfCoins = levelScene.level.counters.coinsCount;
+    evaluationInfo.totalNumberOfHiddenBlocks = levelScene.level.counters.hiddenBlocks;
+    evaluationInfo.totalNumberOfFlowers = levelScene.level.counters.flowers;
+    evaluationInfo.totalNumberOfMushrooms = levelScene.level.counters.mushrooms;
     evaluationInfo.marioMode = levelScene.getMarioMode();
     evaluationInfo.mushroomsDevoured = Mario.mushroomsDevoured;
     evaluationInfo.killsTotal = levelScene.getKillsTotal();
@@ -251,6 +254,7 @@ public EvaluationInfo getEvaluationInfo()
     evaluationInfo.hiddenBlocksFound = Mario.hiddenBlocks;
     evaluationInfo.collisionsWithCreatures = Mario.collisionsWithCreatures;
     evaluationInfo.Memo = levelScene.memo;
+    evaluationInfo.levelLength = levelScene.level.xExit-1;
     return evaluationInfo;
 }
 

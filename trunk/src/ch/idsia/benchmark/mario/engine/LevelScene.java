@@ -804,9 +804,11 @@ public void bump(int x, int y, boolean canBreakBricks)
             if (!Mario.large)
             {
                 addSprite(new Mushroom(this, x * cellSize + 8, y * cellSize + 8));
+                ++level.counters.mushrooms;
             } else
             {
                 addSprite(new FireFlower(this, x * cellSize + 8, y * cellSize + 8));
+                ++level.counters.flowers;
             }
         } else
         {
@@ -1078,6 +1080,9 @@ public int getReceptiveFieldHeight()
 
 public void addMemoMessage(final String reasonOfDeath)
 {
-    memo += "reasonOfDeath\n";
+    if (!reasonOfDeath.equals(""))
+        memo += "reasonOfDeath\n";
+    else
+        memo = "";
 }
 }

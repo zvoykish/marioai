@@ -24,6 +24,10 @@ public class Level
         public int totalCoins;
         public int totalHillStraight;
         public int totalTubes;
+
+        public int mushrooms = 0;
+        public int flowers = 0;
+        public int creatures = 0;
     }
 
     public static final String[] BIT_DESCRIPTIONS = {//
