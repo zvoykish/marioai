@@ -3,13 +3,13 @@
 \usepackage[margin=2cm]{geometry}
 \usepackage{indentfirst}
 \begin{document}
-\section*{MarioAI Benchmark \footnote{v-0.1.6 compliant}. Startup options.}
+\section*{Mario AI Benchmark \footnote{v-0.1.7a compliant}. Setup options.}
 
 \begin{table}[hp]
 
 \center{
 
-\begin{tabular}{| c | p{6cm} | p{3cm} | c | }
+\begin{tabular}{| c | p{6cm} | p{4cm} | c | }
 
    \hline
    Option key & Description & Values range & Example \\
@@ -50,7 +50,7 @@
 \pagebreak
 \begin{table}[hp]
 \center{
-\begin{tabular} {| c | p{6cm} | p{3cm} | c | }
+\begin{tabular} {| c | p{6cm} | p{4cm} | c | }
    \hline
    Option key & Description & Values range & Example \\
    \hline \hline
@@ -90,7 +90,6 @@
 \item winged spiky 
 \item spiky flower
 \end {enumerate} 
-
 Replace \emph{x} with 1 if you want creature to be on the level, otherwise 0. For more details and examples see \texttt{marioai-lvlgen-options-usage.pdf}& $<$xxxxxxxxx$>$. Default: 111111111 & {\texttt Main -le 0 } \\
    \hline
    -lb & Enable/Disable visible blocks on the level & $<$on$|$off$>$. Default: on & {\texttt Main -lb off } \\
@@ -105,7 +104,7 @@ Replace \emph{x} with 1 if you want creature to be on the level, otherwise 0. Fo
 
 \end{tabular}
 
-} \caption{Generalization capacity. Performance of the } \label{table:generalization}
+} \caption{ Setup options for the Mario AI benchmark. Options can be set up via CmdLineOptions.setArgs() method that accepts both array of strings and a single string or by setting individual options with corresponding methods.} \label{tab:cmdlineoptions}
 
 \end{table}
 \end{document}
