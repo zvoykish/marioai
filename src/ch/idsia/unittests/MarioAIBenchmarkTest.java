@@ -82,20 +82,20 @@ public void testForwardJumpingAgentFitnessWithDefaultCreatures()
 }
 
 @Test
-public void testReceptiveField_1x3()
+public void testReceptiveField_1x2()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 1 -rfh 3 -srf on");
+    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 1 -rfh 2 -srf on");
     final BasicTask basicTask = new BasicTask(cmdLineOptions);
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals(7702.0, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+    assertEquals(7648, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
 }
 
 @Test
 public void testReceptiveField_3x1()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 3 -rfh 1 -srf on");
+    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 3 -rfh 1 -srf on");
     final BasicTask basicTask = new BasicTask(cmdLineOptions);
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
@@ -111,7 +111,7 @@ public void testReceptiveField_1x1()
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals(7702.0, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+    assertEquals(7648, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
 }
 
 @Test
@@ -152,6 +152,7 @@ public void testForwardAgentFitnessWithoutCreatures()
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
     assertEquals("Fitness", 7648.0, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
 }
+
 @Test
 public void testForwardJumpingAgentCoinsCollected()
 {
