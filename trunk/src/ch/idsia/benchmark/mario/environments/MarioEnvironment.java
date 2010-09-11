@@ -38,7 +38,7 @@ private MarioEnvironment()
 //        System.out.println("System.getProperty(\"verbose\") = " + System.getProperty("-verbose"));
 //        System.out.println("Java: JA ZDES'!!");
 //        System.out.flush();
-    System.out.println("[~~ Mario AI Benchmark ~~" + GlobalOptions.getVersionUID() + "a]");
+    System.out.println(GlobalOptions.getBenchmarkName());
     levelScene = new LevelScene();
 }
 
@@ -254,7 +254,7 @@ public EvaluationInfo getEvaluationInfo()
     evaluationInfo.hiddenBlocksFound = Mario.hiddenBlocks;
     evaluationInfo.collisionsWithCreatures = Mario.collisionsWithCreatures;
     evaluationInfo.Memo = levelScene.memo;
-    evaluationInfo.levelLength = levelScene.level.xExit-1;
+    evaluationInfo.levelLength = levelScene.level.xExit - 1;
     return evaluationInfo;
 }
 

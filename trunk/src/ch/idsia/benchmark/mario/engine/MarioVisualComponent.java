@@ -111,7 +111,7 @@ public void CreateMarioComponentFrame(MarioVisualComponent m)
 {
     if (marioComponentFrame == null)
     {
-        marioComponentFrame = new JFrame(/*evaluationOptions.getAgentFullLoadName() +*/ "Mario AI benchmark " + GlobalOptions.getVersionUID());
+        marioComponentFrame = new JFrame(/*evaluationOptions.getAgentFullLoadName() +*/ GlobalOptions.getBenchmarkName());
         marioComponentFrame.setContentPane(m);
         m.init();
         marioComponentFrame.pack();
