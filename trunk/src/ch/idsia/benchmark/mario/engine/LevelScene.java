@@ -420,20 +420,20 @@ public byte[][] getLevelSceneObservationZ(int ZLevel)
         System.err.print("MarioXInMap = " + MarioXInMap);
         System.err.println(" ### (int) mario.x / cellSize  = " + (int) mario.x / cellSize);
 
-                        /* typical output
-                MarioYInMap = 10 (int) mario.y / cellSize = 9
-                MarioXInMap = 21(int) mario.x / cellSize  = 22
-                        mario.mapX < (int) mario.x / cellSize
-                        mario.mapY > (int) mario.y / cellSize
-                         TODO: fix mario.mapX !
-                         */
-                //        throw new Error("WRONG mario x or y pos");
+        /* typical output
+MarioYInMap = 10 (int) mario.y / cellSize = 9
+MarioXInMap = 21(int) mario.x / cellSize  = 22
+       mario.mapX < (int) mario.x / cellSize
+       mario.mapY > (int) mario.y / cellSize
+        TODO: fix mario.mapX !
+        */
+        //        throw new Error("WRONG mario x or y pos");
     }
 
     if (MarioYInMap != (int) mario.y / cellSize)
     {
-        System.err.println("mario.y = " + mario.y + ", " + System.currentTimeMillis());
-        System.err.print("\nMarioYInMap = " + MarioYInMap);
+        System.err.print("\nLS: mario.y = " + mario.y + ", " + System.currentTimeMillis());
+        System.err.print(" %% MarioYInMap = " + MarioYInMap);
         System.err.println(" ### (int) mario.y / cellSize = " + (int) mario.y / cellSize);
     }
 
