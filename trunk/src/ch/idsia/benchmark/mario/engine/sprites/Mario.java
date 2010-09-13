@@ -5,10 +5,6 @@ import ch.idsia.benchmark.mario.engine.Art;
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.engine.LevelScene;
 import ch.idsia.benchmark.mario.engine.level.Level;
-
-import java.util.Arrays;
-
-
 public final class Mario extends Sprite
 {
 private final int FractionalPowerUpTime = 0;
@@ -199,55 +195,26 @@ private void savePrevState()
     this.prevyPicO = yPicO;
 }
 
-public void moveOnTheAir()
-{
-    world.paused = false;
-    ya = keys[KEY_DOWN] ? 3 : 0;
-    ya = keys[KEY_UP] ? -3 : 0;
-    xa = keys[KEY_RIGHT] ? 3 : 0;
-    xa = keys[KEY_LEFT] ? -3 : 0;
-
-    if (xa > 2)
-    {
-        facing = 1;
-    }
-    if (xa < -2)
-    {
-        facing = -1;
-    }
-
-    xFlipPic = facing == -1;
-    runTime += (Math.abs(xa)) + 5;
-    if (Math.abs(xa) < 0.5f)
-    {
-        runTime = 0;
-        xa = 0;
-    }
-
-    calcPic();
-
-    move(xa, 0);
-    move(0, ya);
-}
-
 public void move()
 {
     if (GlobalOptions.isFly)
     {
-//        moveOnTheAir();
-//        return;
-        System.out.println("keys = " + keys[KEY_DOWN]);
-        System.out.println("keys = " + keys[KEY_DOWN]);
-        System.out.println("keys = " + keys[KEY_DOWN]);
-        System.out.println("keys = " + keys[KEY_DOWN]);
-        ya = keys[KEY_DOWN] ? -15 : 0;
-        ya = keys[KEY_UP] ? -10 : 0;
-        xa = keys[KEY_RIGHT] ? -15 : 0;
-        xa = keys[KEY_LEFT] ? -15 : 0;
-        System.out.println("keys = " + keys[KEY_RIGHT]);
-        System.out.println("keys = " + Arrays.toString(keys));
-        System.out.println("xa = " + xa);
-        System.out.println("ya = " + ya);
+        if (keys[KEY_DOWN])
+            ya = 15;
+        else
+            ya = 0;
+        if (keys[KEY_UP])
+            ya = -10;
+        else if(!keys[KEY_DOWN])
+            ya = 0;
+        if (keys[KEY_RIGHT])
+            xa = 15;
+        else
+            xa = 0;
+        if (keys[KEY_LEFT])
+            xa = -10;
+        else if (!keys[KEY_RIGHT])
+            xa = 0;
     }
 
     ++world.level.marioTrace[this.mapX][this.mapY];
