@@ -5,6 +5,7 @@ import ch.idsia.benchmark.mario.engine.Art;
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.engine.LevelScene;
 import ch.idsia.benchmark.mario.engine.level.Level;
+
 public final class Mario extends Sprite
 {
 private final int FractionalPowerUpTime = 0;
@@ -199,22 +200,28 @@ public void move()
 {
     if (GlobalOptions.isFly)
     {
-        if (keys[KEY_DOWN])
-            ya = 15;
-        else
-            ya = 0;
-        if (keys[KEY_UP])
-            ya = -10;
-        else if(!keys[KEY_DOWN])
-            ya = 0;
-        if (keys[KEY_RIGHT])
-            xa = 15;
-        else
-            xa = 0;
-        if (keys[KEY_LEFT])
-            xa = -10;
-        else if (!keys[KEY_RIGHT])
-            xa = 0;
+        xa = ya = 0;
+        ya = keys[KEY_DOWN] ? 10 : ya;
+        ya = keys[KEY_UP] ? -10 : ya;
+        xa = keys[KEY_RIGHT] ? 10 : xa;
+        xa = keys[KEY_LEFT] ? -10 : xa;
+
+//        if (keys[KEY_DOWN])
+//            ya = 15;
+//        else
+//            ya = 0;
+//        if (keys[KEY_UP])
+//            ya = -10;
+//        else if(!keys[KEY_DOWN])
+//            ya = 0;
+//        if (keys[KEY_RIGHT])
+//            xa = 15;
+//        else
+//            xa = 0;
+//        if (keys[KEY_LEFT])
+//            xa = -10;
+//        else if (!keys[KEY_RIGHT])
+//            xa = 0;
     }
 
     ++world.level.marioTrace[this.mapX][this.mapY];
