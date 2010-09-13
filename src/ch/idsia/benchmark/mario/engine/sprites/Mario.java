@@ -6,6 +6,8 @@ import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.engine.LevelScene;
 import ch.idsia.benchmark.mario.engine.level.Level;
 
+import java.util.Arrays;
+
 
 public final class Mario extends Sprite
 {
@@ -200,10 +202,10 @@ private void savePrevState()
 public void moveOnTheAir()
 {
     world.paused = false;
-    ya += keys[KEY_DOWN] ? 1 : 0;
-    ya -= keys[KEY_UP] ? 1 : 0;
-    xa += keys[KEY_RIGHT] ? 1 : 0;
-    xa -= keys[KEY_LEFT] ? 1 : 0;
+    ya = keys[KEY_DOWN] ? 3 : 0;
+    ya = keys[KEY_UP] ? -3 : 0;
+    xa = keys[KEY_RIGHT] ? 3 : 0;
+    xa = keys[KEY_LEFT] ? -3 : 0;
 
     if (xa > 2)
     {
@@ -224,18 +226,25 @@ public void moveOnTheAir()
 
     calcPic();
 
-    move (xa, 0);
-    move (0, ya);
+    move(xa, 0);
+    move(0, ya);
 }
 
 public void move()
 {
     if (GlobalOptions.isFly)
     {
-        moveOnTheAir();
-        return;
+//        moveOnTheAir();
+//        return;
+        ya = keys[KEY_DOWN] ? 15 : 0;
+        ya = keys[KEY_UP] ? -10 : 0;
+        xa = keys[KEY_RIGHT] ? 15 : 0;
+        xa = keys[KEY_LEFT] ? -15 : 0;
+        System.out.println("keys = " + Arrays.toString(keys));
+        System.out.println("xa = " + xa);
+        System.out.println("ya = " + ya);
     }
-    
+
     ++world.level.marioTrace[this.mapX][this.mapY];
 
     if (winTime > 0)
