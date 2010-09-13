@@ -259,7 +259,7 @@ private static int buildZone(int x, int maxLength, int maxHeight, int floor, int
     }
 
     for (int y = 0; y < levelDifficulty; y++)
-        addEnemy(x, y);
+        addEnemy(x, y % (level.height - 3));
 
     switch (type)
     {
@@ -312,12 +312,16 @@ private static int buildZone(int x, int maxLength, int maxHeight, int floor, int
     return 0;
 }
 
+public static Random XRnd = new Random(0);
+
 public static void addEnemy(int x, int y)
 {
-    int crType = creaturesRandom.nextInt(8);
+    int crType = creaturesRandom.nextInt(4);
 
     int t = creaturesMaskParser.getNativeType(crType);
-    level.setSpriteTemplate(x, y, new SpriteTemplate(t));
+    int dx = (int) XRnd.nextGaussian();
+//    System.out.println("dx = " + dx);
+    level.setSpriteTemplate(x + dx, y, new SpriteTemplate(t));
     ++counters.creatures;
 }
 
