@@ -157,6 +157,9 @@ public void tick()
         msg = "NULL";
     drawString(thisVolatileImageGraphics, msg, 6, 78, 1);
 
+    if (mario.cheatKeys[Mario.KEY_WIN])
+        mario.win();
+
     if (!this.hasFocus() && (tm - tm0) / (delay + 1) % 42 < 20)
     {
         String msgClick = "CLICK TO PLAY";

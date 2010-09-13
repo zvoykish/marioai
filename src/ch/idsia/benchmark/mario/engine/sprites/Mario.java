@@ -347,8 +347,6 @@ public void move()
 
     // TODO: remove this and clean up "easter eggs", redundant due to "SPACE" for the whole world and "-le 0" to disable creatures
     world.paused = GlobalOptions.isPauseWorld;
-    if (cheatKeys[KEY_WIN])
-        win();
 //        if (keys[KEY_DUMP_CURRENT_WORLD])
 //            try {
 //                System.out.println("DUMP:");
