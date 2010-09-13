@@ -205,26 +205,10 @@ public void move()
         ya = keys[KEY_UP] ? -10 : ya;
         xa = keys[KEY_RIGHT] ? 10 : xa;
         xa = keys[KEY_LEFT] ? -10 : xa;
-
-//        if (keys[KEY_DOWN])
-//            ya = 15;
-//        else
-//            ya = 0;
-//        if (keys[KEY_UP])
-//            ya = -10;
-//        else if(!keys[KEY_DOWN])
-//            ya = 0;
-//        if (keys[KEY_RIGHT])
-//            xa = 15;
-//        else
-//            xa = 0;
-//        if (keys[KEY_LEFT])
-//            xa = -10;
-//        else if (!keys[KEY_RIGHT])
-//            xa = 0;
     }
 
-    ++world.level.marioTrace[this.mapX][this.mapY];
+    if (mapY > -1)
+        ++world.level.marioTrace[this.mapX][this.mapY];
 
     if (winTime > 0)
     {

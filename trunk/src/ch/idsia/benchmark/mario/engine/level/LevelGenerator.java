@@ -258,7 +258,7 @@ private static int buildZone(int x, int maxLength, int maxHeight, int floor, int
         }
     }
 
-    for (int y = 0; y < 10; y++)
+    for (int y = 0; y < levelDifficulty; y++)
         addEnemy(x, y);
 
     switch (type)
