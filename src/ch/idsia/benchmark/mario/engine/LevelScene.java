@@ -9,6 +9,7 @@ import ch.idsia.tools.CmdLineOptions;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public final class LevelScene implements SpriteContext
@@ -926,6 +927,8 @@ public void performAction(boolean[] action)
 {
     // might look ugly , but arrayCopy is not necessary here:
     this.mario.keys = action;
+    System.out.println("action = " + Arrays.toString(action));
+    System.out.println("mario.keys = " + Arrays.toString(mario.keys));
 }
 
 public boolean isLevelFinished()
