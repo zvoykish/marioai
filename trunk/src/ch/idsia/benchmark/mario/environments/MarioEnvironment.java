@@ -8,6 +8,11 @@ import ch.idsia.benchmark.mario.engine.sprites.Mario;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.DecimalFormat;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Sergey Karakovskiy, sergey@idsia.ch
@@ -251,11 +256,69 @@ public EvaluationInfo getEvaluationInfo()
     evaluationInfo.killsByStomp = levelScene.getKillsByStomp();
     evaluationInfo.killsByFire = levelScene.getKillsByFire();
     evaluationInfo.killsByShell = levelScene.getKillsByShell();
-    evaluationInfo.hiddenBlocksFound = Mario.hiddenBlocks;
+    evaluationInfo.hiddenBlocksFound = Mario.hiddenBlocksFound;
     evaluationInfo.collisionsWithCreatures = Mario.collisionsWithCreatures;
     evaluationInfo.Memo = levelScene.memo;
     evaluationInfo.levelLength = levelScene.level.xExit - 1;
+
+    // store mario trace:
+    final String marioTraceFile = "[MarioAI]-MarioTrace.txt";
+    try
+    {
+
+        final PrintWriter pw = new PrintWriter(new FileWriter(marioTraceFile));
+        int[][] trace = levelScene.level.marioTrace;
+        System.out.println("trace.length = " + trace.length);
+        System.out.println("trace = " + trace[0].length);
+        DecimalFormat df = new DecimalFormat("\\s");
+
+        for (int j = 0; j < trace[0].length; ++j)
+
+        {
+            for (int i = 0; i < trace.length; ++i)
+            {
+                System.out.print(spaceFormat(trace[i][j]));
+                pw.print(spaceFormat(trace[i][j]));
+            }
+            System.out.println();
+            pw.println();
+        }
+//        for (int[] ints : trace)
+//        {
+//            for (int anInt : ints)
+//            {
+//                pw.print(df.format(anInt) + " ");
+//            }
+//            pw.println();
+//        }
+        pw.flush();
+    } catch (IOException e)
+    {
+        e.printStackTrace();
+    }
+    finally
+    {
+        Runtime rt = Runtime.getRuntime();
+        try
+        {
+//            Process proc = rt.exec("/usr/local/bin/mate " + marioTraceFile);
+            Process proc = rt.exec("open " + marioTraceFile);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     return evaluationInfo;
+}
+
+private String spaceFormat(int i)
+{
+    int j = 0;
+    String r = "" + ((i == 0) ? "." : i);
+    while (r.length() < 4)
+        r += " ";
+    return r;
 }
 
 

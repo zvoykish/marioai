@@ -145,7 +145,7 @@ public void tick()
     String msg = "Agent: " + this.agentNameStr;
     drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 7, 5);
 
-    msg = "Selected Actions: ";
+    msg = "PRESSED BUTTONS: ";
     drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 8, 6);
 
     msg = "";
@@ -164,8 +164,8 @@ public void tick()
 //            drawString(thisVolatileImageGraphics, msgClick, 160 - msgClick.length() * 4, 110, 7);
     }
 //        thisVolatileImageGraphics.setColor(Color.DARK_GRAY);
-    drawStringDropShadow(thisVolatileImageGraphics, "FPS: ", 32, 2, 7);
-    drawStringDropShadow(thisVolatileImageGraphics, ((GlobalOptions.FPS > 99) ? "\\infty" : GlobalOptions.FPS.toString()), 32, 3, 7);
+    drawStringDropShadow(thisVolatileImageGraphics, "FPS: ", 33, 2, 7);
+    drawStringDropShadow(thisVolatileImageGraphics, ((GlobalOptions.FPS > 99) ? "\\infty" : "  " + GlobalOptions.FPS.toString()), 33, 3, 7);
 
 //        msg = totalNumberOfTrials == -2 ? "" : currentTrial + "(" + ((totalNumberOfTrials == -1) ? "\\infty" : totalNumberOfTrials) + ")";
 
@@ -206,12 +206,13 @@ public void render(Graphics g, float alpha)
         //        int yCam = (int) (yCamO + (this.yCam - yCamO) * alpha);
         if (xCam < 0) xCam = 0;
         if (yCam < 0) yCam = 0;
+        // TODO: change 16 to cellSize (use the SAME static final variable)
         if (xCam > level.length * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH)
             xCam = level.length * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH;
         if (yCam > level.height * 16 - GlobalOptions.VISUAL_COMPONENT_HEIGHT)
             yCam = level.height * 16 - GlobalOptions.VISUAL_COMPONENT_HEIGHT;
     }
-    //      g.drawImage(Art.background, 0, 0, null);
+//          g.drawImage(Art.background, 0, 0, null);
 
     for (int i = 0; i < bgLayer.length; i++)
     {
@@ -227,7 +228,9 @@ public void render(Graphics g, float alpha)
     g.translate(xCam, yCam);
 
     layer.setCam(xCam, yCam);
-    layer.render(g, levelScene.tick, levelScene.paused ? 0 : alpha); //levelScene., levelScene.
+    // TODO : remove alpha
+    layer.render(g, levelScene.tick, levelScene.paused ? 0 : alpha);
+    // TODO : fix renderExit0
     layer.renderExit0(g, levelScene.tick, levelScene.paused ? 0 : alpha, mario.winTime == 0);
 
     g.translate(-xCam, -yCam);
@@ -238,10 +241,6 @@ public void render(Graphics g, float alpha)
     g.translate(xCam, yCam);
     g.setColor(Color.BLACK);
     layer.renderExit1(g, levelScene.tick, levelScene.paused ? 0 : alpha);
-
-//        drawStringDropShadow(g, "MARIO: " + df.format(Mario.lives), 0, 0, 7);
-//        drawStringDropShadow(g, "#########", 0, 1, 7);
-
 
     drawStringDropShadow(g, "DIFFICULTY:   " + df.format(levelScene.getLevelDifficulty()), 0, 0, levelScene.getLevelDifficulty() > 6 ? 1 : levelScene.getLevelDifficulty() > 2 ? 4 : 7);
     drawStringDropShadow(g, "CREATURES:" + (mario.world.paused ? "OFF" : " ON"), 19, 0, 7);
@@ -258,8 +257,9 @@ public void render(Graphics g, float alpha)
 
     drawStringDropShadow(g, "TIME", 33, 0, 7);
     int time = levelScene.getTimeLeft();
-    if (time < 0) time = 0;
-    drawStringDropShadow(g, " " + df2.format(time), 33, 1, 7);
+//    if (time < 0) time = 0;
+
+    drawStringDropShadow(g, " " + df2.format(time), 33, 1, time < 0 ? 3 : time < 50 ? 1 : time < 100 ? 4 : 7);
 
     drawProgress(g);
 
@@ -270,44 +270,44 @@ public void render(Graphics g, float alpha)
         g.drawString("xOld : " + mario.xOld + "yOld: " + mario.yOld, 10, 225);
     }
 
-    if (levelScene.startTime > 0)
-    {
-        float t = levelScene.startTime + alpha - 2;
-        t = t * t * 0.6f;
-        renderBlackout(g, 160, 120, (int) (t));
-    }
+//    if (levelScene.startTime > 0)
+//    {
+//        float t = levelScene.startTime + alpha - 2;
+//        t = t * t * 0.6f;
+//        renderBlackout(g, 160, 120, (int) (t));
+//    }
 //        mario.x>level.xExit*16
-    if (mario.winTime > 0)
-    {
-        float t = mario.winTime + alpha;
-        t = t * t * 0.2f;
+//    if (mario.winTime > 0)
+//    {
+//        float t = mario.winTime + alpha;
+//        t = t * t * 0.2f;
+//
+//        if (t > 900)
+//        {
+////                renderer.levelWon();
+//            mario.win();
+//            //              replayer = new Replayer(recorder.getBytes());
+////                init();
+//        }
+//
+//        renderBlackout(g, mario.xDeathPos - xCam, mario.yDeathPos - yCam,
+//                (int) (GlobalOptions.VISUAL_COMPONENT_WIDTH - t));
+//    }
 
-        if (t > 900)
-        {
-//                renderer.levelWon();
-            mario.win();
-            //              replayer = new Replayer(recorder.getBytes());
-//                init();
-        }
-
-        renderBlackout(g, mario.xDeathPos - xCam, mario.yDeathPos - yCam,
-                (int) (GlobalOptions.VISUAL_COMPONENT_WIDTH - t));
-    }
-
-    if (mario.deathTime > 0)
-    {
+//    if (mario.deathTime > 0)
+//    {
 //            float t = mario.deathTime + alpha;
 //            t = t * t * 0.4f;
 //
 //            if (t > 1800)
 //            {
 //                renderer.levelFailed();
-        mario.die("Reason: <TODO>");
-        //              replayer = new Replayer(recorder.getBytes());
+//        mario.die("");
+    //              replayer = new Replayer(recorder.getBytes());
 //                init();
 //            }
 //            renderBlackout(g, (int) (mario.xDeathPos - xCam), (int) (mario.yDeathPos - yCam), (int) (320 - t));
-    }
+//    }
 }
 
 private void drawProgress(Graphics g)

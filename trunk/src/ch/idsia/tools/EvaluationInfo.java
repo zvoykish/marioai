@@ -51,7 +51,7 @@ private static final float[] retFloatArray = new float[EvaluationInfo.numberOfEl
 private static final float[] zeros = new float[EvaluationInfo.numberOfElements];
 public String Memo = "";
 
-private static final DecimalFormat df = new DecimalFormat("0.00");
+private static final DecimalFormat df = new DecimalFormat("#.##");
 private static MarioSystemOfValues marioSystemOfValues = new MarioSystemOfValues();
 
 public EvaluationInfo()
@@ -96,7 +96,7 @@ public int computeKillsTotal()
     return this.killsTotal;
 }
 
-//TODO: possible fitnesses adjustments: penalize for collisions with creatures and especially for suicide. It's a sin.
+//TODO: possible fitness adjustments: penalize for collisions with creatures and especially for suicide. It's a sin.
 
 public float[] toFloatArray()
 {
@@ -130,18 +130,18 @@ public String toString()
             "\n  Time Left(marioseconds) : " + timeLeft +
             "\n             Coins Gained : " + coinsGained + " of " + totalNumberOfCoins + "(" + coinsGained * 100 / (totalNumberOfCoins == 0 ? 1 : totalNumberOfCoins) + "% collected)" +
             "\n      Hidden Blocks Found : " + hiddenBlocksFound + " of " + totalNumberOfHiddenBlocks + "(" + hiddenBlocksFound * 100 / (totalNumberOfHiddenBlocks == 0 ? 1 : totalNumberOfHiddenBlocks) + "% found)" +
-            "\n       Mushrooms Devoured : " + mushroomsDevoured + " of " + totalNumberOfMushrooms + "appeared (" + mushroomsDevoured * 100 / (totalNumberOfMushrooms == 0 ? 1 : totalNumberOfMushrooms) + "% collected)" +
-            "\n         Flowers Devoured : " + flowersDevoured + " of " + totalNumberOfFlowers + "appeared (" + flowersDevoured * 100 / (totalNumberOfFlowers == 0 ? 1 : totalNumberOfFlowers) + "% collected)" +
+            "\n       Mushrooms Devoured : " + mushroomsDevoured + " of " + totalNumberOfMushrooms + " found (" + mushroomsDevoured * 100 / (totalNumberOfMushrooms == 0 ? 1 : totalNumberOfMushrooms) + "% collected)" +
+            "\n         Flowers Devoured : " + flowersDevoured + " of " + totalNumberOfFlowers + " found (" + flowersDevoured * 100 / (totalNumberOfFlowers == 0 ? 1 : totalNumberOfFlowers) + "% collected)" +
             "\n              kills Total : " + killsTotal + /*TODO: of totalCreatures */
             "\n            kills By Fire : " + killsByFire +
             "\n           kills By Shell : " + killsByShell +
             "\n           kills By Stomp : " + killsByStomp +
-            ((Memo.equals("")) ? "" : "\nMemo: " + Memo);
+            ((Memo.equals("")) ? "" : "\nMEMO INFO: " + Memo);
 }
 
 public String toStringSingleLine()
 {
-    return "##" +
+    return "\n[MarioAI] ~ Evaluation Results:" +
             " Status: " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss") +
             "; Mode: " + Mario.MODES[marioMode] +
             " +  Passed (Cells, Phys): " + df.format((double) distancePassedCells) + ", " +

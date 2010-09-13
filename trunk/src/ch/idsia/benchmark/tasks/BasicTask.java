@@ -38,13 +38,13 @@ public boolean runOneEpisode()
 //        System.out.println("callsCounter = " + callsCounter);
     while (!environment.isLevelFinished())
     {
-        environment.tick();
-//            start timer
-//            long tm = System.currentTimeMillis();
         agent.integrateObservation(environment);
         agent.giveIntermediateReward(environment.getIntermediateReward());
 
         boolean[] action = agent.getAction();
+
+//            start timer
+//            long tm = System.currentTimeMillis();
 
 //            System.out.println("System.currentTimeMillis() - tm > COMPUTATION_TIME_BOUND = " + (System.currentTimeMillis() - tm ));
 //            if (System.currentTimeMillis() - tm > COMPUTATION_TIME_BOUND)
@@ -54,6 +54,8 @@ public boolean runOneEpisode()
 //                return false;
 //            }
         environment.performAction(action);
+        environment.tick();
+
     }
     return true;
 }
@@ -101,9 +103,7 @@ public void doEpisodes(int amount, boolean verbose)
         this.reset(options);
         this.runOneEpisode();
         if (verbose)
-        {
             System.out.println(environment.getEvaluationInfoAsString());
-        }
     }
 }
 

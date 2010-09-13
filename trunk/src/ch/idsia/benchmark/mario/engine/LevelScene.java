@@ -11,9 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LevelScene implements SpriteContext
+public final class LevelScene implements SpriteContext
 {
-public static boolean[] keys = new boolean[16];
+public static final boolean[] keys = new boolean[16];
 public static final String[] keysStr = {"LEFT  ", "RIGHT ", " DOWN ", " JUMP ", " SPEED"};
 
 public static final int cellSize = 16;
@@ -45,6 +45,7 @@ private static final int BRICK = -24; //a rock with animated question symbol
 private static final int FLOWER_POT = -90;
 private static final int BORDER_CANNOT_PASS_THROUGH = -60;
 private static final int BORDER_HILL = -62;
+// TODO : resolve this FLOWER_POT_OR_CANNON = -85;
 private static final int FLOWER_POT_OR_CANNON = -85;
 
 private int receptiveFiledHeight = -1; // to be setup via CmdLineOptions
@@ -57,13 +58,15 @@ private int[] serializedMergedObservation; // memory is allocated in reset
 
 private byte[][] levelSceneZ;     // memory is allocated in reset
 private byte[][] enemiesZ;      // memory is allocated in reset
-private byte[][] mergedZ;      // memory is allocated in reset
+private byte[][] mergedZZ;      // memory is allocated in reset
+
 
 final private List<Float> enemiesFloatsList = new ArrayList<Float>();
 final private float[] marioFloatPos = new float[2];
 final private int[] marioState = new int[12];
 private int numberOfHiddenCoinsGained = 0;
-public String memo;
+
+public String memo = "";
 
 //    public int getTimeLimit() {  return timeLimit; }
 public void setTimeLimit(int timeLimit)
@@ -407,8 +410,28 @@ private byte ZLevelEnemyGeneralization(byte el, int ZLevel)
 
 public byte[][] getLevelSceneObservationZ(int ZLevel)
 {
-    int MarioXInMap = (int) mario.x / cellSize;
-    int MarioYInMap = (int) mario.y / cellSize;
+    //TODO: Check correctness of this change
+//    int MarioXInMap = (int) mario.x / cellSize;
+//    int MarioYInMap = (int) mario.y / cellSize;
+    int MarioXInMap = mario.mapX;
+    int MarioYInMap = mario.mapY;
+    if (MarioXInMap != (int) mario.x / cellSize || MarioYInMap != (int) mario.y / cellSize)
+    {
+//        System.err.print("\nMarioYInMap = " + MarioYInMap);
+//        System.err.println(" ### (int) mario.y / cellSize = " + (int) mario.y / cellSize);
+//        System.err.print("MarioXInMap = " + MarioXInMap);
+//        System.err.println(" ### (int) mario.x / cellSize  = " + (int) mario.x / cellSize);
+
+        /* typical output
+MarioYInMap = 10 (int) mario.y / cellSize = 9
+MarioXInMap = 21(int) mario.x / cellSize  = 22
+        mario.mapX < (int) mario.x / cellSize
+        mario.mapY > (int) mario.y / cellSize
+         TODO: fix mario.mapX !
+         */
+//        throw new Error("WRONG mario x or y pos");
+    }
+
 
     for (int y = MarioYInMap - receptiveFiledHeight / 2, obsX = 0; y <= MarioYInMap + receptiveFiledHeight / 2; y++, obsX++)
     {
@@ -429,8 +452,14 @@ public byte[][] getLevelSceneObservationZ(int ZLevel)
 
 public byte[][] getEnemiesObservationZ(int ZLevel)
 {
-    int MarioXInMap = (int) mario.x / cellSize;
-    int MarioYInMap = (int) mario.y / cellSize;
+    //TODO: Check correctness of this change
+//    int MarioXInMap = (int) mario.x / cellSize;
+//    int MarioYInMap = (int) mario.y / cellSize;
+    int MarioXInMap = mario.mapX;
+    int MarioYInMap = mario.mapY;
+//    if (MarioXInMap != (int) mario.x / cellSize ||MarioYInMap != (int) mario.y / cellSize )
+//        throw new Error("WRONG mario x or y pos");
+
 
     for (int w = 0; w < enemiesZ.length; w++)
         for (int h = 0; h < enemiesZ[0].length; h++)
@@ -480,8 +509,14 @@ public float[] getEnemiesFloatPos()
 
 public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
 {
-    int MarioXInMap = (int) mario.x / cellSize;
-    int MarioYInMap = (int) mario.y / cellSize;
+    //TODO: Check correctness of this change
+//    int MarioXInMap = (int) mario.x / cellSize;
+//    int MarioYInMap = (int) mario.y / cellSize;
+    int MarioXInMap = mario.mapX;
+    int MarioYInMap = mario.mapY;
+
+//    if (MarioXInMap != (int) mario.x / cellSize ||MarioYInMap != (int) mario.y / cellSize )
+//        throw new Error("WRONG mario x or y pos");
 
 
     for (int y = MarioYInMap - receptiveFiledHeight / 2, obsX = 0; y <= MarioYInMap + receptiveFiledHeight / 2; y++, obsX++)
@@ -490,17 +525,17 @@ public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
         {
             if (x >= 0 /*&& x <= level.xExit*/ && y >= 0 && y < level.height)
             {
-                mergedZ[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevelScene);
+                mergedZZ[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevelScene);
             } else
-                mergedZ[obsX][obsY] = 0;
+                mergedZZ[obsX][obsY] = 0;
 //                if (x == MarioXInMap && y == MarioYInMap)
-//                    mergedZ[obsX][obsY] = mario.kind;
+//                    mergedZZ[obsX][obsY] = mario.kind;
         }
     }
 
-//        for (int w = 0; w < mergedZ.length; w++)
-//            for (int h = 0; h < mergedZ[0].length; h++)
-//                mergedZ[w][h] = -1;
+//        for (int w = 0; w < mergedZZ.length; w++)
+//            for (int h = 0; h < mergedZZ[0].length; h++)
+//                mergedZZ[w][h] = -1;
     for (Sprite sprite : sprites)
     {
         if (sprite.kind == mario.kind)
@@ -515,16 +550,16 @@ public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
             int obsX = sprite.mapY - MarioYInMap + receptiveFiledHeight / 2;
             int obsY = sprite.mapX - MarioXInMap + receptiveFiledWidth / 2;
             // quick fix TODO: handle this in more general way.
-            if (mergedZ[obsX][obsY] != 14)
+            if (mergedZZ[obsX][obsY] != 14)
             {
                 byte tmp = ZLevelEnemyGeneralization(sprite.kind, ZLevelEnemies);
                 if (tmp != Sprite.KIND_NONE)
-                    mergedZ[obsX][obsY] = tmp;
+                    mergedZZ[obsX][obsY] = tmp;
             }
         }
     }
 
-    return mergedZ;
+    return mergedZZ;
 }
 
 public List<String> getTextObservationAroundMario(boolean Enemies, boolean LevelMap,
@@ -592,7 +627,6 @@ public List<String> getTextObservationAroundMario(boolean Enemies, boolean Level
     return ret;
 }
 
-
 public int fireballsOnScreen = 0;
 
 List<Shell> shellsToCheck = new ArrayList<Shell>();
@@ -614,10 +648,9 @@ public void tick()
     if (GlobalOptions.isGameplayStopped)
         return;
 
-//        if (GlobalOptions.isTimer)
     timeLeft--;
     if (timeLeft == 0)
-        mario.die("Reason: Time out!");
+        mario.die("Time out!");
     xCamO = xCam;
     yCamO = yCam;
 
@@ -775,7 +808,6 @@ public void tick()
     spritesToRemove.clear();
 }
 
-
 public void addSprite(Sprite sprite)
 {
     spritesToAdd.add(sprite);
@@ -849,7 +881,6 @@ public void bumpInto(int x, int y)
     }
 }
 
-
 public int getTimeSpent() { return startTime / 15; }
 
 public int getTimeLeft() { return timeLeft / 15; }
@@ -901,7 +932,6 @@ public boolean isLevelFinished()
 {
     return mario.getStatus() != Mario.STATUS_RUNNING;
 }
-
 
 public boolean isMarioAbleToShoot()
 {
@@ -1030,7 +1060,7 @@ public void reset(CmdLineOptions cmdLineOptions)
 
         levelSceneZ = new byte[receptiveFiledHeight][receptiveFiledWidth];
         enemiesZ = new byte[receptiveFiledHeight][receptiveFiledWidth];
-        mergedZ = new byte[receptiveFiledHeight][receptiveFiledWidth];
+        mergedZZ = new byte[receptiveFiledHeight][receptiveFiledWidth];
         this.prevRFH = this.receptiveFiledHeight;
         this.prevRFW = this.receptiveFiledWidth;
     }
@@ -1073,16 +1103,14 @@ public int getReceptiveFieldHeight()
 {
     return receptiveFiledHeight;
 }
+
+public void addMemoMessage(final String memoMessage)
+{
+    memo += memoMessage;
+}
+}
+
 //    public void update(boolean[] action)
 //    {
 //        System.arraycopy(action, 0, mario.keys, 0, 6);
 //    }
-
-public void addMemoMessage(final String reasonOfDeath)
-{
-    if (!reasonOfDeath.equals(""))
-        memo += "reasonOfDeath\n";
-    else
-        memo = "";
-}
-}
