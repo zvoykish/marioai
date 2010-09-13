@@ -9,7 +9,6 @@ import ch.idsia.tools.CmdLineOptions;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public final class LevelScene implements SpriteContext
@@ -416,21 +415,26 @@ public byte[][] getLevelSceneObservationZ(int ZLevel)
 //    int MarioYInMap = (int) mario.y / cellSize;
     int MarioXInMap = mario.mapX;
     int MarioYInMap = mario.mapY;
-    if (MarioXInMap != (int) mario.x / cellSize || MarioYInMap != (int) mario.y / cellSize)
+    if (MarioXInMap != (int) mario.x / cellSize)
     {
-//        System.err.print("\nMarioYInMap = " + MarioYInMap);
-//        System.err.println(" ### (int) mario.y / cellSize = " + (int) mario.y / cellSize);
-//        System.err.print("MarioXInMap = " + MarioXInMap);
-//        System.err.println(" ### (int) mario.x / cellSize  = " + (int) mario.x / cellSize);
+        System.err.print("MarioXInMap = " + MarioXInMap);
+        System.err.println(" ### (int) mario.x / cellSize  = " + (int) mario.x / cellSize);
 
-        /* typical output
-MarioYInMap = 10 (int) mario.y / cellSize = 9
-MarioXInMap = 21(int) mario.x / cellSize  = 22
-        mario.mapX < (int) mario.x / cellSize
-        mario.mapY > (int) mario.y / cellSize
-         TODO: fix mario.mapX !
-         */
-//        throw new Error("WRONG mario x or y pos");
+                        /* typical output
+                MarioYInMap = 10 (int) mario.y / cellSize = 9
+                MarioXInMap = 21(int) mario.x / cellSize  = 22
+                        mario.mapX < (int) mario.x / cellSize
+                        mario.mapY > (int) mario.y / cellSize
+                         TODO: fix mario.mapX !
+                         */
+                //        throw new Error("WRONG mario x or y pos");
+    }
+
+    if (MarioYInMap != (int) mario.y / cellSize)
+    {
+        System.err.println("mario.y = " + mario.y + ", " + System.currentTimeMillis());
+        System.err.print("\nMarioYInMap = " + MarioYInMap);
+        System.err.println(" ### (int) mario.y / cellSize = " + (int) mario.y / cellSize);
     }
 
 
@@ -927,8 +931,6 @@ public void performAction(boolean[] action)
 {
     // might look ugly , but arrayCopy is not necessary here:
     this.mario.keys = action;
-    System.out.println("action = " + Arrays.toString(action));
-    System.out.println("mario.keys = " + Arrays.toString(mario.keys));
 }
 
 public boolean isLevelFinished()

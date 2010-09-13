@@ -648,6 +648,8 @@ public void stomp(Shell shell)
     }
 }
 
+
+
 public void getHurt(final int spriteKind)
 {
     if (deathTime > 0 || world.paused || isMarioInvulnerable) return;

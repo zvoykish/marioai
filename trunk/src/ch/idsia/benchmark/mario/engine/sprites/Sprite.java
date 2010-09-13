@@ -131,9 +131,11 @@ public class Sprite
     {
         xOld = x;
         yOld = y;
-        mapX = (int) (xOld / 16);
-        mapY = (int) (yOld / 16);
         move();
+        mapX = (int) (x / 16);
+        if (this instanceof Mario)
+            System.err.println("y = " + y + ", " + System.currentTimeMillis());
+        mapY = (int) (y / 16);
     }
 
     public final void tickNoMove()

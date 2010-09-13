@@ -259,7 +259,7 @@ public EvaluationInfo getEvaluationInfo()
     evaluationInfo.hiddenBlocksFound = Mario.hiddenBlocksFound;
     evaluationInfo.collisionsWithCreatures = Mario.collisionsWithCreatures;
     evaluationInfo.Memo = levelScene.memo;
-    evaluationInfo.levelLength = levelScene.level.xExit - 1;
+    evaluationInfo.levelLength = levelScene.level.length;
 
     // store mario trace:
     final String marioTraceFile = "[MarioAI]-MarioTrace.txt";
