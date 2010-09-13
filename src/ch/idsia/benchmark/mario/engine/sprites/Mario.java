@@ -103,6 +103,8 @@ public Mario(LevelScene world)
     this.world = world;
     x = 32;
     y = 0;
+    mapX = (int) (x / 16);
+    mapY = (int) (y / 16);
 
     facing = 1;
     setMode(Mario.large, Mario.fire);
@@ -647,7 +649,6 @@ public void stomp(Shell shell)
         invulnerableTime = 1;
     }
 }
-
 
 
 public void getHurt(final int spriteKind)
