@@ -7,50 +7,12 @@ import ch.idsia.benchmark.mario.engine.LevelScene;
 import ch.idsia.benchmark.mario.engine.level.Level;
 
 
-public class Mario extends Sprite
+public final class Mario extends Sprite
 {
-public static boolean large = false;
-public static boolean fire = false;
-public static int coins = 0;
-public static int hiddenBlocks = 0;
-public static int collisionsWithCreatures = 0;
-private int status = STATUS_RUNNING;
 private final int FractionalPowerUpTime = 0;
-public static int mushroomsDevoured;
-public static int flowersDevoured;
-private static boolean isMarioInvulnerable;
 public static final String[] MODES = new String[]{"small", "Large", "FIRE"};
 
-// for racoon when carrying the shell
-private int prevWPic;
-private int prevxPicO;
-private int prevyPicO;
-private int prevHPic;
-private boolean isRacoon;
-
-public static void resetStatic(int marioMode)
-{
-    large = marioMode > 0;
-    fire = marioMode == 2;
-    coins = 0;
-    hiddenBlocks = 0;
-    mushroomsDevoured = 0;
-    flowersDevoured = 0;
-}
-
-//    public static void setMode(MODE mode)
-//    {
-//        large = (mode == MODE.MODE_LARGE);
 //        fire = (mode == MODE.MODE_FIRE);
-//    }
-
-public int getMode()
-{
-    return ((large) ? 1 : 0) + ((fire) ? 1 : 0);
-}
-
-//    public static enum MODE {MODE_SMALL, MODE_LARGE, MODE_FIRE}
-
 public static final int KEY_LEFT = 0;
 public static final int KEY_RIGHT = 1;
 public static final int KEY_DOWN = 2;
@@ -66,6 +28,39 @@ public static final int STATUS_RUNNING = 2;
 public static final int STATUS_WIN = 1;
 public static final int STATUS_DEAD = 0;
 
+public static boolean large = false;
+public static boolean fire = false;
+public static int coins = 0;
+public static int hiddenBlocksFound = 0;
+public static int collisionsWithCreatures = 0;
+public static int mushroomsDevoured;
+public static int flowersDevoured;
+
+private static boolean isMarioInvulnerable;
+
+private int status = STATUS_RUNNING;
+// for racoon when carrying the shell
+private int prevWPic;
+private int prevxPicO;
+private int prevyPicO;
+private int prevHPic;
+
+private boolean isRacoon;
+
+public static void resetStatic(int marioMode)
+{
+    large = marioMode > 0;
+    fire = marioMode == 2;
+    coins = 0;
+    hiddenBlocksFound = 0;
+    mushroomsDevoured = 0;
+    flowersDevoured = 0;
+}
+
+public int getMode()
+{
+    return ((large) ? 1 : 0) + ((fire) ? 1 : 0);
+}
 
 //    private static float GROUND_INERTIA = 0.89f;
 //    private static float AIR_INERTIA = 0.89f;
@@ -105,14 +100,13 @@ public Mario(LevelScene world)
 {
     kind = KIND_MARIO;
 //        Mario.instance = this;
+    // TODO: refactor: rename to levelScene
     this.world = world;
-    keys = LevelScene.keys;      // SK: in fact, this is already redundant due to using Agent
-    cheatKeys = LevelScene.keys; // SK: in fact, this is already redundant due to using Agent
     x = 32;
     y = 0;
 
     facing = 1;
-    setLarge(Mario.large, Mario.fire);
+    setMode(Mario.large, Mario.fire);
 }
 
 private boolean lastLarge;
@@ -147,7 +141,7 @@ private void blink(boolean on)
     calcPic();
 }
 
-void setLarge(boolean large, boolean fire)
+void setMode(boolean large, boolean fire)
 {
 //        System.out.println("large = " + large);
     if (fire) large = true;
@@ -170,7 +164,7 @@ public void setRacoon(boolean isRacoon)
 //        if (true)
 //        return;
     this.isRacoon = isRacoon;
-//        this.setLarge(isRacoon, false);
+//        this.setMode(isRacoon, false);
 //        System.out.println("isRacoon = " + isRacoon);
 //        System.out.println("Art.racoonmario.length = " + Art.racoonmario.length);
 //        System.out.println("Art.racoonmario[0].length = " + Art.racoonmario[0].length);
@@ -205,6 +199,8 @@ private void savePrevState()
 
 public void move()
 {
+    ++world.level.marioTrace[this.mapX][this.mapY];
+
     if (winTime > 0)
     {
         winTime++;
@@ -334,9 +330,11 @@ public void move()
     }
     // Cheats:
     if (GlobalOptions.isPowerRestoration && keys[KEY_SPEED] && (!Mario.large || !Mario.fire))
-        setLarge(true, true);
+        setMode(true, true);
 //        if (cheatKeys[KEY_LIFE_UP])
 //            this.lives++;
+
+    // TODO: remove this and clean up "easter eggs", redundant due to "SPACE" for the whole world and "-le 0" to disable creatures
     world.paused = GlobalOptions.isPauseWorld;
     if (cheatKeys[KEY_WIN])
         win();
@@ -377,7 +375,12 @@ public void move()
     move(xa, 0);
     move(0, ya);
 
-    if (y > world.level.height * 16 + 16)
+    // TODO: substitue 16 by cellSize
+//    if (y > world.level.height * 16 + 16)
+
+    if (mapY > world.level.height - 1)
+//            y = world.level.height * 16 - 16;
+//    mapY=world.level.height-1;
         die("Reason: Fell down into a gap");
 
     if (x < 0)
@@ -400,6 +403,7 @@ public void move()
         xa = 0;
     }
 
+    // TODO: move to variable (gravity?)
     ya *= 0.85f;
     if (onGround)
     {
@@ -416,7 +420,7 @@ public void move()
 
     if (carried != null)
     {
-        carried.x = x + facing * 8;
+        carried.x = x + facing * 8; //TODO : move to cellSize_2 = cellSize/2;
         carried.y = y - 2;
         if (!keys[KEY_SPEED])
         {
@@ -640,7 +644,7 @@ public void stomp(Shell shell)
     }
 }
 
-public void getHurt()
+public void getHurt(final int spriteKind)
 {
     if (deathTime > 0 || world.paused || isMarioInvulnerable) return;
 
@@ -653,15 +657,15 @@ public void getHurt()
         powerUpTime = -3 * FractionalPowerUpTime;
         if (fire)
         {
-            world.mario.setLarge(true, false);
+            world.mario.setMode(true, false);
         } else
         {
-            world.mario.setLarge(false, false);
+            world.mario.setMode(false, false);
         }
         invulnerableTime = 32;
     } else
     {
-        die("Reason of death: Collision with creature");
+        die("Collision with a creature " + spriteKind); // TODO: substitue by named creature kind
     }
 }
 
@@ -672,7 +676,6 @@ public void win()
     world.paused = true;
     winTime = 1;
     status = Mario.STATUS_WIN;
-    world.addMemoMessage("");
 }
 
 public void die(String reasonOfDeath)
@@ -683,7 +686,7 @@ public void die(String reasonOfDeath)
     deathTime = 25;
     status = Mario.STATUS_DEAD;
     // TODO: [M] refactor reasons of death to enum {COLLISION, GAP, TIMEOUT}
-    world.addMemoMessage(reasonOfDeath);
+    world.addMemoMessage("Reason of death: " + reasonOfDeath);
 }
 
 
@@ -695,7 +698,7 @@ public void getFlower()
     {
         world.paused = true;
         powerUpTime = 3 * FractionalPowerUpTime;
-        world.mario.setLarge(true, true);
+        world.mario.setMode(true, true);
     } else
     {
         Mario.gainCoin();
@@ -711,7 +714,7 @@ public void getMushroom()
     {
         world.paused = true;
         powerUpTime = 3 * FractionalPowerUpTime;
-        world.mario.setLarge(true, false);
+        world.mario.setMode(true, false);
     } else
     {
         Mario.gainCoin();
@@ -751,28 +754,6 @@ public void stomp(BulletBill bill)
     invulnerableTime = 1;
 }
 
-//    public byte getKeyMask()
-//    {
-//        int mask = 0;
-//        for (int i = 0; i < 7; i++)
-//        {
-//            if (keys[i]) mask |= (1 << i);
-//        }
-//        return (byte) mask;
-//    }
-
-//    public void setKeys(byte mask)
-//    {
-//        for (int i = 0; i < 7; i++)
-//        {
-//            keys[i] = (mask & (1 << i)) > 0;
-//        }
-//    }
-//
-//    public static void get1Up()
-//    {
-//        lives++;
-//    }
 
 public static void gainCoin()
 {
@@ -783,7 +764,7 @@ public static void gainCoin()
 
 public static void gainHiddenBlock()
 {
-    hiddenBlocks++;
+    ++hiddenBlocksFound;
 }
 
 public int getStatus()
@@ -811,3 +792,26 @@ public static void setMarioInvulnerable(boolean marioInvulnerable)
     isMarioInvulnerable = marioInvulnerable;
 }
 }
+
+//    public byte getKeyMask()
+//    {
+//        int mask = 0;
+//        for (int i = 0; i < 7; i++)
+//        {
+//            if (keys[i]) mask |= (1 << i);
+//        }
+//        return (byte) mask;
+//    }
+
+//    public void setKeys(byte mask)
+//    {
+//        for (int i = 0; i < 7; i++)
+//        {
+//            keys[i] = (mask & (1 << i)) > 0;
+//        }
+//    }
+//
+//    public static void get1Up()
+//    {
+//        lives++;
+//    }

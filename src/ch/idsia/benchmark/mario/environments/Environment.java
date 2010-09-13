@@ -66,19 +66,7 @@ public byte[][] getLevelSceneObservationZ(int ZLevelScene);
 
 public byte[][] getEnemiesObservationZ(int ZLevelEnemies);
 
-// KILLS
-
-public int getKillsTotal();
-
-public int getKillsByFire();
-
-public int getKillsByStomp();
-
-public int getKillsByShell();
-
-int getMarioStatus();
-
-// FOR AmiCo
+// OBSERVATION FOR AmiCo Agents
 
 public float[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies);
 
@@ -101,6 +89,19 @@ public int[] getSerializedEnemiesObservationZ(int ZLevelEnemies);
 public int[] getSerializedMergedObservationZZ(int ZLevelScene, int ZLevelEnemies);
 
 public float[] getCreaturesFloatPos();
+
+// KILLS
+
+public int getKillsTotal();
+
+public int getKillsByFire();
+
+public int getKillsByStomp();
+
+public int getKillsByShell();
+
+int getMarioStatus();
+
 
 /**
  * @return int array filled with data about Mario :
@@ -140,4 +141,6 @@ public float getIntermediateReward();
  *         pos[1] = ReceptiveFieldHeight/2
  */
 public int[] getMarioReceptiveFieldCenter();
+
+// public int getLevelLength(); getLevelType();
 }
