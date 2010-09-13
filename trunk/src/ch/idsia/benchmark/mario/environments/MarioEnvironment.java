@@ -11,7 +11,6 @@ import ch.idsia.tools.EvaluationInfo;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DecimalFormat;
 
 /**
  * Created by IntelliJ IDEA.
@@ -269,9 +268,6 @@ public EvaluationInfo getEvaluationInfo()
 
         final PrintWriter pw = new PrintWriter(new FileWriter(marioTraceFile));
         int[][] trace = levelScene.level.marioTrace;
-        System.out.println("trace.length = " + trace.length);
-        System.out.println("trace = " + trace[0].length);
-        DecimalFormat df = new DecimalFormat("\\s");
 
         for (int j = 0; j < trace[0].length; ++j)
 

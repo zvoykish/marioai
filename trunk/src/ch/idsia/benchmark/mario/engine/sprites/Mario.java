@@ -236,10 +236,15 @@ public void move()
     {
 //        moveOnTheAir();
 //        return;
-        ya = keys[KEY_DOWN] ? 15 : 0;
+        System.out.println("keys = " + keys[KEY_DOWN]);
+        System.out.println("keys = " + keys[KEY_DOWN]);
+        System.out.println("keys = " + keys[KEY_DOWN]);
+        System.out.println("keys = " + keys[KEY_DOWN]);
+        ya = keys[KEY_DOWN] ? -15 : 0;
         ya = keys[KEY_UP] ? -10 : 0;
-        xa = keys[KEY_RIGHT] ? 15 : 0;
+        xa = keys[KEY_RIGHT] ? -15 : 0;
         xa = keys[KEY_LEFT] ? -15 : 0;
+        System.out.println("keys = " + keys[KEY_RIGHT]);
         System.out.println("keys = " + Arrays.toString(keys));
         System.out.println("xa = " + xa);
         System.out.println("ya = " + ya);
