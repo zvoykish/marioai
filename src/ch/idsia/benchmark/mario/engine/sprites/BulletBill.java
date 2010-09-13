@@ -18,10 +18,9 @@ public int anim;
 public boolean dead = false;
 private int deadTime = 0;
 
-
 public BulletBill(LevelScene world, float x, float y, int dir)
 {
-    kind = KIND_BULLET_BILL;     //added by SK
+    kind = KIND_BULLET_BILL;
     sheet = Art.enemies;
 
     this.x = x;
@@ -55,6 +54,8 @@ public void collideCheck()
             {
                 world.mario.stomp(this);
                 dead = true;
+                ++LevelScene.killedCreaturesTotal;
+                ++LevelScene.killedCreaturesByStomp;
 
                 xa = 0;
                 ya = 1;
