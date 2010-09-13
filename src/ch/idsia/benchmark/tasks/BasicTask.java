@@ -39,6 +39,7 @@ public boolean runOneEpisode()
 //        System.out.println("callsCounter = " + callsCounter);
     while (!environment.isLevelFinished())
     {
+        environment.tick();
         if (!GlobalOptions.isGameplayStopped)
         {
             agent.integrateObservation(environment);
@@ -47,7 +48,6 @@ public boolean runOneEpisode()
             boolean[] action = agent.getAction();
             environment.performAction(action);
         }
-        environment.tick();
     }
     return true;
 }

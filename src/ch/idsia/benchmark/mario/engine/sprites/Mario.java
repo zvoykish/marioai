@@ -5,6 +5,7 @@ import ch.idsia.benchmark.mario.engine.Art;
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.engine.LevelScene;
 import ch.idsia.benchmark.mario.engine.level.Level;
+import ch.idsia.benchmark.mario.environments.Environment;
 
 public final class Mario extends Sprite
 {
@@ -64,7 +65,7 @@ public int getMode()
 //    private static float GROUND_INERTIA = 0.89f;
 //    private static float AIR_INERTIA = 0.89f;
 
-public boolean[] keys;
+public boolean[] keys = new boolean[Environment.numberOfButtons];
 public boolean[] cheatKeys;
 private float runTime;
 boolean wasOnGround = false;
