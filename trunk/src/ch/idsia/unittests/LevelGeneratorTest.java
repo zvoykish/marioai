@@ -10,10 +10,6 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
-import java.util.List;
-
 /**
  * Created by IntelliJ IDEA.
  * User: Sergey Karakovskiy, sergey.karakovskiy@gmail.com
@@ -101,7 +97,7 @@ public class LevelGeneratorTest extends TestCase
     @Test
     public void testCreateLevelWithTubesWithFlowers()
     {
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-ltb on -le 111111111 -ld 5");
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-ltb on -le 111111111 -ld 5 -ls 22");
         Level level = LevelGenerator.createLevel(cmdLineOptions);
 
         boolean fl = false;

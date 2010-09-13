@@ -313,7 +313,7 @@ public void render(Graphics g, float alpha)
 private void drawProgress(Graphics g)
 {
     String entirePathStr = "......................................>";
-    double physLength = (levelScene.getLevelLength() - 53) * 16;
+    double physLength = (levelScene.getLevelLength()) * 16;
     int progressInChars = (int) (mario.x * (entirePathStr.length() / physLength));
     String progress_str = "";
     for (int i = 0; i < progressInChars - 1; ++i)

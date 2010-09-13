@@ -15,6 +15,7 @@ private Graphics2D g;
 private static final Color transparent = new Color(0, 0, 0, 0);
 private Level level;
 
+private static final int exitXOffset = 2;
 private Random random = new Random();
 public boolean renderBehaviors = false;
 

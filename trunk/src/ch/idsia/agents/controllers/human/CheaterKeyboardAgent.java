@@ -151,6 +151,12 @@ public class CheaterKeyboardAgent extends KeyAdapter implements Agent
 //                    System.out.println("Space bar pressed");
                     GlobalOptions.isGameplayStopped = !GlobalOptions.isGameplayStopped;
                 }
+                break;
+            case KeyEvent.VK_F:
+                if (isPressed)
+                {
+                    GlobalOptions.isFly = !GlobalOptions.isFly;
+                }
         }
     }
 }

@@ -250,6 +250,7 @@ public EvaluationInfo getEvaluationInfo()
     evaluationInfo.totalNumberOfHiddenBlocks = levelScene.level.counters.hiddenBlocks;
     evaluationInfo.totalNumberOfFlowers = levelScene.level.counters.flowers;
     evaluationInfo.totalNumberOfMushrooms = levelScene.level.counters.mushrooms;
+    evaluationInfo.totalNumberOfCreatures = levelScene.level.counters.creatures;
     evaluationInfo.marioMode = levelScene.getMarioMode();
     evaluationInfo.mushroomsDevoured = Mario.mushroomsDevoured;
     evaluationInfo.killsTotal = levelScene.getKillsTotal();
@@ -299,14 +300,14 @@ public EvaluationInfo getEvaluationInfo()
     finally
     {
         Runtime rt = Runtime.getRuntime();
-        try
-        {
+//        try
+//        {
 //            Process proc = rt.exec("/usr/local/bin/mate " + marioTraceFile);
-            Process proc = rt.exec("open " + marioTraceFile);
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+//            Process proc = rt.exec("open " + marioTraceFile);
+//        } catch (IOException e)
+//        {
+//            e.printStackTrace();
+//        }
     }
 
     return evaluationInfo;

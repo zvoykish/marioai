@@ -93,7 +93,7 @@ public class HumanKeyboardAgent extends KeyAdapter implements Agent
     public void reset()
     {
         // Just check you keyboard. Especially arrow buttons and 'A' and 'S'!
-        Action = new boolean[Environment.numberOfButtons];
+        Action = new boolean[6];//Environment.numberOfButtons];
     }
 
     public boolean[] getAction(Environment observation)
@@ -130,6 +130,9 @@ public class HumanKeyboardAgent extends KeyAdapter implements Agent
                 break;
             case KeyEvent.VK_DOWN:
                 Action[Mario.KEY_DOWN] = isPressed;
+                break;
+            case KeyEvent.VK_UP:
+                Action[Mario.KEY_UP] = isPressed;
                 break;
 
             case KeyEvent.VK_S:
