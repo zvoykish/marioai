@@ -197,8 +197,45 @@ private void savePrevState()
     this.prevyPicO = yPicO;
 }
 
+public void moveOnTheAir()
+{
+    world.paused = false;
+    ya += keys[KEY_DOWN] ? 1 : 0;
+    ya -= keys[KEY_UP] ? 1 : 0;
+    xa += keys[KEY_RIGHT] ? 1 : 0;
+    xa -= keys[KEY_LEFT] ? 1 : 0;
+
+    if (xa > 2)
+    {
+        facing = 1;
+    }
+    if (xa < -2)
+    {
+        facing = -1;
+    }
+
+    xFlipPic = facing == -1;
+    runTime += (Math.abs(xa)) + 5;
+    if (Math.abs(xa) < 0.5f)
+    {
+        runTime = 0;
+        xa = 0;
+    }
+
+    calcPic();
+
+    move (xa, 0);
+    move (0, ya);
+}
+
 public void move()
 {
+    if (GlobalOptions.isFly)
+    {
+        moveOnTheAir();
+        return;
+    }
+    
     ++world.level.marioTrace[this.mapX][this.mapY];
 
     if (winTime > 0)
@@ -375,13 +412,8 @@ public void move()
     move(xa, 0);
     move(0, ya);
 
-    // TODO: substitue 16 by cellSize
-//    if (y > world.level.height * 16 + 16)
-
-    if (mapY > world.level.height - 1)
-//            y = world.level.height * 16 - 16;
-//    mapY=world.level.height-1;
-        die("Reason: Fell down into a gap");
+    if (y > world.level.height * 16 + 16)
+        die("Reason: Gap");
 
     if (x < 0)
     {

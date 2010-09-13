@@ -42,6 +42,7 @@ public int totalNumberOfCoins = MagicNumberUnDef;
 public int totalNumberOfHiddenBlocks = MagicNumberUnDef;
 public int totalNumberOfMushrooms = MagicNumberUnDef;
 public int totalNumberOfFlowers = MagicNumberUnDef;
+public int totalNumberOfCreatures = MagicNumberUnDef; //including spiky flowers
 
 public int levelLength = MagicNumberUnDef;
 
@@ -132,7 +133,7 @@ public String toString()
             "\n      Hidden Blocks Found : " + hiddenBlocksFound + " of " + totalNumberOfHiddenBlocks + "(" + hiddenBlocksFound * 100 / (totalNumberOfHiddenBlocks == 0 ? 1 : totalNumberOfHiddenBlocks) + "% found)" +
             "\n       Mushrooms Devoured : " + mushroomsDevoured + " of " + totalNumberOfMushrooms + " found (" + mushroomsDevoured * 100 / (totalNumberOfMushrooms == 0 ? 1 : totalNumberOfMushrooms) + "% collected)" +
             "\n         Flowers Devoured : " + flowersDevoured + " of " + totalNumberOfFlowers + " found (" + flowersDevoured * 100 / (totalNumberOfFlowers == 0 ? 1 : totalNumberOfFlowers) + "% collected)" +
-            "\n              kills Total : " + killsTotal + /*TODO: of totalCreatures */
+            "\n              kills Total : " + killsTotal + " of " + totalNumberOfCreatures + " found (" + killsTotal * 100 / (totalNumberOfCreatures == 0 ? 1 : totalNumberOfCreatures) + "%)" +
             "\n            kills By Fire : " + killsByFire +
             "\n           kills By Shell : " + killsByShell +
             "\n           kills By Stomp : " + killsByStomp +

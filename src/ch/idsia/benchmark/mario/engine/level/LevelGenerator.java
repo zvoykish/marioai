@@ -4,7 +4,10 @@ import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.CreaturesMaskParser;
 
+import java.awt.*;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Vector;
 
 /**
  * Using this class is very simple. Just call <b>createMethod</b> with params:
@@ -25,6 +28,7 @@ import java.util.Random;
 
 public class LevelGenerator
 {
+private static int k = 2;
 /*
 From left to right:
     0)goomba
@@ -36,8 +40,39 @@ From left to right:
     6)winged red koopa
     7)winged spiky
     8)spiky flower
-    9)bullet
 */
+
+private static class creaturesSpreader
+{
+    int maxFitness = 0;
+
+    public void getCreatures()
+    {
+        HashSet used = new HashSet();
+        creaturesToBuild.clear();
+
+        int pointsCount = creaturesRandom.nextInt((int) Math.log(levelDifficulty*levelDifficulty + levelDifficulty));//creaturesRandom.nextInt((levelDifficulty + 5)%(creaturesPos.size()+1)+1);
+        if (pointsCount > creaturesPos.size())
+        {
+            pointsCount = creaturesPos.size();
+//            pointsCount = (int) (pointsCount - ((float)5/13)*creaturesPos.size());
+        }
+//        else if (pointsCount > ((float)5/13)*creaturesPos.size())
+//            pointsCount -= (((float)2/13)*creaturesPos.size());// - 2;creaturesRandom.nextInt(2);
+
+        int i = 0;
+        while ( i < pointsCount)
+        {
+            int p = creaturesRandom.nextInt(creaturesPos.size());
+            if (!used.contains(p))
+            {
+                used.add(p);
+                creaturesToBuild.add(creaturesPos.get(p));
+                ++i;
+            }
+        }
+    }
+}
 
 public static final int TYPE_OVERGROUND = 0;
 public static final int TYPE_UNDERGROUND = 1;
@@ -67,6 +102,8 @@ private static int levelType;
 private static int levelSeed;
 
 private static CreaturesMaskParser creaturesMaskParser;
+private static Vector<Point> creaturesPos = new Vector<Point>();
+private static Vector<Point> creaturesToBuild = new Vector<Point>();
 
 private static final boolean RIGHT_DIRECTION_BOTTOM = false;
 private static final int ANY_HEIGHT = -1;
@@ -80,6 +117,7 @@ private LevelGenerator() {}
 public static Level createLevel(CmdLineOptions args)
 {
     length = args.getLevelLength();
+    System.out.println("args.getLevelLength() = " + args.getLevelLength());
     height = args.getLevelHeight();
     if (height < 15)
     {
@@ -134,7 +172,7 @@ public static Level createLevel(CmdLineOptions args)
     }
 
     length += buildStraight(0, level.length, true, floor, INFINITY_FLOOR_HEIGHT);
-    while (length < level.length - 64)
+    while (length < level.length-10)
     {
         length += buildZone(length, level.length - length, ANY_HEIGHT, floor, INFINITY_FLOOR_HEIGHT);
     }
@@ -145,10 +183,10 @@ public static Level createLevel(CmdLineOptions args)
     }
 
     //coordinates of the exit
-    level.xExit = length + 8;
+    level.xExit = level.length;
     level.yExit = floor;
 
-    //fix floor
+    //level zone where exit is located
     for (int x = length; x < level.length; x++)
     {
         for (int y = 0; y < height; y++)
@@ -220,6 +258,9 @@ private static int buildZone(int x, int maxLength, int maxHeight, int floor, int
         }
     }
 
+    for (int y = 0; y < 10; y++)
+        addEnemy(x, y);
+
     switch (type)
     {
         case ODDS_STRAIGHT:
@@ -243,7 +284,7 @@ private static int buildZone(int x, int maxLength, int maxHeight, int floor, int
             if ((floor > 2 || floor == ANY_HEIGHT) && (counters.gapsCount < counters.totalGaps))
             {
                 counters.gapsCount++;
-                return buildGap(x, 12, maxHeight, floor, floorHeight);
+                return buildGap(x, maxLength > 12 ? 12 : maxLength, maxHeight, floor, floorHeight);
             } else
             {
                 return 0;
@@ -266,9 +307,20 @@ private static int buildZone(int x, int maxLength, int maxHeight, int floor, int
             }
         }
     }
+
+
+
     return 0;
 }
 
+public static void addEnemy(int x, int y)
+{
+        int crType = creaturesRandom.nextInt(8);
+
+        int t = creaturesMaskParser.getNativeType(CreaturesMaskParser.RED_KOOPA);
+        level.setSpriteTemplate(x, y, new SpriteTemplate(t));
+        ++counters.creatures;
+}
 
 /*
     first component of sum : position on  Y axis
@@ -316,7 +368,7 @@ private static int buildDeadEnds(int x0, int maxLength)
     int rHeight = floor - 1; //rest height
 
     length += buildStraight(x0, preDeadEndLength, true, floor, INFINITY_FLOOR_HEIGHT);//buildZone( x0, x0+preDeadEndLength, floor ); //build pre dead end zone
-    buildBlocks(x0, x0 + preDeadEndLength, floor, true, 0, 0, true);
+    buildBlocks(x0, x0 + preDeadEndLength, floor, true, 0, 0, true, true);
 
     //correct direction
     //true - top, false = bottom
@@ -329,9 +381,10 @@ private static int buildDeadEnds(int x0, int maxLength)
     int separatorHeight = 2 + globalRandom.nextInt(2);
 
     int nx = x0 + length;
-    int depth = globalRandom.nextInt(levelDifficulty) + levelDifficulty;
+    int depth = globalRandom.nextInt(levelDifficulty) + 2*levelDifficulty;
     if (depth + length > maxLength)
     {
+//        depth = maxLength
         while (depth + length > maxLength - 1)
         {
             depth--;
@@ -384,12 +437,13 @@ private static int buildDeadEnds(int x0, int maxLength)
         }
     }
 
-
     return length + tLength;
 }
 
 private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, int floorHeight)
 {
+    creaturesPos.clear();
+
     int gs = globalRandom.nextInt(4) + 2; //GapStairs
     int gl = globalRandom.nextInt(2) + 2; //GapLength
 //        System.out.println("globalRandom.nextInt() % this.levelDifficulty+1 = " +
@@ -415,10 +469,18 @@ private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, in
             floor -= 1;
         }
     }
+    
     if (floorHeight == INFINITY_FLOOR_HEIGHT)
     {
         floorHeight = height - floor;
     }
+
+    if (gs > 3 && creaturesRandom.nextInt(35) > levelDifficulty + 1 && !hasStairs)
+    {
+//        addEnemiesLine(xo, xo + gs - 1, floor - 1);
+//        addEnemiesLine(xo + length - gs, xo + length - 1, floor - 1);
+    }
+
     for (int x = xo; x < xo + length; x++)
     {
         if (x < xo + gs || x > xo + length - gs - 1)
@@ -428,6 +490,8 @@ private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, in
                 if (y >= floor && y <= floor + floorHeight)
                 {
                     level.setBlock(x, y, (byte) (1 + 9 * 16));
+                    if (y == floor && !hasStairs)
+                        creaturesPos.add(new Point(x, y - k));
                 } else if (hasStairs)
                 {
                     if (x < xo + gs)
@@ -448,14 +512,25 @@ private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, in
         }
     }
 
-    if (length < 0) length = 1;
+    if (length < 0) length = 1; //TODO: check this conditions. move it to the begining?
     if (length > maxLength) length = maxLength;
-//        System.out.println("length = " + length);
+//        System.out.println("length = " + length);creaturesSpreader cs = new creaturesSpreader();
+
+    creaturesSpreader cs = new creaturesSpreader();
+    cs.getCreatures();
+
+    for (Point v : creaturesToBuild)
+    {
+        addEnemiesLine(v.x, v.x+1, v.y);
+    }
     return length;
 }
 
 private static int buildCannons(int xo, int maxLength, int maxHeight, int vfloor, int floorHeight)
 {
+    creaturesPos.clear();
+
+    int maxCannonHeight = 0;
     int length = globalRandom.nextInt(10) + 2;
     if (length > maxLength) length = maxLength;
 
@@ -472,6 +547,8 @@ private static int buildCannons(int xo, int maxLength, int maxHeight, int vfloor
     {
         floorHeight = height - floor;
     }
+
+    int oldXCannon = -1;
 
     int xCannon = xo + 1 + globalRandom.nextInt(4);
     for (int x = xo; x < xo + length; x++)
@@ -501,19 +578,28 @@ private static int buildCannons(int xo, int maxLength, int maxHeight, int vfloor
                     cannonHeight++;
                 }
             }
+            if (cannonHeight > maxCannonHeight)
+                maxCannonHeight = cannonHeight;
         }
 
         for (int y = 0; y < height; y++)
         {
-            if (y >= floor && y <= floor + floorHeight)
+            if (y >= floor && y <= floor + floorHeight) //TODO: build straight
             {
                 level.setBlock(x, y, (byte) (1 + 9 * 16));
+                if (y == floor && x != xCannon)
+                    creaturesPos.add(new Point (x, y - 1)); //TODO: loop; reserve creatures pos
             } else if (counters.cannonsCount <= counters.totalCannons)
             {
                 if (x == xCannon && y >= cannonHeight && y <= floor)// + floorHeight)
                 {
                     if (y == cannonHeight)
                     {
+                        if (oldXCannon != -1 && creaturesRandom.nextInt(35) > levelDifficulty + 1)
+                        {
+//                            addEnemiesLine(oldXCannon + 1, xCannon - 1, floor - 1);
+                        }
+                        oldXCannon = x;
                         level.setBlock(x, y, (byte) (14 + 0 * 16));   // cannon barrel
                     } else if (y == cannonHeight + 1)
                     {
@@ -527,11 +613,23 @@ private static int buildCannons(int xo, int maxLength, int maxHeight, int vfloor
         }
     }
 
+    if (globalRandom.nextBoolean())
+        buildBlocks(xo, xo+length, floor - maxCannonHeight - 2, false, 0, 0, false, false);
+
+    creaturesSpreader cs = new creaturesSpreader();
+    cs.getCreatures();
+
+    for (Point v : creaturesToBuild)
+    {
+        addEnemiesLine(v.x, v.x+1, v.y);
+    }
+
     return length;
 }
 
 private static int buildHillStraight(int xo, int maxLength, int vfloor)
 {
+    creaturesPos.clear();
     int length = globalRandom.nextInt(10) + 10;
     if (length > maxLength)
     {
@@ -561,7 +659,9 @@ private static int buildHillStraight(int xo, int maxLength, int vfloor)
         }
     }
 
-    addEnemiesLine(xo + 1, xo + length - 1, floor - 1);
+//    addEnemiesLine(xo + 1, xo + length - 1, floor - 1);
+    for (int i = xo + 1; i < xo + length - 1; i++)
+        creaturesPos.add(new Point (i, floor - 1));
 
     int h = floor;
 
@@ -587,10 +687,12 @@ private static int buildHillStraight(int xo, int maxLength, int vfloor)
             {
                 occupied[xxo - xo] = true;
                 occupied[xxo - xo + l] = true;
-                addEnemiesLine(xxo, xxo + l, h - 1);
+//                addEnemiesLine(xxo, xxo + l, h - 1);
+                for (int i = xxo; i < xxo + l; i++)
+                    creaturesPos.add(new Point(i, h - k));
                 if (globalRandom.nextInt(4) == 0)
                 {
-                    decorate(xxo - 1, xxo + l + 1, h, false);
+                    decorate(xxo - 1, xxo + l + 1, h);
                     keepGoing = false;
                 }
                 for (int x = xxo; x < xxo + l; x++)
@@ -619,31 +721,51 @@ private static int buildHillStraight(int xo, int maxLength, int vfloor)
         }
     }
 
+    creaturesSpreader cs = new creaturesSpreader();
+    cs.getCreatures();
+
+    for (Point v : creaturesToBuild)
+    {
+        addEnemiesLine(v.x, v.x+1, v.y);
+    }
+
     return length;
+}
+
+private static boolean canAddEnemyLine(int x0, int x1, int y)
+{
+    if (!creaturesMaskParser.canAdd())
+    {
+        return false;
+    }
+    boolean res = true;
+    for (int x = x0; x < x1; x++)
+    {
+        for (int yy = y; yy > y + 1; yy++)
+        {
+            if (level.getBlock(x, yy) != 0)
+            {
+                res = false;
+                break;
+            }
+        }
+    }
+
+    return res;
 }
 
 private static void addEnemiesLine(int x0, int x1, int y)
 {
-    boolean canAdd = true;
-    for (int x = x0; x < x1; x++)
-    {
-        if (level.getBlock(x, y) == -95)
-        {
-            canAdd = false;
-            break;
-        }
-    }
-    Random locRnd = new Random(levelSeed);
+    if (x0 > 0)
+        return;
+//    Random locRnd = new Random(levelSeed); //TODO: move to static
 
     if (!canAddEnemyLine(x0, x1, y))
-    {
-        canAdd = false;
-    }
-    if (!canAdd) return;
+        return;
 
     for (int x = x0; x < x1; x++)
     {
-        if (creaturesRandom.nextInt(35) < levelDifficulty + 1)
+        if (creaturesRandom.nextInt(25) < levelDifficulty + 1)
         {
             if (creaturesMaskParser.isComplete())
             { //Difficulty of creatures on the level depends on the levelDifficulty of the level
@@ -670,7 +792,7 @@ private static void addEnemiesLine(int x0, int x1, int y)
                 }
                 do
                 {
-                    crType = locRnd.nextInt(8);
+                    crType = creaturesRandom.nextInt(8);
                     if (creaturesMaskParser.isEnabled(crType))
                     {
                         enabled = true;
@@ -688,6 +810,9 @@ private static void addEnemiesLine(int x0, int x1, int y)
 
 private static int buildTubes(int xo, int maxLength, int maxHeight, int vfloor, int floorHeight)
 {
+    creaturesPos.clear();
+
+    int maxTubeHeight = 0;
     int length = globalRandom.nextInt(10) + 5;
     if (length > maxLength) length = maxLength;
 
@@ -725,6 +850,8 @@ private static int buildTubes(int xo, int maxLength, int maxHeight, int vfloor, 
         floorHeight = height - floor;
     }
 
+    int oldXTube = -1;
+
     for (int x = xo; x < xo + length; x++)
     {
         if (x > xTube + 1)
@@ -738,6 +865,9 @@ private static int buildTubes(int xo, int maxLength, int maxHeight, int vfloor, 
                     tubeHeight++;
                 }
             }
+
+            if (tubeHeight > maxTubeHeight)
+                maxTubeHeight = tubeHeight;
         }
         if (xTube >= xo + length - 2)
         {
@@ -752,9 +882,11 @@ private static int buildTubes(int xo, int maxLength, int maxHeight, int vfloor, 
 
         for (int y = 0; y < floor + floorHeight; y++)
         {
-            if (y >= floor && y <= floor + floorHeight)
+            if (y >= floor && y <= floor + floorHeight) //TODO: build straight
             {
                 level.setBlock(x, y, (byte) (1 + 9 * 16));
+                if (y == floor && x != xTube && x != xTube + 1)
+                    creaturesPos.add (new Point (x, y - k));
             } else
             {
                 if ((x == xTube || x == xTube + 1) && y >= tubeHeight)
@@ -766,6 +898,11 @@ private static int buildTubes(int xo, int maxLength, int maxHeight, int vfloor, 
                         level.setBlock(x, y, (byte) (xPic + 0 * 16));
                         if (x == xTube)
                         {
+                            if (oldXTube != -1 && creaturesRandom.nextInt(35) > levelDifficulty + 1)
+                            {
+//                                addEnemiesLine(oldXTube + 2, xTube - 1, floor - 1);
+                            }
+                            oldXTube = x;
                             counters.tubesCount++;
                         }
                     } else
@@ -777,6 +914,17 @@ private static int buildTubes(int xo, int maxLength, int maxHeight, int vfloor, 
         }
     }
 
+    if (globalRandom.nextBoolean())
+        buildBlocks(xo, xo+length, floor - maxTubeHeight - 2, false, 0, 0, false, false);
+
+    creaturesSpreader cs = new creaturesSpreader();
+    cs.getCreatures();
+
+    for (Point v : creaturesToBuild)
+    {
+        addEnemiesLine(v.x, v.x+1, v.y);
+    }
+
     return length;
 }
 
@@ -786,13 +934,15 @@ private static int buildTubes(int xo, int maxLength, int maxHeight, int vfloor, 
 
 private static int buildStraight(int xo, int maxLength, boolean safe, int vfloor, int floorHeight)
 {
+    creaturesPos.clear();
+    
     int length;
     if (floorHeight != INFINITY_FLOOR_HEIGHT)
     {
         length = maxLength;
     } else
     {
-        length = globalRandom.nextInt(10) + 2;
+        length = globalRandom.nextInt(8) + 2;//globalRandom.nextInt(50)+1) + 2;
         if (safe) length = 10 + globalRandom.nextInt(5);
         if (length > maxLength) length = maxLength;
     }
@@ -818,9 +968,9 @@ private static int buildStraight(int xo, int maxLength, boolean safe, int vfloor
         for (int y = floor; y < y1; y++)
         {
             if (y >= floor)
-            {
                 level.setBlock(x, y, (byte) (1 + 9 * 16));
-            }
+            if (y == floor)
+                creaturesPos.add(new Point(x, y - k));
         }
     }
 
@@ -828,8 +978,16 @@ private static int buildStraight(int xo, int maxLength, boolean safe, int vfloor
     {
         if (length > 5)
         {
-            decorate(xo, xo + length, floor, false);
+            decorate(xo, xo + length, floor);
         }
+    }
+
+    creaturesSpreader cs = new creaturesSpreader();
+    cs.getCreatures();
+
+    for (Point v : creaturesToBuild)
+    {
+        addEnemiesLine(v.x, v.x+1, v.y);
     }
 
     return length;
@@ -844,25 +1002,26 @@ private static boolean canBuildBlocks(int x0, int floor, boolean isHB)
 
     boolean res = true;
 
-    if (floor < 4)
-    {
-        return false;
-    }
+//    if (floor < 1)
+//    {
+//        return false;
+//    }
 
-    for (int y = 0; y < 4; y++)
-    {
-        if (level.getBlock(x0, floor - y) != 0)
-        {
-            res = false;
-            break;
-        }
-    }
+//    for (int y = 0; y < 1; y++)
+//    {
+//        if (level.getBlock(x0, floor - y) != 0)
+//        {
+//            res = false;
+//            break;
+//        }
+//    }
 
     return res;
 }
 
-private static void buildBlocks(int x0, int x1, int floor, boolean pHB, int pS, int pE, boolean onlyHB)
+private static void buildBlocks(int x0, int x1, int floor, boolean pHB, int pS, int pE, boolean onlyHB, boolean isDistance)
 {
+    //TODO: check canAddBlocks
     if (counters.blocksCount > counters.totalBlocks)
     {
         return;
@@ -874,7 +1033,8 @@ private static void buildBlocks(int x0, int x1, int floor, boolean pHB, int pS, 
     if (onlyHB)
         hb = onlyHB;
 
-    while (floor - 4 > 0) //minimal distance between the bricks line and floor is 4
+    --floor;
+    while (floor > 0) //minimal distance between the bricks line and floor is 4
     {
         if ((x1 - 1 - e) - (x0 + 1 + s) > 0) //minimal number of bricks in the line is positive value
         {
@@ -900,11 +1060,15 @@ private static void buildBlocks(int x0, int x1, int floor, boolean pHB, int pS, 
                             counters.blocksCount++;
                             if ((globalRandom.nextInt(4) == 0))
                             {
-                                level.setBlock(x, floor - 4, (byte) (4 + 2 + 1 * 16)); //a brick with animated question symbol with power up. when broken becomes a rock
+                                if (level.getBlock(x, floor) == 0)
+                                    level.setBlock(x, floor, (byte) (4 + 2 + 1 * 16)); //a brick with animated question symbol with power up. when broken becomes a rock
                             } else
                             {
-                                level.setBlock(x, floor - 4, (byte) (4 + 1 + 1 * 16)); //a brick with animated question symbol with coin. when broken becomes a rock
-                                ++counters.coinsCount;
+                                if (level.getBlock(x, floor) == 0)
+                                {
+                                    level.setBlock(x, floor, (byte) (4 + 1 + 1 * 16)); //a brick with animated question symbol with coin. when broken becomes a rock
+                                    ++counters.coinsCount;
+                                }
                             }
                             canDeco = true;
                         }
@@ -915,36 +1079,50 @@ private static void buildBlocks(int x0, int x1, int floor, boolean pHB, int pS, 
                             counters.blocksCount++;
                             if (globalRandom.nextInt(4) == 0)
                             {
-                                level.setBlock(x, floor - 4, (byte) (2 + 1 * 16)); //a brick with a power up. when broken becomes a rock
+                                if (level.getBlock(x, floor) == 0)
+                                    level.setBlock(x, floor, (byte) (2 + 1 * 16)); //a brick with a power up. when broken becomes a rock
                             } else
                             {
-                                level.setBlock(x, floor - 4, (byte) (1 + 1 * 16)); //a brick with a coin. when broken becomes a rock
-                                ++counters.coinsCount;
+                                if (level.getBlock(x, floor) == 0)
+                                {
+                                    level.setBlock(x, floor, (byte) (1 + 1 * 16)); //a brick with a coin. when broken becomes a rock
+                                    ++counters.coinsCount;
+                                }
                             }
                             canDeco = true;
                         }
                     } else if (globalRandom.nextInt(2) == 1 && canBuildBlocks(x, floor - 4, false))
                     {
-                        counters.blocksCount++;
-                        level.setBlock(x, floor - 4, (byte) (0 + 1 * 16)); //a break brick
-                        canDeco = true;
+                        if (level.getBlock(x, floor) == 0)
+                        {
+                            counters.blocksCount++; //TODO: move it in to the Level.setBlock
+                            level.setBlock(x, floor , (byte) (0 + 1 * 16)); //a break brick
+                            canDeco = true;
+                        }
                     }
                     if (canDeco)
                     {
-                        if (globalRandom.nextInt(4) == 2) addEnemiesLine(x0 + 1, x1 - 1, floor - 1);
+                        //if (creaturesRandom.nextInt(35) > levelDifficulty + 1) addEnemiesLine(x0 + 1, x1 - 1, floor - 1);
                         buildCoins(x0, x1, floor, s, e);
                     }
                 }
+
+                if (level.getBlock(x, floor - 1) == 0)
+                    creaturesPos.add(new Point(x, floor - 1));
             }
             if (onlyHB)
             {
                 hb = true;
             } else
             {
-                hb = globalRandom.nextBoolean();//globalRandom.nextInt(3) == globalRandom.nextInt(3);
+                hb = globalRandom.nextInt(4) == 0;//globalRandom.nextInt(3) == globalRandom.nextInt(3);
             }
         }
-        floor -= 4;
+
+//        if (creaturesRandom.nextInt(35) > levelDifficulty + 1)
+//            addEnemiesLine(x0 + 1, x1 - 1, floor - 1);
+
+        floor -= isDistance ? 4 : globalRandom.nextInt(6) + 3;
         s = globalRandom.nextInt(4);
         e = globalRandom.nextInt(4);
     }
@@ -972,29 +1150,7 @@ private static void buildCoins(int x0, int x1, int floor, int s, int e)
     }
 }
 
-private static boolean canAddEnemyLine(int x0, int x1, int floor)
-{
-    if (!creaturesMaskParser.canAdd())
-    {
-        return false;
-    }
-    boolean res = true;
-    for (int x = x0; x < x1; x++)
-    {
-        for (int y = floor; y > floor - 2; y--)
-        {
-            if (level.getBlock(x, y) != 0)
-            {
-                res = false;
-                break;
-            }
-        }
-    }
-
-    return res;
-}
-
-private static void decorate(int x0, int x1, int floor, boolean recurs)
+private static void decorate(int x0, int x1, int floor)
 {
     if (floor < 1) return;
 
@@ -1002,25 +1158,17 @@ private static void decorate(int x0, int x1, int floor, boolean recurs)
     int e = globalRandom.nextInt(4);
     boolean hb = ((globalRandom.nextInt(levelDifficulty + 1) % (levelDifficulty + 1))) > 0.5;
 
-    if (!hb)
-    {
-        addEnemiesLine(x0 + 1, x1 - 1, floor - 1);
-    }
+//    if (!hb)
+//    {
+//        addEnemiesLine(x0 + 1, x1 - 1, floor - 1);
+//    }
 
     if (floor - 2 > 0 && !hb)
     {
         buildCoins(x0, x1, floor, s, e);
     }
 
-    if (!recurs) buildBlocks(x0, x1, floor, hb, s, e, false);
-
-    int length = x1 - x0 - 2;
-
-    if (length > 2)
-    {
-        //decorate(x0, x1, floor - 4);
-        globalRandom.nextInt();
-    }
+    buildBlocks(x0, x1, floor, hb, s, e, false, false);
 }
 
 private static void fixWalls()

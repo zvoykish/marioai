@@ -22,6 +22,7 @@ public static boolean isPauseWorld = false;
 
 public static boolean isVisualization = true;
 public static boolean isGameplayStopped = false;
+public static boolean isFly = false;
 
 private static GameViewer GameViewer = null;
 //    public static boolean isTimer = true;

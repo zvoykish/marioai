@@ -437,7 +437,7 @@ MarioXInMap = 21(int) mario.x / cellSize  = 22
     {
         for (int x = MarioXInMap - receptiveFiledWidth / 2, obsY = 0; x <= MarioXInMap + receptiveFiledWidth / 2; x++, obsY++)
         {
-            if (x >= 0 && x <= level.xExit && y >= 0 && y < level.height)
+            if (x >= 0 && x < level.xExit && y >= 0 && y < level.height)
             {
                 levelSceneZ[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevel);
             } else
@@ -523,7 +523,7 @@ public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
     {
         for (int x = MarioXInMap - receptiveFiledWidth / 2, obsY = 0; x <= MarioXInMap + receptiveFiledWidth / 2; x++, obsY++)
         {
-            if (x >= 0 /*&& x <= level.xExit*/ && y >= 0 && y < level.height)
+            if (x >= 0 && x < level.xExit && y >= 0 && y < level.height)
             {
                 mergedZZ[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevelScene);
             } else
