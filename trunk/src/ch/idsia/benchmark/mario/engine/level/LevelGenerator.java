@@ -316,6 +316,8 @@ public static Random XRnd = new Random(0);
 
 public static void addEnemy(int x, int y)
 {
+//    if (x>0)
+//    return;
     int crType = creaturesRandom.nextInt(4);
 
     int t = creaturesMaskParser.getNativeType(crType);

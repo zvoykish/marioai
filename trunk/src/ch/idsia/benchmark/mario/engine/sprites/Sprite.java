@@ -134,7 +134,7 @@ public final void tick()
     move();
     mapY = (int) (y / 16);
 
-
+    mapY = (int) (y / 16);
     mapX = (int) (x / 16);
 //    if (this instanceof Mario)
 //        System.err.println("y = " + y + ", " + System.currentTimeMillis());
