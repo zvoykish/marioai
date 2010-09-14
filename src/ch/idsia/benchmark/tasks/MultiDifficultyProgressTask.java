@@ -15,65 +15,70 @@ import ch.idsia.tools.CmdLineOptions;
  */
 public class MultiDifficultyProgressTask implements Task
 {
-    private CmdLineOptions options;
-    private int startingSeed = 0;
-    private int[] difficulties = {0, 3, 5, 10};
+private CmdLineOptions options;
+private int startingSeed = 0;
+private int[] difficulties = {0, 3, 5, 10};
 
-    public MultiDifficultyProgressTask(CmdLineOptions evaluationOptions)
-    {
-        setOptions(evaluationOptions);
-    }
+public MultiDifficultyProgressTask(CmdLineOptions evaluationOptions)
+{
+    setOptions(evaluationOptions);
+}
 
-    public float[] evaluate(final Agent controller)
+public float[] evaluate(final Agent controller)
+{
+    float distanceTravelled = 0;
+    float[] fitnesses = new float[difficulties.length + 1];
+    for (int difficulty : difficulties)
     {
-        float distanceTravelled = 0;
-        float[] fitnesses = new float[difficulties.length + 1];
-        for (int difficulty : difficulties)
-        {
-            controller.reset();
-            options.setLevelRandSeed(startingSeed);
-            options.setLevelDifficulty(difficulty);
-            options.setAgent(controller);
+        controller.reset();
+        options.setLevelRandSeed(startingSeed);
+        options.setLevelDifficulty(difficulty);
+        options.setAgent(controller);
 //            Evaluator evaluator = new Evaluator(options);
 //            List<EvaluationInfo> results = evaluator.evaluate();
 //            EvaluationInfo result = results.get(0);
 //            float thisDistance = result.computeDistancePassed();
 //            fitnesses[i + 1] = thisDistance;
 //            distanceTravelled += thisDistance;
-        }
-        distanceTravelled = distanceTravelled / difficulties.length;
-        fitnesses[0] = distanceTravelled;
-        return fitnesses;
-        //return new double[]{distanceTravelled};
     }
+    distanceTravelled = distanceTravelled / difficulties.length;
+    fitnesses[0] = distanceTravelled;
+    return fitnesses;
+    //return new double[]{distanceTravelled};
+}
 
-    public void setStartingSeed(int seed)
-    {
-        startingSeed = seed;
-    }
+public void setStartingSeed(int seed)
+{
+    startingSeed = seed;
+}
 
-    public void setOptions(CmdLineOptions options)
-    {
-        this.options = options;
-    }
+public void setOptions(CmdLineOptions options)
+{
+    this.options = options;
+}
 
-    public CmdLineOptions getOptions()
-    {
-        return options;
-    }
+public CmdLineOptions getOptions()
+{
+    return options;
+}
 
-    public void doEpisodes(int amount, boolean verbose)
-    {
+public void doEpisodes(int amount, boolean verbose)
+{
 
-    }
+}
 
-    public boolean isFinished()
-    {
-        return false;
-    }
+public boolean isFinished()
+{
+    return false;
+}
 
-    public void reset()
-    {
+public void reset()
+{
 
-    }
+}
+
+public String getName()
+{
+    return null;  //To change body of implemented methods use File | Settings | File Templates.
+}
 }

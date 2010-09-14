@@ -18,6 +18,7 @@ private Agent agent;
 protected CmdLineOptions options;
 private long COMPUTATION_TIME_BOUND = 42; // stands for prescribed  FPS 24.
 private int callsCounter = 0;
+private String name = getClass().getSimpleName();
 
 public BasicTask(CmdLineOptions cmdLineOptions)
 {
@@ -49,6 +50,7 @@ public boolean runOneEpisode()
             environment.performAction(action);
         }
     }
+    environment.getEvaluationInfo().setTaskName(name);
     return true;
 }
 
@@ -107,6 +109,11 @@ public boolean isFinished()
 public void reset()
 {
 
+}
+
+public String getName()
+{
+    return name;
 }
 }
 

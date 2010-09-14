@@ -38,6 +38,8 @@ public int timeLeft = MagicNumberUnDef;
 public int timeSpent = MagicNumberUnDef;
 public int hiddenBlocksFound = MagicNumberUnDef;
 
+private String taskName = "NoTaskNameSpecified";
+
 public int totalNumberOfCoins = MagicNumberUnDef;
 public int totalNumberOfHiddenBlocks = MagicNumberUnDef;
 public int totalNumberOfMushrooms = MagicNumberUnDef;
@@ -54,6 +56,7 @@ public String Memo = "";
 
 private static final DecimalFormat df = new DecimalFormat("#.##");
 private static MarioSystemOfValues marioSystemOfValues = new MarioSystemOfValues();
+
 
 public EvaluationInfo()
 {
@@ -121,7 +124,7 @@ public float[] toFloatArray()
 
 public String toString()
 {
-    return "\n[MarioAI] ~ Evaluation Results:" +
+    return "\n[MarioAI] ~ Evaluation Results for Task: " + taskName +
             "\n         Weighted Fitness : " + df.format(computeWeightedFitness()) +
             "\n             Mario Status : " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss...") +
             "\n               Mario Mode : " + Mario.MODES[marioMode] +
@@ -158,5 +161,10 @@ public String toStringSingleLine()
             "; By Fire: " + killsByFire +
             "; By Shell: " + killsByShell +
             "; By Stomp: " + killsByStomp;
+}
+
+public void setTaskName(final String name)
+{
+    taskName = name;
 }
 }

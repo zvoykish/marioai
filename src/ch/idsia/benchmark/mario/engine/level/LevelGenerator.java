@@ -51,7 +51,7 @@ private static class creaturesSpreader
         HashSet used = new HashSet();
         creaturesToBuild.clear();
 
-        int pointsCount = creaturesRandom.nextInt((int) Math.log(levelDifficulty * levelDifficulty + levelDifficulty));//creaturesRandom.nextInt((levelDifficulty + 5)%(creaturesPos.size()+1)+1);
+        int pointsCount = 1;//creaturesRandom.nextInt((int) Math.log(levelDifficulty * levelDifficulty + levelDifficulty));//creaturesRandom.nextInt((levelDifficulty + 5)%(creaturesPos.size()+1)+1);
         if (pointsCount > creaturesPos.size())
         {
             pointsCount = creaturesPos.size();
