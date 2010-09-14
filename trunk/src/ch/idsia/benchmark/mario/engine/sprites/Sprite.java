@@ -131,13 +131,13 @@ public final void tick()
 {
     xOld = x;
     yOld = y;
-    mapY = (int) (y / 16);
     move();
+    mapY = (int) (y / 16);
 
 
     mapX = (int) (x / 16);
-    if (this instanceof Mario)
-        System.err.println("y = " + y + ", " + System.currentTimeMillis());
+//    if (this instanceof Mario)
+//        System.err.println("y = " + y + ", " + System.currentTimeMillis());
 
 }
 

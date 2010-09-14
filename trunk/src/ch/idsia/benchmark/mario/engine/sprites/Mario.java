@@ -201,6 +201,10 @@ private void savePrevState()
 
 public void move()
 {
+    int mapy1 = (int) (y / 16);
+    int mapx1 = (int) (x / 16);
+    System.err.println("mapx1 = " + mapx1);
+    System.err.println("mapy1 = " + mapy1);
     if (GlobalOptions.isFly)
     {
         xa = ya = 0;
