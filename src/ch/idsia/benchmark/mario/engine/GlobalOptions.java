@@ -36,7 +36,6 @@ public static int receptiveFieldHeight = -1;
 private static MarioVisualComponent marioVisualComponent;
 public static int VISUAL_COMPONENT_WIDTH = 320;
 public static int VISUAL_COMPONENT_HEIGHT = 240;
-public static boolean isMatrixView;
 
 public static boolean isShowReceptiveField = false;
 

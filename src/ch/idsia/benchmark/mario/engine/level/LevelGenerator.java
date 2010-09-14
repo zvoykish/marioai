@@ -117,7 +117,6 @@ private LevelGenerator() {}
 public static Level createLevel(CmdLineOptions args)
 {
     length = args.getLevelLength();
-    System.out.println("args.getLevelLength() = " + args.getLevelLength());
     height = args.getLevelHeight();
     if (height < 15)
     {
