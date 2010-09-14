@@ -25,20 +25,6 @@ import java.util.Random;
 
 public class LevelGenerator
 {
-private static int k = 2;
-/*
-From left to right:
-    0)goomba
-    1)green koopa
-    2)red koopa
-    3)spiky
-    4)winged goomba
-    5)winged green koopa
-    6)winged red koopa
-    7)winged spiky
-    8)spiky flower
-*/
-
 public static final int TYPE_OVERGROUND = 0;
 public static final int TYPE_UNDERGROUND = 1;
 public static final int TYPE_CASTLE = 2;
@@ -51,8 +37,10 @@ private static boolean isFlatLevel;
 private static int length;
 private static int height;
 private static Level level;
+
 private static Random globalRandom = new Random(0);
 private static Random creaturesRandom = new Random(0);
+public static Random XRnd = new Random(0); //used in addEnemy to compute dx
 
 private static final int ODDS_STRAIGHT = 0;
 private static final int ODDS_HILL_STRAIGHT = 1;
@@ -184,24 +172,6 @@ public static Level createLevel(CmdLineOptions args)
 
     fixWalls();
 
-//        System.out.println("deadEndsCount = " + counters.deadEndsCount);
-//        System.out.println("cannonsCount = " + counters.cannonsCount);
-//        System.out.println("hillStraightCount = " + counters.hillStraightCount);
-//        System.out.println("tubesCount = " + counters.tubesCount);
-//        System.out.println("blocksCount = " + counters.blocksCount);
-//        System.out.println("coinsCount = " + counters.coinsCount);
-//        System.out.println("gapsCount = " + counters.gapsCount);
-//        System.out.println("hiddenBlocksCount = " + counters.hiddenBlocksFound);
-//
-//        System.out.println("total deadEndsCount = " + counters.totalDeadEnds);
-//        System.out.println("total cannonsCount = " + counters.totalCannons);
-//        System.out.println("total hillStraightCount = " + counters.totalHillStraight);
-//        System.out.println("total tubesCount = " + counters.totalTubes);
-//        System.out.println("total blocksCount = " + counters.totalBlocks);
-//        System.out.println("total coinsCount = " + counters.totalCannons);
-//        System.out.println("total gapsCount = " + counters.totalGaps);
-//        System.out.println("total hiddenBlocksCount = " + counters.totalHiddenBlocks);
-
     level.counters = counters;
 
     return level;
@@ -269,9 +239,9 @@ private static int buildZone(int x, int maxLength, int maxHeight, int floor, int
     }
 
     int crCount = 0;
-    for (int xx = 0; xx < length; xx++ )
+    for (int xx = 0; xx < length; xx++)
         for (int yy = 1; yy < 10; yy++)
-            if (level.getBlock (x + xx, yy) == 0 && creaturesRandom.nextInt(levelDifficulty + 1) + 1 > (levelDifficulty + 1) / 2 && crCount < levelDifficulty + 1)
+            if (level.getBlock(x + xx, yy) == 0 && creaturesRandom.nextInt(levelDifficulty + 1) + 1 > (levelDifficulty + 1) / 2 && crCount < levelDifficulty + 1)
             {
                 addEnemy(x + xx, yy);
                 ++crCount;
@@ -280,54 +250,56 @@ private static int buildZone(int x, int maxLength, int maxHeight, int floor, int
     return length;
 }
 
-public static Random XRnd = new Random(0);
-
 public static void addEnemy(int x, int y)
 {
-//    if (x>0)
-//    return;
-    int crType = creaturesRandom.nextInt(4);
+    if (!creaturesMaskParser.canAdd())
+        return;
 
-    int t = creaturesMaskParser.getNativeType(crType);
+    int t;
+
+    if (creaturesMaskParser.isComplete())
+    { //Difficulty of creatures on the level depends on the levelDifficulty of the level
+        int type = creaturesRandom.nextInt(4);
+        if (levelDifficulty < 1)
+        {
+            type = CreaturesMaskParser.GOOMBA;
+        } else if (levelDifficulty < 3)
+        {
+            int type1 = creaturesRandom.nextInt(3);
+            int type2 = creaturesRandom.nextInt(3) + 3;
+            type = creaturesRandom.nextInt(2) == 1 ? type1 : type2;
+        }
+        t = creaturesMaskParser.getNativeType(type);
+        level.setSpriteTemplate(x, y, new SpriteTemplate(type));
+        ++counters.creatures;
+    } else
+    {
+        boolean enabled = false;
+        int type;// = creaturesRandom.nextInt(4);
+        if (levelDifficulty < 3)
+        {
+            creaturesRandom.nextInt(3);
+        }
+        do
+        {
+            type = creaturesRandom.nextInt(8);
+            if (creaturesMaskParser.isEnabled(type))
+            {
+                enabled = true;
+            }
+        }
+        while (!enabled);
+
+        t = creaturesMaskParser.getNativeType(type);
+        level.setSpriteTemplate(x, y, new SpriteTemplate(t));
+        ++counters.creatures;
+    }
+
     int dx = (int) XRnd.nextGaussian();
-//    System.out.println("dx = " + dx);
     level.setSpriteTemplate(x + dx, y, new SpriteTemplate(t));
     ++counters.creatures;
-}
 
-/*
-    first component of sum : position on  Y axis
-    second component of sum : position  on X axis
-    starting at 0
-    *16 because size of the picture is 16x16 pixels
-    0+9*16 -- left side of the ground
-    1+9*16 -- upper side of ground; common block telling "it's smth (ground) here". Is processed further.
-    2+9*16 -- right side of the earth
-    3+9*16 -- peice of the earth
-    9+0*16 -- block of a ladder
-    14+0*16 -- cannon barrel
-    14+1*16 -- base for cannon barrel
-    14+2*16 -- cannon pole
-    4+8*16 -- left piece of a hill of ground
-    4+11*16 -- left piece of a hill of ground as well
-    6+8*16 --  right upper peice of a hill
-    6+11*16 -- right upper peice of a hill on earth
-    2+2*16 --  animated coin
-    4+2+1*16 -- a rock with animated question symbol with power up
-    4+1+1*16 -- a rock with animated question symbol with coin
-    2+1*16 -- brick with power up. when broken becomes a rock
-    1+1*16 -- brick with power coin. when broken becomes a rock
-    0+1*16 -- break brick
-    1+10*16 -- earth, bottom piece
-    1+8*16 --  earth, upper piece
-    3+10*16 -- piece of earth
-    3+11*16 -- piece of earth
-    2+8*16 -- right part of earth
-    0+8*16 -- left upper part of earth
-    3+8*16 -- piece of earth
-    2+10*16 -- right bottomp iece of earth
-    0+10*16 -- left bottom piece of earth
-*/
+}
 
 //x0 - first block to start from
 //maxLength - maximal length of the zone
@@ -420,6 +392,9 @@ private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, in
 //        System.out.println("globalRandom.nextInt() % this.levelDifficulty+1 = " +
     int length = gs * 2 + gl + globalRandom.nextInt(levelDifficulty + 1) + 1;
 
+    if (length > maxLength)
+        length = maxLength;
+
     boolean hasStairs = globalRandom.nextInt(3) == 0;
     if (maxHeight <= 5 && maxHeight != ANY_HEIGHT)
     {
@@ -480,9 +455,6 @@ private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, in
         }
     }
 
-    if (length < 0) length = 1; //TODO: check this conditions. move it to the begining?
-    if (length > maxLength) length = maxLength;
-
     return length;
 }
 
@@ -542,7 +514,7 @@ private static int buildCannons(int xo, int maxLength, int maxHeight, int vfloor
 
         for (int y = 0; y < height; y++)
         {
-            if (y >= floor && y <= floor + floorHeight) //TODO: build straight
+            if (y >= floor && y <= floor + floorHeight)
             {
                 level.setBlock(x, y, (byte) (1 + 9 * 16));
             } else if (counters.cannonsCount <= counters.totalCannons)
@@ -689,60 +661,6 @@ private static boolean canAddEnemyLine(int x0, int x1, int y)
     return res;
 }
 
-private static void addEnemiesLine(int x0, int x1, int y)
-{
-    if (x0 > 0)
-        return;
-//    Random locRnd = new Random(levelSeed); //TODO: move to static
-
-    if (!canAddEnemyLine(x0, x1, y))
-        return;
-
-    for (int x = x0; x < x1; x++)
-    {
-        if (creaturesRandom.nextInt(25) < levelDifficulty + 1)
-        {
-            if (creaturesMaskParser.isComplete())
-            { //Difficulty of creatures on the level depends on the levelDifficulty of the level
-                int type = creaturesRandom.nextInt(4);
-                if (levelDifficulty < 1)
-                {
-                    type = CreaturesMaskParser.GOOMBA;
-                } else if (levelDifficulty < 3)
-                {
-                    int type1 = creaturesRandom.nextInt(3);
-                    int type2 = creaturesRandom.nextInt(3) + 3;
-                    type = creaturesRandom.nextInt(2) == 1 ? type1 : type2;
-                }
-                type = creaturesMaskParser.getNativeType(type);
-                level.setSpriteTemplate(x, y, new SpriteTemplate(type));
-                ++counters.creatures;
-            } else
-            {
-                boolean enabled = false;
-                int crType;// = creaturesRandom.nextInt(4);
-                if (levelDifficulty < 3)
-                {
-                    creaturesRandom.nextInt(3);
-                }
-                do
-                {
-                    crType = creaturesRandom.nextInt(8);
-                    if (creaturesMaskParser.isEnabled(crType))
-                    {
-                        enabled = true;
-                    }
-                }
-                while (!enabled);
-
-                int t = creaturesMaskParser.getNativeType(crType);
-                level.setSpriteTemplate(x, y, new SpriteTemplate(t));
-                ++counters.creatures;
-            }
-        }
-    }
-}
-
 private static int buildTubes(int xo, int maxLength, int maxHeight, int vfloor, int floorHeight)
 {
     int maxTubeHeight = 0;
@@ -777,7 +695,6 @@ private static int buildTubes(int xo, int maxLength, int maxHeight, int vfloor, 
         }
     }
 
-    //TODO: make this part like in BuildStraight. Not critical but unity of code style
     if (floorHeight == INFINITY_FLOOR_HEIGHT)
     {
         floorHeight = height - floor;
@@ -815,10 +732,9 @@ private static int buildTubes(int xo, int maxLength, int maxHeight, int vfloor, 
 
         for (int y = 0; y < floor + floorHeight; y++)
         {
-            if (y >= floor && y <= floor + floorHeight) //TODO: build straight
-            {
+            if (y >= floor && y <= floor + floorHeight)
                 level.setBlock(x, y, (byte) (1 + 9 * 16));
-            } else
+            else
             {
                 if ((x == xTube || x == xTube + 1) && y >= tubeHeight)
                 {
@@ -928,7 +844,6 @@ private static boolean canBuildBlocks(int x0, int floor, boolean isHB)
 
 private static void buildBlocks(int x0, int x1, int floor, boolean pHB, int pS, int pE, boolean onlyHB, boolean isDistance)
 {
-    //TODO: check canAddBlocks
     if (counters.blocksCount > counters.totalBlocks)
     {
         return;
@@ -1205,4 +1120,91 @@ private static void blockify(Level level, boolean[][] blocks, int width, int hei
         }
     }
 }
+
+private static void addEnemiesLine(int x0, int x1, int y)
+{
+    if (x0 > 0)
+        return;
+
+    if (!canAddEnemyLine(x0, x1, y))
+        return;
+
+    for (int x = x0; x < x1; x++)
+    {
+        if (creaturesRandom.nextInt(25) < levelDifficulty + 1)
+        {
+            if (creaturesMaskParser.isComplete())
+            { //Difficulty of creatures on the level depends on the levelDifficulty of the level
+                int type = creaturesRandom.nextInt(4);
+                if (levelDifficulty < 1)
+                {
+                    type = CreaturesMaskParser.GOOMBA;
+                } else if (levelDifficulty < 3)
+                {
+                    int type1 = creaturesRandom.nextInt(3);
+                    int type2 = creaturesRandom.nextInt(3) + 3;
+                    type = creaturesRandom.nextInt(2) == 1 ? type1 : type2;
+                }
+                type = creaturesMaskParser.getNativeType(type);
+                level.setSpriteTemplate(x, y, new SpriteTemplate(type));
+                ++counters.creatures;
+            } else
+            {
+                boolean enabled = false;
+                int crType;// = creaturesRandom.nextInt(4);
+                if (levelDifficulty < 3)
+                {
+                    creaturesRandom.nextInt(3);
+                }
+                do
+                {
+                    crType = creaturesRandom.nextInt(8);
+                    if (creaturesMaskParser.isEnabled(crType))
+                    {
+                        enabled = true;
+                    }
+                }
+                while (!enabled);
+
+                int t = creaturesMaskParser.getNativeType(crType);
+                level.setSpriteTemplate(x, y, new SpriteTemplate(t));
+                ++counters.creatures;
+            }
+        }
+    }
 }
+}
+
+/*
+    first component of sum : position on  Y axis
+    second component of sum : position  on X axis
+    starting at 0
+    *16 because size of the picture is 16x16 pixels
+    0+9*16 -- left side of the ground
+    1+9*16 -- upper side of ground; common block telling "it's smth (ground) here". Is processed further.
+    2+9*16 -- right side of the earth
+    3+9*16 -- peice of the earth
+    9+0*16 -- block of a ladder
+    14+0*16 -- cannon barrel
+    14+1*16 -- base for cannon barrel
+    14+2*16 -- cannon pole
+    4+8*16 -- left piece of a hill of ground
+    4+11*16 -- left piece of a hill of ground as well
+    6+8*16 --  right upper peice of a hill
+    6+11*16 -- right upper peice of a hill on earth
+    2+2*16 --  animated coin
+    4+2+1*16 -- a rock with animated question symbol with power up
+    4+1+1*16 -- a rock with animated question symbol with coin
+    2+1*16 -- brick with power up. when broken becomes a rock
+    1+1*16 -- brick with power coin. when broken becomes a rock
+    0+1*16 -- break brick
+    1+10*16 -- earth, bottom piece
+    1+8*16 --  earth, upper piece
+    3+10*16 -- piece of earth
+    3+11*16 -- piece of earth
+    2+8*16 -- right part of earth
+    0+8*16 -- left upper part of earth
+    3+8*16 -- piece of earth
+    2+10*16 -- right bottomp iece of earth
+    0+10*16 -- left bottom piece of earth
+*/
