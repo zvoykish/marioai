@@ -59,14 +59,14 @@ private static MarioVisualComponent marioVisualComponent = null;
 /*
 bring back:
 if (width != 320 || height != 240) {
- 	 Ê Ê Ê Ê Ê Ê Ê Ê Ê Êif (useScale2x) {
- 	 Ê Ê Ê Ê Ê Ê Ê Ê Ê Ê Ê Êg.drawImage(scale2x.scale(image), 0, 0, null);
- 	 Ê Ê Ê Ê Ê Ê Ê Ê Ê Ê} else {
- 	 Ê Ê Ê Ê Ê Ê Ê Ê Ê Ê Ê Êg.drawImage(image, 0, 0, 640 * 2, 480 * 2, null);
- 	 Ê Ê Ê Ê Ê Ê Ê Ê Ê Ê}
- 	 Ê Ê Ê Ê Ê Ê Ê Ê} else {
- 	 Ê Ê Ê Ê Ê Ê Ê Ê Ê Êg.drawImage(image, 0, 0, null);
- 	 Ê Ê Ê Ê Ê Ê Ê Ê}
+ 	 ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½if (useScale2x) {
+ 	 ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½g.drawImage(scale2x.scale(image), 0, 0, null);
+ 	 ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½} else {
+ 	 ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½g.drawImage(image, 0, 0, 640 * 2, 480 * 2, null);
+ 	 ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½}
+ 	 ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½} else {
+ 	 ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½g.drawImage(image, 0, 0, null);
+ 	 ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½}
 */
 
 private MarioVisualComponent(CmdLineOptions cmdLineOptions, LevelScene levelScene)
@@ -210,54 +210,51 @@ public void tick()
     }
 }
 
-public void render(Graphics g, float alpha)
+public void render(Graphics g, float cameraOffSet)
 {
-    int xCam = (int) (mario.xOld + (mario.x - mario.xOld) * alpha) - 160;
-    int yCam = (int) (mario.yOld + (mario.y - mario.yOld) * alpha) - 120;
+    int xCam = (int) (mario.xOld + (mario.x - mario.xOld) * cameraOffSet) - 160;
+    int yCam = (int) (mario.yOld + (mario.y - mario.yOld) * cameraOffSet) - 120;
 
     if (GlobalOptions.isMarioAlwaysInCenter)
     {
     } else
     {
-        //int xCam = (int) (xCamO + (this.xCam - xCamO) * alpha);
-        //        int yCam = (int) (yCamO + (this.yCam - yCamO) * alpha);
+        //int xCam = (int) (xCamO + (this.xCam - xCamO) * cameraOffSet);
+        //        int yCam = (int) (yCamO + (this.yCam - yCamO) * cameraOffSet);
         if (xCam < 0) xCam = 0;
         if (yCam < 0) yCam = 0;
-        // TODO: change 16 to cellSize (use the SAME static final variable)
-        if (xCam > level.length * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH)
-            xCam = level.length * 16 - GlobalOptions.VISUAL_COMPONENT_WIDTH;
-        if (yCam > level.height * 16 - GlobalOptions.VISUAL_COMPONENT_HEIGHT)
-            yCam = level.height * 16 - GlobalOptions.VISUAL_COMPONENT_HEIGHT;
+        if (xCam > level.length * levelScene.cellSize - GlobalOptions.VISUAL_COMPONENT_WIDTH)
+            xCam = level.length * levelScene.cellSize - GlobalOptions.VISUAL_COMPONENT_WIDTH;
+        if (yCam > level.height * levelScene.cellSize - GlobalOptions.VISUAL_COMPONENT_HEIGHT)
+            yCam = level.height * levelScene.cellSize - GlobalOptions.VISUAL_COMPONENT_HEIGHT;
     }
 //          g.drawImage(Art.background, 0, 0, null);
 
     for (int i = 0; i < bgLayer.length; i++)
     {
         bgLayer[i].setCam(xCam, yCam);
-        bgLayer[i].render(g, levelScene.tick, alpha); //levelScene.
+        bgLayer[i].render(g, levelScene.tick, cameraOffSet); //levelScene.
     }
 
     g.translate(-xCam, -yCam);
 
     for (Sprite sprite : levelScene.sprites)          // levelScene.
-        if (sprite.layer == 0) sprite.render(g, alpha);
+        if (sprite.layer == 0) sprite.render(g, cameraOffSet);
 
     g.translate(xCam, yCam);
 
     layer.setCam(xCam, yCam);
-    // TODO : remove alpha
-    layer.render(g, levelScene.tick, levelScene.paused ? 0 : alpha);
-    // TODO : fix renderExit0
-    layer.renderExit0(g, levelScene.tick, levelScene.paused ? 0 : alpha, mario.winTime == 0);
+    layer.render(g, levelScene.tick, levelScene.paused ? 0 : cameraOffSet);
+    layer.renderExit0(g, levelScene.tick, levelScene.paused ? 0 : cameraOffSet, mario.winTime == 0);
 
     g.translate(-xCam, -yCam);
 
     for (Sprite sprite : levelScene.sprites)  // Mario, creatures
-        if (sprite.layer == 1) sprite.render(g, alpha);
+        if (sprite.layer == 1) sprite.render(g, cameraOffSet);
 
     g.translate(xCam, yCam);
     g.setColor(Color.BLACK);
-    layer.renderExit1(g, levelScene.tick, levelScene.paused ? 0 : alpha);
+    layer.renderExit1(g, levelScene.tick, levelScene.paused ? 0 : cameraOffSet);
 
     drawStringDropShadow(g, "DIFFICULTY:   " + df.format(levelScene.getLevelDifficulty()), 0, 0, levelScene.getLevelDifficulty() > 6 ? 1 : levelScene.getLevelDifficulty() > 2 ? 4 : 7);
     drawStringDropShadow(g, "CREATURES:" + (mario.world.paused ? "OFF" : " ON"), 19, 0, 7);
@@ -289,14 +286,14 @@ public void render(Graphics g, float alpha)
 
 //    if (levelScene.startTime > 0)
 //    {
-//        float t = levelScene.startTime + alpha - 2;
+//        float t = levelScene.startTime + cameraOffSet - 2;
 //        t = t * t * 0.6f;
 //        renderBlackout(g, 160, 120, (int) (t));
 //    }
 //        mario.x>level.xExit*16
 //    if (mario.winTime > 0)
 //    {
-//        float t = mario.winTime + alpha;
+//        float t = mario.winTime + cameraOffSet;
 //        t = t * t * 0.2f;
 //
 //        if (t > 900)
@@ -313,7 +310,7 @@ public void render(Graphics g, float alpha)
 
 //    if (mario.deathTime > 0)
 //    {
-//            float t = mario.deathTime + alpha;
+//            float t = mario.deathTime + cameraOffSet;
 //            t = t * t * 0.4f;
 //
 //            if (t > 1800)
