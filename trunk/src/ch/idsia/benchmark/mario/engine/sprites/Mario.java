@@ -281,6 +281,8 @@ public void move()
         facing = -1;
     }
 
+    float grCoef = 1;//(float) (1/1.4);
+
     if (keys[KEY_JUMP] || (jumpTime < 0 && !onGround && !sliding))
     {
         if (jumpTime < 0)
@@ -291,8 +293,8 @@ public void move()
         } else if (onGround && mayJump)
         {
             xJumpSpeed = 0;
-            yJumpSpeed = -1.9f;
-            jumpTime = 7;
+            yJumpSpeed = grCoef == 1 ? -1.9f : -grCoef;  //-1.9f*grCoef;
+            jumpTime = (int) (7 * grCoef);
             ya = jumpTime * yJumpSpeed;
             onGround = false;
             sliding = false;
@@ -409,7 +411,8 @@ public void move()
     }
 
     // TODO: move to variable (gravity?)
-    ya *= 0.85f;
+    ya *= grCoef == 1 ? 0.85f : 1 / grCoef; //0.85f;
+//    System.out.println("ya = " + ya);
     if (onGround)
     {
         xa *= GROUND_INERTIA;
