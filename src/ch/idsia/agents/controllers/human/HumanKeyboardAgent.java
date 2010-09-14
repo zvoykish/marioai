@@ -93,7 +93,7 @@ public class HumanKeyboardAgent extends KeyAdapter implements Agent
     public void reset()
     {
         // Just check you keyboard. Especially arrow buttons and 'A' and 'S'!
-        Action = new boolean[6];//Environment.numberOfButtons];
+        Action = new boolean[Environment.numberOfButtons];
     }
 
     public boolean[] getAction(Environment observation)
