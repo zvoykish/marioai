@@ -198,13 +198,13 @@ public void renderExit0(Graphics g, int tick, float alpha, boolean bar)
 {
     for (int y = level.yExit - 8; y < level.yExit; y++)
     {
-        g.drawImage(Art.level[12][y == level.yExit - 8 ? 4 : 5], (level.xExit << 4) - xCam - 16, (y << 4) - yCam, null);
+        g.drawImage(Art.level[12][y == level.yExit - 8 ? 4 : 5], (level.xExit - exitXOffset << 4) - xCam - 16, (y << 4) - yCam, null);
     }
     int yh = level.yExit * 16 - (int) ((Math.sin((tick + alpha) / 20) * 0.5 + 0.5) * 7 * 16) - 8;
     if (bar)
     {
-        g.drawImage(Art.level[12][3], (level.xExit << 4) - xCam - 16, yh - yCam, null);
-        g.drawImage(Art.level[13][3], (level.xExit << 4) - xCam, yh - yCam, null);
+        g.drawImage(Art.level[12][3], (level.xExit - exitXOffset << 4) - xCam - 16, yh - yCam, null);
+        g.drawImage(Art.level[13][3], (level.xExit - exitXOffset << 4) - xCam, yh - yCam, null);
     }
 }
 
@@ -213,7 +213,7 @@ public void renderExit1(Graphics g, int tick, float alpha)
 {
     for (int y = level.yExit - 8; y < level.yExit; y++)
     {
-        g.drawImage(Art.level[13][y == level.yExit - 8 ? 4 : 5], (level.xExit << 4) - xCam + 16, (y << 4) - yCam, null);
+        g.drawImage(Art.level[13][y == level.yExit - 8 ? 4 : 5], (level.xExit - exitXOffset << 4) - xCam + 16, (y << 4) - yCam, null);
     }
 }
 }
