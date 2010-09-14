@@ -55,6 +55,20 @@ private String agentNameStr;
 private GameViewer gameViewer = null;
 private static MarioVisualComponent marioVisualComponent = null;
 
+//private Scale2x scale2x = new Scale2x(320, 240);
+/*
+bring back:
+if (width != 320 || height != 240) {
+ 	 Ê Ê Ê Ê Ê Ê Ê Ê Ê Êif (useScale2x) {
+ 	 Ê Ê Ê Ê Ê Ê Ê Ê Ê Ê Ê Êg.drawImage(scale2x.scale(image), 0, 0, null);
+ 	 Ê Ê Ê Ê Ê Ê Ê Ê Ê Ê} else {
+ 	 Ê Ê Ê Ê Ê Ê Ê Ê Ê Ê Ê Êg.drawImage(image, 0, 0, 640 * 2, 480 * 2, null);
+ 	 Ê Ê Ê Ê Ê Ê Ê Ê Ê Ê}
+ 	 Ê Ê Ê Ê Ê Ê Ê Ê} else {
+ 	 Ê Ê Ê Ê Ê Ê Ê Ê Ê Êg.drawImage(image, 0, 0, null);
+ 	 Ê Ê Ê Ê Ê Ê Ê Ê}
+*/
+
 private MarioVisualComponent(CmdLineOptions cmdLineOptions, LevelScene levelScene)
 {
     this.levelScene = levelScene;

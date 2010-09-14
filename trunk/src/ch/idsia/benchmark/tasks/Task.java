@@ -13,15 +13,17 @@ import ch.idsia.tools.CmdLineOptions;
 
 public interface Task
 {
-    public float[] evaluate(Agent controller);
+public float[] evaluate(Agent controller);
 
-    public void setOptions(CmdLineOptions options);
+public void setOptions(CmdLineOptions options);
 
-    public CmdLineOptions getOptions();
+public CmdLineOptions getOptions();
 
-    void doEpisodes(int amount, boolean verbose);
+void doEpisodes(int amount, boolean verbose);
 
-    boolean isFinished();
+boolean isFinished();
 
-    void reset();
+void reset();
+
+public String getName();
 }

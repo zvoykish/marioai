@@ -4,6 +4,7 @@ import ch.idsia.benchmark.mario.engine.level.Level;
 import ch.idsia.benchmark.mario.engine.level.LevelGenerator;
 import ch.idsia.benchmark.mario.engine.level.SpriteTemplate;
 import ch.idsia.benchmark.mario.engine.sprites.*;
+import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.tools.CmdLineOptions;
 
 import java.io.DataInputStream;
@@ -13,8 +14,8 @@ import java.util.List;
 
 public final class LevelScene implements SpriteContext
 {
-public static final boolean[] keys = new boolean[16];
-public static final String[] keysStr = {"LEFT  ", "RIGHT ", " DOWN ", " JUMP ", " SPEED"};
+public static final boolean[] defaultKeys = new boolean[Environment.numberOfButtons];
+public static final String[] keysStr = {"LEFT  ", "RIGHT ", " DOWN ", " JUMP ", " SPEED", "UP!"};
 
 public static final int cellSize = 16;
 
@@ -109,31 +110,10 @@ public void init(CmdLineOptions args)
 {
     /*        if (replayer!=null)
     {                level = LevelGenerator.createLevel(2048, 15, replayer.nextLong());         }
-    else
-    {*/
-//        level = LevelGenerator.createLevel(320, 15, levelSeed);
-//        if (levelSeed != -152)
-    level = LevelGenerator.createLevel(args);
-//        else
-//        try
-//        {
-//            level = Level.load(new DataInputStream(LevelScene.class.getResourceAsStream("resources/test.lvl")));
-//            System.out.println("level.getWidthCells() = " + level.getWidthCells());
-//            level.xExit = level.length - 6;
-//            level.yExit = 5;
-
-//            System.out.println("level.xExit = " + level.xExit);
-//            System.out.println("level.yExit = " + level.yExit);
-//        } catch (IOException e)
-//        {
-//        }
-//        Ssystem.out.println("\nJava:level created.");
-    //        }
-
     /*        if (recorder != null)
-    {
     recorder.addLong(LevelGenerator.lastSeed);
     }*/
+    level = LevelGenerator.createLevel(args);
     paused = false;
     Sprite.spriteContext = this;
     sprites.clear();
@@ -143,13 +123,34 @@ public void init(CmdLineOptions args)
 
     mario = new Mario(this);
     sprites.add(mario);
-//        System.out.println("mario.sheet = " + mario.sheet);
     startTime = 1;
-//        if (levelSeed == 152)
-//            mario.x = level.xExit * 16 - 17;
     timeLeft = timeLimit * 15;
 
     tick = 0;
+}
+
+//TODO: Move to createLevel, enable -ls to accept filePaths for *.lvl files, i.e. allow to load levels with -ls option
+
+/*
+
+*/
+private void loadLevel(String filePath)
+{
+
+    try
+    {
+        if (filePath.equals("")) filePath = "resources/test.lvl";
+        level = Level.load(new DataInputStream(LevelScene.class.getResourceAsStream(filePath)));
+        System.out.println("level.getWidthCells() = " + level.getWidthCells());
+        level.xExit = level.length - 6;
+        level.yExit = 5;
+
+        System.out.println("level.xExit = " + level.xExit);
+        System.out.println("level.yExit = " + level.yExit);
+    } catch (IOException e)
+    {
+        System.err.println("[MarioAI EXCEPTION] : failed while trying to load " + filePath);
+    }
 }
 
 private String mapElToStr(int el)
@@ -1048,6 +1049,8 @@ public void reset(CmdLineOptions cmdLineOptions)
 //        this.getViewLocation().y, setUpOptions[16] == 1;
 //        this.getZLevelEnemies(),setUpOptions[17] ;
 //        this.getZLevelScene()   setUpOptions[18] ;
+
+    // TODO: FIX ME: this this.levelHeight is never used! 
     this.levelHeight = cmdLineOptions.getLevelHeight();
 
     receptiveFiledWidth = cmdLineOptions.getReceptiveFieldWidth();
