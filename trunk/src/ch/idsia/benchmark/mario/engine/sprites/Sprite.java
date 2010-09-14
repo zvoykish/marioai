@@ -122,7 +122,7 @@ public void render(Graphics og, float alpha)
         MarioVisualComponent.drawString(og, String.valueOf(this.kind), (int) x - 4, (int) y - 8, 2);
     }
 
-    if (GlobalOptions.isMatrixView)
+    if (GlobalOptions.isShowReceptiveField)
         og.drawString("Matrix View", xPixel, yPixel);
 
 }
@@ -133,12 +133,7 @@ public final void tick()
     yOld = y;
     move();
     mapY = (int) (y / 16);
-
-    mapY = (int) (y / 16);
     mapX = (int) (x / 16);
-//    if (this instanceof Mario)
-//        System.err.println("y = " + y + ", " + System.currentTimeMillis());
-
 }
 
 public final void tickNoMove()

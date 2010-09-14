@@ -201,10 +201,6 @@ private void savePrevState()
 
 public void move()
 {
-    int mapy1 = (int) (y / 16);
-    int mapx1 = (int) (x / 16);
-    System.err.println("mapx1 = " + mapx1);
-    System.err.println("mapy1 = " + mapy1);
     if (GlobalOptions.isFly)
     {
         xa = ya = 0;
@@ -618,7 +614,8 @@ public void stomp(Enemy enemy)
     if (deathTime > 0 || world.paused) return;
 
     float targetY = enemy.y - enemy.height / 2;
-//    move(0, targetY - y);
+    move(0, targetY - y);
+    mapY = (int) y / 16;
 
     xJumpSpeed = 0;
     yJumpSpeed = -1.9f;
@@ -641,7 +638,8 @@ public void stomp(Shell shell)
     } else
     {
         float targetY = shell.y - shell.height / 2;
-//        move(0, targetY - y);
+        move(0, targetY - y);
+        mapY = (int) y / 16;
 
         xJumpSpeed = 0;
         yJumpSpeed = -1.9f;
@@ -753,7 +751,8 @@ public void stomp(BulletBill bill)
     if (deathTime > 0 || world.paused) return;
 
     float targetY = bill.y - bill.height / 2;
-//    move(0, targetY - y);
+    move(0, targetY - y);
+    mapY = (int) y / 16;
 
     xJumpSpeed = 0;
     yJumpSpeed = -1.9f;
