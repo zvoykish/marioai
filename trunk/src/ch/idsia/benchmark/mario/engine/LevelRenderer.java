@@ -97,15 +97,13 @@ public void render(Graphics g, int tick, float alpha)
             byte b = level.getBlock(x, y);
 
             //drawing of hidden block number
-
-            // TODO: !H! fix rendering: hidden blocks '1' symbol is rendered one cell above actual position of a hidden block
             if (b == 1 && GlobalOptions.isShowReceptiveField)
             {
                 g.setColor(Color.BLUE);
                 int yo = 0;
                 if (x >= 0 && y >= 0 && x < level.length && y < level.height) yo = level.data[x][y];
                 if (yo > 0) yo = (int) (Math.sin((yo - alpha) / 4.0f * Math.PI) * 8);
-                g.drawString(String.valueOf(1), (x << 4) - xCam, (y << 4) - yCam - yo);
+                g.drawString(String.valueOf(1), (x << 4) - xCam, (y << 4) - yCam - yo + LevelScene.cellSize);
             }
 
             if (((Level.TILE_BEHAVIORS[b & 0xff]) & Level.BIT_ANIMATED) > 0)

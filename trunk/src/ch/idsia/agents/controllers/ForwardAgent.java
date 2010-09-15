@@ -33,7 +33,6 @@ public void reset()
 
 private boolean DangerOfGap(byte[][] levelScene)
 {
-    // TODO: introduce variables instead of constants.
     int fromX = receptiveFieldWidth / 2;
     int fromY = receptiveFieldHeight / 2;
 

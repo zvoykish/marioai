@@ -203,7 +203,7 @@ private static int buildZone(int x, int maxLength, int maxHeight, int floor, int
             if (floor == DEFAULT_FLOOR && counters.hillStraightCount < counters.totalHillStraight)
             {
                 counters.hillStraightCount++;
-                length = buildHillStraight(x, maxLength, floor);
+                length = buildHillStraight(x, maxLength, floor, false);
             } else
                 length = 0;
             break;
@@ -217,7 +217,7 @@ private static int buildZone(int x, int maxLength, int maxHeight, int floor, int
             if ((floor > 2 || floor == ANY_HEIGHT) && (counters.gapsCount < counters.totalGaps))
             {
                 counters.gapsCount++;
-                length = buildGap(x, maxLength, maxHeight, floor - globalRandom.nextInt(8), floorHeight);
+                length = buildGap(x, maxLength, maxHeight, floor, floorHeight);
             } else
                 length = 0;
             break;
@@ -388,10 +388,10 @@ private static int buildDeadEnds(int x0, int maxLength)
 
 private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, int floorHeight)
 {
-    int gs = 0;//globalRandom.nextInt(4) + 2; //GapStairs
-    int gl = 0;//globalRandom.nextInt(2) + 2; //GapLength
+    int gs = globalRandom.nextInt(5) + 2; //GapStairs
+    int gl = globalRandom.nextInt(levelDifficulty) + levelDifficulty > 7 ? 10 : 3;//globalRandom.nextInt(2) + 2; //GapLength
 //        System.out.println("globalRandom.nextInt() % this.levelDifficulty+1 = " +
-    int length = gs * 2 + gl + globalRandom.nextInt(levelDifficulty);
+    int length = gs * 2 + gl;
 
 //    System.out.println("length = " + length);
 //    System.out.println("maxLength = " + maxLength);
@@ -405,23 +405,23 @@ private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, in
     }
 
     int floor = vfloor;
-//    if (vfloor == DEFAULT_FLOOR && !isFlatLevel)
-//    {
-//        floor = height - 1 - globalRandom.nextInt(4);
-//    } else //code in this block is a magic. don't change it
-//    {
-//        floor++;
-////        globalRandom.nextInt();
-//        if (floor > 1)
-//        {
-//            floor -= 1;
-//        }
-//    }
-//
-//    if (floorHeight == INFINITY_FLOOR_HEIGHT)
-//    {
-//        floorHeight = height - floor;
-//    }
+    if (vfloor == DEFAULT_FLOOR && !isFlatLevel)
+    {
+        floor = height - 1 - globalRandom.nextInt(4);
+    } else //code in this block is a magic. don't change it
+    {
+        floor++;
+//        globalRandom.nextInt();
+        if (floor > 1)
+        {
+            floor -= 1;
+        }
+    }
+
+    if (floorHeight == INFINITY_FLOOR_HEIGHT)
+    {
+        floorHeight = height - floor;
+    }
 
 //
 //    if (gs > 3 && creaturesRandom.nextInt(35) > levelDifficulty + 1 && !hasStairs)
@@ -439,33 +439,26 @@ private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, in
                 if (y >= floor && y <= floor + floorHeight)
                 {
                     System.out.println("x = " + x);
-                    level.setBlock(x, y - 5, (byte) (1 + 9 * 16));
+                    level.setBlock(x, y, (byte) (1 + 9 * 16));
                 } else if (hasStairs)
                 {
                     if (x < xo + gs)
                     {
                         if (y >= floor - (x - xo) + 1 && y <= floor + floorHeight)
-                        {
-                            System.err.println("!asdfadsfa");
                             level.setBlock(x, y, (byte) (9 + 0 * 16));
-                        }
-                    } else
-                    {
-                        if (y >= floor - ((xo + length) - x) + 2 && y <= floor + floorHeight)
-                        {
-                            System.err.println("!asdfadsfa");
-                            level.setBlock(x, y, (byte) (9 + 0 * 16));
-                        }
                     }
+                    else
+                        if (y >= floor - ((xo + length) - x) + 2 && y <= floor + floorHeight)
+                            level.setBlock(x, y, (byte) (9 + 0 * 16));
                 }
             }
         }
     }
     System.out.println("length = " + length);
-    if (length > 20)
+    if (gl > 8)
     {
         System.out.println("floor = " + floor);
-        length += buildHillStraight(xo + 25, length, floor - 2);
+        buildHillStraight(xo + globalRandom.nextInt(Math.abs((gl-4))/2 + 1) + gs, gl, level.height, true);
     }
 
 
@@ -562,7 +555,7 @@ private static int buildCannons(int xo, int maxLength, int maxHeight, int vfloor
     return length;
 }
 
-private static int buildHillStraight(int xo, int maxLength, int vfloor)
+private static int buildHillStraight(int xo, int maxLength, int vfloor, final boolean isInGap)
 {
 //    System.out.println("xo = " + xo);
     int length = globalRandom.nextInt(10) + 10;
@@ -579,24 +572,27 @@ private static int buildHillStraight(int xo, int maxLength, int vfloor)
     if (vfloor == DEFAULT_FLOOR)
     {
         floor = height - 1 - globalRandom.nextInt(4);
-    } else
-    {
-        globalRandom.nextInt();
     }
-    for (int x = xo; x < xo + length; x++)
+//    if (isInGap)
+//        floor = level.height;
+
+    if (!isInGap)
     {
-        for (int y = 0; y < height; y++)
+        for (int x = xo; x < xo + length; x++)
         {
-            if (y >= floor)
+            for (int y = 0; y < height; y++)
             {
-                level.setBlock(x, y, (byte) (1 + 9 * 16));
+                if (y >= floor)
+                {
+                    level.setBlock(x, y, (byte) (1 + 9 * 16));
+                }
             }
         }
     }
 
 //    addEnemiesLine(xo + 1, xo + length - 1, floor - 1);
 
-    int h = floor;
+    int h = isInGap ? level.height : floor;
 
     boolean keepGoing = true;
 
@@ -611,9 +607,9 @@ private static int buildHillStraight(int xo, int maxLength, int vfloor)
         } else
         {
             int l = globalRandom.nextInt(5) + 3;
-            int xxo = globalRandom.nextInt(length - l - 2) + xo + 1;
+            int xxo = globalRandom.nextInt(length - l - 2 + 1) + xo + 1;
 
-            if (occupied[xxo - xo] || occupied[xxo - xo + l] || occupied[xxo - xo - 1] || occupied[xxo - xo + l + 1])
+            if (occupied[xxo - xo] || occupied[xxo - xo + l] || occupied[xxo - xo - 1] || occupied[xxo - xo + l])
             {
                 keepGoing = false;
             } else
