@@ -124,6 +124,7 @@ public static Level createLevel(CmdLineOptions args)
     length += buildStraight(0, level.length, true, floor, INFINITY_FLOOR_HEIGHT);
     while (length < level.length - 10)
     {
+//        System.out.println("level.length - length = " + (level.length - length));
         length += buildZone(length, level.length - length, ANY_HEIGHT, floor, INFINITY_FLOOR_HEIGHT);
     }
 
@@ -179,6 +180,7 @@ public static Level createLevel(CmdLineOptions args)
 
 private static int buildZone(int x, int maxLength, int maxHeight, int floor, int floorHeight)
 {
+//    System.out.println("buildZone maxLength = " + maxLength);
     int t = globalRandom.nextInt(totalOdds);
     int type = 0;
     //calculate what will be built
@@ -215,7 +217,7 @@ private static int buildZone(int x, int maxLength, int maxHeight, int floor, int
             if ((floor > 2 || floor == ANY_HEIGHT) && (counters.gapsCount < counters.totalGaps))
             {
                 counters.gapsCount++;
-                length = buildGap(x, maxLength > 12 ? 12 : maxLength, maxHeight, floor, floorHeight);
+                length = buildGap(x, maxLength, maxHeight, floor - globalRandom.nextInt(8), floorHeight);
             } else
                 length = 0;
             break;
@@ -386,44 +388,47 @@ private static int buildDeadEnds(int x0, int maxLength)
 
 private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, int floorHeight)
 {
-    int gs = globalRandom.nextInt(4) + 2; //GapStairs
-    int gl = globalRandom.nextInt(2) + 2; //GapLength
+    int gs = 0;//globalRandom.nextInt(4) + 2; //GapStairs
+    int gl = 0;//globalRandom.nextInt(2) + 2; //GapLength
 //        System.out.println("globalRandom.nextInt() % this.levelDifficulty+1 = " +
-    int length = gs * 2 + gl + globalRandom.nextInt(levelDifficulty + 1) + 1;
+    int length = gs * 2 + gl + globalRandom.nextInt(levelDifficulty);
 
+//    System.out.println("length = " + length);
+//    System.out.println("maxLength = " + maxLength);
     if (length > maxLength)
         length = maxLength;
 
     boolean hasStairs = globalRandom.nextInt(3) == 0;
-    if (maxHeight <= 5 && maxHeight != ANY_HEIGHT)
+    if (isFlatLevel || (maxHeight <= 5 && maxHeight != ANY_HEIGHT))
     {
         hasStairs = false;
     }
 
     int floor = vfloor;
-    if (vfloor == DEFAULT_FLOOR && !isFlatLevel)
-    {
-        floor = height - 1 - globalRandom.nextInt(4);
-    } else //code in this block is a magic. don't change it
-    {
-        floor++;
-        globalRandom.nextInt();
-        if (floor > 1)
-        {
-            floor -= 1;
-        }
-    }
+//    if (vfloor == DEFAULT_FLOOR && !isFlatLevel)
+//    {
+//        floor = height - 1 - globalRandom.nextInt(4);
+//    } else //code in this block is a magic. don't change it
+//    {
+//        floor++;
+////        globalRandom.nextInt();
+//        if (floor > 1)
+//        {
+//            floor -= 1;
+//        }
+//    }
+//
+//    if (floorHeight == INFINITY_FLOOR_HEIGHT)
+//    {
+//        floorHeight = height - floor;
+//    }
 
-    if (floorHeight == INFINITY_FLOOR_HEIGHT)
-    {
-        floorHeight = height - floor;
-    }
-
-    if (gs > 3 && creaturesRandom.nextInt(35) > levelDifficulty + 1 && !hasStairs)
-    {
-//        addEnemiesLine(xo, xo + gs - 1, floor - 1);
-//        addEnemiesLine(xo + length - gs, xo + length - 1, floor - 1);
-    }
+//
+//    if (gs > 3 && creaturesRandom.nextInt(35) > levelDifficulty + 1 && !hasStairs)
+//    {
+////        addEnemiesLine(xo, xo + gs - 1, floor - 1);
+////        addEnemiesLine(xo + length - gs, xo + length - 1, floor - 1);
+//    }
 
     for (int x = xo; x < xo + length; x++)
     {
@@ -433,19 +438,22 @@ private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, in
             {
                 if (y >= floor && y <= floor + floorHeight)
                 {
-                    level.setBlock(x, y, (byte) (1 + 9 * 16));
+                    System.out.println("x = " + x);
+                    level.setBlock(x, y - 5, (byte) (1 + 9 * 16));
                 } else if (hasStairs)
                 {
                     if (x < xo + gs)
                     {
                         if (y >= floor - (x - xo) + 1 && y <= floor + floorHeight)
                         {
+                            System.err.println("!asdfadsfa");
                             level.setBlock(x, y, (byte) (9 + 0 * 16));
                         }
                     } else
                     {
                         if (y >= floor - ((xo + length) - x) + 2 && y <= floor + floorHeight)
                         {
+                            System.err.println("!asdfadsfa");
                             level.setBlock(x, y, (byte) (9 + 0 * 16));
                         }
                     }
@@ -453,7 +461,15 @@ private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, in
             }
         }
     }
+    System.out.println("length = " + length);
+    if (length > 20)
+    {
+        System.out.println("floor = " + floor);
+        length += buildHillStraight(xo + 25, length, floor - 2);
+    }
 
+
+    System.out.println("gaps= " + counters.gapsCount);
     return length;
 }
 
@@ -548,6 +564,7 @@ private static int buildCannons(int xo, int maxLength, int maxHeight, int vfloor
 
 private static int buildHillStraight(int xo, int maxLength, int vfloor)
 {
+//    System.out.println("xo = " + xo);
     int length = globalRandom.nextInt(10) + 10;
     if (length > maxLength)
     {

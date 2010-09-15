@@ -295,7 +295,7 @@ public EvaluationInfo getEvaluationInfo()
     }
     finally
     {
-        Runtime rt = Runtime.getRuntime();
+//        Runtime rt = Runtime.getRuntime();
 //        try
 //        {
 //            Process proc = rt.exec("/usr/local/bin/mate " + marioTraceFile);

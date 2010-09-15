@@ -167,4 +167,7 @@ public void setTaskName(final String name)
 {
     taskName = name;
 }
+
+//public operator+
+
 }
