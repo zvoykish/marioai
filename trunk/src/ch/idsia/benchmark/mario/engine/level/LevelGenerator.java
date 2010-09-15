@@ -190,9 +190,6 @@ private static int buildZone(int x, int maxLength, int maxHeight, int floor, int
         }
     }
 
-//    for (int y = 0; y < levelDifficulty; y++)
-//        addEnemy(x, y % (level.height - 3));
-
     int length = 0;
 
     switch (type)
@@ -239,13 +236,17 @@ private static int buildZone(int x, int maxLength, int maxHeight, int floor, int
     }
 
     int crCount = 0;
-    for (int xx = 0; xx < length; xx++)
-        for (int yy = 1; yy < 10; yy++)
-            if (level.getBlock(x + xx, yy) == 0 && creaturesRandom.nextInt(levelDifficulty + 1) + 1 > (levelDifficulty + 1) / 2 && crCount < levelDifficulty + 1)
-            {
-                addEnemy(x + xx, yy);
-                ++crCount;
-            }
+//    for (int y = level.height - 3; y > levelDifficulty + 1; --y)
+//    {
+//        addEnemy(x, y);
+//        ++crCount;
+//    }
+    for (int yy = level.height; yy > 0; yy--)
+        if (level.getBlock(x, yy) == 0 && creaturesRandom.nextInt(levelDifficulty + 1) + 1 > (levelDifficulty + 1) / 2 && crCount < levelDifficulty + 1)
+        {
+            addEnemy(x, yy);
+            ++crCount;
+        }
 
     return length;
 }
@@ -270,7 +271,6 @@ public static void addEnemy(int x, int y)
             type = creaturesRandom.nextInt(2) == 1 ? type1 : type2;
         }
         t = creaturesMaskParser.getNativeType(type);
-        level.setSpriteTemplate(x, y, new SpriteTemplate(type));
         ++counters.creatures;
     } else
     {
@@ -291,7 +291,6 @@ public static void addEnemy(int x, int y)
         while (!enabled);
 
         t = creaturesMaskParser.getNativeType(type);
-        level.setSpriteTemplate(x, y, new SpriteTemplate(t));
         ++counters.creatures;
     }
 
