@@ -113,7 +113,19 @@ public void init(CmdLineOptions args)
     /*        if (recorder != null)
     recorder.addLong(LevelGenerator.lastSeed);
     }*/
-    level = LevelGenerator.createLevel(args);
+    if (args.getLevelRandSeed() == -42)
+    {
+        try
+        {
+            level = Level.load(new DataInputStream(LevelScene.class.getResourceAsStream("resources/test.lvl")));
+            level.setSpriteTemplate(20, level.height - 3, new SpriteTemplate(Sprite.KIND_GREEN_KOOPA));
+            level.setBlock(17, 8, (byte) (4 + 1 + 1 * 16));
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }else
+        level = LevelGenerator.createLevel(args);
     paused = false;
     Sprite.spriteContext = this;
     sprites.clear();
