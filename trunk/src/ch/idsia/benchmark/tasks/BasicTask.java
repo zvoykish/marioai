@@ -50,7 +50,7 @@ public boolean runOneEpisode()
             environment.performAction(action);
         }
     }
-    environment.getEvaluationInfo().setTaskName(name);
+//    environment.getEvaluationInfo().setTaskName(name);
     return true;
 }
 

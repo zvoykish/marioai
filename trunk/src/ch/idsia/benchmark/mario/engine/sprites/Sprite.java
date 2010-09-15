@@ -99,6 +99,7 @@ public void render(Graphics og, float alpha)
         if (this.kind == KIND_MARIO)
         {
 //                og.drawString("M", (int) x, (int) y);
+            og.drawString("Matrix View", xPixel - 40, yPixel - 20);
             int width = GlobalOptions.receptiveFieldWidth * 16;
             int height = GlobalOptions.receptiveFieldHeight * 16;
 
@@ -121,10 +122,6 @@ public void render(Graphics og, float alpha)
         og.setColor(Color.GREEN);
         MarioVisualComponent.drawString(og, String.valueOf(this.kind), (int) x - 4, (int) y - 8, 2);
     }
-
-    if (GlobalOptions.isShowReceptiveField)
-        og.drawString("Matrix View", xPixel, yPixel);
-
 }
 
 public final void tick()

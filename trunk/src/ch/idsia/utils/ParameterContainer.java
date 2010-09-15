@@ -216,7 +216,7 @@ public static void InitDefaults()
         defaultOptionsHashMap.put("-gvc", "off"); //defaultOptionsHashMap.put("-gameViewerContinuousUpdates","off");
         defaultOptionsHashMap.put("-i", "off"); // Mario Invulnerability
         defaultOptionsHashMap.put("-ld", "0"); //defaultOptionsHashMap.put("-levelDifficulty","0");
-        defaultOptionsHashMap.put("-ll", "320"); //defaultOptionsHashMap.put("-levelLength","320");
+        defaultOptionsHashMap.put("-ll", "256"); //defaultOptionsHashMap.put("-levelLength","320");
         defaultOptionsHashMap.put("-ls", "0"); //defaultOptionsHashMap.put("-levelRandSeed","1");
         defaultOptionsHashMap.put("-lt", "0"); //defaultOptionsHashMap.put("-levelType","1");
         defaultOptionsHashMap.put("-fps", "24");
