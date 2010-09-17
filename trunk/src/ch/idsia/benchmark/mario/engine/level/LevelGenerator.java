@@ -245,7 +245,10 @@ private static int buildZone(int x, int maxLength, int maxHeight, int floor, int
 //        ++crCount;
 //    }
     for (int yy = level.height; yy > 0; yy--)
-        if (level.getBlock(x, yy) == 0 && creaturesRandom.nextInt(levelDifficulty + 1) + 1 > (levelDifficulty + 1) / 2 && crCount < levelDifficulty + 1)
+        if (level.getBlock(x, yy) == 0 &&
+                creaturesRandom.nextInt(levelDifficulty + 1) + 1 > (levelDifficulty + 1) / 2 &&
+                crCount < levelDifficulty + 1 &&
+                level.getSpriteTemplate(x, yy) == null)
         {
             addEnemy(x, yy);
             ++crCount;
@@ -260,9 +263,14 @@ public static void addEnemy(int x, int y)
         return;
 
     int dx = (int) XRnd.nextGaussian();
-    level.setSpriteTemplate(x + dx, y, new SpriteTemplate(creaturesRandom.getNextCreature()));
-    ++counters.creatures;
-    //TODO: check if sprite is not KIND_UNDEF
+    int creatureKind = creaturesRandom.nextCreature();
+    if (creatureKind != Sprite.KIND_UNDEF)
+    {
+        if (level.setSpriteTemplate(x + dx, y, new SpriteTemplate(creatureKind)) )
+            ++counters.creatures;
+        else
+            creaturesRandom.increaseLastCreature();
+    }
 }
 
 //x0 - first block to start from

@@ -119,20 +119,74 @@ public class LevelGeneratorTest extends TestCase
     public void testRandomCreatureGenerator_RedKoopaWinged()
     {
         RandomCreatureGenerator g = new RandomCreatureGenerator(0, "rkw", 0);
-        assertEquals(Sprite.KIND_RED_KOOPA_WINGED, g.getNextCreature());
+        assertEquals(Sprite.KIND_RED_KOOPA_WINGED, g.nextCreature());
     }
 
     @Test
     public void testRandomCreatureGenerator_GreenKoopaWinged()
     {
         RandomCreatureGenerator g = new RandomCreatureGenerator(0, "gkw", 0);
-        assertEquals(Sprite.KIND_GREEN_KOOPA_WINGED, g.getNextCreature());
+        assertEquals(Sprite.KIND_GREEN_KOOPA_WINGED, g.nextCreature());
     }
 
     @Test
     public void testRandomCreatureGenerator_Goomba()
     {
         RandomCreatureGenerator g = new RandomCreatureGenerator(0, "g", 0);
-        assertEquals(Sprite.KIND_GOOMBA, g.getNextCreature());
+        assertEquals(Sprite.KIND_GOOMBA, g.nextCreature());
+    }
+
+    @Test
+    public void testRandomCreatureGenerator_10Goombas()
+    {
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-le g:10");
+        Level level = LevelGenerator.createLevel(cmdLineOptions);
+
+        int counter = 0;
+
+        for (int i = 0; i < level.length; i++)
+            for (int j = 0; j < level.height; j++)
+            {
+                SpriteTemplate st1 = level.getSpriteTemplate (i, j);
+
+                if (st1 != null)
+                {
+                    int type = st1.getType();
+                    assertEquals(Sprite.KIND_GOOMBA, type);
+
+                    ++counter;
+                }
+            }
+
+        System.out.println("level.counters.creatures = " + level.counters.creatures);
+        
+        assertEquals(10, counter);
+    }
+
+    @Test
+    public void testRandomCreatureGenerator_20RedWingedKoopas()
+    {
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-le rkw:20");
+        Level level = LevelGenerator.createLevel(cmdLineOptions);
+
+        int counter = 0;
+
+        for (int i = 0; i < level.length; i++)
+            for (int j = 0; j < level.height; j++)
+            {
+                SpriteTemplate st1 = level.getSpriteTemplate (i, j);
+
+                if (st1 != null)
+                {
+                    int type = st1.getType();
+                    assertEquals(Sprite.KIND_RED_KOOPA_WINGED, type);
+
+                    ++counter;
+                }
+            }
+
+        System.out.println("level.counters.creatures = " + level.counters.creatures);
+
+        assertEquals(20, counter);
     }
 }
