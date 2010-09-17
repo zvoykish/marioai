@@ -173,7 +173,7 @@
         <copy todir="${trunk.output.dir}">
             <fileset dir="${module.trunk.basedir}/src">
                 <patternset refid="compiler.resources"/>
-                <type type="file"/>
+                <kind kind="file"/>
             </fileset>
         </copy>
     </target>
