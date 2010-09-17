@@ -5,6 +5,7 @@ import ch.idsia.benchmark.mario.engine.level.LevelGenerator;
 import ch.idsia.benchmark.mario.engine.level.SpriteTemplate;
 import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.RandomCreatureGenerator;
 import junit.framework.TestCase;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -46,9 +47,26 @@ public class LevelGeneratorTest extends TestCase
     @Test
     public void testSpriteTemplates() throws Exception
     {
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions();
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-le g");
         Level level1 = LevelGenerator.createLevel(cmdLineOptions);
         Level level2 = LevelGenerator.createLevel(cmdLineOptions);
+
+        for (int i = 0; i < level1.length; i++)
+            for (int j = 0; j < level1.height; j++)
+            {
+                SpriteTemplate st1 = level1.getSpriteTemplate (i, j);
+                if (st1 != null)
+                    System.out.print(st1.getType()+"(" + i + "," + j + ")");
+            }
+        System.out.println("");
+        for (int i = 0; i < level2.length; i++)
+            for (int j = 0; j < level2.height; j++)
+            {
+                SpriteTemplate st2 = level2.getSpriteTemplate (i, j);
+                if (st2 != null)
+                    System.out.print(st2.getType()+"(" + i + "," + j + ")");
+            }
+        System.out.println("");
 
         for (int i = 0; i < level1.length; i++)
             for (int j = 0; j < level1.height; j++)
@@ -76,7 +94,7 @@ public class LevelGeneratorTest extends TestCase
     @Test
     public void testCreateLevelWithoutCreatures() throws Exception
     {
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-le 0");
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-le off");
         Level level = LevelGenerator.createLevel(cmdLineOptions);
 
         for (int i = 0; i < level.length; i++)
@@ -87,7 +105,7 @@ public class LevelGeneratorTest extends TestCase
     @Test
     public void testCreateLevelWithTubesWithoutFlowers()
     {
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-ltb on -le 111111110");
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-ltb on -le g,gw,gk,gkw,rk,rkw,s,sw");
         Level level = LevelGenerator.createLevel(cmdLineOptions);
 
         assertEquals(true, level.counters.tubesCount > 0);
@@ -97,7 +115,7 @@ public class LevelGeneratorTest extends TestCase
     @Test
     public void testCreateLevelWithTubesWithFlowers()
     {
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-ltb on -le 111111111 -ld 5 -ls 22");
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-ltb on -le f -ld 5 -ls 222");
         Level level = LevelGenerator.createLevel(cmdLineOptions);
 
         boolean fl = false;
@@ -111,5 +129,26 @@ public class LevelGeneratorTest extends TestCase
                 }
 
         assertEquals(true, fl);
+    }
+
+    @Test
+    public void testRandomCreatureGenerator_RedKoopaWinged()
+    {
+        RandomCreatureGenerator g = new RandomCreatureGenerator(0, "rkw", 0);
+        assertEquals(Sprite.KIND_RED_KOOPA_WINGED, g.getNextCreature());
+    }
+
+    @Test
+    public void testRandomCreatureGenerator_GreenKoopaWinged()
+    {
+        RandomCreatureGenerator g = new RandomCreatureGenerator(0, "gkw", 0);
+        assertEquals(Sprite.KIND_GREEN_KOOPA_WINGED, g.getNextCreature());
+    }
+
+    @Test
+    public void testRandomCreatureGenerator_Goomba()
+    {
+        RandomCreatureGenerator g = new RandomCreatureGenerator(0, "g", 0);
+        assertEquals(Sprite.KIND_GOOMBA, g.getNextCreature());
     }
 }

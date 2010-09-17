@@ -246,7 +246,7 @@ public static void InitDefaults()
         defaultOptionsHashMap.put("-lb", "on"); //level: blocks count
         defaultOptionsHashMap.put("-lg", "on"); //level: gaps count
         defaultOptionsHashMap.put("-lhb", "off"); //level: hidden blocks count
-        defaultOptionsHashMap.put("-le", "1111111111"); //level: enemies bit mask
+        defaultOptionsHashMap.put("-le", ""); //level: creatures
         defaultOptionsHashMap.put("-lf", "off"); //level: flat level
         defaultOptionsHashMap.put("-stop", "off"); //is gameplay stopped
     }

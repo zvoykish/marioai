@@ -2,7 +2,7 @@ package ch.idsia.benchmark.mario.engine.level;
 
 import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 import ch.idsia.tools.CmdLineOptions;
-import ch.idsia.tools.CreaturesMaskParser;
+import ch.idsia.tools.RandomCreatureGenerator;
 
 import java.util.Random;
 
@@ -39,7 +39,7 @@ private static int height;
 private static Level level;
 
 private static Random globalRandom = new Random(0);
-private static Random creaturesRandom = new Random(0);
+private static RandomCreatureGenerator creaturesRandom = new RandomCreatureGenerator(0, "", 0);
 public static Random XRnd = new Random(0); //used in addEnemy to compute dx
 
 private static final int ODDS_STRAIGHT = 0;
@@ -54,7 +54,7 @@ private static int levelDifficulty;
 private static int levelType;
 private static int levelSeed;
 
-private static CreaturesMaskParser creaturesMaskParser;
+//private static CreaturesMaskParser creaturesMaskParser;
 
 private static final boolean RIGHT_DIRECTION_BOTTOM = false;
 private static final int ANY_HEIGHT = -1;
@@ -84,7 +84,7 @@ public static Level createLevel(CmdLineOptions args)
     counters.totalCoins = args.getCoinsCount() ? Integer.MAX_VALUE : 0;
     counters.totalTubes = args.getTubesCount() ? Integer.MAX_VALUE : 0;
 
-    creaturesMaskParser = new CreaturesMaskParser(args.getEnemies());
+//    creaturesMaskParser = new CreaturesMaskParser(args.getEnemies());
 
     levelType = args.getLevelType();
     levelDifficulty = args.getLevelDifficulty();
@@ -110,7 +110,7 @@ public static Level createLevel(CmdLineOptions args)
     levelSeed = args.getLevelRandSeed();// + levelType;
 //        System.out.println("Level seed: " + String.valueOf(levelSeed));
     globalRandom.setSeed(levelSeed);
-    creaturesRandom.setSeed(levelSeed);
+    creaturesRandom.setSeed(levelSeed, args.getEnemies(), levelDifficulty);
 
     int length = 0; //total level length
     //mario starts on straight
@@ -255,49 +255,11 @@ private static int buildZone(int x, int maxLength, int maxHeight, int floor, int
 
 public static void addEnemy(int x, int y)
 {
-    if (!creaturesMaskParser.canAdd())
+    if (!creaturesRandom.canAdd())
         return;
 
-    int t;
-
-    if (creaturesMaskParser.isComplete())
-    { //Difficulty of creatures on the level depends on the levelDifficulty of the level
-        int type = creaturesRandom.nextInt(4);
-        if (levelDifficulty < 1)
-        {
-            type = CreaturesMaskParser.GOOMBA;
-        } else if (levelDifficulty < 3)
-        {
-            int type1 = creaturesRandom.nextInt(3);
-            int type2 = creaturesRandom.nextInt(3) + 3;
-            type = creaturesRandom.nextInt(2) == 1 ? type1 : type2;
-        }
-        t = creaturesMaskParser.getNativeType(type);
-        ++counters.creatures;
-    } else
-    {
-        boolean enabled = false;
-        int type;// = creaturesRandom.nextInt(4);
-        if (levelDifficulty < 3)
-        {
-            creaturesRandom.nextInt(3);
-        }
-        do
-        {
-            type = creaturesRandom.nextInt(8);
-            if (creaturesMaskParser.isEnabled(type))
-            {
-                enabled = true;
-            }
-        }
-        while (!enabled);
-
-        t = creaturesMaskParser.getNativeType(type);
-        ++counters.creatures;
-    }
-
     int dx = (int) XRnd.nextGaussian();
-    level.setSpriteTemplate(x + dx, y, new SpriteTemplate(t));
+    level.setSpriteTemplate(x + dx, y, new SpriteTemplate(creaturesRandom.getNextCreature()));
     ++counters.creatures;
 
 }
@@ -651,28 +613,6 @@ private static int buildHillStraight(int xo, int maxLength, int vfloor, final bo
     return length;
 }
 
-private static boolean canAddEnemyLine(int x0, int x1, int y)
-{
-    if (!creaturesMaskParser.canAdd())
-    {
-        return false;
-    }
-    boolean res = true;
-    for (int x = x0; x < x1; x++)
-    {
-        for (int yy = y; yy > y + 1; yy++)
-        {
-            if (level.getBlock(x, yy) != 0)
-            {
-                res = false;
-                break;
-            }
-        }
-    }
-
-    return res;
-}
-
 private static int buildTubes(int xo, int maxLength, int maxHeight, int vfloor, int floorHeight)
 {
     int maxTubeHeight = 0;
@@ -736,7 +676,7 @@ private static int buildTubes(int xo, int maxLength, int maxHeight, int vfloor, 
             xTube += 10;
         }
 
-        if (x == xTube && globalRandom.nextInt(11) < levelDifficulty + 1 && creaturesMaskParser.isEnabled(CreaturesMaskParser.SPIKY_FLOWER))
+        if (x == xTube && globalRandom.nextInt(11) < levelDifficulty + 1 && creaturesRandom.isCreatureEnabled("f"))
         {
             level.setSpriteTemplate(x, tubeHeight, new SpriteTemplate(Sprite.KIND_ENEMY_FLOWER));
             ++counters.creatures;
@@ -1133,58 +1073,80 @@ private static void blockify(Level level, boolean[][] blocks, int width, int hei
     }
 }
 
-private static void addEnemiesLine(int x0, int x1, int y)
-{
-    if (x0 > 0)
-        return;
-
-    if (!canAddEnemyLine(x0, x1, y))
-        return;
-
-    for (int x = x0; x < x1; x++)
-    {
-        if (creaturesRandom.nextInt(25) < levelDifficulty + 1)
-        {
-            if (creaturesMaskParser.isComplete())
-            { //Difficulty of creatures on the level depends on the levelDifficulty of the level
-                int type = creaturesRandom.nextInt(4);
-                if (levelDifficulty < 1)
-                {
-                    type = CreaturesMaskParser.GOOMBA;
-                } else if (levelDifficulty < 3)
-                {
-                    int type1 = creaturesRandom.nextInt(3);
-                    int type2 = creaturesRandom.nextInt(3) + 3;
-                    type = creaturesRandom.nextInt(2) == 1 ? type1 : type2;
-                }
-                type = creaturesMaskParser.getNativeType(type);
-                level.setSpriteTemplate(x, y, new SpriteTemplate(type));
-                ++counters.creatures;
-            } else
-            {
-                boolean enabled = false;
-                int crType;// = creaturesRandom.nextInt(4);
-                if (levelDifficulty < 3)
-                {
-                    creaturesRandom.nextInt(3);
-                }
-                do
-                {
-                    crType = creaturesRandom.nextInt(8);
-                    if (creaturesMaskParser.isEnabled(crType))
-                    {
-                        enabled = true;
-                    }
-                }
-                while (!enabled);
-
-                int t = creaturesMaskParser.getNativeType(crType);
-                level.setSpriteTemplate(x, y, new SpriteTemplate(t));
-                ++counters.creatures;
-            }
-        }
-    }
-}
+//private static boolean canAddEnemyLine(int x0, int x1, int y)
+//{
+//    if (!creaturesMaskParser.canAdd())
+//    {
+//        return false;
+//    }
+//    boolean res = true;
+//    for (int x = x0; x < x1; x++)
+//    {
+//        for (int yy = y; yy > y + 1; yy++)
+//        {
+//            if (level.getBlock(x, yy) != 0)
+//            {
+//                res = false;
+//                break;
+//            }
+//        }
+//    }
+//
+//    return res;
+//}
+//
+//private static void addEnemiesLine(int x0, int x1, int y)
+//{
+//    if (x0 > 0)
+//        return;
+//
+//    if (!canAddEnemyLine(x0, x1, y))
+//        return;
+//
+//    for (int x = x0; x < x1; x++)
+//    {
+//        if (creaturesRandom.nextInt(25) < levelDifficulty + 1)
+//        {
+//            if (creaturesMaskParser.isComplete())
+//            { //Difficulty of creatures on the level depends on the levelDifficulty of the level
+//                int type = creaturesRandom.nextInt(4);
+//                if (levelDifficulty < 1)
+//                {
+//                    type = CreaturesMaskParser.GOOMBA;
+//                } else if (levelDifficulty < 3)
+//                {
+//                    int type1 = creaturesRandom.nextInt(3);
+//                    int type2 = creaturesRandom.nextInt(3) + 3;
+//                    type = creaturesRandom.nextInt(2) == 1 ? type1 : type2;
+//                }
+//                type = creaturesMaskParser.getNativeType(type);
+//                level.setSpriteTemplate(x, y, new SpriteTemplate(type));
+//                ++counters.creatures;
+//            } else
+//            {
+//                boolean enabled = false;
+//                int crType;// = creaturesRandom.nextInt(4);
+//                if (levelDifficulty < 3)
+//                {
+//                    creaturesRandom.nextInt(3);
+//                }
+//                do
+//                {
+//                    crType = creaturesRandom.nextInt(8);
+//                    if (creaturesMaskParser.isEnabled(crType))
+//                    {
+//                        enabled = true;
+//                    }
+//                }
+//                while (!enabled);
+//
+//                int t = creaturesMaskParser.getNativeType(crType);
+//                level.setSpriteTemplate(x, y, new SpriteTemplate(t));
+//                ++counters.creatures;
+//            }
+//        }
+//    }
+//}
 }
 
 /*
