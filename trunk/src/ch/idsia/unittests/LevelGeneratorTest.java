@@ -47,26 +47,10 @@ public class LevelGeneratorTest extends TestCase
     @Test
     public void testSpriteTemplates() throws Exception
     {
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-le g");
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions();
         Level level1 = LevelGenerator.createLevel(cmdLineOptions);
         Level level2 = LevelGenerator.createLevel(cmdLineOptions);
 
-        for (int i = 0; i < level1.length; i++)
-            for (int j = 0; j < level1.height; j++)
-            {
-                SpriteTemplate st1 = level1.getSpriteTemplate (i, j);
-                if (st1 != null)
-                    System.out.print(st1.getType()+"(" + i + "," + j + ")");
-            }
-        System.out.println("");
-        for (int i = 0; i < level2.length; i++)
-            for (int j = 0; j < level2.height; j++)
-            {
-                SpriteTemplate st2 = level2.getSpriteTemplate (i, j);
-                if (st2 != null)
-                    System.out.print(st2.getType()+"(" + i + "," + j + ")");
-            }
-        System.out.println("");
 
         for (int i = 0; i < level1.length; i++)
             for (int j = 0; j < level1.height; j++)
