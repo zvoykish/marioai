@@ -111,6 +111,7 @@ public static Level createLevel(CmdLineOptions args)
 //        System.out.println("Level seed: " + String.valueOf(levelSeed));
     globalRandom.setSeed(levelSeed);
     creaturesRandom.setSeed(levelSeed, args.getEnemies(), levelDifficulty);
+    XRnd.setSeed(levelSeed);
 
     int length = 0; //total level length
     //mario starts on straight
@@ -261,7 +262,7 @@ public static void addEnemy(int x, int y)
     int dx = (int) XRnd.nextGaussian();
     level.setSpriteTemplate(x + dx, y, new SpriteTemplate(creaturesRandom.getNextCreature()));
     ++counters.creatures;
-
+    //TODO: check if sprite is not KIND_UNDEF
 }
 
 //x0 - first block to start from
