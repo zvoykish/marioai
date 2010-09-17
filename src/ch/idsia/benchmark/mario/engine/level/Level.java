@@ -228,13 +228,14 @@ public SpriteTemplate getSpriteTemplate(int x, int y)
     return spriteTemplates[x][y];
 }
 
-public void setSpriteTemplate(int x, int y, SpriteTemplate spriteTemplate)
+public boolean setSpriteTemplate(int x, int y, SpriteTemplate spriteTemplate)
 {
-    if (x < 0) return;
-    if (y < 0) return;
-    if (x >= length) return;
-    if (y >= height) return;
+    if (x < 0) return false;
+    if (y < 0) return false;
+    if (x >= length) return false;
+    if (y >= height) return false;
     spriteTemplates[x][y] = spriteTemplate;
+    return true;
 }
 
 // TODO: remove if not necessary or use for EvaluationInfo
