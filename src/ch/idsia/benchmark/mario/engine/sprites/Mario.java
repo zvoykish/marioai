@@ -110,10 +110,11 @@ public Mario(LevelScene levelScene)
     facing = 1;
     setMode(Mario.large, Mario.fire);
 
-    final float g = .5f;
+    final float g = 0.005f;
+    final float jumpPower = .05f;
+    // TODO: -jp <float>, default 7;
     yaa = g * 3;
-    jT = 7 / (g);
-
+    jT = jumpPower / (g);
 }
 
 float jT;
