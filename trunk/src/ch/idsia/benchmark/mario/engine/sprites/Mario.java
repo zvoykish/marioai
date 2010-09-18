@@ -102,8 +102,8 @@ public Mario(LevelScene world)
 //        Mario.instance = this;
     // TODO: refactor: rename to levelScene
     this.world = world;
-    x = 32;
-    y = 0;
+    x = 162;
+    y = 150;
     mapX = (int) (x / 16);
     mapY = (int) (y / 16);
 
