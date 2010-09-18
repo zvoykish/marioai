@@ -36,6 +36,8 @@ private int timeLeft;
 private int width;
 private int height;
 
+private static float creaturesGravity;
+
 public boolean visualization = false;
 
 private static final int CANNON_MUZZLE = -82;
@@ -1070,6 +1072,8 @@ public void reset(CmdLineOptions cmdLineOptions)
 
 
     mario = new Mario(this);
+    mario.setMarioGravity(cmdLineOptions.getMarioGravity());
+
     sprites.add(mario);
     startTime = 1;
     timeLeft = timeLimit * 15;

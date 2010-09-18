@@ -26,8 +26,8 @@ private static final String[] allowed = new String[]{
         "-amico",
         "-echo", // echo options
         "-ewf",
-        "-grc",  //level: Creatures gravity
-        "-grm",  //level: Mario gravity
+        "-cgr",  //level: Creatures gravity
+        "-mgr",  //level: Mario gravity
         "-gv",
         "-gvc",
         "-i",
@@ -213,8 +213,8 @@ public static void InitDefaults()
         defaultOptionsHashMap.put("-amico", "off");
         defaultOptionsHashMap.put("-echo", "off"); //defaultOptionsHashMap.put("-echo","off");
         defaultOptionsHashMap.put("-ewf", "on"); //defaultOptionsHashMap.put("-exitWhenFinished","off");
-        defaultOptionsHashMap.put("-grc", "1.0");
-        defaultOptionsHashMap.put("-grm", "1.0");
+        defaultOptionsHashMap.put("-cgr", "1.0"); //Gravity creatures
+        defaultOptionsHashMap.put("-mgr", "1.0"); //Gravity Mario
         defaultOptionsHashMap.put("-gv", "off"); //defaultOptionsHashMap.put("-gameViewer","off");
         defaultOptionsHashMap.put("-gvc", "off"); //defaultOptionsHashMap.put("-gameViewerContinuousUpdates","off");
         defaultOptionsHashMap.put("-i", "off"); // Mario Invulnerability

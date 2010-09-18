@@ -157,7 +157,7 @@ public int nextCreature()
 {
     int kind = Sprite.KIND_UNDEF;
 
-    if (allowedCreatures.size() == 0)
+    if (allowedCreatures.size() == 0 && !kindByDifficulty)
         return kind;
 
     if (kindByDifficulty)
@@ -184,12 +184,15 @@ public int nextCreature()
 
 public void increaseLastCreature()
 {
-    int index = getCreatureIndex(lastDecreased);
-    if (counters[index] == 0)
+    if (!kindByDifficulty)
     {
-        allowedCreatures.add(lastDecreased);
+        int index = getCreatureIndex(lastDecreased);
+        if (counters[index] == 0)
+        {
+            allowedCreatures.add(lastDecreased);
+        }
+        ++counters[index];
     }
-    ++counters[index];
 }
 
 public boolean isCreatureEnabled(String creature)
