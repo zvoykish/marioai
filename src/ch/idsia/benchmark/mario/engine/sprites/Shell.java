@@ -45,7 +45,7 @@ public Shell(LevelScene world, float x, float y, int type)
     xPic = 4;
     ya = -5;
 
-//    yaa = creaturesGravity * 2; //TODO: 1
+    yaa = creaturesGravity * 2;
 }
 
 public boolean fireballCollideCheck(Fireball fireball)
