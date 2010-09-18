@@ -84,23 +84,23 @@ public void testForwardJumpingAgentFitnessWithDefaultCreatures()
 @Test
 public void testReceptiveField_1x2()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 1 -rfh 2 -srf on");
+    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -fps 75 -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 1 -rfh 2 -srf on");
     final BasicTask basicTask = new BasicTask(cmdLineOptions);
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals(7648, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+    assertEquals(6852.63671875, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
 }
 
 @Test
 public void testReceptiveField_3x1()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 3 -rfh 1 -srf on");
+    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 3 -rfh 1 -srf on");
     final BasicTask basicTask = new BasicTask(cmdLineOptions);
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals(7702.0, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+    assertEquals(6852.63671875, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
 }
 
 @Test
@@ -111,7 +111,7 @@ public void testReceptiveField_1x1()
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals(7648, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+    assertEquals(6852.63671875, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
 }
 
 @Test
@@ -172,4 +172,45 @@ public void testStopGameplay()
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
 }
+
+@Test
+public void testScaredShooty_G10()
+{
+    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:10");
+    final BasicTask basicTask = new BasicTask(cmdLineOptions);
+    basicTask.reset(cmdLineOptions);
+    basicTask.runOneEpisode();
+    assertEquals(10, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
+}
+
+@Test
+public void testScaredShooty_G10RK5()
+{
+    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:10,rk:5");
+    final BasicTask basicTask = new BasicTask(cmdLineOptions);
+    basicTask.reset(cmdLineOptions);
+    basicTask.runOneEpisode();
+    assertEquals(15, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
+}
+
+@Test
+public void testScaredShooty_GW10G10()
+{
+    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:10,gw:10");
+    final BasicTask basicTask = new BasicTask(cmdLineOptions);
+    basicTask.reset(cmdLineOptions);
+    basicTask.runOneEpisode();
+    assertEquals(10, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
+}
+
+@Test
+public void testScaredShooty_G6S3()
+{
+    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:6,s:3");
+    final BasicTask basicTask = new BasicTask(cmdLineOptions);
+    basicTask.reset(cmdLineOptions);
+    basicTask.runOneEpisode();
+    assertEquals(6, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
+}
+
 }

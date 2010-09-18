@@ -59,7 +59,6 @@ public SpriteTemplate spriteTemplate;
 public static void setCreaturesGravity(final float creaturesGravity)
 {
     Sprite.creaturesGravity = creaturesGravity;
-    System.out.println("creaturesGravity = " + creaturesGravity);
 }
 
 protected static float creaturesGravity;
