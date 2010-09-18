@@ -4,6 +4,9 @@ import ch.idsia.benchmark.mario.engine.sprites.Mario;
 import ch.idsia.benchmark.tasks.MarioSystemOfValues;
 import ch.idsia.benchmark.tasks.SystemOfValues;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
 
 
@@ -56,6 +59,7 @@ public String Memo = "";
 
 private static final DecimalFormat df = new DecimalFormat("#.##");
 private static MarioSystemOfValues marioSystemOfValues = new MarioSystemOfValues();
+public int[][] marioTrace;
 
 
 public EvaluationInfo()
@@ -124,6 +128,49 @@ public float[] toFloatArray()
 
 public String toString()
 {
+    // store mario trace:
+    final String marioTraceFile = "[MarioAI]-MarioTrace.txt";
+    try
+    {
+        final PrintWriter pw = new PrintWriter(new FileWriter(marioTraceFile));
+
+        for (int j = 0; j < marioTrace[0].length; ++j)
+
+        {
+            for (int i = 0; i < marioTrace.length; ++i)
+            {
+                System.out.print(spaceFormat(marioTrace[i][j]));
+                pw.print(spaceFormat(marioTrace[i][j]));
+            }
+            System.out.println();
+            pw.println();
+        }
+//        for (int[] ints : trace)
+//        {
+//            for (int anInt : ints)
+//            {
+//                pw.print(df.format(anInt) + " ");
+//            }
+//            pw.println();
+//        }
+        pw.flush();
+    } catch (IOException e)
+    {
+        e.printStackTrace();
+    }
+    finally
+    {
+//        Runtime rt = Runtime.getRuntime();
+//        try
+//        {
+//            Process proc = rt.exec("/usr/local/bin/mate " + marioTraceFile);
+//            Process proc = rt.exec("open " + marioTraceFile);
+//        } catch (IOException e)
+//        {
+//            e.printStackTrace();
+//        }
+    }
+
     return "\n[MarioAI] ~ Evaluation Results for Task: " + taskName +
             "\n         Weighted Fitness : " + df.format(computeWeightedFitness()) +
             "\n             Mario Status : " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss...") +
@@ -166,6 +213,15 @@ public String toStringSingleLine()
 public void setTaskName(final String name)
 {
     taskName = name;
+}
+
+private String spaceFormat(int i)
+{
+    int j = 0;
+    String r = "" + ((i == 0) ? "." : i);
+    while (r.length() < 4)
+        r += " ";
+    return r;
 }
 
 //public operator+

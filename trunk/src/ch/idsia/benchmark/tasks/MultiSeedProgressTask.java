@@ -12,67 +12,67 @@ import ch.idsia.tools.CmdLineOptions;
 
 public class MultiSeedProgressTask extends BasicTask implements Task
 {
-    private CmdLineOptions options;
-    private int startingSeed = 0;
-    private int numberOfSeeds = 3;
+private CmdLineOptions options;
+private int startingSeed = 0;
+private int numberOfSeeds = 3;
 
-    public MultiSeedProgressTask(CmdLineOptions evaluationOptions)
+public MultiSeedProgressTask(CmdLineOptions evaluationOptions)
+{
+    super(evaluationOptions);
+    setOptions(evaluationOptions);
+}
+
+public float[] evaluate(Agent controller)
+{
+    float distanceTravelled = 0;
+
+    options.setAgent(controller);
+//        this.setAgent(controller);
+
+    for (int i = 0; i < numberOfSeeds; i++)
     {
-        super(evaluationOptions);
-        setOptions(evaluationOptions);
+        controller.reset();
+        options.setLevelRandSeed(startingSeed + i);
+        this.reset(options);
+        this.runOneEpisode();
+        distanceTravelled += this.getEnvironment().getEvaluationInfo().computeDistancePassed();
     }
+    distanceTravelled = distanceTravelled / numberOfSeeds;
+    return new float[]{distanceTravelled};
+}
 
-    public float[] evaluate(Agent controller)
-    {
-        float distanceTravelled = 0;
+public void setStartingSeed(int seed)
+{
+    startingSeed = seed;
+}
 
-        options.setAgent(controller);
-        this.setAgent(controller);
+public void setNumberOfSeeds(int number)
+{
+    numberOfSeeds = number;
+}
 
-        for (int i = 0; i < numberOfSeeds; i++)
-        {
-            controller.reset();
-            options.setLevelRandSeed(startingSeed + i);
-            this.reset(options);
-            this.runOneEpisode();
-            distanceTravelled += this.getEnvironment().getEvaluationInfo().computeDistancePassed();
-        }
-        distanceTravelled = distanceTravelled / numberOfSeeds;
-        return new float[]{distanceTravelled};
-    }
+public void setOptions(CmdLineOptions options)
+{
+    this.options = options;
+}
 
-    public void setStartingSeed(int seed)
-    {
-        startingSeed = seed;
-    }
+public CmdLineOptions getOptions()
+{
+    return options;
+}
 
-    public void setNumberOfSeeds(int number)
-    {
-        numberOfSeeds = number;
-    }
+public void doEpisodes(int amount, boolean verbose)
+{
 
-    public void setOptions(CmdLineOptions options)
-    {
-        this.options = options;
-    }
+}
 
-    public CmdLineOptions getOptions()
-    {
-        return options;
-    }
+public boolean isFinished()
+{
+    return true;
+}
 
-    public void doEpisodes(int amount, boolean verbose)
-    {
+public void reset()
+{
 
-    }
-
-    public boolean isFinished()
-    {
-        return true;
-    }
-
-    public void reset()
-    {
-
-    }
+}
 }

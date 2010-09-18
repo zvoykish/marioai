@@ -7,8 +7,10 @@ import ch.idsia.benchmark.mario.environments.MarioEnvironment;
 import ch.idsia.tools.CmdLineOptions;
 
 /**
- * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 14, 2010 Time: 4:47:33 PM
- * Package: ch.idsia.maibe.tasks
+ * Created by IntelliJ IDEA.
+ * User: Sergey Karakovskiy,
+ * sergey@idsia.ch
+ * Date: Mar 14, 2010 Time: 4:47:33 PM
  */
 
 public class BasicTask implements Task
@@ -17,27 +19,18 @@ protected final static Environment environment = MarioEnvironment.getInstance();
 private Agent agent;
 protected CmdLineOptions options;
 private long COMPUTATION_TIME_BOUND = 42; // stands for prescribed  FPS 24.
-private int callsCounter = 0;
 private String name = getClass().getSimpleName();
 
 public BasicTask(CmdLineOptions cmdLineOptions)
 {
-    // TODO: remove this crutch
-    this.setAgent(cmdLineOptions.getAgent());
     this.setOptions(cmdLineOptions);
 }
 
 /**
- * @return boolean flat whether controller is disqualified or not
+ * @return boolean flag whether controller is disqualified or not
  */
-
-
 public boolean runOneEpisode()
 {
-//        System.out.println("agent = " + agent);
-//        boolean tormoz = r.nextInt() < 10;
-    ++callsCounter;
-//        System.out.println("callsCounter = " + callsCounter);
     while (!environment.isLevelFinished())
     {
         environment.tick();
@@ -50,22 +43,14 @@ public boolean runOneEpisode()
             environment.performAction(action);
         }
     }
-//    environment.getEvaluationInfo().setTaskName(name);
+    environment.getEvaluationInfo().setTaskName(name);
     return true;
-}
-
-// TODO: remove this crutch
-
-public final void setAgent(Agent agent)
-{
-    this.agent = agent;
-    // TODO: remove this crutch
-    environment.setAgent(agent);
 }
 
 public void reset(CmdLineOptions cmdLineOptions)
 {
     options = cmdLineOptions;
+    agent = options.getAgent();
     environment.reset(cmdLineOptions);
     agent.reset();
 }

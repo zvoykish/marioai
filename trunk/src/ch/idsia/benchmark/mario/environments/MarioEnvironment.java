@@ -8,10 +8,6 @@ import ch.idsia.benchmark.mario.engine.sprites.Mario;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-
 /**
  * Created by IntelliJ IDEA.
  * User: Sergey Karakovskiy, sergey@idsia.ch
@@ -21,7 +17,7 @@ import java.io.PrintWriter;
 
 public final class MarioEnvironment implements Environment
 {
-private int[] marioCenterPos = new int[2];
+private int[] marioReceptiveFieldCenterPos = new int[2];
 
 private final LevelScene levelScene;
 //    private int frame = 0;
@@ -70,12 +66,12 @@ public void reset(CmdLineOptions setUpOptions)
     System.out.println("");
     System.out.flush();*/
     this.setAgent(setUpOptions.getAgent());
-    marioCenterPos[0] = setUpOptions.getReceptiveFieldWidth() / 2;
-    marioCenterPos[1] = setUpOptions.getReceptiveFieldHeight() / 2;
-//        System.out.println("marioCenterPosX = " + marioCenterPos[0]);
-//        System.out.println("marioCenterPosY = " + marioCenterPos[1]);
+    marioReceptiveFieldCenterPos[0] = setUpOptions.getReceptiveFieldWidth() / 2;
+    marioReceptiveFieldCenterPos[1] = setUpOptions.getReceptiveFieldHeight() / 2;
+//        System.out.println("marioCenterPosX = " + marioReceptiveFieldCenterPos[0]);
+//        System.out.println("marioCenterPosY = " + marioReceptiveFieldCenterPos[1]);
 
-    if (/*levelScene.visualization*/ setUpOptions.isVisualization())
+    if (setUpOptions.isVisualization())
     {
         if (marioVisualComponent == null)
             marioVisualComponent = MarioVisualComponent.getInstance(setUpOptions, levelScene);
@@ -260,62 +256,8 @@ public EvaluationInfo getEvaluationInfo()
     evaluationInfo.collisionsWithCreatures = Mario.collisionsWithCreatures;
     evaluationInfo.Memo = levelScene.memo;
     evaluationInfo.levelLength = levelScene.level.length;
-
-    // store mario trace:
-    final String marioTraceFile = "[MarioAI]-MarioTrace.txt";
-    try
-    {
-
-        final PrintWriter pw = new PrintWriter(new FileWriter(marioTraceFile));
-        int[][] trace = levelScene.level.marioTrace;
-
-        for (int j = 0; j < trace[0].length; ++j)
-
-        {
-            for (int i = 0; i < trace.length; ++i)
-            {
-                System.out.print(spaceFormat(trace[i][j]));
-                pw.print(spaceFormat(trace[i][j]));
-            }
-            System.out.println();
-            pw.println();
-        }
-//        for (int[] ints : trace)
-//        {
-//            for (int anInt : ints)
-//            {
-//                pw.print(df.format(anInt) + " ");
-//            }
-//            pw.println();
-//        }
-        pw.flush();
-    } catch (IOException e)
-    {
-        e.printStackTrace();
-    }
-    finally
-    {
-//        Runtime rt = Runtime.getRuntime();
-//        try
-//        {
-//            Process proc = rt.exec("/usr/local/bin/mate " + marioTraceFile);
-//            Process proc = rt.exec("open " + marioTraceFile);
-//        } catch (IOException e)
-//        {
-//            e.printStackTrace();
-//        }
-    }
-
+    evaluationInfo.marioTrace = levelScene.level.marioTrace;
     return evaluationInfo;
-}
-
-private String spaceFormat(int i)
-{
-    int j = 0;
-    String r = "" + ((i == 0) ? "." : i);
-    while (r.length() < 4)
-        r += " ";
-    return r;
 }
 
 
@@ -332,6 +274,6 @@ public float getIntermediateReward()
 
 public int[] getMarioReceptiveFieldCenter()
 {
-    return marioCenterPos;
+    return marioReceptiveFieldCenterPos;
 }
 }

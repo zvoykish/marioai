@@ -83,7 +83,7 @@ private boolean canShoot = false;
 int width = 4;
 int height = 24;
 
-public LevelScene world;
+public LevelScene levelScene;
 public int facing;
 private int powerUpTime = 0; // exclude pause for rendering changes
 
@@ -96,14 +96,13 @@ private int invulnerableTime = 0;
 public Sprite carried = null;
 //    private static Mario instance;
 
-public Mario(LevelScene world)
+public Mario(LevelScene levelScene)
 {
     kind = KIND_MARIO;
 //        Mario.instance = this;
-    // TODO: refactor: rename to levelScene
-    this.world = world;
-    x = 162;
-    y = 150;
+    this.levelScene = levelScene;
+    x = levelScene.getMarioInitialPos().x;
+    y = levelScene.getMarioInitialPos().y;
     mapX = (int) (x / 16);
     mapY = (int) (y / 16);
 
@@ -211,7 +210,7 @@ public void move()
     }
 
     if (mapY > -1)
-        ++world.level.marioTrace[this.mapX][this.mapY];
+        ++levelScene.level.marioTrace[this.mapX][this.mapY];
 
     if (winTime > 0)
     {
@@ -253,7 +252,7 @@ public void move()
             blink(((-powerUpTime / 3) & 1) == 0);
         }
 
-        if (powerUpTime == 0) world.paused = false;
+        if (powerUpTime == 0) levelScene.paused = false;
 
         calcPic();
         return;
@@ -338,9 +337,9 @@ public void move()
         sliding = false;
     }
 
-    if (keys[KEY_SPEED] && canShoot && Mario.fire && world.fireballsOnScreen < 2)
+    if (keys[KEY_SPEED] && canShoot && Mario.fire && levelScene.fireballsOnScreen < 2)
     {
-        world.addSprite(new Fireball(world, x + facing * 6, y - 20, facing));
+        levelScene.addSprite(new Fireball(levelScene, x + facing * 6, y - 20, facing));
     }
     // Cheats:
     if (GlobalOptions.isPowerRestoration && keys[KEY_SPEED] && (!Mario.large || !Mario.fire))
@@ -348,13 +347,13 @@ public void move()
 //        if (cheatKeys[KEY_LIFE_UP])
 //            this.lives++;
 
-    // TODO: remove this and clean up "easter eggs", redundant due to "SPACE" for the whole world and "-le 0" to disable creatures
-    world.paused = GlobalOptions.isPauseWorld;
+    // TODO: remove this and clean up "easter eggs", redundant due to "SPACE" for the whole levelScene and "-le 0" to disable creatures
+    levelScene.paused = GlobalOptions.isPauseWorld;
 //        if (keys[KEY_DUMP_CURRENT_WORLD])
 //            try {
 //                System.out.println("DUMP:");
-////                world.getTextObservationAroundMario(System.out);
-//                //world.level.save(System.out);
+////                levelScene.getTextObservationAroundMario(System.out);
+//                //levelScene.level.save(System.out);
 //                System.out.println("DUMPED:");
 //            } catch (IOException e) {
 //                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -378,7 +377,7 @@ public void move()
     {
         for (int i = 0; i < 1; i++)
         {
-            world.addSprite(new Sparkle((int) (x + Math.random() * 4 - 2) + facing * 8, (int) (y + Math.random() * 4) - 24, (float) (Math.random() * 2 - 1), (float) Math.random() * 1, 0, 1, 5));
+            levelScene.addSprite(new Sparkle((int) (x + Math.random() * 4 - 2) + facing * 8, (int) (y + Math.random() * 4) - 24, (float) (Math.random() * 2 - 1), (float) Math.random() * 1, 0, 1, 5));
         }
         ya *= 0.5f;
     }
@@ -387,7 +386,7 @@ public void move()
     move(xa, 0);
     move(0, ya);
 
-    if (y > world.level.height * 16 + 16)
+    if (y > levelScene.level.height * 16 + 16)
         die("Gap");
 
     if (x < 0)
@@ -396,17 +395,17 @@ public void move()
         xa = 0;
     }
 
-    if (x > world.level.xExit * 16 - 8 &&
-            x < world.level.xExit * 16 + 2 * 16 &&
-            y < world.level.yExit * 16)
+    if (x > levelScene.level.xExit * 16 - 8 &&
+            x < levelScene.level.xExit * 16 + 2 * 16 &&
+            y < levelScene.level.yExit * 16)
     {
-        x = world.level.xExit * 16;
+        x = levelScene.level.xExit * 16;
         win();
     }
 
-    if (x > world.level.length * 16)
+    if (x > levelScene.level.length * 16)
     {
-        x = world.level.length * 16;
+        x = levelScene.level.length * 16;
         xa = 0;
     }
 
@@ -478,7 +477,7 @@ private void calcPic()
         {
             for (int i = 0; i < 3; i++)
             {
-                world.addSprite(new Sparkle((int) (x + Math.random() * 8 - 4), (int) (y + Math.random() * 4), (float) (Math.random() * 2 - 1), (float) Math.random() * -1, 0, 1, 5));
+                levelScene.addSprite(new Sparkle((int) (x + Math.random() * 8 - 4), (int) (y + Math.random() * 4), (float) (Math.random() * 2 - 1), (float) Math.random() * -1, 0, 1, 5));
             }
         }
     }
@@ -591,22 +590,22 @@ private boolean isBlocking(float _x, float _y, float xa, float ya)
     int y = (int) (_y / 16);
     if (x == (int) (this.x / 16) && y == (int) (this.y / 16)) return false;
 
-    boolean blocking = world.level.isBlocking(x, y, xa, ya);
+    boolean blocking = levelScene.level.isBlocking(x, y, xa, ya);
 
-    byte block = world.level.getBlock(x, y);
+    byte block = levelScene.level.getBlock(x, y);
 
     if (((Level.TILE_BEHAVIORS[block & 0xff]) & Level.BIT_PICKUPABLE) > 0)
     {
         Mario.gainCoin();
-        world.level.setBlock(x, y, (byte) 0);
+        levelScene.level.setBlock(x, y, (byte) 0);
         for (int xx = 0; xx < 2; xx++)
             for (int yy = 0; yy < 2; yy++)
-                world.addSprite(new Sparkle(x * 16 + xx * 8 + (int) (Math.random() * 8), y * 16 + yy * 8 + (int) (Math.random() * 8), 0, 0, 0, 2, 5));
+                levelScene.addSprite(new Sparkle(x * 16 + xx * 8 + (int) (Math.random() * 8), y * 16 + yy * 8 + (int) (Math.random() * 8), 0, 0, 0, 2, 5));
     }
 
     if (blocking && ya < 0)
     {
-        world.bump(x, y, large);
+        levelScene.bump(x, y, large);
     }
 
     return blocking;
@@ -614,7 +613,7 @@ private boolean isBlocking(float _x, float _y, float xa, float ya)
 
 public void stomp(Enemy enemy)
 {
-    if (deathTime > 0 || world.paused) return;
+    if (deathTime > 0 || levelScene.paused) return;
 
     float targetY = enemy.y - enemy.height / 2;
     move(0, targetY - y);
@@ -631,7 +630,7 @@ public void stomp(Enemy enemy)
 
 public void stomp(Shell shell)
 {
-    if (deathTime > 0 || world.paused) return;
+    if (deathTime > 0 || levelScene.paused) return;
 
     if (keys[KEY_SPEED] && shell.facing == 0)
     {
@@ -657,21 +656,21 @@ public void stomp(Shell shell)
 
 public void getHurt(final int spriteKind)
 {
-    if (deathTime > 0 || world.paused || isMarioInvulnerable) return;
+    if (deathTime > 0 || levelScene.paused || isMarioInvulnerable) return;
 
     if (invulnerableTime > 0) return;
 
     ++collisionsWithCreatures;
     if (large)
     {
-        world.paused = true;
+        levelScene.paused = true;
         powerUpTime = -3 * FractionalPowerUpTime;
         if (fire)
         {
-            world.mario.setMode(true, false);
+            levelScene.mario.setMode(true, false);
         } else
         {
-            world.mario.setMode(false, false);
+            levelScene.mario.setMode(false, false);
         }
         invulnerableTime = 32;
     } else
@@ -684,7 +683,7 @@ public void win()
 {
     xDeathPos = (int) x;
     yDeathPos = (int) y;
-    world.paused = true;
+    levelScene.paused = true;
     winTime = 1;
     status = Mario.STATUS_WIN;
 }
@@ -693,23 +692,23 @@ public void die(String reasonOfDeath)
 {
     xDeathPos = (int) x;
     yDeathPos = (int) y;
-    world.paused = true;
+    levelScene.paused = true;
     deathTime = 25;
     status = Mario.STATUS_DEAD;
     // TODO: [M] refactor reasons of death to enum {COLLISION, GAP, TIMEOUT}
-    world.addMemoMessage("Reason of death: " + reasonOfDeath);
+    levelScene.addMemoMessage("Reason of death: " + reasonOfDeath);
 }
 
 
 public void getFlower()
 {
-    if (deathTime > 0 || world.paused) return;
+    if (deathTime > 0 || levelScene.paused) return;
 
     if (!fire)
     {
-        world.paused = true;
+        levelScene.paused = true;
         powerUpTime = 3 * FractionalPowerUpTime;
-        world.mario.setMode(true, true);
+        levelScene.mario.setMode(true, true);
     } else
     {
         Mario.gainCoin();
@@ -719,13 +718,13 @@ public void getFlower()
 
 public void getMushroom()
 {
-    if (deathTime > 0 || world.paused) return;
+    if (deathTime > 0 || levelScene.paused) return;
 
     if (!large)
     {
-        world.paused = true;
+        levelScene.paused = true;
         powerUpTime = 3 * FractionalPowerUpTime;
-        world.mario.setMode(true, false);
+        levelScene.mario.setMode(true, false);
     } else
     {
         Mario.gainCoin();
@@ -735,7 +734,7 @@ public void getMushroom()
 
 public void kick(Shell shell)
 {
-//        if (deathTime > 0 || world.paused) return;
+//        if (deathTime > 0 || levelScene.paused) return;
 
     if (keys[KEY_SPEED])
     {
@@ -751,7 +750,7 @@ public void kick(Shell shell)
 
 public void stomp(BulletBill bill)
 {
-    if (deathTime > 0 || world.paused) return;
+    if (deathTime > 0 || levelScene.paused) return;
 
     float targetY = bill.y - bill.height / 2;
     move(0, targetY - y);

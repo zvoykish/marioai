@@ -7,6 +7,7 @@ import ch.idsia.benchmark.mario.engine.sprites.*;
 import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.tools.CmdLineOptions;
 
+import java.awt.*;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,6 +69,7 @@ final private int[] marioState = new int[12];
 private int numberOfHiddenCoinsGained = 0;
 
 public String memo = "";
+private Point marioInitialPos;
 
 //    public int getTimeLimit() {  return timeLimit; }
 
@@ -105,29 +107,6 @@ public LevelScene()
         e.printStackTrace();
         System.exit(0);
     }
-}
-
-public void init(CmdLineOptions args)
-{
-    /*        if (replayer!=null)
-    {                level = LevelGenerator.createLevel(2048, 15, replayer.nextLong());         }
-    /*        if (recorder != null)
-    recorder.addLong(LevelGenerator.lastSeed);
-    }*/
-    level = LevelGenerator.createLevel(args);
-    paused = false;
-    Sprite.spriteContext = this;
-    sprites.clear();
-    this.width = GlobalOptions.VISUAL_COMPONENT_WIDTH;
-    this.height = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
-
-
-    mario = new Mario(this);
-    sprites.add(mario);
-    startTime = 1;
-    timeLeft = timeLimit * 15;
-
-    tick = 0;
 }
 
 //TODO: Move to createLevel, enable -ls to accept filePaths for *.lvl files, i.e. allow to load levels with -ls option
@@ -577,8 +556,8 @@ public List<String> getTextObservationAroundMario(boolean Enemies, boolean Level
     List<String> ret = new ArrayList<String>();
     if (level != null && mario != null)
     {
-        ret.add("Total world length = " + level.length);
-        ret.add("Total world height = " + level.height);
+        ret.add("Total levelScene length = " + level.length);
+        ret.add("Total levelScene height = " + level.height);
         ret.add("Physical Mario Position (x,y): (" + mario.x + "," + mario.y + ")");
         ret.add("Mario Observation (Receptive Field)   Width: " + receptiveFieldWidth + " Height: " + receptiveFieldHeight);
         ret.add("X Exit Position: " + level.xExit);
@@ -895,22 +874,22 @@ public int getTimeLeft() { return timeLeft / 15; }
 
 public int getKillsTotal()
 {
-    return mario.world.killedCreaturesTotal;
+    return mario.levelScene.killedCreaturesTotal;
 }
 
 public int getKillsByFire()
 {
-    return mario.world.killedCreaturesByFireBall;
+    return mario.levelScene.killedCreaturesByFireBall;
 }
 
 public int getKillsByStomp()
 {
-    return mario.world.killedCreaturesByStomp;
+    return mario.levelScene.killedCreaturesByStomp;
 }
 
 public int getKillsByShell()
 {
-    return mario.world.killedCreaturesByShell;
+    return mario.levelScene.killedCreaturesByShell;
 }
 
 public int[] getMarioState()
@@ -1013,7 +992,7 @@ public boolean isMarioAbleToJump()
 public void resetDefault()
 {
     // TODO: set values to defaults
-    init(CmdLineOptions.getDefaultOptions());
+    reset(CmdLineOptions.getDefaultOptions());
 }
 
 public void reset(CmdLineOptions cmdLineOptions)
@@ -1074,8 +1053,28 @@ public void reset(CmdLineOptions cmdLineOptions)
         this.prevRFW = this.receptiveFieldWidth;
     }
 
+    marioInitialPos = cmdLineOptions.getMarioInitialPos();
+    // inlined from init()
 //        System.out.println("Call to init:");
-    init(cmdLineOptions);
+    /*        if (replayer!=null)
+    {                level = LevelGenerator.createLevel(2048, 15, replayer.nextLong());         }
+    /*        if (recorder != null)
+    recorder.addLong(LevelGenerator.lastSeed);
+    }*/
+    level = LevelGenerator.createLevel(cmdLineOptions);
+    paused = false;
+    Sprite.spriteContext = this;
+    sprites.clear();
+    this.width = GlobalOptions.VISUAL_COMPONENT_WIDTH;
+    this.height = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
+
+
+    mario = new Mario(this);
+    sprites.add(mario);
+    startTime = 1;
+    timeLeft = timeLimit * 15;
+
+    tick = 0;
 }
 
 public float[] getMarioFloatPos()
@@ -1117,6 +1116,8 @@ public void addMemoMessage(final String memoMessage)
 {
     memo += memoMessage;
 }
+
+public Point getMarioInitialPos() {return marioInitialPos;}
 }
 
 //    public void update(boolean[] action)
