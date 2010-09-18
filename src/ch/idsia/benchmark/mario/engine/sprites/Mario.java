@@ -62,17 +62,11 @@ public static void resetStatic(CmdLineOptions cmdLineOptions)
 
     isMarioInvulnerable = cmdLineOptions.isMarioInvulnerable();
     marioGravity = cmdLineOptions.getMarioGravity();
-    System.out.println("marioGravity = " + marioGravity);
 }
 
 public int getMode()
 {
     return ((large) ? 1 : 0) + ((fire) ? 1 : 0);
-}
-
-public static void setMarioGravity(final float marioGravity)
-{
-    Mario.marioGravity = marioGravity;
 }
 
 //    private static float GROUND_INERTIA = 0.89f;
@@ -364,7 +358,6 @@ public void move()
 //        if (cheatKeys[KEY_LIFE_UP])
 //            this.lives++;
 
-    // TODO: remove this and clean up "easter eggs", redundant due to "SPACE" for the whole levelScene and "-le 0" to disable creatures
     levelScene.paused = GlobalOptions.isPauseWorld;
 //        if (keys[KEY_DUMP_CURRENT_WORLD])
 //            try {

@@ -204,7 +204,8 @@ private static int buildZone(int x, int maxLength, int maxHeight, int floor, int
             if (floor == DEFAULT_FLOOR && counters.hillStraightCount < counters.totalHillStraight)
             {
                 counters.hillStraightCount++;
-                length = buildHillStraight(x, maxLength, floor, false);
+//                length = buildHillStraight(x, maxLength, floor, false);
+                length = buildHill(x, true, maxLength, floor, false);
             } else
                 length = 0;
             break;
@@ -361,8 +362,10 @@ private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, in
 {
     int gs = globalRandom.nextInt(5) + 2; //GapStairs
     int gl = globalRandom.nextInt(levelDifficulty) + levelDifficulty > 7 ? 10 : 3;//globalRandom.nextInt(2) + 2; //GapLength
+    System.out.println("gl = " + gl);
 //        System.out.println("globalRandom.nextInt() % this.levelDifficulty+1 = " +
     int length = gs * 2 + gl;
+    System.out.println("length = " + length);
 
 //    System.out.println("length = " + length);
 //    System.out.println("maxLength = " + maxLength);
@@ -425,15 +428,11 @@ private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, in
             }
         }
     }
-    System.out.println("length = " + length);
     if (gl > 8)
     {
-        System.out.println("floor = " + floor);
-        buildHillStraight(xo + globalRandom.nextInt(Math.abs((gl-4))/2 + 1) + gs, gl, level.height, true);
+        buildHill(xo + gs + globalRandom.nextInt(Math.abs((gl-4))/2 + 1), false, 3, floor, true);
     }
 
-
-    System.out.println("gaps= " + counters.gapsCount);
     return length;
 }
 
@@ -526,30 +525,23 @@ private static int buildCannons(int xo, int maxLength, int maxHeight, int vfloor
     return length;
 }
 
-private static int buildHillStraight(int xo, int maxLength, int vfloor, final boolean isInGap)
+private static int buildHill(int x0, boolean withStraight, int maxLength, int vfloor, boolean isInGap)
 {
-//    System.out.println("xo = " + xo);
     int length = globalRandom.nextInt(10) + 10;
     if (length > maxLength)
     {
         length = maxLength;
     }
-/*        if( maxLength < 10 )
-        {
-            return 0;
-        }
-*/
+
     int floor = vfloor;
     if (vfloor == DEFAULT_FLOOR)
     {
         floor = height - 1 - globalRandom.nextInt(4);
     }
-//    if (isInGap)
-//        floor = level.height;
 
-    if (!isInGap)
+    if (withStraight)
     {
-        for (int x = xo; x < xo + length; x++)
+        for (int x = x0; x < x0 + length; x++)
         {
             for (int y = 0; y < height; y++)
             {
@@ -561,61 +553,49 @@ private static int buildHillStraight(int xo, int maxLength, int vfloor, final bo
         }
     }
 
-//    addEnemiesLine(xo + 1, xo + length - 1, floor - 1);
+    boolean canBuild = true;
 
-    int h = isInGap ? level.height : floor;
-
-    boolean keepGoing = true;
-
-    boolean[] occupied = new boolean[length];
-    while (keepGoing)
+    int top = floor;
+    if (isInGap)
+        floor = level.height;
+    while (canBuild)
     {
-        h = h - 2 - globalRandom.nextInt(3);
-
-        if (h <= 0)
+        top -= isFlatLevel ? 0 : (globalRandom.nextInt(2) + 2);
+        if (top < 0)
+            canBuild = false;
+        else
         {
-            keepGoing = false;
-        } else
-        {
-            int l = globalRandom.nextInt(5) + 3;
-            int xxo = globalRandom.nextInt(length - l - 2 + 1) + xo + 1;
+            int l = globalRandom.nextInt(length / 2) + 1;
+            int xx0 = globalRandom.nextInt(l + 1) + x0;
 
-            if (occupied[xxo - xo] || occupied[xxo - xo + l] || occupied[xxo - xo - 1] || occupied[xxo - xo + l])
+            if (globalRandom.nextInt(4) == 0)
             {
-                keepGoing = false;
-            } else
+                decorate(xx0 - 1, xx0 + l + 1, top);
+                canBuild = false;
+            }
+            for (int x = xx0; x < xx0 + l; x++)
             {
-                occupied[xxo - xo] = true;
-                occupied[xxo - xo + l] = true;
-//                addEnemiesLine(xxo, xxo + l, h - 1);
-                if (globalRandom.nextInt(4) == 0)
+                for (int y = top; y < floor; y++)
                 {
-                    decorate(xxo - 1, xxo + l + 1, h);
-                    keepGoing = false;
-                }
-                for (int x = xxo; x < xxo + l; x++)
-                {
-                    for (int y = h; y < floor; y++)
+                    int xx = 5;
+                    if (x == xx0) xx = 4;
+                    if (x == xx0 + l - 1) xx = 6;
+                    int yy = 9;
+                    if (y == top) yy = 8;
+
+                    if (level.getBlock(x, y) == 0)
                     {
-                        int xx = 5;
-                        if (x == xxo) xx = 4;
-                        if (x == xxo + l - 1) xx = 6;
-                        int yy = 9;
-                        if (y == h) yy = 8;
-
-                        if (level.getBlock(x, y) == 0)
-                        {
-                            level.setBlock(x, y, (byte) (xx + yy * 16));
-                        } else
-                        {
-                            if (level.getBlock(x, y) == (byte) (4 + 8 * 16))
-                                level.setBlock(x, y, (byte) (4 + 11 * 16));
-                            if (level.getBlock(x, y) == (byte) (6 + 8 * 16))
-                                level.setBlock(x, y, (byte) (6 + 11 * 16));
-                        }
+                        level.setBlock(x, y, (byte) (xx + yy * 16));
+                    } else
+                    {
+                        if (level.getBlock(x, y) == (byte) (4 + 8 * 16))
+                            level.setBlock(x, y, (byte) (4 + 11 * 16));
+                        if (level.getBlock(x, y) == (byte) (6 + 8 * 16))
+                            level.setBlock(x, y, (byte) (6 + 11 * 16));
                     }
                 }
             }
+            addEnemy(xx0, top - 1);
         }
     }
 
@@ -1081,6 +1061,110 @@ private static void blockify(Level level, boolean[][] blocks, int width, int hei
         }
     }
 }
+
+//private static int buildHillStraight(int xo, int maxLength, int vfloor, final boolean isInGap)
+//{
+////    System.out.println("xo = " + xo);
+//    int length = globalRandom.nextInt(10) + 10;
+//    if (length > maxLength)
+//    {
+//        length = maxLength;
+//    }
+///*        if( maxLength < 10 )
+//        {
+//            return 0;
+//        }
+//*/
+//    int floor = vfloor;
+//    if (vfloor == DEFAULT_FLOOR)
+//    {
+//        floor = height - 1 - globalRandom.nextInt(4);
+//    }
+////    if (isInGap)
+////        floor = level.height;
+//
+//    if (!isInGap)
+//    {
+//        for (int x = xo; x < xo + length; x++)
+//        {
+//            for (int y = 0; y < height; y++)
+//            {
+//                if (y >= floor)
+//                {
+//                    level.setBlock(x, y, (byte) (1 + 9 * 16));
+//                }
+//            }
+//        }
+//    }
+//
+////    addEnemiesLine(xo + 1, xo + length - 1, floor - 1);
+//
+////    int h = level.height;
+////    if (isFlatLevel)
+////        floor = level.height;
+////    int h = isInGap ? level.height : floor;
+//    int h = floor;
+//
+//    boolean keepGoing = true;
+//
+//    boolean[] occupied = new boolean[length];
+//    while (keepGoing)
+//    {
+//        if (isFlatLevel)
+//            h = vfloor;
+//        else
+//            h = h - 2 - globalRandom.nextInt(3);
+//
+//        if (h <= 0)
+//        {
+//            keepGoing = false;
+//        } else
+//        {
+//            int l = globalRandom.nextInt(maxLength) + 1;
+//            //int xxo = globalRandom.nextInt(length - l - 2 + 1) + xo + 1;
+//            int xxo = globalRandom.nextInt(l + 1) + xo;
+//
+//            if (false)//occupied[xxo - xo] || occupied[xxo - xo + l] || occupied[xxo - xo - 1] || occupied[xxo - xo + l])
+//            {
+//                keepGoing = false;
+//            } else
+//            {
+////                occupied[xxo - xo] = true;
+////                occupied[xxo - xo + l] = true;
+////                addEnemiesLine(xxo, xxo + l, h - 1);
+//                if (globalRandom.nextInt(4) == 0)
+//                {
+//                    decorate(xxo - 1, xxo + l + 1, h);
+//                    keepGoing = false;
+//                }
+//                for (int x = xxo; x < xxo + l; x++)
+//                {
+//                    for (int y = h; y < floor; y++)
+//                    {
+//                        int xx = 5;
+//                        if (x == xxo) xx = 4;
+//                        if (x == xxo + l - 1) xx = 6;
+//                        int yy = 9;
+//                        if (y == h) yy = 8;
+//
+//                        if (level.getBlock(x, y) == 0)
+//                        {
+//                            level.setBlock(x, y, (byte) (xx + yy * 16));
+//                        } else
+//                        {
+//                            if (level.getBlock(x, y) == (byte) (4 + 8 * 16))
+//                                level.setBlock(x, y, (byte) (4 + 11 * 16));
+//                            if (level.getBlock(x, y) == (byte) (6 + 8 * 16))
+//                                level.setBlock(x, y, (byte) (6 + 11 * 16));
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    return length;
+//}
 
 //private static boolean canAddEnemyLine(int x0, int x1, int y)
 //{
