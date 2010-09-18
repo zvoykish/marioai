@@ -78,19 +78,31 @@
    \hline
    -lhb & Enable/Disable hidden blocks on the level\footnote{If level is build with dead ends and without hidden blocks, then you will go out from dead end over visible blocks, e.g. hidden blocks are replaced with visible blocks.} & $<$on$|$off$>$. Default: off & {\texttt Main -lhb off } \\
    \hline
-   -le & Customize creatures on the level. Creatures, that will be on the level are defined with bit mask. From left to right:
-\begin{enumerate}
-\item goomba
-\item green koopa
-\item red koopa
-\item spiky
-\item winged goomba
-\item winged green koopa
-\item winged red koopa
-\item winged spiky 
-\item spiky flower
-\end {enumerate} 
-Replace \emph{x} with 1 if you want creature to be on the level, otherwise 0. For more details and examples see \texttt{marioai-lvlgen-options-usage.pdf}& $<$xxxxxxxxx$>$. Default: 111111111 & {\texttt Main -le 0 } \\
+   -le & Customize creatures on the level. Creatures, that will be on the level are defined with first letter of the creature kind:
+	\center{
+	\begin{tabular}{| c | c |}
+	    \hline
+	    Creature & Short name \\
+	    \hline \hline
+	    Goomba & g \\
+	    \hline
+	    Goomba Winged & gw \\
+	    \hline
+	    Green Koopa & gk \\
+	    \hline
+	    Green Koopa Winged & gk \\
+	    \hline
+	    Red Koopa & gk \\
+	    \hline
+	    Red Koopa Winged & gk \\
+	    \hline
+	    Spiky & gk \\
+	    \hline
+	    Spiky Winged & gk \\
+	    \hline
+	\end{tabular}
+	}
+    For more details and examples see \texttt{marioai-lvlgen-options-usage.pdf}& List of creatures separated by comma. Default:~``~``~(empty~string) & {\texttt Main -le off } \\
    \hline
    -lb & Enable/Disable visible blocks on the level & $<$on$|$off$>$. Default: on & {\texttt Main -lb off } \\
    \hline
