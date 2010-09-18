@@ -46,6 +46,7 @@ private int prevyPicO;
 private int prevHPic;
 
 private boolean isRacoon;
+private float yaa = 1;
 
 public static void resetStatic(int marioMode)
 {
@@ -108,8 +109,14 @@ public Mario(LevelScene levelScene)
 
     facing = 1;
     setMode(Mario.large, Mario.fire);
+
+    final float g = .5f;
+    yaa = g * 3;
+    jT = 7 / (g);
+
 }
 
+float jT;
 private boolean lastLarge;
 private boolean lastFire;
 private boolean newLarge;
@@ -293,7 +300,7 @@ public void move()
         {
             xJumpSpeed = 0;
             yJumpSpeed = grCoef == 1 ? -1.9f : -grCoef;  //-1.9f*grCoef;
-            jumpTime = (int) (7 * grCoef);
+            jumpTime = (int) jT;
             ya = jumpTime * yJumpSpeed;
             onGround = false;
             sliding = false;
@@ -420,9 +427,11 @@ public void move()
         xa *= AIR_INERTIA;
     }
 
+
     if (!onGround)
     {
-        ya += 3;
+//        ya += 3;
+        ya += yaa;
     }
 
     if (carried != null)

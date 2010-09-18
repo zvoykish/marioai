@@ -6,11 +6,11 @@ import ch.idsia.benchmark.mario.environments.Environment;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Sergey Karakovskiy
+ * User: Sergey Karakovskiy, sergey.karakovskiy@gmail.com
  * Date: Apr 8, 2009
  * Time: 4:03:46 AM
- * Package: ch.idsia.controllers.agents.controllers;
  */
+
 public class ForwardAgent extends BasicMarioAIAgent implements Agent
 {
 int trueJumpCounter = 0;
@@ -46,7 +46,7 @@ private boolean DangerOfGap(byte[][] levelScene)
         boolean f = true;
         for (int y = fromY; y < receptiveFieldHeight; ++y)
         {
-            if (getReceptiveFieldCellValue(x, y) != 0)
+            if (getReceptiveFieldCellValue(y, x) != 0)
                 f = false;
         }
         if (f ||
