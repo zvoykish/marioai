@@ -6,6 +6,7 @@ import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.engine.LevelScene;
 import ch.idsia.benchmark.mario.engine.level.Level;
 import ch.idsia.benchmark.mario.environments.Environment;
+import ch.idsia.tools.CmdLineOptions;
 
 public final class Mario extends Sprite
 {
@@ -50,14 +51,18 @@ private int prevHPic;
 private boolean isRacoon;
 private float yaa = 1;
 
-public static void resetStatic(int marioMode)
+public static void resetStatic(CmdLineOptions cmdLineOptions)
 {
-    large = marioMode > 0;
-    fire = marioMode == 2;
+    large = cmdLineOptions.getMarioMode() > 0;
+    fire = cmdLineOptions.getMarioMode() == 2;
     coins = 0;
     hiddenBlocksFound = 0;
     mushroomsDevoured = 0;
     flowersDevoured = 0;
+
+    isMarioInvulnerable = cmdLineOptions.isMarioInvulnerable();
+    marioGravity = cmdLineOptions.getMarioGravity();
+    System.out.println("marioGravity = " + marioGravity);
 }
 
 public int getMode()
@@ -116,7 +121,7 @@ public Mario(LevelScene levelScene)
 
     facing = 1;
     setMode(Mario.large, Mario.fire);
-    
+
     final float jumpPower = 7;
     // TODO: -jp <float>, default 7;
     yaa = marioGravity * 3;
@@ -633,7 +638,7 @@ public void stomp(Enemy enemy)
 
     xJumpSpeed = 0;
     yJumpSpeed = -1.9f;
-    jumpTime = (int)jT + 1;
+    jumpTime = (int) jT + 1;
     ya = jumpTime * yJumpSpeed;
     onGround = false;
     sliding = false;
@@ -657,7 +662,7 @@ public void stomp(Shell shell)
 
         xJumpSpeed = 0;
         yJumpSpeed = -1.9f;
-        jumpTime = (int)jT + 1;
+        jumpTime = (int) jT + 1;
         ya = jumpTime * yJumpSpeed;
         onGround = false;
         sliding = false;
@@ -770,7 +775,7 @@ public void stomp(BulletBill bill)
 
     xJumpSpeed = 0;
     yJumpSpeed = -1.9f;
-    jumpTime = (int)jT + 1;
+    jumpTime = (int) jT + 1;
     ya = jumpTime * yJumpSpeed;
     onGround = false;
     sliding = false;

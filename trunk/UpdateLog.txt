@@ -1,0 +1,4 @@
+Mario AI benchmark update log.
+
+Version 0.1.8 DATE: 2010-09-18 (September)
+ 1. 
