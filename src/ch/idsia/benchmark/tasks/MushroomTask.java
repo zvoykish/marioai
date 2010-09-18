@@ -11,26 +11,26 @@ import ch.idsia.tools.CmdLineOptions;
  */
 public class MushroomTask extends BasicTask implements Task
 {
-    private MarioCustomSystemOfValues sov = new MarioCustomSystemOfValues();
+private MarioCustomSystemOfValues sov = new MarioCustomSystemOfValues();
 
-    public MushroomTask(CmdLineOptions cmdLineOptions)
-    {
-        super(cmdLineOptions);
-        this.options = cmdLineOptions;
-    }
+public MushroomTask(CmdLineOptions cmdLineOptions)
+{
+    super(cmdLineOptions);
+    this.options = cmdLineOptions;
+}
 
-    public float[] evaluate(Agent controller)
-    {
-        float fitness = 0;
-        controller.reset();
+public float[] evaluate(Agent controller)
+{
+    float fitness = 0;
+    controller.reset();
 //        options.setLevelRandSeed(startingSeed++);
 //        System.out.println("controller = " + controller);
-        options.setAgent(controller);
-        this.setAgent(controller);
-        this.reset(options);
-        this.runOneEpisode();
-        fitness += this.getEnvironment().getEvaluationInfo().computeWeightedFitness(sov);
-        return new float[]{fitness};
-    }
+    options.setAgent(controller);
+//        this.setAgent(controller);
+    this.reset(options);
+    this.runOneEpisode();
+    fitness += this.getEnvironment().getEvaluationInfo().computeWeightedFitness(sov);
+    return new float[]{fitness};
+}
 
 }

@@ -257,7 +257,7 @@ public void render(Graphics g, float cameraOffSet)
     layer.renderExit1(g, levelScene.tick, levelScene.paused ? 0 : cameraOffSet);
 
     drawStringDropShadow(g, "DIFFICULTY:   " + df.format(levelScene.getLevelDifficulty()), 0, 0, levelScene.getLevelDifficulty() > 6 ? 1 : levelScene.getLevelDifficulty() > 2 ? 4 : 7);
-    drawStringDropShadow(g, "CREATURES:" + (mario.world.paused ? "OFF" : " ON"), 19, 0, 7);
+    drawStringDropShadow(g, "CREATURES:" + (mario.levelScene.paused ? "OFF" : " ON"), 19, 0, 7);
     drawStringDropShadow(g, "SEED:" + levelScene.getLevelSeed(), 0, 1, 7);
     drawStringDropShadow(g, "TYPE:" + LEVEL_TYPES[levelScene.getLevelType()], 0, 2, 7);
     drawStringDropShadow(g, "ALL KILLS: " + levelScene.killedCreaturesTotal, 19, 1, 1);

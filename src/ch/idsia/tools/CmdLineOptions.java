@@ -2,6 +2,7 @@ package ch.idsia.tools;
 
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +31,8 @@ public final class CmdLineOptions extends EvaluationOptions
 {
 private static final HashMap<String, CmdLineOptions> CmdLineOptionsMapString = new HashMap<String, CmdLineOptions>();
 private String optionsString;
+
+final private Point marioInitialPos = new Point();
 
 public CmdLineOptions(String[] args)
 {
@@ -88,11 +91,17 @@ public void setArgs(String[] args)
     GlobalOptions.isGameplayStopped = isStopGamePlay();
 }
 
-public float getGravity()
+public float getMarioGravity()
 {
-    return f(getParameterValue("-gr"));
+    // TODO: getMarioGravity
+    return f(getParameterValue("-mgr"));
 }
 
+public float getCreaturesGravity()
+{
+    // TODO: getCreaturesGravity
+    return f(getParameterValue("-cgr"));
+}
 
 public int getViewWidth()
 {
@@ -191,4 +200,10 @@ public Boolean isReceptiveFieldVisualized()
     return b(getParameterValue("-srf"));
 }
 
+public Point getMarioInitialPos()
+{
+    marioInitialPos.x = i(getParameterValue("-mix"));
+    marioInitialPos.y = i(getParameterValue("-miy"));
+    return marioInitialPos;
+}
 }

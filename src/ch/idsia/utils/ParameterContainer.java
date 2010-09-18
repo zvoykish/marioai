@@ -47,6 +47,8 @@ private static final String[] allowed = new String[]{
         "-le",  // level: enemies; set up with bit mask
         "-lf",  // level: flat level
         "-mm",
+        "-mix",
+        "-miy",
         "-fps",
         "-pr",
         "-pw",
@@ -57,6 +59,7 @@ private static final String[] allowed = new String[]{
 //            "-t",
         "-tc",
         "-tl",
+        "-trace",
         "-vaot",
         "-vis",
         "-vlx",
@@ -221,6 +224,8 @@ public static void InitDefaults()
         defaultOptionsHashMap.put("-lt", "0"); //defaultOptionsHashMap.put("-levelType","1");
         defaultOptionsHashMap.put("-fps", "24");
         defaultOptionsHashMap.put("-mm", "2"); //Mario Mode
+        defaultOptionsHashMap.put("-mix", "32"); //Mario Initial physical Position
+        defaultOptionsHashMap.put("-miy", "32"); //Mario Initial physical Position
         defaultOptionsHashMap.put("-pw", "off"); //defaultOptionsHashMap.put("-isPauseWorld","off");
         defaultOptionsHashMap.put("-pr", "off"); //defaultOptionsHashMap.put("-powerRestoration","off");
         defaultOptionsHashMap.put("-rfh", "19");
@@ -229,6 +234,7 @@ public static void InitDefaults()
 //            defaultOptionsHashMap.put("-t", "on"); //defaultOptionsHashMap.put("-timer","on");
         defaultOptionsHashMap.put("-tl", "200"); //Time Limit
         defaultOptionsHashMap.put("-tc", "off"); //defaultOptionsHashMap.put("-toolsConfigurator","off");
+        defaultOptionsHashMap.put("-trace", "off"); // Trace Mario path through the level, output to std and default file
         defaultOptionsHashMap.put("-vaot", "off"); //defaultOptionsHashMap.put("-viewAlwaysOnTop","off");
         defaultOptionsHashMap.put("-vlx", "0"); //defaultOptionsHashMap.put("-viewLocationX","0");
         defaultOptionsHashMap.put("-vly", "0"); //defaultOptionsHashMap.put("-viewLocationY","0");

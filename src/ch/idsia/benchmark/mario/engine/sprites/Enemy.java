@@ -315,7 +315,7 @@ private boolean isBlocking(float _x, float _y, float xa, float ya)
 
     boolean blocking = world.level.isBlocking(x, y, xa, ya);
 
-//        byte block = world.level.getBlock(x, y);
+//        byte block = levelScene.level.getBlock(x, y);
 
     return blocking;
 }
