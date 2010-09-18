@@ -116,6 +116,7 @@ public void printOptions(boolean singleLine)
 
 public static CmdLineOptions getOptionsByString(String argString)
 {
+    // TODO: verify validity of this method, add unit tests
     if (CmdLineOptionsMapString.get(argString) == null)
     {
         final CmdLineOptions value = new CmdLineOptions(argString.trim().split("\\s+"));

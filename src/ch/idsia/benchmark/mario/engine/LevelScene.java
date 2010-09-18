@@ -15,7 +15,7 @@ import java.util.List;
 public final class LevelScene implements SpriteContext
 {
 public static final boolean[] defaultKeys = new boolean[Environment.numberOfButtons];
-public static final String[] keysStr = {"LEFT  ", "RIGHT ", " DOWN ", " JUMP ", " SPEED", "UP!"};
+public static final String[] keysStr = {"<< LEFT  ", "RIGHT >> ", " DOWN ", " JUMP ", " SPEED", " ^^UP!"};
 
 public static final int cellSize = 16;
 
@@ -49,8 +49,8 @@ private static final int BORDER_HILL = -62;
 // TODO : resolve this FLOWER_POT_OR_CANNON = -85;
 private static final int FLOWER_POT_OR_CANNON = -85;
 
-private int receptiveFiledHeight = -1; // to be setup via CmdLineOptions
-private int receptiveFiledWidth = -1; // to be setup via CmdLineOptions
+private int receptiveFieldHeight = -1; // to be setup via CmdLineOptions
+private int receptiveFieldWidth = -1; // to be setup via CmdLineOptions
 private int prevRFH = -1;
 private int prevRFW = -1;
 private int[] serializedLevelScene;   // memory is allocated in reset
@@ -70,6 +70,7 @@ private int numberOfHiddenCoinsGained = 0;
 public String memo = "";
 
 //    public int getTimeLimit() {  return timeLimit; }
+
 public void setTimeLimit(int timeLimit)
 { this.timeLimit = timeLimit; }
 
@@ -134,6 +135,7 @@ public void init(CmdLineOptions args)
 /*
 
 */
+
 private void loadLevel(String filePath)
 {
 
@@ -439,9 +441,9 @@ MarioXInMap = 21(int) mario.x / cellSize  = 22
     }
 
 
-    for (int y = MarioYInMap - receptiveFiledHeight / 2, obsX = 0; y <= MarioYInMap + receptiveFiledHeight / 2; y++, obsX++)
+    for (int y = MarioYInMap - receptiveFieldHeight / 2, obsX = 0; y <= MarioYInMap + receptiveFieldHeight / 2; y++, obsX++)
     {
-        for (int x = MarioXInMap - receptiveFiledWidth / 2, obsY = 0; x <= MarioXInMap + receptiveFiledWidth / 2; x++, obsY++)
+        for (int x = MarioXInMap - receptiveFieldWidth / 2, obsY = 0; x <= MarioXInMap + receptiveFieldWidth / 2; x++, obsY++)
         {
             if (x >= 0 && x < level.xExit && y >= 0 && y < level.height)
             {
@@ -475,14 +477,14 @@ public byte[][] getEnemiesObservationZ(int ZLevel)
         if (sprite.kind == mario.kind)
             continue;
         if (sprite.mapX >= 0 &&
-                sprite.mapX >= MarioXInMap - receptiveFiledWidth / 2 &&
-                sprite.mapX <= MarioXInMap + receptiveFiledWidth / 2 &&
+                sprite.mapX >= MarioXInMap - receptiveFieldWidth / 2 &&
+                sprite.mapX <= MarioXInMap + receptiveFieldWidth / 2 &&
                 sprite.mapY >= 0 &&
-                sprite.mapY >= MarioYInMap - receptiveFiledHeight / 2 &&
-                sprite.mapY <= MarioYInMap + receptiveFiledHeight / 2)
+                sprite.mapY >= MarioYInMap - receptiveFieldHeight / 2 &&
+                sprite.mapY <= MarioYInMap + receptiveFieldHeight / 2)
         {
-            int obsX = sprite.mapY - MarioYInMap + receptiveFiledHeight / 2;
-            int obsY = sprite.mapX - MarioXInMap + receptiveFiledWidth / 2;
+            int obsX = sprite.mapY - MarioYInMap + receptiveFieldHeight / 2;
+            int obsY = sprite.mapX - MarioXInMap + receptiveFieldWidth / 2;
             enemiesZ[obsX][obsY] = ZLevelEnemyGeneralization(sprite.kind, ZLevel);
         }
     }
@@ -525,9 +527,9 @@ public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
 //        throw new Error("WRONG mario x or y pos");
 
 
-    for (int y = MarioYInMap - receptiveFiledHeight / 2, obsX = 0; y <= MarioYInMap + receptiveFiledHeight / 2; y++, obsX++)
+    for (int y = MarioYInMap - receptiveFieldHeight / 2, obsX = 0; y <= MarioYInMap + receptiveFieldHeight / 2; y++, obsX++)
     {
-        for (int x = MarioXInMap - receptiveFiledWidth / 2, obsY = 0; x <= MarioXInMap + receptiveFiledWidth / 2; x++, obsY++)
+        for (int x = MarioXInMap - receptiveFieldWidth / 2, obsY = 0; x <= MarioXInMap + receptiveFieldWidth / 2; x++, obsY++)
         {
             if (x >= 0 && x < level.xExit && y >= 0 && y < level.height)
             {
@@ -547,14 +549,14 @@ public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
         if (sprite.kind == mario.kind)
             continue;
         if (sprite.mapX >= 0 &&
-                sprite.mapX > MarioXInMap - receptiveFiledWidth / 2 &&
-                sprite.mapX < MarioXInMap + receptiveFiledWidth / 2 &&
+                sprite.mapX > MarioXInMap - receptiveFieldWidth / 2 &&
+                sprite.mapX < MarioXInMap + receptiveFieldWidth / 2 &&
                 sprite.mapY >= 0 &&
-                sprite.mapY > MarioYInMap - receptiveFiledHeight / 2 &&
-                sprite.mapY < MarioYInMap + receptiveFiledHeight / 2)
+                sprite.mapY > MarioYInMap - receptiveFieldHeight / 2 &&
+                sprite.mapY < MarioYInMap + receptiveFieldHeight / 2)
         {
-            int obsX = sprite.mapY - MarioYInMap + receptiveFiledHeight / 2;
-            int obsY = sprite.mapX - MarioXInMap + receptiveFiledWidth / 2;
+            int obsX = sprite.mapY - MarioYInMap + receptiveFieldHeight / 2;
+            int obsY = sprite.mapX - MarioXInMap + receptiveFieldWidth / 2;
             // quick fix TODO: handle this in more general way.
             if (mergedZZ[obsX][obsY] != 14)
             {
@@ -578,7 +580,7 @@ public List<String> getTextObservationAroundMario(boolean Enemies, boolean Level
         ret.add("Total world length = " + level.length);
         ret.add("Total world height = " + level.height);
         ret.add("Physical Mario Position (x,y): (" + mario.x + "," + mario.y + ")");
-        ret.add("Mario Observation (Receptive Field)   Width: " + receptiveFiledWidth + " Height: " + receptiveFiledHeight);
+        ret.add("Mario Observation (Receptive Field)   Width: " + receptiveFieldWidth + " Height: " + receptiveFieldHeight);
         ret.add("X Exit Position: " + level.xExit);
         int MarioXInMap = (int) mario.x / cellSize;
         int MarioYInMap = (int) mario.y / cellSize;
@@ -953,7 +955,7 @@ public float[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies
 {
     // TODO:SK, serialize all data to a sole double[]
     assert false;
-    return new float[0];  //To change body of implemented methods use File | Settings | File Templates.
+    return new float[0];
 }
 
 public int[] getSerializedLevelSceneObservationZ(int ZLevelScene)
@@ -962,7 +964,9 @@ public int[] getSerializedLevelSceneObservationZ(int ZLevelScene)
     byte[][] levelScene = this.getLevelSceneObservationZ(ZLevelScene);
     for (int i = 0; i < serializedLevelScene.length; ++i)
     {
-        serializedLevelScene[i] = (int) levelScene[i / receptiveFiledWidth][i % receptiveFiledHeight]; //TODO: fix it. crashes if -rfw and -rfh are 1x3 and 3x1
+        final int i1 = i / receptiveFieldWidth;
+        final int i2 = i % receptiveFieldWidth;
+        serializedLevelScene[i] = (int) levelScene[i1][i2];
     }
     return serializedLevelScene;
 }
@@ -972,9 +976,7 @@ public int[] getSerializedEnemiesObservationZ(int ZLevelEnemies)
     // serialization into arrays of primitive types to speed up the data transfer.
     byte[][] enemies = this.getEnemiesObservationZ(ZLevelEnemies);
     for (int i = 0; i < serializedEnemies.length; ++i)
-    {
-        serializedEnemies[i] = (int) enemies[i / receptiveFiledWidth][i % receptiveFiledHeight];
-    }
+        serializedEnemies[i] = (int) enemies[i / receptiveFieldWidth][i % receptiveFieldWidth];
     return serializedEnemies;
 }
 
@@ -983,12 +985,15 @@ public int[] getSerializedMergedObservationZZ(int ZLevelScene, int ZLevelEnemies
     // serialization into arrays of primitive types to speed up the data transfer.
     byte[][] merged = this.getMergedObservationZZ(ZLevelScene, ZLevelEnemies);
     for (int i = 0; i < serializedMergedObservation.length; ++i)
-    {
-        serializedMergedObservation[i] = (int) merged[i / receptiveFiledWidth][i % receptiveFiledHeight];
-    }
+        serializedMergedObservation[i] = (int) merged[i / receptiveFieldWidth][i % receptiveFieldWidth];
     return serializedMergedObservation;
 }
 
+/**
+ * first and second elements of the array are x and y Mario coordinates correspondingly
+ *
+ * @return an array of size 2*(number of creatures on screen) including mario
+ */
 public float[] getCreaturesFloatPos()
 {
     float[] enemies = this.getEnemiesFloatPos();
@@ -1013,12 +1018,8 @@ public void resetDefault()
 
 public void reset(CmdLineOptions cmdLineOptions)
 {
-
 //        System.out.println("\nLevelScene RESET!");
-
-
 //        this.gameViewer = setUpOptions[0] == 1;
-
     this.mario.setMarioInvulnerable(cmdLineOptions.isMarioInvulnerable());
 //        System.out.println("this.mario.isMarioInvulnerable = " + this.mario.isMarioInvulnerable);
     this.levelDifficulty = cmdLineOptions.getLevelDifficulty();
@@ -1053,24 +1054,24 @@ public void reset(CmdLineOptions cmdLineOptions)
     // TODO: FIX ME: this this.levelHeight is never used! 
     this.levelHeight = cmdLineOptions.getLevelHeight();
 
-    receptiveFiledWidth = cmdLineOptions.getReceptiveFieldWidth();
-    receptiveFiledHeight = cmdLineOptions.getReceptiveFieldHeight();
+    receptiveFieldWidth = cmdLineOptions.getReceptiveFieldWidth();
+    receptiveFieldHeight = cmdLineOptions.getReceptiveFieldHeight();
     killedCreaturesTotal = 0;
     killedCreaturesByFireBall = 0;
     killedCreaturesByStomp = 0;
     killedCreaturesByShell = 0;
 
-    if (receptiveFiledHeight != this.prevRFH || receptiveFiledWidth != this.prevRFW)
+    if (receptiveFieldHeight != this.prevRFH || receptiveFieldWidth != this.prevRFW)
     {
-        serializedLevelScene = new int[receptiveFiledHeight * receptiveFiledWidth];
-        serializedEnemies = new int[receptiveFiledHeight * receptiveFiledWidth];
-        serializedMergedObservation = new int[receptiveFiledHeight * receptiveFiledWidth];
+        serializedLevelScene = new int[receptiveFieldHeight * receptiveFieldWidth];
+        serializedEnemies = new int[receptiveFieldHeight * receptiveFieldWidth];
+        serializedMergedObservation = new int[receptiveFieldHeight * receptiveFieldWidth];
 
-        levelSceneZ = new byte[receptiveFiledHeight][receptiveFiledWidth];
-        enemiesZ = new byte[receptiveFiledHeight][receptiveFiledWidth];
-        mergedZZ = new byte[receptiveFiledHeight][receptiveFiledWidth];
-        this.prevRFH = this.receptiveFiledHeight;
-        this.prevRFW = this.receptiveFiledWidth;
+        levelSceneZ = new byte[receptiveFieldHeight][receptiveFieldWidth];
+        enemiesZ = new byte[receptiveFieldHeight][receptiveFieldWidth];
+        mergedZZ = new byte[receptiveFieldHeight][receptiveFieldWidth];
+        this.prevRFH = this.receptiveFieldHeight;
+        this.prevRFW = this.receptiveFieldWidth;
     }
 
 //        System.out.println("Call to init:");
@@ -1104,12 +1105,12 @@ public int getLevelType()
 
 public int getReceptiveFieldWidth()
 {
-    return receptiveFiledWidth;
+    return receptiveFieldWidth;
 }
 
 public int getReceptiveFieldHeight()
 {
-    return receptiveFiledHeight;
+    return receptiveFieldHeight;
 }
 
 public void addMemoMessage(final String memoMessage)

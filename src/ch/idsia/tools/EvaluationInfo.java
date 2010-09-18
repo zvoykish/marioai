@@ -129,11 +129,11 @@ public String toString()
             "\n             Mario Status : " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss...") +
             "\n               Mario Mode : " + Mario.MODES[marioMode] +
             "\nCollisions with creatures : " + collisionsWithCreatures +
-            "\n     Passed (Cells, Phys) : " + distancePassedCells + ", " + df.format(distancePassedPhys) + " (" + distancePassedCells * 100 / levelLength + "% passed)" +
+            "\n     Passed (Cells, Phys) : " + distancePassedCells + " of " + levelLength + ", " + df.format(distancePassedPhys) + " of " + df.format(levelLength * 16) + " (" + distancePassedCells * 100 / levelLength + "% passed)" +
             "\n Time Spent(marioseconds) : " + timeSpent +
             "\n  Time Left(marioseconds) : " + timeLeft +
-            "\n             Coins Gained : " + coinsGained + " of " + totalNumberOfCoins + "(" + coinsGained * 100 / (totalNumberOfCoins == 0 ? 1 : totalNumberOfCoins) + "% collected)" +
-            "\n      Hidden Blocks Found : " + hiddenBlocksFound + " of " + totalNumberOfHiddenBlocks + "(" + hiddenBlocksFound * 100 / (totalNumberOfHiddenBlocks == 0 ? 1 : totalNumberOfHiddenBlocks) + "% found)" +
+            "\n             Coins Gained : " + coinsGained + " of " + totalNumberOfCoins + " (" + coinsGained * 100 / (totalNumberOfCoins == 0 ? 1 : totalNumberOfCoins) + "% collected)" +
+            "\n      Hidden Blocks Found : " + hiddenBlocksFound + " of " + totalNumberOfHiddenBlocks + " (" + hiddenBlocksFound * 100 / (totalNumberOfHiddenBlocks == 0 ? 1 : totalNumberOfHiddenBlocks) + "% found)" +
             "\n       Mushrooms Devoured : " + mushroomsDevoured + " of " + totalNumberOfMushrooms + " found (" + mushroomsDevoured * 100 / (totalNumberOfMushrooms == 0 ? 1 : totalNumberOfMushrooms) + "% collected)" +
             "\n         Flowers Devoured : " + flowersDevoured + " of " + totalNumberOfFlowers + " found (" + flowersDevoured * 100 / (totalNumberOfFlowers == 0 ? 1 : totalNumberOfFlowers) + "% collected)" +
             "\n              kills Total : " + killsTotal + " of " + totalNumberOfCreatures + " found (" + killsTotal * 100 / (totalNumberOfCreatures == 0 ? 1 : totalNumberOfCreatures) + "%)" +
