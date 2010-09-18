@@ -24,6 +24,8 @@ private boolean onGround = false;
 int width = 4;
 int height = 24;
 
+private float yaa = 1;
+
 private LevelScene world;
 public int facing;
 public int deadTime = 0;
@@ -33,6 +35,8 @@ public boolean avoidCliffs = true;
 
 public boolean winged = true;
 private int wingTime = 0;
+
+private float yaw = 0;
 
 public boolean noFireballDeath;
 
@@ -51,6 +55,8 @@ public Enemy(LevelScene world, int x, int y, int dir, int type, boolean winged, 
     xPicO = 8;
     yPicO = 31;
 
+//    yaa = GlobalOptions.creaturesGravity * 2; //TODO: 2
+//    yaw = GlobalOptions.creaturesGravity == 1 ? 0 : 0.3f * GlobalOptions.creaturesGravity; //TODO: 3
 
     switch (type)
     {
@@ -204,10 +210,10 @@ public void move()
     {
         if (winged)
         {
-            ya += 0.6f;
+            ya += 0.6f*yaw;
         } else
         {
-            ya += 2;
+            ya += yaa;
         }
     } else if (winged)
     {

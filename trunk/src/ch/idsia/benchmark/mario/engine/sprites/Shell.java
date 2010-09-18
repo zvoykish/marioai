@@ -19,6 +19,8 @@ public int facing;
 public boolean avoidCliffs = false;
 public int anim;
 
+private float yaa = 1;
+
 public boolean dead = false;
 private int deadTime = 0;
 public boolean carried;
@@ -42,6 +44,8 @@ public Shell(LevelScene world, float x, float y, int type)
 
     xPic = 4;
     ya = -5;
+
+//    yaa = creaturesGravity * 2; //TODO: 1
 }
 
 public boolean fireballCollideCheck(Fireball fireball)
@@ -182,7 +186,7 @@ public void move()
 
     if (!onGround)
     {
-        ya += 2;
+        ya += yaa;
     }
 }
 

@@ -28,6 +28,8 @@ public static final int STATUS_RUNNING = 2;
 public static final int STATUS_WIN = 1;
 public static final int STATUS_DEAD = 0;
 
+private static float marioGravity;
+
 public static boolean large = false;
 public static boolean fire = false;
 public static int coins = 0;
@@ -61,6 +63,11 @@ public static void resetStatic(int marioMode)
 public int getMode()
 {
     return ((large) ? 1 : 0) + ((fire) ? 1 : 0);
+}
+
+public static void setMarioGravity(final float marioGravity)
+{
+    Mario.marioGravity = marioGravity;
 }
 
 //    private static float GROUND_INERTIA = 0.89f;
@@ -109,15 +116,14 @@ public Mario(LevelScene levelScene)
 
     facing = 1;
     setMode(Mario.large, Mario.fire);
-
-    final float g = 0.005f;
-    final float jumpPower = .05f;
+    
+    final float jumpPower = 7;
     // TODO: -jp <float>, default 7;
-    yaa = g * 3;
-    jT = jumpPower / (g);
+    yaa = marioGravity * 3;
+    jT = jumpPower / (marioGravity);
 }
 
-float jT;
+private float jT;
 private boolean lastLarge;
 private boolean lastFire;
 private boolean newLarge;
@@ -288,8 +294,6 @@ public void move()
         facing = -1;
     }
 
-    float grCoef = 1;//(float) (1/1.4);
-
     if (keys[KEY_JUMP] || (jumpTime < 0 && !onGround && !sliding))
     {
         if (jumpTime < 0)
@@ -300,7 +304,7 @@ public void move()
         } else if (onGround && mayJump)
         {
             xJumpSpeed = 0;
-            yJumpSpeed = grCoef == 1 ? -1.9f : -grCoef;  //-1.9f*grCoef;
+            yJumpSpeed = -1.9f;
             jumpTime = (int) jT;
             ya = jumpTime * yJumpSpeed;
             onGround = false;
@@ -417,9 +421,7 @@ public void move()
         xa = 0;
     }
 
-    // TODO: move to variable (gravity?)
-    ya *= grCoef == 1 ? 0.85f : 1 / grCoef; //0.85f;
-//    System.out.println("ya = " + ya);
+    ya *= 0.85f;
     if (onGround)
     {
         xa *= GROUND_INERTIA;
@@ -631,7 +633,7 @@ public void stomp(Enemy enemy)
 
     xJumpSpeed = 0;
     yJumpSpeed = -1.9f;
-    jumpTime = 8;
+    jumpTime = (int)jT + 1;
     ya = jumpTime * yJumpSpeed;
     onGround = false;
     sliding = false;
@@ -655,7 +657,7 @@ public void stomp(Shell shell)
 
         xJumpSpeed = 0;
         yJumpSpeed = -1.9f;
-        jumpTime = 8;
+        jumpTime = (int)jT + 1;
         ya = jumpTime * yJumpSpeed;
         onGround = false;
         sliding = false;
@@ -768,7 +770,7 @@ public void stomp(BulletBill bill)
 
     xJumpSpeed = 0;
     yJumpSpeed = -1.9f;
-    jumpTime = 8;
+    jumpTime = (int)jT + 1;
     ya = jumpTime * yJumpSpeed;
     onGround = false;
     sliding = false;
