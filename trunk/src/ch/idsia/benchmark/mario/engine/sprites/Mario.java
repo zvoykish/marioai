@@ -815,10 +815,6 @@ public boolean isCanShoot()
     return canShoot;
 }
 
-public static void setMarioInvulnerable(boolean marioInvulnerable)
-{
-    isMarioInvulnerable = marioInvulnerable;
-}
 }
 
 //    public byte getKeyMask()

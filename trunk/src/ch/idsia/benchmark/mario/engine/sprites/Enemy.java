@@ -55,8 +55,8 @@ public Enemy(LevelScene world, int x, int y, int dir, int type, boolean winged, 
     xPicO = 8;
     yPicO = 31;
 
-//    yaa = GlobalOptions.creaturesGravity * 2; //TODO: 2
-//    yaw = GlobalOptions.creaturesGravity == 1 ? 0 : 0.3f * GlobalOptions.creaturesGravity; //TODO: 3
+    yaa = creaturesGravity * 2;
+    yaw = creaturesGravity == 1 ? 0 : 0.3f * creaturesGravity;
 
     switch (type)
     {
@@ -210,7 +210,7 @@ public void move()
     {
         if (winged)
         {
-            ya += 0.6f*yaw;
+            ya += 0.6f * yaw;
         } else
         {
             ya += yaa;
