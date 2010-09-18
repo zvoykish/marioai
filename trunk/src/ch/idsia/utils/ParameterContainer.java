@@ -235,7 +235,7 @@ public static void InitDefaults()
         defaultOptionsHashMap.put("-tl", "200"); //Time Limit
         defaultOptionsHashMap.put("-tc", "off"); //defaultOptionsHashMap.put("-toolsConfigurator","off");
         defaultOptionsHashMap.put("-trace", "off"); // Trace Mario path through the level, output to std and default file
-        defaultOptionsHashMap.put("-vaot", "off"); //defaultOptionsHashMap.put("-viewAlwaysOnTop","off");
+        defaultOptionsHashMap.put("-vaot", "on"); //defaultOptionsHashMap.put("-viewAlwaysOnTop","off");
         defaultOptionsHashMap.put("-vlx", "0"); //defaultOptionsHashMap.put("-viewLocationX","0");
         defaultOptionsHashMap.put("-vly", "0"); //defaultOptionsHashMap.put("-viewLocationY","0");
         defaultOptionsHashMap.put("-vis", "on"); //defaultOptionsHashMap.put("-visual","on");
