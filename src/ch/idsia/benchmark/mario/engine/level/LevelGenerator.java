@@ -362,13 +362,8 @@ private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, in
 {
     int gs = globalRandom.nextInt(5) + 2; //GapStairs
     int gl = globalRandom.nextInt(levelDifficulty) + levelDifficulty > 7 ? 10 : 3;//globalRandom.nextInt(2) + 2; //GapLength
-    System.out.println("gl = " + gl);
-//        System.out.println("globalRandom.nextInt() % this.levelDifficulty+1 = " +
     int length = gs * 2 + gl;
-    System.out.println("length = " + length);
 
-//    System.out.println("length = " + length);
-//    System.out.println("maxLength = " + maxLength);
     if (length > maxLength)
         length = maxLength;
 
@@ -411,10 +406,8 @@ private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, in
             for (int y = 0; y < height; y++)
             {
                 if (y >= floor && y <= floor + floorHeight)
-                {
-                    System.out.println("x = " + x);
                     level.setBlock(x, y, (byte) (1 + 9 * 16));
-                } else if (hasStairs)
+                else if (hasStairs)
                 {
                     if (x < xo + gs)
                     {
