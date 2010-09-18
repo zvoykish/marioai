@@ -1001,7 +1001,6 @@ public void reset(CmdLineOptions cmdLineOptions)
 {
 //        System.out.println("\nLevelScene RESET!");
 //        this.gameViewer = setUpOptions[0] == 1;
-    this.mario.setMarioInvulnerable(cmdLineOptions.isMarioInvulnerable());
 //        System.out.println("this.mario.isMarioInvulnerable = " + this.mario.isMarioInvulnerable);
     this.levelDifficulty = cmdLineOptions.getLevelDifficulty();
 //        System.out.println("this.levelDifficulty = " + this.levelDifficulty);
@@ -1011,7 +1010,7 @@ public void reset(CmdLineOptions cmdLineOptions)
 //        System.out.println("levelSeed = " + levelSeed);
     this.levelType = cmdLineOptions.getLevelType();
 //        System.out.println("levelType = " + levelType);
-    Mario.resetStatic(cmdLineOptions.getMarioMode());
+
 
     GlobalOptions.FPS = cmdLineOptions.getFPS();
 //        System.out.println("GlobalOptions.FPS = " + GlobalOptions.FPS);
@@ -1070,9 +1069,8 @@ public void reset(CmdLineOptions cmdLineOptions)
     this.width = GlobalOptions.VISUAL_COMPONENT_WIDTH;
     this.height = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
 
-
+    Mario.resetStatic(cmdLineOptions);
     mario = new Mario(this);
-    mario.setMarioGravity(cmdLineOptions.getMarioGravity());
 
     sprites.add(mario);
     startTime = 1;

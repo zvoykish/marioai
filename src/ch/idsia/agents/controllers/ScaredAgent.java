@@ -13,42 +13,42 @@ import ch.idsia.benchmark.mario.engine.sprites.Mario;
  */
 public class ScaredAgent extends BasicMarioAIAgent implements Agent
 {
-    public ScaredAgent()
-    {
-        super("ScaredAgent");
-    }
+public ScaredAgent()
+{
+    super("ScaredAgent");
+}
 
-    int trueJumpCounter = 0;
+int trueJumpCounter = 0;
 //    int trueSpeedCounter = 0;
 
-    public boolean[] getAction()
+public boolean[] getAction()
+{
+    if (/*levelScene[11][13] != 0 ||*/ levelScene[this.receptiveFieldWidth / 2][this.receptiveFieldHeight / 2 + 1] != 0 ||
+            /* levelScene[12][13] == 0 ||*/ levelScene[this.receptiveFieldWidth / 2 / 2 + 1][this.receptiveFieldHeight / 2 + 1] == 0)
     {
-        if (/*levelScene[11][13] != 0 ||*/ levelScene[11][12] != 0 ||
-                /* levelScene[12][13] == 0 ||*/ levelScene[12][12] == 0)
+        if (isMarioAbleToJump || (!isMarioOnGround && action[Mario.KEY_JUMP]))
         {
-            if (isMarioAbleToJump || (!isMarioOnGround && action[Mario.KEY_JUMP]))
-            {
-                action[Mario.KEY_JUMP] = true;
-            }
-            ++trueJumpCounter;
-        } else
-        {
-            action[Mario.KEY_JUMP] = false;
-            trueJumpCounter = 0;
+            action[Mario.KEY_JUMP] = true;
         }
-
-        if (trueJumpCounter > 46)
-        {
-            trueJumpCounter = 0;
-            action[Mario.KEY_JUMP] = false;
-        }
-
-        return action;  //To change body of implemented methods use File | Settings | File Templates.
+        ++trueJumpCounter;
+    } else
+    {
+        action[Mario.KEY_JUMP] = false;
+        trueJumpCounter = 0;
     }
 
-    public void reset()
+    if (trueJumpCounter > 46)
     {
-        action[Mario.KEY_RIGHT] = true;
-        action[Mario.KEY_SPEED] = false;
+        trueJumpCounter = 0;
+        action[Mario.KEY_JUMP] = false;
     }
+
+    return action;  //To change body of implemented methods use File | Settings | File Templates.
+}
+
+public void reset()
+{
+    action[Mario.KEY_RIGHT] = true;
+    action[Mario.KEY_SPEED] = false;
+}
 }

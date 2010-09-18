@@ -12,7 +12,7 @@ public abstract class
 {
 public static final int primaryVerionUID = 0;
 public static final int minorVerionUID = 1;
-public static final int minorSubVerionID = 7;
+public static final int minorSubVerionID = 8;
 
 public static boolean areLabels = false;
 public static boolean isMarioAlwaysInCenter = false;
@@ -56,7 +56,7 @@ public static int getMinorSubVerionID()
 
 public static String getBenchmarkName()
 {
-    return "[~~ Mario AI Benchmark ~~" + GlobalOptions.getVersionUID() + "a]";
+    return "[~ Mario AI Benchmark ~" + GlobalOptions.getVersionUID() + "]";
 }
 
 public static String getVersionUID()

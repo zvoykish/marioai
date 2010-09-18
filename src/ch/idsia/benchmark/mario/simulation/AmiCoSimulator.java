@@ -15,38 +15,34 @@ import ch.idsia.tools.CmdLineOptions;
 
 public class AmiCoSimulator
 {
-    public static void main(String[] args)
+public static void main(String[] args)
+{
+    CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
+    cmdLineOptions.setMarioInvulnerable(true);
+    String options = "-lf on -zs 1 -ls 16 -vis 1";
+    System.out.print(options);
+    Environment environment = MarioEnvironment.getInstance();
+    Agent agent = new ForwardAgent();
+    environment.reset(options);
+    while (!environment.isLevelFinished())
     {
-        CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
-        cmdLineOptions.setMarioInvulnerable(true);
-        String options = "-lf on -zs 1 -ls 16 -vis 1";
-        System.out.print(options);
-        Environment environment = MarioEnvironment.getInstance();
-        Agent agent = new ForwardAgent();
-        environment.reset(options);
-        while (!environment.isLevelFinished())
-        {
-            environment.tick();
+        environment.tick();
 //                agent.integrateObservation(environment.getSerializedLevelSceneObservationZ(options[17]),
 //                                           environment.getSerializedEnemiesObservationZ(options[18]),
 //                                           environment.getMarioFloatPos(),
 //                                           environment.getEnemiesFloatPos(),
 //                                           environment.getMarioState());
-            agent.integrateObservation(environment);
-            environment.performAction(agent.getAction());
-        }
-        System.out.println("Evaluation Info:");
-        float[] ev = environment.getEvaluationInfoAsFloats();
-        for (float anEv : ev)
-        {
-            System.out.print(anEv + ", ");
-        }
-//        }
-        System.exit(0);
+        agent.integrateObservation(environment);
+        environment.performAction(agent.getAction());
     }
-
-    public void runEpisodes()
+    System.out.println("Evaluation Info:");
+    float[] ev = environment.getEvaluationInfoAsFloats();
+    for (float anEv : ev)
     {
-
+        System.out.print(anEv + ", ");
     }
+//        }
+    System.exit(0);
+}
+
 }
