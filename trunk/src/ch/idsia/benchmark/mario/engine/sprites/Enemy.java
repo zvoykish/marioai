@@ -36,7 +36,7 @@ public boolean avoidCliffs = true;
 public boolean winged = true;
 private int wingTime = 0;
 
-private float yaw = 0;
+private float yaw = 1;
 
 public boolean noFireballDeath;
 
@@ -56,7 +56,7 @@ public Enemy(LevelScene world, int x, int y, int dir, int type, boolean winged, 
     yPicO = 31;
 
     yaa = creaturesGravity * 2;
-    yaw = creaturesGravity == 1 ? 0 : 0.3f * creaturesGravity;
+    yaw = creaturesGravity == 1 ? 1 : 0.3f * creaturesGravity;
 
     switch (type)
     {
