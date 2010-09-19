@@ -155,23 +155,27 @@ public void reset()
 
 public void tick()
 {
+//    this.render(thisVolatileImageGraphics, CheaterKeyboardAgent.isObserveLevel ? level.length : 0);
     this.render(thisVolatileImageGraphics, 0);
-    String msg = "Agent: " + this.agentNameStr;
-    drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 7, 5);
 
-    msg = "PRESSED BUTTONS: ";
-    drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 8, 6);
+    String msg = "Agent: " + this.agentNameStr;
+    drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 5, 5);
+
+    msg = "PRESSED KEYS: ";
+    drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 6, 6);
 
     msg = "";
     if (mario.keys != null)
     {
         for (int i = 0; i < Environment.numberOfButtons; ++i)
-            msg += (mario.keys[i]) ? LevelScene.keysStr[i] : "      ";
+            msg += (mario.keys[i]) ? LevelScene.keysStr[i] : "    ";
     } else
         msg = "NULL";
-    drawString(thisVolatileImageGraphics, msg, 6, 78, 1);
+    drawString(thisVolatileImageGraphics, msg, 107, 52, 1);
+    if (mario.keys[Mario.KEY_SPEED])
+        thisVolatileImageGraphics.drawImage(Art.particles[0][3], 234, 50, 10, 10, null);
 
-    if (mario.cheatKeys[Mario.KEY_WIN])
+    if (mario.cheatKeys[CheaterKeyboardAgent.CHEAT_KEY_WIN])
         mario.win();
 
     if (!this.hasFocus() && (tm - tm0) / (delay + 1) % 42 < 20)
@@ -215,7 +219,7 @@ public void render(Graphics g, float cameraOffSet)
     int xCam = (int) (mario.xOld + (mario.x - mario.xOld) * cameraOffSet) - 160;
     int yCam = (int) (mario.yOld + (mario.y - mario.yOld) * cameraOffSet) - 120;
 
-    if (GlobalOptions.isMarioAlwaysInCenter)
+    if (GlobalOptions.isCameraCenteredOnMario)
     {
     } else
     {
@@ -223,10 +227,10 @@ public void render(Graphics g, float cameraOffSet)
         //        int yCam = (int) (yCamO + (this.yCam - yCamO) * cameraOffSet);
         if (xCam < 0) xCam = 0;
         if (yCam < 0) yCam = 0;
-        if (xCam > level.length * levelScene.cellSize - GlobalOptions.VISUAL_COMPONENT_WIDTH)
-            xCam = level.length * levelScene.cellSize - GlobalOptions.VISUAL_COMPONENT_WIDTH;
-        if (yCam > level.height * levelScene.cellSize - GlobalOptions.VISUAL_COMPONENT_HEIGHT)
-            yCam = level.height * levelScene.cellSize - GlobalOptions.VISUAL_COMPONENT_HEIGHT;
+        if (xCam > level.length * LevelScene.cellSize - GlobalOptions.VISUAL_COMPONENT_WIDTH)
+            xCam = level.length * LevelScene.cellSize - GlobalOptions.VISUAL_COMPONENT_WIDTH;
+        if (yCam > level.height * LevelScene.cellSize - GlobalOptions.VISUAL_COMPONENT_HEIGHT)
+            yCam = level.height * LevelScene.cellSize - GlobalOptions.VISUAL_COMPONENT_HEIGHT;
     }
 //          g.drawImage(Art.background, 0, 0, null);
 
@@ -256,18 +260,25 @@ public void render(Graphics g, float cameraOffSet)
     g.setColor(Color.BLACK);
     layer.renderExit1(g, levelScene.tick, levelScene.paused ? 0 : cameraOffSet);
 
-    drawStringDropShadow(g, "DIFFICULTY:   " + df.format(levelScene.getLevelDifficulty()), 0, 0, levelScene.getLevelDifficulty() > 6 ? 1 : levelScene.getLevelDifficulty() > 2 ? 4 : 7);
-    drawStringDropShadow(g, "CREATURES:" + (mario.levelScene.paused ? "OFF" : " ON"), 19, 0, 7);
+    drawStringDropShadow(g, "DIFFICULTY: " + df.format(levelScene.getLevelDifficulty()), 0, 0, levelScene.getLevelDifficulty() > 6 ? 1 : levelScene.getLevelDifficulty() > 2 ? 4 : 7);
+//    drawStringDropShadow(g, "CREATURES:" + (mario.levelScene.paused ? "OFF" : " ON"), 19, 0, 7);
     drawStringDropShadow(g, "SEED:" + levelScene.getLevelSeed(), 0, 1, 7);
     drawStringDropShadow(g, "TYPE:" + LEVEL_TYPES[levelScene.getLevelType()], 0, 2, 7);
-    drawStringDropShadow(g, "ALL KILLS: " + levelScene.killedCreaturesTotal, 19, 1, 1);
+    drawStringDropShadow(g, "ALL KILLS: " + levelScene.killedCreaturesTotal, 19, 0, 1);
     drawStringDropShadow(g, "LENGTH:" + (int) mario.x / 16 + " of " + levelScene.getLevelLength(), 0, 3, 7);
-    drawStringDropShadow(g, "by Fire  : " + levelScene.killedCreaturesByFireBall, 19, 2, 1);
-    drawStringDropShadow(g, "COINS    : " + df.format(Mario.coins), 0, 4, 4);
-    drawStringDropShadow(g, "by Shell : " + levelScene.killedCreaturesByShell, 19, 3, 1);
-    drawStringDropShadow(g, "MUSHROOMS: " + df.format(Mario.mushroomsDevoured), 0, 5, 4);
-    drawStringDropShadow(g, "by Stomp : " + levelScene.killedCreaturesByStomp, 19, 4, 1);
-    drawStringDropShadow(g, "FLOWERS  : " + df.format(Mario.flowersDevoured), 0, 6, 4);
+    drawStringDropShadow(g, "by Fire  : " + levelScene.killedCreaturesByFireBall, 19, 1, 1);
+//    drawStringDropShadow(g, "COINS    : " + df.format(Mario.coins), 0, 4, 4);
+    drawStringDropShadow(g, "by Shell : " + levelScene.killedCreaturesByShell, 19, 2, 1);
+    // COINS:
+    g.drawImage(Art.level[0][2], 2, 35, 10, 10, null);
+    drawStringDropShadow(g, "x" + df.format(Mario.coins), 1, 4, 4);
+    g.drawImage(Art.items[0][0], 47, 35, 11, 11, null);
+    drawStringDropShadow(g, "x" + df.format(Mario.mushroomsDevoured), 7, 4, 4);
+    g.drawImage(Art.items[1][0], 89, 35, 11, 11, null);
+    drawStringDropShadow(g, "x" + df.format(Mario.flowersDevoured), 12, 4, 4);
+//    drawStringDropShadow(g, "MUSHROOMS: " + df.format(Mario.mushroomsDevoured), 0, 5, 4);
+    drawStringDropShadow(g, "by Stomp : " + levelScene.killedCreaturesByStomp, 19, 3, 1);
+//    drawStringDropShadow(g, "FLOWERS  : " + df.format(Mario.flowersDevoured), 0, 6, 4);
 
     drawStringDropShadow(g, "TIME", 33, 0, 7);
     int time = levelScene.getTimeLeft();
@@ -414,7 +425,7 @@ private void renderBlackout(Graphics g, int x, int y, int radius)
     g.fillPolygon(xp, yp, xp.length);
 }
 
-////        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 ////        frame.setLocation((screenSize.length-frame.getWidth())/2, (screenSize.height-frame.getHeight())/2);
 private static GraphicsConfiguration graphicsConfiguration;
 
@@ -437,7 +448,6 @@ public void postInitGraphics()
 //        System.out.println("thisVolatileImageGraphics = " + thisVolatileImageGraphics);
 }
 
-
 public void postInitGraphicsAndLevel()
 {
     if (graphicsConfiguration != null)
@@ -459,7 +469,7 @@ public void postInitGraphicsAndLevel()
             Level bgLevel = BgLevelGenerator.createLevel(w / 32 + 1, h / 32 + 1, i == 0, levelScene.getLevelType());
             bgLayer[i] = new BgRenderer(bgLevel, graphicsConfiguration, GlobalOptions.VISUAL_COMPONENT_WIDTH, GlobalOptions.VISUAL_COMPONENT_HEIGHT, scrollSpeed);
         }
-    } else throw new Error("[MarioAI] ERROR: Graphics Configuration is null. Graphics initialization failed");
+    } else throw new Error("[Mario AI : ERROR] : Graphics Configuration is null. Graphics initialization failed");
 }
 
 public void adjustFPS()
@@ -492,7 +502,7 @@ public void setGameViewer(GameViewer gameViewer)
 
 public List<String> getTextObservation(boolean showEnemies, boolean showLevelScene, boolean showMerged, int zLevelMapValue, int zLevelEnemiesValue)
 {
-    return levelScene.getTextObservationAroundMario(showEnemies, showLevelScene, showMerged, zLevelMapValue, zLevelEnemiesValue);
+    return levelScene.getObservationStrings(showEnemies, showLevelScene, showMerged, zLevelMapValue, zLevelEnemiesValue);
 }
 }
 

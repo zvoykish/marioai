@@ -20,10 +20,6 @@ public static final int KEY_DOWN = 2;
 public static final int KEY_JUMP = 3;
 public static final int KEY_SPEED = 4;
 public static final int KEY_UP = 5;
-public static final int KEY_PAUSE = 6;
-public static final int KEY_DUMP_CURRENT_WORLD = 7;
-public static final int KEY_LIFE_UP = 8;
-public static final int KEY_WIN = 9;
 
 public static final int STATUS_RUNNING = 2;
 public static final int STATUS_WIN = 1;
@@ -362,7 +358,7 @@ public void move()
 //        if (keys[KEY_DUMP_CURRENT_WORLD])
 //            try {
 //                System.out.println("DUMP:");
-////                levelScene.getTextObservationAroundMario(System.out);
+////                levelScene.getObservationStrings(System.out);
 //                //levelScene.level.save(System.out);
 //                System.out.println("DUMPED:");
 //            } catch (IOException e) {

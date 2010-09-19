@@ -16,7 +16,7 @@ import java.util.List;
 public final class LevelScene implements SpriteContext
 {
 public static final boolean[] defaultKeys = new boolean[Environment.numberOfButtons];
-public static final String[] keysStr = {"<< LEFT  ", "RIGHT >> ", " DOWN ", " JUMP ", " SPEED", " ^^UP!"};
+public static final String[] keysStr = {"<<L ", "R>> ", "\\\\//", "JUMP", " RUN", "^UP^"};
 
 public static final int cellSize = 16;
 
@@ -44,8 +44,8 @@ private static final int CANNON_MUZZLE = -82;
 private static final int CANNON_TRUNK = -80;
 private static final int COIN_ANIM = Sprite.KIND_COIN_ANIM;  //1
 private static final int BREAKABLE_BRICK = -20;
-private static final int UNBREAKABLE_BRICK = -22; //a rock with animated question symbol
-private static final int BRICK = -24; //a rock with animated question symbol
+private static final int UNBREAKABLE_BRICK = -22; //a rock with animated question mark
+private static final int BRICK = -24;           //a rock with animated question mark
 private static final int FLOWER_POT = -90;
 private static final int BORDER_CANNOT_PASS_THROUGH = -60;
 private static final int BORDER_HILL = -62;
@@ -551,9 +551,9 @@ public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
     return mergedZZ;
 }
 
-public List<String> getTextObservationAroundMario(boolean Enemies, boolean LevelMap,
-                                                  boolean mergedObservationFlag,
-                                                  int ZLevelScene, int ZLevelEnemies)
+public List<String> getObservationStrings(boolean Enemies, boolean LevelMap,
+                                          boolean mergedObservationFlag,
+                                          int ZLevelScene, int ZLevelEnemies)
 {
     List<String> ret = new ArrayList<String>();
     if (level != null && mario != null)

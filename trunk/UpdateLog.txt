@@ -1,6 +1,8 @@
 Mario AI benchmark update log.
 
 
+18. Improvement: (Visualization) Game State representation compressed. 
+17. Improvement: Encoding update. Facilitates learning algorithms to learn the differences in terrain and enemies.
 
 Version 0.1.8 DATE: 2010-09-18 (September)
 
@@ -11,9 +13,9 @@ Version 0.1.8 DATE: 2010-09-18 (September)
 14. Unit tests, JUnit + TestNG. 73 unit tests give you pretty good insight about how the benchmark does work, how can
     you use it and gives some hints about internals that was hard to get quickly. To launch them all at together in IntelliJ
     IDEA just run (Ctrl+Shift+F10) ch.idsia.unittests package. Please, report by posting and issue if any of them failed!
-13. Gravity options. "-mgr <float>" or setMarioGravity(float), setCreaturesGravity(float) influences the Mario gravity,
-    "-cgr <float>" the creatures ones. These options will be used to create some new tasks for Learning track, the agent
-     will be compared to handle various physics of the Mario Environment.
+13. Gravity options. "-mgr <float>" or setMarioGravity(float) influences the Mario gravity, "-cgr <float>"
+    setCreaturesGravity(float) -- the creatures' ones. These options will be used to create some new tasks for Learning
+    track; the agent will be compared to handle various physics of the Mario Environment.
 12. Optional Receptive Field Size. Default: 19x19 as before.
 11. Documentation updated (http://marioai.googlecode.com/svn/trunk/doc)
 10. Evaluation info outputs more exhaustive information about Agent performance after the end of the episode
