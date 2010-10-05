@@ -30,6 +30,8 @@ static public class objCounters implements Serializable
     public int mushrooms = 0;
     public int flowers = 0;
     public int creatures = 0;
+
+    private static final long serialVersionUID = 4505050755444159808L;
 }
 
 public static final String[] BIT_DESCRIPTIONS = {//
@@ -56,7 +58,7 @@ public static final int BIT_ANIMATED = 1 << 7;
 
 public static objCounters counters;
 
-private final int FILE_HEADER = 0x271c4178;
+//private final int FILE_HEADER = 0x271c4178;
 public int length;
 public int height;
 public int randomSeed;
@@ -67,11 +69,6 @@ public byte[][] map;
 public byte[][] data;
 // Experimental feature: Mario TRACE
 public int[][] marioTrace;
-
-
-//    public Vector ints;
-//    public Vector booleans;
-//    public byte[][] observation;
 
 public SpriteTemplate[][] spriteTemplates;
 
@@ -122,50 +119,14 @@ public static void saveBehaviors(DataOutputStream dos) throws IOException
 
 public static Level load(ObjectInputStream ois) throws IOException, ClassNotFoundException
 {
-//    long header = dis.readLong();
-//    if (header != Level.FILE_HEADER) throw new IOException("Bad level header");
-//    int version = dis.read() & 0xff;
-////        System.out.println("version = " + version);
-//    int width = dis.readShort() & 0xffff;
-//    int height = dis.readShort() & 0xffff;
-//    Level level = new Level(width, height);
-//    level.map = new byte[width][height];
-//    level.data = new byte[width][height];
-//    for (int i = 0; i < width; i++)
-//    {
-//        dis.readFully(level.map[i]);
-//        dis.readFully(level.data[i]);
-//    }
     Level level = (Level) ois.readObject();
-    System.out.println("level.counters = " + level.counters);
     return level;
 }
 
 public static void save(Level lvl, ObjectOutputStream oos) throws IOException
 {
-//    dos.writeLong(Level.FILE_HEADER);
-//    dos.write((byte) 0);
-//
-//    dos.writeShort((short) length);
-//    dos.writeShort((short) height);
-//
-//    for (int i = 0; i < length; i++)
-//    {
-//        dos.write(map[i]);
-//        dos.write(data[i]);
-//    }
     oos.writeObject(lvl);
 }
-
-//    public void save_rand(DataOutputStream dos) throws IOException
-//    {
-//        for (int i = 0; i < ints.size(); i++)
-//            dos.writeInt(new Integer((Integer) ints.get(i)));
-//
-//        dos.writeChar('\n');
-//        for (int i = 0; i < booleans.size(); i++)
-//            dos.writeBoolean(new Boolean((Boolean) booleans.get(i)));
-//    }
 
 /**
  * Animates the unbreakable brick when smashed from below by Mario
@@ -242,11 +203,17 @@ public boolean setSpriteTemplate(int x, int y, SpriteTemplate spriteTemplate)
     return true;
 }
 
-// TODO: remove if not necessary or use for EvaluationInfo
+private void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException
+{
+    aInputStream.defaultReadObject();
+    counters = (Level.objCounters) aInputStream.readObject();
+}
 
-public int getWidthCells() { return length; }
-
-public float getWidthPhys() { return length * 16; }
+private void writeObject(ObjectOutputStream aOutputStream) throws IOException
+{
+    aOutputStream.defaultWriteObject();
+    aOutputStream.writeObject(counters);
+}
 }
 
 

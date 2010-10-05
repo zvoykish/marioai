@@ -59,7 +59,6 @@ private static int levelDifficulty;
 private static int levelType;
 private static int levelSeed;
 
-private static final boolean RIGHT_DIRECTION_BOTTOM = false; // TODO: describe this
 private static final int ANY_HEIGHT = -1;
 private static final int INFINITE_FLOOR_HEIGHT = Integer.MAX_VALUE;
 
@@ -71,14 +70,13 @@ private LevelGenerator() {}
 private static void loadLevel(String filePath)
 {    try
     {
-        if (filePath.equals(""))
-            filePath = "resources/test.lvl";
+        if (filePath.equals("")) //This must never happen
+        {
+            System.err.println("[MarioAI ERROR] : file path to the level is empty");
+            System.exit(-3);
+        }
 
-        System.out.println("here");
         level = Level.load(new ObjectInputStream(new FileInputStream(filePath)));
-        System.out.println("level.getWidthCells() = " + level.getWidthCells());
-        System.out.println("level.xExit = " + level.xExit);
-        System.out.println("level.yExit = " + level.yExit);
     } catch (IOException e)
     {
         System.err.println("[MarioAI EXCEPTION] : failed while trying to load " + filePath);
@@ -86,7 +84,6 @@ private static void loadLevel(String filePath)
     } catch (ClassNotFoundException e)
     {
         System.err.println("[MarioAI EXCEPTION] : class not found in " + filePath);
-//        e.printStackTrace();
         System.exit(-3);
     }
 }
@@ -369,7 +366,7 @@ private static int buildDeadEnds(int x0, int maxLength)
         {
             if (x - nx >= depth - wallWidth)
             {
-                if (direction == RIGHT_DIRECTION_BOTTOM) //wall on the top
+                if (direction == globalRandom.nextBoolean()) //wall on the top
                 {
                     if (y <= separatorY)// + separatorHeight )
                     {

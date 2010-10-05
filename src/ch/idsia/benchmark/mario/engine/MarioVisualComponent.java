@@ -156,7 +156,7 @@ public void reset()
 public void tick()
 {
 //    this.render(thisVolatileImageGraphics, CheaterKeyboardAgent.isObserveLevel ? level.length : 0);
-    this.render(thisVolatileImageGraphics, GlobalOptions.isObserveLevel ? 20 : 0);
+    this.render(thisVolatileImageGraphics);
 
     String msg = "Agent: " + this.agentNameStr;
     drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 5, 5);
@@ -214,10 +214,10 @@ public void tick()
     }
 }
 
-public void render(Graphics g, float cameraOffSet)
+public void render(Graphics g)
 {
-    int xCam = (int) (mario.xOld + (mario.x - mario.xOld) * cameraOffSet) - 160;
-    int yCam = (int) (mario.yOld + (mario.y - mario.yOld) * cameraOffSet) - 120;
+    int xCam = (int) (mario.xOld + (mario.x - mario.xOld)) - 160;
+    int yCam = (int) (mario.yOld + (mario.y - mario.yOld)) - 120;
 
     if (GlobalOptions.isCameraCenteredOnMario)
     {
@@ -237,28 +237,28 @@ public void render(Graphics g, float cameraOffSet)
     for (int i = 0; i < bgLayer.length; i++)
     {
         bgLayer[i].setCam(xCam, yCam);
-        bgLayer[i].render(g, levelScene.tick, cameraOffSet); //levelScene.
+        bgLayer[i].render(g, levelScene.tick); //levelScene.
     }
 
     g.translate(-xCam, -yCam);
 
     for (Sprite sprite : levelScene.sprites)          // levelScene.
-        if (sprite.layer == 0) sprite.render(g, cameraOffSet);
+        if (sprite.layer == 0) sprite.render(g);
 
     g.translate(xCam, yCam);
 
     layer.setCam(xCam, yCam);
-    layer.render(g, levelScene.tick, /*levelScene.paused ? 0 : */cameraOffSet);
-    layer.renderExit0(g, levelScene.tick, /*levelScene.paused ? 0 :*/ cameraOffSet, mario.winTime == 0);
+    layer.render(g, levelScene.tick /*levelScene.paused ? 0 : */);
+    layer.renderExit0(g, levelScene.tick, /*levelScene.paused ? 0 :*/  mario.winTime == 0);
 
     g.translate(-xCam, -yCam);
 
     for (Sprite sprite : levelScene.sprites)  // Mario, creatures
-        if (sprite.layer == 1) sprite.render(g, cameraOffSet);
+        if (sprite.layer == 1) sprite.render(g);
 
     g.translate(xCam, yCam);
     g.setColor(Color.BLACK);
-    layer.renderExit1(g, levelScene.tick, /*levelScene.paused ? 0 :*/ cameraOffSet);
+    layer.renderExit1(g, levelScene.tick);
 
     drawStringDropShadow(g, "DIFFICULTY: " + df.format(levelScene.getLevelDifficulty()), 0, 0, levelScene.getLevelDifficulty() > 6 ? 1 : levelScene.getLevelDifficulty() > 2 ? 4 : 7);
 //    drawStringDropShadow(g, "CREATURES:" + (mario.levelScene.paused ? "OFF" : " ON"), 19, 0, 7);
