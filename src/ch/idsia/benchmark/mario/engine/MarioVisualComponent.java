@@ -159,10 +159,10 @@ public void tick()
     this.render(thisVolatileImageGraphics);
 
     String msg = "Agent: " + this.agentNameStr;
-    drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 5, 5);
+    drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 6, 5);
 
     msg = "PRESSED KEYS: ";
-    drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 6, 6);
+    drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 7, 6);
 
     msg = "";
     if (mario.keys != null)
@@ -171,9 +171,9 @@ public void tick()
             msg += (mario.keys[i]) ? LevelScene.keysStr[i] : "    ";
     } else
         msg = "NULL";
-    drawString(thisVolatileImageGraphics, msg, 107, 52, 1);
+    drawString(thisVolatileImageGraphics, msg, 107, 61, 1);
     if (mario.keys[Mario.KEY_SPEED])
-        thisVolatileImageGraphics.drawImage(Art.particles[0][3], 234, 50, 10, 10, null);
+        thisVolatileImageGraphics.drawImage(Art.particles[0][3], 234, 59, 10, 10, null);
 
     if (mario.cheatKeys[CheaterKeyboardAgent.CHEAT_KEY_WIN])
         mario.win();
@@ -266,17 +266,17 @@ public void render(Graphics g)
     drawStringDropShadow(g, "TYPE:" + LEVEL_TYPES[levelScene.getLevelType()], 0, 2, 7);
     drawStringDropShadow(g, "ALL KILLS: " + levelScene.killedCreaturesTotal, 19, 0, 1);
     drawStringDropShadow(g, "LENGTH:" + (int) mario.x / 16 + " of " + levelScene.getLevelLength(), 0, 3, 7);
-    //TODO: height output here
+    drawStringDropShadow(g, "HEIGHT:" + (int) mario.y / 16 + " of " + levelScene.getLevelHeight(), 0, 4, 7);
     drawStringDropShadow(g, "by Fire  : " + levelScene.killedCreaturesByFireBall, 19, 1, 1);
 //    drawStringDropShadow(g, "COINS    : " + df.format(Mario.coins), 0, 4, 4);
     drawStringDropShadow(g, "by Shell : " + levelScene.killedCreaturesByShell, 19, 2, 1);
     // COINS:
-    g.drawImage(Art.level[0][2], 2, 35, 10, 10, null);
-    drawStringDropShadow(g, "x" + df.format(Mario.coins), 1, 4, 4);
-    g.drawImage(Art.items[0][0], 47, 35, 11, 11, null);
-    drawStringDropShadow(g, "x" + df.format(Mario.mushroomsDevoured), 7, 4, 4);
-    g.drawImage(Art.items[1][0], 89, 35, 11, 11, null);
-    drawStringDropShadow(g, "x" + df.format(Mario.flowersDevoured), 12, 4, 4);
+    g.drawImage(Art.level[0][2], 2, 43, 10, 10, null);
+    drawStringDropShadow(g, "x" + df.format(Mario.coins), 1, 5, 4);
+    g.drawImage(Art.items[0][0], 47, 43, 11, 11, null);
+    drawStringDropShadow(g, "x" + df.format(Mario.mushroomsDevoured), 7, 5, 4);
+    g.drawImage(Art.items[1][0], 89, 43, 11, 11, null);
+    drawStringDropShadow(g, "x" + df.format(Mario.flowersDevoured), 12, 5, 4);
 //    drawStringDropShadow(g, "MUSHROOMS: " + df.format(Mario.mushroomsDevoured), 0, 5, 4);
     drawStringDropShadow(g, "by Stomp : " + levelScene.killedCreaturesByStomp, 19, 3, 1);
 //    drawStringDropShadow(g, "FLOWERS  : " + df.format(Mario.flowersDevoured), 0, 6, 4);
