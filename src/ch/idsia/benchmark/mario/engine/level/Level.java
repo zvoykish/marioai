@@ -1,12 +1,12 @@
 package ch.idsia.benchmark.mario.engine.level;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 
-public class Level
+public class Level implements Serializable
 {
-static public class objCounters
+private static final long serialVersionUID = -2222762134065697580L;
+
+static public class objCounters implements Serializable
 {
     public int deadEndsCount = 0;
     public int cannonsCount = 0;
@@ -56,9 +56,12 @@ public static final int BIT_ANIMATED = 1 << 7;
 
 public static objCounters counters;
 
-private static final int FILE_HEADER = 0x271c4178;
+private final int FILE_HEADER = 0x271c4178;
 public int length;
 public int height;
+public int randomSeed;
+public int type;
+public int difficulty;
 
 public byte[][] map;
 public byte[][] data;
@@ -74,8 +77,6 @@ public SpriteTemplate[][] spriteTemplates;
 
 public int xExit;
 public int yExit;
-
-private static boolean bulletsEnabled;
 
 public Level(int length, int height)
 {
@@ -119,38 +120,41 @@ public static void saveBehaviors(DataOutputStream dos) throws IOException
     dos.write(Level.TILE_BEHAVIORS);
 }
 
-public static Level load(DataInputStream dis) throws IOException
+public static Level load(ObjectInputStream ois) throws IOException, ClassNotFoundException
 {
-    long header = dis.readLong();
-    if (header != Level.FILE_HEADER) throw new IOException("Bad level header");
-    int version = dis.read() & 0xff;
-//        System.out.println("version = " + version);
-    int width = dis.readShort() & 0xffff;
-    int height = dis.readShort() & 0xffff;
-    Level level = new Level(width, height);
-    level.map = new byte[width][height];
-    level.data = new byte[width][height];
-    for (int i = 0; i < width; i++)
-    {
-        dis.readFully(level.map[i]);
-        dis.readFully(level.data[i]);
-    }
+//    long header = dis.readLong();
+//    if (header != Level.FILE_HEADER) throw new IOException("Bad level header");
+//    int version = dis.read() & 0xff;
+////        System.out.println("version = " + version);
+//    int width = dis.readShort() & 0xffff;
+//    int height = dis.readShort() & 0xffff;
+//    Level level = new Level(width, height);
+//    level.map = new byte[width][height];
+//    level.data = new byte[width][height];
+//    for (int i = 0; i < width; i++)
+//    {
+//        dis.readFully(level.map[i]);
+//        dis.readFully(level.data[i]);
+//    }
+    Level level = (Level) ois.readObject();
+    System.out.println("level.counters = " + level.counters);
     return level;
 }
 
-public void save(DataOutputStream dos) throws IOException
+public static void save(Level lvl, ObjectOutputStream oos) throws IOException
 {
-    dos.writeLong(Level.FILE_HEADER);
-    dos.write((byte) 0);
-
-    dos.writeShort((short) length);
-    dos.writeShort((short) height);
-
-    for (int i = 0; i < length; i++)
-    {
-        dos.write(map[i]);
-        dos.write(data[i]);
-    }
+//    dos.writeLong(Level.FILE_HEADER);
+//    dos.write((byte) 0);
+//
+//    dos.writeShort((short) length);
+//    dos.writeShort((short) height);
+//
+//    for (int i = 0; i < length; i++)
+//    {
+//        dos.write(map[i]);
+//        dos.write(data[i]);
+//    }
+    oos.writeObject(lvl);
 }
 
 //    public void save_rand(DataOutputStream dos) throws IOException

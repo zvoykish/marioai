@@ -4,6 +4,9 @@ import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.RandomCreatureGenerator;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Random;
 
 /**
@@ -65,8 +68,39 @@ static Level.objCounters counters = new Level.objCounters();
 
 private LevelGenerator() {}
 
+private static void loadLevel(String filePath)
+{    try
+    {
+        if (filePath.equals(""))
+            filePath = "resources/test.lvl";
+
+        System.out.println("here");
+        level = Level.load(new ObjectInputStream(new FileInputStream(filePath)));
+        System.out.println("level.getWidthCells() = " + level.getWidthCells());
+        System.out.println("level.xExit = " + level.xExit);
+        System.out.println("level.yExit = " + level.yExit);
+    } catch (IOException e)
+    {
+        System.err.println("[MarioAI EXCEPTION] : failed while trying to load " + filePath);
+        System.exit(-3); //TODO: move all error codes to constants
+    } catch (ClassNotFoundException e)
+    {
+        System.err.println("[MarioAI EXCEPTION] : class not found in " + filePath);
+//        e.printStackTrace();
+        System.exit(-3);
+    }
+}
+
 public static Level createLevel(CmdLineOptions args)
 {
+    try
+    {
+        levelSeed = args.getLevelRandSeed();
+    } catch (Exception e)
+    {
+        loadLevel(args.getParameterValue("-ls"));
+        return level;
+    }
     length = args.getLevelLength();
     height = args.getLevelHeight();
     if (height < 15)
@@ -74,6 +108,7 @@ public static Level createLevel(CmdLineOptions args)
         System.err.println("[Mario AI WARNING] : Level height changed to minimal allowed value 15");
         height = 15;
     }
+    System.out.println("here");
     isFlatLevel = args.isFlatLevel();
     counters.totalHillStraight = args.getHillStraightCount() ? Integer.MAX_VALUE : 0;
     counters.totalCannons = args.getCannonsCount() ? Integer.MAX_VALUE : 0;
@@ -105,7 +140,7 @@ public static Level createLevel(CmdLineOptions args)
     }
 
     level = new Level(length, height);
-    levelSeed = args.getLevelRandSeed();// + levelType; // TODO: ensure the difference of underground, castle
+//    levelSeed = args.getLevelRandSeed();// + levelType; // TODO: ensure the difference of underground, castle
     globalRandom.setSeed(levelSeed);
     creaturesRandom.setSeed(levelSeed, args.getEnemies(), levelDifficulty);
     dxRnd.setSeed(levelSeed);
@@ -130,6 +165,9 @@ public static Level createLevel(CmdLineOptions args)
     //coordinates of the exit
     level.xExit = level.length;
     level.yExit = floor;
+    level.randomSeed = levelSeed;
+    level.type = levelType;
+    level.difficulty = levelDifficulty;
 
     //level zone where exit is located
     for (int x = currentLength; x < level.length; x++)

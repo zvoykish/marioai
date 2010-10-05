@@ -402,12 +402,12 @@ public void bumpCheck(int xTile, int yTile)
     }
 }
 
-public void render(Graphics og, float alpha)
+public void render(Graphics og, float cameraOffSet)
 {
     if (winged)
     {
-        int xPixel = (int) (xOld + (x - xOld) * alpha) - xPicO;
-        int yPixel = (int) (yOld + (y - yOld) * alpha) - yPicO;
+        int xPixel = (int) (xOld + (x - xOld) * cameraOffSet) - xPicO;
+        int yPixel = (int) (yOld + (y - yOld) * cameraOffSet) - yPicO;
 
         if (kind == KIND_GREEN_KOOPA ||
                 kind == KIND_RED_KOOPA ||
@@ -422,12 +422,12 @@ public void render(Graphics og, float alpha)
         }
     }
 
-    super.render(og, alpha);
+    super.render(og, cameraOffSet);
 
     if (winged)
     {
-        int xPixel = (int) (xOld + (x - xOld) * alpha) - xPicO;
-        int yPixel = (int) (yOld + (y - yOld) * alpha) - yPicO;
+        int xPixel = (int) (xOld + (x - xOld) * cameraOffSet) - xPicO;
+        int yPixel = (int) (yOld + (y - yOld) * cameraOffSet) - yPicO;
 
         if (kind == KIND_GREEN_KOOPA ||
                 kind == KIND_RED_KOOPA ||

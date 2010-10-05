@@ -69,15 +69,15 @@ public void move()
     y += ya;
 }
 
-public void render(Graphics og, float alpha)
+public void render(Graphics og, float cameraOffSet)
 {
     if (!visible) return;
 
-//        int xPixel = (int)(xOld+(x-xOld)*alpha)-xPicO;
-//        int yPixel = (int)(yOld+(y-yOld)*alpha)-yPicO;
+        int xPixel = (int)(xOld+(x-xOld)*cameraOffSet)-xPicO;
+        int yPixel = (int)(yOld+(y-yOld)*cameraOffSet)-yPicO;
 
-    int xPixel = (int) x - xPicO;
-    int yPixel = (int) y - yPicO;
+//    int xPixel = (int) x - xPicO;
+//    int yPixel = (int) y - yPicO;
 
 //        System.out.print("xPic = " + xPic);
 //        System.out.print(", yPic = " + yPic);

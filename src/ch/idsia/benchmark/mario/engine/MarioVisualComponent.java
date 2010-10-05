@@ -156,7 +156,7 @@ public void reset()
 public void tick()
 {
 //    this.render(thisVolatileImageGraphics, CheaterKeyboardAgent.isObserveLevel ? level.length : 0);
-    this.render(thisVolatileImageGraphics, 0);
+    this.render(thisVolatileImageGraphics, GlobalOptions.isObserveLevel ? 20 : 0);
 
     String msg = "Agent: " + this.agentNameStr;
     drawStringDropShadow(thisVolatileImageGraphics, msg, 0, 5, 5);
@@ -248,8 +248,8 @@ public void render(Graphics g, float cameraOffSet)
     g.translate(xCam, yCam);
 
     layer.setCam(xCam, yCam);
-    layer.render(g, levelScene.tick, levelScene.paused ? 0 : cameraOffSet);
-    layer.renderExit0(g, levelScene.tick, levelScene.paused ? 0 : cameraOffSet, mario.winTime == 0);
+    layer.render(g, levelScene.tick, /*levelScene.paused ? 0 : */cameraOffSet);
+    layer.renderExit0(g, levelScene.tick, /*levelScene.paused ? 0 :*/ cameraOffSet, mario.winTime == 0);
 
     g.translate(-xCam, -yCam);
 
@@ -258,7 +258,7 @@ public void render(Graphics g, float cameraOffSet)
 
     g.translate(xCam, yCam);
     g.setColor(Color.BLACK);
-    layer.renderExit1(g, levelScene.tick, levelScene.paused ? 0 : cameraOffSet);
+    layer.renderExit1(g, levelScene.tick, /*levelScene.paused ? 0 :*/ cameraOffSet);
 
     drawStringDropShadow(g, "DIFFICULTY: " + df.format(levelScene.getLevelDifficulty()), 0, 0, levelScene.getLevelDifficulty() > 6 ? 1 : levelScene.getLevelDifficulty() > 2 ? 4 : 7);
 //    drawStringDropShadow(g, "CREATURES:" + (mario.levelScene.paused ? "OFF" : " ON"), 19, 0, 7);
@@ -266,6 +266,7 @@ public void render(Graphics g, float cameraOffSet)
     drawStringDropShadow(g, "TYPE:" + LEVEL_TYPES[levelScene.getLevelType()], 0, 2, 7);
     drawStringDropShadow(g, "ALL KILLS: " + levelScene.killedCreaturesTotal, 19, 0, 1);
     drawStringDropShadow(g, "LENGTH:" + (int) mario.x / 16 + " of " + levelScene.getLevelLength(), 0, 3, 7);
+    //TODO: height output here
     drawStringDropShadow(g, "by Fire  : " + levelScene.killedCreaturesByFireBall, 19, 1, 1);
 //    drawStringDropShadow(g, "COINS    : " + df.format(Mario.coins), 0, 4, 4);
     drawStringDropShadow(g, "by Shell : " + levelScene.killedCreaturesByShell, 19, 2, 1);

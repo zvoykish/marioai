@@ -38,6 +38,7 @@ public static int VISUAL_COMPONENT_WIDTH = 320;
 public static int VISUAL_COMPONENT_HEIGHT = 240;
 
 public static boolean isShowReceptiveField = false;
+public static boolean isObserveLevel = false;
 
 public static int getPrimaryVersionUID()
 {

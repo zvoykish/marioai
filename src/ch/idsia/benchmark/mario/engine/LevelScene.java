@@ -8,12 +8,11 @@ import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.tools.CmdLineOptions;
 
 import java.awt.*;
-import java.io.DataInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class LevelScene implements SpriteContext
+public final class LevelScene implements SpriteContext, Serializable
 {
 public static final boolean[] defaultKeys = new boolean[Environment.numberOfButtons];
 public static final String[] keysStr = {"<<L ", "R>> ", "\\\\//", "JUMP", " RUN", "^UP^"};
@@ -72,6 +71,7 @@ private int numberOfHiddenCoinsGained = 0;
 
 public String memo = "";
 private Point marioInitialPos;
+private static final long serialVersionUID = -715653399093887130L;
 
 //    public int getTimeLimit() {  return timeLimit; }
 
@@ -112,29 +112,6 @@ public LevelScene()
 }
 
 //TODO: Move to createLevel, enable -ls to accept filePaths for *.lvl files, i.e. allow to load levels with -ls option
-
-/*
-
-*/
-
-private void loadLevel(String filePath)
-{
-
-    try
-    {
-        if (filePath.equals("")) filePath = "resources/test.lvl";
-        level = Level.load(new DataInputStream(LevelScene.class.getResourceAsStream(filePath)));
-        System.out.println("level.getWidthCells() = " + level.getWidthCells());
-        level.xExit = level.length - 6;
-        level.yExit = 5;
-
-        System.out.println("level.xExit = " + level.xExit);
-        System.out.println("level.yExit = " + level.yExit);
-    } catch (IOException e)
-    {
-        System.err.println("[MarioAI EXCEPTION] : failed while trying to load " + filePath);
-    }
-}
 
 private String mapElToStr(int el)
 {
@@ -1004,11 +981,11 @@ public void reset(CmdLineOptions cmdLineOptions)
 //        System.out.println("this.mario.isMarioInvulnerable = " + this.mario.isMarioInvulnerable);
     this.levelDifficulty = cmdLineOptions.getLevelDifficulty();
 //        System.out.println("this.levelDifficulty = " + this.levelDifficulty);
-    this.levelLength = cmdLineOptions.getLevelLength();
+//    this.levelLength = cmdLineOptions.getLevelLength();
 //        System.out.println("this.levelLength = " + this.levelLength);
-    this.levelSeed = cmdLineOptions.getLevelRandSeed();
+//    this.levelSeed = cmdLineOptions.getLevelRandSeed();
 //        System.out.println("levelSeed = " + levelSeed);
-    this.levelType = cmdLineOptions.getLevelType();
+//    this.levelType = cmdLineOptions.getLevelType();
 //        System.out.println("levelType = " + levelType);
 
 
@@ -1032,7 +1009,7 @@ public void reset(CmdLineOptions cmdLineOptions)
 //        this.getZLevelScene()   setUpOptions[18] ;
 
     // TODO: FIX ME: this this.levelHeight is never used! 
-    this.levelHeight = cmdLineOptions.getLevelHeight();
+//    this.levelHeight = cmdLineOptions.getLevelHeight();
 
     receptiveFieldWidth = cmdLineOptions.getReceptiveFieldWidth();
     receptiveFieldHeight = cmdLineOptions.getReceptiveFieldHeight();
@@ -1063,6 +1040,28 @@ public void reset(CmdLineOptions cmdLineOptions)
     recorder.addLong(LevelGenerator.lastSeed);
     }*/
     level = LevelGenerator.createLevel(cmdLineOptions);
+    String fileName = cmdLineOptions.getLevelFileName();
+    if (!fileName.equals(""))
+    {
+        try
+        {
+            System.out.println("fileName = " + fileName);
+            Level.save(level, new ObjectOutputStream(new FileOutputStream(fileName)));
+//            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName));
+//            oos.writeObject(level);
+//            oos.flush();
+//            oos.close();
+        } catch (IOException e)
+        {
+            System.err.println("[Mario AI WARNING] : Cannot write in to the file " + fileName);
+            e.printStackTrace();
+        }
+    }
+    this.levelSeed = level.randomSeed;
+    this.levelLength = level.length;
+    this.levelType = level.type;
+    this.levelDifficulty = level.difficulty;
+
     paused = false;
     Sprite.spriteContext = this;
     sprites.clear();
@@ -1101,6 +1100,9 @@ public long getLevelSeed()
 
 public int getLevelLength()
 { return levelLength; }
+
+public int getLevelHeight()
+{ return levelHeight; }
 
 public int getLevelType()
 { return levelType; }

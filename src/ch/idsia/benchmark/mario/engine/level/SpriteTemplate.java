@@ -5,7 +5,9 @@ import ch.idsia.benchmark.mario.engine.sprites.Enemy;
 import ch.idsia.benchmark.mario.engine.sprites.FlowerEnemy;
 import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 
-public class SpriteTemplate
+import java.io.Serializable;
+
+public class SpriteTemplate implements Serializable
 {
 public int lastVisibleTick = -1;
 public Sprite sprite;

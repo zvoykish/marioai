@@ -87,7 +87,7 @@ private void updateArea(int x0, int y0, int w, int h)
     }
 }
 
-public void render(Graphics g, int tick, float alpha)
+public void render(Graphics g, int tick, float cameraOffSet)
 {
     g.drawImage(image, 0, 0, null);
 
@@ -102,7 +102,7 @@ public void render(Graphics g, int tick, float alpha)
                 g.setColor(Color.BLUE);
                 int yo = 0;
                 if (x >= 0 && y >= 0 && x < level.length && y < level.height) yo = level.data[x][y];
-                if (yo > 0) yo = (int) (Math.sin((yo - alpha) / 4.0f * Math.PI) * 8);
+                if (yo > 0) yo = (int) (Math.sin((yo - cameraOffSet) / 4.0f * Math.PI) * 8);
                 g.drawString(String.valueOf(1), (x << 4) - xCam, (y << 4) - yCam - yo + LevelScene.cellSize);
             }
 
@@ -121,7 +121,7 @@ public void render(Graphics g, int tick, float alpha)
                 }
                 int yo = 0;
                 if (x >= 0 && y >= 0 && x < level.length && y < level.height) yo = level.data[x][y];
-                if (yo > 0) yo = (int) (Math.sin((yo - alpha) / 4.0f * Math.PI) * 8);
+                if (yo > 0) yo = (int) (Math.sin((yo - cameraOffSet) / 4.0f * Math.PI) * 8);
                 g.drawImage(Art.level[(b % 16) / 4 * 4 + animTime][b / 16], (x << 4) - xCam, (y << 4) - yCam - yo, null);
             }
             /*                else if (b == Level.TILE_BONUS)
@@ -129,7 +129,7 @@ public void render(Graphics g, int tick, float alpha)
             int animTime = (tick / 3) % 4;
             int yo = 0;
             if (x >= 0 && y >= 0 && x < level.length && y < level.height) yo = level.data[x][y];
-            if (yo > 0) yo = (int) (Math.sin((yo - alpha) / 4.0f * Math.PI) * 8);
+            if (yo > 0) yo = (int) (Math.sin((yo - cameraOffSet) / 4.0f * Math.PI) * 8);
             g.drawImage(Art.mapSprites[(4 + animTime)][0], (x << 4) - xCam, (y << 4) - yCam - yo, null);
             }*/
 

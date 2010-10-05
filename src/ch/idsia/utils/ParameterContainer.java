@@ -68,7 +68,8 @@ private static final String[] allowed = new String[]{
         "-vh",
         "-ze",
         "-zs",
-        "-stop"
+        "-stop",
+        "-s"
 };
 
 public ParameterContainer()
@@ -255,6 +256,7 @@ public static void InitDefaults()
         defaultOptionsHashMap.put("-le", ""); //level: creatures
         defaultOptionsHashMap.put("-lf", "off"); //level: flat level
         defaultOptionsHashMap.put("-stop", "off"); //is gameplay stopped
+        defaultOptionsHashMap.put("-s", ""); //path to the file where level will be saved
     }
 }
 
