@@ -1,6 +1,7 @@
 package ch.idsia.tools;
 
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
+import ch.idsia.benchmark.mario.simulation.SimulationOptions;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -23,11 +24,11 @@ import java.util.Map;
  * @author Sergey Karakovskiy
  * @version 1.0, Apr 25, 2009
  * @see ch.idsia.utils.ParameterContainer
- * @see ch.idsia.tools.EvaluationOptions
+ * @see ch.idsia.benchmark.mario.simulation.SimulationOptions
  * @since MarioAI0.1
  */
 
-public final class CmdLineOptions extends EvaluationOptions
+public final class CmdLineOptions extends SimulationOptions
 {
 private static final HashMap<String, CmdLineOptions> CmdLineOptionsMapString = new HashMap<String, CmdLineOptions>();
 private String optionsString;

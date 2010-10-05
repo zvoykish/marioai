@@ -204,9 +204,7 @@ public boolean b(String s)
 
 public static void InitDefaults()
 {
-    if (defaultOptionsHashMap != null)
-        return;
-    else
+    if (defaultOptionsHashMap == null)
     {
         defaultOptionsHashMap = new HashMap<String, String>();
 //            AgentsPool.setCurrentAgent(new HumanKeyboardAgent());

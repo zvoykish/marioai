@@ -4,8 +4,8 @@ import ch.idsia.agents.Agent;
 import ch.idsia.agents.AgentsPool;
 import ch.idsia.agents.controllers.TimingAgent;
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
+import ch.idsia.benchmark.mario.simulation.SimulationOptions;
 import ch.idsia.tools.CmdLineOptions;
-import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.utils.StatisticalSummary;
 
 public class Stats
@@ -24,7 +24,7 @@ public class Stats
     {
         TimingAgent controller = new TimingAgent(agent);
 //        RegisterableAgent.registerAgent (controller);
-        EvaluationOptions options = new CmdLineOptions(new String[0]);
+        SimulationOptions options = new CmdLineOptions(new String[0]);
 
 //        options.setNumberOfTrials(1);
         options.setVisualization(false);
@@ -50,7 +50,7 @@ public class Stats
         System.out.println("Stats sum: " + competitionScore);
     }
 
-    public static double testConfig(TimingAgent controller, EvaluationOptions options, int seed, int level, boolean paused)
+    public static double testConfig(TimingAgent controller, SimulationOptions options, int seed, int level, boolean paused)
     {
         options.setLevelDifficulty(level);
         options.setPauseWorld(paused);
@@ -62,7 +62,7 @@ public class Stats
     }
 
 
-    public static StatisticalSummary test(Agent controller, EvaluationOptions options, int seed)
+    public static StatisticalSummary test(Agent controller, SimulationOptions options, int seed)
     {
         StatisticalSummary ss = new StatisticalSummary();
         for (int i = 0; i < numberOfTrials; i++)

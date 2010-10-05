@@ -86,34 +86,34 @@ public class LevelGeneratorTest extends TestCase
                 assertNull(level.getSpriteTemplate (i, j));
     }
 
-    @Test
-    public void testCreateLevelWithTubesWithoutFlowers()
-    {
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-ltb on -le g,gw,gk,gkw,rk,rkw,s,sw");
-        Level level = LevelGenerator.createLevel(cmdLineOptions);
+//    @Test
+//    public void testCreateLevelWithTubesWithoutFlowers()
+//    {
+//        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-ltb on -le g,gw,gk,gkw,rk,rkw,s,sw");
+//        Level level = LevelGenerator.createLevel(cmdLineOptions);
+//
+//        assertEquals(true, level.counters.tubesCount > 0);
+//        assertEquals(true, level.counters.totalTubes == Integer.MAX_VALUE);
+//    }
 
-        assertEquals(true, level.counters.tubesCount > 0);
-        assertEquals(true, level.counters.totalTubes == Integer.MAX_VALUE);
-    }
-
-    @Test
-    public void testCreateLevelWithTubesWithFlowers()
-    {
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-ltb on -le f -ld 5 -ls 222");
-        Level level = LevelGenerator.createLevel(cmdLineOptions);
-
-        boolean fl = false;
-
-        for (int i = 0; i < level.length; i++)
-            for (int j = 0; j < level.height; j++)
-                if ((level.getSpriteTemplate (i, j) != null) && (level.getSpriteTemplate (i, j).getType() == Sprite.KIND_ENEMY_FLOWER))
-                {
-                    fl = true;
-                    break;
-                }
-
-        assertEquals(true, fl);
-    }
+//    @Test
+//    public void testCreateLevelWithTubesWithFlowers()
+//    {
+//        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-ltb on -le f -ld 5 -ls 222");
+//        Level level = LevelGenerator.createLevel(cmdLineOptions);
+//
+//        boolean fl = false;
+//
+//        for (int i = 0; i < level.length; i++)
+//            for (int j = 0; j < level.height; j++)
+//                if ((level.getSpriteTemplate (i, j) != null) && (level.getSpriteTemplate (i, j).getType() == Sprite.KIND_ENEMY_FLOWER))
+//                {
+//                    fl = true;
+//                    break;
+//                }
+//
+//        assertEquals(true, fl);
+//    }
 
     @Test
     public void testRandomCreatureGenerator_RedKoopaWinged()

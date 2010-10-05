@@ -34,7 +34,7 @@ public void tearDown()
 @Test
 public void testTotalNumberOfOptions() throws Exception
 {
-    assertEquals(45, cmdLineOptions.getTotalNumberOfOptions());
+    assertEquals(46, cmdLineOptions.getTotalNumberOfOptions());
 }
 
 @Test

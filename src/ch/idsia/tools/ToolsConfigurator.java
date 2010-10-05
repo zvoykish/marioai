@@ -5,6 +5,7 @@ import ch.idsia.agents.AgentsPool;
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.engine.MarioVisualComponent;
 import ch.idsia.benchmark.mario.engine.level.LevelGenerator;
+import ch.idsia.benchmark.mario.simulation.SimulationOptions;
 import ch.idsia.scenarios.oldscenarios.MainRun;
 
 import javax.swing.*;
@@ -81,11 +82,11 @@ public class ToolsConfigurator extends JFrame
 
     public static void CreateMarioComponentFrame()
     {
-        CreateMarioComponentFrame(new EvaluationOptions());
+//        CreateMarioComponentFrame(new SimulationOptions()); //TODO: fix it
     }
 
     @Deprecated
-    static void CreateMarioComponentFrame(EvaluationOptions evaluationOptions)
+    static void CreateMarioComponentFrame(SimulationOptions simulationOptions)
     {
 //        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 //        frame.setLocation((screenSize.length-frame.getWidth())/2, (screenSize.height-frame.getHeight())/2);
@@ -104,9 +105,9 @@ public class ToolsConfigurator extends JFrame
             marioComponentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         }
 //        marioComponentFrame.setTitle(evaluationOptions.getAgent().getName() + " - Mario Intelligent 2.0");
-        marioComponentFrame.setAlwaysOnTop(evaluationOptions.isViewAlwaysOnTop());
-        marioComponentFrame.setLocation(evaluationOptions.getViewLocation());
-        marioComponentFrame.setVisible(evaluationOptions.isVisualization());
+        marioComponentFrame.setAlwaysOnTop(simulationOptions.isViewAlwaysOnTop());
+        marioComponentFrame.setLocation(simulationOptions.getViewLocation());
+        marioComponentFrame.setVisible(simulationOptions.isVisualization());
     }
 
     enum INTERFACE_TYPE
@@ -323,8 +324,8 @@ public class ToolsConfigurator extends JFrame
     public void simulateOrPlay()
     {
         //Simulate or Play!
-        EvaluationOptions evaluationOptions = prepareEvaluatorOptions();
-        assert (evaluationOptions != null);
+        SimulationOptions simulationOptions = prepareSimulationOptions();
+        assert (simulationOptions != null);
 //        if (evaluator == null)
 //            evaluator = new Evaluator(evaluationOptions);
 //        else
@@ -333,26 +334,26 @@ public class ToolsConfigurator extends JFrame
 //        LOGGER.println("Play/Simulation started!", LOGGER.VERBOSE_MODE.INFO);
     }
 
-    private EvaluationOptions prepareEvaluatorOptions()
+    private SimulationOptions prepareSimulationOptions()
     {
-        EvaluationOptions evaluationOptions = cmdLineOptions;
+        SimulationOptions simulationOptions = cmdLineOptions;
         Agent agent = AgentsPool.getAgentByName(ChoiceAgent.getSelectedItem());
-        evaluationOptions.setAgent(agent);
+        simulationOptions.setAgent(agent);
         int type = ChoiceLevelType.getSelectedIndex();
         if (type == 4)
             type = (new Random()).nextInt(4);
-        evaluationOptions.setLevelType(type);
-        evaluationOptions.setLevelDifficulty(Integer.parseInt(JSpinnerLevelDifficulty.getValue().toString()));
-        evaluationOptions.setLevelRandSeed(Integer.parseInt(JSpinnerLevelRandomizationSeed.getValue().toString()));
-        evaluationOptions.setLevelLength(Integer.parseInt(JSpinnerLevelLength.getValue().toString()));
-        evaluationOptions.setVisualization(CheckboxShowVizualization.getState());
-//        evaluationOptions.setNumberOfTrials(Integer.parseInt(JSpinnerMaxAttempts.getValue().toString()));
-        evaluationOptions.setPauseWorld(CheckboxPauseWorld.getState());
-        evaluationOptions.setPowerRestoration(CheckboxPowerRestoration.getState());
-        evaluationOptions.setExitProgramWhenFinished(CheckboxExitOnFinish.getState());
-//        evaluationOptions.setMatlabFileName(TextFieldMatLabFileName.getText());
+        simulationOptions.setLevelType(type);
+        simulationOptions.setLevelDifficulty(Integer.parseInt(JSpinnerLevelDifficulty.getValue().toString()));
+        simulationOptions.setLevelRandSeed(Integer.parseInt(JSpinnerLevelRandomizationSeed.getValue().toString()));
+        simulationOptions.setLevelLength(Integer.parseInt(JSpinnerLevelLength.getValue().toString()));
+        simulationOptions.setVisualization(CheckboxShowVizualization.getState());
+//        simulationOptions.setNumberOfTrials(Integer.parseInt(JSpinnerMaxAttempts.getValue().toString()));
+        simulationOptions.setPauseWorld(CheckboxPauseWorld.getState());
+        simulationOptions.setPowerRestoration(CheckboxPowerRestoration.getState());
+        simulationOptions.setExitProgramWhenFinished(CheckboxExitOnFinish.getState());
+//        simulationOptions.setMatlabFileName(TextFieldMatLabFileName.getText());
 
-        return evaluationOptions;
+        return simulationOptions;
     }
 
 

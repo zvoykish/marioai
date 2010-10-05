@@ -29,7 +29,7 @@ public final class Play
  * @param args input parameters for customization of the benchmark.
  * @see ch.idsia.scenarios.oldscenarios.MainRun
  * @see ch.idsia.tools.CmdLineOptions
- * @see ch.idsia.tools.EvaluationOptions
+ * @see ch.idsia.benchmark.mario.simulation.SimulationOptions
  * @since MarioAI-0.1
  */
 

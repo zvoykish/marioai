@@ -4,10 +4,10 @@ import ch.idsia.agents.Agent;
 import ch.idsia.agents.AgentsPool;
 import ch.idsia.agents.controllers.ForwardJumpingAgent;
 import ch.idsia.agents.controllers.TimingAgent;
+import ch.idsia.benchmark.mario.simulation.SimulationOptions;
 import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
-import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.utils.StatisticalSummary;
 
 
@@ -150,7 +150,7 @@ public final class GamePlayEvaluation
         System.out.println("TOTAL SUM for " + agent.getName() + " = " + (competitionScore + killsSum + marioStatusSum + marioModeSum + timeLeftSum));
     }
 
-    public static double testConfig(TimingAgent controller, EvaluationOptions options, int seed, int levelDifficulty, boolean paused)
+    public static double testConfig(TimingAgent controller, SimulationOptions options, int seed, int levelDifficulty, boolean paused)
     {
         options.setLevelDifficulty(levelDifficulty);
         options.setPauseWorld(paused);
@@ -161,7 +161,7 @@ public final class GamePlayEvaluation
         return ss.mean();
     }
 
-    public static StatisticalSummary test(Agent controller, EvaluationOptions options, int seed)
+    public static StatisticalSummary test(Agent controller, SimulationOptions options, int seed)
     {
         StatisticalSummary ss = new StatisticalSummary();
         int kills = 0;
