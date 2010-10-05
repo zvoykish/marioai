@@ -659,7 +659,6 @@ public void stomp(Shell shell)
     }
 }
 
-
 public void getHurt(final int spriteKind)
 {
     if (deathTime > 0 || levelScene.paused || isMarioInvulnerable) return;
@@ -704,7 +703,6 @@ public void die(String reasonOfDeath)
     // TODO: [M] refactor reasons of death to enum {COLLISION, GAP, TIMEOUT}
     levelScene.addMemoMessage("Reason of death: " + reasonOfDeath);
 }
-
 
 public void getFlower()
 {
@@ -770,7 +768,6 @@ public void stomp(BulletBill bill)
     sliding = false;
     invulnerableTime = 1;
 }
-
 
 public static void gainCoin()
 {

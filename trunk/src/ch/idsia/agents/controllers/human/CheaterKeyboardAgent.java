@@ -149,12 +149,6 @@ private void toggleKey(int keyCode, boolean isPressed)
             {
                 GlobalOptions.isFly = !GlobalOptions.isFly;
             }
-            break;
-        case KeyEvent.VK_O:
-            if (isPressed)
-                GlobalOptions.isObserveLevel = true;//!GlobalOptions.isObserveLevel;
-            else
-                GlobalOptions.isObserveLevel = false;
     }
 }
 }

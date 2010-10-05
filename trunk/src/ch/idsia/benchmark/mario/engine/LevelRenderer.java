@@ -87,7 +87,7 @@ private void updateArea(int x0, int y0, int w, int h)
     }
 }
 
-public void render(Graphics g, int tick, float cameraOffSet)
+public void render(Graphics g, int tick)
 {
     g.drawImage(image, 0, 0, null);
 
@@ -102,7 +102,7 @@ public void render(Graphics g, int tick, float cameraOffSet)
                 g.setColor(Color.BLUE);
                 int yo = 0;
                 if (x >= 0 && y >= 0 && x < level.length && y < level.height) yo = level.data[x][y];
-                if (yo > 0) yo = (int) (Math.sin((yo - cameraOffSet) / 4.0f * Math.PI) * 8);
+                if (yo > 0) yo = (int) (Math.sin(yo / 4.0f * Math.PI) * 8);
                 g.drawString(String.valueOf(1), (x << 4) - xCam, (y << 4) - yCam - yo + LevelScene.cellSize);
             }
 
@@ -121,7 +121,7 @@ public void render(Graphics g, int tick, float cameraOffSet)
                 }
                 int yo = 0;
                 if (x >= 0 && y >= 0 && x < level.length && y < level.height) yo = level.data[x][y];
-                if (yo > 0) yo = (int) (Math.sin((yo - cameraOffSet) / 4.0f * Math.PI) * 8);
+                if (yo > 0) yo = (int) (Math.sin(yo / 4.0f * Math.PI) * 8);
                 g.drawImage(Art.level[(b % 16) / 4 * 4 + animTime][b / 16], (x << 4) - xCam, (y << 4) - yCam - yo, null);
             }
             /*                else if (b == Level.TILE_BONUS)
@@ -192,13 +192,13 @@ public void setLevel(Level level)
     updateArea(0, 0, width, height);
 }
 
-public void renderExit0(Graphics g, int tick, float alpha, boolean bar)
+public void renderExit0(Graphics g, int tick, boolean bar)
 {
     for (int y = level.yExit - 8; y < level.yExit; y++)
     {
         g.drawImage(Art.level[12][y == level.yExit - 8 ? 4 : 5], (level.xExit - exitXOffset << 4) - xCam - 16, (y << 4) - yCam, null);
     }
-    int yh = level.yExit * 16 - (int) ((Math.sin((tick + alpha) / 20) * 0.5 + 0.5) * 7 * 16) - 8;
+    int yh = level.yExit * 16 - (int) ((Math.sin(tick / 20) * 0.5 + 0.5) * 7 * 16) - 8;
     if (bar)
     {
         g.drawImage(Art.level[12][3], (level.xExit - exitXOffset << 4) - xCam - 16, yh - yCam, null);
@@ -207,7 +207,7 @@ public void renderExit0(Graphics g, int tick, float alpha, boolean bar)
 }
 
 
-public void renderExit1(Graphics g, int tick, float alpha)
+public void renderExit1(Graphics g, int tick)
 {
     for (int y = level.yExit - 8; y < level.yExit; y++)
     {
