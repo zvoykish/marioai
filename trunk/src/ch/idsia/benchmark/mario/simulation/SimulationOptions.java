@@ -100,7 +100,7 @@ public void setLevelHeight(int levelHeight)
 
 //LevelRandSeed
 
-public int getLevelRandSeed()
+public int getLevelRandSeed() throws NumberFormatException
 {
     return i(getParameterValue("-ls"));
 }

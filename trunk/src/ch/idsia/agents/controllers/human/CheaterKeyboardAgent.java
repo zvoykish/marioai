@@ -20,7 +20,7 @@ public static final int CHEAT_KEY_PAUSE = 6;
 public static final int CHEAT_KEY_DUMP_CURRENT_WORLD = 7;
 public static final int CHEAT_KEY_LIFE_UP = 8;
 public static final int CHEAT_KEY_WIN = 9;
-public static final int CHEAT_KEY_OBSERVLE_LEVEL = 10;
+public static final int CHEAT_KEY_OBSERVE_LEVEL = 10;
 
 private boolean Action[] = null;
 
@@ -149,10 +149,12 @@ private void toggleKey(int keyCode, boolean isPressed)
             {
                 GlobalOptions.isFly = !GlobalOptions.isFly;
             }
-//            case KeyEvent.VK_O:
-//                if (isPressed)
-//                    isObserveLevel = !isObserveLevel;
-//                break;
+            break;
+        case KeyEvent.VK_O:
+            if (isPressed)
+                GlobalOptions.isObserveLevel = true;//!GlobalOptions.isObserveLevel;
+            else
+                GlobalOptions.isObserveLevel = false;
     }
 }
 }

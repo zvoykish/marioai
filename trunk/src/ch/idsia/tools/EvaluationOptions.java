@@ -78,6 +78,11 @@ public String getAgentFullLoadName()
     return getParameterValue("-ag");
 }
 
+public String getLevelFileName()
+{
+    return getParameterValue("-s");
+}
+
 //    public boolean isTimer()
 //    {
 //        return b(getParameterValue("-t"));

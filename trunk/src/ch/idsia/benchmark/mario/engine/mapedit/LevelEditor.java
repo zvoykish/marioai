@@ -9,12 +9,10 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
+import java.io.*;
 
 
-public class LevelEditor extends JFrame implements ActionListener
+public class LevelEditor extends JFrame implements ActionListener, Serializable
 {
     private static final long serialVersionUID = 7461321112832160393L;
 
@@ -121,11 +119,12 @@ public class LevelEditor extends JFrame implements ActionListener
         {
             if (e.getSource() == loadButton)
             {
-                levelEditView.setLevel(Level.load(new DataInputStream(LevelScene.class.getResourceAsStream(nameField.getText().trim()))));
+                levelEditView.setLevel(Level.load(new ObjectInputStream(LevelScene.class.getResourceAsStream(nameField.getText().trim()))));
             }
             if (e.getSource() == saveButton)
             {
-                levelEditView.getLevel().save(new DataOutputStream(new FileOutputStream(nameField.getText().trim())));
+//                levelEditView.getLevel().save(new ObjectOutputStream(new FileOutputStream(nameField.getText().trim())));
+                Level.save(levelEditView.getLevel(), new ObjectOutputStream(new FileOutputStream(nameField.getText().trim())));
             }
         }
         catch (Exception ex)
