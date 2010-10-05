@@ -27,6 +27,8 @@ private Agent agent;
 private static final MarioEnvironment ourInstance = new MarioEnvironment();
 private static final EvaluationInfo evaluationInfo = new EvaluationInfo();
 
+private static String marioTraceFile;
+
 public static MarioEnvironment getInstance()
 {
     return ourInstance;
@@ -68,8 +70,8 @@ public void reset(CmdLineOptions setUpOptions)
     this.setAgent(setUpOptions.getAgent());
     marioReceptiveFieldCenterPos[0] = setUpOptions.getReceptiveFieldWidth() / 2;
     marioReceptiveFieldCenterPos[1] = setUpOptions.getReceptiveFieldHeight() / 2;
-//        System.out.println("marioCenterPosX = " + marioReceptiveFieldCenterPos[0]);
-//        System.out.println("marioCenterPosY = " + marioReceptiveFieldCenterPos[1]);
+    
+    marioTraceFile = setUpOptions.getTraceFile();
 
     if (setUpOptions.isVisualization())
     {
@@ -83,7 +85,6 @@ public void reset(CmdLineOptions setUpOptions)
         marioVisualComponent.setAlwaysOnTop(setUpOptions.isViewAlwaysOnTop());
     } else
         levelScene.reset(setUpOptions);
-
 }
 
 public void tick()
@@ -256,6 +257,7 @@ public EvaluationInfo getEvaluationInfo()
     evaluationInfo.collisionsWithCreatures = Mario.collisionsWithCreatures;
     evaluationInfo.Memo = levelScene.memo;
     evaluationInfo.levelLength = levelScene.level.length;
+    evaluationInfo.marioTraceFile = marioTraceFile;
     evaluationInfo.marioTrace = levelScene.level.marioTrace;
     return evaluationInfo;
 }

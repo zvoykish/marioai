@@ -388,6 +388,28 @@ public void setFlatLevel(boolean var)
 
 public boolean isTrace()
 {
-    return b(getParameterValue("-trace"));
+    String s = getParameterValue("-trace");
+    boolean f = false;
+    
+    if (!s.equals("off") && !s.isEmpty())
+        f = true;
+
+    return f;
+}
+
+public String getTraceFile()
+{
+    String s = getParameterValue("-trace");
+    String res = "";
+
+    if (!s.equals("off") && !s.isEmpty())
+    {
+        if (s.equals("on"))
+            res = "[MarioAI]-MarioTrace.txt";
+        else
+            res = s;
+    }
+
+    return res;
 }
 }
