@@ -82,7 +82,7 @@ public class ToolsConfigurator extends JFrame
 
     public static void CreateMarioComponentFrame()
     {
-//        CreateMarioComponentFrame(new SimulationOptions()); //TODO: fix it
+        CreateMarioComponentFrame(new CmdLineOptions());
     }
 
     @Deprecated

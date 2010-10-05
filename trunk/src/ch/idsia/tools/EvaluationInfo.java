@@ -60,6 +60,7 @@ public String Memo = "";
 private static final DecimalFormat df = new DecimalFormat("#.##");
 private static MarioSystemOfValues marioSystemOfValues = new MarioSystemOfValues();
 public int[][] marioTrace;
+public String marioTraceFile;
 
 
 public EvaluationInfo()
@@ -129,22 +130,23 @@ public float[] toFloatArray()
 public String toString()
 {
     // store mario trace:
-    final String marioTraceFile = "[MarioAI]-MarioTrace.txt";
     try
     {
-        final PrintWriter pw = new PrintWriter(new FileWriter(marioTraceFile));
-
-        for (int j = 0; j < marioTrace[0].length; ++j)
-
+        if (!marioTraceFile.equals(""))
         {
-            for (int i = 0; i < marioTrace.length; ++i)
+            final PrintWriter pw = new PrintWriter(new FileWriter(marioTraceFile));
+
+            for (int j = 0; j < marioTrace[0].length; ++j)
+
             {
-                System.out.print(spaceFormat(marioTrace[i][j]));
-                pw.print(spaceFormat(marioTrace[i][j]));
+                for (int i = 0; i < marioTrace.length; ++i)
+                {
+                    System.out.print(spaceFormat(marioTrace[i][j]));
+                    pw.print(spaceFormat(marioTrace[i][j]));
+                }
+                System.out.println();
+                pw.println();
             }
-            System.out.println();
-            pw.println();
-        }
 //        for (int[] ints : trace)
 //        {
 //            for (int anInt : ints)
@@ -153,7 +155,8 @@ public String toString()
 //            }
 //            pw.println();
 //        }
-        pw.flush();
+            pw.flush();
+        }
     } catch (IOException e)
     {
         e.printStackTrace();

@@ -1,6 +1,5 @@
 package ch.idsia.benchmark.mario.engine.sprites;
 
-
 import ch.idsia.benchmark.mario.engine.Art;
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.engine.LevelScene;
@@ -35,6 +34,8 @@ public static int collisionsWithCreatures = 0;
 public static int mushroomsDevoured;
 public static int flowersDevoured;
 
+private static boolean isTrace;
+
 private static boolean isMarioInvulnerable;
 
 private int status = STATUS_RUNNING;
@@ -58,6 +59,8 @@ public static void resetStatic(CmdLineOptions cmdLineOptions)
 
     isMarioInvulnerable = cmdLineOptions.isMarioInvulnerable();
     marioGravity = cmdLineOptions.getMarioGravity();
+
+    isTrace = cmdLineOptions.isTrace();
 }
 
 public int getMode()
@@ -79,7 +82,6 @@ private boolean sliding = false;
 private int jumpTime = 0;
 private float xJumpSpeed;
 private float yJumpSpeed;
-
 
 private boolean canShoot = false;
 
@@ -218,7 +220,7 @@ public void move()
         xa = keys[KEY_LEFT] ? -10 : xa;
     }
 
-    if (mapY > -1)
+    if (mapY > -1 && isTrace)
         ++levelScene.level.marioTrace[this.mapX][this.mapY];
 
     if (winTime > 0)
