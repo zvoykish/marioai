@@ -4,8 +4,8 @@ import ch.idsia.agents.Agent;
 import ch.idsia.agents.AgentsPool;
 import ch.idsia.agents.controllers.ScaredAgent;
 import ch.idsia.agents.controllers.TimingAgent;
+import ch.idsia.benchmark.mario.simulation.SimulationOptions;
 import ch.idsia.tools.CmdLineOptions;
-import ch.idsia.tools.EvaluationOptions;
 import ch.idsia.utils.StatisticalSummary;
 
 /**
@@ -29,7 +29,7 @@ public class MainRun
     public static void main(String[] args)
     {
         CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
-        EvaluationOptions evaluationOptions = cmdLineOptions;  // if none options mentioned, all defalults are used.
+        SimulationOptions evaluationOptions = cmdLineOptions;  // if none options mentioned, all defalults are used.
         createAgentsPool();
 
         if (scoring)
@@ -101,7 +101,7 @@ public class MainRun
     public static void score(Agent agent, int startingSeed, CmdLineOptions cmdLineOptions)
     {
         TimingAgent controller = new TimingAgent(agent);
-        EvaluationOptions options = cmdLineOptions;
+        SimulationOptions options = cmdLineOptions;
 
 //        options.setNumberOfTrials(1);
 //        options.setVisualization(false);
@@ -128,7 +128,7 @@ public class MainRun
         System.out.println("TOTAL SUM for " + agent.getName() + " = " + (competitionScore + killsSum + marioStatusSum + marioModeSum + timeLeftSum));
     }
 
-    public static double testConfig(TimingAgent controller, EvaluationOptions options, int seed, int levelDifficulty, boolean paused)
+    public static double testConfig(TimingAgent controller, SimulationOptions options, int seed, int levelDifficulty, boolean paused)
     {
         options.setLevelDifficulty(levelDifficulty);
         options.setPauseWorld(paused);
@@ -139,7 +139,7 @@ public class MainRun
         return ss.mean();
     }
 
-    public static StatisticalSummary test(Agent controller, EvaluationOptions options, int seed)
+    public static StatisticalSummary test(Agent controller, SimulationOptions options, int seed)
     {
         StatisticalSummary ss = new StatisticalSummary();
         int kills = 0;

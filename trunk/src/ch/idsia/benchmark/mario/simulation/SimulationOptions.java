@@ -2,7 +2,10 @@ package ch.idsia.benchmark.mario.simulation;
 
 import ch.idsia.agents.Agent;
 import ch.idsia.agents.AgentsPool;
+import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.utils.ParameterContainer;
+
+import java.awt.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,18 +15,80 @@ import ch.idsia.utils.ParameterContainer;
  * Package: .Simulation
  */
 
-
 public class SimulationOptions extends ParameterContainer
 {
+final Point viewLocation = new Point(42, 42);
 protected Agent agent;
 //    protected MarioComponent marioComponent = null;
-
 
 protected SimulationOptions()
 {
     super();
 }
 
+public void setUpOptions(String[] args)
+{
+    if (args != null)
+        for (int i = 0; i < args.length - 1; i += 2)
+            try
+            {
+                setParameterValue(args[i], args[i + 1]);
+            }
+            catch (ArrayIndexOutOfBoundsException e)
+            {
+                // Basically we can push the red button to explaud the computer, since this case must happen never.
+                System.err.println("Error: Wrong number of input parameters");
+//                System.err.println("It is a perfect day to kill yourself with the yellow wall");
+            }
+    GlobalOptions.isVisualization = isVisualization();
+    GlobalOptions.FPS = getFPS() /*GlobalOptions.FPS*/;
+    GlobalOptions.isPauseWorld = isPauseWorld();
+    GlobalOptions.isPowerRestoration = isPowerRestoration();
+//        GlobalOptions.isTimer = isTimer();
+}
+
+public Boolean isExitProgramWhenFinished()
+{
+    return b(getParameterValue("-ewf"));
+}
+
+public void setExitProgramWhenFinished(boolean exitProgramWhenFinished)
+{
+    setParameterValue("-ewf", s(exitProgramWhenFinished));
+}
+
+public Point getViewLocation()
+{
+    viewLocation.x = i(getParameterValue("-vlx"));
+    viewLocation.y = i(getParameterValue("-vly"));
+    return viewLocation;
+}
+
+public Boolean isViewAlwaysOnTop()
+{
+    return b(getParameterValue("-vaot"));
+}
+
+public void setFPS(int fps)
+{
+    setParameterValue("-fps", s(fps));
+    GlobalOptions.FPS = getFPS();
+}
+
+public Integer getFPS()
+{
+    return i(getParameterValue("-fps"));
+}
+
+public String getAgentFullLoadName()
+{
+    return getParameterValue("-ag");
+}
+
+public String getLevelFileName()
+{
+    return getParameterValue("-s");
+}
 
 // Agent
 
@@ -60,7 +125,6 @@ public void setLevelType(int levelType)
 {
     setParameterValue("-lt", s(levelType));
 }
-
 
 // LevelDifficulty
 

@@ -2,9 +2,9 @@ package ch.idsia.scenarios.test;
 
 import ch.idsia.agents.Agent;
 import ch.idsia.agents.learning.LargeSRNAgent;
+import ch.idsia.benchmark.mario.simulation.SimulationOptions;
 import ch.idsia.evolution.SRN;
 import ch.idsia.tools.CmdLineOptions;
-import ch.idsia.tools.EvaluationOptions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -38,7 +38,7 @@ public class PlayJLink
         // System.out.println(output.length+" "+output[0].length);
         SRN srn = new SRN(inputs, recurrent, output, recurrent.length, output[0].length);
         Agent agent = new LargeSRNAgent(srn);
-        EvaluationOptions options = new CmdLineOptions(new String[0]);
+        SimulationOptions options = new CmdLineOptions(new String[0]);
         final int startingSeed = 0;
         options.setLevelRandSeed(seed);
 //        options.setNumberOfTrials(1);
