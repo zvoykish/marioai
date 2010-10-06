@@ -9,6 +9,7 @@ import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.GameViewer;
+import ch.idsia.tools.Scale2x;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,7 +56,7 @@ private String agentNameStr;
 private GameViewer gameViewer = null;
 private static MarioVisualComponent marioVisualComponent = null;
 
-//private Scale2x scale2x = new Scale2x(320, 240);
+private Scale2x scale2x = new Scale2x(320, 240);
 /*
 bring back:
 if (width != 320 || height != 240) {
@@ -83,7 +84,7 @@ private MarioVisualComponent(CmdLineOptions cmdLineOptions, LevelScene levelScen
 
     setPreferredSize(size);
     setMinimumSize(size);
-    setMaximumSize(size);
+    setMaximumSize(new Dimension(width * 2, height * 2));
 
     setFocusable(true);
 
@@ -193,13 +194,15 @@ public void tick()
 //        drawStringDropShadow(thisVolatileImageGraphics, "Trial:", 33, 4, 7);
 //        drawStringDropShadow(thisVolatileImageGraphics, msg, 33, 5, 7);
 
-//        if (length != 320 || height != 240) {
-//            thisGraphics.drawImage(thisVolatileImage, 0, 0, 320 * 4, 240 * 4, null);
-//        } else {
-//            thisGraphics.drawImage(thisVolatileImage, 0, 0, null);
-//        }
+    if (GlobalOptions.isScale2x)
+    {
+        thisGraphics.drawImage(scale2x.scale(thisVolatileImage), 0, 0, null); //TODO: handle this
+    } else
+    {
+        thisGraphics.drawImage(thisVolatileImage, 0, 0, null);
+    }
 
-    thisGraphics.drawImage(thisVolatileImage, 0, 0, null);
+//    thisGraphics.drawImage(thisVolatileImage, 0, 0, null);
     if (this.gameViewer != null)
         this.gameViewer.tick();
     // Delay depending on how far we are behind.
@@ -296,7 +299,7 @@ public void render(Graphics g)
         g.drawString("xOld : " + mario.xOld + "yOld: " + mario.yOld, 10, 225);
     }
 
-//    if (levelScene.startTime > 0)
+//    if (levelScene.startTime > 0) TODO: remove this code?
 //    {
 //        float t = levelScene.startTime + cameraOffSet - 2;
 //        t = t * t * 0.6f;
@@ -368,25 +371,25 @@ public static void drawString(Graphics g, String text, int x, int y, int c)
         g.drawImage(Art.font[ch[i] - 32][c], x + i * 8, y, null);
 }
 
-private void drawGrid(Graphics g, int length)
-{
-    width = length * 16;
-    height = length * 16;
-    g.setColor(Color.GREEN);
-
-    int rows = length;
-    int columns = length;
-
-    int htOfRow = height / (rows);
-    int k;
-    for (k = 0; k < rows; k++)
-        g.drawLine((int) mario.x, k * htOfRow, (int) (mario.x + width), k * htOfRow);
-
-    int wdOfRow = width / (columns);
-    for (k = 0; k < columns; k++)
-        g.drawLine(k * wdOfRow, 0, k * wdOfRow, height);
-
-}
+//private void drawGrid(Graphics g, int length)
+//{
+//    width = length * 16;
+//    height = length * 16;
+//    g.setColor(Color.GREEN);
+//
+//    int rows = length;
+//    int columns = length;
+//
+//    int htOfRow = height / (rows);
+//    int k;
+//    for (k = 0; k < rows; k++)
+//        g.drawLine((int) mario.x, k * htOfRow, (int) (mario.x + width), k * htOfRow);
+//
+//    int wdOfRow = width / (columns);
+//    for (k = 0; k < columns; k++)
+//        g.drawLine(k * wdOfRow, 0, k * wdOfRow, height);
+//
+//}
 
 private void renderBlackout(Graphics g, int x, int y, int radius)
 {
@@ -504,6 +507,13 @@ public void setGameViewer(GameViewer gameViewer)
 public List<String> getTextObservation(boolean showEnemies, boolean showLevelScene, boolean showMerged, int zLevelMapValue, int zLevelEnemiesValue)
 {
     return levelScene.getObservationStrings(showEnemies, showLevelScene, showMerged, zLevelMapValue, zLevelEnemiesValue);
+}
+
+public void changeScale2x()
+{
+    marioVisualComponent.setPreferredSize(new Dimension(width, height));
+    marioComponentFrame.pack();
+    this.thisGraphics = getGraphics();
 }
 }
 

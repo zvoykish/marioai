@@ -149,6 +149,12 @@ private void toggleKey(int keyCode, boolean isPressed)
             {
                 GlobalOptions.isFly = !GlobalOptions.isFly;
             }
+            break;
+        case KeyEvent.VK_F1:
+            if (isPressed)
+            {
+                GlobalOptions.changeScale2x();
+            }
     }
 }
 }
