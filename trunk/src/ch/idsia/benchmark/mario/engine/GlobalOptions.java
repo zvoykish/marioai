@@ -38,6 +38,7 @@ public static int VISUAL_COMPONENT_WIDTH = 320;
 public static int VISUAL_COMPONENT_HEIGHT = 240;
 
 public static boolean isShowReceptiveField = false;
+public static boolean isScale2x = false;
 
 public static int getPrimaryVersionUID()
 {
@@ -101,5 +102,13 @@ final static private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH
 public static String getTimeStamp()
 {
     return dateFormat.format(new Date());
+}
+
+public static void changeScale2x()
+{
+    isScale2x = !isScale2x;
+    marioVisualComponent.width *= isScale2x ? 2 : 0.5;
+    marioVisualComponent.height *= isScale2x ? 2 : 0.5;
+    marioVisualComponent.changeScale2x();
 }
 }
