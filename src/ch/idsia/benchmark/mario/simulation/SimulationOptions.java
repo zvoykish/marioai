@@ -390,8 +390,8 @@ public boolean isTrace()
 {
     String s = getParameterValue("-trace");
     boolean f = false;
-    
-    if (!s.equals("off") && !s.isEmpty())
+
+    if (!s.equals("off") && !s.equals(""))
         f = true;
 
     return f;
@@ -402,7 +402,7 @@ public String getTraceFile()
     String s = getParameterValue("-trace");
     String res = "";
 
-    if (!s.equals("off") && !s.isEmpty())
+    if (!s.equals("off") && !s.equals(""))
     {
         if (s.equals("on"))
             res = "[MarioAI]-MarioTrace.txt";
