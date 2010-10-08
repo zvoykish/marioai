@@ -371,37 +371,9 @@ private byte ZLevelEnemyGeneralization(byte el, int ZLevel)
 
 public byte[][] getLevelSceneObservationZ(int ZLevel)
 {
-    //TODO: Check correctness of this change
-//    int MarioXInMap = (int) mario.x / cellSize;
-//    int MarioYInMap = (int) mario.y / cellSize;
-    int MarioXInMap = mario.mapX;
-    int MarioYInMap = mario.mapY;
-    if (MarioXInMap != (int) mario.x / cellSize)
+    for (int y = mario.mapY - receptiveFieldHeight / 2, obsX = 0; y <= mario.mapY + receptiveFieldHeight / 2; y++, obsX++)
     {
-        System.err.print("MarioXInMap = " + MarioXInMap);
-        System.err.println(" ### (int) mario.x / cellSize  = " + (int) mario.x / cellSize);
-
-        /* typical output
-MarioYInMap = 10 (int) mario.y / cellSize = 9
-MarioXInMap = 21(int) mario.x / cellSize  = 22
-       mario.mapX < (int) mario.x / cellSize
-       mario.mapY > (int) mario.y / cellSize
-        TODO: fix mario.mapX !
-        */
-        //        throw new Error("WRONG mario x or y pos");
-    }
-
-    if (MarioYInMap != (int) mario.y / cellSize)
-    {
-        System.err.print("\nLS: mario.y = " + mario.y + ", " + System.currentTimeMillis());
-        System.err.print(" %% MarioYInMap = " + MarioYInMap);
-        System.err.println(" ### (int) mario.y / cellSize = " + (int) mario.y / cellSize);
-    }
-
-
-    for (int y = MarioYInMap - receptiveFieldHeight / 2, obsX = 0; y <= MarioYInMap + receptiveFieldHeight / 2; y++, obsX++)
-    {
-        for (int x = MarioXInMap - receptiveFieldWidth / 2, obsY = 0; x <= MarioXInMap + receptiveFieldWidth / 2; x++, obsY++)
+        for (int x = mario.mapX - receptiveFieldWidth / 2, obsY = 0; x <= mario.mapX + receptiveFieldWidth / 2; x++, obsY++)
         {
             if (x >= 0 && x < level.xExit && y >= 0 && y < level.height)
             {
@@ -418,15 +390,6 @@ MarioXInMap = 21(int) mario.x / cellSize  = 22
 
 public byte[][] getEnemiesObservationZ(int ZLevel)
 {
-    //TODO: Check correctness of this change
-//    int MarioXInMap = (int) mario.x / cellSize;
-//    int MarioYInMap = (int) mario.y / cellSize;
-    int MarioXInMap = mario.mapX;
-    int MarioYInMap = mario.mapY;
-//    if (MarioXInMap != (int) mario.x / cellSize ||MarioYInMap != (int) mario.y / cellSize )
-//        throw new Error("WRONG mario x or y pos");
-
-
     for (int w = 0; w < enemiesZ.length; w++)
         for (int h = 0; h < enemiesZ[0].length; h++)
             enemiesZ[w][h] = 0;
@@ -435,14 +398,14 @@ public byte[][] getEnemiesObservationZ(int ZLevel)
         if (sprite.kind == mario.kind)
             continue;
         if (sprite.mapX >= 0 &&
-                sprite.mapX >= MarioXInMap - receptiveFieldWidth / 2 &&
-                sprite.mapX <= MarioXInMap + receptiveFieldWidth / 2 &&
+                sprite.mapX >= mario.mapX - receptiveFieldWidth / 2 &&
+                sprite.mapX <= mario.mapX + receptiveFieldWidth / 2 &&
                 sprite.mapY >= 0 &&
-                sprite.mapY >= MarioYInMap - receptiveFieldHeight / 2 &&
-                sprite.mapY <= MarioYInMap + receptiveFieldHeight / 2)
+                sprite.mapY >= mario.mapY - receptiveFieldHeight / 2 &&
+                sprite.mapY <= mario.mapY + receptiveFieldHeight / 2)
         {
-            int obsX = sprite.mapY - MarioYInMap + receptiveFieldHeight / 2;
-            int obsY = sprite.mapX - MarioXInMap + receptiveFieldWidth / 2;
+            int obsX = sprite.mapY - mario.mapY + receptiveFieldHeight / 2;
+            int obsY = sprite.mapX - mario.mapX + receptiveFieldWidth / 2;
             enemiesZ[obsX][obsY] = ZLevelEnemyGeneralization(sprite.kind, ZLevel);
         }
     }
@@ -454,16 +417,28 @@ public float[] getEnemiesFloatPos()
     enemiesFloatsList.clear();
     for (Sprite sprite : sprites)
     {
-        // check if is an influenceable creature
-        if (sprite.kind >= Sprite.KIND_GOOMBA && sprite.kind <= Sprite.KIND_MUSHROOM)
+        // TODO: add unit tests for getEnemiesFloatPos involving all kinds of creatures
+        switch (sprite.kind)
         {
-            enemiesFloatsList.add((float) sprite.kind);
-            enemiesFloatsList.add(sprite.x);
-            enemiesFloatsList.add(sprite.y);
+            case Sprite.KIND_GOOMBA:
+            case Sprite.KIND_BULLET_BILL:
+            case Sprite.KIND_ENEMY_FLOWER:
+            case Sprite.KIND_GOOMBA_WINGED:
+            case Sprite.KIND_GREEN_KOOPA:
+            case Sprite.KIND_GREEN_KOOPA_WINGED:
+            case Sprite.KIND_RED_KOOPA:
+            case Sprite.KIND_RED_KOOPA_WINGED:
+            case Sprite.KIND_SPIKY:
+            case Sprite.KIND_SPIKY_WINGED:
+            case Sprite.KIND_SHELL:
+            {
+                enemiesFloatsList.add((float) sprite.kind);
+                enemiesFloatsList.add(sprite.x);
+                enemiesFloatsList.add(sprite.y);
+            }
         }
     }
 
-    // potential memory leak while using through JNI, careful!
     float[] enemiesFloatsPosArray = new float[enemiesFloatsList.size()];
 
     int i = 0;
@@ -475,19 +450,14 @@ public float[] getEnemiesFloatPos()
 
 public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
 {
-    //TODO: Check correctness of this change
 //    int MarioXInMap = (int) mario.x / cellSize;
 //    int MarioYInMap = (int) mario.y / cellSize;
-    int MarioXInMap = mario.mapX;
-    int MarioYInMap = mario.mapY;
 
 //    if (MarioXInMap != (int) mario.x / cellSize ||MarioYInMap != (int) mario.y / cellSize )
 //        throw new Error("WRONG mario x or y pos");
-
-
-    for (int y = MarioYInMap - receptiveFieldHeight / 2, obsX = 0; y <= MarioYInMap + receptiveFieldHeight / 2; y++, obsX++)
+    for (int y = mario.mapY - receptiveFieldHeight / 2, obsX = 0; y <= mario.mapY + receptiveFieldHeight / 2; y++, obsX++)
     {
-        for (int x = MarioXInMap - receptiveFieldWidth / 2, obsY = 0; x <= MarioXInMap + receptiveFieldWidth / 2; x++, obsY++)
+        for (int x = mario.mapX - receptiveFieldWidth / 2, obsY = 0; x <= mario.mapX + receptiveFieldWidth / 2; x++, obsY++)
         {
             if (x >= 0 && x < level.xExit && y >= 0 && y < level.height)
             {
@@ -498,7 +468,6 @@ public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
 //                    mergedZZ[obsX][obsY] = mario.kind;
         }
     }
-
 //        for (int w = 0; w < mergedZZ.length; w++)
 //            for (int h = 0; h < mergedZZ[0].length; h++)
 //                mergedZZ[w][h] = -1;
@@ -507,15 +476,16 @@ public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
         if (sprite.kind == mario.kind)
             continue;
         if (sprite.mapX >= 0 &&
-                sprite.mapX > MarioXInMap - receptiveFieldWidth / 2 &&
-                sprite.mapX < MarioXInMap + receptiveFieldWidth / 2 &&
+                sprite.mapX > mario.mapX - receptiveFieldWidth / 2 &&
+                sprite.mapX < mario.mapX + receptiveFieldWidth / 2 &&
                 sprite.mapY >= 0 &&
-                sprite.mapY > MarioYInMap - receptiveFieldHeight / 2 &&
-                sprite.mapY < MarioYInMap + receptiveFieldHeight / 2)
+                sprite.mapY > mario.mapY - receptiveFieldHeight / 2 &&
+                sprite.mapY < mario.mapY + receptiveFieldHeight / 2)
         {
-            int obsX = sprite.mapY - MarioYInMap + receptiveFieldHeight / 2;
-            int obsY = sprite.mapX - MarioXInMap + receptiveFieldWidth / 2;
+            int obsX = sprite.mapY - mario.mapY + receptiveFieldHeight / 2;
+            int obsY = sprite.mapX - mario.mapX + receptiveFieldWidth / 2;
             // quick fix TODO: handle this in more general way.
+            // TODO: substitue '14' by explicit statement
             if (mergedZZ[obsX][obsY] != 14)
             {
                 byte tmp = ZLevelEnemyGeneralization(sprite.kind, ZLevelEnemies);
