@@ -124,19 +124,6 @@ public String getParameterValue(String param)
 //                " used");
     optionsHashMap.put(param, ret);
     return ret;
-//        try
-//        {
-//
-//        }catch (Exception ex)
-//        {
-//
-//        }finally
-//        {
-//            return ret;
-//        }
-
-//
-//
 //        if (allowedOptions.contains(param))
 //        {
 //            if (optionsHashMap.get(param) == null)

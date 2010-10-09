@@ -73,12 +73,12 @@ public void reset(CmdLineOptions setUpOptions)
     }
     System.out.println("");
     System.out.flush();*/
-//    if (!setUpOptions.getRepFile().equals(""))
-        
+//    if (!setUpOptions.getReplayFileName().equals(""))
+
     this.setAgent(setUpOptions.getAgent());
     marioReceptiveFieldCenterPos[0] = setUpOptions.getReceptiveFieldWidth() / 2;
     marioReceptiveFieldCenterPos[1] = setUpOptions.getReceptiveFieldHeight() / 2;
-    
+
     marioTraceFile = setUpOptions.getTraceFile();
 
     if (setUpOptions.isVisualization())
