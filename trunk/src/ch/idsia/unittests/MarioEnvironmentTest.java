@@ -2,6 +2,7 @@ package ch.idsia.unittests;
 
 import ch.idsia.benchmark.mario.environments.MarioEnvironment;
 import ch.idsia.benchmark.tasks.BasicTask;
+import ch.idsia.benchmark.tasks.ReplayTask;
 import ch.idsia.tools.CmdLineOptions;
 import junit.framework.TestCase;
 import org.testng.annotations.AfterTest;
@@ -249,5 +250,50 @@ public void testMarioReceptiveFieldSizeW8H6_vis() throws Exception
         assertEquals(3, pos[1]);
 
     }
+}
+
+@Test
+public void testRecordingFitness()
+{
+    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip");
+    final BasicTask basicTask = new BasicTask(cmdLineOptions);
+    basicTask.reset(cmdLineOptions);
+    basicTask.runOneEpisode();
+    float originalFitness = basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
+    System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
+
+    final CmdLineOptions options = new CmdLineOptions("-rep recorderTest.zip");
+    final ReplayTask replayTask = new ReplayTask(options);
+    replayTask.reset(options);
+    replayTask.startReplay();
+    System.out.println(replayTask.getEnvironment().getEvaluationInfoAsString());
+    float replayFitness = basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
+    assertEquals(originalFitness, replayFitness);
+}
+
+@Test
+public void testRecordingTrace()
+{
+    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip");
+    final BasicTask basicTask = new BasicTask(cmdLineOptions);
+    basicTask.reset(cmdLineOptions);
+    basicTask.runOneEpisode();
+
+    float originalFitness = basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
+    int[][] firstTrace = basicTask.getEnvironment().getEvaluationInfo().marioTrace;
+    System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
+
+    final CmdLineOptions options = new CmdLineOptions("-rep recorderTest.zip");
+    final ReplayTask replayTask = new ReplayTask(options);
+    replayTask.reset(options);
+    replayTask.startReplay();
+
+    float replayFitness = basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
+    int[][] secondTrace = basicTask.getEnvironment().getEvaluationInfo().marioTrace;
+    System.out.println(replayTask.getEnvironment().getEvaluationInfoAsString());
+    
+    for (int j = 0; j < firstTrace[0].length; ++j)
+        for (int i = 0; i < firstTrace.length; ++i)
+            assertEquals(firstTrace[i][j], secondTrace[i][j]);
 }
 }

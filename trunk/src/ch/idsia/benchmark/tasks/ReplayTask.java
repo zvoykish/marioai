@@ -70,7 +70,7 @@ public void reset(CmdLineOptions cmdLineOptions)
     String repFile = options.getReplayFileName();
 
     if (!repFile.equals(""))
-        cmdLineOptions.setParameterValue("-ag", "ch.idsia.agents.controllers.ReplayAgent");
+        cmdLineOptions.setParameterValue("-ag", "ch.idsia.agents.controllers.ReplayAgent"); //todo:fix it
 
     options = cmdLineOptions;
     environment.reset(cmdLineOptions);

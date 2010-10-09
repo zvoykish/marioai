@@ -105,7 +105,6 @@ public static Level createLevel(CmdLineOptions args)
         System.err.println("[Mario AI WARNING] : Level height changed to minimal allowed value 15");
         height = 15;
     }
-    System.out.println("here");
     isFlatLevel = args.isFlatLevel();
     counters.totalHillStraight = args.getHillStraightCount() ? Integer.MAX_VALUE : 0;
     counters.totalCannons = args.getCannonsCount() ? Integer.MAX_VALUE : 0;

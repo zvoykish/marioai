@@ -22,9 +22,12 @@ private ZipFile zf;
 private ZipEntry ze;
 private BufferedInputStream fis;
 
-public Replayer(String filename) throws IOException
+public Replayer(String fileName) throws IOException
 {
-    zf = new ZipFile(filename);
+    if (!fileName.endsWith(".zip"))
+        fileName += ".zip";
+
+    zf = new ZipFile(fileName);
 }
 
 public void openFile(String filename) throws Exception

@@ -16,9 +16,12 @@ public class Recorder //TODO: auto add .zip extension
 {
 private ZipOutputStream zos;
 
-public Recorder(String filename) throws FileNotFoundException
+public Recorder(String fileName) throws FileNotFoundException
 {
-    zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(filename)));
+    if (!fileName.endsWith(".zip"))
+        fileName += ".zip";
+
+    zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)));
 }
 
 public void createFile(String filename) throws IOException
