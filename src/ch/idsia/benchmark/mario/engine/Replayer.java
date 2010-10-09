@@ -1,67 +1,84 @@
 package ch.idsia.benchmark.mario.engine;
 
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
-public class Replayer
+/**
+ * Created by IntelliJ IDEA.
+ * User: Sergey Karakovskiy, firstName_at_idsia_dot_ch
+ * Date: May 5, 2009
+ * Time: 9:34:33 PM
+ * Package: ch.idsia.utils
+ */
+public class Replayer //TODO: auto add .zip extension
 {
-    private ByteArrayInputStream bais;
-    private DataInputStream dis;
+private ZipFile zf;
+private ZipEntry ze;
+private BufferedInputStream fis;
 
-    private byte tick = 0;
-    private int tickCount = -99999999;
+public Replayer(String filename) throws IOException
+{
+    zf = new ZipFile(filename);
+}
 
-    public Replayer(byte[] bytes)
+public void openFile(String filename) throws Exception
+{
+    Enumeration e = zf.entries();
+    boolean f = false;
+
+    while (e.hasMoreElements())
     {
-        bais = new ByteArrayInputStream(bytes);
-        dis = new DataInputStream(bais);
-    }
-
-    public long nextLong()
-    {
-        try
+        ze = (ZipEntry) e.nextElement();
+        if (ze.getName().equals(filename))
         {
-            return dis.readLong();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            return 0;
+            f = true;
+            break;
         }
     }
+    
+    if (!f)
+        throw new Exception("[Mario AI EXCEPTION] : File " + filename + " not found in the archive");
+}
 
-    public byte nextTick()
-    {
-        if (tickCount == -99999999)
-        {
-            try
-            {
-                tickCount = dis.readInt();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
+private void openInputStream() throws IOException
+{
+    fis = new BufferedInputStream(zf.getInputStream(ze));
+}
 
-        if (tickCount == 0)
-        {
-            try
-            {
-                tick = (byte) dis.read();
-                tickCount = dis.readInt();
-            }
-            catch (IOException e)
-            {
-            }
-        }
+public byte[] readBytes(int size) throws IOException
+{
+    if (fis == null)
+        openInputStream();
 
-        if (tickCount > 0)
-        {
-            tickCount--;
-        }
+    byte[] buffer = new byte[size];
+    int count = fis.read(buffer, 0, size);
 
-        return tick;
-    }
+    if (count == -1)
+        buffer = null;
+
+    return buffer;
+}
+
+public Object readObject() throws IOException, ClassNotFoundException
+{
+    ObjectInputStream ois = new ObjectInputStream(zf.getInputStream(ze));
+    Object res = ois.readObject();
+    ois.close();
+
+    return res;
+}
+
+public void closeFile() throws IOException
+{
+    fis.close();
+}
+
+public void closeZip() throws IOException
+{
+    zf.close();
+}
 }

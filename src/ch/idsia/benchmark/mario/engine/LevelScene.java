@@ -80,9 +80,6 @@ public void setTimeLimit(int timeLimit)
 
 private int timeLimit = 200;
 
-//    private Recorder recorder = new Recorder();
-//    private Replayer replayer = null;
-
 private long levelSeed;
 private int levelType;
 private int levelDifficulty;
@@ -949,7 +946,7 @@ public void reset(CmdLineOptions cmdLineOptions)
 //        System.out.println("\nLevelScene RESET!");
 //        this.gameViewer = setUpOptions[0] == 1;
 //        System.out.println("this.mario.isMarioInvulnerable = " + this.mario.isMarioInvulnerable);
-    this.levelDifficulty = cmdLineOptions.getLevelDifficulty();
+//    this.levelDifficulty = cmdLineOptions.getLevelDifficulty();
 //        System.out.println("this.levelDifficulty = " + this.levelDifficulty);
 //    this.levelLength = cmdLineOptions.getLevelLength();
 //        System.out.println("this.levelLength = " + this.levelLength);
@@ -977,9 +974,6 @@ public void reset(CmdLineOptions cmdLineOptions)
 //        this.getViewLocation().y, setUpOptions[16] == 1;
 //        this.getZLevelEnemies(),setUpOptions[17] ;
 //        this.getZLevelScene()   setUpOptions[18] ;
-
-    // TODO: FIX ME: this this.levelHeight is never used! 
-//    this.levelHeight = cmdLineOptions.getLevelHeight();
 
     receptiveFieldWidth = cmdLineOptions.getReceptiveFieldWidth();
     receptiveFieldHeight = cmdLineOptions.getReceptiveFieldHeight();
@@ -1009,7 +1003,31 @@ public void reset(CmdLineOptions cmdLineOptions)
     /*        if (recorder != null)
     recorder.addLong(LevelGenerator.lastSeed);
     }*/
-    level = LevelGenerator.createLevel(cmdLineOptions);
+
+    //open replayer file, read level, close file
+    String repFile = cmdLineOptions.getRepFile();
+    if (!repFile.equals(""))
+    {
+        try
+        {
+            //TODO: it is not very good. think on it (opening replayer file twice: here and in BasicTask)
+            Replayer replayer = new Replayer(repFile);
+            replayer.openFile("level.lvl");
+            level = (Level) replayer.readObject();
+//            replayer.closeFile();
+            replayer.closeZip();
+        } catch (IOException e)
+        {
+            //TODO: describe this exceptions
+            e.printStackTrace();
+        } catch (Exception e)
+        {
+            //TODO
+            e.printStackTrace();
+        }
+    }else
+        level = LevelGenerator.createLevel(cmdLineOptions);
+
     String fileName = cmdLineOptions.getLevelFileName();
     if (!fileName.equals(""))
     {
@@ -1017,10 +1035,6 @@ public void reset(CmdLineOptions cmdLineOptions)
         {
             System.out.println("fileName = " + fileName);
             Level.save(level, new ObjectOutputStream(new FileOutputStream(fileName)));
-//            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName));
-//            oos.writeObject(level);
-//            oos.flush();
-//            oos.close();
         } catch (IOException e)
         {
             System.err.println("[Mario AI WARNING] : Cannot write in to the file " + fileName);
@@ -1029,6 +1043,7 @@ public void reset(CmdLineOptions cmdLineOptions)
     }
     this.levelSeed = level.randomSeed;
     this.levelLength = level.length;
+    this.levelHeight = level.height;
     this.levelType = level.type;
     this.levelDifficulty = level.difficulty;
 

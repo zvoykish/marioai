@@ -412,4 +412,14 @@ public String getTraceFile()
 
     return res;
 }
+
+public String getRecFile()
+{
+    return getParameterValue("-rec");
+}
+
+public String getRepFile()
+{
+    return getParameterValue("-rep");
+}
 }
