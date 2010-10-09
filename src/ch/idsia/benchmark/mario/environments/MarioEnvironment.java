@@ -324,7 +324,7 @@ public int[] getMarioReceptiveFieldCenter()
     return marioReceptiveFieldCenterPos;
 }
 
-public void closeRecorder() //TODO: find a better place for this
+public void closeRecorder()
 {
     if (recorder != null)
     {
@@ -332,6 +332,7 @@ public void closeRecorder() //TODO: find a better place for this
         {
 //            recorder.closeFile();
             recorder.closeZip();
+            recorder = null;
         } catch (IOException e)
         {
             e.printStackTrace();
