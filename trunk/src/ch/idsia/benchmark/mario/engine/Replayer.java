@@ -1,5 +1,7 @@
 package ch.idsia.benchmark.mario.engine;
 
+import ch.idsia.benchmark.mario.environments.Environment;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -49,15 +51,23 @@ private void openInputStream() throws IOException
     fis = new BufferedInputStream(zf.getInputStream(ze));
 }
 
-public byte[] readBytes(int size) throws IOException
+public boolean[] readAction() throws IOException
 {
     if (fis == null)
         openInputStream();
 
-    byte[] buffer = new byte[size];
-    int count = fis.read(buffer, 0, size);
+    boolean[] buffer = new boolean[Environment.numberOfButtons];
+//    int count = fis.read(buffer, 0, size);
+    byte actions = (byte) fis.read();
+    for (int i = 0; i < Environment.numberOfButtons; i++)
+    {
+        if ((actions & ((1 << i))) > 0)
+            buffer[i] = true;
+        else
+            buffer[i] = false;
+    }
 
-    if (count == -1)
+    if (actions == -1)
         buffer = null;
 
     return buffer;
@@ -67,14 +77,14 @@ public Object readObject() throws IOException, ClassNotFoundException
 {
     ObjectInputStream ois = new ObjectInputStream(zf.getInputStream(ze));
     Object res = ois.readObject();
-    ois.close();
+//    ois.close();
 
     return res;
 }
 
 public void closeFile() throws IOException
 {
-    fis.close();
+    fis.close(); //TODO: never used. fix it
 }
 
 public void closeZip() throws IOException

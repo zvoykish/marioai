@@ -11,9 +11,6 @@ import ch.idsia.tools.EvaluationInfo;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
@@ -103,11 +100,7 @@ public void reset(CmdLineOptions setUpOptions)
     if (!recFile.equals("off"))
     {
         if (recFile.equals("on"))
-        {
-            DateFormat dateFormat = new SimpleDateFormat("MM-dd-HH-mm-ss");
-            Date date = new Date();
-            recFile = dateFormat.format(date) + ".zip";
-        }
+            recFile = GlobalOptions.getTimeStamp() + ".zip";
 
         try
         {
@@ -256,7 +249,7 @@ public void performAction(boolean[] action)
     try
     {
         if (recorder != null)
-            recorder.writeBytes(action);
+            recorder.writeAction(action);
     } catch (IOException e)
     {
         e.printStackTrace();
@@ -337,7 +330,7 @@ public void closeRecorder() //TODO: find a better place for this
     {
         try
         {
-            recorder.closeFile();
+//            recorder.closeFile();
             recorder.closeZip();
         } catch (IOException e)
         {
