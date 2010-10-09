@@ -1,6 +1,11 @@
 Mario AI benchmark update log.
 
 
+23. Change: License update.
+22. Improvement: Recordings, Replays feature added.
+21. Change: Environment.getEnemiesFloatPos() returns relative to mario coordinates. Centered on Mario.
+20. Bug fix: Environment.getEnemiesFloatPos() was not returning any information after encoding change.
+19. Improvement: Zoom in with smooth graphics scaling. Press Z key to enable/disable doubled screen size.
 18. Improvement: (Visualization) Game State representation compressed. 
 17. Improvement: Encoding update. Facilitates learning algorithms to learn the differences in terrain and enemies.
 

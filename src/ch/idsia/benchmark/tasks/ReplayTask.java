@@ -49,7 +49,7 @@ public float[] evaluate(final Agent controller)
 
 public void setOptions(final CmdLineOptions options)
 {
-    this.options = options; 
+    this.options = options;
 }
 
 public CmdLineOptions getOptions()
@@ -67,7 +67,7 @@ public boolean isFinished()
 
 public void reset(CmdLineOptions cmdLineOptions)
 {
-    String repFile = options.getRepFile();
+    String repFile = options.getReplayFileName();
 
     if (!repFile.equals(""))
         cmdLineOptions.setParameterValue("-ag", "ch.idsia.agents.controllers.ReplayAgent");
@@ -77,7 +77,7 @@ public void reset(CmdLineOptions cmdLineOptions)
     agent = options.getAgent();
 
     if (!repFile.equals(""))
-        ((ReplayAgent)agent).setRepFile(repFile);
+        ((ReplayAgent) agent).setRepFile(repFile);
 
     agent.reset();
 }

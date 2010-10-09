@@ -430,8 +430,8 @@ public float[] getEnemiesFloatPos()
             case Sprite.KIND_SHELL:
             {
                 enemiesFloatsList.add((float) sprite.kind);
-                enemiesFloatsList.add(sprite.x);
-                enemiesFloatsList.add(sprite.y);
+                enemiesFloatsList.add(sprite.x - mario.x);
+                enemiesFloatsList.add(sprite.y - mario.y);
             }
         }
     }
@@ -970,10 +970,6 @@ public void reset(CmdLineOptions cmdLineOptions)
 //        this.isViewAlwaysOnTop() ? 1 : 0, setUpOptions[13]
     this.visualization = cmdLineOptions.isVisualization();
 //        System.out.println("visualization = " + visualization);
-//        this.getViewLocation().x, setUpOptions[15] == 1;
-//        this.getViewLocation().y, setUpOptions[16] == 1;
-//        this.getZLevelEnemies(),setUpOptions[17] ;
-//        this.getZLevelScene()   setUpOptions[18] ;
 
     receptiveFieldWidth = cmdLineOptions.getReceptiveFieldWidth();
     receptiveFieldHeight = cmdLineOptions.getReceptiveFieldHeight();
@@ -996,22 +992,15 @@ public void reset(CmdLineOptions cmdLineOptions)
     }
 
     marioInitialPos = cmdLineOptions.getMarioInitialPos();
-    // inlined from init()
-//        System.out.println("Call to init:");
-    /*        if (replayer!=null)
-    {                level = LevelGenerator.createLevel(2048, 15, replayer.nextLong());         }
-    /*        if (recorder != null)
-    recorder.addLong(LevelGenerator.lastSeed);
-    }*/
 
     //open replayer file, read level, close file
-    String repFile = cmdLineOptions.getRepFile();
-    if (!repFile.equals(""))
+    String replayFileName = cmdLineOptions.getReplayFileName();
+    if (!replayFileName.equals(""))
     {
         try
         {
-            //TODO: it is not very good. think on it (opening replayer file twice: here and in BasicTask)
-            Replayer replayer = new Replayer(repFile);
+            //TODO: fix it! replay is opened twice: here and in ReplayTask). Reduce to a single open.
+            Replayer replayer = new Replayer(replayFileName);
             replayer.openFile("level.lvl");
             level = (Level) replayer.readObject();
 //            replayer.closeFile();
@@ -1025,7 +1014,7 @@ public void reset(CmdLineOptions cmdLineOptions)
             //TODO
             e.printStackTrace();
         }
-    }else
+    } else
         level = LevelGenerator.createLevel(cmdLineOptions);
 
     String fileName = cmdLineOptions.getLevelFileName();
@@ -1037,7 +1026,7 @@ public void reset(CmdLineOptions cmdLineOptions)
             Level.save(level, new ObjectOutputStream(new FileOutputStream(fileName)));
         } catch (IOException e)
         {
-            System.err.println("[Mario AI WARNING] : Cannot write in to the file " + fileName);
+            System.err.println("[Mario AI WARNING] : Cannot write to file " + fileName);
             e.printStackTrace();
         }
     }
