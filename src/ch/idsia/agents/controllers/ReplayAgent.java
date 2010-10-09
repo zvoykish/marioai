@@ -13,13 +13,15 @@ import java.io.IOException;
  * Time: 2:08:47 AM
  * Package: ch.idsia.agents.controllers
  */
-public class ReplayAgent extends BasicMarioAIAgent implements Agent
+public class ReplayAgent implements Agent
 {
-Replayer replayer;
+private Replayer replayer;
+private String name;
+
 
 public ReplayAgent()
 {
-    super("Replay");
+    setName("Replay");
 }
 
 public void setRepFile(String fileName)
@@ -30,38 +32,64 @@ public void setRepFile(String fileName)
         replayer.openFile("actions.act");
     } catch (IOException e)
     {
-        //TODO: describe
-        e.printStackTrace();
+        System.err.println("[Mario AI EXCEPTION] : Could not find or open archive file " + fileName);
+//        e.printStackTrace();
     } catch (Exception e)
     {
-        //TODO: describe
-        e.printStackTrace();
+        System.err.println(e.getMessage());
+//        e.printStackTrace();
     }
 }
 
-public void integrateObservation(Environment environment)
-{}
-
 public boolean[] getAction()
 {
-    boolean[] res = null;
+    //handle situation when time is over
+    boolean[] action = null;
     try
     {
-        //TODO: check if action is null
-        byte[] action = replayer.readBytes(6);
-        res = new boolean[action.length];
-        for (int i = 0; i < action.length; i++)
-            res[i] = action[i] == 0 ? false : true;
+        action = replayer.readAction();
+        if (action == null)
+        {
+            action = new boolean[Environment.numberOfButtons];
+            for (int i = 0; i < Environment.numberOfButtons; i++)
+                action[i] = false;
+        }
     } catch (IOException e)
     {
         //TODO: describe this
         e.printStackTrace();
     }
-    return res;
+    return action;
 }
 
-public void reset()
-{
+public void integrateObservation(final Environment environment)
+{}
 
+public void giveIntermediateReward(final float intermediateReward)
+{}
+
+public void reset()
+{}
+
+public String getName()
+{
+    return name;
+}
+
+public void setName(final String name)
+{
+    this.name = name;
+}
+
+public void closeReplayer()
+{
+    try
+    {
+        replayer.closeFile();
+        replayer.closeZip();
+    } catch (IOException e)
+    {
+        e.printStackTrace();
+    }
 }
 }

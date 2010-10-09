@@ -1,9 +1,6 @@
 package ch.idsia.benchmark.mario.engine;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -14,14 +11,14 @@ import java.util.zip.ZipOutputStream;
  * Time: 9:34:33 PM
  * Package: ch.idsia.utils
  */
-//TODO: buffered output
+
 public class Recorder //TODO: auto add .zip extension
 {
 private ZipOutputStream zos;
 
 public Recorder(String filename) throws FileNotFoundException
 {
-    zos = new ZipOutputStream(new FileOutputStream(filename));
+    zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(filename)));
 }
 
 public void createFile(String filename) throws IOException
@@ -43,20 +40,24 @@ public void writeObject(Object object) throws IOException
 
 public void closeFile() throws IOException
 {
+    zos.flush();
     zos.closeEntry();
 }
 
 public void closeZip() throws IOException
 {
+    zos.flush();
     zos.close();
 }
 
-public void writeBytes(final boolean[] bo) throws IOException
+public void writeAction(final boolean[] bo) throws IOException
 {
-    //TODO: translate boolean array to 1 byte using bits
-    byte[] b = new byte[bo.length];
+    byte action = 0;
+
     for (int i = 0; i < bo.length; i++)
-        b[i] = (byte) (bo[i] ? 1 : 0);
-    writeBytes(b);
+        if (bo[i])
+            action |= (1 << i);
+
+    zos.write(action);
 }
 }
