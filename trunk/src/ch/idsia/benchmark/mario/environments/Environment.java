@@ -142,5 +142,7 @@ public float getIntermediateReward();
  */
 public int[] getMarioReceptiveFieldCenter();
 
+public void closeRecorder();
+    
 // public int getLevelLength(); getLevelType();
 }

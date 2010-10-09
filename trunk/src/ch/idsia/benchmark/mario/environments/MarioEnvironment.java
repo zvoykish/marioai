@@ -4,9 +4,16 @@ import ch.idsia.agents.Agent;
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.engine.LevelScene;
 import ch.idsia.benchmark.mario.engine.MarioVisualComponent;
+import ch.idsia.benchmark.mario.engine.Recorder;
 import ch.idsia.benchmark.mario.engine.sprites.Mario;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
@@ -28,6 +35,8 @@ private static final MarioEnvironment ourInstance = new MarioEnvironment();
 private static final EvaluationInfo evaluationInfo = new EvaluationInfo();
 
 private static String marioTraceFile;
+
+private Recorder recorder;
 
 public static MarioEnvironment getInstance()
 {
@@ -67,6 +76,8 @@ public void reset(CmdLineOptions setUpOptions)
     }
     System.out.println("");
     System.out.flush();*/
+//    if (!setUpOptions.getRepFile().equals(""))
+        
     this.setAgent(setUpOptions.getAgent());
     marioReceptiveFieldCenterPos[0] = setUpOptions.getReceptiveFieldWidth() / 2;
     marioReceptiveFieldCenterPos[1] = setUpOptions.getReceptiveFieldHeight() / 2;
@@ -85,6 +96,37 @@ public void reset(CmdLineOptions setUpOptions)
         marioVisualComponent.setAlwaysOnTop(setUpOptions.isViewAlwaysOnTop());
     } else
         levelScene.reset(setUpOptions);
+
+    //create recorder
+    String recFile = setUpOptions.getRecFile();
+    //todo: fix file extension
+    if (!recFile.equals("off"))
+    {
+        if (recFile.equals("on"))
+        {
+            DateFormat dateFormat = new SimpleDateFormat("MM-dd-HH-mm-ss");
+            Date date = new Date();
+            recFile = dateFormat.format(date) + ".zip";
+        }
+
+        try
+        {
+            recorder = new Recorder(recFile);
+
+            recorder.createFile("level.lvl");
+            recorder.writeObject(levelScene.level);
+            recorder.closeFile();
+
+            recorder.createFile("actions.act");
+        } catch (FileNotFoundException e)
+        {
+            System.err.println("[Mario AI EXCEPTION] : Unable to initialize recorder. Game will not be recorded.");
+        } catch (IOException e)
+        {
+            //TODO: describe
+            e.printStackTrace();
+        }
+    }
 }
 
 public void tick()
@@ -211,6 +253,14 @@ public int[] getMarioState()
 
 public void performAction(boolean[] action)
 {
+    try
+    {
+        if (recorder != null)
+            recorder.writeBytes(action);
+    } catch (IOException e)
+    {
+        e.printStackTrace();
+    }
     levelScene.performAction(action);
 }
 
@@ -231,6 +281,8 @@ public String getEvaluationInfoAsString()
 
 public EvaluationInfo getEvaluationInfo()
 {
+    if (recorder != null)
+        closeRecorder();
 //        evaluationInfo.agentType = agent.getClass().getSimpleName();
 //        evaluationInfo.agentName = agent.getName();
     evaluationInfo.marioStatus = levelScene.getMarioStatus();
@@ -277,5 +329,20 @@ public float getIntermediateReward()
 public int[] getMarioReceptiveFieldCenter()
 {
     return marioReceptiveFieldCenterPos;
+}
+
+public void closeRecorder() //TODO: find a better place for this
+{
+    if (recorder != null)
+    {
+        try
+        {
+            recorder.closeFile();
+            recorder.closeZip();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
 }
 }

@@ -1,6 +1,7 @@
 package ch.idsia.benchmark.tasks;
 
 import ch.idsia.agents.Agent;
+import ch.idsia.agents.controllers.ReplayAgent;
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.benchmark.mario.environments.MarioEnvironment;
@@ -43,15 +44,25 @@ public boolean runOneEpisode()
             environment.performAction(action);
         }
     }
+    environment.closeRecorder();
     environment.getEvaluationInfo().setTaskName(name);
     return true;
 }
 
 public void reset(CmdLineOptions cmdLineOptions)
 {
+    String repFile = options.getRepFile();
+
+    if (!repFile.equals(""))
+        cmdLineOptions.setParameterValue("-ag", "ch.idsia.agents.controllers.ReplayAgent");
+
     options = cmdLineOptions;
-    agent = options.getAgent();
     environment.reset(cmdLineOptions);
+    agent = options.getAgent();
+
+    if (!repFile.equals(""))
+        ((ReplayAgent)agent).setRepFile(repFile);
+    
     agent.reset();
 }
 
@@ -84,6 +95,7 @@ public void doEpisodes(int amount, boolean verbose)
         if (verbose)
             System.out.println(environment.getEvaluationInfoAsString());
     }
+    //todo: close zip here
 }
 
 public boolean isFinished()

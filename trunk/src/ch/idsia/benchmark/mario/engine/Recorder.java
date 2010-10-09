@@ -1,63 +1,62 @@
 package ch.idsia.benchmark.mario.engine;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
-
-public class Recorder
+/**
+ * Created by IntelliJ IDEA.
+ * User: Sergey Karakovskiy, firstName_at_idsia_dot_ch
+ * Date: May 5, 2009
+ * Time: 9:34:33 PM
+ * Package: ch.idsia.utils
+ */
+//TODO: buffered output
+public class Recorder //TODO: auto add .zip extension
 {
-    private ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    private DataOutputStream dos = new DataOutputStream(baos);
+private ZipOutputStream zos;
 
-    private byte lastTick = 0;
-    private int tickCount = 0;
+public Recorder(String filename) throws FileNotFoundException
+{
+    zos = new ZipOutputStream(new FileOutputStream(filename));
+}
 
-    public void addLong(long val)
-    {
-        try
-        {
-            dos.writeLong(val);
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
+public void createFile(String filename) throws IOException
+{
+   zos.putNextEntry(new ZipEntry(filename));
+}
 
-    public void addTick(byte tick)
-    {
-        try
-        {
-            if (tick == lastTick)
-            {
-                tickCount++;
-            } else
-            {
-                dos.writeInt(tickCount);
-                dos.write(tick);
-                lastTick = tick;
-                tickCount = 1;
-            }
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
+public void writeBytes(byte[] data) throws IOException
+{
+    zos.write(data, 0, data.length);
+}
 
-    public byte[] getBytes()
-    {
-        try
-        {
-            dos.writeInt(tickCount);
-            dos.write(-1);
-            dos.close();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        return baos.toByteArray();
-    }
+public void writeObject(Object object) throws IOException
+{
+    ObjectOutputStream oos = new ObjectOutputStream(zos);
+    oos.writeObject(object);
+    oos.flush();
+}
+
+public void closeFile() throws IOException
+{
+    zos.closeEntry();
+}
+
+public void closeZip() throws IOException
+{
+    zos.close();
+}
+
+public void writeBytes(final boolean[] bo) throws IOException
+{
+    //TODO: translate boolean array to 1 byte using bits
+    byte[] b = new byte[bo.length];
+    for (int i = 0; i < bo.length; i++)
+        b[i] = (byte) (bo[i] ? 1 : 0);
+    writeBytes(b);
+}
 }
