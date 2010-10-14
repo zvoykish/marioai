@@ -44,7 +44,7 @@ public boolean startReplay()
 
 public float[] evaluate(final Agent controller)
 {
-    return new float[0];  //To change body of implemented methods use File | Settings | File Templates.
+    return new float[0];
 }
 
 public void setOptions(final CmdLineOptions options)
@@ -67,17 +67,19 @@ public boolean isFinished()
 
 public void reset(CmdLineOptions cmdLineOptions)
 {
-    String repFile = options.getReplayFileName();
+    options = cmdLineOptions;
 
-    if (!repFile.equals(""))
+    String replayFileName = options.getReplayFileName();
+
+    // TODO: possible to remove it?
+    if (!replayFileName.equals(""))
         cmdLineOptions.setParameterValue("-ag", "ch.idsia.agents.controllers.ReplayAgent"); //todo:fix it
 
-    options = cmdLineOptions;
     environment.reset(cmdLineOptions);
     agent = options.getAgent();
 
-    if (!repFile.equals(""))
-        ((ReplayAgent) agent).setRepFile(repFile);
+    if (!replayFileName.equals(""))
+        ((ReplayAgent) agent).setRepFile(replayFileName);
 
     agent.reset();
 }
