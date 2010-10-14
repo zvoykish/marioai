@@ -8,7 +8,7 @@ parameter saves generated level to the fileName.
 23. Change: License update. (license switch to "New BSD License", this allows anyone use our code even in commercial use,
 yet you have to mention the original authors and the web-site)
 22. Improvement: Recordings, Replays feature added. java Main -rec fileName to record or -rec on -- recording will be saved
-to file with a current timestamp(yyyy-MM-dd_HH-mm-ss). java Main -rep fileName to replay the recording.
+to file with a current timestamp(yyyy-MM-dd_HH-mm-ss). java Replay -rep fileName to replay the recording.
 21. Change: Environment.getEnemiesFloatPos() returns relative to mario coordinates. Centered on Mario.
 20. Bug fix: Environment.getEnemiesFloatPos() was not returning any information after encoding change.
     (thanks to Isaiah Hines for posting and issue)
