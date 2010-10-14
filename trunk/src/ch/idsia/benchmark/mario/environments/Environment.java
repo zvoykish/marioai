@@ -1,6 +1,7 @@
 package ch.idsia.benchmark.mario.environments;
 
 import ch.idsia.agents.Agent;
+import ch.idsia.benchmark.mario.engine.LevelScene;
 import ch.idsia.benchmark.mario.engine.sprites.Mario;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
@@ -143,6 +144,12 @@ public float getIntermediateReward();
 public int[] getMarioReceptiveFieldCenter();
 
 public void closeRecorder();
+
+public void setRecording(final boolean recording);
     
 // public int getLevelLength(); getLevelType();
+
+public void setMario(Mario mario);
+
+public LevelScene getLevelScene();
 }

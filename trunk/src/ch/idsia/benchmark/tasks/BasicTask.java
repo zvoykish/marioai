@@ -40,10 +40,11 @@ public boolean runOneEpisode()
             agent.giveIntermediateReward(environment.getIntermediateReward());
 
             boolean[] action = agent.getAction();
+            environment.setRecording(GlobalOptions.isRecording);
             environment.performAction(action);
         }
     }
-    environment.closeRecorder();
+    environment.closeRecorder(); //recorder initialized in environment.reset
     environment.getEvaluationInfo().setTaskName(name);
     return true;
 }

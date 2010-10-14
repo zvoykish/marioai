@@ -6,6 +6,8 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Enumeration;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -16,11 +18,12 @@ import java.util.zip.ZipFile;
  * Time: 9:34:33 PM
  * Package: ch.idsia.utils
  */
-public class Replayer //TODO: auto add .zip extension
+public class Replayer
 {
 private ZipFile zf;
 private ZipEntry ze;
 private BufferedInputStream fis;
+Queue replayFiles = new LinkedList();
 
 public Replayer(String fileName) throws IOException
 {
@@ -28,28 +31,28 @@ public Replayer(String fileName) throws IOException
         fileName += ".zip";
 
     zf = new ZipFile(fileName);
+    Enumeration en = zf.entries();
+    while (en.hasMoreElements())
+    {
+        String s = ((ZipEntry) en.nextElement()).getName();
+        if (s.endsWith(".mario") || s.endsWith(".act"))
+        {
+            s = s.substring(0, s.lastIndexOf("."));
+            if (!replayFiles.contains(s))
+                replayFiles.add(s);
+        }
+    }
 }
 
 public void openFile(String filename) throws Exception
 {
-    Enumeration e = zf.entries();
-    boolean f = false;
+    ze = zf.getEntry(filename);
 
-    while (e.hasMoreElements())
-    {
-        ze = (ZipEntry) e.nextElement();
-        if (ze.getName().equals(filename))
-        {
-            f = true;
-            break;
-        }
-    }
-    
-    if (!f)
+    if (ze == null)
         throw new Exception("[Mario AI EXCEPTION] : File " + filename + " not found in the archive");
 }
 
-private void openInputStream() throws IOException
+private void openBufferedInputStream() throws IOException
 {
     fis = new BufferedInputStream(zf.getInputStream(ze));
 }
@@ -57,7 +60,7 @@ private void openInputStream() throws IOException
 public boolean[] readAction() throws IOException
 {
     if (fis == null)
-        openInputStream();
+        openBufferedInputStream();
 
     boolean[] buffer = new boolean[Environment.numberOfButtons];
 //    int count = fis.read(buffer, 0, size);
@@ -76,6 +79,17 @@ public boolean[] readAction() throws IOException
     return buffer;
 }
 
+public byte[] readGameInformation(int length) throws IOException
+{
+    if (fis == null)
+        openBufferedInputStream();
+
+    byte[] buffer = new byte[length];
+    fis.read(buffer, 0, length);
+
+    return buffer;
+}
+
 public Object readObject() throws IOException, ClassNotFoundException
 {
     ObjectInputStream ois = new ObjectInputStream(zf.getInputStream(ze));
@@ -87,11 +101,18 @@ public Object readObject() throws IOException, ClassNotFoundException
 
 public void closeFile() throws IOException
 {
-    fis.close(); //TODO: never used. fix it
+    fis.close();
 }
 
 public void closeZip() throws IOException
 {
     zf.close();
+}
+
+public String getNextReplayFileName()
+{
+    String s = (String) replayFiles.poll();
+
+    return s;
 }
 }

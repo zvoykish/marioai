@@ -9,6 +9,8 @@ import java.io.Serializable;
 
 public class SpriteTemplate implements Serializable
 {
+private static final long serialVersionUID = -6585112454240065011L;
+
 public int lastVisibleTick = -1;
 public Sprite sprite;
 public boolean isDead = false;

@@ -29,9 +29,16 @@ public void createFile(String filename) throws IOException
    zos.putNextEntry(new ZipEntry(filename));
 }
 
-public void writeBytes(byte[] data) throws IOException
+public void writeMarioState(int[] data, float[] marioFloatPos) throws IOException
 {
-    zos.write(data, 0, data.length);
+    byte[] res = new byte[data.length + marioFloatPos.length];
+    int i = 0;
+    for (; i < data.length; i++)
+        res[i] = (byte)data[i];
+    for (; i < data.length+marioFloatPos.length; i++)
+        res[i] = (byte)(marioFloatPos[i-data.length]/16);
+
+    zos.write(res, 0, res.length);
 }
 
 public void writeObject(Object object) throws IOException
@@ -60,6 +67,8 @@ public void writeAction(final boolean[] bo) throws IOException
     for (int i = 0; i < bo.length; i++)
         if (bo[i])
             action |= (1 << i);
+
+    System.err.println(action);
 
     zos.write(action);
 }

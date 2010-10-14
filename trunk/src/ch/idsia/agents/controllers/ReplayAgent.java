@@ -24,21 +24,11 @@ public ReplayAgent()
     setName("Replay");
 }
 
-public void setRepFile(String fileName)
+//this method should return mario state and position array
+//byte[]
+public void setReplayer(Replayer replayer)
 {
-    try
-    {
-        replayer = new Replayer(fileName);
-        replayer.openFile("actions.act");
-    } catch (IOException e)
-    {
-        System.err.println("[Mario AI EXCEPTION] : Could not find or open archive file " + fileName);
-//        e.printStackTrace();
-    } catch (Exception e)
-    {
-        System.err.println(e.getMessage());
-//        e.printStackTrace();
-    }
+    this.replayer = replayer;
 }
 
 public boolean[] getAction()
@@ -48,12 +38,12 @@ public boolean[] getAction()
     try
     {
         action = replayer.readAction();
-        if (action == null)
-        {
-            action = new boolean[Environment.numberOfButtons];
-            for (int i = 0; i < Environment.numberOfButtons; i++)
-                action[i] = false;
-        }
+//        if (action == null)
+//        {
+//            action = new boolean[Environment.numberOfButtons];
+//            for (int i = 0; i < Environment.numberOfButtons; i++)
+//                action[i] = false;
+//        }
     } catch (IOException e)
     {
         //TODO: describe this

@@ -12,7 +12,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class LevelScene implements SpriteContext, Serializable
+public final class LevelScene implements SpriteContext
 {
 public static final boolean[] defaultKeys = new boolean[Environment.numberOfButtons];
 public static final String[] keysStr = {"<<L ", "R>> ", "\\\\//", "JUMP", " RUN", "^UP^"};
@@ -71,7 +71,6 @@ private int numberOfHiddenCoinsGained = 0;
 
 public String memo = "";
 private Point marioInitialPos;
-private static final long serialVersionUID = -715653399093887130L;
 
 //    public int getTimeLimit() {  return timeLimit; }
 
@@ -849,7 +848,7 @@ public int[] getMarioState()
     marioState[6] = this.getKillsTotal();
     marioState[7] = this.getKillsByFire();
     marioState[8] = this.getKillsByStomp();
-    marioState[9] = this.getKillsByStomp();
+    marioState[9] = this.getKillsByStomp(); //TODO:duplicated record
     marioState[10] = this.getKillsByShell();
     marioState[11] = this.getTimeLeft();
     return marioState;
@@ -863,7 +862,7 @@ public void performAction(boolean[] action)
 
 public boolean isLevelFinished()
 {
-    return mario.getStatus() != Mario.STATUS_RUNNING;
+    return (mario.getStatus() != Mario.STATUS_RUNNING) || (mario.keys == null);
 }
 
 public boolean isMarioAbleToShoot()
