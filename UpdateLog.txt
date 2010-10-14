@@ -1,12 +1,19 @@
 Mario AI benchmark update log.
 
+Version 0.1.9 DATE: 2010-10-14 (October)
 
-23. Change: License update.
-22. Improvement: Recordings, Replays feature added.
+24. Improvement: Option -l <fileName> with parameter loads .lvl file instead of creating the level. Option -s <fileName> with
+parameter saves generated level to the fileName.
+23. Change: License update. (license switch to "New BSD License", this allows anyone use our code even in commercial use,
+yet you have to mention the original authors and the web-site)
+22. Improvement: Recordings, Replays feature added. java Main -rec fileName to record or -rec on -- recording will be saved
+to file with a current timestamp(yyyy-MM-dd_HH-mm-ss). java Main -rep fileName to replay the recording.
 21. Change: Environment.getEnemiesFloatPos() returns relative to mario coordinates. Centered on Mario.
 20. Bug fix: Environment.getEnemiesFloatPos() was not returning any information after encoding change.
-19. Improvement: Zoom in with smooth graphics scaling. Press Z key to enable/disable doubled screen size.
-18. Improvement: (Visualization) Game State representation compressed. 
+    (thanks to Isaiah Hines for posting and issue)
+19. Improvement: While in Visual mode press "Z" to double the size of the Mario Visual Component. 'Zoom in' is with smooth
+    graphics scaling. Press Z key to enable/disable doubled screen size.
+18. Improvement: (Visualization) Game State representation compressed.
 17. Improvement: Encoding update. Facilitates learning algorithms to learn the differences in terrain and enemies.
 
 Version 0.1.8 DATE: 2010-09-18 (September)

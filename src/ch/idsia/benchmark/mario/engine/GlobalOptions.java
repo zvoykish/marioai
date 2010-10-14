@@ -12,7 +12,7 @@ public abstract class
 {
 public static final int primaryVerionUID = 0;
 public static final int minorVerionUID = 1;
-public static final int minorSubVerionID = 8;
+public static final int minorSubVerionID = 9;
 
 public static boolean areLabels = false;
 public static boolean isCameraCenteredOnMario = false;
