@@ -5,9 +5,12 @@ import ch.idsia.benchmark.mario.engine.MarioVisualComponent;
 import ch.idsia.benchmark.mario.engine.level.SpriteTemplate;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class Sprite
+public class Sprite implements Serializable
 {
+private static final long serialVersionUID = 3090864320994188467L;
+
 public static final int KIND_NONE = 0;
 public static final int KIND_MARIO = -31;
 public static final int KIND_GOOMBA = 80;
@@ -46,15 +49,14 @@ public int hPic = 32;
 public int xPicO, yPicO;
 public boolean xFlipPic = false;
 public boolean yFlipPic = false;
-public Image[][] sheet;
-public Image[][] prevSheet;
+transient public Image[][] sheet;
+transient public Image[][] prevSheet;
 
 public boolean visible = true;
 
 public int layer = 1;
 
 public SpriteTemplate spriteTemplate;
-
 
 public static void setCreaturesGravity(final float creaturesGravity)
 {

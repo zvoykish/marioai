@@ -39,6 +39,7 @@ public static int VISUAL_COMPONENT_HEIGHT = 240;
 
 public static boolean isShowReceptiveField = false;
 public static boolean isScale2x = false;
+public static boolean isRecording = true;
 
 public static int getPrimaryVersionUID()
 {
@@ -50,7 +51,7 @@ public static int getMinorVersionUID()
     return minorVerionUID;
 }
 
-public static int getMinorSubVerionID()
+public static int getMinorSubVersionID()
 {
     return minorSubVerionID;
 }
@@ -62,7 +63,7 @@ public static String getBenchmarkName()
 
 public static String getVersionUID()
 {
-    return " " + getPrimaryVersionUID() + "." + getMinorVersionUID() + "." + getMinorSubVerionID();
+    return " " + getPrimaryVersionUID() + "." + getMinorVersionUID() + "." + getMinorSubVersionID();
 }
 
 public static void registerMarioVisualComponent(MarioVisualComponent mc)

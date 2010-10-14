@@ -7,7 +7,12 @@ import ch.idsia.benchmark.mario.engine.level.Level;
 import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.tools.CmdLineOptions;
 
-public final class Mario extends Sprite
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public final class Mario extends Sprite implements Serializable, Cloneable
 {
 private final int FractionalPowerUpTime = 0;
 public static final String[] MODES = new String[]{"small", "Large", "FIRE"};
@@ -71,8 +76,8 @@ public int getMode()
 //    private static float GROUND_INERTIA = 0.89f;
 //    private static float AIR_INERTIA = 0.89f;
 
-public boolean[] keys = new boolean[Environment.numberOfButtons];
-public boolean[] cheatKeys;
+transient public boolean[] keys = new boolean[Environment.numberOfButtons];
+transient public boolean[] cheatKeys;
 private float runTime;
 boolean wasOnGround = false;
 boolean onGround = false;
@@ -88,7 +93,7 @@ private boolean canShoot = false;
 int width = 4;
 int height = 24;
 
-public LevelScene levelScene;
+transient public LevelScene levelScene;
 public int facing;
 private int powerUpTime = 0; // exclude pause for rendering changes
 
@@ -803,6 +808,31 @@ public boolean isCanShoot()
     return canShoot;
 }
 
+private void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException
+{
+    aInputStream.defaultReadObject();
+    carried = (Sprite) aInputStream.readObject();
+}
+
+private void writeObject(ObjectOutputStream aOutputStream) throws IOException
+{
+    aOutputStream.defaultWriteObject();
+    aOutputStream.writeObject(carried);
+}
+
+public Object clone()
+{
+    try
+    {
+        Mario cloned = (Mario) super.clone();
+        return cloned;
+    }
+    catch (CloneNotSupportedException e)
+    {
+        System.out.println(e);
+        return null;
+    }
+}
 }
 
 //    public byte getKeyMask()

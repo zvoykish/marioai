@@ -153,6 +153,12 @@ private void toggleKey(int keyCode, boolean isPressed)
             {
                 GlobalOptions.changeScale2x();
             }
+            break;
+        case KeyEvent.VK_R:
+            if (isPressed)
+            {
+                GlobalOptions.isRecording = !GlobalOptions.isRecording;
+            }
     }
 }
 }

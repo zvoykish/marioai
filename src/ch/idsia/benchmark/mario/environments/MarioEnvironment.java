@@ -34,6 +34,8 @@ private static final EvaluationInfo evaluationInfo = new EvaluationInfo();
 private static String marioTraceFile;
 
 private Recorder recorder;
+private boolean isRecording;
+private boolean lastRecordingState;
 
 public static MarioEnvironment getInstance()
 {
@@ -96,7 +98,7 @@ public void reset(CmdLineOptions setUpOptions)
 
     //create recorder
     String recFile = setUpOptions.getRecFile();
-    //todo: fix file extension
+
     if (!recFile.equals("off"))
     {
         if (recFile.equals("on"))
@@ -110,7 +112,10 @@ public void reset(CmdLineOptions setUpOptions)
             recorder.writeObject(levelScene.level);
             recorder.closeFile();
 
-            recorder.createFile("actions.act");
+            isRecording = true;
+            lastRecordingState = false;
+
+//            recorder.createFile("actions.act");
         } catch (FileNotFoundException e)
         {
             System.err.println("[Mario AI EXCEPTION] : Unable to initialize recorder. Game will not be recorded.");
@@ -120,6 +125,11 @@ public void reset(CmdLineOptions setUpOptions)
             e.printStackTrace();
         }
     }
+}
+
+public void resetForReplay()
+{
+    
 }
 
 public void tick()
@@ -248,8 +258,29 @@ public void performAction(boolean[] action)
 {
     try
     {
-        if (recorder != null)
-            recorder.writeAction(action);
+        if (recorder != null && action != null)
+        {
+            if (isRecording)
+            {
+                if (!lastRecordingState)
+                {
+                    String timeStamp = GlobalOptions.getTimeStamp();
+                    recorder.createFile(timeStamp+".mario");
+                    recorder.writeObject(levelScene.mario);
+                    recorder.closeFile();
+                    recorder.createFile(timeStamp+".act");
+//                    recorder.writeMarioState(getMarioState(), getMarioFloatPos());
+                }
+
+                recorder.writeAction(action);
+            }
+            else
+            {
+                recorder.closeFile();
+            }
+
+            lastRecordingState = isRecording;
+        }
     } catch (IOException e)
     {
         e.printStackTrace();
@@ -338,5 +369,20 @@ public void closeRecorder()
             e.printStackTrace();
         }
     }
+}
+
+public void setRecording(boolean isRecording)
+{
+    this.isRecording = isRecording;
+}
+
+public void setMario(Mario mario)
+{
+    levelScene.mario = mario;
+}
+
+public LevelScene getLevelScene()
+{
+    return levelScene;
 }
 }
