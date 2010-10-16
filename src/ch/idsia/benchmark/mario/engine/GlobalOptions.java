@@ -27,6 +27,8 @@ public static boolean isFly = false;
 private static GameViewer GameViewer = null;
 //    public static boolean isTimer = true;
 
+public static int mariosecondMultiplier = 15;
+
 public static boolean isPowerRestoration;
 
 // required for rendering grid in ch/idsia/benchmark/mario/engine/sprites/Sprite.java
@@ -39,7 +41,7 @@ public static int VISUAL_COMPONENT_HEIGHT = 240;
 
 public static boolean isShowReceptiveField = false;
 public static boolean isScale2x = false;
-public static boolean isRecording = true;
+//public static boolean isRecording = true;
 
 public static int getPrimaryVersionUID()
 {

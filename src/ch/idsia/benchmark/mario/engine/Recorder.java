@@ -12,7 +12,7 @@ import java.util.zip.ZipOutputStream;
  * Package: ch.idsia.utils
  */
 
-public class Recorder //TODO: auto add .zip extension
+public class Recorder
 {
 private ZipOutputStream zos;
 
@@ -27,18 +27,6 @@ public Recorder(String fileName) throws FileNotFoundException
 public void createFile(String filename) throws IOException
 {
    zos.putNextEntry(new ZipEntry(filename));
-}
-
-public void writeMarioState(int[] data, float[] marioFloatPos) throws IOException
-{
-    byte[] res = new byte[data.length + marioFloatPos.length];
-    int i = 0;
-    for (; i < data.length; i++)
-        res[i] = (byte)data[i];
-    for (; i < data.length+marioFloatPos.length; i++)
-        res[i] = (byte)(marioFloatPos[i-data.length]/16);
-
-    zos.write(res, 0, res.length);
 }
 
 public void writeObject(Object object) throws IOException

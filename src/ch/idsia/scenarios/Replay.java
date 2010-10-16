@@ -18,7 +18,7 @@ public static void main(String[] args)
     final ReplayTask replayTask = new ReplayTask(cmdLineOptions);
     replayTask.reset(cmdLineOptions);
     replayTask.startReplay();
-    System.out.println(replayTask.getEnvironment().getEvaluationInfoAsString());
+//    System.out.println(replayTask.getEnvironment().getEvaluationInfoAsString());
 
     System.exit(0);
 }

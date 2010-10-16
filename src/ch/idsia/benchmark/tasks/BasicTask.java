@@ -40,7 +40,7 @@ public boolean runOneEpisode()
             agent.giveIntermediateReward(environment.getIntermediateReward());
 
             boolean[] action = agent.getAction();
-            environment.setRecording(GlobalOptions.isRecording);
+//            environment.setRecording(GlobalOptions.isRecording);
             environment.performAction(action);
         }
     }

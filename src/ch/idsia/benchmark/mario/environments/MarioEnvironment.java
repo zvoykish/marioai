@@ -1,10 +1,7 @@
 package ch.idsia.benchmark.mario.environments;
 
 import ch.idsia.agents.Agent;
-import ch.idsia.benchmark.mario.engine.GlobalOptions;
-import ch.idsia.benchmark.mario.engine.LevelScene;
-import ch.idsia.benchmark.mario.engine.MarioVisualComponent;
-import ch.idsia.benchmark.mario.engine.Recorder;
+import ch.idsia.benchmark.mario.engine.*;
 import ch.idsia.benchmark.mario.engine.sprites.Mario;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
@@ -34,8 +31,6 @@ private static final EvaluationInfo evaluationInfo = new EvaluationInfo();
 private static String marioTraceFile;
 
 private Recorder recorder;
-private boolean isRecording;
-private boolean lastRecordingState;
 
 public static MarioEnvironment getInstance()
 {
@@ -75,7 +70,7 @@ public void reset(CmdLineOptions setUpOptions)
     }
     System.out.println("");
     System.out.flush();*/
-//    if (!setUpOptions.getReplayFileName().equals(""))
+//    if (!setUpOptions.getReplayOptions().equals(""))
 
     this.setAgent(setUpOptions.getAgent());
     marioReceptiveFieldCenterPos[0] = setUpOptions.getReceptiveFieldWidth() / 2;
@@ -112,10 +107,7 @@ public void reset(CmdLineOptions setUpOptions)
             recorder.writeObject(levelScene.level);
             recorder.closeFile();
 
-            isRecording = true;
-            lastRecordingState = false;
-
-//            recorder.createFile("actions.act");
+            recorder.createFile("actions.act");
         } catch (FileNotFoundException e)
         {
             System.err.println("[Mario AI EXCEPTION] : Unable to initialize recorder. Game will not be recorded.");
@@ -125,11 +117,6 @@ public void reset(CmdLineOptions setUpOptions)
             e.printStackTrace();
         }
     }
-}
-
-public void resetForReplay()
-{
-    
 }
 
 public void tick()
@@ -259,28 +246,7 @@ public void performAction(boolean[] action)
     try
     {
         if (recorder != null && action != null)
-        {
-            if (isRecording)
-            {
-                if (!lastRecordingState)
-                {
-                    String timeStamp = GlobalOptions.getTimeStamp();
-                    recorder.createFile(timeStamp+".mario");
-                    recorder.writeObject(levelScene.mario);
-                    recorder.closeFile();
-                    recorder.createFile(timeStamp+".act");
-//                    recorder.writeMarioState(getMarioState(), getMarioFloatPos());
-                }
-
-                recorder.writeAction(action);
-            }
-            else
-            {
-                recorder.closeFile();
-            }
-
-            lastRecordingState = isRecording;
-        }
+            recorder.writeAction(action);
     } catch (IOException e)
     {
         e.printStackTrace();
@@ -338,7 +304,6 @@ public EvaluationInfo getEvaluationInfo()
     return evaluationInfo;
 }
 
-
 public void setAgent(Agent agent)
 {
     this.agent = agent;
@@ -371,18 +336,24 @@ public void closeRecorder()
     }
 }
 
-public void setRecording(boolean isRecording)
+public int getTimeSpent()
 {
-    this.isRecording = isRecording;
+    return levelScene.getTimeSpent();
 }
 
-public void setMario(Mario mario)
+public void setVisualization(boolean b)
 {
-    levelScene.mario = mario;
+    levelScene.visualization = b;
+    GlobalOptions.isVisualization = b;
 }
 
-public LevelScene getLevelScene()
+public void setReplayer(Replayer replayer)
 {
-    return levelScene;
+    levelScene.setReplayer(replayer);
 }
+
+//public void setRecording(boolean isRecording)
+//{
+//    this.isRecording = isRecording;
+//}
 }

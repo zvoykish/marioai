@@ -1,13 +1,11 @@
 package ch.idsia.benchmark.mario.engine;
 
 import ch.idsia.benchmark.mario.environments.Environment;
+import ch.idsia.tools.ReplayerOptions;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.Enumeration;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -20,28 +18,32 @@ import java.util.zip.ZipFile;
  */
 public class Replayer
 {
-private ZipFile zf;
-private ZipEntry ze;
+private ZipFile zf = null;
+private ZipEntry ze = null;
 private BufferedInputStream fis;
-Queue replayFiles = new LinkedList();
+private ReplayerOptions options;
 
-public Replayer(String fileName) throws IOException
+public Replayer(String replayOptions)
 {
+    this.options = new ReplayerOptions(replayOptions);
+}
+
+public boolean openNextReplayFile() throws IOException
+{
+//    if (zf != null)
+//        zf.close();
+
+    String fileName = options.getNextReplayFile();
+    if (fileName == null)
+        return false;
+
     if (!fileName.endsWith(".zip"))
         fileName += ".zip";
 
     zf = new ZipFile(fileName);
-    Enumeration en = zf.entries();
-    while (en.hasMoreElements())
-    {
-        String s = ((ZipEntry) en.nextElement()).getName();
-        if (s.endsWith(".mario") || s.endsWith(".act"))
-        {
-            s = s.substring(0, s.lastIndexOf("."));
-            if (!replayFiles.contains(s))
-                replayFiles.add(s);
-        }
-    }
+    ze = null;
+
+    return true;
 }
 
 public void openFile(String filename) throws Exception
@@ -67,7 +69,7 @@ public boolean[] readAction() throws IOException
     byte actions = (byte) fis.read();
     for (int i = 0; i < Environment.numberOfButtons; i++)
     {
-        if ((actions & ((1 << i))) > 0)
+        if ((actions & (1 << i)) > 0)
             buffer[i] = true;
         else
             buffer[i] = false;
@@ -75,17 +77,6 @@ public boolean[] readAction() throws IOException
 
     if (actions == -1)
         buffer = null;
-
-    return buffer;
-}
-
-public byte[] readGameInformation(int length) throws IOException
-{
-    if (fis == null)
-        openBufferedInputStream();
-
-    byte[] buffer = new byte[length];
-    fis.read(buffer, 0, length);
 
     return buffer;
 }
@@ -109,10 +100,26 @@ public void closeZip() throws IOException
     zf.close();
 }
 
-public String getNextReplayFileName()
+public boolean hasMoreChunks()
 {
-    String s = (String) replayFiles.poll();
+    return options.hasMoreChunks();
+}
 
-    return s;
+public int actionsFileSize()
+{
+    int size = (int) ze.getSize();
+    if (size == -1)
+        size = Integer.MAX_VALUE;
+    return size;
+}
+
+public ReplayerOptions.Interval getNextIntervalInMarioseconds()
+{
+    return options.getNextIntervalInMarioseconds();
+}
+
+public ReplayerOptions.Interval getNextIntervalInTicks()
+{
+    return options.getNextIntervalInTicks();
 }
 }
