@@ -89,6 +89,8 @@ public static int killedCreaturesByFireBall;
 public static int killedCreaturesByStomp;
 public static int killedCreaturesByShell;
 
+private Replayer replayer;
+
 //    private int[] args; //passed to reset method. ATTENTION: not cloned.
 
 public LevelScene()
@@ -813,9 +815,9 @@ public void bumpInto(int x, int y)
     }
 }
 
-public int getTimeSpent() { return startTime / 15; }
+public int getTimeSpent() { return startTime / GlobalOptions.mariosecondMultiplier; }
 
-public int getTimeLeft() { return timeLeft / 15; }
+public int getTimeLeft() { return timeLeft / GlobalOptions.mariosecondMultiplier; }
 
 public int getKillsTotal()
 {
@@ -862,7 +864,7 @@ public void performAction(boolean[] action)
 
 public boolean isLevelFinished()
 {
-    return (mario.getStatus() != Mario.STATUS_RUNNING) || (mario.keys == null);
+    return (mario.getStatus() != Mario.STATUS_RUNNING);
 }
 
 public boolean isMarioAbleToShoot()
@@ -993,17 +995,16 @@ public void reset(CmdLineOptions cmdLineOptions)
     marioInitialPos = cmdLineOptions.getMarioInitialPos();
 
     //open replayer file, read level, close file
-    String replayFileName = cmdLineOptions.getReplayFileName();
+    String replayFileName = cmdLineOptions.getReplayOptions();
     if (!replayFileName.equals(""))
     {
         try
         {
-            //TODO: fix it! replay is opened twice: here and in ReplayTask). Reduce to a single open.
-            Replayer replayer = new Replayer(replayFileName);
+//            replayer.openNextReplayFile();
             replayer.openFile("level.lvl");
             level = (Level) replayer.readObject();
 //            replayer.closeFile();
-            replayer.closeZip();
+//            replayer.closeZip();
         } catch (IOException e)
         {
             //TODO: describe this exceptions
@@ -1047,7 +1048,7 @@ public void reset(CmdLineOptions cmdLineOptions)
 
     sprites.add(mario);
     startTime = 1;
-    timeLeft = timeLimit * 15;
+    timeLeft = timeLimit * GlobalOptions.mariosecondMultiplier;
 
     tick = 0;
 }
@@ -1096,6 +1097,11 @@ public void addMemoMessage(final String memoMessage)
 }
 
 public Point getMarioInitialPos() {return marioInitialPos;}
+
+public void setReplayer(Replayer replayer)
+{
+    this.replayer = replayer;
+}
 }
 
 //    public void update(boolean[] action)

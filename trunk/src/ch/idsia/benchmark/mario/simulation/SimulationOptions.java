@@ -418,7 +418,7 @@ public String getRecFile()
     return getParameterValue("-rec");
 }
 
-public String getReplayFileName()
+public String getReplayOptions()
 {
     return getParameterValue("-rep");
 }

@@ -213,4 +213,10 @@ public void testScaredShooty_G6S3()
     assertEquals(6, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
 }
 
+@Test
+public void testRecorderOptionsParser()
+{
+//    ReplayerOptions recOp = new ReplayerOptions("test;3:5;6:11");
+//    assertEquals("test", recOp.getOutputFileName());
+}
 }

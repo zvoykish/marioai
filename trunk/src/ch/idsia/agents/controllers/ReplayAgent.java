@@ -38,12 +38,6 @@ public boolean[] getAction()
     try
     {
         action = replayer.readAction();
-//        if (action == null)
-//        {
-//            action = new boolean[Environment.numberOfButtons];
-//            for (int i = 0; i < Environment.numberOfButtons; i++)
-//                action[i] = false;
-//        }
     } catch (IOException e)
     {
         //TODO: describe this
@@ -69,17 +63,5 @@ public String getName()
 public void setName(final String name)
 {
     this.name = name;
-}
-
-public void closeReplayer()
-{
-    try
-    {
-        replayer.closeFile();
-        replayer.closeZip();
-    } catch (IOException e)
-    {
-        e.printStackTrace();
-    }
 }
 }

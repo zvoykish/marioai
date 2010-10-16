@@ -1,7 +1,7 @@
 package ch.idsia.benchmark.mario.environments;
 
 import ch.idsia.agents.Agent;
-import ch.idsia.benchmark.mario.engine.LevelScene;
+import ch.idsia.benchmark.mario.engine.Replayer;
 import ch.idsia.benchmark.mario.engine.sprites.Mario;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
@@ -145,11 +145,13 @@ public int[] getMarioReceptiveFieldCenter();
 
 public void closeRecorder();
 
-public void setRecording(final boolean recording);
+public void setReplayer(Replayer recorder);
+
+//public void setRecording(final boolean recording);
+
+public int getTimeSpent();
+
+public void setVisualization(boolean b);
     
 // public int getLevelLength(); getLevelType();
-
-public void setMario(Mario mario);
-
-public LevelScene getLevelScene();
 }
