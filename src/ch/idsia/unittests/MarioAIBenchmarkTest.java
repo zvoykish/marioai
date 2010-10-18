@@ -2,6 +2,7 @@ package ch.idsia.unittests;
 
 import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.ReplayerOptions;
 import junit.framework.TestCase;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -214,9 +215,17 @@ public void testScaredShooty_G6S3()
 }
 
 @Test
-public void testRecorderOptionsParser()
+public void testRecorderOptionsParser_OneFile()
 {
-//    ReplayerOptions recOp = new ReplayerOptions("test;3:5;6:11");
-//    assertEquals("test", recOp.getOutputFileName());
+    ReplayerOptions recOp = new ReplayerOptions("test;3:5;6:11");
+    assertEquals("test", recOp.getNextReplayFile());
+}
+
+@Test
+public void testRecorderOptionsParser_TwoFiles()
+{
+    ReplayerOptions recOp = new ReplayerOptions("test;3:5;6:11,test2");
+    assertEquals("test", recOp.getNextReplayFile());
+    assertEquals("test2", recOp.getNextReplayFile());
 }
 }

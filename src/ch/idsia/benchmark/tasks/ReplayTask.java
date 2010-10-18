@@ -33,12 +33,13 @@ public ReplayTask(CmdLineOptions cmdLineOptions)
 
 public boolean startReplay()
 {
+    ((ReplayAgent) agent).setReplayer(replayer);
+    environment.setReplayer(replayer);
     try
     {
         while (replayer.openNextReplayFile()) //while there are more .zip files
         {
-            environment.setReplayer(replayer);
-            ((ReplayAgent) agent).setReplayer(replayer);            
+//            ((ReplayAgent) agent).setReplayer(replayer);
             environment.reset(options);
             environment.setVisualization(false);
 
@@ -70,7 +71,7 @@ public boolean startReplay()
             }
             
             environment.setVisualization(true);
-            replayer.closeFile();
+//            replayer.closeFile();
             replayer.closeZip();
         }
 
