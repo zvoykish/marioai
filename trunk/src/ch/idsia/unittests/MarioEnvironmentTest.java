@@ -296,4 +296,5 @@ public void testRecordingTrace()
         for (int i = 0; i < firstTrace.length; ++i)
             assertEquals(firstTrace[i][j], secondTrace[i][j]);
 }
+
 }

@@ -42,6 +42,7 @@ public boolean openNextReplayFile() throws IOException
 
     zf = new ZipFile(fileName);
     ze = null;
+    fis = null;
 
     return true;
 }
@@ -92,7 +93,7 @@ public Object readObject() throws IOException, ClassNotFoundException
 
 public void closeFile() throws IOException
 {
-    fis.close();
+//    fis.close();
 }
 
 public void closeZip() throws IOException
