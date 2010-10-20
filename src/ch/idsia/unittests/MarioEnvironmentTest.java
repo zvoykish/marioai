@@ -255,16 +255,15 @@ public void testMarioReceptiveFieldSizeW8H6_vis() throws Exception
 @Test
 public void testRecordingFitness()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip");
+    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip -i on");
     final BasicTask basicTask = new BasicTask(cmdLineOptions);
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
     float originalFitness = basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
 
-    final CmdLineOptions options = new CmdLineOptions("-rep recorderTest.zip");
-    final ReplayTask replayTask = new ReplayTask(options);
-    replayTask.reset(options);
+    final ReplayTask replayTask = new ReplayTask();
+    replayTask.reset("recorderTest.zip");
     replayTask.startReplay();
     System.out.println(replayTask.getEnvironment().getEvaluationInfoAsString());
     float replayFitness = basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
@@ -274,21 +273,18 @@ public void testRecordingFitness()
 @Test
 public void testRecordingTrace()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip");
+    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip -i on");
     final BasicTask basicTask = new BasicTask(cmdLineOptions);
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
 
-    float originalFitness = basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
     int[][] firstTrace = basicTask.getEnvironment().getEvaluationInfo().marioTrace;
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
 
-    final CmdLineOptions options = new CmdLineOptions("-rep recorderTest.zip");
-    final ReplayTask replayTask = new ReplayTask(options);
-    replayTask.reset(options);
+    final ReplayTask replayTask = new ReplayTask();
+    replayTask.reset("-rep recorderTest.zip");
     replayTask.startReplay();
 
-    float replayFitness = basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
     int[][] secondTrace = basicTask.getEnvironment().getEvaluationInfo().marioTrace;
     System.out.println(replayTask.getEnvironment().getEvaluationInfoAsString());
     

@@ -92,7 +92,7 @@ public void reset(CmdLineOptions setUpOptions)
         levelScene.reset(setUpOptions);
 
     //create recorder
-    String recFile = setUpOptions.getRecFile();
+    String recFile = setUpOptions.getRecordFile();
 
     if (!recFile.equals("off"))
     {
@@ -105,6 +105,10 @@ public void reset(CmdLineOptions setUpOptions)
 
             recorder.createFile("level.lvl");
             recorder.writeObject(levelScene.level);
+            recorder.closeFile();
+
+            recorder.createFile("options");
+            recorder.writeObject(setUpOptions.asString());
             recorder.closeFile();
 
             recorder.createFile("actions.act");
@@ -122,7 +126,7 @@ public void reset(CmdLineOptions setUpOptions)
 public void tick()
 {
     levelScene.tick();
-    if (levelScene.visualization)
+    if (GlobalOptions.isVisualization)
         marioVisualComponent.tick();
 }
 
@@ -246,7 +250,10 @@ public void performAction(boolean[] action)
     try
     {
         if (recorder != null && action != null)
+        {
             recorder.writeAction(action);
+            recorder.changeRecordingState(GlobalOptions.isRecording, getTimeSpent());
+        }
     } catch (IOException e)
     {
         e.printStackTrace();
@@ -327,7 +334,7 @@ public void closeRecorder()
         try
         {
 //            recorder.closeFile();
-            recorder.closeZip();
+            recorder.closeRecorder(false, getTimeSpent());
             recorder = null;
         } catch (IOException e)
         {
@@ -339,12 +346,6 @@ public void closeRecorder()
 public int getTimeSpent()
 {
     return levelScene.getTimeSpent();
-}
-
-public void setVisualization(boolean b)
-{
-    levelScene.visualization = b;
-    GlobalOptions.isVisualization = b;
 }
 
 public void setReplayer(Replayer replayer)

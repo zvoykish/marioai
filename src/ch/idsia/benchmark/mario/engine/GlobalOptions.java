@@ -41,7 +41,8 @@ public static int VISUAL_COMPONENT_HEIGHT = 240;
 
 public static boolean isShowReceptiveField = false;
 public static boolean isScale2x = false;
-//public static boolean isRecording = true;
+public static boolean isRecording = false;
+public static boolean isReplaying = false;
 
 public static int getPrimaryVersionUID()
 {

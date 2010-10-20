@@ -2,6 +2,7 @@ package ch.idsia.tools;
 
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.regex.Matcher;
@@ -16,10 +17,16 @@ import java.util.regex.Pattern;
  */
 public class ReplayerOptions
 {
-public static class Interval
+public static class Interval implements Serializable
 {
     public int from;
     public int to;
+
+    public Interval()
+    {
+        from = 0;
+        to = 0;
+    }
 
     public Interval(String interval)
     {
@@ -90,5 +97,10 @@ public Interval getNextIntervalInTicks()
 public boolean hasMoreChunks()
 {
     return !chunks.isEmpty();
+}
+
+public void setChunks(Queue chunks)
+{
+    this.chunks = chunks;
 }
 }

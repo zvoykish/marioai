@@ -146,7 +146,7 @@ public static Level createLevel(CmdLineOptions args)
     //by default mario supposed to start on a straight surface
     int floor = DEFAULT_FLOOR;
     if (isFlatLevel)
-        floor = height - 1 - globalRandom.nextInt(12);
+        floor = height - 1 - globalRandom.nextInt(4);
 
     currentLength += buildStraight(0, level.length, true, floor, INFINITE_FLOOR_HEIGHT);
     while (currentLength < level.length - 10)
@@ -156,7 +156,7 @@ public static Level createLevel(CmdLineOptions args)
     }
 
     if (!isFlatLevel)  //NOT flat level
-        floor = height - 1 - globalRandom.nextInt(12); //floor of the exit line
+        floor = height - 1 - globalRandom.nextInt(4); //floor of the exit line
 
     //coordinates of the exit
     level.xExit = level.length;

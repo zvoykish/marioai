@@ -150,8 +150,6 @@ public void setReplayer(Replayer recorder);
 //public void setRecording(final boolean recording);
 
 public int getTimeSpent();
-
-public void setVisualization(boolean b);
-    
+   
 // public int getLevelLength(); getLevelType();
 }

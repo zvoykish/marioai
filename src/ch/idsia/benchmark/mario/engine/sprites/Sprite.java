@@ -62,6 +62,43 @@ public static void setCreaturesGravity(final float creaturesGravity)
 
 protected static float creaturesGravity;
 
+public static String getNameByKind(int kind)
+{
+    switch (kind)
+    {
+        case Sprite.KIND_MARIO:
+            return "Mario";
+        case Sprite.KIND_GOOMBA:
+            return "Goomba";
+        case Sprite.KIND_GOOMBA_WINGED:
+            return "Goomba Winged";
+        case Sprite.KIND_RED_KOOPA:
+            return "Red Koopa";
+        case Sprite.KIND_RED_KOOPA_WINGED:
+            return "Red Koopa Winged";
+        case Sprite.KIND_GREEN_KOOPA:
+            return "Green Koopa";
+        case Sprite.KIND_GREEN_KOOPA_WINGED:
+            return "Green Koopa Winged";
+        case Sprite.KIND_SPIKY:
+            return "Spiky";
+        case Sprite.KIND_SPIKY_WINGED:
+            return "Spiky Winged";
+        case Sprite.KIND_BULLET_BILL:
+            return "Bullet";
+        case Sprite.KIND_ENEMY_FLOWER:
+            return "Flower";
+        case Sprite.KIND_SHELL:
+            return "Shell";
+        case Sprite.KIND_MUSHROOM:
+            return "Mushroom";
+        case Sprite.KIND_FIRE_FLOWER:
+            return "Power up Flower";
+    }
+
+    return "Unknown";
+}
+
 public void move()
 {
     x += xa;
