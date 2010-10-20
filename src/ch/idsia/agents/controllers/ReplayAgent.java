@@ -21,11 +21,12 @@ private String name;
 
 public ReplayAgent(String name)
 {
-    setName("Replay(" + name + ")");
+    setName("Replay<" + name + ">");
 }
 
 //this method should return mario state and position array
-//byte[]
+//byte[] TODO: fix comment
+
 public void setReplayer(Replayer replayer)
 {
     this.replayer = replayer;
@@ -33,7 +34,7 @@ public void setReplayer(Replayer replayer)
 
 public boolean[] getAction()
 {
-    //handle situation when time is over
+    //handle the "Out of time" case
     boolean[] action = null;
     try
     {
