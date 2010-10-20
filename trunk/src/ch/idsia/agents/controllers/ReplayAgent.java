@@ -19,9 +19,9 @@ private Replayer replayer;
 private String name;
 
 
-public ReplayAgent()
+public ReplayAgent(String name)
 {
-    setName("Replay");
+    setName("Replay(" + name + ")");
 }
 
 //this method should return mario state and position array
