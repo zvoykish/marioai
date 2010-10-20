@@ -278,6 +278,12 @@ public String getEvaluationInfoAsString()
 
 public EvaluationInfo getEvaluationInfo()
 {
+    computeEvaluationInfo();
+    return evaluationInfo;
+}
+
+private void computeEvaluationInfo()
+{
     if (recorder != null)
         closeRecorder();
 //        evaluationInfo.agentType = agent.getClass().getSimpleName();
@@ -308,7 +314,6 @@ public EvaluationInfo getEvaluationInfo()
     evaluationInfo.levelLength = levelScene.level.length;
     evaluationInfo.marioTraceFile = marioTraceFile;
     evaluationInfo.marioTrace = levelScene.level.marioTrace;
-    return evaluationInfo;
 }
 
 public void setAgent(Agent agent)
