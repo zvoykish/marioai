@@ -2,6 +2,8 @@ Mario AI benchmark update log.
 
 Version 0.1.9 DATE: 2010-10-14 (October)
 
+27. New Feature: Hot key R to start/stop recording.
+26. Issue: Mario can jump in to the ground. fixed, r601.
 25. Improvement: Unit tests added for recorder and replayer. 
 24. Improvement: Option -l <fileName> with parameter loads .lvl file instead of creating the level. Option -s <fileName> with
 parameter saves generated level to the fileName.
