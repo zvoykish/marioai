@@ -37,7 +37,7 @@ private int height;
 
 private static float creaturesGravity;
 
-public boolean visualization = false;
+//public boolean visualization = false;
 
 private static final int CANNON_MUZZLE = -82;
 private static final int CANNON_TRUNK = -80;
@@ -108,8 +108,6 @@ public LevelScene()
         System.exit(0);
     }
 }
-
-//TODO: Move to createLevel, enable -ls to accept filePaths for *.lvl files, i.e. allow to load levels with -ls option
 
 private String mapElToStr(int el)
 {
@@ -969,7 +967,7 @@ public void reset(CmdLineOptions cmdLineOptions)
     this.setTimeLimit(cmdLineOptions.getTimeLimit());
 //        System.out.println("this.getTimeLimit() = " + this.getTimeLimit());
 //        this.isViewAlwaysOnTop() ? 1 : 0, setUpOptions[13]
-    this.visualization = cmdLineOptions.isVisualization();
+    GlobalOptions.isVisualization = cmdLineOptions.isVisualization();
 //        System.out.println("visualization = " + visualization);
 
     receptiveFieldWidth = cmdLineOptions.getReceptiveFieldWidth();
@@ -1004,7 +1002,7 @@ public void reset(CmdLineOptions cmdLineOptions)
             replayer.openFile("level.lvl");
             level = (Level) replayer.readObject();
 //            replayer.closeFile();
-//            replayer.closeZip();
+//            replayer.closeRecorder();
         } catch (IOException e)
         {
             //TODO: describe this exceptions

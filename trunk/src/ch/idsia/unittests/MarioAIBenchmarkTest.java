@@ -68,7 +68,7 @@ public void testForwardJumpingAgentFitnessWithoutCreatures()
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals("Fitness", 5227.0, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+    assertEquals("Fitness", 7664.0, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
 }
 
 @Test
@@ -151,7 +151,7 @@ public void testForwardAgentFitnessWithoutCreatures()
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals("Fitness", 5435.0, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+    assertEquals("Fitness", 7816.0, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
 }
 
 @Test
@@ -201,7 +201,7 @@ public void testScaredShooty_GW10G10()
     final BasicTask basicTask = new BasicTask(cmdLineOptions);
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
-    assertEquals(9, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
+    assertEquals(8, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
 }
 
 @Test

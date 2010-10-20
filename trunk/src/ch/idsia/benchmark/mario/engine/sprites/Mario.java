@@ -682,7 +682,7 @@ public void getHurt(final int spriteKind)
         invulnerableTime = 32;
     } else
     {
-        die("Collision with a creature " + spriteKind); // TODO: substitue by named creature kind
+        die("Collision with a creature " + Sprite.getNameByKind(spriteKind));
     }
 }
 

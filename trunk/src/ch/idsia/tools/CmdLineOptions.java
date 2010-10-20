@@ -31,7 +31,7 @@ import java.util.Map;
 public final class CmdLineOptions extends SimulationOptions
 {
 private static final HashMap<String, CmdLineOptions> CmdLineOptionsMapString = new HashMap<String, CmdLineOptions>();
-private String optionsString;
+private String optionsAsString = "";
 
 final private Point marioInitialPos = new Point();
 
@@ -64,6 +64,10 @@ public void setArgs(String argString)
         this.setArgs((String[]) null);
 }
 
+public String asString()
+{
+    return optionsAsString;
+}
 
 public void setArgs(String[] args)
 {
@@ -76,6 +80,10 @@ public void setArgs(String[] args)
 //            this.setUpOptions(shiftedargs);
 //        }
 //        else
+    if (args != null)
+        for (String s: args)
+            optionsAsString += s + " ";
+
     this.setUpOptions(args);
 
     if (isEcho())

@@ -1,7 +1,6 @@
 package ch.idsia.scenarios;
 
 import ch.idsia.benchmark.tasks.ReplayTask;
-import ch.idsia.tools.CmdLineOptions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -14,9 +13,9 @@ public class Replay
 {
 public static void main(String[] args)
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
-    final ReplayTask replayTask = new ReplayTask(cmdLineOptions);
-    replayTask.reset(cmdLineOptions);
+//    final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
+    final ReplayTask replayTask = new ReplayTask();
+    replayTask.reset(args[0]);
     replayTask.startReplay();
 //    System.out.println(replayTask.getEnvironment().getEvaluationInfoAsString());
 

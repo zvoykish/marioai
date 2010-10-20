@@ -413,9 +413,14 @@ public String getTraceFile()
     return res;
 }
 
-public String getRecFile()
+public String getRecordFile()
 {
     return getParameterValue("-rec");
+}
+
+public void setRecordFile(String var)
+{
+    setParameterValue("-rec", var);
 }
 
 public String getReplayOptions()

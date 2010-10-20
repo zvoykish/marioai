@@ -205,6 +205,8 @@ public void tick()
     }
 }
 
+private int recordIndicator = 20;
+
 public void render(Graphics g)
 {
     int xCam = (int) (mario.xOld + (mario.x - mario.xOld)) - 160;
@@ -271,6 +273,22 @@ public void render(Graphics g)
 //    drawStringDropShadow(g, "MUSHROOMS: " + df.format(Mario.mushroomsDevoured), 0, 5, 4);
     drawStringDropShadow(g, "by Stomp : " + levelScene.killedCreaturesByStomp, 19, 3, 1);
 //    drawStringDropShadow(g, "FLOWERS  : " + df.format(Mario.flowersDevoured), 0, 6, 4);
+    if (GlobalOptions.isRecording)
+    {
+        --recordIndicator;
+        if (recordIndicator >= 0)
+        {
+            g.setColor(Color.RED);
+            g.fillOval(19 * 8 + 5, 39, 10, 10);
+        }
+        else if (recordIndicator == -20)
+            recordIndicator = 20;
+    }
+    if (GlobalOptions.isReplaying)
+    {
+        g.setColor(new Color(0,200, 0));
+        g.fillPolygon(new int[]{157, 157, 170}, new int[]{50, 38, 44}, 3);
+    }
 
     drawStringDropShadow(g, "TIME", 33, 0, 7);
     int time = levelScene.getTimeLeft();

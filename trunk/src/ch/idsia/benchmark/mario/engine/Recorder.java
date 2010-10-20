@@ -1,6 +1,10 @@
 package ch.idsia.benchmark.mario.engine;
 
+import ch.idsia.tools.ReplayerOptions;
+
 import java.io.*;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -15,6 +19,9 @@ import java.util.zip.ZipOutputStream;
 public class Recorder
 {
 private ZipOutputStream zos;
+boolean lastRecordingState = false;
+private Queue<ReplayerOptions.Interval> chunks = new LinkedList<ReplayerOptions.Interval>();
+private ReplayerOptions.Interval chunk;
 
 public Recorder(String fileName) throws FileNotFoundException
 {
@@ -42,8 +49,15 @@ public void closeFile() throws IOException
     zos.closeEntry();
 }
 
-public void closeZip() throws IOException
+public void closeRecorder(boolean recordingState, int time) throws IOException
 {
+    changeRecordingState(recordingState, time);
+    if (!chunks.isEmpty())
+    {
+        createFile("chunks");
+        writeObject(chunks);
+        closeFile();
+    }
     zos.flush();
     zos.close();
 }
@@ -56,8 +70,21 @@ public void writeAction(final boolean[] bo) throws IOException
         if (bo[i])
             action |= (1 << i);
 
-    System.err.println(action);
-
     zos.write(action);
+}
+
+public void changeRecordingState(boolean state, int time)
+{
+    if (state && !lastRecordingState)
+    {
+        chunk = new ReplayerOptions.Interval();
+        chunk.from = time;
+        lastRecordingState = state;
+    } else if (!state && lastRecordingState)
+    {
+        chunk.to = time;
+        chunks.add(chunk);
+        lastRecordingState = state;
+    }
 }
 }

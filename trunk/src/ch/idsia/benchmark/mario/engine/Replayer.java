@@ -6,6 +6,7 @@ import ch.idsia.tools.ReplayerOptions;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.Queue;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -43,6 +44,13 @@ public boolean openNextReplayFile() throws IOException
     zf = new ZipFile(fileName);
     ze = null;
     fis = null;
+
+    try
+    {
+        openFile("chunks");
+        options.setChunks((Queue) readObject());
+    } catch (Exception ignored)
+    {} //if file with replay chunks not found, than use user specified chunks
 
     return true;
 }
@@ -96,7 +104,7 @@ public void closeFile() throws IOException
 //    fis.close();
 }
 
-public void closeZip() throws IOException
+public void closeReplayFile() throws IOException
 {
     zf.close();
 }
