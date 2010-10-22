@@ -38,7 +38,7 @@ public void playOneFile(final CmdLineOptions options)
 
     while (!environment.isLevelFinished())
     {
-        if (environment.getTimeSpent() == interval.from) //TODO: fix?
+        if (environment.getTimeSpent() == interval.from) //TODO: Comment this piece
             GlobalOptions.isVisualization = true;
         else if (environment.getTimeSpent() == interval.to)
         {

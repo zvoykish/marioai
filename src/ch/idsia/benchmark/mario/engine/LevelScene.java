@@ -8,7 +8,10 @@ import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.tools.CmdLineOptions;
 
 import java.awt.*;
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,9 +38,8 @@ private int timeLeft;
 private int width;
 private int height;
 
+// TODO: fix it! creaturesGravity never used
 private static float creaturesGravity;
-
-//public boolean visualization = false;
 
 private static final int CANNON_MUZZLE = -82;
 private static final int CANNON_TRUNK = -80;
@@ -48,7 +50,7 @@ private static final int BRICK = -24;           //a rock with animated question 
 private static final int FLOWER_POT = -90;
 private static final int BORDER_CANNOT_PASS_THROUGH = -60;
 private static final int BORDER_HILL = -62;
-// TODO : resolve this FLOWER_POT_OR_CANNON = -85;
+// TODO:TASK:!H! : resolve (document why) this: FLOWER_POT_OR_CANNON = -85;
 private static final int FLOWER_POT_OR_CANNON = -85;
 
 private int receptiveFieldHeight = -1; // to be setup via CmdLineOptions
@@ -66,7 +68,7 @@ private byte[][] mergedZZ;      // memory is allocated in reset
 
 final private List<Float> enemiesFloatsList = new ArrayList<Float>();
 final private float[] marioFloatPos = new float[2];
-final private int[] marioState = new int[12];
+final private int[] marioState = new int[11];
 private int numberOfHiddenCoinsGained = 0;
 
 public String memo = "";
@@ -599,17 +601,6 @@ public void tick()
     if (xCam > level.length * cellSize - GlobalOptions.VISUAL_COMPONENT_WIDTH)
         xCam = level.length * cellSize - GlobalOptions.VISUAL_COMPONENT_WIDTH;
 
-    // TODO: reincarnate recordings
-    /*      if (recorder != null)
-    {
-    recorder.addTick(mario.getKeyMask());
-    }
-
-    if (replayer!=null)
-    {
-    mario.setKeys(replayer.nextTick());
-    }*/
-
     fireballsOnScreen = 0;
 
     for (Sprite sprite : sprites)
@@ -848,9 +839,8 @@ public int[] getMarioState()
     marioState[6] = this.getKillsTotal();
     marioState[7] = this.getKillsByFire();
     marioState[8] = this.getKillsByStomp();
-    marioState[9] = this.getKillsByStomp(); //TODO:duplicated record
-    marioState[10] = this.getKillsByShell();
-    marioState[11] = this.getTimeLeft();
+    marioState[9] = this.getKillsByShell();
+    marioState[10] = this.getTimeLeft();
     return marioState;
 }
 
@@ -877,7 +867,7 @@ public int getMarioStatus()
 
 public float[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies)
 {
-    // TODO:SK, serialize all data to a sole double[]
+    // TODO:TASK:[M], serialize all data to a sole double[]
     assert false;
     return new float[0];
 }
@@ -1005,11 +995,10 @@ public void reset(CmdLineOptions cmdLineOptions)
 //            replayer.closeRecorder();
         } catch (IOException e)
         {
-            //TODO: describe this exceptions
+            System.err.println("[Mario AI Exception] : level reading failed");
             e.printStackTrace();
         } catch (Exception e)
         {
-            //TODO
             e.printStackTrace();
         }
     } else
@@ -1024,7 +1013,7 @@ public void reset(CmdLineOptions cmdLineOptions)
             Level.save(level, new ObjectOutputStream(new FileOutputStream(fileName)));
         } catch (IOException e)
         {
-            System.err.println("[Mario AI WARNING] : Cannot write to file " + fileName);
+            System.err.println("[Mario AI Exception] : Cannot write to file " + fileName);
             e.printStackTrace();
         }
     }

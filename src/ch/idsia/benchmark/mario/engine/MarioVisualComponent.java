@@ -184,7 +184,8 @@ public void tick()
 
     if (GlobalOptions.isScale2x)
     {
-        thisGraphics.drawImage(scale2x.scale(thisVolatileImage), 0, 0, null); //TODO: handle this
+        //TODO: handle this (what?)
+        thisGraphics.drawImage(scale2x.scale(thisVolatileImage), 0, 0, null);
     } else
     {
         thisGraphics.drawImage(thisVolatileImage, 0, 0, null);
@@ -280,13 +281,12 @@ public void render(Graphics g)
         {
             g.setColor(Color.RED);
             g.fillOval(19 * 8 + 5, 39, 10, 10);
-        }
-        else if (recordIndicator == -20)
+        } else if (recordIndicator == -20)
             recordIndicator = 20;
     }
     if (GlobalOptions.isReplaying)
     {
-        g.setColor(new Color(0,200, 0));
+        g.setColor(new Color(0, 200, 0));
         g.fillPolygon(new int[]{157, 157, 170}, new int[]{50, 38, 44}, 3);
     }
 
@@ -304,45 +304,6 @@ public void render(Graphics g)
         g.drawString("x : " + mario.x + "y: " + mario.y, 10, 215);
         g.drawString("xOld : " + mario.xOld + "yOld: " + mario.yOld, 10, 225);
     }
-
-//    if (levelScene.startTime > 0) TODO: remove this code?
-//    {
-//        float t = levelScene.startTime + cameraOffSet - 2;
-//        t = t * t * 0.6f;
-//        renderBlackout(g, 160, 120, (int) (t));
-//    }
-//        mario.x>level.xExit*16
-//    if (mario.winTime > 0)
-//    {
-//        float t = mario.winTime + cameraOffSet;
-//        t = t * t * 0.2f;
-//
-//        if (t > 900)
-//        {
-////                renderer.levelWon();
-//            mario.win();
-//            //              replayer = new Replayer(recorder.getBytes());
-////                init();
-//        }
-//
-//        renderBlackout(g, mario.xDeathPos - xCam, mario.yDeathPos - yCam,
-//                (int) (GlobalOptions.VISUAL_COMPONENT_WIDTH - t));
-//    }
-
-//    if (mario.deathTime > 0)
-//    {
-//            float t = mario.deathTime + cameraOffSet;
-//            t = t * t * 0.4f;
-//
-//            if (t > 1800)
-//            {
-//                renderer.levelFailed();
-//        mario.die("");
-    //              replayer = new Replayer(recorder.getBytes());
-//                init();
-//            }
-//            renderBlackout(g, (int) (mario.xDeathPos - xCam), (int) (mario.yDeathPos - yCam), (int) (320 - t));
-//    }
 }
 
 private void drawProgress(Graphics g)
@@ -377,66 +338,8 @@ public static void drawString(Graphics g, String text, int x, int y, int c)
         g.drawImage(Art.font[ch[i] - 32][c], x + i * 8, y, null);
 }
 
-//private void drawGrid(Graphics g, int length)
-//{
-//    width = length * 16;
-//    height = length * 16;
-//    g.setColor(Color.GREEN);
-//
-//    int rows = length;
-//    int columns = length;
-//
-//    int htOfRow = height / (rows);
-//    int k;
-//    for (k = 0; k < rows; k++)
-//        g.drawLine((int) mario.x, k * htOfRow, (int) (mario.x + width), k * htOfRow);
-//
-//    int wdOfRow = width / (columns);
-//    for (k = 0; k < columns; k++)
-//        g.drawLine(k * wdOfRow, 0, k * wdOfRow, height);
-//
-//}
-
-private void renderBlackout(Graphics g, int x, int y, int radius)
-{
-    if (radius > GlobalOptions.VISUAL_COMPONENT_WIDTH) return;
-
-    int[] xp = new int[20];
-    int[] yp = new int[20];
-    for (int i = 0; i < 16; i++)
-    {
-        xp[i] = x + (int) (Math.cos(i * Math.PI / 15) * radius);
-        yp[i] = y + (int) (Math.sin(i * Math.PI / 15) * radius);
-    }
-    xp[16] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
-    yp[16] = y;
-    xp[17] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
-    yp[17] = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
-    xp[18] = 0;
-    yp[18] = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
-    xp[19] = 0;
-    yp[19] = y;
-    g.fillPolygon(xp, yp, xp.length);
-
-    for (int i = 0; i < 16; i++)
-    {
-        xp[i] = x - (int) (Math.cos(i * Math.PI / 15) * radius);
-        yp[i] = y - (int) (Math.sin(i * Math.PI / 15) * radius);
-    }
-    xp[16] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
-    yp[16] = y;
-    xp[17] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
-    yp[17] = 0;
-    xp[18] = 0;
-    yp[18] = 0;
-    xp[19] = 0;
-    yp[19] = y;
-
-    g.fillPolygon(xp, yp, xp.length);
-}
-
-Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-////        frame.setLocation((screenSize.length-frame.getWidth())/2, (screenSize.height-frame.getHeight())/2);
+//Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//        frame.setLocation((screenSize.length-frame.getWidth())/2, (screenSize.height-frame.getHeight())/2);
 private static GraphicsConfiguration graphicsConfiguration;
 
 public void init()
@@ -521,6 +424,47 @@ public void changeScale2x()
     marioComponentFrame.pack();
     this.thisGraphics = getGraphics();
 }
+
+
+private void renderBlackout(Graphics g, int x, int y, int radius)
+{
+    if (radius > GlobalOptions.VISUAL_COMPONENT_WIDTH) return;
+
+    int[] xp = new int[20];
+    int[] yp = new int[20];
+    for (int i = 0; i < 16; i++)
+    {
+        xp[i] = x + (int) (Math.cos(i * Math.PI / 15) * radius);
+        yp[i] = y + (int) (Math.sin(i * Math.PI / 15) * radius);
+    }
+    xp[16] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
+    yp[16] = y;
+    xp[17] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
+    yp[17] = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
+    xp[18] = 0;
+    yp[18] = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
+    xp[19] = 0;
+    yp[19] = y;
+    g.fillPolygon(xp, yp, xp.length);
+
+    for (int i = 0; i < 16; i++)
+    {
+        xp[i] = x - (int) (Math.cos(i * Math.PI / 15) * radius);
+        yp[i] = y - (int) (Math.sin(i * Math.PI / 15) * radius);
+    }
+    xp[16] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
+    yp[16] = y;
+    xp[17] = GlobalOptions.VISUAL_COMPONENT_WIDTH;
+    yp[17] = 0;
+    xp[18] = 0;
+    yp[18] = 0;
+    xp[19] = 0;
+    yp[19] = y;
+
+    g.fillPolygon(xp, yp, xp.length);
+}
+
+
 }
 
 

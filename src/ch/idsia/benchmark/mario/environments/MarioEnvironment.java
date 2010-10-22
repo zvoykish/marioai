@@ -31,6 +31,7 @@ private static final EvaluationInfo evaluationInfo = new EvaluationInfo();
 private static String marioTraceFile;
 
 private Recorder recorder;
+private float intermediateReward = -1;
 
 public static MarioEnvironment getInstance()
 {
@@ -73,6 +74,12 @@ public void reset(CmdLineOptions setUpOptions)
 //    if (!setUpOptions.getReplayOptions().equals(""))
 
     this.setAgent(setUpOptions.getAgent());
+    // TODO:TASK:[M] Arbitrary center of ego in Receptive Field
+    //  marioReceptiveFieldCenterX, default: getReceptiveFieldWidth() / 2
+    // TODO : same for Y
+//    marioReceptiveFieldCenterPos[0] = setUpOptions.marioReceptiveFieldCenterX();
+//    marioReceptiveFieldCenterPos[1] = setUpOptions.marioReceptiveFieldCenterY();
+
     marioReceptiveFieldCenterPos[0] = setUpOptions.getReceptiveFieldWidth() / 2;
     marioReceptiveFieldCenterPos[1] = setUpOptions.getReceptiveFieldHeight() / 2;
 
@@ -92,16 +99,16 @@ public void reset(CmdLineOptions setUpOptions)
         levelScene.reset(setUpOptions);
 
     //create recorder
-    String recFile = setUpOptions.getRecordFile();
+    String recordingFileName = setUpOptions.getRecordingFileName();
 
-    if (!recFile.equals("off"))
+    if (!recordingFileName.equals("off"))
     {
-        if (recFile.equals("on"))
-            recFile = GlobalOptions.getTimeStamp() + ".zip";
+        if (recordingFileName.equals("on"))
+            recordingFileName = GlobalOptions.getTimeStamp() + ".zip";
 
         try
         {
-            recorder = new Recorder(recFile);
+            recorder = new Recorder(recordingFileName);
 
             recorder.createFile("level.lvl");
             recorder.writeObject(levelScene.level);
@@ -114,10 +121,10 @@ public void reset(CmdLineOptions setUpOptions)
             recorder.createFile("actions.act");
         } catch (FileNotFoundException e)
         {
-            System.err.println("[Mario AI EXCEPTION] : Unable to initialize recorder. Game will not be recorded.");
+            System.err.println("[Mario AI EXCEPTION] : Some of the recording components were not created. Recording failed");
         } catch (IOException e)
         {
-            //TODO: describe
+            System.err.println("[Mario AI EXCEPTION] : Some of the recording components were not created. Recording failed");
             e.printStackTrace();
         }
     }
@@ -266,9 +273,9 @@ public boolean isLevelFinished()
     return levelScene.isLevelFinished();
 }
 
-public float[] getEvaluationInfoAsFloats()
+public int[] getEvaluationInfoAsInts()
 {
-    return this.getEvaluationInfo().toFloatArray();
+    return this.getEvaluationInfo().toIntArray();
 }
 
 public String getEvaluationInfoAsString()
@@ -290,7 +297,7 @@ private void computeEvaluationInfo()
 //        evaluationInfo.agentName = agent.getName();
     evaluationInfo.marioStatus = levelScene.getMarioStatus();
     evaluationInfo.flowersDevoured = Mario.flowersDevoured;
-    evaluationInfo.distancePassedPhys = levelScene.getMarioFloatPos()[0];
+    evaluationInfo.distancePassedPhys = (int) levelScene.mario.x;
     evaluationInfo.distancePassedCells = levelScene.mario.mapX;
 //     evaluationInfo.totalLengthOfLevelCells = levelScene.level.getWidthCells();
 //     evaluationInfo.totalLengthOfLevelPhys = levelScene.level.getWidthPhys();
@@ -324,7 +331,7 @@ public void setAgent(Agent agent)
 public float getIntermediateReward()
 {
     // TODO: reward for coins, killed creatures, cleared dead-ends, bypassed gaps, hidden blocks found
-    return -1;
+    return intermediateReward;
 }
 
 public int[] getMarioReceptiveFieldCenter()

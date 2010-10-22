@@ -24,7 +24,7 @@ static public class objCounters implements Serializable
     public int totalCoins;
     public int totalHillStraight;
     public int totalTubes;
-    // TODO : include in Evalutation info:
+    // TODO:TASK:[M] : include in Evaluation info:
     public int totalPowerUps;
 
     public int mushrooms = 0;

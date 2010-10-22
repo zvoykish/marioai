@@ -7,7 +7,7 @@ import ch.idsia.benchmark.tasks.ProgressTask;
 import ch.idsia.evolution.Evolvable;
 import ch.idsia.evolution.ea.ES;
 import ch.idsia.tools.CmdLineOptions;
-import ch.idsia.utils.Stats;
+import ch.idsia.utils.statistics.Stats;
 import ch.idsia.utils.wox.serial.Easy;
 
 import java.io.IOException;

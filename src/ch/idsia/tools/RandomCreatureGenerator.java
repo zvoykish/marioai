@@ -69,14 +69,14 @@ public void setSeed(long seed, String creatures, int difficulty)
                 int index = getCreatureIndex(subgroups[0]);
                 if (subgroups.length == 2)
                 {
-                    int count = Integer.valueOf (subgroups[1]);
+                    int count = Integer.valueOf(subgroups[1]);
                     counters[index] = count;
                 } else
                 {
                     counters[index] = Integer.MAX_VALUE;
                 }
-                //TODO: handle gw:0 situation
-                //TODO: creatures type depends on difficulty, but number of creatures can be specified for each kind of creature.
+                //TODO:[M] handle gw:0 situation
+                //TODO:|L| creatures type depends on difficulty, but number of creatures can be specified for each kind of creature.
             }
         } else
         {
@@ -162,7 +162,7 @@ public int nextCreature()
 
     if (kindByDifficulty)
     {
-        kind = getCreatureType (kinds[this.nextInt(8)]);
+        kind = getCreatureType(kinds[this.nextInt(8)]);
         if (difficulty < 1)
         {
             kind = this.getCreatureType("g");
@@ -174,7 +174,7 @@ public int nextCreature()
     } else
     {
         Object[] localKinds = allowedCreatures.toArray();
-        String c = (String)localKinds[this.nextInt(localKinds.length)];
+        String c = (String) localKinds[this.nextInt(localKinds.length)];
         kind = this.getCreatureType(c);
         decreaseCreatureCounter(c);
     }

@@ -41,7 +41,7 @@ public boolean[] getAction()
         action = replayer.readAction();
     } catch (IOException e)
     {
-        //TODO: describe this
+        System.err.println("[Mario AI Exception] : ReplayAgent is not able to read next action");
         e.printStackTrace();
     }
     return action;

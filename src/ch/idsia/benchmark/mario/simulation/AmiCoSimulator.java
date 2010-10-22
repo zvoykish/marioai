@@ -36,8 +36,8 @@ public static void main(String[] args)
         environment.performAction(agent.getAction());
     }
     System.out.println("Evaluation Info:");
-    float[] ev = environment.getEvaluationInfoAsFloats();
-    for (float anEv : ev)
+    int[] ev = environment.getEvaluationInfoAsInts();
+    for (int anEv : ev)
     {
         System.out.print(anEv + ", ");
     }

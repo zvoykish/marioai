@@ -413,7 +413,7 @@ public String getTraceFile()
     return res;
 }
 
-public String getRecordFile()
+public String getRecordingFileName()
 {
     return getParameterValue("-rec");
 }

@@ -10,7 +10,6 @@ from agents.forwardrandomagent import ForwardRandomAgent
 
 
 #from pybrain.... episodic import EpisodicExperiment
-#TODO: reset sends: vis, diff=, lt=, ll=, rs=, mariomode, time limit, pw,
 # with creatures, without creatures.
 # send creatures.
 

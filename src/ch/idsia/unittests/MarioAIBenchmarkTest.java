@@ -140,7 +140,7 @@ public void testForwardAgentFitnessWithDefaultCreaturesVisual()
 @Test
 public void testForwardAgentCoinsCollected()
 {
-    //TODo: testForwardAgentCoinsCollected
+    //TODo:!H! testForwardAgentCoinsCollected
 }
 
 @Test
@@ -157,7 +157,7 @@ public void testForwardAgentFitnessWithoutCreatures()
 @Test
 public void testForwardJumpingAgentCoinsCollected()
 {
-    //TODo: testForwardJumpingAgentCoinsCollected
+    //TODo:!H! testForwardJumpingAgentCoinsCollected
 }
 
 /**

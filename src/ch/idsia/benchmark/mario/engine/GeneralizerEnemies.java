@@ -85,7 +85,7 @@ public byte ZLevelGeneralization(byte el, int ZLevel)
             System.err.println("ERROR: Z2 UNKNOWNN el = " + el);
             return 1;
     }
-    return el; //TODO: Throw unknown ZLevel exception
+    return el; //TODO:TASK:|L|, Build Hierarchy of Exceptions, here: Throw unknown ZLevel exception
 
 }
 }
