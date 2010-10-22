@@ -15,12 +15,30 @@ import ch.idsia.tools.CmdLineOptions;
  */
 public class GeneralScenario
 {
-    public static void main(String[] args)
-    {
+public static void main(String[] args)
+{
 //        Agent agent = new ForwardAgent();
+    CmdLineOptions options = new CmdLineOptions(args);
+    Task task = new ProgressTask(options);
+    Experiment exp = new EpisodicExperiment(task, options.getAgent());
+    exp.doEpisodes(2);
+}
+
+/*
         CmdLineOptions options = new CmdLineOptions(args);
-        Task task = new ProgressTask(options);
-        Experiment exp = new EpisodicExperiment(task, options.getAgent());
-        exp.doEpisodes(2);
-    }
+//        Evaluator evaluator = new Evaluator(options);
+//        Agent agent = new ForwardAgent();
+        options.setFPS(24);
+//        options.setVisualization(false);
+        String amicoModuleName = options.getPyAmiCoModuleName();
+        System.out.println("amicoModuleName = " + amicoModuleName);
+//        String amicoAgentName = "ForwardAgent";
+        System.out.println("options.getAgentFullLoadName() = " + options.getAgentFullLoadName());
+        Agent agent = new AmiCoAgent(amicoModuleName, options.getAgentFullLoadName());
+        options.setAgent(agent);
+//        evaluator.evaluate();
+//        System.out.println("evaluator = " + evaluator.getMeanEvaluationSummary());
+        System.exit(0);
+
+ */
 }
