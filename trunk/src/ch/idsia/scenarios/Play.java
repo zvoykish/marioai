@@ -2,9 +2,7 @@ package ch.idsia.scenarios;
 
 import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.benchmark.tasks.MarioCustomSystemOfValues;
-import ch.idsia.tools.CmdLineOptions;
-
-import java.io.IOException; /**
+import ch.idsia.tools.CmdLineOptions; /**
  * Created by IntelliJ IDEA.
  * User: julian
  * Date: May 5, 2009
@@ -35,15 +33,6 @@ public final class Play
 
 public static void main(String[] args)
 {
-    Runtime rt = Runtime.getRuntime();
-    try
-    {
-//            Process proc = rt.exec("/usr/local/bin/mate " + marioTraceFile);
-        Process proc = rt.exec("python hello.py");
-    } catch (IOException e)
-    {
-        e.printStackTrace();
-    }
     final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
     final BasicTask basicTask = new BasicTask(cmdLineOptions);
     cmdLineOptions.setVisualization(true);
@@ -51,6 +40,7 @@ public static void main(String[] args)
     final MarioCustomSystemOfValues m = new MarioCustomSystemOfValues();
 //        basicTask.runOneEpisode();
     // run 1 episode with same options, each time giving output of Evaluation info.
+    // verbose = false
     basicTask.doEpisodes(1, false);
     System.out.println("\nEvaluationInfo: \n" + basicTask.getEnvironment().getEvaluationInfoAsString());
     System.out.println("\nCustom : \n" + basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(m));

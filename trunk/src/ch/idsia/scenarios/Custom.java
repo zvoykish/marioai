@@ -6,6 +6,8 @@ import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
 
+import java.io.IOException;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Sergey Karakovskiy, sergey@idsia.ch
@@ -14,7 +16,7 @@ import ch.idsia.tools.CmdLineOptions;
  * Package: ch.idsia
  */
 
-public class CustomRun
+public class Custom
 {
 public static void main(String[] args)
 {
@@ -34,7 +36,15 @@ public static void main(String[] args)
             System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
         } while (basicTask.getEnvironment().getEvaluationInfo().marioStatus != Environment.MARIO_STATUS_WIN);
     }
-
+    Runtime rt = Runtime.getRuntime();
+    try
+    {
+//            Process proc = rt.exec("/usr/local/bin/mate " + marioTraceFile);
+        Process proc = rt.exec("python hello.py");
+    } catch (IOException e)
+    {
+        e.printStackTrace();
+    }
     System.exit(0);
 
 }
