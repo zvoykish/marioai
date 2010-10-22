@@ -4,86 +4,86 @@ import ch.idsia.benchmark.mario.engine.LevelScene;
 
 public class FlowerEnemy extends Enemy
 {
-    private int tick;
-    private int yStart;
-    private int jumpTime = 0;
-    private LevelScene world;
+private int tick;
+private int yStart;
+private int jumpTime = 0;
+private LevelScene world;
 
-    public FlowerEnemy(LevelScene world, int x, int y, int mapX, int mapY)
+public FlowerEnemy(LevelScene world, int x, int y, int mapX, int mapY)
+{
+    super(world, x, y, 1, Sprite.KIND_ENEMY_FLOWER, false, mapX, mapY);
+    noFireballDeath = false;
+    this.world = world;
+    this.xPic = 0;
+    this.yPic = 6;
+    this.yPicO = 24;
+    this.height = 12;
+    this.width = 2;
+
+    yStart = y;
+    ya = -8;
+
+    this.y -= 1;
+
+    this.layer = 0;
+
+    for (int i = 0; i < 4; i++)
     {
-        super(world, x, y, 1, Sprite.KIND_ENEMY_FLOWER, false, mapX, mapY);
-        noFireballDeath = false;
-        this.world = world;
-        this.xPic = 0;
-        this.yPic = 6;
-        this.yPicO = 24;
-        this.height = 12;
-        this.width = 2;
+        move();
+    }
+}
 
-        yStart = y;
-        ya = -8;
+public void move()
+{
+    //TODO:|L| check this
+    if (deadTime > 0)
+    {
+        deadTime--;
 
-        this.y -= 1;
-
-        this.layer = 0;
-
-        for (int i = 0; i < 4; i++)
+        if (deadTime == 0)
         {
-            move();
+            deadTime = 1;
+            for (int i = 0; i < 8; i++)
+            {
+                world.addSprite(new Sparkle((int) (x + Math.random() * 16 - 8) + 4, (int) (y - Math.random() * 8) + 4, (float) (Math.random() * 2 - 1), (float) Math.random() * -1, 0, 1, 5));
+            }
+            spriteContext.removeSprite(this);
         }
+
+        x += xa;
+        y += ya;
+        ya *= 0.95;
+        ya += 1;
+
+        return;
     }
 
-    public void move()
+    tick++;
+
+    if (y >= yStart)
     {
-        //TODO: check this
-        if (deadTime > 0)
+        y = yStart;
+
+        int xd = (int) (Math.abs(world.mario.x - x));
+        jumpTime++;
+        if (jumpTime > 40 && xd > 24)
         {
-            deadTime--;
-
-            if (deadTime == 0)
-            {
-                deadTime = 1;
-                for (int i = 0; i < 8; i++)
-                {
-                    world.addSprite(new Sparkle((int) (x + Math.random() * 16 - 8) + 4, (int) (y - Math.random() * 8) + 4, (float) (Math.random() * 2 - 1), (float) Math.random() * -1, 0, 1, 5));
-                }
-                spriteContext.removeSprite(this);
-            }
-
-            x += xa;
-            y += ya;
-            ya *= 0.95;
-            ya += 1;
-
-            return;
-        }
-
-        tick++;
-
-        if (y >= yStart)
-        {
-            y = yStart;
-
-            int xd = (int) (Math.abs(world.mario.x - x));
-            jumpTime++;
-            if (jumpTime > 40 && xd > 24)
-            {
-                ya = -8;
-            } else
-            {
-                ya = 0;
-            }
+            ya = -8;
         } else
         {
-            jumpTime = 0;
+            ya = 0;
         }
-
-        y += ya;
-        ya *= 0.9;
-        ya += 0.1f;
-
-        xPic = ((tick / 2) & 1) * 2 + ((tick / 6) & 1);
+    } else
+    {
+        jumpTime = 0;
     }
+
+    y += ya;
+    ya *= 0.9;
+    ya += 0.1f;
+
+    xPic = ((tick / 2) & 1) * 2 + ((tick / 6) & 1);
+}
 
 /*    public void render(Graphics og, float alpha)
     {

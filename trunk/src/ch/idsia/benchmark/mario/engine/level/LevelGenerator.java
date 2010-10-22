@@ -3,6 +3,7 @@ package ch.idsia.benchmark.mario.engine.level;
 import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.RandomCreatureGenerator;
+import ch.idsia.utils.ErrorCodes;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.util.Random;
 /**
  * This class is simple to use. Just call <b>createLevel</b> method with params:
  * <ul>
- * CmdLineOptions args, that contains: ... TODO
+ * CmdLineOptions args, that contains: ... TODO:TASK:[M]
  * <p/>
  * <li>length -- length of the level in cells. One cell is 16 pixels long</li>
  * <li>height -- height of the level in cells. One cell is 16 pixels long </li>
@@ -68,23 +69,24 @@ static Level.objCounters counters = new Level.objCounters();
 private LevelGenerator() {}
 
 private static void loadLevel(String filePath)
-{    try
+{
+    try
     {
         if (filePath.equals("")) //This must never happen
         {
-            System.err.println("[MarioAI ERROR] : file path to the level is empty");
-            System.exit(-3);
+            System.err.println("[MarioAI ERROR] : level file path is empty; exiting...");
+            System.exit(ErrorCodes.FILE_NAME_OR_LOAD_PROBLEM);
         }
 
         level = Level.load(new ObjectInputStream(new FileInputStream(filePath)));
     } catch (IOException e)
     {
         System.err.println("[MarioAI EXCEPTION] : failed while trying to load " + filePath);
-        System.exit(-3); //TODO: move all error codes to constants
+        System.exit(ErrorCodes.FILE_NAME_OR_LOAD_PROBLEM);
     } catch (ClassNotFoundException e)
     {
         System.err.println("[MarioAI EXCEPTION] : class not found in " + filePath);
-        System.exit(-3);
+        System.exit(ErrorCodes.FILE_NAME_OR_LOAD_PROBLEM);
     }
 }
 
@@ -136,7 +138,7 @@ public static Level createLevel(CmdLineOptions args)
     }
 
     level = new Level(length, height);
-//    levelSeed = args.getLevelRandSeed();// + levelType; // TODO: ensure the difference of underground, castle
+//    levelSeed = args.getLevelRandSeed();// + levelType; // TODO:TASK:[M] ensure the difference of underground, castle
     globalRandom.setSeed(levelSeed);
     creaturesRandom.setSeed(levelSeed, args.getEnemies(), levelDifficulty);
     dxRnd.setSeed(levelSeed);
@@ -876,7 +878,7 @@ private static void buildBlocks(int x0, int x1, int floor, boolean pHB, int pS, 
                     {
                         if (level.getBlock(x, floor) == 0)
                         {
-                            counters.blocksCount++; //TODO: move it in to the Level.setBlock
+                            counters.blocksCount++; //TODO:TASK:!H! move it in to the Level.setBlock
                             level.setBlock(x, floor, (byte) (0 + 1 * 16)); //a break brick
                             canDeco = true;
                         }

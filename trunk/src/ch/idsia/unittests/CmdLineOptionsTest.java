@@ -88,14 +88,14 @@ public void testSetArgs() throws Exception
             " -le 1111111111" +
             " -lf off";
     cmdLineOptions.setArgs(args);
-    // TODO: test all occurences
+    // TODO:TASK:[M] test all cases
 }
 
 @Test
 public void testSetLevelEnemies()
 {
     cmdLineOptions.setArgs("-le 1111111111");
-    // TODO: test various conditions
+    // TODO:TASK:[M] test various conditions
 }
 
 @Test

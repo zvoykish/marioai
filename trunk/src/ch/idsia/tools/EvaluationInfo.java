@@ -26,8 +26,7 @@ public static final int numberOfElements = 14;
 
 // ordered in alphabetical order;
 public int distancePassedCells = MagicNumberUnDef;
-// TODO: migrate to all integers.
-public float distancePassedPhys = MagicNumberUnDef;
+public int distancePassedPhys = MagicNumberUnDef;
 public int flowersDevoured = MagicNumberUnDef;
 public int killsByFire = MagicNumberUnDef;
 public int killsByShell = MagicNumberUnDef;
@@ -53,8 +52,8 @@ public int levelLength = MagicNumberUnDef;
 
 public int collisionsWithCreatures = MagicNumberUnDef;
 
-private static final float[] retFloatArray = new float[EvaluationInfo.numberOfElements];
-private static final float[] zeros = new float[EvaluationInfo.numberOfElements];
+private static final int[] retFloatArray = new int[EvaluationInfo.numberOfElements];
+private static final int[] zeros = new int[EvaluationInfo.numberOfElements];
 public String Memo = "";
 
 private static final DecimalFormat df = new DecimalFormat("#.##");
@@ -107,7 +106,7 @@ public int computeKillsTotal()
 
 //TODO: possible fitness adjustments: penalize for collisions with creatures and especially for suicide. It's a sin.
 
-public float[] toFloatArray()
+public int[] toIntArray()
 {
     retFloatArray[0] = this.distancePassedCells;
     retFloatArray[1] = this.distancePassedPhys;

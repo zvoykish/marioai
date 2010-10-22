@@ -81,7 +81,7 @@ public void setArgs(String[] args)
 //        }
 //        else
     if (args != null)
-        for (String s: args)
+        for (String s : args)
             optionsAsString += s + " ";
 
     this.setUpOptions(args);
@@ -102,13 +102,13 @@ public void setArgs(String[] args)
 
 public float getMarioGravity()
 {
-    // TODO: getMarioGravity
+    // TODO: getMarioGravity, doublecheck if unit test is present and remove if fixed
     return f(getParameterValue("-mgr"));
 }
 
 public float getCreaturesGravity()
 {
-    // TODO: getCreaturesGravity
+    // TODO: getCreaturesGravity, same as for mgr
     return f(getParameterValue("-cgr"));
 }
 

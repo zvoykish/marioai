@@ -16,10 +16,10 @@ import java.util.List;
 
 public class Evaluator implements Runnable
 {
-    Thread thisThread = null;
+Thread thisThread = null;
 //    EvaluationOptions evaluationOptions;
 
-    private List<EvaluationInfo> evaluationSummary = new ArrayList<EvaluationInfo>();
+private List<EvaluationInfo> evaluationSummary = new ArrayList<EvaluationInfo>();
 
 //    private void evaluateServerMode()
 //    {
@@ -85,8 +85,8 @@ public class Evaluator implements Runnable
 //        }
 //    }
 
-    public List<EvaluationInfo> evaluate()
-    {
+public List<EvaluationInfo> evaluate()
+{
 //        if (this.evaluationOptions.isServerMode() )
 //        {
 //            this.evaluateServerMode();
@@ -94,7 +94,7 @@ public class Evaluator implements Runnable
 //        }
 
 //        Simulation simulator = new BasicSimulator(evaluationOptions.getSimulationOptionsCopy());
-        // Simulate One Level
+    // Simulate One Level
 
 //        EvaluationInfo evaluationInfo;
 
@@ -131,19 +131,20 @@ public class Evaluator implements Runnable
 //        LOGGER.println("Total Evaluation Duration (HH:mm:ss:ms) " + GlobalOptions.getDateTime(elapsed), LOGGER.VERBOSE_MODE.ALL);
 //        if (!fileName.equals(""))
 //            LOGGER.println("Exported to " + fileName, LOGGER.VERBOSE_MODE.ALL);
-        return evaluationSummary;
-    }
+    return evaluationSummary;
+}
 
 //    public void verbose(String message, LOGGER.VERBOSE_MODE verbose_mode)
 //    {
 //        LOGGER.println(message, verbose_mode);
 //    }
 
-    public String getMeanEvaluationSummary()
-    {
-        //TODO: SK
-        return "\nEvaluation Summary:\n...\nEnd of Evaluation Summary\n";
-    }
+public String getMeanEvaluationSummary()
+{
+//            TODO:TASK:[M] time per level\    mean time per level
+    //TODO:TASK:[M] getMeanEvaluationSummary, compute mean, standard deviation of each component of a summary
+    return "\nEvaluation Summary:\n...\nEnd of Evaluation Summary\n";
+}
 
 //    public String exportToMatLabFile()
 //    {
@@ -177,29 +178,34 @@ public class Evaluator implements Runnable
 
 //    public void exportToPyPlot(String fileName)
 //    {
-//        //TODO:SK
+//        //TODO:TASK:[M] create a plot.py, that if python plot.py produces a diagram and saves it to pdf 
 //    }
 
-    public void reset()
-    {
-        evaluationSummary = new ArrayList<EvaluationInfo>();
-    }
+//    public void exportToMathematicaNotebookFile(String fileName)
+//    {
+//        //TODO:TASK:|L|
+//    }
+
+public void reset()
+{
+    evaluationSummary = new ArrayList<EvaluationInfo>();
+}
 
 //    public Evaluator(EvaluationOptions evaluationOptions)
 //    {
 ////        init(evaluationOptions);
 //    }
 
-    public void run()
-    {
-        evaluate();
-    }
+public void run()
+{
+    evaluate();
+}
 
-    public void start()
-    {
-        if (thisThread.getState() == Thread.State.NEW)
-            thisThread.start();
-    }
+public void start()
+{
+    if (thisThread.getState() == Thread.State.NEW)
+        thisThread.start();
+}
 
 //    public void init(EvaluationOptions evaluationOptions)
 //    {

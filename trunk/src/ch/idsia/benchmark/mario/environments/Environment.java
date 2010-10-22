@@ -125,7 +125,7 @@ void performAction(boolean[] action);
 
 boolean isLevelFinished();
 
-float[] getEvaluationInfoAsFloats();
+int[] getEvaluationInfoAsInts();
 
 String getEvaluationInfoAsString();
 
@@ -150,6 +150,6 @@ public void setReplayer(Replayer recorder);
 //public void setRecording(final boolean recording);
 
 public int getTimeSpent();
-   
+
 // public int getLevelLength(); getLevelType();
 }

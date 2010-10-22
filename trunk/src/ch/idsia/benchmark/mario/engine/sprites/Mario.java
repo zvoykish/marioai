@@ -115,7 +115,7 @@ public Mario(LevelScene levelScene)
     setMode(Mario.large, Mario.fire);
 
     final float jumpPower = 7;
-    // TODO: -jp <float>, default 7;
+    // TODO:TASK:!H! -jp <float>, default 7;
     yaa = marioGravity * 3;
     jT = jumpPower / (marioGravity);
 }
@@ -435,7 +435,7 @@ public void move()
 
     if (carried != null)
     {
-        carried.x = x + facing * 8; //TODO : move to cellSize_2 = cellSize/2;
+        carried.x = x + facing * 8; //TODO:|L| move to cellSize_2 = cellSize/2;
         carried.y = y - 2;
         if (!keys[KEY_SPEED])
         {
@@ -682,7 +682,7 @@ public void getHurt(final int spriteKind)
         invulnerableTime = 32;
     } else
     {
-        die("Collision with a creature " + Sprite.getNameByKind(spriteKind));
+        die("Collision with a creature [" + Sprite.getNameByKind(spriteKind) + "]");
     }
 }
 
@@ -706,7 +706,7 @@ public void die(String reasonOfDeath)
     levelScene.addMemoMessage("Reason of death: " + reasonOfDeath);
 }
 
-public void getFlower()
+public void devourFlower()
 {
     if (deathTime > 0 || levelScene.paused) return;
 
@@ -722,7 +722,7 @@ public void getFlower()
     ++flowersDevoured;
 }
 
-public void getMushroom()
+public void devourMushroom()
 {
     if (deathTime > 0 || levelScene.paused) return;
 

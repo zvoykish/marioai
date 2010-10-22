@@ -8,7 +8,7 @@ import ch.idsia.benchmark.mario.simulation.SimulationOptions;
 import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
-import ch.idsia.utils.StatisticalSummary;
+import ch.idsia.utils.statistics.StatisticalSummary;
 
 
 /**
