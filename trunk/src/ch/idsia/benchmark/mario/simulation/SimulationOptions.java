@@ -282,12 +282,12 @@ public void setDeadEndsCount(boolean var)
 
 public Boolean getCannonsCount()
 {
-    return b(getParameterValue("-lc"));
+    return b(getParameterValue("-lca"));
 }
 
 public void setCannonsCount(boolean var)
 {
-    setParameterValue("-lc", s(var));
+    setParameterValue("-lca", s(var));
 }
 
 // Level: HillStraight count

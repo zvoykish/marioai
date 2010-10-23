@@ -37,7 +37,7 @@ private static final String[] allowed = new String[]{
         "-lt",  // level: type
         "-lh",  // level: height [16-20]
         "-lde", // level: dead ends count
-        "-lc",  // level: cannons count
+        "-lca",  // level: cannons count
         "-lhs", // level: HillStraight count
         "-ltb", // level: Tubes count
         "-lb",  // level: blocks count
@@ -233,7 +233,7 @@ public static void InitDefaults()
         defaultOptionsHashMap.put("-ze", "0"); //  ZoomLevel of Enemies observation
         defaultOptionsHashMap.put("-lh", "15"); //level height
         defaultOptionsHashMap.put("-lde", "off"); //level: dead ends count
-        defaultOptionsHashMap.put("-lc", "on"); //level: cannons count
+        defaultOptionsHashMap.put("-lca", "on"); //level: cannons count
         defaultOptionsHashMap.put("-lhs", "on"); //level: HillStraight count
         defaultOptionsHashMap.put("-ltb", "on"); //level: tubes count
         defaultOptionsHashMap.put("-lco", "on"); //level: coins count

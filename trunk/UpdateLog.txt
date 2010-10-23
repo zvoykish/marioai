@@ -2,6 +2,7 @@ Mario AI benchmark update log.
 
 Version 0.1.9 DATE: 2010-10-14 (October)
 
+28. Option -lc moved to -lca (level cannons).
 27. New Feature: Hot key R to start/stop recording.
 26. Issue: Mario can jump in to the ground. fixed, r601.
 25. Improvement: Unit tests added for recorder and replayer. 
