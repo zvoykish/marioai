@@ -104,26 +104,26 @@ public static void main(String[] args)
     final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
     LearningAgent learningAgent = new SRNESLearningAgent(new MediumSRNAgent()); // Your Competition Entry goes here
 
-    cmdLineOptions.setArgs("-lco off -lb off -le 0 -lhb off -lg off -ltb off -lhs off -lc off -lde off");
+    cmdLineOptions.setArgs("-lco off -lb off -le off -lhb off -lg off -ltb off -lhs off -lca off -lde off");
     float finalScore = LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
 
 //        ProgressTask task = new ProgressTask(options);
 //        ES es = new ES (task, initial, populationSize);
 
 //        Level 2
-    cmdLineOptions.setArgs("-lco on -lb on -le 1111111 -lhb off -lg off -ltb off -lhs off -lc off -lde off -ld 3");
+    cmdLineOptions.setArgs("-lco on -lb on -lhb off -lg off -ltb off -lhs off -lca off -lde off -ld 3");
     finalScore += LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
 
 //        Level 3
-    cmdLineOptions.setArgs("-lco off -lb off -le 0 -lhb off -lg on -ltb off -lhs off -lc off -lde off -ld 2");
+    cmdLineOptions.setArgs("-lco off -lb off -le off -lhb off -lg on -ltb off -lhs off -lca off -lde off -ld 2");
     finalScore += LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
 
 //        Level 4
-    cmdLineOptions.setArgs("-lco off -lb off -le 0 -lhb off -lg on -ltb on -lhs off -lc on -lde off -ld 3");
+    cmdLineOptions.setArgs("-lco off -lb off -le off -lhb off -lg on -ltb on -lhs off -lca on -lde off -ld 3");
     finalScore += LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
 
 //        Level 5
-    cmdLineOptions.setArgs("-lco on -lb off -le 1011000 -lhb on -lg off -ltb on -lhs off -lc off -lde off -ld 3");
+    cmdLineOptions.setArgs("-lco on -lb off -le g,rk,gw -lhb on -lg off -ltb on -lhs off -lca off -lde off -ld 3");
     finalScore += LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
 
 

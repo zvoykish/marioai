@@ -4,9 +4,9 @@ import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.ReplayerOptions;
 import junit.framework.TestCase;
+import org.junit.Test;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
 
 import java.util.Random;
 
@@ -44,7 +44,7 @@ public void testRandomPersistence()
 @Test
 public void testAgentLoadAndGetAgentName()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -lc 0 -ag ch.idsia.agents.controllers.ForwardJumpingAgent");
+    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -lca off -ag ch.idsia.agents.controllers.ForwardJumpingAgent");
     assertNotNull(cmdLineOptions.getAgent());
     assertEquals(cmdLineOptions.getAgent().getName(), "ForwardJumpingAgent");
     assertEquals(cmdLineOptions.getAgentFullLoadName(), "ch.idsia.agents.controllers.ForwardJumpingAgent");
@@ -53,7 +53,7 @@ public void testAgentLoadAndGetAgentName()
 @Test
 public void testAgentLoadHumanKeyboardAgent()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -lc 0");
+    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -lca off");
     assertNotNull(cmdLineOptions.getAgent());
     assertEquals(cmdLineOptions.getAgent().getName(), "HumanKeyboardAgent");
     assertEquals(cmdLineOptions.getAgentFullLoadName(), "ch.idsia.agents.controllers.human.HumanKeyboardAgent");

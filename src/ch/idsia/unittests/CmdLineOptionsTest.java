@@ -50,8 +50,8 @@ public void testSetArgs() throws Exception
             " -amico off" +
             " -echo off" +
             " -ewf on" +
-            " -grc 1.0" +
-            " -grm 1.0" +
+            " -cgr 1.0" +
+            " -mgr 1.0" +
             " -gv off" +
             " -gvc off" +
             " -i off" +
@@ -78,7 +78,7 @@ public void testSetArgs() throws Exception
             " -ze 0" +
             " -lh 15" +
             " -lde off" +
-            " -lc on" +
+            " -lca on" +
             " -lhs on" +
             " -ltb on" +
             " -lco on" +
