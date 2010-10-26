@@ -2,18 +2,26 @@
 \usepackage[pdftex,unicode]{hyperref}
 \usepackage[margin=2cm]{geometry}
 \usepackage{indentfirst}
+\usepackage{longtable}
 \begin{document}
-\section*{Mario AI Benchmark \footnote{v-0.1.7a compliant}. Setup options.}
+\section*{Mario AI Benchmark \footnote{v-0.1.9 compliant}. Setup options.}
 
-\begin{table}[hp]
+\begin{center}
+\begin{longtable}{|c|p{6cm}|p{4cm}|c|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Option key}} & \multicolumn{1}{c|}{\textbf{Description}} & \multicolumn{1}{c|}{\textbf{Value range}} & \multicolumn{1}{c|}{\textbf{Example}}\\ \hline 
+\endfirsthead
+\multicolumn{4}{c}%
+{}\\%{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\hline
+\multicolumn{1}{|c|}{\textbf{Option key}} & \multicolumn{1}{c|}{\textbf{Description}} & \multicolumn{1}{c|}{\textbf{Value range}} & \multicolumn{1}{c|}{\textbf{Example}}\\ \hline 
+\endhead
 
-\center{
+\hline \multicolumn{4}{|r|}{{Continued on next page}} \\ \hline
+\endfoot
 
-\begin{tabular}{| c | p{6cm} | p{4cm} | c | }
-
-   \hline
-   Option key & Description & Values range & Example \\
-   \hline \hline
+\hline
+\endlastfoot
    -echo & Output all command line options to console after initialization & $<$on$|$off$>$. Default: off & {\texttt Main -echo on} \\ 
    \hline
    -ag & AgentName should extend RegisterableAgent in order for the native agent to be available from command line & AgentName or Agents implementations. Default: HumanKeyboardAgent & {\texttt Main -ag ForwardAgent} \\
@@ -44,21 +52,15 @@
    \hline
    -mm & Mario Mode. 0 -- small,1 - large, 2 - large, fire ability is available & $<$0$|$1$|$2$>$. Default: 2 & {\texttt Main -mm 1} \\
    \hline
-\end{tabular}
-}
-\end{table}
-\pagebreak
-\begin{table}[hp]
-\center{
-\begin{tabular} {| c | p{6cm} | p{4cm} | c | }
+   -mgr & Mario gravity. Than greater number, than greater gravity & Any number $\in (0, 2)$. Default: 1 & {\texttt Main -mgr 0.8} \\
    \hline
-   Option key & Description & Values range & Example \\
-   \hline \hline
+   -cgr & Creatures gravity. Than greater number, than greater gravity & Any number $\in (0, 2)$. Default: 1 & {\texttt Main -cgr 1.5} \\
+   \hline
    -fps & Change FPS. 100 enables max FPS & $<$integers in [1..100]$>$. Default: 24 & {\texttt Main -fps 50} \\
    \hline
    -lt & Level type. 0 - Overground, 1 - Underground, 2 - Castle & $<$0$|$1$|$2$>$. Default: 0 & {\texttt Main -lt 1} \\
    \hline
-   -ls & Level (Randomization) Seed & $<$integers in [1..maxInt]$>$. Default: 0 & {\texttt Main -ls 42} \\
+   -ls & Level (Randomization) Seed & $<$integers in [1..maxInt] $|$ Path to the \texttt{.lvl} file$>$. Default: 0 & {\texttt Main -ls 42} \\
    \hline
    -ll & Level length & $<$integers in [1..4096]$>$. Default: 320 & {\texttt Main -ll 550} \\
    \hline
@@ -90,15 +92,15 @@
 	    \hline
 	    Green Koopa & gk \\
 	    \hline
-	    Green Koopa Winged & gk \\
+	    Green Koopa Winged & gkw \\
 	    \hline
-	    Red Koopa & gk \\
+	    Red Koopa & rk \\
 	    \hline
-	    Red Koopa Winged & gk \\
+	    Red Koopa Winged & rkw \\
 	    \hline
-	    Spiky & gk \\
+	    Spiky & s \\
 	    \hline
-	    Spiky Winged & gk \\
+	    Spiky Winged & sw \\
 	    \hline
 	\end{tabular}
 	}
@@ -111,12 +113,6 @@
    -lf & Create flat level & $<$on$|$off$>$. Default: off & {\texttt Main -lf on} \\
    \hline
    -stop & Run benchmark and stop a gameplay. To continue a gameplay press a \texttt{SPACEBAR} key. & $<$on$|$off$>$. Default: off & {\texttt Main -stop on} \\
-    \hline
-   
-
-\end{tabular}
-
-} \caption{ Setup options for the Mario AI benchmark. Options can be set up via CmdLineOptions.setArgs() method that accepts both array of strings and a single string or by setting individual options with corresponding methods.} \label{tab:cmdlineoptions}
-
-\end{table}
+\end{longtable}
+\end{center}
 \end{document}
