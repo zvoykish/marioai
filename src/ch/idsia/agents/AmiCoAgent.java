@@ -77,19 +77,20 @@ public class AmiCoAgent implements Agent
         }
         float[] marioPos = observation.getMarioFloatPos();
         float[] enemiesPos = observation.getEnemiesFloatPos();
-        int[] marioState = new int[]{
-                observation.getMarioStatus(),
-                observation.getMarioMode(),
-                observation.isMarioOnGround() ? 1 : 0,
-                observation.isMarioAbleToJump() ? 1 : 0,
-                observation.isMarioAbleToShoot() ? 1 : 0,
-                observation.isMarioCarrying() ? 1 : 0,
-                observation.getKillsTotal(),
-                observation.getKillsByFire(),
-                observation.getKillsByStomp(),
-                observation.getKillsByStomp(),
-                observation.getKillsByShell()
-        };
+        int[] marioState = observation.getMarioState();
+//        int[] marioState = new int[]{
+//                observation.getMarioStatus(),
+//                observation.getMarioMode(),
+//                observation.isMarioOnGround() ? 1 : 0,
+//                observation.isMarioAbleToJump() ? 1 : 0,
+//                observation.isMarioAbleToShoot() ? 1 : 0,
+//                observation.isMarioCarrying() ? 1 : 0,
+//                observation.getKillsTotal(),
+//                observation.getKillsByFire(),
+//                observation.getKillsByStomp(),
+//                observation.getKillsByStomp(),
+//                observation.getKillsByShell()
+//        };
 
         int[] action = javaCallsPython.getAction(squashedLevelScene, squashedEnemies, marioPos, enemiesPos, marioState);
 

@@ -12,6 +12,7 @@ public class JavaPy
     public JavaPy(String moduleName, String agentName)
     {
 //        System.out.println("Constructor");
+        //TODO: add check for successful initialization
         this.setModuleName(moduleName);
         this.setAgentName(agentName);
         System.out.println("Java: agentName = " + agentName);
@@ -27,7 +28,7 @@ public class JavaPy
     static
     {
         System.out.println("Java: loading AmiCo...");
-        System.loadLibrary("AmiCo");
+        System.loadLibrary("AmiCoJavaPy");
         System.out.println("Java: AmiCo library has been successfully loaded!");
     }
 }
