@@ -82,6 +82,7 @@ public void startReplay()
             replayer.openFile("options");
             String strOptions = (String) replayer.readObject();
             CmdLineOptions options = new CmdLineOptions(strOptions);
+            options.setVisualization(true);
             options.setRecordFile("off");
             options.setAgent(new ReplayAgent(options.getAgent().getName()));
             agent = options.getAgent();
