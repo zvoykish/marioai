@@ -2,6 +2,7 @@ package ch.idsia.agents.learning;
 
 import ch.idsia.agents.Agent;
 import ch.idsia.agents.controllers.BasicMarioAIAgent;
+import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.evolution.Evolvable;
 import ch.idsia.evolution.SRN;
 //import ch.idsia.benchmark.mario.environments.Environment;
@@ -16,7 +17,7 @@ public class MediumSRNAgent extends BasicMarioAIAgent implements Agent, Evolvabl
 {
 
     private SRN srn;
-    final int numberOfOutputs = 5;
+    final int numberOfOutputs = Environment.numberOfButtons;
     final int numberOfInputs = /*53*/28;
     static private final String name = "MediumSRNAgent";
 
