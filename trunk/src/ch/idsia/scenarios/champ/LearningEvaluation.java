@@ -78,9 +78,10 @@ private static float evaluateSubmission(CmdLineOptions cmdLineOptions, LearningA
     learningAgent.learn();
     // perform the gameplay task on the same level
     cmdLineOptions.setVisualization(true);
+    Agent bestAgent = learningAgent.getBestAgent();
+    cmdLineOptions.setAgent(bestAgent);
     BasicTask basicTask = new BasicTask(cmdLineOptions);
     basicTask.reset(cmdLineOptions);
-    Agent bestAgent = learningAgent.getBestAgent();
 //        basicTask.setAgent(bestAgent);
     if (!basicTask.runOneEpisode())  // make evaluation on the same episode once
     {
