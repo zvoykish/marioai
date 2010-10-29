@@ -810,6 +810,7 @@ public int getTimeLeft() { return timeLeft / GlobalOptions.mariosecondMultiplier
 
 public int getKillsTotal()
 {
+    //TODO: what the hell?
     return mario.levelScene.killedCreaturesTotal;
 }
 
@@ -923,7 +924,6 @@ public boolean isMarioOnGround()
 public boolean isMarioAbleToJump()
 { return mario.mayJump(); }
 
-
 public void resetDefault()
 {
     // TODO: set values to defaults
@@ -982,15 +982,14 @@ public void reset(CmdLineOptions cmdLineOptions)
 
     marioInitialPos = cmdLineOptions.getMarioInitialPos();
 
-    //open replayer file, read level, close file
-    String replayFileName = cmdLineOptions.getReplayOptions();
-    if (!replayFileName.equals(""))
+    if (replayer != null)
     {
         try
         {
 //            replayer.openNextReplayFile();
             replayer.openFile("level.lvl");
             level = (Level) replayer.readObject();
+            level.counters.resetUncountableCounters();
 //            replayer.closeFile();
 //            replayer.closeRecorder();
         } catch (IOException e)
@@ -1009,7 +1008,6 @@ public void reset(CmdLineOptions cmdLineOptions)
     {
         try
         {
-            System.out.println("fileName = " + fileName);
             Level.save(level, new ObjectOutputStream(new FileOutputStream(fileName)));
         } catch (IOException e)
         {

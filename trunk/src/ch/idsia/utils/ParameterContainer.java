@@ -70,8 +70,7 @@ private static final String[] allowed = new String[]{
         "-zs",
         "-stop",
         "-s",
-        "-rec",
-        "-rep"
+        "-rec"
 };
 
 public ParameterContainer()
@@ -245,7 +244,6 @@ public static void InitDefaults()
         defaultOptionsHashMap.put("-stop", "off"); //is gameplay stopped
         defaultOptionsHashMap.put("-s", ""); //path to the file where level will be saved
         defaultOptionsHashMap.put("-rec", "off"); //path to the file where recorded game will be saved
-        defaultOptionsHashMap.put("-rep", ""); //path to the file with saved game record
     }
 }
 

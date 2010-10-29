@@ -60,7 +60,7 @@ public void openFile(String filename) throws Exception
     ze = zf.getEntry(filename);
 
     if (ze == null)
-        throw new Exception("[Mario AI EXCEPTION] : File " + filename + " not found in the archive");
+        throw new Exception("[Mario AI EXCEPTION] : File <" + filename + "> not found in the archive");
 }
 
 private void openBufferedInputStream() throws IOException

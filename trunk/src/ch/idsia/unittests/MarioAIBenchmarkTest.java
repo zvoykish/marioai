@@ -68,7 +68,7 @@ public void testForwardJumpingAgentFitnessWithoutCreatures()
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals("Fitness", 7664, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+    assertEquals(7664, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
 
 @Test
@@ -79,18 +79,18 @@ public void testForwardJumpingAgentFitnessWithDefaultCreatures()
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals("Fitness", 5873, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+    assertEquals(5873, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
 
 @Test
 public void testReceptiveField_1x2()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -fps 75 -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 1 -rfh 3 -srf on");
+    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -fps 75 -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 1 -rfh 2 -srf on");
     final BasicTask basicTask = new BasicTask(cmdLineOptions);
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals(6852, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+    assertEquals(6852, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
 
 @Test
@@ -101,7 +101,7 @@ public void testReceptiveField_3x1()
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals(6852, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+    assertEquals(6852, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
 
 @Test
@@ -112,7 +112,7 @@ public void testReceptiveField_1x1()
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals(6852, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+    assertEquals(6852, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
 
 @Test
@@ -123,7 +123,7 @@ public void testForwardAgentFitnessWithDefaultCreatures()
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals(7162, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+    assertEquals(7162, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
 
 @Test
@@ -134,7 +134,7 @@ public void testForwardAgentFitnessWithDefaultCreaturesVisual()
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals(7162, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+    assertEquals(7162, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
 
 @Test
@@ -151,7 +151,7 @@ public void testForwardAgentFitnessWithoutCreatures()
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals("Fitness", 7816, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(), 0.1);
+    assertEquals(7816, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
 
 @Test

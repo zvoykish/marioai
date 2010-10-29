@@ -89,8 +89,8 @@ public void startReplay()
             agent.reset();
             ((ReplayAgent) agent).setReplayer(replayer);
 
-            environment.reset(options);
             environment.setReplayer(replayer);
+            environment.reset(options);
             GlobalOptions.isVisualization = false;
 
             replayer.openFile("actions.act");
