@@ -39,7 +39,7 @@ public static void main(String[] args)
     Runtime rt = Runtime.getRuntime();
     try
     {
-//            Process proc = rt.exec("/usr/local/bin/mate " + marioTraceFile);
+//            Process proc = rt.exec("/usr/local/bin/mate " + marioTraceFileName);
         Process proc = rt.exec("python hello.py");
     } catch (IOException e)
     {

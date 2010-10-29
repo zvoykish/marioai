@@ -319,7 +319,7 @@ private void computeEvaluationInfo()
     evaluationInfo.collisionsWithCreatures = Mario.collisionsWithCreatures;
     evaluationInfo.Memo = levelScene.memo;
     evaluationInfo.levelLength = levelScene.level.length;
-    evaluationInfo.marioTraceFile = marioTraceFile;
+    evaluationInfo.marioTraceFileName = marioTraceFile;
     evaluationInfo.marioTrace = levelScene.level.marioTrace;
 }
 
