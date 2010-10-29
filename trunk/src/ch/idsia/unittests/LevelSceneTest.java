@@ -7,6 +7,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Sergey Karakovskiy, sergey.karakovskiy@gmail.com
@@ -49,25 +51,25 @@ public void testGetSerializedLevelSceneObservationZ() throws Exception
     LevelScene levelScene = new LevelScene();
     levelScene.reset(cmd);
     byte[][] o = levelScene.getLevelSceneObservationZ(1);
-//    System.out.println("o = " + Arrays.deepToString(o));
-//    for (int i = 0; i < o.length; i++)
-//    {
-//        byte[] bytes = o[i];
-//        for (int j = 0; j < bytes.length; j++)
-//        {
-//            byte aByte = bytes[j];
-//            if (aByte != 0)
-//            {
-//
-//                System.out.println("\ni = " + i);
-//                System.out.println("j = " + j);
-//            }
-//
-//        }
-//    }
+    System.out.println("o = " + Arrays.deepToString(o));
+    for (int i = 0; i < o.length; i++)
+    {
+        byte[] bytes = o[i];
+        for (int j = 0; j < bytes.length; j++)
+        {
+            byte aByte = bytes[j];
+            if (aByte != 0)
+            {
+
+                System.out.println("\ni = " + i);
+                System.out.println("j = " + j);
+            }
+
+        }
+    }
     int[] obs = levelScene.getSerializedLevelSceneObservationZ(1);
     assertEquals(obs[14 * 19 + 4], o[14][4]);
-    assertEquals(obs[14 * 19 + 4], -60);
+    assertEquals(obs[14 * 19 + 4], 0);
 }
 
 
