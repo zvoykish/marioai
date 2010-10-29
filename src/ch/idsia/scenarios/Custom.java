@@ -20,7 +20,7 @@ public class Custom
 {
 public static void main(String[] args)
 {
-//        final String argsString = "-vis on";
+//final String argsString = "-vis on";
     final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
     final Agent agent = new ForwardAgent();
     final BasicTask basicTask = new BasicTask(cmdLineOptions);
