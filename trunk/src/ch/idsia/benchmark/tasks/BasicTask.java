@@ -5,6 +5,7 @@ import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.benchmark.mario.environments.MarioEnvironment;
 import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.EvaluationInfo;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,6 +21,7 @@ private Agent agent;
 protected CmdLineOptions options;
 private long COMPUTATION_TIME_BOUND = 42; // stands for prescribed  FPS 24.
 private String name = getClass().getSimpleName();
+private EvaluationInfo evaluationInfo;
 
 public BasicTask(CmdLineOptions cmdLineOptions)
 {
@@ -46,6 +48,7 @@ public boolean runOneEpisode()
     }
     environment.closeRecorder(); //recorder initialized in environment.reset
     environment.getEvaluationInfo().setTaskName(name);
+    this.evaluationInfo = environment.getEvaluationInfo().clone();
     return true;
 }
 
@@ -101,6 +104,11 @@ public void reset()
 public String getName()
 {
     return name;
+}
+
+public EvaluationInfo getEvaluationInfo()
+{
+    return evaluationInfo;
 }
 }
 

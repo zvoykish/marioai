@@ -215,4 +215,9 @@ public Point getMarioInitialPos()
     marioInitialPos.y = i(getParameterValue("-miy"));
     return marioInitialPos;
 }
+
+public void reset()
+{
+
+}
 }

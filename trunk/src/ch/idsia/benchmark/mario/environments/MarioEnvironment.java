@@ -305,7 +305,7 @@ private void computeEvaluationInfo()
     evaluationInfo.timeLeft = levelScene.getTimeLeft();
     evaluationInfo.coinsGained = Mario.coins;
     evaluationInfo.totalNumberOfCoins = levelScene.level.counters.coinsCount;
-    evaluationInfo.totalNumberOfHiddenBlocks = levelScene.level.counters.hiddenBlocks;
+    evaluationInfo.totalNumberOfHiddenBlocks = levelScene.level.counters.hiddenBlocksCount;
     evaluationInfo.totalNumberOfFlowers = levelScene.level.counters.flowers;
     evaluationInfo.totalNumberOfMushrooms = levelScene.level.counters.mushrooms;
     evaluationInfo.totalNumberOfCreatures = levelScene.level.counters.creatures;

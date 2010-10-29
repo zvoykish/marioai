@@ -18,7 +18,7 @@ import java.text.DecimalFormat;
  * Package: .Tools
  */
 
-public final class EvaluationInfo
+public final class EvaluationInfo implements Cloneable
 {
 private static final int MagicNumberUnDef = -42;
 
@@ -226,6 +226,36 @@ private String spaceFormat(int i)
     return r;
 }
 
-//public operator+
-
+public EvaluationInfo clone()
+{
+    EvaluationInfo ret = new EvaluationInfo();
+    ret.marioStatus = this.marioStatus;
+    ret.flowersDevoured = this.flowersDevoured;
+    ret.distancePassedPhys = this.distancePassedPhys;
+    // TODO:!H! cloneable.. all necessary fields...
+//    evaluationInfo.distancePassedCells = levelScene.mario.mapX;
+////     evaluationInfo.totalLengthOfLevelCells = levelScene.level.getWidthCells();
+////     evaluationInfo.totalLengthOfLevelPhys = levelScene.level.getWidthPhys();
+//    evaluationInfo.timeSpent = levelScene.getTimeSpent();
+//    evaluationInfo.timeLeft = levelScene.getTimeLeft();
+//    evaluationInfo.coinsGained = Mario.coins;
+//    evaluationInfo.totalNumberOfCoins = levelScene.level.counters.coinsCount;
+//    evaluationInfo.totalNumberOfHiddenBlocks = levelScene.level.counters.hiddenBlocksCount;
+//    evaluationInfo.totalNumberOfFlowers = levelScene.level.counters.flowers;
+//    evaluationInfo.totalNumberOfMushrooms = levelScene.level.counters.mushrooms;
+//    evaluationInfo.totalNumberOfCreatures = levelScene.level.counters.creatures;
+//    evaluationInfo.marioMode = levelScene.getMarioMode();
+//    evaluationInfo.mushroomsDevoured = Mario.mushroomsDevoured;
+//    evaluationInfo.killsTotal = levelScene.getKillsTotal();
+//    evaluationInfo.killsByStomp = levelScene.getKillsByStomp();
+//    evaluationInfo.killsByFire = levelScene.getKillsByFire();
+//    evaluationInfo.killsByShell = levelScene.getKillsByShell();
+//    evaluationInfo.hiddenBlocksFound = Mario.hiddenBlocksFound;
+//    evaluationInfo.collisionsWithCreatures = Mario.collisionsWithCreatures;
+//    evaluationInfo.Memo = levelScene.memo;
+//    evaluationInfo.levelLength = levelScene.level.length;
+//    evaluationInfo.marioTraceFile = marioTraceFile;
+//    evaluationInfo.marioTrace = levelScene.level.marioTrace;
+    return ret;
+}
 }
