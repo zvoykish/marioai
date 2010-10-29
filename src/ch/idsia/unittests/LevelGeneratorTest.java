@@ -4,6 +4,7 @@ import ch.idsia.benchmark.mario.engine.level.Level;
 import ch.idsia.benchmark.mario.engine.level.LevelGenerator;
 import ch.idsia.benchmark.mario.engine.level.SpriteTemplate;
 import ch.idsia.benchmark.mario.engine.sprites.Sprite;
+import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.RandomCreatureGenerator;
 import junit.framework.TestCase;
@@ -30,6 +31,27 @@ public class LevelGeneratorTest extends TestCase
     public void tearDown()
     {
 
+    }
+
+    @Test
+    public void testRegressionLBBug() throws Exception
+    {
+        // This test has to be first because it only happens if blocks have
+        // never been on before.
+        final CmdLineOptions cmdLineOptions = new CmdLineOptions();
+        cmdLineOptions.setArgs("-lb off");
+        Level level1 = LevelGenerator.createLevel(cmdLineOptions);
+        cmdLineOptions.setArgs("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -lb on");
+        final BasicTask basicTask = new BasicTask(cmdLineOptions);
+        basicTask.reset(cmdLineOptions);
+        basicTask.runOneEpisode();
+        cmdLineOptions.setArgs("-lb off");
+        Level level2 = LevelGenerator.createLevel(cmdLineOptions);
+
+
+        for (int i = 0; i < level1.length; i++)
+            for (int j = 0; j < level1.height; j++)
+                assertEquals (level1.getBlock (i, j), level2.getBlock (i, j));
     }
 
     @Test
@@ -158,7 +180,7 @@ public class LevelGeneratorTest extends TestCase
                 }
             }
 
-        System.out.println("level.counters.creatures = " + level.counters.creatures);
+        System.out.println("level.counters.creatures = " + Level.counters.creatures);
         
         assertEquals(10, counter);
     }
@@ -185,7 +207,7 @@ public class LevelGeneratorTest extends TestCase
                 }
             }
 
-        System.out.println("level.counters.creatures = " + level.counters.creatures);
+        System.out.println("level.counters.creatures = " + Level.counters.creatures);
 
         assertEquals(20, counter);
     }
