@@ -257,6 +257,7 @@ public void testRecordingFitness()
 {
     final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip -i on");
     final BasicTask basicTask = new BasicTask(cmdLineOptions);
+    basicTask.getEnvironment().setReplayer(null);
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
     float originalFitness = basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
@@ -266,8 +267,29 @@ public void testRecordingFitness()
     replayTask.reset("recorderTest.zip");
     replayTask.startReplay();
     System.out.println(replayTask.getEnvironment().getEvaluationInfoAsString());
-    float replayFitness = basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
+    float replayFitness = replayTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
     assertEquals(originalFitness, replayFitness);
+}
+
+@Test
+public void testRecordingEvaluationString()
+{
+    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip -i on");
+    final BasicTask basicTask = new BasicTask(cmdLineOptions);
+    basicTask.getEnvironment().setReplayer(null);
+    basicTask.reset(cmdLineOptions);
+    basicTask.runOneEpisode();
+    String playEvaluationString = basicTask.getEnvironment().getEvaluationInfoAsString();
+    System.out.println(playEvaluationString);
+
+    final ReplayTask replayTask = new ReplayTask();
+    replayTask.reset("recorderTest.zip");
+    replayTask.startReplay();
+    String replayEvaluationString = replayTask.getEnvironment().getEvaluationInfoAsString();
+    System.out.println(replayEvaluationString);
+
+    for (int i = 0; i < playEvaluationString.length(); i++)
+        assertEquals(playEvaluationString.charAt(i), replayEvaluationString.charAt(i));
 }
 
 @Test
@@ -275,6 +297,7 @@ public void testRecordingTrace()
 {
     final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip -i on");
     final BasicTask basicTask = new BasicTask(cmdLineOptions);
+    basicTask.getEnvironment().setReplayer(null);
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
 
@@ -282,12 +305,12 @@ public void testRecordingTrace()
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
 
     final ReplayTask replayTask = new ReplayTask();
-    replayTask.reset("-rep recorderTest.zip");
+    replayTask.reset("recorderTest.zip");
     replayTask.startReplay();
 
-    int[][] secondTrace = basicTask.getEnvironment().getEvaluationInfo().marioTrace;
+    int[][] secondTrace = replayTask.getEnvironment().getEvaluationInfo().marioTrace;
     System.out.println(replayTask.getEnvironment().getEvaluationInfoAsString());
-    
+
     for (int j = 0; j < firstTrace[0].length; ++j)
         for (int i = 0; i < firstTrace.length; ++i)
             assertEquals(firstTrace[i][j], secondTrace[i][j]);

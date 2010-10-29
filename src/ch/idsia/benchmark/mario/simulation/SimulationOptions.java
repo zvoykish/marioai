@@ -422,9 +422,4 @@ public void setRecordFile(String var)
 {
     setParameterValue("-rec", var);
 }
-
-public String getReplayOptions()
-{
-    return getParameterValue("-rep");
-}
 }

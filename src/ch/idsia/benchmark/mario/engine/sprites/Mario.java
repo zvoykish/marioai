@@ -31,8 +31,8 @@ public static boolean fire = false;
 public static int coins = 0;
 public static int hiddenBlocksFound = 0;
 public static int collisionsWithCreatures = 0;
-public static int mushroomsDevoured;
-public static int flowersDevoured;
+public static int mushroomsDevoured = 0;
+public static int flowersDevoured = 0;
 
 private static boolean isTrace;
 

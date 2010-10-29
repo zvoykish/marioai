@@ -45,6 +45,9 @@ static public class objCounters implements Serializable
         coinsCount = 0;
         gapsCount = 0;
         hiddenBlocksCount = 0;
+        mushrooms = 0;
+        flowers = 0;
+        creatures = 0;
         totalHillStraight = args.getHillStraightCount() ? Integer.MAX_VALUE : 0;
         totalCannons = args.getCannonsCount() ? Integer.MAX_VALUE : 0;
         totalGaps = args.getGapsCount() ? Integer.MAX_VALUE : 0;
@@ -53,6 +56,13 @@ static public class objCounters implements Serializable
         totalHiddenBlocks = args.getHiddenBlocksCount() ? Integer.MAX_VALUE : 0;
         totalCoins = args.getCoinsCount() ? Integer.MAX_VALUE : 0;
         totalTubes = args.getTubesCount() ? Integer.MAX_VALUE : 0;
+        resetUncountableCounters();
+    }
+
+    public void resetUncountableCounters()
+    {
+        mushrooms = 0;
+        flowers = 0;
     }
 }
 
