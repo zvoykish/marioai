@@ -1,5 +1,7 @@
 package ch.idsia.benchmark.mario.engine.level;
 
+import ch.idsia.tools.CmdLineOptions;
+
 import java.io.*;
 
 public class Level implements Serializable
@@ -15,7 +17,7 @@ static public class objCounters implements Serializable
     public int blocksCount = 0;
     public int coinsCount = 0;
     public int gapsCount = 0;
-    public int hiddenBlocks = 0;
+    public int hiddenBlocksCount = 0;
     public int totalCannons;
     public int totalGaps;
     public int totalDeadEnds;
@@ -32,6 +34,26 @@ static public class objCounters implements Serializable
     public int creatures = 0;
 
     private static final long serialVersionUID = 4505050755444159808L;
+
+    public void reset(final CmdLineOptions args)
+    {
+        deadEndsCount = 0;
+        cannonsCount = 0;
+        hillStraightCount = 0;
+        tubesCount = 0;
+        blocksCount = 0;
+        coinsCount = 0;
+        gapsCount = 0;
+        hiddenBlocksCount = 0;
+        totalHillStraight = args.getHillStraightCount() ? Integer.MAX_VALUE : 0;
+        totalCannons = args.getCannonsCount() ? Integer.MAX_VALUE : 0;
+        totalGaps = args.getGapsCount() ? Integer.MAX_VALUE : 0;
+        totalDeadEnds = args.getDeadEndsCount() ? Integer.MAX_VALUE : 0;
+        totalBlocks = args.getBlocksCount() ? Integer.MAX_VALUE : 0;
+        totalHiddenBlocks = args.getHiddenBlocksCount() ? Integer.MAX_VALUE : 0;
+        totalCoins = args.getCoinsCount() ? Integer.MAX_VALUE : 0;
+        totalTubes = args.getTubesCount() ? Integer.MAX_VALUE : 0;
+    }
 }
 
 public static final String[] BIT_DESCRIPTIONS = {//

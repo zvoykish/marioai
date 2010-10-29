@@ -92,6 +92,7 @@ private static void loadLevel(String filePath)
 
 public static Level createLevel(CmdLineOptions args)
 {
+    // -ls option can also load level from file if filename instead of a number provided
     try
     {
         levelSeed = args.getLevelRandSeed();
@@ -108,14 +109,7 @@ public static Level createLevel(CmdLineOptions args)
         height = 15;
     }
     isFlatLevel = args.isFlatLevel();
-    counters.totalHillStraight = args.getHillStraightCount() ? Integer.MAX_VALUE : 0;
-    counters.totalCannons = args.getCannonsCount() ? Integer.MAX_VALUE : 0;
-    counters.totalGaps = args.getGapsCount() ? Integer.MAX_VALUE : 0;
-    counters.totalDeadEnds = args.getDeadEndsCount() ? Integer.MAX_VALUE : 0;
-    counters.totalBlocks = args.getBlocksCount() ? Integer.MAX_VALUE : 0;
-    counters.totalHiddenBlocks = args.getHiddenBlocksCount() ? Integer.MAX_VALUE : 0;
-    counters.totalCoins = args.getCoinsCount() ? Integer.MAX_VALUE : 0;
-    counters.totalTubes = args.getTubesCount() ? Integer.MAX_VALUE : 0;
+    counters.reset(args);
 
     levelType = args.getLevelType();
     levelDifficulty = args.getLevelDifficulty();
@@ -829,7 +823,7 @@ private static void buildBlocks(int x0, int x1, int floor, boolean pHB, int pS, 
                     if (isBlock && canBuildBlocks(x, floor - 4, true))
                     {
                         level.setBlock(x, floor - 4, (byte) (1)); //a hidden block with a coin
-                        counters.hiddenBlocks++;
+                        counters.hiddenBlocksCount++;
                         ++counters.coinsCount;
                     }
                 } else
