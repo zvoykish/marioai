@@ -228,34 +228,45 @@ private String spaceFormat(int i)
 
 public EvaluationInfo clone()
 {
-    EvaluationInfo ret = new EvaluationInfo();
-    ret.marioStatus = this.marioStatus;
-    ret.flowersDevoured = this.flowersDevoured;
-    ret.distancePassedPhys = this.distancePassedPhys;
-
-    ret.distancePassedCells = this.distancePassedCells;
-////     evaluationInfo.totalLengthOfLevelCells = levelScene.level.getWidthCells();
-////     evaluationInfo.totalLengthOfLevelPhys = levelScene.level.getWidthPhys();
-    ret.timeSpent = this.timeSpent;
-    ret.timeLeft = this.timeLeft;
-    ret.coinsGained = this.coinsGained;
-    ret.totalNumberOfCoins = this.totalNumberOfCoins;
-    ret.totalNumberOfHiddenBlocks = this.totalNumberOfHiddenBlocks;
-    ret.totalNumberOfFlowers = this.totalNumberOfFlowers;
-    ret.totalNumberOfMushrooms = this.totalNumberOfMushrooms;
-    ret.totalNumberOfCreatures = this.totalNumberOfCreatures;
-    ret.marioMode = this.marioMode;
-    ret.mushroomsDevoured = this.mushroomsDevoured;
-    ret.killsTotal = this.killsTotal;
-    ret.killsByStomp = this.killsByStomp;
-    ret.killsByFire = this.killsByFire;
-    ret.killsByShell = this.killsByShell;
-    ret.hiddenBlocksFound = this.hiddenBlocksFound;
-    ret.collisionsWithCreatures = this.collisionsWithCreatures;
-    ret.Memo = this.Memo.substring(0);
-    ret.levelLength = this.levelLength;
-    ret.marioTraceFileName = this.marioTraceFileName;
-    ret.marioTrace = this.marioTrace;
-    return ret;
+    try
+    {
+        EvaluationInfo ret = (EvaluationInfo) super.clone();
+        return ret;
+    }
+    catch (CloneNotSupportedException e)
+    {
+        System.err.println(e);
+        return null;
+    }
+    // TODO:!H!:double check the validity of this change!
+//    EvaluationInfo ret = new EvaluationInfo();
+//    ret.marioStatus = this.marioStatus;
+//    ret.flowersDevoured = this.flowersDevoured;
+//    ret.distancePassedPhys = this.distancePassedPhys;
+//
+//    ret.distancePassedCells = this.distancePassedCells;
+//////     evaluationInfo.totalLengthOfLevelCells = levelScene.level.getWidthCells();
+//////     evaluationInfo.totalLengthOfLevelPhys = levelScene.level.getWidthPhys();
+//    ret.timeSpent = this.timeSpent;
+//    ret.timeLeft = this.timeLeft;
+//    ret.coinsGained = this.coinsGained;
+//    ret.totalNumberOfCoins = this.totalNumberOfCoins;
+//    ret.totalNumberOfHiddenBlocks = this.totalNumberOfHiddenBlocks;
+//    ret.totalNumberOfFlowers = this.totalNumberOfFlowers;
+//    ret.totalNumberOfMushrooms = this.totalNumberOfMushrooms;
+//    ret.totalNumberOfCreatures = this.totalNumberOfCreatures;
+//    ret.marioMode = this.marioMode;
+//    ret.mushroomsDevoured = this.mushroomsDevoured;
+//    ret.killsTotal = this.killsTotal;
+//    ret.killsByStomp = this.killsByStomp;
+//    ret.killsByFire = this.killsByFire;
+//    ret.killsByShell = this.killsByShell;
+//    ret.hiddenBlocksFound = this.hiddenBlocksFound;
+//    ret.collisionsWithCreatures = this.collisionsWithCreatures;
+//    ret.Memo = this.Memo.substring(0);
+//    ret.levelLength = this.levelLength;
+//    ret.marioTraceFileName = this.marioTraceFileName;
+//    ret.marioTrace = this.marioTrace;
+//    return ret;
 }
 }
