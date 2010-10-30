@@ -810,23 +810,22 @@ public int getTimeLeft() { return timeLeft / GlobalOptions.mariosecondMultiplier
 
 public int getKillsTotal()
 {
-    //TODO: what the hell?
-    return mario.levelScene.killedCreaturesTotal;
+    return killedCreaturesTotal;
 }
 
 public int getKillsByFire()
 {
-    return mario.levelScene.killedCreaturesByFireBall;
+    return killedCreaturesByFireBall;
 }
 
 public int getKillsByStomp()
 {
-    return mario.levelScene.killedCreaturesByStomp;
+    return killedCreaturesByStomp;
 }
 
 public int getKillsByShell()
 {
-    return mario.levelScene.killedCreaturesByShell;
+    return killedCreaturesByShell;
 }
 
 public int[] getMarioState()

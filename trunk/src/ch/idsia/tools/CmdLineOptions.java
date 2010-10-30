@@ -218,6 +218,6 @@ public Point getMarioInitialPos()
 
 public void reset()
 {
-
+    // TODO: reset to defaults fix issue 11
 }
 }

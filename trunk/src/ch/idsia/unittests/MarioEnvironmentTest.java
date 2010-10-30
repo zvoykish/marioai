@@ -248,7 +248,6 @@ public void testMarioReceptiveFieldSizeW8H6_vis() throws Exception
         int[] pos = basicTask.getEnvironment().getMarioReceptiveFieldCenter();
         assertEquals(4, pos[0]);
         assertEquals(3, pos[1]);
-
     }
 }
 
