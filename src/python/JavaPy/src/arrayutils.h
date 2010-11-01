@@ -150,7 +150,7 @@ To convertPythonArrayToJavaArray (JNIEnv* env, From* array, char type, unsigned 
 
     To ret = newJavaArrayByType<To>(env, type, size);
     if (ret == NULL) {
-        std::cerr << "\nC++: ERROR while creating int array in convertCppArrayTojbooleanArray: array is NULL\n";
+        std::cerr << "\nC++: ERROR while creating int array in convertPythonArrayToJavaArray: array is NULL\n";
         std::cerr.flush();
         return NULL;
     }

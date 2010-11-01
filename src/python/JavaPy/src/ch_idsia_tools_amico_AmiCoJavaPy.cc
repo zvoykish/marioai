@@ -24,7 +24,7 @@ PyObject* mainModule;
 const char* agentName;
 
 JNIEXPORT jint JNICALL
-Java_ch_idsia_tools_amico_JavaPy_initModule(JNIEnv *env,
+Java_ch_idsia_tools_amico_JavaPy_initModule(JNIEnv* env,
                                             jobject obj,
                                             jstring moduleNameJ)
 {
@@ -52,8 +52,8 @@ Java_ch_idsia_tools_amico_JavaPy_initModule(JNIEnv *env,
     return SUCCESS;
 }
 
-JNIEXPORT jintArray JNICALL
-Java_ch_idsia_tools_amico_JavaPy_integrateObservation(JNIEnv *env,
+JNIEXPORT void JNICALL
+Java_ch_idsia_tools_amico_JavaPy_integrateObservation(JNIEnv* env,
                                                       jobject obj,
                                                       jintArray squashedObservation,
                                                       jintArray squashedEnemies,
@@ -67,32 +67,40 @@ Java_ch_idsia_tools_amico_JavaPy_integrateObservation(JNIEnv *env,
     PyObject* enPos = convertJavaArrayToPythonArray<jfloatArray, jfloat>(env, enemiesPos, 'F');
     PyObject* mState = convertJavaArrayToPythonArray<jintArray, jint>(env, marioState, 'I');
     PyObject* res = PyObject_CallMethod(mainModule, "integrateObservation", "((items)(items)(items)(items)(items))", sqObs, sqEn, mPos, enPos, mState);
-    PyObject* actions = PyObject_CallMethod(mainModule, "getAction", "()");
-    if (actions == NULL)
-        std::cout << AMICO_ERROR << "Actions is NULL!" << std::endl;
-    
-    return actions;
 }
 
 JNIEXPORT jstring JNICALL
-Java_ch_idsia_tools_amico_AmiCoJavaPy_getName(JNIEnv *, jobject)
+Java_ch_idsia_tools_amico_AmiCoJavaPy_getName(JNIEnv* env, jobject obj)
 {
-    return NULL;
+    PyObject* res = PyObject_CallMethod(mainModule, "getName", "()");
+    const char* str = PyString_AsString(res);
+    return env->NewStringUTF(str);
 }
 
 JNIEXPORT jintArray JNICALL
-Java_ch_idsia_tools_amico_AmiCoJavaPy_getAction(JNIEnv *, jobject)
+Java_ch_idsia_tools_amico_AmiCoJavaPy_getAction(JNIEnv* env, jobject obj)
 {
-    return NULL;
-}
+    PyObject* res = PyObject_CallMethod(mainModule, "getAction", "()");
 
-JNIEXPORT void JNICALL
-Java_ch_idsia_tools_amico_AmiCoJavaPy_giveIntermediateReward(JNIEnv *, jobject, jfloat)
-{
-}
-
-JNIEXPORT void JNICALL
-Java_ch_idsia_tools_amico_AmiCoJavaPy_reset(JNIEnv *, jobject)
-{
+    unsigned size = (unsigned)PyTuple_Size(res);
+    int* ar = new int[size];
+    for (int i = 0; i < size; i++)
+    {
+        ar[i] = PyInt_AsLong(PyTuple_GetItem(res, i));
+    }
     
+    jintArray array = convertPythonArrayToJavaArray<int, jintArray, jint>(env, ar, 'I', (unsigned)PyTuple_Size(res));
+    return array;
+}
+
+JNIEXPORT void JNICALL
+Java_ch_idsia_tools_amico_AmiCoJavaPy_giveIntermediateReward(JNIEnv* env, jobject obj, jfloat intermediateReward)
+{
+    PyObject_CallMethod(mainModule, "giveIntermediateReward", "(d)", (double) intermediateReward);
+}
+
+JNIEXPORT void JNICALL
+Java_ch_idsia_tools_amico_AmiCoJavaPy_reset(JNIEnv* env, jobject obj)
+{
+    PyObject_CallMethod(mainModule, "reset", "()");
 }
