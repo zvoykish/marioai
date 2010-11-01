@@ -1,7 +1,7 @@
 package ch.idsia.agents;
 
 import ch.idsia.benchmark.mario.environments.Environment;
-import ch.idsia.tools.amico.JavaPy;
+import ch.idsia.tools.amico.AmiCoJavaPy;
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,60 +12,32 @@ import ch.idsia.tools.amico.JavaPy;
  */
 public class AmiCoAgent implements Agent
 {
-    static JavaPy javaCallsPython = null;
+    static AmiCoJavaPy amicoJavaPy = null;
     private final String moduleName;
-    private final String agentName;
     private Environment env;
 
-    public AmiCoAgent(String amicoModuleName, String amicoAgentName)
+    public AmiCoAgent(String amicoModuleName)
     {
-        this.moduleName = amicoModuleName;
-        this.agentName = amicoAgentName;
+        this.moduleName = amicoModuleName.substring(0, amicoModuleName.indexOf(".py"));
         this.reset();
     }
 
+    @Deprecated
     public void integrateObservation(int[] serializedLevelSceneObservationZ, int[] serializedEnemiesObservationZ, float[] marioFloatPos, float[] enemiesFloatPos, int[] marioState)
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+        amicoJavaPy.integrateObservation(serializedLevelSceneObservationZ, serializedEnemiesObservationZ, marioFloatPos, enemiesFloatPos, marioState);
     }
 
     public boolean[] getAction()
-    {
-        return this.getAction(this.env);
-    }
-
-    public void integrateObservation(Environment environment)
-    {
-        this.env = environment;
-    }
-
-    public void giveIntermediateReward(float intermediateReward)
-    {
-
-    }
-
-    public void reset()
-    {
-        if (javaCallsPython == null)
-        {
-            System.out.println("Java: Initialize AmiCo");
-            javaCallsPython = new JavaPy(moduleName, agentName);
-        } else
-        {
-            System.out.println("Java: AmiCo is already initialized");
-        }
-    }
-
-    public boolean[] getAction(Environment observation)
     {
         int ZLevelScene = 1;
         int ZLevelEnemies = 0;
         // Default hardcoded values for ZLevels used by now
         // Will use extra values from int[] action in future to tailor the representation of levels
-        byte[][] levelScene = observation.getLevelSceneObservationZ(ZLevelScene);
-        byte[][] enemies = observation.getEnemiesObservationZ(ZLevelEnemies);
-        int rows = observation.getReceptiveFieldHeight();
-        int cols = observation.getReceptiveFieldWidth();
+        byte[][] levelScene = env.getLevelSceneObservationZ(ZLevelScene);
+        byte[][] enemies = env.getEnemiesObservationZ(ZLevelEnemies);
+        int rows = env.getReceptiveFieldHeight();
+        int cols = env.getReceptiveFieldWidth();
         int[] squashedLevelScene = new int[rows * cols];
         int[] squashedEnemies = new int[enemies.length * enemies[0].length];
 
@@ -75,24 +47,13 @@ public class AmiCoAgent implements Agent
             squashedLevelScene[i] = levelScene[i / cols][i % rows];
             squashedEnemies[i] = enemies[i / cols][i % rows];
         }
-        float[] marioPos = observation.getMarioFloatPos();
-        float[] enemiesPos = observation.getEnemiesFloatPos();
-        int[] marioState = observation.getMarioState();
-//        int[] marioState = new int[]{
-//                observation.getMarioStatus(),
-//                observation.getMarioMode(),
-//                observation.isMarioOnGround() ? 1 : 0,
-//                observation.isMarioAbleToJump() ? 1 : 0,
-//                observation.isMarioAbleToShoot() ? 1 : 0,
-//                observation.isMarioCarrying() ? 1 : 0,
-//                observation.getKillsTotal(),
-//                observation.getKillsByFire(),
-//                observation.getKillsByStomp(),
-//                observation.getKillsByStomp(),
-//                observation.getKillsByShell()
-//        };
+        float[] marioPos = env.getMarioFloatPos();
+        float[] enemiesPos = env.getEnemiesFloatPos();
+        int[] marioState = env.getMarioState();
 
-        int[] action = javaCallsPython.getAction(squashedLevelScene, squashedEnemies, marioPos, enemiesPos, marioState);
+        amicoJavaPy.integrateObservation(squashedLevelScene, squashedEnemies, marioPos, enemiesPos, marioState);
+
+        int[] action = amicoJavaPy.getAction();
 
         boolean[] ret = new boolean[action.length];
         for (int i = 0; i < action.length; ++i)
@@ -100,13 +61,40 @@ public class AmiCoAgent implements Agent
         return ret;
     }
 
+    public void integrateObservation(Environment environment)
+    {
+        this.env = environment;
+    }
+
+    public void giveIntermediateReward(float intermediateReward)
+    {
+        amicoJavaPy.giveIntermediateReward(intermediateReward);
+    }
+
+    public void reset()
+    {
+        if (amicoJavaPy == null)
+        {
+            System.out.println("Java: Initialize AmiCo");
+            amicoJavaPy = new AmiCoJavaPy(moduleName);
+            if (amicoJavaPy != null)
+                System.out.println("Java: Initialize AmiCo");
+            else
+                throw new Error("AmiCoJavaPy not initialized");
+        } else
+        {
+            amicoJavaPy.reset();
+//            System.out.println("Java: AmiCo is already initialized");
+        }
+    }
+
     public String getName()
     {
-        return this.agentName;
+        return amicoJavaPy.getName();
     }
 
     public void setName(String name)
     {
-        throw new Error("AmiCo agent name must be set only via constructor");
+        throw new Error("AmiCo agent name could not be changed");
     }
 }

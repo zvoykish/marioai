@@ -5,25 +5,27 @@ package ch.idsia.tools.amico;
  * User: Sergey Karakovskiy, sergey at idsia dot ch
  * Date: Feb 18, 2010
  * Time: 6:43:16 PM
- * Package: PACKAGE_NAME
+ * Package: ch.idsia.tools.amico
  */
-public class JavaPy
+public class AmiCoJavaPy
 {
-    public JavaPy(String moduleName, String agentName)
+    public AmiCoJavaPy(String moduleName)
     {
-//        System.out.println("Constructor");
         //TODO: add check for successful initialization
         this.setModuleName(moduleName);
-        this.setAgentName(agentName);
-        System.out.println("Java: agentName = " + agentName);
     }
 
     public native int setModuleName(String moduleName);
 
-    public native int setAgentName(String agentName);
+    public native String getName();
 
-    public native int[] getAction(int[] squashedObservation, int[] squashedEnemies,
-                                  float[] marioPos, float[] enemiesPos, int[] marioState);
+    public native void integrateObservation(int[] squashedObservation, int[] squashedEnemies, float[] marioPos, float[] enemiesPos, int[] marioState);
+
+    public native int[] getAction();
+
+    public native void giveIntermediateReward(final float intermediateReward);
+
+    public native void reset();
 
     static
     {
