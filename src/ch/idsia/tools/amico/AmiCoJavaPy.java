@@ -11,11 +11,15 @@ public class AmiCoJavaPy
 {
     public AmiCoJavaPy(String moduleName)
     {
-        //TODO: add check for successful initialization
-        this.setModuleName(moduleName);
+        int res = this.initModule(moduleName);
+        if (res == 0)
+        {
+            System.out.println("Java: Python module initialized successfully");
+        } else
+            throw new Error("Java: Python module initialization failed");
     }
 
-    public native int setModuleName(String moduleName);
+    public native int initModule(String moduleName);
 
     public native String getName();
 
