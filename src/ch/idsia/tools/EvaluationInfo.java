@@ -230,8 +230,7 @@ public EvaluationInfo clone()
 {
     try
     {
-        EvaluationInfo ret = (EvaluationInfo) super.clone();
-        return ret;
+        return (EvaluationInfo) super.clone();
     }
     catch (CloneNotSupportedException e)
     {
