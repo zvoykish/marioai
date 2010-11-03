@@ -21,7 +21,7 @@ import java.io.IOException;
 public class ReplayTask implements Task
 {
 protected final static Environment environment = MarioEnvironment.getInstance();
-private Agent agent;
+private ReplayAgent agent;
 private String name = getClass().getSimpleName();
 private Replayer replayer;
 
@@ -65,11 +65,6 @@ public float[] evaluate(final Agent controller)
 public void setOptions(final CmdLineOptions options)
 {}
 
-public CmdLineOptions getOptions()
-{
-    return null;
-}
-
 public void doEpisodes(final int amount, final boolean verbose)
 {}
 
@@ -81,13 +76,14 @@ public void startReplay()
         {
             replayer.openFile("options");
             String strOptions = (String) replayer.readObject();
-            CmdLineOptions options = new CmdLineOptions(strOptions);
+            CmdLineOptions options = new CmdLineOptions(strOptions); //TODO: setArgs
+            //TODO: reset; resetAndSetArgs;
             options.setVisualization(true);
             options.setRecordFile("off");
-            options.setAgent(new ReplayAgent(options.getAgent().getName()));
-            agent = options.getAgent();
+            agent = new ReplayAgent(options.getAgent().getName());
+            options.setAgent(agent);
             agent.reset();
-            ((ReplayAgent) agent).setReplayer(replayer);
+            agent.setReplayer(replayer);
 
             environment.setReplayer(replayer);
             environment.reset(options);

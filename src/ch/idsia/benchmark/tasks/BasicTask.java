@@ -75,11 +75,6 @@ public void setOptions(CmdLineOptions options)
     this.options = options;
 }
 
-public CmdLineOptions getOptions()
-{
-    return options;
-}
-
 public void doEpisodes(int amount, boolean verbose)
 {
     for (int i = 0; i < amount; ++i)

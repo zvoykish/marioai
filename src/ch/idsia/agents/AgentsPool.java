@@ -32,7 +32,10 @@ public final class AgentsPool
         Agent agent;
         try
         {
-            agent = (Agent) Class.forName(name).newInstance();
+            if (name.endsWith(".py"))
+                agent = new AmiCoAgent(name);
+            else
+                agent = (Agent) Class.forName(name).newInstance();
         }
         catch (ClassNotFoundException e)
         {

@@ -95,6 +95,6 @@ public class AmiCoAgent implements Agent
 
     public void setName(String name)
     {
-        throw new Error("AmiCo agent name could not be changed");
+        throw new Error("AmiCo agent name can not be changed");
     }
 }
