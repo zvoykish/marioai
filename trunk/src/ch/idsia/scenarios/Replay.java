@@ -27,7 +27,6 @@ Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 0
     replayTask.startReplay();
     // TODO: output evaluationInfo as in BasicTask
     System.out.println(replayTask.getEnvironment().getEvaluationInfoAsString());
-    // TODO: Unit test: compare with original fitness and evaluationInfo. play, store evaluation info string, replay, compare obtained evaluation info string 
     System.exit(0);
 }
 }

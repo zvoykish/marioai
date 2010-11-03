@@ -12,7 +12,7 @@
 #include <iostream>
 
 static std::string AMICO_WARNING = "[AmiCo Warning] : ";
-static std::string AMICO_ERROR = "[AmiCo Warning] : ";
+static std::string AMICO_ERROR = "[AmiCo Error] : ";
 static std::string AMICO_INFO = "[AmiCo Info] : ";
 static std::string AMICO_EXCEPTION = "[AmiCo Exception] : ";
 
@@ -24,7 +24,7 @@ PyObject* mainModule;
 const char* agentName;
 
 JNIEXPORT jint JNICALL
-Java_ch_idsia_tools_amico_JavaPy_initModule(JNIEnv* env,
+Java_ch_idsia_tools_amico_AmiCoJavaPy_initModule(JNIEnv* env,
                                             jobject obj,
                                             jstring moduleNameJ)
 {
@@ -40,11 +40,20 @@ Java_ch_idsia_tools_amico_JavaPy_initModule(JNIEnv* env,
     }
 
     const char* moduleName = (env)->GetStringUTFChars(moduleNameJ, NULL);
-    mainModule = PyImport_ImportModule(moduleName);
-    if (mainModule != 0)
+    std::cerr << moduleName << std::endl;
+    PyObject* pyMod = PyString_FromString(moduleName);
+//    mainModule = PyImport_Import(pyMod);
+    mainModule = PyImport_ImportModule("__main__");
+    std::cerr << "something done" << std::endl;
+    PyObject* pp = PyImport_Import(pyMod);
+    Py_DECREF(pyMod);
+//    PyRun_SimpleString("import sys");
+//    PyRun_SimpleString("import ctypes");
+    if (pp != 0)
         std::cout << AMICO_INFO << "Main module has been loaded successfuly" << std::endl;
     else
     {
+//        Py_Finalize();
         std::cout << AMICO_ERROR << "Main module had not been loaded successfuly. Details:" << std::endl;
         PyErr_Print();
         return ERROR_PYTHON_IS_NOT_INITIALIZED;
@@ -53,7 +62,7 @@ Java_ch_idsia_tools_amico_JavaPy_initModule(JNIEnv* env,
 }
 
 JNIEXPORT void JNICALL
-Java_ch_idsia_tools_amico_JavaPy_integrateObservation(JNIEnv* env,
+Java_ch_idsia_tools_amico_AmiCoJavaPy_integrateObservation(JNIEnv* env,
                                                       jobject obj,
                                                       jintArray squashedObservation,
                                                       jintArray squashedEnemies,

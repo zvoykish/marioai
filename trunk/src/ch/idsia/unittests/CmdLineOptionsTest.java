@@ -88,6 +88,7 @@ public void testSetArgs() throws Exception
             " -le 1111111111" +
             " -lf off";
     cmdLineOptions.setArgs(args);
+    assertEquals(cmdLineOptions.getAgent().getName(), "-ag ch.idsia.agents.controllers.human.HumanKeyboardAgent");
     // TODO:TASK:[M] test all cases
 }
 

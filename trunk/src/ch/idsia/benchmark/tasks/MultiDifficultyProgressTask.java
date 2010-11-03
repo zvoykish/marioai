@@ -57,11 +57,6 @@ public void setOptions(CmdLineOptions options)
     this.options = options;
 }
 
-public CmdLineOptions getOptions()
-{
-    return options;
-}
-
 public void doEpisodes(int amount, boolean verbose)
 {
 

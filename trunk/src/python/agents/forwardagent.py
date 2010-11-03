@@ -28,6 +28,8 @@ class ForwardAgent(MarioAgent):
     receptiveFieldHeight = None
     receptiveFieldCenterX = None
     receptiveFieldCentery = None
+    
+    agentName = "AmiCo Forward Agent"
 
 
     def reset(self):
@@ -55,8 +57,10 @@ class ForwardAgent(MarioAgent):
         return self.levelScene[x][y]
         
     def _dangerOfGap(self):
-        fromX = self.receptiveFieldWidth / 2;
-        fromY = self.receptiveFieldHeight / 2;
+        fromX = self.levelScene.shape[0] / 2
+        fromY = self.levelScene.shape[1] / 2
+        self.receptiveFieldCenterX = fromX + 1
+        self.receptiveFieldCenterY = fromY + 1
 
         if (fromX > 3):
             fromX -= 2;
@@ -73,6 +77,8 @@ class ForwardAgent(MarioAgent):
                 return True
         return False
 
+    def giveIntermediateReward(self):
+	pass
 
     def _a2(self):
         """ Interesting, sometimes very useful behaviour which might prevent falling down into a gap!
@@ -160,6 +166,8 @@ class ForwardAgent(MarioAgent):
         t = tuple(self.action.tolist())
         return t
 
+    def getName(self):
+	return agentName
 
     def integrateObservation(self, squashedObservation, squashedEnemies, marioPos, enemiesPos, marioState):
         """This method stores the observation inside the agent"""
