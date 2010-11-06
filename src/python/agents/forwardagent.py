@@ -3,6 +3,7 @@ __author__ = "Sergey Karakovskiy, sergey at idsia fullstop ch"
 __date__ = "$May 1, 2009 2:46:34 AM$"
 
 from marioagent import MarioAgent
+import numpy
 
 class ForwardAgent(MarioAgent):
     """ In fact the Python twin of the
@@ -40,18 +41,18 @@ class ForwardAgent(MarioAgent):
         """Constructor"""
         self.trueJumpCounter = 0
         self.trueSpeedCounter = 0
-        self.action = numpy.zeros(5, int)
+        self.action = [0, 0, 0, 0, 0, 0]
         self.action[1] = 1
         self.actionStr = ""
 
     def getReceptiveFieldCellValue(self, x, y):
-	if (x < 0 or x >= self.levelScene.shape[0] or y < 0 or y >= self.levelScene.shape[1]):
+	if (x < 0 or x >= self.receptiveFieldCenterX or y < 0 or y >= self.receptiveFieldCenterY):
             return 0
         return self.levelScene[x][y]
         
     def _dangerOfGap(self):
-        fromX = self.levelScene.shape[0] / 2
-        fromY = self.levelScene.shape[1] / 2
+        fromX = self.receptiveFieldCenterX #self.levelScene.shape[0] / 2
+        fromY = self.receptiveFieldCenterY #self.levelScene.shape[1] / 2
         self.receptiveFieldCenterX = fromX + 1
         self.receptiveFieldCenterY = fromY + 1
 
@@ -88,7 +89,7 @@ class ForwardAgent(MarioAgent):
 #                % (self.getReceptiveFieldCellValue(self.receptiveFieldCenterX + 2, self.receptiveFieldCenterY + 2), \
 #                self.getReceptiveFieldCellValue(self.receptiveFieldCenterX + 2, self.receptiveFieldCenterY + 3), self.getReceptiveFieldCellValue(self.receptiveFieldCenterX + 2, self.receptiveFieldCenterY + 3), self.trueJumpCounter)
 
-        a = numpy.zeros(5, int)
+        a = [0, 0, 0, 0, 0, 0]
         a[1] = 1
 
         danger = self._dangerOfGap()
@@ -156,11 +157,12 @@ class ForwardAgent(MarioAgent):
 
         # print "returning from getAction: ", self.action 
         # print "returning from getAction: ", self.action.tolist()
-        t = tuple(self.action.tolist())
+        t = tuple(self.action) #tuple(self.action.tolist())
+	print "From python:",t
         return t
 
     def getName(self):
-	return agentName
+	return self.agentName
 
     def integrateObservation(self, squashedObservation, squashedEnemies, marioPos, enemiesPos, marioState):
         """This method stores the observation inside the agent"""
@@ -169,23 +171,30 @@ class ForwardAgent(MarioAgent):
         #print "Py: got observation::: marioPos: \n", marioPos
         #print "Py: got observation::: enemiesPos: \n", enemiesPos
         #print "Py: got observation::: marioState: \n", marioState
-        
+                
         row = marioState[11]
         col = marioState[12]
         levelScene=[]
+        enemiesObservation=[]
         
         for i in range(row):
 	  levelScene.append(squashedObservation[i*col:i*col+col])
+	  
+	print levelScene
 	    
         for i in range(row):
-	  levelScene.append(squashedEnemies[i*col:i*col+col])
+	  enemiesObservation.append(squashedEnemies[i*col:i*col+col])
         
         self.marioFloats = marioPos
         self.enemiesFloats = enemiesPos
         self.mayMarioJump = marioState[3]
         self.isMarioOnGround = marioState[2]
-        self.levelScene = levelScene
         self.marioState = marioState[1]
+        self.levelScene = levelScene
+        self.receptiveFieldWidth = marioState[11]
+        self.receptiveFieldHeight = marioState[12]
+        self.receptiveFieldCenterX = marioState[13]
+        self.receptiveFieldCenterY = marioState[14]
         #self.printLevelScene()
 
     def printLevelScene(self):
