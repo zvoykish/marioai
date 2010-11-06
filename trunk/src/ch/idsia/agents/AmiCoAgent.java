@@ -14,11 +14,19 @@ public class AmiCoAgent implements Agent
 {
     static AmiCoJavaPy amicoJavaPy = null;
     private final String moduleName;
+    private final String className;
     private Environment env;
 
     public AmiCoAgent(String amicoModuleName)
     {
-        this.moduleName = amicoModuleName.substring(0, amicoModuleName.indexOf(".py"));
+        //xxxxx.xxxx.xxx.className.py
+        //tmp contains all the string except .py
+        String tmp = amicoModuleName.substring(0, amicoModuleName.lastIndexOf(".py"));
+        int lastPoint = tmp.lastIndexOf(".");
+        //className
+        this.className = tmp.substring(lastPoint + 1);
+        //xxxxx.xxxx.xxx
+        this.moduleName = tmp.substring(0, lastPoint);
         this.reset();
     }
 
@@ -76,7 +84,7 @@ public class AmiCoAgent implements Agent
         if (amicoJavaPy == null)
         {
             System.out.println("Java: Initialize AmiCo");
-            amicoJavaPy = new AmiCoJavaPy(moduleName);
+            amicoJavaPy = new AmiCoJavaPy(moduleName, className);
             if (amicoJavaPy != null)
                 System.out.println("Java: Initialize AmiCo");
             else
