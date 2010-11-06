@@ -62,11 +62,13 @@ Java_ch_idsia_tools_amico_AmiCoJavaPy_initModule(JNIEnv* env,
         PyErr_Print();
         return ERROR_PYTHON_IS_NOT_INITIALIZED;
     }
+        PyErr_Print();
 
     std::cerr << moduleName << std::endl;
     std::cerr << className << std::endl;
 
     agentClass = PyObject_GetAttrString(mainModule, className);
+        PyErr_Print();
 //    Py_DECREF(mainModule);
 
     if (agentClass != NULL)
@@ -132,14 +134,15 @@ Java_ch_idsia_tools_amico_AmiCoJavaPy_integrateObservation(JNIEnv* env,
     PyObject* enPos = convertJavaArrayToPythonArray<jfloatArray, jfloat>(env, enemiesPos, 'F');
     PyObject* mState = convertJavaArrayToPythonArray<jintArray, jint>(env, marioState, 'I');
 
-        PyErr_Print();
-    PyObject* args = Py_BuildValue("((items)(items)(items)(items)(items))", sqObs, sqEn, mPos, enPos, mState);
-        PyErr_Print();
-    PyObject* res = PyEval_CallObject(integrateObservationMethod, args);
-        PyErr_Print();
-    Py_DECREF(args);
-        PyErr_Print();
-//    PyObject* res = PyObject_CallMethod(mainModule, "integrateObservation", "((items)(items)(items)(items)(items))", sqObs, sqEn, mPos, enPos, mState);
+    PyObject* obs = PyTuple_New(5);
+    PyTuple_SET_ITEM(obs, (Py_ssize_t)0, sqObs);
+    PyTuple_SET_ITEM(obs, (Py_ssize_t)1, sqEn);
+    PyTuple_SET_ITEM(obs, (Py_ssize_t)2, mPos);
+    PyTuple_SET_ITEM(obs, (Py_ssize_t)3, enPos);
+    PyTuple_SET_ITEM(obs, (Py_ssize_t)4, mState);
+
+    PyObject* res = PyEval_CallObject(integrateObservationMethod, obs);
+    Py_DECREF(obs);
 }
 
 JNIEXPORT jstring JNICALL
@@ -168,21 +171,18 @@ JNIEXPORT jintArray JNICALL
 Java_ch_idsia_tools_amico_AmiCoJavaPy_getAction(JNIEnv* env, jobject obj)
 {
     PyObject* args = Py_BuildValue("()");
-    std::cerr << "here" << std::endl; std::cerr.flush();
     PyObject* res = PyEval_CallObject(getActionMethod, args);
-    std::cerr << "here" << std::endl; std::cerr.flush();
     Py_DECREF(args);
 
-    std::cerr << "here" << std::endl; std::cerr.flush();
-//    if (!PyTuple_Check(res))
-//    {
-//        std::cerr << "here" << std::endl; std::cerr.flush();
-//        std::cerr << AMICO_ERROR << "Object return by getAction method is not a tuple" << std::endl; std::cerr.flush();
-//        return NULL;
-//    }
+    if (!PyTuple_Check(res))
+    {
+        std::cerr << AMICO_ERROR << "Object return by getAction method is not a tuple" << std::endl; std::cerr.flush();
+        return NULL;
+    }
 
     std::cerr << "here" << std::endl; std::cerr.flush();
-    int size = (int)PyTuple_Size(res);
+    int size = 6;//(int)PyTuple_Size(res);
+    PyErr_Print();
     std::cerr << "here" << std::endl; std::cerr.flush();
     int* ar = new int[size];
     for (int i = 0; i < size; i++)
