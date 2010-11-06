@@ -3,7 +3,6 @@ __author__ = "Sergey Karakovskiy, sergey at idsia fullstop ch"
 __date__ = "$May 1, 2009 2:46:34 AM$"
 
 from marioagent import MarioAgent
-import numpy
 
 class ForwardAgent(MarioAgent):
     """ In fact the Python twin of the
@@ -51,8 +50,8 @@ class ForwardAgent(MarioAgent):
         return self.levelScene[x][y]
         
     def _dangerOfGap(self):
-        fromX = self.receptiveFieldCenterX #self.levelScene.shape[0] / 2
-        fromY = self.receptiveFieldCenterY #self.levelScene.shape[1] / 2
+        fromX = self.receptiveFieldCenterX
+        fromY = self.receptiveFieldCenterY
         self.receptiveFieldCenterX = fromX + 1
         self.receptiveFieldCenterY = fromY + 1
 
@@ -71,7 +70,7 @@ class ForwardAgent(MarioAgent):
                 return True
         return False
 
-    def giveIntermediateReward(self):
+    def giveIntermediateReward(self, reward):
 	pass
 
     def _a2(self):
@@ -154,12 +153,7 @@ class ForwardAgent(MarioAgent):
             self.action[self.KEY_JUMP] = 0;
 
         self.action[self.KEY_SPEED] = danger
-
-        # print "returning from getAction: ", self.action 
-        # print "returning from getAction: ", self.action.tolist()
-        t = tuple(self.action) #tuple(self.action.tolist())
-	print "From python:",t
-        return t
+        return tuple(self.action)
 
     def getName(self):
 	return self.agentName
@@ -179,8 +173,6 @@ class ForwardAgent(MarioAgent):
         
         for i in range(row):
 	  levelScene.append(squashedObservation[i*col:i*col+col])
-	  
-	print levelScene
 	    
         for i in range(row):
 	  enemiesObservation.append(squashedEnemies[i*col:i*col+col])

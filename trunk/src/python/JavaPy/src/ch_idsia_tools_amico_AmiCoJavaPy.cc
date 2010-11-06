@@ -1,8 +1,12 @@
-/* 
- * File:   ch_idsia_tools_amico_JavaPy.cc
- * Author: nikolay
+/**
+ * @file	ch_idsia_tools_amico_AmiCoJavaPy.cc
+ * @brief	JavaCallsPython main file
  *
- * Created on October 24, 2010, 3:49 PM
+ * @author Sergey Karakovskiy, sergey at idsia.ch ; Nikolay Sohryakov, Nikolay.Sohryakov at gmail.com
+ *
+ * This is a customized Mario AI specific version of AmiCo.
+ * It supports the JavaPy direction. In this set up Mario AI benchmark is used
+ * as active entity.
  */
 
 #include <Python.h>
@@ -18,6 +22,7 @@ static std::string AMICO_EXCEPTION = "[AmiCo Exception] : ";
 
 static int ERROR_PYTHON_IS_NOT_INITIALIZED = -1;
 static int ERROR_CLASS_NOT_FOUND = -2;
+static int ERROR_METHOD_NOT_FOUND = -3;
 static int SUCCESS = 0;
 
 PyObject* mainModule;
@@ -62,14 +67,9 @@ Java_ch_idsia_tools_amico_AmiCoJavaPy_initModule(JNIEnv* env,
         PyErr_Print();
         return ERROR_PYTHON_IS_NOT_INITIALIZED;
     }
-        PyErr_Print();
-
-    std::cerr << moduleName << std::endl;
-    std::cerr << className << std::endl;
 
     agentClass = PyObject_GetAttrString(mainModule, className);
-        PyErr_Print();
-//    Py_DECREF(mainModule);
+    Py_DECREF(mainModule);
 
     if (agentClass != NULL)
         std::cout << AMICO_INFO << "Class found successfully" << std::endl;
@@ -99,20 +99,34 @@ Java_ch_idsia_tools_amico_AmiCoJavaPy_initModule(JNIEnv* env,
     getActionMethod = PyObject_GetAttrString(classInstance, "getAction");
 
     if (getNameMethod == NULL)
-        std::cerr << "getNameMethod" << std::endl;
+    {
+        std::cerr << AMICO_EXCEPTION << "Method \"getName\" not found" << std::endl;
+        return ERROR_METHOD_NOT_FOUND;
+    }
 
     if (resetMethod == NULL)
-        std::cerr << "resetMethod" << std::endl;
+    {
+        std::cerr << AMICO_EXCEPTION << "Method \"reset\" not found" << std::endl;
+        return ERROR_METHOD_NOT_FOUND;
+    }
 
     if (giveIntermediateRewardMethod == NULL)
-        std::cerr << "getIntermediate" << std::endl;
+    {
+        std::cerr << AMICO_EXCEPTION << "Method \"giveIntermediateReward\" not found" << std::endl;
+        return ERROR_METHOD_NOT_FOUND;
+    }
 
     if (integrateObservationMethod == NULL)
-        std::cerr << "integrateObservation" << std::endl;
+    {
+        std::cerr << AMICO_EXCEPTION << "Method \"integrateObservation\" not found" << std::endl;
+        return ERROR_METHOD_NOT_FOUND;
+    }
 
     if (getActionMethod == NULL)
-        std::cerr << "getAction" << std::endl;
-
+    {
+        std::cerr << AMICO_EXCEPTION << "Method \"getAction\" not found" << std::endl;
+        return ERROR_METHOD_NOT_FOUND;
+    }
 
     Py_DECREF(agentClass);
 
@@ -140,6 +154,13 @@ Java_ch_idsia_tools_amico_AmiCoJavaPy_integrateObservation(JNIEnv* env,
     PyTuple_SET_ITEM(obs, (Py_ssize_t)2, mPos);
     PyTuple_SET_ITEM(obs, (Py_ssize_t)3, enPos);
     PyTuple_SET_ITEM(obs, (Py_ssize_t)4, mState);
+
+    if (obs == NULL)
+    {
+        std::cerr << AMICO_ERROR << "Can not create new Python tuple in \"integrateObservation\" method" << std::endl;
+        //TODO: perform Py_Finalize() to destroy Python environment? is it necessary here?
+        return;
+    }
 
     PyObject* res = PyEval_CallObject(integrateObservationMethod, obs);
     Py_DECREF(obs);
@@ -180,15 +201,10 @@ Java_ch_idsia_tools_amico_AmiCoJavaPy_getAction(JNIEnv* env, jobject obj)
         return NULL;
     }
 
-    std::cerr << "here" << std::endl; std::cerr.flush();
-    int size = 6;//(int)PyTuple_Size(res);
-    PyErr_Print();
-    std::cerr << "here" << std::endl; std::cerr.flush();
+    int size = 6;
     int* ar = new int[size];
     for (int i = 0; i < size; i++)
-    {
         ar[i] = PyInt_AsLong(PyTuple_GetItem(res, i));
-    }
     
     jintArray array = convertPythonArrayToJavaArray<int, jintArray, jint>(env, ar, 'I', (unsigned)PyTuple_Size(res));
     return array;
@@ -197,7 +213,12 @@ Java_ch_idsia_tools_amico_AmiCoJavaPy_getAction(JNIEnv* env, jobject obj)
 JNIEXPORT void JNICALL
 Java_ch_idsia_tools_amico_AmiCoJavaPy_giveIntermediateReward(JNIEnv* env, jobject obj, jfloat intermediateReward)
 {
-    //PyObject_CallMethod(mainModule, "giveIntermediateReward", "(d)", (double) intermediateReward);
+    PyObject* arg = PyFloat_FromDouble(intermediateReward);
+    PyObject* args = PyTuple_New(1);
+    PyTuple_SET_ITEM(args, (Py_ssize_t)0, arg);
+
+    PyEval_CallObject(giveIntermediateRewardMethod, args);
+    Py_DECREF(args);
 }
 
 JNIEXPORT void JNICALL
