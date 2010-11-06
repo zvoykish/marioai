@@ -9,9 +9,9 @@ package ch.idsia.tools.amico;
  */
 public class AmiCoJavaPy
 {
-    public AmiCoJavaPy(String moduleName)
+    public AmiCoJavaPy(String moduleName, String className)
     {
-        int res = this.initModule(moduleName);
+        int res = this.initModule(moduleName, className);
         if (res == 0)
         {
             System.out.println("Java: Python module initialized successfully");
@@ -19,7 +19,7 @@ public class AmiCoJavaPy
             throw new Error("Java: Python module initialization failed");
     }
 
-    public native int initModule(String moduleName);
+    public native int initModule(String moduleName, String className);
 
     public native String getName();
 

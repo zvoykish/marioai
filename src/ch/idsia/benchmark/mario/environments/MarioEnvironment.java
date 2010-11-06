@@ -74,7 +74,7 @@ public void reset(CmdLineOptions setUpOptions)
 //    if (!setUpOptions.getReplayOptions().equals(""))
 
     this.setAgent(setUpOptions.getAgent());
-    // TODO:TASK:[M] Arbitrary center of ego in Receptive Field
+    // TODO:TASK:[M] Arbitrary center of ego in Receptive Field. don't forget to change code in the LevelScene.getMarioState() method
     //  marioReceptiveFieldCenterX, default: getReceptiveFieldWidth() / 2
     // TODO : same for Y
 //    marioReceptiveFieldCenterPos[0] = setUpOptions.marioReceptiveFieldCenterX();

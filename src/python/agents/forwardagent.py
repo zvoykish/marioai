@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import numpy
 __author__ = "Sergey Karakovskiy, sergey at idsia fullstop ch"
 __date__ = "$May 1, 2009 2:46:34 AM$"
 
@@ -44,12 +43,6 @@ class ForwardAgent(MarioAgent):
         self.action = numpy.zeros(5, int)
         self.action[1] = 1
         self.actionStr = ""
-
-    def setReceptiveFieldInfo(self, info):
-        self.receptiveFieldWidth = info[0]
-        self.receptiveFieldHeight = info[1]
-        self.receptiveFieldCenterX = info[2]
-        self.receptiveFieldCenterY = info[3]
 
     def getReceptiveFieldCellValue(self, x, y):
 	if (x < 0 or x >= self.levelScene.shape[0] or y < 0 or y >= self.levelScene.shape[1]):
@@ -134,7 +127,7 @@ class ForwardAgent(MarioAgent):
         """
     	#print "M: mayJump: %s, onGround: %s, level[11,12]: %d, level[11,13]: %d, jc: %d" % (self.mayMarioJump, self.isMarioOnGround, self.levelScene[11,12], self.levelScene[11,13], self.trueJumpCounter)
     	if (self.isEpisodeOver):
-    	    return numpy.ones(5, int)
+    	    return (1, 1, 1, 1, 1, 1)
                
             #print "LevelScene: \n"
             #print self.levelScene
@@ -176,14 +169,17 @@ class ForwardAgent(MarioAgent):
         #print "Py: got observation::: marioPos: \n", marioPos
         #print "Py: got observation::: enemiesPos: \n", enemiesPos
         #print "Py: got observation::: marioState: \n", marioState
-        a = numpy.array(squashedObservation)
-        row = 19 #22
-        col = 19 #22
-        a.resize((row,col))
-        #print "\n a== \n", a
-        levelScene = a
-        enemiesObservation = numpy.array(squashedEnemies)
-        enemiesObservation.resize((row,col))
+        
+        row = marioState[11]
+        col = marioState[12]
+        levelScene=[]
+        
+        for i in range(row):
+	  levelScene.append(squashedObservation[i*col:i*col+col])
+	    
+        for i in range(row):
+	  levelScene.append(squashedEnemies[i*col:i*col+col])
+        
         self.marioFloats = marioPos
         self.enemiesFloats = enemiesPos
         self.mayMarioJump = marioState[3]

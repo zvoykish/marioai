@@ -13,7 +13,7 @@ extern "C" {
  * Signature: (Ljava/lang/String;)I
  */
 JNIEXPORT jint JNICALL Java_ch_idsia_tools_amico_AmiCoJavaPy_initModule
-  (JNIEnv *, jobject, jstring);
+  (JNIEnv *, jobject, jstring, jstring);
 
 /*
  * Class:     ch_idsia_tools_amico_AmiCoJavaPy

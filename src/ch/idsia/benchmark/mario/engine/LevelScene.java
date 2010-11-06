@@ -68,7 +68,7 @@ private byte[][] mergedZZ;      // memory is allocated in reset
 
 final private List<Float> enemiesFloatsList = new ArrayList<Float>();
 final private float[] marioFloatPos = new float[2];
-final private int[] marioState = new int[11];
+final private int[] marioState = new int[15];
 private int numberOfHiddenCoinsGained = 0;
 
 public String memo = "";
@@ -841,6 +841,12 @@ public int[] getMarioState()
     marioState[8] = this.getKillsByStomp();
     marioState[9] = this.getKillsByShell();
     marioState[10] = this.getTimeLeft();
+    marioState[11] = this.receptiveFieldWidth;
+    marioState[12] = this.receptiveFieldHeight;
+    //TODO: use SetUpOptions to access this fields when receptiveFieldCenter feature will be implemented
+    marioState[13] = this.receptiveFieldWidth/2;
+    //TODO: same for Y
+    marioState[14] = this.receptiveFieldHeight/2;
     return marioState;
 }
 
