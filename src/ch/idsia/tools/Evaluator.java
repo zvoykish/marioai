@@ -23,7 +23,7 @@ private List<EvaluationInfo> evaluationSummary = new ArrayList<EvaluationInfo>()
 
 //    private void evaluateServerMode()
 //    {
-//        Server server = new Server(evaluationOptions.getServerAgentPort(), Environment.numberOfObservationElements, Environment.numberOfButtons);
+//        Server server = new Server(evaluationOptions.getServerAgentPort(), Environment.numberOfObservationElements, Environment.numberOfKeys);
 //        evaluationOptions.setAgent(new ServerAgent(server));
 //
 //        Simulation simulator = new BasicSimulator(evaluationOptions.getSimulationOptionsCopy());

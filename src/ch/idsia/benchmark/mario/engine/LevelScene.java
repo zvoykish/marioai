@@ -17,7 +17,7 @@ import java.util.List;
 
 public final class LevelScene implements SpriteContext
 {
-public static final boolean[] defaultKeys = new boolean[Environment.numberOfButtons];
+public static final boolean[] defaultKeys = new boolean[Environment.numberOfKeys];
 public static final String[] keysStr = {"<<L ", "R>> ", "\\\\//", "JUMP", " RUN", "^UP^"};
 
 public static final int cellSize = 16;
@@ -844,9 +844,9 @@ public int[] getMarioState()
     marioState[11] = this.receptiveFieldWidth;
     marioState[12] = this.receptiveFieldHeight;
     //TODO: use SetUpOptions to access this fields when receptiveFieldCenter feature will be implemented
-    marioState[13] = this.receptiveFieldWidth/2;
+    marioState[13] = this.receptiveFieldWidth / 2;
     //TODO: same for Y
-    marioState[14] = this.receptiveFieldHeight/2;
+    marioState[14] = this.receptiveFieldHeight / 2;
     return marioState;
 }
 

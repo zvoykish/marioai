@@ -156,7 +156,7 @@ public void tick()
     msg = "";
     if (mario.keys != null)
     {
-        for (int i = 0; i < Environment.numberOfButtons; ++i)
+        for (int i = 0; i < Environment.numberOfKeys; ++i)
             msg += (mario.keys[i]) ? LevelScene.keysStr[i] : "    ";
     } else
         msg = "NULL";

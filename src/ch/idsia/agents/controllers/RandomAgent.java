@@ -14,36 +14,36 @@ import java.util.Random;
  */
 public class RandomAgent extends BasicMarioAIAgent implements Agent
 {
-    public RandomAgent()
+public RandomAgent()
+{
+    super("RandomAgent");
+    reset();
+}
+
+private Random R = null;
+
+public void reset()
+{
+    // Dummy reset, of course, but meet formalities!
+    R = new Random();
+}
+
+public boolean[] getAction()
+{
+    boolean[] ret = new boolean[Environment.numberOfKeys];
+
+    for (int i = 0; i < Environment.numberOfKeys; ++i)
     {
-        super("RandomAgent");
-        reset();
-    }
-
-    private Random R = null;
-
-    public void reset()
-    {
-        // Dummy reset, of course, but meet formalities!
-        R = new Random();
-    }
-
-    public boolean[] getAction()
-    {
-        boolean[] ret = new boolean[Environment.numberOfButtons];
-
-        for (int i = 0; i < Environment.numberOfButtons; ++i)
-        {
-            // Here the RandomAgent is encouraged to move more often to the Right and make long Jumps.
-            boolean toggleParticularAction = R.nextBoolean();
-            toggleParticularAction = (i == 0 && toggleParticularAction && R.nextBoolean()) ? R.nextBoolean() : toggleParticularAction;
-            toggleParticularAction = (i == 1 || i > 3 && !toggleParticularAction) ? R.nextBoolean() : toggleParticularAction;
-            toggleParticularAction = (i > 3 && !toggleParticularAction) ? R.nextBoolean() : toggleParticularAction;
+        // Here the RandomAgent is encouraged to move more often to the Right and make long Jumps.
+        boolean toggleParticularAction = R.nextBoolean();
+        toggleParticularAction = (i == 0 && toggleParticularAction && R.nextBoolean()) ? R.nextBoolean() : toggleParticularAction;
+        toggleParticularAction = (i == 1 || i > 3 && !toggleParticularAction) ? R.nextBoolean() : toggleParticularAction;
+        toggleParticularAction = (i > 3 && !toggleParticularAction) ? R.nextBoolean() : toggleParticularAction;
 //            toggleParticularAction = (i == 4 && !toggleParticularAction ) ? R.nextBoolean() :  toggleParticularAction;
-            ret[i] = toggleParticularAction;
-        }
-        if (ret[1])
-            ret[0] = false;
-        return ret;
+        ret[i] = toggleParticularAction;
     }
+    if (ret[1])
+        ret[0] = false;
+    return ret;
+}
 }
