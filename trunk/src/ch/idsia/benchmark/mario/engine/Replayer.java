@@ -73,10 +73,10 @@ public boolean[] readAction() throws IOException
     if (fis == null)
         openBufferedInputStream();
 
-    boolean[] buffer = new boolean[Environment.numberOfButtons];
+    boolean[] buffer = new boolean[Environment.numberOfKeys];
 //    int count = fis.read(buffer, 0, size);
     byte actions = (byte) fis.read();
-    for (int i = 0; i < Environment.numberOfButtons; i++)
+    for (int i = 0; i < Environment.numberOfKeys; i++)
     {
         if ((actions & (1 << i)) > 0)
             buffer[i] = true;

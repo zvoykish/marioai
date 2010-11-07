@@ -12,7 +12,7 @@ import ch.idsia.benchmark.mario.environments.Environment;
  */
 public class BasicMarioAIAgent implements Agent
 {
-protected boolean action[] = new boolean[Environment.numberOfButtons];
+protected boolean action[] = new boolean[Environment.numberOfKeys];
 protected String name = "Instance_of_BasicAIAgent._Change_this_name";
 
 /*final*/
@@ -57,7 +57,7 @@ public BasicMarioAIAgent(String s)
 
 public boolean[] getAction()
 {
-    return new boolean[Environment.numberOfButtons];
+    return new boolean[Environment.numberOfKeys];
 
 }
 
@@ -96,13 +96,13 @@ public void giveIntermediateReward(float intermediateReward)
 
 public void reset()
 {
-    action = new boolean[Environment.numberOfButtons];// Empty action
+    action = new boolean[Environment.numberOfKeys];// Empty action
 }
 
 @Deprecated
 public boolean[] getAction(Environment observation)
 {
-    return new boolean[Environment.numberOfButtons]; // Empty action
+    return new boolean[Environment.numberOfKeys]; // Empty action
 }
 
 public String getName() { return name; }

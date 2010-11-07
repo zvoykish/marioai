@@ -24,7 +24,7 @@ public ForwardAgent()
 
 public void reset()
 {
-    action = new boolean[Environment.numberOfButtons];
+    action = new boolean[Environment.numberOfKeys];
     action[Mario.KEY_RIGHT] = true;
     action[Mario.KEY_SPEED] = true;
     trueJumpCounter = 0;

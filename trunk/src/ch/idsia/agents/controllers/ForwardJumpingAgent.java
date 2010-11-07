@@ -14,22 +14,22 @@ import ch.idsia.benchmark.mario.environments.Environment;
 
 public class ForwardJumpingAgent extends BasicMarioAIAgent implements Agent
 {
-    public ForwardJumpingAgent()
-    {
-        super("ForwardJumpingAgent");
-        reset();
-    }
+public ForwardJumpingAgent()
+{
+    super("ForwardJumpingAgent");
+    reset();
+}
 
-    public boolean[] getAction()
-    {
-        action[Mario.KEY_SPEED] = action[Mario.KEY_JUMP] = isMarioAbleToJump || !isMarioOnGround;
-        return action;
-    }
+public boolean[] getAction()
+{
+    action[Mario.KEY_SPEED] = action[Mario.KEY_JUMP] = isMarioAbleToJump || !isMarioOnGround;
+    return action;
+}
 
-    public void reset()
-    {
-        action = new boolean[Environment.numberOfButtons];
-        action[Mario.KEY_RIGHT] = true;
-        action[Mario.KEY_SPEED] = true;
-    }
+public void reset()
+{
+    action = new boolean[Environment.numberOfKeys];
+    action[Mario.KEY_RIGHT] = true;
+    action[Mario.KEY_SPEED] = true;
+}
 }

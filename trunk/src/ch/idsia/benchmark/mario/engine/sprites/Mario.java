@@ -71,7 +71,7 @@ public int getMode()
 //    private static float GROUND_INERTIA = 0.89f;
 //    private static float AIR_INERTIA = 0.89f;
 
-public boolean[] keys = new boolean[Environment.numberOfButtons];
+public boolean[] keys = new boolean[Environment.numberOfKeys];
 public boolean[] cheatKeys;
 private float runTime;
 boolean wasOnGround = false;
