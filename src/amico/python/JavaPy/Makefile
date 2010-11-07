@@ -6,7 +6,7 @@ BUILDDIR = build
 OS = $(shell uname -s)
 CFLAGS = 
 INCLUDES = 
-LFLAGS = 
+LFLAGS =    
 LIBS = 
 MAIN = 
 
