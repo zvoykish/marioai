@@ -255,4 +255,4 @@ fi
 }
 
 detect_java_vm
-python "$1" "$2"
+amico.python "$1" "$2"
