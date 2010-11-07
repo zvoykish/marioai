@@ -53,5 +53,5 @@ cd "$OUT_DIR/$BUILD_DIR/"
 if [ "${OS}" = "Linux" ]; then
 	./AmiCoRunner.sh "$AGENT" "$CMD_LINE_OPTIONS"
 elif [ "${OS}" = "Darwin" ]; then
-	python "$AGENT" "$CMD_LINE_OPTIONS"
+	amico.python "$AGENT" "$CMD_LINE_OPTIONS"
 fi
