@@ -1,8 +1,8 @@
 #!/bin/bash
 
-MARIO_DIR="."
-OUT_DIR="."
-BUILD_DIR="AmiCoBuild"
+MARIO_DIR="../../../../bin"
+OUT_DIR="../../../../bin"
+BUILD_DIR="AmiCoBuild/PyJava"
 MAKE_OUT_DIR="./build"
 CMD_LINE_OPTIONS=
 AGENT=
@@ -40,7 +40,7 @@ if [ "$LIBRARY_FILE_NAME" = "" ]; then
 fi
 	
 mv "$MAKE_OUT_DIR/$LIBRARY_FILE_NAME" "$OUT_DIR/$BUILD_DIR/"
-rm "$MAKE_OUT_DIR"
+rm -rf "$MAKE_OUT_DIR"
 cp AmiCoRunner.sh "$OUT_DIR/$BUILD_DIR/"
 cp ../agents/*.py "$OUT_DIR/$BUILD_DIR/"
 cp -r "$MARIO_DIR/ch" "$OUT_DIR/$BUILD_DIR/"
@@ -53,5 +53,5 @@ cd "$OUT_DIR/$BUILD_DIR/"
 if [ "${OS}" = "Linux" ]; then
 	./AmiCoRunner.sh "$AGENT" "$CMD_LINE_OPTIONS"
 elif [ "${OS}" = "Darwin" ]; then
-	amico.python "$AGENT" "$CMD_LINE_OPTIONS"
+	python "$AGENT" "$CMD_LINE_OPTIONS"
 fi
