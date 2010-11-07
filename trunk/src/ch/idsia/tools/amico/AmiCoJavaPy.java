@@ -34,7 +34,7 @@ public native void reset();
 static
 {
     System.out.println("Java: loading AmiCo...");
-    System.load("/Users/Duke/Projects/MarioAI/trunk/src/python/JavaPy/build/libAmiCoJavaPy.dylib");
+    System.loadLibrary("AmiCoJavaPy");
     System.out.println("Java: AmiCo library has been successfully loaded!");
 }
 }
