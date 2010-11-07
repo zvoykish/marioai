@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import numpy
 __author__ = "Sergey Karakovskiy, sergey at idsia fullstop ch"
 __date__ = "$August 26, 2010 1:33:34 PM$"
 
@@ -22,7 +21,7 @@ class ForwardJumpingAgent(MarioAgent):
     marioState = None
 
     def reset(self):
-	self.action = numpy.zeros(5, int)
+	self.action = [0, 0, 0, 0, 0, 0]
 	self.action[1] = 1
 	self.action[self.KEY_SPEED] = 1
         self.isEpisodeOver = False
@@ -37,11 +36,11 @@ class ForwardJumpingAgent(MarioAgent):
         """
 	#print "M: mayJump: %s, onGround: %s, level[11,12]: %d, level[11,13]: %d, jc: %d" % (self.mayMarioJump, self.isMarioOnGround, self.levelScene[11,12], self.levelScene[11,13], self.trueJumpCounter)
 	if (self.isEpisodeOver):
-	    return numpy.ones(5, int)
+	    return (1, 1, 1, 1, 1, 1)
            
         self.action[self.KEY_SPEED] = self.action[self.KEY_JUMP] =  self.mayMarioJump or not self.isMarioOnGround;
 
-        t = tuple(self.action.tolist())
+        t = tuple(self.action)
         return t
 
     def integrateObservation(self, squashedObservation, squashedEnemies, marioPos, enemiesPos, marioState):
@@ -51,14 +50,14 @@ class ForwardJumpingAgent(MarioAgent):
         #print "Py: got observation::: marioPos: \n", marioPos
         #print "Py: got observation::: enemiesPos: \n", enemiesPos
         #print "Py: got observation::: marioState: \n", marioState
-        a = numpy.array(squashedObservation)
-        row = 19
-        col = 19
-        a.resize((row,col))
+        #a = numpy.array(squashedObservation)
+        #row = 19
+        #col = 19
+        #a.resize((row,col))
         #print "\n a== \n", a
-        levelScene = a
-        enemiesObservation = numpy.array(squashedEnemies)
-        enemiesObservation.resize((row,col))
+        #levelScene = a
+        #enemiesObservation = numpy.array(squashedEnemies)
+        #enemiesObservation.resize((row,col))
         self.marioFloats = marioPos
         self.enemiesFloats = enemiesPos
         self.mayMarioJump = marioState[3]

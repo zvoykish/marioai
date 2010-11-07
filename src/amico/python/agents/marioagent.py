@@ -7,14 +7,15 @@ class MarioAgent:
         Generally it will also learn from experience. It can interact directly with a Task.
     """
 
-    def integrateObservation(self, obs):
+    def integrateObservation(self, squashedObservation, squashedEnemies, marioPos, enemiesPos, marioState):
         raise "Not implemented"
 
     def getAction(self):
         raise "Not implemented"
 
-    def giveReward(self, reward):
+    def giveIntermediateReward(self, reward):
         pass
+      
     def _getName(self):
         if self._name is None:
             self._name = self.__class__.__name__

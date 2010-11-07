@@ -62,9 +62,9 @@ static jmethodID midGetMarioFloatPos;
 static jmethodID midGetEnemiesFloatPos;
 static jmethodID midGetMarioState;
 static jmethodID midPerformAction;
-static jmethodID midGetReceptiveFieldWidth;
-static jmethodID midGetReceptiveFieldHeight;
-static jmethodID midGetMarioReceptiveFieldCenter;
+//static jmethodID midGetReceptiveFieldWidth;
+//static jmethodID midGetReceptiveFieldHeight;
+//static jmethodID midGetMarioReceptiveFieldCenter;
 
 void initMarioAIBenchmark();
 /*
@@ -244,11 +244,12 @@ void initMarioAIBenchmark()
     midGetEnemiesFloatPos = getMethodIDSafe("getEnemiesFloatPos", "()[F");
     midGetMarioState = getMethodIDSafe("getMarioState", "()[I");
     midPerformAction = getMethodIDSafe("performAction", "([Z)V");
-    midGetReceptiveFieldWidth = getMethodIDSafe("getReceptiveFieldWidth", "()I");
-    midGetReceptiveFieldHeight = getMethodIDSafe("getReceptiveFieldHeight", "()I");
-    midGetMarioReceptiveFieldCenter = getMethodIDSafe("getMarioReceptiveFieldCenter", "()[I");
+    //midGetReceptiveFieldWidth = getMethodIDSafe("getReceptiveFieldWidth", "()I");
+    //midGetReceptiveFieldHeight = getMethodIDSafe("getReceptiveFieldHeight", "()I");
+    //midGetMarioReceptiveFieldCenter = getMethodIDSafe("getMarioReceptiveFieldCenter", "()[I");
 }
 
+/*
 PyObject* getReceptiveFieldInfo()
 {
     int width = env->CallIntMethod(obj, midGetReceptiveFieldWidth);
@@ -268,7 +269,7 @@ PyObject* getReceptiveFieldInfo()
 
     return res;
 }
-
+*/
 /**
  @brief Validates ID of the method
 
