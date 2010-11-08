@@ -1,5 +1,6 @@
 package ch.idsia.unittests;
 
+import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.ReplayerOptions;
@@ -227,5 +228,15 @@ public void testRecorderOptionsParser_TwoFiles()
     ReplayerOptions recOp = new ReplayerOptions("test;3:5;6:11,test2");
     assertEquals("test", recOp.getNextReplayFile());
     assertEquals("test2", recOp.getNextReplayFile());
+}
+
+@Test
+public void testScale2XEnabledOnStartup()
+{
+    CmdLineOptions cmdLineOptions = new CmdLineOptions("-z on");
+
+    BasicTask basicTask = new BasicTask(cmdLineOptions);
+    basicTask.reset(cmdLineOptions);
+    assertTrue(GlobalOptions.isScale2x);
 }
 }

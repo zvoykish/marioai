@@ -72,15 +72,17 @@ public void startReplay()
 {
     try
     {
+        agent = new ReplayAgent("Replay agent");
+        CmdLineOptions options = new CmdLineOptions();
         while (replayer.openNextReplayFile())
         {
             replayer.openFile("options");
             String strOptions = (String) replayer.readObject();
-            CmdLineOptions options = new CmdLineOptions(strOptions); //TODO: setArgs
+            options.setArgs(strOptions);
             //TODO: reset; resetAndSetArgs;
             options.setVisualization(true);
             options.setRecordFile("off");
-            agent = new ReplayAgent(options.getAgent().getName());
+            agent.setName(options.getAgent().getName());
             options.setAgent(agent);
             agent.reset();
             agent.setReplayer(replayer);
