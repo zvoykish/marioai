@@ -110,6 +110,9 @@ public static String getTimeStamp()
 
 public static void changeScale2x()
 {
+    if (marioVisualComponent == null)
+        return;
+    
     isScale2x = !isScale2x;
     marioVisualComponent.width *= isScale2x ? 2 : 0.5;
     marioVisualComponent.height *= isScale2x ? 2 : 0.5;

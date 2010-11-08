@@ -70,7 +70,8 @@ private static final String[] allowed = new String[]{
         "-zs",
         "-stop",
         "-s",
-        "-rec"
+        "-rec",
+        "-z"
 };
 
 public ParameterContainer()
@@ -244,6 +245,7 @@ public static void InitDefaults()
         defaultOptionsHashMap.put("-stop", "off"); //is gameplay stopped
         defaultOptionsHashMap.put("-s", ""); //path to the file where level will be saved
         defaultOptionsHashMap.put("-rec", "off"); //path to the file where recorded game will be saved
+        defaultOptionsHashMap.put("-z", "off"); //enable Scale2X on startup
     }
 }
 

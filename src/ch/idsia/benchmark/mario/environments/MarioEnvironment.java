@@ -85,6 +85,7 @@ public void reset(CmdLineOptions setUpOptions)
 
     marioTraceFile = setUpOptions.getTraceFile();
 
+
     if (setUpOptions.isVisualization())
     {
         if (marioVisualComponent == null)
@@ -95,6 +96,9 @@ public void reset(CmdLineOptions setUpOptions)
         marioVisualComponent.setAgent(agent);
         marioVisualComponent.setLocation(setUpOptions.getViewLocation());
         marioVisualComponent.setAlwaysOnTop(setUpOptions.isViewAlwaysOnTop());
+
+        if (setUpOptions.isScale2X())
+            GlobalOptions.changeScale2x();
     } else
         levelScene.reset(setUpOptions);
 

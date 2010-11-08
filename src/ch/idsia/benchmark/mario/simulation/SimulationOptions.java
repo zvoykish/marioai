@@ -422,4 +422,9 @@ public void setRecordFile(String var)
 {
     setParameterValue("-rec", var);
 }
+
+public boolean isScale2X()
+{
+    return b(getParameterValue("-z"));
+}
 }

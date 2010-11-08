@@ -280,14 +280,18 @@ public void render(Graphics g)
         if (recordIndicator >= 0)
         {
             g.setColor(Color.RED);
-            g.fillOval(19 * 8 + 5, 39, 10, 10);
+            g.fillOval(303, 4, 13, 13);//19 * 8 + 5, 39, 10, 10);
+            g.setColor(Color.black);
+            g.drawOval(303, 4, 13, 13);//19 * 8 + 5, 39, 10, 10);
         } else if (recordIndicator == -20)
             recordIndicator = 20;
     }
     if (GlobalOptions.isReplaying)
     {
         g.setColor(new Color(0, 200, 0));
-        g.fillPolygon(new int[]{157, 157, 170}, new int[]{50, 38, 44}, 3);
+        g.fillPolygon(new int[]{303, 303, 316}, new int[]{16, 4, 10}, 3);
+        g.setColor(Color.black);
+        g.drawPolygon(new int[]{303, 303, 316}, new int[]{16, 4, 10}, 3);
     }
 
     drawStringDropShadow(g, "TIME", 33, 0, 7);
