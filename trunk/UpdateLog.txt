@@ -1,8 +1,17 @@
 Mario AI benchmark update log.
 
+Version 0.2 DATE: 2010-11-08 (November)
+
+32. 
+31. Interface update: int[] getEvaluationInfoAsInts(); substituted float[] getEvaluationInfoAsFloatss();
+30. LICENSE.txt now in trunk
+29. New Feature: Seamless integration of AmiCo library. Example of Python->Java,
+    Java->Python agents in src/amico directory. Mac OS X 10.5.8 and above, Linux
+    are supported out of the box. For windows -- still some shamanic actions required. To be updated soon.
+
 Version 0.1.9 DATE: 2010-10-14 (October)
 
-28. Option -lc moved to -lca (level cannons).
+28. Change: Option -lc moved to -lca (level cannons).
 27. New Feature: Hot key R to start/stop recording.
 26. Issue: Mario can jump in to the ground. fixed, r601.
 25. Improvement: Unit tests added for recorder and replayer. 

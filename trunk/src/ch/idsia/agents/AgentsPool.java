@@ -1,3 +1,30 @@
+/*
+ * Copyright (c) 2009-2010, Sergey Karakovskiy and Julian Togelius
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Mario AI nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
 package ch.idsia.agents;
 
 import ch.idsia.agents.controllers.human.HumanKeyboardAgent;
@@ -15,94 +42,94 @@ import java.util.*;
 
 public final class AgentsPool
 {
-    private static Agent currentAgent = null;
+private static Agent currentAgent = null;
 
-    public static void addAgent(Agent agent)
+public static void addAgent(Agent agent)
+{
+    agentsHashMap.put(agent.getName(), agent);
+}
+
+public static void addAgent(String agentWOXName) throws IllegalFormatException
+{
+    addAgent(load(agentWOXName));
+}
+
+public static Agent load(String name)
+{
+    Agent agent;
+    try
     {
-        agentsHashMap.put(agent.getName(), agent);
+        if (name.endsWith(".py"))
+            agent = new AmiCoAgent(name);
+        else
+            agent = (Agent) Class.forName(name).newInstance();
     }
-
-    public static void addAgent(String agentWOXName) throws IllegalFormatException
+    catch (ClassNotFoundException e)
     {
-        addAgent(load(agentWOXName));
-    }
-
-    public static Agent load(String name)
-    {
-        Agent agent;
+        System.out.println(name + " is not a class name; trying to load a wox definition with that name.");
         try
         {
-            if (name.endsWith(".py"))
-                agent = new AmiCoAgent(name);
-            else
-                agent = (Agent) Class.forName(name).newInstance();
-        }
-        catch (ClassNotFoundException e)
+            agent = (Agent) Easy.load(name);
+        } catch (Exception ex)
         {
-            System.out.println(name + " is not a class name; trying to load a wox definition with that name.");
-            try
-            {
-                agent = (Agent) Easy.load(name);
-            } catch (Exception ex)
-            {
-                System.err.println(name + " is not a wox definition");
-                agent = null;
-            }
+            System.err.println(name + " is not a wox definition");
+            agent = null;
+        }
 
-            if (agent == null)
-            {
-                System.err.println("wox definition has not been found as well. Loading <HumanKeyboardAgent> instead");
-                agent = new HumanKeyboardAgent();
-            }
-            System.out.println("agent = " + agent);
-        }
-        catch (Exception e)
+        if (agent == null)
         {
-//            e.printStackTrace ();
+            System.err.println("wox definition has not been found as well. Loading <HumanKeyboardAgent> instead");
             agent = new HumanKeyboardAgent();
-            System.err.println("Agent is null. Loading agent with name " + name + " failed.");
-            System.out.println("agent = " + agent);
-//            System.exit (1);
         }
-
-        return agent;
+        System.out.println("agent = " + agent);
     }
-
-    public static Collection<Agent> getAgentsCollection()
+    catch (Exception e)
     {
-        return agentsHashMap.values();
+//            e.printStackTrace ();
+        agent = new HumanKeyboardAgent();
+        System.err.println("Agent is null. Loading agent with name " + name + " failed.");
+        System.out.println("agent = " + agent);
+//            System.exit (1);
     }
 
-    public static Set<String> getAgentsNames()
-    {
-        return AgentsPool.agentsHashMap.keySet();
-    }
+    return agent;
+}
 
-    public static Agent getAgentByName(String agentName)
-    {
-        // There is only one case possible;
-        Agent ret = AgentsPool.agentsHashMap.get(agentName);
-        if (ret == null)
-            ret = AgentsPool.agentsHashMap.get(agentName.split(":")[0]);
-        return ret;
-    }
+public static Collection<Agent> getAgentsCollection()
+{
+    return agentsHashMap.values();
+}
 
-    public static Agent getCurrentAgent()
-    {
-        if (currentAgent == null)
-            currentAgent = (Agent) getAgentsCollection().toArray()[0];
-        return currentAgent;
-    }
+public static Set<String> getAgentsNames()
+{
+    return AgentsPool.agentsHashMap.keySet();
+}
 
-    public static void setCurrentAgent(Agent agent)
-    {
-        currentAgent = agent;
-    }
+public static Agent getAgentByName(String agentName)
+{
+    // There is only one case possible;
+    Agent ret = AgentsPool.agentsHashMap.get(agentName);
+    if (ret == null)
+        ret = AgentsPool.agentsHashMap.get(agentName.split(":")[0]);
+    return ret;
+}
 
-    public static void setCurrentAgent(String agentWOXName)
-    {
-        setCurrentAgent(AgentsPool.load(agentWOXName));
-    }
+public static Agent getCurrentAgent()
+{
+    if (currentAgent == null)
+        currentAgent = (Agent) getAgentsCollection().toArray()[0];
+    return currentAgent;
+}
 
-    static HashMap<String, Agent> agentsHashMap = new LinkedHashMap<String, Agent>();
+public static void setCurrentAgent(Agent agent)
+{
+    currentAgent = agent;
+}
+
+public static void setCurrentAgent(String agentWOXName)
+{
+    setCurrentAgent(AgentsPool.load(agentWOXName));
+}
+
+static HashMap<String, Agent> agentsHashMap = new LinkedHashMap<String, Agent>();
 }
