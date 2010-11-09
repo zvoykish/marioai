@@ -1,4 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2009-2010, Sergey Karakovskiy and Julian Togelius
+  ~ All rights reserved.
+  ~
+  ~ Redistribution and use in source and binary forms, with or without
+  ~ modification, are permitted provided that the following conditions are met:
+  ~     * Redistributions of source code must retain the above copyright
+  ~       notice, this list of conditions and the following disclaimer.
+  ~     * Redistributions in binary form must reproduce the above copyright
+  ~       notice, this list of conditions and the following disclaimer in the
+  ~       documentation and/or other materials provided with the distribution.
+  ~     * Neither the name of the Mario AI nor the
+  ~       names of its contributors may be used to endorse or promote products
+  ~       derived from this software without specific prior written permission.
+  ~
+  ~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  ~ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  ~ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  ~ IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE BE LIABLE FOR ANY DIRECT,
+  ~ INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+  ~ NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  ~ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  ~ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  ~ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  ~ POSSIBILITY OF SUCH DAMAGE.
+  -->
+
 <project name="trunk" default="all">
 
 
@@ -35,11 +62,11 @@
         <exclude name="**/vssver2.scc/**"/>
     </patternset>
     <patternset id="library.patterns">
-        <include name="*.zip"/>
         <include name="*.war"/>
-        <include name="*.egg"/>
         <include name="*.ear"/>
+        <include name="*.zip"/>
         <include name="*.swc"/>
+        <include name="*.egg"/>
         <include name="*.jar"/>
     </patternset>
     <patternset id="compiler.resources">
@@ -59,18 +86,18 @@
 
     <!-- JDK definitions -->
 
-    <property name="jdk.bin.1.6" value="${jdk.home.1.6}/bin"/>
-    <path id="jdk.classpath.1.6">
-        <fileset dir="${jdk.home.1.6}">
-            <include name="../../A/Resources/Deploy.bundle/Contents/Resources/Java/deploy.jar"/>
-            <include name="../Classes/dt.jar"/>
-            <include name="../../A/Resources/Deploy.bundle/Contents/Resources/Java/javaws.jar"/>
-            <include name="../Classes/jce.jar"/>
-            <include name="../Classes/management-agent.jar"/>
+    <property name="jdk.bin.1.5" value="${jdk.home.1.5}/bin"/>
+    <path id="jdk.classpath.1.5">
+        <fileset dir="${jdk.home.1.5}">
+            <include name="lib/deploy.jar"/>
+            <include name="lib/dt.jar"/>
+            <include name="lib/jce.jar"/>
+            <include name="lib/plugin.jar"/>
             <include name="lib/sa-jdi.jar"/>
-            <include name="../Classes/alt-rt.jar"/>
             <include name="../Classes/charsets.jar"/>
             <include name="../Classes/classes.jar"/>
+            <include name="../Classes/dt.jar"/>
+            <include name="../Classes/jce.jar"/>
             <include name="../Classes/jconsole.jar"/>
             <include name="../Classes/jsse.jar"/>
             <include name="../Classes/laf.jar"/>
@@ -98,9 +125,9 @@
     <dirname property="module.trunk.basedir" file="${ant.file}"/>
 
 
-    <property name="module.jdk.home.trunk" value="${jdk.home.1.6}"/>
-    <property name="module.jdk.bin.trunk" value="${jdk.bin.1.6}"/>
-    <property name="module.jdk.classpath.trunk" value="jdk.classpath.1.6"/>
+    <property name="module.jdk.home.trunk" value="${jdk.home.1.5}"/>
+    <property name="module.jdk.bin.trunk" value="${jdk.bin.1.5}"/>
+    <property name="module.jdk.classpath.trunk" value="jdk.classpath.1.5"/>
 
     <property name="compiler.args.trunk" value="${compiler.args}"/>
 
@@ -173,7 +200,7 @@
         <copy todir="${trunk.output.dir}">
             <fileset dir="${module.trunk.basedir}/src">
                 <patternset refid="compiler.resources"/>
-                <kind kind="file"/>
+                <type type="file"/>
             </fileset>
         </copy>
     </target>
