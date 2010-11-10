@@ -150,5 +150,18 @@ public void testStop()
     assertEquals(GlobalOptions.isGameplayStopped, this.cmdLineOptions.isStopGamePlay().booleanValue());
 }
 
+@Test
+public void testReset()
+{
+    cmdLineOptions.setArgs("-echo on -rfw 21 -rfh 17");
+    assertTrue(cmdLineOptions.isEcho());
+    assertEquals(new Integer(21), cmdLineOptions.getReceptiveFieldWidth());
+    assertEquals(new Integer(17), cmdLineOptions.getReceptiveFieldHeight());
+
+    cmdLineOptions.reset();
+    assertFalse(cmdLineOptions.isEcho());
+    assertEquals(new Integer(19), cmdLineOptions.getReceptiveFieldWidth());
+    assertEquals(new Integer(19), cmdLineOptions.getReceptiveFieldHeight());
+}
 
 }
