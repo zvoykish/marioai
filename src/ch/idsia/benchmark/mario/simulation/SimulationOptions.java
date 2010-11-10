@@ -424,7 +424,7 @@ public boolean isTrace()
     return f;
 }
 
-public String getTraceFile()
+public String getTraceFileName()
 {
     String s = getParameterValue("-trace");
     String res = "";

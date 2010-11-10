@@ -28,14 +28,17 @@
 package ch.idsia.benchmark.tasks;
 
 /**
- * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Apr 4, 2010 Time: 11:52:31 AM
- * Package: ch.idsia.maibe.tasks
+ * Created by IntelliJ IDEA.
+ * User: Sergey Karakovskiy, sergey@idsia.ch
+ * Date: Apr 4, 2010 Time: 11:52:31 AM
  */
+
 public class MarioCustomSystemOfValues extends SystemOfValues
 {
+
 public MarioCustomSystemOfValues()
 {
-    this.distance = .2f;
+    this.distance = 2;
     this.win = 1;
     this.mode = 500;
     this.coins = 0;

@@ -110,7 +110,7 @@ public void reset(CmdLineOptions setUpOptions)
     marioReceptiveFieldCenterPos[0] = setUpOptions.getReceptiveFieldWidth() / 2;
     marioReceptiveFieldCenterPos[1] = setUpOptions.getReceptiveFieldHeight() / 2;
 
-    marioTraceFile = setUpOptions.getTraceFile();
+    marioTraceFile = setUpOptions.getTraceFileName();
 
 
     if (setUpOptions.isVisualization())

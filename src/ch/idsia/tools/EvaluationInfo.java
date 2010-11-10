@@ -94,12 +94,12 @@ public EvaluationInfo()
     System.arraycopy(EvaluationInfo.zeros, 0, retFloatArray, 0, EvaluationInfo.numberOfElements);
 }
 
-public float computeBasicFitness()
+public int computeBasicFitness()
 {
     return distancePassedPhys - timeSpent + coinsGained + marioStatus * marioSystemOfValues.win;
 }
 
-public float computeWeightedFitness(SystemOfValues sov)
+public int computeWeightedFitness(SystemOfValues sov)
 {
     return
             distancePassedPhys * sov.distance +
@@ -116,7 +116,7 @@ public float computeWeightedFitness(SystemOfValues sov)
                     timeLeft * sov.timeLeft;
 }
 
-public float computeWeightedFitness()
+public int computeWeightedFitness()
 {
     return this.computeWeightedFitness(marioSystemOfValues);
 }

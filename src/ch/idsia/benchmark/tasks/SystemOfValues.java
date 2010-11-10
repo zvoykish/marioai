@@ -33,7 +33,7 @@ package ch.idsia.benchmark.tasks;
  */
 public class SystemOfValues
 {
-public float distance = 1;
+public int distance = 1;
 public int win = 1024;
 public int mode = 32;
 public int coins = 16;
