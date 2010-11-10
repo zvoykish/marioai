@@ -176,27 +176,27 @@ public static CmdLineOptions getDefaultOptions()
     return getOptionsByString("");
 }
 
-public Boolean isToolsConfigurator()
+public boolean isToolsConfigurator()
 {
     return b(getParameterValue("-tc"));
 }
 
-public Boolean isGameViewer()
+public boolean isGameViewer()
 {
     return b(getParameterValue("-gv"));
 }
 
-public Boolean isGameViewerContinuousUpdates()
+public boolean isGameViewerContinuousUpdates()
 {
     return b(getParameterValue("-gvc"));
 }
 
-public Boolean isEcho()
+public boolean isEcho()
 {
     return b(getParameterValue("-echo"));
 }
 
-public Boolean isStopGamePlay()
+public boolean isStopGamePlay()
 {
     return b(getParameterValue("-stop"));
 }
@@ -206,7 +206,7 @@ public String getPyAmiCoModuleName()
     return getParameterValue("-pym");
 }
 
-public Integer getReceptiveFieldWidth()
+public int getReceptiveFieldWidth()
 {
     int ret = i(getParameterValue("-rfw"));
 
@@ -219,7 +219,7 @@ public Integer getReceptiveFieldWidth()
     return ret;
 }
 
-public Integer getReceptiveFieldHeight()
+public int getReceptiveFieldHeight()
 {
     int ret = i(getParameterValue("-rfh"));
     if (ret % 2 == 0)
@@ -231,7 +231,7 @@ public Integer getReceptiveFieldHeight()
     return ret;
 }
 
-public Boolean isReceptiveFieldVisualized()
+public boolean isReceptiveFieldVisualized()
 {
     return b(getParameterValue("-srf"));
 }
