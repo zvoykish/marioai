@@ -388,7 +388,7 @@ private static int buildDeadEnds(int x0, int maxLength)
         {
             if (x - nx >= depth - wallWidth)
             {
-                if (direction == globalRandom.nextBoolean()) //wall on the top
+                if (direction == true) //wall on the top
                 {
                     if (y <= separatorY)// + separatorHeight )
                     {
