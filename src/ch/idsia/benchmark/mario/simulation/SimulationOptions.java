@@ -74,7 +74,7 @@ public void setUpOptions(String[] args)
 //        GlobalOptions.isTimer = isTimer();
 }
 
-public Boolean isExitProgramWhenFinished()
+public boolean isExitProgramWhenFinished()
 {
     return b(getParameterValue("-ewf"));
 }
@@ -91,7 +91,7 @@ public Point getViewLocation()
     return viewLocation;
 }
 
-public Boolean isViewAlwaysOnTop()
+public boolean isViewAlwaysOnTop()
 {
     return b(getParameterValue("-vaot"));
 }
@@ -102,7 +102,7 @@ public void setFPS(int fps)
     GlobalOptions.FPS = getFPS();
 }
 
-public Integer getFPS()
+public int getFPS()
 {
     return i(getParameterValue("-fps"));
 }
@@ -220,14 +220,14 @@ public void setPauseWorld(boolean pauseWorld)
     setParameterValue("-pw", s(pauseWorld));
 }
 
-public Boolean isPauseWorld()
+public boolean isPauseWorld()
 {
     return b(getParameterValue("-pw"));
 }
 
 //isPowerRestoration
 
-public Boolean isPowerRestoration()
+public boolean isPowerRestoration()
 {
     return b(getParameterValue("-pr"));
 }
@@ -295,7 +295,7 @@ public void setMarioInvulnerable(boolean invulnerable)
 
 // Level: dead ends count
 
-public Boolean getDeadEndsCount()
+public boolean getDeadEndsCount()
 {
     return b(getParameterValue("-lde"));
 }
@@ -307,7 +307,7 @@ public void setDeadEndsCount(boolean var)
 
 // Level: cannons count
 
-public Boolean getCannonsCount()
+public boolean getCannonsCount()
 {
     return b(getParameterValue("-lca"));
 }
@@ -319,7 +319,7 @@ public void setCannonsCount(boolean var)
 
 // Level: HillStraight count
 
-public Boolean getHillStraightCount()
+public boolean getHillStraightCount()
 {
     return b(getParameterValue("-lhs"));
 }
@@ -331,7 +331,7 @@ public void setHillStraightCount(boolean var)
 
 // Level: Tubes count
 
-public Boolean getTubesCount()
+public boolean getTubesCount()
 {
     return b(getParameterValue("-ltb"));
 }
@@ -343,7 +343,7 @@ public void setTubesCount(boolean var)
 
 // Level: blocks count
 
-public Boolean getBlocksCount()
+public boolean getBlocksCount()
 {
     return b(getParameterValue("-lb"));
 }
@@ -355,7 +355,7 @@ public void setBlocksCount(boolean var)
 
 // Level: coins count
 
-public Boolean getCoinsCount()
+public boolean getCoinsCount()
 {
     return b(getParameterValue("-lco"));
 }
@@ -367,7 +367,7 @@ public void setCoinsCount(boolean var)
 
 // Level: gaps count
 
-public Boolean getGapsCount()
+public boolean getGapsCount()
 {
     return b(getParameterValue("-lg"));
 }
@@ -379,7 +379,7 @@ public void setGapsCount(boolean var)
 
 // Level: hidden blocks count
 
-public Boolean getHiddenBlocksCount()
+public boolean getHiddenBlocksCount()
 {
     return b(getParameterValue("-lhb"));
 }
