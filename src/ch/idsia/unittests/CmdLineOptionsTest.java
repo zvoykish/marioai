@@ -74,7 +74,7 @@ public void testAllOptionsHaveDefaults()
 public void testSetArgs() throws Exception
 {
     String args = "-ag ch.idsia.agents.controllers.human.HumanKeyboardAgent" +
-            " -amico off" +
+          //  " -amico off" +
             " -echo off" +
             " -ewf on" +
             " -cgr 1.0" +
@@ -112,9 +112,49 @@ public void testSetArgs() throws Exception
             " -lb on" +
             " -lg on" +
             " -lhb off" +
-            " -le 1111111111" +
+            " -le g,gw,gk,gkw,rk,rkw,s,sw" +
             " -lf off";
     cmdLineOptions.setArgs(args);
+    assertEquals(cmdLineOptions.getAgentFullLoadName(),"ch.idsia.agents.controllers.human.HumanKeyboardAgent");
+    assertEquals(cmdLineOptions.isEcho(), false);
+    assertEquals(cmdLineOptions.isExitProgramWhenFinished(), true);
+    assertEquals(cmdLineOptions.getCreaturesGravity(), 1.0f);
+    assertEquals(cmdLineOptions.getMarioGravity(), 1.0f);
+    assertEquals(cmdLineOptions.isGameViewer(), false);
+    assertEquals(cmdLineOptions.isGameViewerContinuousUpdates(), false);
+    assertEquals(cmdLineOptions.isMarioInvulnerable(), false);
+    assertEquals(cmdLineOptions.getLevelDifficulty(), 0);
+    assertEquals(cmdLineOptions.getLevelLength(), 320);
+    assertEquals(cmdLineOptions.getLevelRandSeed(), 0);
+    assertEquals(cmdLineOptions.getLevelType(), 0);
+    assertEquals(cmdLineOptions.getFPS(), 24);
+    assertEquals(cmdLineOptions.getMarioMode(), 2);
+    assertEquals(cmdLineOptions.isPauseWorld(), false);
+    assertEquals(cmdLineOptions.isPowerRestoration(), false);
+    assertEquals(cmdLineOptions.getReceptiveFieldHeight(), 19);
+    assertEquals(cmdLineOptions.getReceptiveFieldWidth(), 19);
+    assertEquals(cmdLineOptions.isReceptiveFieldVisualized(), false);
+    assertEquals(cmdLineOptions.getTimeLimit(), 200);
+    assertEquals(cmdLineOptions.isToolsConfigurator(), false);
+    assertEquals(cmdLineOptions.isViewAlwaysOnTop(), false);
+    assertEquals(cmdLineOptions.getViewLocation().x, 0);
+    assertEquals(cmdLineOptions.getViewLocation().y, 0);
+    assertEquals(cmdLineOptions.isVisualization(), true);
+    assertEquals(cmdLineOptions.getViewWidth(), 320);
+    assertEquals(cmdLineOptions.getViewHeight(), 240);
+    assertEquals(cmdLineOptions.getZLevelScene(), 1);
+    assertEquals(cmdLineOptions.getZLevelEnemies(), 0);
+    assertEquals(cmdLineOptions.getLevelHeight(), 15);
+    assertEquals(cmdLineOptions.getDeadEndsCount(), false);
+    assertEquals(cmdLineOptions.getCannonsCount(), true);
+    assertEquals(cmdLineOptions.getHillStraightCount(), true);
+    assertEquals(cmdLineOptions.getTubesCount(), true);
+    assertEquals(cmdLineOptions.getCoinsCount(), true);
+    assertEquals(cmdLineOptions.getBlocksCount(), true);
+    assertEquals(cmdLineOptions.getGapsCount(), true);
+    assertEquals(cmdLineOptions.getHiddenBlocksCount(), false);
+    assertEquals(cmdLineOptions.getEnemies(), "g,gw,gk,gkw,rk,rkw,s,sw");
+    assertEquals(cmdLineOptions.isFlatLevel(), false);
 //    TODO:TASK:[M] test all cases
 }
 
