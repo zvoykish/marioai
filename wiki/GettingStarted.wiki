@@ -5,13 +5,12 @@
 
 = Introduction =
 
-Checkout from SVN [http://code.google.com/p/marioai/source/checkout Source] or download from a [http://code.google.com/p/marioai/downloads/list Downloads] page the zipped source.
-
+Checkout from SVN [http://code.google.com/p/marioai/source/checkout Source] or download a [www.marioai.com/marioai-benchmark/download/MarioAI.zip zip] package.
 
 = Details =
 
-Seek for the specific project files in trunk. Project files for IntelliJ IDEA, Eclipse Galileo and Netbeans are provided.
-Or you might also checkout from SVN using the above mentioned IDEs.
+Look for the specific project files in trunk. Project files for IntelliJ IDEA, Eclipse Galileo and Netbeans are provided.
+Or you might also checkout from SVN using the above mentioned IDEs. Use SVN version 1.6 everywhere.
 
  == * *IntelliJ IDEA* ==
   # Checkout from Version Control.
