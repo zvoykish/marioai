@@ -16,7 +16,7 @@
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE BE LIABLE FOR ANY DIRECT,
+ * IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
  * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
  * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
  * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
@@ -146,8 +146,8 @@ public void testDefaultAgent()
 public void testStop()
 {
     this.cmdLineOptions.setArgs("-stop on");
-    assertEquals(true, this.cmdLineOptions.isStopGamePlay().booleanValue());
-    assertEquals(GlobalOptions.isGameplayStopped, this.cmdLineOptions.isStopGamePlay().booleanValue());
+    assertEquals(true, this.cmdLineOptions.isStopGamePlay());
+    assertEquals(GlobalOptions.isGameplayStopped, this.cmdLineOptions.isStopGamePlay());
 }
 
 @Test
@@ -155,13 +155,13 @@ public void testReset()
 {
     cmdLineOptions.setArgs("-echo on -rfw 21 -rfh 17");
     assertTrue(cmdLineOptions.isEcho());
-    assertEquals(new Integer(21), cmdLineOptions.getReceptiveFieldWidth());
-    assertEquals(new Integer(17), cmdLineOptions.getReceptiveFieldHeight());
+    assertEquals(21, cmdLineOptions.getReceptiveFieldWidth());
+    assertEquals(17, cmdLineOptions.getReceptiveFieldHeight());
 
     cmdLineOptions.reset();
     assertFalse(cmdLineOptions.isEcho());
-    assertEquals(new Integer(19), cmdLineOptions.getReceptiveFieldWidth());
-    assertEquals(new Integer(19), cmdLineOptions.getReceptiveFieldHeight());
+    assertEquals(19, cmdLineOptions.getReceptiveFieldWidth());
+    assertEquals(19, cmdLineOptions.getReceptiveFieldHeight());
 }
 
 }
