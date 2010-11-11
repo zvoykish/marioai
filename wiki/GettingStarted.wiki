@@ -5,7 +5,7 @@
 
 = Introduction =
 
-Checkout from SVN [http://code.google.com/p/marioai/source/checkout Source] or download a [www.marioai.com/marioai-benchmark/download/MarioAI.zip zip] package.
+Checkout from SVN [http://code.google.com/p/marioai/source/checkout Source] or download a [http://www.marioai.com/marioai-benchmark/download/MarioAI.zip zip] package.
 
 = Details =
 
