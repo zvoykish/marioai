@@ -253,8 +253,8 @@ public void testMarioReceptiveFieldSizeW5H7_vis() throws Exception
         final BasicTask basicTask = new BasicTask(cmdLineOptions);
         basicTask.reset(cmdLineOptions);
         basicTask.runOneEpisode();
-        assertEquals(cmdLineOptions.getReceptiveFieldHeight().intValue(), 7);
-        assertEquals(cmdLineOptions.getReceptiveFieldWidth().intValue(), 5);
+        assertEquals(cmdLineOptions.getReceptiveFieldHeight(), 7);
+        assertEquals(cmdLineOptions.getReceptiveFieldWidth(), 5);
     }
 }
 
@@ -270,8 +270,8 @@ public void testMarioReceptiveFieldSizeW8H6_vis() throws Exception
         final BasicTask basicTask = new BasicTask(cmdLineOptions);
         basicTask.reset(cmdLineOptions);
         basicTask.runOneEpisode();
-        assertEquals(7, cmdLineOptions.getReceptiveFieldHeight().intValue());
-        assertEquals(9, cmdLineOptions.getReceptiveFieldWidth().intValue());
+        assertEquals(7, cmdLineOptions.getReceptiveFieldHeight());
+        assertEquals(9, cmdLineOptions.getReceptiveFieldWidth());
         int[] pos = basicTask.getEnvironment().getMarioReceptiveFieldCenter();
         assertEquals(4, pos[0]);
         assertEquals(3, pos[1]);
