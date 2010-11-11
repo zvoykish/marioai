@@ -219,17 +219,17 @@ public void testScaredShooty_G10RK5()
     final BasicTask basicTask = new BasicTask(cmdLineOptions);
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
-    assertEquals(13, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
+    assertEquals(15, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
 }
 
 @Test
 public void testScaredShooty_GW10G10()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:10,gw:10");
+    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:10,gw:10");
     final BasicTask basicTask = new BasicTask(cmdLineOptions);
     basicTask.reset(cmdLineOptions);
     basicTask.runOneEpisode();
-    assertEquals(8, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
+    assertEquals(10, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
 }
 
 @Test
