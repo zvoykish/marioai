@@ -72,6 +72,7 @@ private static int height;
 private static Level level;
 
 private static Random globalRandom = new Random(0);
+private static Random ceilingRandom = new Random(0);
 private static RandomCreatureGenerator creaturesRandom = new RandomCreatureGenerator(0, "", 0);
 public static Random dxRnd = new Random(0); //used in addEnemy to compute dx
 
@@ -120,9 +121,10 @@ private static void loadLevel(String filePath)
 public static Level createLevel(CmdLineOptions args)
 {
     // -ls option can also load level from file if filename instead of a number provided
+    levelType = args.getLevelType();
     try
     {
-        levelSeed = args.getLevelRandSeed();
+        levelSeed = args.getLevelRandSeed() + levelType;
     } catch (Exception e)
     {
         loadLevel(args.getParameterValue("-ls"));
@@ -138,7 +140,6 @@ public static Level createLevel(CmdLineOptions args)
     isFlatLevel = args.isFlatLevel();
     counters.reset(args);
 
-    levelType = args.getLevelType();
     levelDifficulty = args.getLevelDifficulty();
     odds[ODDS_STRAIGHT] = 20;
     odds[ODDS_HILL_STRAIGHT] = 1;
@@ -162,6 +163,7 @@ public static Level createLevel(CmdLineOptions args)
 //    levelSeed = args.getLevelRandSeed();// + levelType; // TODO:TASK:[M] ensure the difference of underground, castle
     globalRandom.setSeed(levelSeed);
     creaturesRandom.setSeed(levelSeed, args.getEnemies(), levelDifficulty);
+    ceilingRandom.setSeed(levelSeed);
     dxRnd.setSeed(levelSeed);
 
     int currentLength = 0; //total level currentLength so far
@@ -200,27 +202,27 @@ public static Level createLevel(CmdLineOptions args)
         }
     }
 
-    //if underground or castle then build ceiling
-    if (levelType == LevelGenerator.TYPE_CASTLE || levelType == LevelGenerator.TYPE_UNDERGROUND)
-    {
-        int ceiling = 0;
-        int run = 0;
-        for (int x = 0; x < level.length; x++)
-        {
-            if (run-- <= 0 && x > 4)
-            {
-                ceiling = globalRandom.nextInt(4);
-                run = globalRandom.nextInt(4) + 4;
-            }
-            for (int y = 0; y < level.height; y++)
-            {
-                if ((x > 4 && y <= ceiling) || x < 1)
-                {
-                    level.setBlock(x, 0, (byte) (1 + 9 * 16));
-                }
-            }
-        }
-    }
+//    //if underground or castle then build ceiling
+//    if (levelType == LevelGenerator.TYPE_CASTLE || levelType == LevelGenerator.TYPE_UNDERGROUND)
+//    {
+//        int ceiling = 0;
+//        int run = 0;
+//        for (int x = 0; x < level.length; x++)
+//        {
+//            if (run-- <= 0 && x > 4)
+//            {
+//                ceiling = globalRandom.nextInt(4);
+//                run = globalRandom.nextInt(4) + 4;
+//            }
+//            for (int y = 0; y < level.height; y++)
+//            {
+//                if ((x > 4 && y <= ceiling) || x < 1)
+//                {
+//                    level.setBlock(x, 0, (byte) (1 + 9 * 16));
+//                }
+//            }
+//        }
+//    }
 
     fixWalls();
 
@@ -305,10 +307,54 @@ private static int buildZone(int x, int maxLength, int maxHeight, int floor, int
             ++crCount;
         }
 
+    if (levelType > 0)
+        buildCeiling(x, length);
+
     return length;
 }
 
-public static void addEnemy(int x, int y)
+private static void buildCeiling(int x0, int length)
+{
+    int maxCeilingHeight = 3;
+    int ceilingLength = length;
+
+    if (ceilingLength < 2)
+            return;
+//    len:
+//    for (int i = x0; i < x1; i++)
+//        for (int j = 0; j < height; j++)
+//            if (level.getBlock(i, j) != 0)
+//            {
+//                maxCeilingHeight = j;
+//                break len;
+//            }
+    int len = 0;
+
+    while (len < ceilingLength)
+    {
+        int sectionLength = ceilingRandom.nextInt(2) + 2;
+        if (sectionLength > ceilingLength)
+            sectionLength = ceilingLength;
+
+//        if (maxCeilingHeight > 0)
+//            maxCeilingHeight--;
+//        if (maxCeilingHeight == 0)
+//            maxCeilingHeight = 1;
+//        if (maxCeilingHeight > 5)
+//            maxCeilingHeight = 5;
+
+        int height = ceilingRandom.nextInt(maxCeilingHeight) + 1;
+        for (int i = 0; i < sectionLength; i++)
+        {
+            for (int j = 0; j < height; j++)
+                level.setBlock(x0 + len + i, j, (byte) (1 + 9 * 16));
+        }
+        
+        len += sectionLength;
+    }
+}
+
+private static void addEnemy(int x, int y)
 {
     if (!creaturesRandom.canAdd())
         return;
