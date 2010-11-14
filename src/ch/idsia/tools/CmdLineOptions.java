@@ -133,6 +133,11 @@ public float getMarioGravity()
     return f(getParameterValue("-mgr"));
 }
 
+public float getWind()
+{
+    return f(getParameterValue("-w"));
+}
+
 public float getCreaturesGravity()
 {
     // TODO: getCreaturesGravity, same as for mgr

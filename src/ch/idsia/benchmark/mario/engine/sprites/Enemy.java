@@ -205,8 +205,8 @@ public void move()
         facing = -1;
     }
 
-    xa = facing * sideWaysSpeed;
-
+    xa = facing * (sideWaysSpeed + (facing == 1 ? wind : -wind));
+//    xa += facing == 1 ? -wind : wind;
 //        mayJump = (onGround);
 
     xFlipPic = facing == -1;
