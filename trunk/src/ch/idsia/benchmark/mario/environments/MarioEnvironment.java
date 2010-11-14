@@ -104,7 +104,11 @@ public void reset(MarioAIOptions setUpOptions)
     // TODO:TASK:[M] Arbitrary center of ego in Receptive Field.
     // TODO: remember to change code in the LevelScene.getMarioState() method
     marioEgoPos[0] = setUpOptions.marioEgoPosRow();
+    if (marioEgoPos[0] == -1)
+        marioEgoPos[0] = setUpOptions.getReceptiveFieldWidth() / 2;
     marioEgoPos[1] = setUpOptions.marioEgoPosCol();
+    if (marioEgoPos[1] == -1)
+        marioEgoPos[1] = setUpOptions.getReceptiveFieldWidth() / 2;
 
     marioTraceFile = setUpOptions.getTraceFileName();
 

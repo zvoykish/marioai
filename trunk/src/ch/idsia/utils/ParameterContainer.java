@@ -275,6 +275,8 @@ public static void InitDefaults()
         defaultOptionsHashMap.put("-rec", "off"); //path to the file where recorded game will be saved
         defaultOptionsHashMap.put("-z", "off"); //enable Scale2X on startup
         defaultOptionsHashMap.put("-w", "0"); //wind for Mario
+        defaultOptionsHashMap.put("-mer", "-1"); //wind for Mario
+        defaultOptionsHashMap.put("-mec", "-1"); //wind for Mario
     }
 }
 
