@@ -203,7 +203,7 @@ public void testStopGameplay()
 }
 
 @Test
-public void testScaredShooty_G10()
+public void testScaredShooty_with10Goombas()
 {
     final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:10");
     final BasicTask basicTask = new BasicTask(cmdLineOptions);
@@ -213,7 +213,7 @@ public void testScaredShooty_G10()
 }
 
 @Test
-public void testScaredShooty_G10RK5()
+public void testScaredShooty_with10Goombas5RedKoopas()
 {
     final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:10,rk:5");
     final BasicTask basicTask = new BasicTask(cmdLineOptions);
@@ -223,7 +223,7 @@ public void testScaredShooty_G10RK5()
 }
 
 @Test
-public void testScaredShooty_GW10G10()
+public void testScaredShooty_with10GoombasWinged10Goombas()
 {
     final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:10,gw:10");
     final BasicTask basicTask = new BasicTask(cmdLineOptions);
@@ -233,7 +233,7 @@ public void testScaredShooty_GW10G10()
 }
 
 @Test
-public void testScaredShooty_G6S3()
+public void testScaredShooty_with6Goombas3Spikies()
 {
     final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:6,s:3");
     final BasicTask basicTask = new BasicTask(cmdLineOptions);
