@@ -87,7 +87,13 @@ public static void setCreaturesGravity(final float creaturesGravity)
     Sprite.creaturesGravity = creaturesGravity;
 }
 
+public static void setWind(final float wind)
+{
+    Sprite.wind = wind;
+}
+
 protected static float creaturesGravity;
+protected static float wind = 0;
 
 public static String getNameByKind(int kind)
 {

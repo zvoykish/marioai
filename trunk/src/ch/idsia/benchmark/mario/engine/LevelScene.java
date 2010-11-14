@@ -1060,6 +1060,7 @@ public void reset(CmdLineOptions cmdLineOptions)
     this.height = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
 
     Sprite.setCreaturesGravity(cmdLineOptions.getCreaturesGravity());
+    Sprite.setWind(cmdLineOptions.getWind());
     Mario.resetStatic(cmdLineOptions);
     mario = new Mario(this);
 

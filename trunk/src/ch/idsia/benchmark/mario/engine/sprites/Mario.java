@@ -75,6 +75,8 @@ private int prevHPic;
 private boolean isRacoon;
 private float yaa = 1;
 
+private static float wind = 0f;
+
 public static void resetStatic(CmdLineOptions cmdLineOptions)
 {
     large = cmdLineOptions.getMarioMode() > 0;
@@ -86,6 +88,7 @@ public static void resetStatic(CmdLineOptions cmdLineOptions)
 
     isMarioInvulnerable = cmdLineOptions.isMarioInvulnerable();
     marioGravity = cmdLineOptions.getMarioGravity();
+    wind = cmdLineOptions.getWind();
 
     isTrace = cmdLineOptions.isTrace();
 }
@@ -357,14 +360,14 @@ public void move()
     if (keys[KEY_LEFT] && !ducking)
     {
         if (facing == 1) sliding = false;
-        xa -= sideWaysSpeed;
+        xa -= sideWaysSpeed - wind;
         if (jumpTime >= 0) facing = -1;
     }
 
     if (keys[KEY_RIGHT] && !ducking)
     {
         if (facing == -1) sliding = false;
-        xa += sideWaysSpeed;
+        xa += sideWaysSpeed + wind;
         if (jumpTime >= 0) facing = 1;
     }
 
@@ -400,7 +403,7 @@ public void move()
     xFlipPic = facing == -1;
 
     runTime += (Math.abs(xa)) + 5;
-    if (Math.abs(xa) < 0.5f)
+    if (Math.abs(xa) < 0.3f)
     {
         runTime = 0;
         xa = 0;
@@ -421,7 +424,7 @@ public void move()
     move(xa, 0);
     move(0, ya);
 
-    if (y > levelScene.level.height * 16 + 16)
+    if (y > levelScene.level.height * LevelScene.cellSize + LevelScene.cellSize)
         die("Gap");
 
     if (x < 0)
@@ -430,17 +433,17 @@ public void move()
         xa = 0;
     }
 
-    if (x > levelScene.level.xExit * 16 - 8 &&
-            x < levelScene.level.xExit * 16 + 2 * 16 &&
-            y < levelScene.level.yExit * 16)
+    if (x > levelScene.level.xExit * LevelScene.cellSize - 8 &&
+            x < levelScene.level.xExit * LevelScene.cellSize + 2 * LevelScene.cellSize &&
+            y < levelScene.level.yExit * LevelScene.cellSize)
     {
-        x = levelScene.level.xExit * 16;
+        x = levelScene.level.xExit * LevelScene.cellSize;
         win();
     }
 
-    if (x > levelScene.level.length * 16)
+    if (x > levelScene.level.length * LevelScene.cellSize)
     {
-        x = levelScene.level.length * 16;
+        x = levelScene.level.length * LevelScene.cellSize;
         xa = 0;
     }
 
