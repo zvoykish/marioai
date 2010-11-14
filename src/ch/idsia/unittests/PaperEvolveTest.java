@@ -29,7 +29,6 @@ package ch.idsia.unittests;
 
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
 
 /**
  * Created by IntelliJ IDEA.
@@ -50,9 +49,4 @@ public void tearDown()
 {
 }
 
-@Test
-public void testPaperEvolve()
-{
-
-}
 }
