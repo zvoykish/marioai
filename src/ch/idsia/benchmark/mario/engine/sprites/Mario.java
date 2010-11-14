@@ -360,14 +360,14 @@ public void move()
     if (keys[KEY_LEFT] && !ducking)
     {
         if (facing == 1) sliding = false;
-        xa -= sideWaysSpeed - wind;
+        xa -= sideWaysSpeed * wind;
         if (jumpTime >= 0) facing = -1;
     }
 
     if (keys[KEY_RIGHT] && !ducking)
     {
         if (facing == -1) sliding = false;
-        xa += sideWaysSpeed + wind;
+        xa += sideWaysSpeed * wind;
         if (jumpTime >= 0) facing = 1;
     }
 
@@ -403,7 +403,7 @@ public void move()
     xFlipPic = facing == -1;
 
     runTime += (Math.abs(xa)) + 5;
-    if (Math.abs(xa) < 0.3f)
+    if (Math.abs(xa) < 0.5f)
     {
         runTime = 0;
         xa = 0;
