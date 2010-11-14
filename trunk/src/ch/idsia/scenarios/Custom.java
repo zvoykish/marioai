@@ -31,7 +31,7 @@ import ch.idsia.agents.Agent;
 import ch.idsia.agents.controllers.ForwardAgent;
 import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.benchmark.tasks.BasicTask;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 
 import java.io.IOException;
 
@@ -48,17 +48,17 @@ public class Custom
 public static void main(String[] args)
 {
 //final String argsString = "-vis on";
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions(args);
     final Agent agent = new ForwardAgent();
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
     for (int i = 0; i < 10; ++i)
     {
         int seed = 0;
         do
         {
-            cmdLineOptions.setLevelDifficulty(i);
-            cmdLineOptions.setLevelRandSeed(seed++);
-            basicTask.reset(cmdLineOptions);
+            marioAIOptions.setLevelDifficulty(i);
+            marioAIOptions.setLevelRandSeed(seed++);
+            basicTask.reset(marioAIOptions);
             basicTask.runOneEpisode();
             System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
         } while (basicTask.getEnvironment().getEvaluationInfo().marioStatus != Environment.MARIO_STATUS_WIN);

@@ -76,6 +76,8 @@ private static final String[] allowed = new String[]{
         "-mm",  // Mario Mode <0|1|2>
         "-mix", // TODO
         "-miy", // TODO
+        "-mer", // Mario Ego Row
+        "-mec", // Mario Ego Column
         "-fps", // Frames Per Second - update frequency
         "-pr",  // Power resoration (cheat) (bring Mario to FIRE state if "Shoot/RUN" key activated.
         "-pw",  // Pouse World

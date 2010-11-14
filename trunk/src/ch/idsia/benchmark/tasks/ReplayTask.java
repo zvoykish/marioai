@@ -33,7 +33,7 @@ import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.engine.Replayer;
 import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.benchmark.mario.environments.MarioEnvironment;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 import ch.idsia.tools.ReplayerOptions;
 
 import java.io.IOException;
@@ -55,7 +55,7 @@ private Replayer replayer;
 public ReplayTask()
 {}
 
-public void playOneFile(final CmdLineOptions options)
+public void playOneFile(final MarioAIOptions options)
 {
     ReplayerOptions.Interval interval = replayer.getNextIntervalInMarioseconds();
     if (interval == null)
@@ -89,7 +89,7 @@ public float[] evaluate(final Agent controller)
     return new float[0];  //To change body of implemented methods use File | Settings | File Templates.
 }
 
-public void setOptions(final CmdLineOptions options)
+public void setOptions(final MarioAIOptions options)
 {}
 
 public void doEpisodes(final int amount, final boolean verbose)
@@ -100,7 +100,7 @@ public void startReplay()
     try
     {
         agent = new ReplayAgent("Replay agent");
-        CmdLineOptions options = new CmdLineOptions();
+        MarioAIOptions options = new MarioAIOptions();
         while (replayer.openNextReplayFile())
         {
             replayer.openFile("options");

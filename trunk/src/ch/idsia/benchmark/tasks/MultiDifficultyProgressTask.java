@@ -28,7 +28,7 @@
 package ch.idsia.benchmark.tasks;
 
 import ch.idsia.agents.Agent;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 //import ch.idsia.tools.EvaluationInfo;
 //import ch.idsia.tools.Evaluator;
 
@@ -42,11 +42,11 @@ import ch.idsia.tools.CmdLineOptions;
  */
 public class MultiDifficultyProgressTask implements Task
 {
-private CmdLineOptions options;
+private MarioAIOptions options;
 private int startingSeed = 0;
 private int[] difficulties = {0, 3, 5, 10};
 
-public MultiDifficultyProgressTask(CmdLineOptions evaluationOptions)
+public MultiDifficultyProgressTask(MarioAIOptions evaluationOptions)
 {
     setOptions(evaluationOptions);
 }
@@ -79,7 +79,7 @@ public void setStartingSeed(int seed)
     startingSeed = seed;
 }
 
-public void setOptions(CmdLineOptions options)
+public void setOptions(MarioAIOptions options)
 {
     this.options = options;
 }

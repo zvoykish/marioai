@@ -28,7 +28,7 @@
 package ch.idsia.benchmark.tasks;
 
 import ch.idsia.agents.Agent;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -39,11 +39,11 @@ import ch.idsia.tools.CmdLineOptions;
 
 public class MultiSeedProgressTask extends BasicTask implements Task
 {
-private CmdLineOptions options;
+private MarioAIOptions options;
 private int startingSeed = 0;
 private int numberOfSeeds = 3;
 
-public MultiSeedProgressTask(CmdLineOptions evaluationOptions)
+public MultiSeedProgressTask(MarioAIOptions evaluationOptions)
 {
     super(evaluationOptions);
     setOptions(evaluationOptions);
@@ -78,12 +78,12 @@ public void setNumberOfSeeds(int number)
     numberOfSeeds = number;
 }
 
-public void setOptions(CmdLineOptions options)
+public void setOptions(MarioAIOptions options)
 {
     this.options = options;
 }
 
-public CmdLineOptions getOptions()
+public MarioAIOptions getOptions()
 {
     return options;
 }

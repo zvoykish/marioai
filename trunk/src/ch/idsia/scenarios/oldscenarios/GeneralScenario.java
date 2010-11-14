@@ -31,7 +31,7 @@ import ch.idsia.benchmark.experiments.EpisodicExperiment;
 import ch.idsia.benchmark.experiments.Experiment;
 import ch.idsia.benchmark.tasks.ProgressTask;
 import ch.idsia.benchmark.tasks.Task;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -45,14 +45,14 @@ public class GeneralScenario
 public static void main(String[] args)
 {
 //        Agent agent = new ForwardAgent();
-    CmdLineOptions options = new CmdLineOptions(args);
+    MarioAIOptions options = new MarioAIOptions(args);
     Task task = new ProgressTask(options);
     Experiment exp = new EpisodicExperiment(task, options.getAgent());
     exp.doEpisodes(2);
 }
 
 /*
-        CmdLineOptions options = new CmdLineOptions(args);
+        MarioAIOptions options = new MarioAIOptions(args);
 //        Evaluator evaluator = new Evaluator(options);
 //        Agent agent = new ForwardAgent();
         options.setFPS(24);

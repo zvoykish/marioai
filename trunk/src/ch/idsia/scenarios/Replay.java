@@ -48,7 +48,7 @@ Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 0
 	at ch.idsia.scenarios.Replay.main(Replay.java:18)
     
      */
-//    final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
+//    final MarioAIOptions cmdLineOptions = new MarioAIOptions(args);
     final ReplayTask replayTask = new ReplayTask();
     replayTask.reset(args[0]);
     replayTask.startReplay();

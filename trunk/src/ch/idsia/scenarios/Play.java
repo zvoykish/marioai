@@ -29,7 +29,7 @@ package ch.idsia.scenarios;
 
 import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.benchmark.tasks.MarioCustomSystemOfValues;
-import ch.idsia.tools.CmdLineOptions; /**
+import ch.idsia.tools.MarioAIOptions; /**
  * Created by IntelliJ IDEA.
  * User: julian
  * Date: May 5, 2009
@@ -53,17 +53,17 @@ public final class Play
  *
  * @param args input parameters for customization of the benchmark.
  * @see ch.idsia.scenarios.oldscenarios.MainRun
- * @see ch.idsia.tools.CmdLineOptions
+ * @see ch.idsia.tools.MarioAIOptions
  * @see ch.idsia.benchmark.mario.simulation.SimulationOptions
  * @since MarioAI-0.1
  */
 
 public static void main(String[] args)
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
-    cmdLineOptions.setVisualization(true);
-//        basicTask.reset(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions(args);
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
+    marioAIOptions.setVisualization(true);
+//        basicTask.reset(marioAIOptions);
     final MarioCustomSystemOfValues m = new MarioCustomSystemOfValues();
 //        basicTask.runOneEpisode();
     // run 1 episode with same options, each time giving output of Evaluation info.

@@ -28,7 +28,7 @@
 package ch.idsia.benchmark.mario.engine.level;
 
 import ch.idsia.benchmark.mario.engine.sprites.Sprite;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 import ch.idsia.tools.RandomCreatureGenerator;
 import ch.idsia.utils.ErrorCodes;
 
@@ -40,7 +40,7 @@ import java.util.Random;
 /**
  * This class is simple to use. Just call <b>createLevel</b> method with params:
  * <ul>
- * CmdLineOptions args, that contains: ... TODO:TASK:[M]
+ * MarioAIOptions args, that contains: ... TODO:TASK:[M]
  * <p/>
  * <li>length -- length of the level in cells. One cell is 16 pixels long</li>
  * <li>height -- height of the level in cells. One cell is 16 pixels long </li>
@@ -118,7 +118,7 @@ private static void loadLevel(String filePath)
     }
 }
 
-public static Level createLevel(CmdLineOptions args)
+public static Level createLevel(MarioAIOptions args)
 {
     // -ls option can also load level from file if filename instead of a number provided
     levelType = args.getLevelType();
@@ -319,7 +319,7 @@ private static void buildCeiling(int x0, int length)
     int ceilingLength = length;
 
     if (ceilingLength < 2)
-            return;
+        return;
 //    len:
 //    for (int i = x0; i < x1; i++)
 //        for (int j = 0; j < height; j++)
@@ -349,7 +349,7 @@ private static void buildCeiling(int x0, int length)
             for (int j = 0; j < height; j++)
                 level.setBlock(x0 + len + i, j, (byte) (1 + 9 * 16));
         }
-        
+
         len += sectionLength;
     }
 }

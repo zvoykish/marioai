@@ -32,7 +32,7 @@ import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.engine.LevelScene;
 import ch.idsia.benchmark.mario.engine.level.Level;
 import ch.idsia.benchmark.mario.environments.Environment;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 
 public final class Mario extends Sprite
 {
@@ -77,20 +77,20 @@ private float yaa = 1;
 
 private static float wind = 0f;
 
-public static void resetStatic(CmdLineOptions cmdLineOptions)
+public static void resetStatic(MarioAIOptions marioAIOptions)
 {
-    large = cmdLineOptions.getMarioMode() > 0;
-    fire = cmdLineOptions.getMarioMode() == 2;
+    large = marioAIOptions.getMarioMode() > 0;
+    fire = marioAIOptions.getMarioMode() == 2;
     coins = 0;
     hiddenBlocksFound = 0;
     mushroomsDevoured = 0;
     flowersDevoured = 0;
 
-    isMarioInvulnerable = cmdLineOptions.isMarioInvulnerable();
-    marioGravity = cmdLineOptions.getMarioGravity();
-    wind = cmdLineOptions.getWind();
+    isMarioInvulnerable = marioAIOptions.isMarioInvulnerable();
+    marioGravity = marioAIOptions.getMarioGravity();
+    wind = marioAIOptions.getWind();
 
-    isTrace = cmdLineOptions.isTrace();
+    isTrace = marioAIOptions.isTrace();
 }
 
 public int getMode()

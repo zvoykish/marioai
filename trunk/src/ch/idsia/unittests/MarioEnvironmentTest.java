@@ -30,7 +30,7 @@ package ch.idsia.unittests;
 import ch.idsia.benchmark.mario.environments.MarioEnvironment;
 import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.benchmark.tasks.ReplayTask;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 import junit.framework.TestCase;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -232,14 +232,14 @@ public void testGetIntermediateReward() throws Exception
 @Test
 public void testMarioCenterPos() throws Exception
 {
-    CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -rfw 5 -rfh 7");
+    MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -rfw 5 -rfh 7");
     MarioEnvironment env = MarioEnvironment.getInstance();
 
     assertNotNull(env);
 
-    env.reset(cmdLineOptions);
+    env.reset(marioAIOptions);
 
-    int[] pos = env.getMarioReceptiveFieldCenter();
+    int[] pos = env.getMarioEgoPos();
     assertEquals(2, pos[0]);
     assertEquals(3, pos[1]);
 }
@@ -249,12 +249,12 @@ public void testMarioReceptiveFieldSizeW5H7_vis() throws Exception
 {
     if (INCLUDE_VISUAL_TESTS)
     {
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -rfw 5 -rfh 7 -le 0 -srf on -gv on");
-        final BasicTask basicTask = new BasicTask(cmdLineOptions);
-        basicTask.reset(cmdLineOptions);
+        final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis on -rfw 5 -rfh 7 -le 0 -srf on -gv on");
+        final BasicTask basicTask = new BasicTask(marioAIOptions);
+        basicTask.reset(marioAIOptions);
         basicTask.runOneEpisode();
-        assertEquals(cmdLineOptions.getReceptiveFieldHeight(), 7);
-        assertEquals(cmdLineOptions.getReceptiveFieldWidth(), 5);
+        assertEquals(marioAIOptions.getReceptiveFieldHeight(), 7);
+        assertEquals(marioAIOptions.getReceptiveFieldWidth(), 5);
     }
 }
 
@@ -266,13 +266,13 @@ public void testMarioReceptiveFieldSizeW8H6_vis() throws Exception
 {
     if (INCLUDE_VISUAL_TESTS)
     {
-        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -rfw 8 -rfh 6 -le 0 -srf on");
-        final BasicTask basicTask = new BasicTask(cmdLineOptions);
-        basicTask.reset(cmdLineOptions);
+        final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis on -rfw 8 -rfh 6 -le 0 -srf on");
+        final BasicTask basicTask = new BasicTask(marioAIOptions);
+        basicTask.reset(marioAIOptions);
         basicTask.runOneEpisode();
-        assertEquals(7, cmdLineOptions.getReceptiveFieldHeight());
-        assertEquals(9, cmdLineOptions.getReceptiveFieldWidth());
-        int[] pos = basicTask.getEnvironment().getMarioReceptiveFieldCenter();
+        assertEquals(7, marioAIOptions.getReceptiveFieldHeight());
+        assertEquals(9, marioAIOptions.getReceptiveFieldWidth());
+        int[] pos = basicTask.getEnvironment().getMarioEgoPos();
         assertEquals(4, pos[0]);
         assertEquals(3, pos[1]);
     }
@@ -281,10 +281,10 @@ public void testMarioReceptiveFieldSizeW8H6_vis() throws Exception
 @Test
 public void testRecordingFitness()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip -i on");
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis on -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip -i on");
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
     basicTask.getEnvironment().setReplayer(null);
-    basicTask.reset(cmdLineOptions);
+    basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     float originalFitness = basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
@@ -300,10 +300,10 @@ public void testRecordingFitness()
 @Test
 public void testRecordingEvaluationString()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip -i on");
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip -i on");
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
     basicTask.getEnvironment().setReplayer(null);
-    basicTask.reset(cmdLineOptions);
+    basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     String playEvaluationString = basicTask.getEnvironment().getEvaluationInfoAsString();
     System.out.println(playEvaluationString);
@@ -321,10 +321,10 @@ public void testRecordingEvaluationString()
 @Test
 public void testRecordingTrace()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip -i on");
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip -i on");
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
     basicTask.getEnvironment().setReplayer(null);
-    basicTask.reset(cmdLineOptions);
+    basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
 
     int[][] firstTrace = basicTask.getEnvironment().getEvaluationInfo().marioTrace;

@@ -34,8 +34,8 @@ import ch.idsia.benchmark.mario.engine.level.Level;
 import ch.idsia.benchmark.mario.engine.sprites.Mario;
 import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 import ch.idsia.benchmark.mario.environments.Environment;
-import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.GameViewer;
+import ch.idsia.tools.MarioAIOptions;
 import ch.idsia.tools.Scale2x;
 
 import javax.swing.*;
@@ -85,15 +85,15 @@ private static MarioVisualComponent marioVisualComponent = null;
 
 private Scale2x scale2x = new Scale2x(320, 240);
 
-private MarioVisualComponent(CmdLineOptions cmdLineOptions, LevelScene levelScene)
+private MarioVisualComponent(MarioAIOptions marioAIOptions, LevelScene levelScene)
 {
     this.levelScene = levelScene;
     adjustFPS();
 
     this.setFocusable(true);
     this.setEnabled(true);
-    this.width = cmdLineOptions.getViewWidth();
-    this.height = cmdLineOptions.getViewHeight();
+    this.width = marioAIOptions.getViewWidth();
+    this.height = marioAIOptions.getViewHeight();
 
     Dimension size = new Dimension(width, height);
 
@@ -113,23 +113,23 @@ private MarioVisualComponent(CmdLineOptions cmdLineOptions, LevelScene levelScen
 
     GlobalOptions.registerMarioVisualComponent(this);
 
-    if (cmdLineOptions.isGameViewer())
+    if (marioAIOptions.isGameViewer())
     {
         if (this.gameViewer == null)
         {
 
-            this.setGameViewer(new GameViewer(cmdLineOptions));
+            this.setGameViewer(new GameViewer(marioAIOptions));
             this.gameViewer.setMarioVisualComponent(this);
             this.gameViewer.setVisible(true);
         }
     }
 }
 
-public static MarioVisualComponent getInstance(CmdLineOptions cmdLineOptions, LevelScene levelScene)
+public static MarioVisualComponent getInstance(MarioAIOptions marioAIOptions, LevelScene levelScene)
 {
     if (marioVisualComponent == null)
     {
-        marioVisualComponent = new MarioVisualComponent(cmdLineOptions, levelScene);
+        marioVisualComponent = new MarioVisualComponent(marioAIOptions, levelScene);
         marioVisualComponent.CreateMarioComponentFrame(marioVisualComponent);
     }
     return marioVisualComponent;

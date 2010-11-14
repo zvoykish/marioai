@@ -29,7 +29,7 @@ package ch.idsia.scenarios.champ;
 
 import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.benchmark.tasks.Task;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -40,15 +40,15 @@ import ch.idsia.tools.CmdLineOptions;
  */
 public class LearningTask extends BasicTask implements Task
 {
-public LearningTask(CmdLineOptions cmdLineOptions)
+public LearningTask(MarioAIOptions marioAIOptions)
 {
-    super(cmdLineOptions);
+    super(marioAIOptions);
 }
 
-public void reset(CmdLineOptions cmdLineOptions)
+public void reset(MarioAIOptions marioAIOptions)
 {
-    options = cmdLineOptions;
-    environment.reset(cmdLineOptions);
+    options = marioAIOptions;
+    environment.reset(marioAIOptions);
 }
 
 }

@@ -33,8 +33,8 @@ import ch.idsia.agents.SRNESLearningAgent;
 import ch.idsia.agents.learning.MediumSRNAgent;
 import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.benchmark.tasks.ProgressTask;
-import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
+import ch.idsia.tools.MarioAIOptions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -60,16 +60,16 @@ private static boolean detailedStats = false;
 
 final static int populationSize = 100;
 
-private static float evaluateSubmission(CmdLineOptions cmdLineOptions, LearningAgent learningAgent)
+private static float evaluateSubmission(MarioAIOptions marioAIOptions, LearningAgent learningAgent)
 {
     boolean verbose = false;
     float fitness = 0;
     int disqualifications = 0;
 
-    cmdLineOptions.setVisualization(false);
-    //final LearningTask learningTask = new LearningTask(cmdLineOptions);
+    marioAIOptions.setVisualization(false);
+    //final LearningTask learningTask = new LearningTask(marioAIOptions);
     //learningTask.setAgent(learningAgent);
-    ProgressTask task = new ProgressTask(cmdLineOptions);
+    ProgressTask task = new ProgressTask(marioAIOptions);
 
     learningAgent.newEpisode();
     learningAgent.setTask(task);
@@ -80,8 +80,8 @@ private static float evaluateSubmission(CmdLineOptions cmdLineOptions, LearningA
     {
         System.out.println("-------------------------------");
         System.out.println(i + " trial");
-        //learningTask.reset(cmdLineOptions);
-        task.reset(cmdLineOptions);
+        //learningTask.reset(marioAIOptions);
+        task.reset(marioAIOptions);
         // inform your agent that new episode is coming, pick up next representative in population.
 //            learningAgent.learn();
         task.runOneEpisode();
@@ -104,11 +104,11 @@ private static float evaluateSubmission(CmdLineOptions cmdLineOptions, LearningA
     // do some post processing if you need to. In general: select the Agent with highest score.
     learningAgent.learn();
     // perform the gameplay task on the same level
-    cmdLineOptions.setVisualization(true);
+    marioAIOptions.setVisualization(true);
     Agent bestAgent = learningAgent.getBestAgent();
-    cmdLineOptions.setAgent(bestAgent);
-    BasicTask basicTask = new BasicTask(cmdLineOptions);
-    basicTask.reset(cmdLineOptions);
+    marioAIOptions.setAgent(bestAgent);
+    BasicTask basicTask = new BasicTask(marioAIOptions);
+    basicTask.reset(marioAIOptions);
 //        basicTask.setAgent(bestAgent);
     if (!basicTask.runOneEpisode())  // make evaluation on the same episode once
     {
@@ -129,30 +129,30 @@ public static void main(String[] args)
 {
 //        Level 1
     // set up parameters
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions(args);
     LearningAgent learningAgent = new SRNESLearningAgent(new MediumSRNAgent()); // Your Competition Entry goes here
 
-    cmdLineOptions.setArgs("-lco off -lb off -le off -lhb off -lg off -ltb off -lhs off -lca off -lde off");
-    float finalScore = LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
+    marioAIOptions.setArgs("-lco off -lb off -le off -lhb off -lg off -ltb off -lhs off -lca off -lde off");
+    float finalScore = LearningEvaluation.evaluateSubmission(marioAIOptions, learningAgent);
 
 //        ProgressTask task = new ProgressTask(options);
 //        ES es = new ES (task, initial, populationSize);
 
 //        Level 2
-    cmdLineOptions.setArgs("-lco on -lb on -lhb off -lg off -ltb off -lhs off -lca off -lde off -ld 3");
-    finalScore += LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
+    marioAIOptions.setArgs("-lco on -lb on -lhb off -lg off -ltb off -lhs off -lca off -lde off -ld 3");
+    finalScore += LearningEvaluation.evaluateSubmission(marioAIOptions, learningAgent);
 
 //        Level 3
-    cmdLineOptions.setArgs("-lco off -lb off -le off -lhb off -lg on -ltb off -lhs off -lca off -lde off -ld 2");
-    finalScore += LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
+    marioAIOptions.setArgs("-lco off -lb off -le off -lhb off -lg on -ltb off -lhs off -lca off -lde off -ld 2");
+    finalScore += LearningEvaluation.evaluateSubmission(marioAIOptions, learningAgent);
 
 //        Level 4
-    cmdLineOptions.setArgs("-lco off -lb off -le off -lhb off -lg on -ltb on -lhs off -lca on -lde off -ld 3");
-    finalScore += LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
+    marioAIOptions.setArgs("-lco off -lb off -le off -lhb off -lg on -ltb on -lhs off -lca on -lde off -ld 3");
+    finalScore += LearningEvaluation.evaluateSubmission(marioAIOptions, learningAgent);
 
 //        Level 5
-    cmdLineOptions.setArgs("-lco on -lb off -le g,rk,gw -lhb on -lg off -ltb on -lhs off -lca off -lde off -ld 3");
-    finalScore += LearningEvaluation.evaluateSubmission(cmdLineOptions, learningAgent);
+    marioAIOptions.setArgs("-lco on -lb off -le g,rk,gw -lhb on -lg off -ltb on -lhs off -lca off -lde off -ld 3");
+    finalScore += LearningEvaluation.evaluateSubmission(marioAIOptions, learningAgent);
 
 
     System.out.println("finalScore = " + finalScore);

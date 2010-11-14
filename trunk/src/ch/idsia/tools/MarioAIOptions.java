@@ -44,7 +44,7 @@ import java.util.Map;
  */
 
 /**
- * The <code>CmdLineOptions</code> class handles the command-line options
+ * The <code>MarioAIOptions</code> class handles the command-line options
  * It sets up parameters from command line if there are any.
  * Defaults are used otherwise.
  *
@@ -55,14 +55,14 @@ import java.util.Map;
  * @since MarioAI0.1
  */
 
-public final class CmdLineOptions extends SimulationOptions
+public final class MarioAIOptions extends SimulationOptions
 {
-private static final HashMap<String, CmdLineOptions> CmdLineOptionsMapString = new HashMap<String, CmdLineOptions>();
+private static final HashMap<String, MarioAIOptions> CmdLineOptionsMapString = new HashMap<String, MarioAIOptions>();
 private String optionsAsString = "";
 
 final private Point marioInitialPos = new Point();
 
-public CmdLineOptions(String[] args)
+public MarioAIOptions(String[] args)
 {
     super();
     this.setArgs(args);
@@ -70,14 +70,14 @@ public CmdLineOptions(String[] args)
 
 //    @Deprecated
 
-public CmdLineOptions(String args)
+public MarioAIOptions(String args)
 {
-    //USE CmdLineOptions.getCmdLineOptionsClassByString(String args) method
+    //USE MarioAIOptions.getCmdLineOptionsClassByString(String args) method
     super();
     this.setArgs(args);
 }
 
-public CmdLineOptions()
+public MarioAIOptions()
 {
     super();
     this.setArgs("");
@@ -164,19 +164,19 @@ public void printOptions(boolean singleLine)
             System.out.println(el.getKey() + " " + el.getValue() + " ");
 }
 
-public static CmdLineOptions getOptionsByString(String argString)
+public static MarioAIOptions getOptionsByString(String argString)
 {
     // TODO: verify validity of this method, add unit tests
     if (CmdLineOptionsMapString.get(argString) == null)
     {
-        final CmdLineOptions value = new CmdLineOptions(argString.trim().split("\\s+"));
+        final MarioAIOptions value = new MarioAIOptions(argString.trim().split("\\s+"));
         CmdLineOptionsMapString.put(argString, value);
         return value;
     }
     return CmdLineOptionsMapString.get(argString);
 }
 
-public static CmdLineOptions getDefaultOptions()
+public static MarioAIOptions getDefaultOptions()
 {
     return getOptionsByString("");
 }
@@ -206,33 +206,28 @@ public boolean isStopGamePlay()
     return b(getParameterValue("-stop"));
 }
 
-public String getPyAmiCoModuleName()
-{
-    return getParameterValue("-pym");
-}
-
 public int getReceptiveFieldWidth()
 {
     int ret = i(getParameterValue("-rfw"));
-
-    if (ret % 2 == 0)
-    {
-        System.err.println("\n[MarioAI WARNING] : Wrong value for receptive field width: " + ret++ +
-                " ; receptive field width set to " + ret);
-        setParameterValue("-rfw", s(ret));
-    }
+//
+//    if (ret % 2 == 0)
+//    {
+//        System.err.println("\n[MarioAI WARNING] : Wrong value for receptive field width: " + ret++ +
+//                " ; receptive field width set to " + ret);
+//        setParameterValue("-rfw", s(ret));
+//    }
     return ret;
 }
 
 public int getReceptiveFieldHeight()
 {
     int ret = i(getParameterValue("-rfh"));
-    if (ret % 2 == 0)
-    {
-        System.err.println("\n[MarioAI WARNING] : Wrong value for receptive field height: " + ret++ +
-                " ; receptive field height set to " + ret);
-        setParameterValue("-rfh", s(ret));
-    }
+//    if (ret % 2 == 0)
+//    {
+//        System.err.println("\n[MarioAI WARNING] : Wrong value for receptive field height: " + ret++ +
+//                " ; receptive field height set to " + ret);
+//        setParameterValue("-rfh", s(ret));
+//    }
     return ret;
 }
 
@@ -251,5 +246,15 @@ public Point getMarioInitialPos()
 public void reset()
 {
     optionsHashMap.clear();
+}
+
+public int marioEgoPosRow()
+{
+    return i(getParameterValue("-mer"));
+}
+
+public int marioEgoPosCol()
+{
+    return i(getParameterValue("-mec"));
 }
 }

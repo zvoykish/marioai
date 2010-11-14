@@ -30,8 +30,8 @@ package ch.idsia.benchmark.mario.environments;
 import ch.idsia.agents.Agent;
 import ch.idsia.benchmark.mario.engine.Replayer;
 import ch.idsia.benchmark.mario.engine.sprites.Mario;
-import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
+import ch.idsia.tools.MarioAIOptions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -158,13 +158,13 @@ String getEvaluationInfoAsString();
 
 EvaluationInfo getEvaluationInfo();
 
-void reset(CmdLineOptions cmdLineOptions);
+void reset(MarioAIOptions marioAIOptions);
 
 void setAgent(Agent agent);
 
 public float getIntermediateReward();
 
-public int[] getMarioReceptiveFieldCenter();
+public int[] getMarioEgoPos();
 
 public void closeRecorder();
 

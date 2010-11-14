@@ -29,7 +29,7 @@ package ch.idsia.benchmark.tasks;
 
 import ch.idsia.agents.Agent;
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -52,7 +52,7 @@ private String fileTimeStamp = "-uid-" + uid + "-" + GlobalOptions.getTimeStamp(
 
 //    private int startingSeed;
 
-public ProgressTask(CmdLineOptions evaluationOptions)
+public ProgressTask(MarioAIOptions evaluationOptions)
 {
     super(evaluationOptions);
     setOptions(evaluationOptions);

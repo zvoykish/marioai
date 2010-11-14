@@ -30,8 +30,8 @@ package ch.idsia.benchmark.mario.environments;
 import ch.idsia.agents.Agent;
 import ch.idsia.benchmark.mario.engine.*;
 import ch.idsia.benchmark.mario.engine.sprites.Mario;
-import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
+import ch.idsia.tools.MarioAIOptions;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -45,7 +45,7 @@ import java.io.IOException;
 
 public final class MarioEnvironment implements Environment
 {
-private int[] marioReceptiveFieldCenterPos = new int[2];
+private int[] marioEgoPos = new int[2];
 
 private final LevelScene levelScene;
 //    private int frame = 0;
@@ -82,14 +82,14 @@ public void resetDefault()
 
 public void reset(String args)
 {
-    CmdLineOptions cmdLineOptions = CmdLineOptions.getOptionsByString(args);
-    this.reset(cmdLineOptions);
-//        CmdLineOptions opts = new CmdLineOptions(setUpOptions);
+    MarioAIOptions marioAIOptions = MarioAIOptions.getOptionsByString(args);
+    this.reset(marioAIOptions);
+//        MarioAIOptions opts = new MarioAIOptions(setUpOptions);
 //        int[] intOpts = opts.toIntArray();
 //        this.reset(intOpts);
 }
 
-public void reset(CmdLineOptions setUpOptions)
+public void reset(MarioAIOptions setUpOptions)
 {
     /*System.out.println("\nsetUpOptions = " + setUpOptions);
     for (int i = 0; i < setUpOptions.length; ++i)
@@ -101,14 +101,10 @@ public void reset(CmdLineOptions setUpOptions)
 //    if (!setUpOptions.getReplayOptions().equals(""))
 
     this.setAgent(setUpOptions.getAgent());
-    // TODO:TASK:[M] Arbitrary center of ego in Receptive Field. don't forget to change code in the LevelScene.getMarioState() method
-    //  marioReceptiveFieldCenterX, default: getReceptiveFieldWidth() / 2
-    // TODO : same for Y
-//    marioReceptiveFieldCenterPos[0] = setUpOptions.marioReceptiveFieldCenterX();
-//    marioReceptiveFieldCenterPos[1] = setUpOptions.marioReceptiveFieldCenterY();
-
-    marioReceptiveFieldCenterPos[0] = setUpOptions.getReceptiveFieldWidth() / 2;
-    marioReceptiveFieldCenterPos[1] = setUpOptions.getReceptiveFieldHeight() / 2;
+    // TODO:TASK:[M] Arbitrary center of ego in Receptive Field.
+    // TODO: remember to change code in the LevelScene.getMarioState() method
+    marioEgoPos[0] = setUpOptions.marioEgoPosRow();
+    marioEgoPos[1] = setUpOptions.marioEgoPosCol();
 
     marioTraceFile = setUpOptions.getTraceFileName();
 
@@ -365,9 +361,9 @@ public float getIntermediateReward()
     return intermediateReward;
 }
 
-public int[] getMarioReceptiveFieldCenter()
+public int[] getMarioEgoPos()
 {
-    return marioReceptiveFieldCenterPos;
+    return marioEgoPos;
 }
 
 public void closeRecorder()

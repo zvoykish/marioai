@@ -28,7 +28,7 @@
 package ch.idsia.benchmark.tasks;
 
 import ch.idsia.agents.Agent;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -42,7 +42,7 @@ public interface Task
 {
 public float[] evaluate(Agent controller);
 
-public void setOptions(CmdLineOptions options);
+public void setOptions(MarioAIOptions options);
 
 void doEpisodes(int amount, boolean verbose);
 

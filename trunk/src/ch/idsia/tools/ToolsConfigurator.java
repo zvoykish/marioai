@@ -58,34 +58,34 @@ import java.util.Set;
 public class ToolsConfigurator extends JFrame
 {
 private Evaluator evaluator;
-private static CmdLineOptions cmdLineOptions = null;
+private static MarioAIOptions marioAIOptions = null;
 
 public static void main(String[] args)
 {
-    cmdLineOptions = new CmdLineOptions(args);
+    marioAIOptions = new MarioAIOptions(args);
     // Create an Agent here
     MainRun.createAgentsPool();
 
     ToolsConfigurator toolsConfigurator = new ToolsConfigurator(null, null);
-    toolsConfigurator.setVisible(cmdLineOptions.isToolsConfigurator());
+    toolsConfigurator.setVisible(marioAIOptions.isToolsConfigurator());
 
-    toolsConfigurator.ChoiceLevelType.select(cmdLineOptions.getLevelType());
-    toolsConfigurator.JSpinnerLevelDifficulty.setValue(cmdLineOptions.getLevelDifficulty());
-    toolsConfigurator.JSpinnerLevelRandomizationSeed.setValue(cmdLineOptions.getLevelRandSeed());
-    toolsConfigurator.JSpinnerLevelLength.setValue(cmdLineOptions.getLevelLength());
-    toolsConfigurator.CheckboxShowVizualization.setState(cmdLineOptions.isVisualization());
-//        toolsConfigurator.JSpinnerMaxAttempts.setValue(cmdLineOptions.getNumberOfTrials());
+    toolsConfigurator.ChoiceLevelType.select(marioAIOptions.getLevelType());
+    toolsConfigurator.JSpinnerLevelDifficulty.setValue(marioAIOptions.getLevelDifficulty());
+    toolsConfigurator.JSpinnerLevelRandomizationSeed.setValue(marioAIOptions.getLevelRandSeed());
+    toolsConfigurator.JSpinnerLevelLength.setValue(marioAIOptions.getLevelLength());
+    toolsConfigurator.CheckboxShowVizualization.setState(marioAIOptions.isVisualization());
+//        toolsConfigurator.JSpinnerMaxAttempts.setValue(marioAIOptions.getNumberOfTrials());
     toolsConfigurator.ChoiceAgent.select(AgentsPool.getCurrentAgent().getName());
-    toolsConfigurator.CheckboxMaximizeFPS.setState(cmdLineOptions.getFPS() > GlobalOptions.MaxFPS - 1);
-    toolsConfigurator.CheckboxPauseWorld.setState(cmdLineOptions.isPauseWorld());
-    toolsConfigurator.CheckboxPowerRestoration.setState(cmdLineOptions.isPowerRestoration());
-//        toolsConfigurator.CheckboxStopSimulationIfWin.setState(cmdLineOptions.isStopSimulationIfWin());
-    toolsConfigurator.CheckboxExitOnFinish.setState(cmdLineOptions.isExitProgramWhenFinished());
-//        toolsConfigurator.TextFieldMatLabFileName.setText(cmdLineOptions.getMatlabFileName());
+    toolsConfigurator.CheckboxMaximizeFPS.setState(marioAIOptions.getFPS() > GlobalOptions.MaxFPS - 1);
+    toolsConfigurator.CheckboxPauseWorld.setState(marioAIOptions.isPauseWorld());
+    toolsConfigurator.CheckboxPowerRestoration.setState(marioAIOptions.isPowerRestoration());
+//        toolsConfigurator.CheckboxStopSimulationIfWin.setState(marioAIOptions.isStopSimulationIfWin());
+    toolsConfigurator.CheckboxExitOnFinish.setState(marioAIOptions.isExitProgramWhenFinished());
+//        toolsConfigurator.TextFieldMatLabFileName.setText(marioAIOptions.getMatlabFileName());
 
-    gameViewer = new GameViewer(cmdLineOptions);
+    gameViewer = new GameViewer(marioAIOptions);
 
-    CreateMarioComponentFrame(cmdLineOptions);
+    CreateMarioComponentFrame(marioAIOptions);
 //        marioComponent.init();
 
 //        toolsConfigurator.setMarioComponent(marioComponent);
@@ -93,9 +93,9 @@ public static void main(String[] args)
     toolsConfigurator.setGameViewer(gameViewer);
     gameViewer.setAlwaysOnTop(false);
     gameViewer.setToolsConfigurator(toolsConfigurator);
-    gameViewer.setVisible(cmdLineOptions.isGameViewer());
+    gameViewer.setVisible(marioAIOptions.isGameViewer());
 
-    if (!cmdLineOptions.isToolsConfigurator())
+    if (!marioAIOptions.isToolsConfigurator())
     {
         toolsConfigurator.simulateOrPlay();
     }
@@ -106,7 +106,7 @@ public static MarioVisualComponent marioVisualComponent = null;
 
 public static void CreateMarioComponentFrame()
 {
-    CreateMarioComponentFrame(new CmdLineOptions());
+    CreateMarioComponentFrame(new MarioAIOptions());
 }
 
 @Deprecated
@@ -358,7 +358,7 @@ public void simulateOrPlay()
 
 private SimulationOptions prepareSimulationOptions()
 {
-    SimulationOptions simulationOptions = cmdLineOptions;
+    SimulationOptions simulationOptions = marioAIOptions;
     Agent agent = AgentsPool.getAgentByName(ChoiceAgent.getSelectedItem());
     simulationOptions.setAgent(agent);
     int type = ChoiceLevelType.getSelectedIndex();
