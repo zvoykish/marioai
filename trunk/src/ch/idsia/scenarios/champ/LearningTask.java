@@ -49,7 +49,6 @@ public void reset(CmdLineOptions cmdLineOptions)
 {
     options = cmdLineOptions;
     environment.reset(cmdLineOptions);
-
 }
 
 }
