@@ -360,14 +360,14 @@ public void move()
     if (keys[KEY_LEFT] && !ducking)
     {
         if (facing == 1) sliding = false;
-        xa -= sideWaysSpeed * wind;
+        xa -= sideWaysSpeed * (wind + 1);
         if (jumpTime >= 0) facing = -1;
     }
 
     if (keys[KEY_RIGHT] && !ducking)
     {
         if (facing == -1) sliding = false;
-        xa += sideWaysSpeed * wind;
+        xa += sideWaysSpeed * (wind + 1);
         if (jumpTime >= 0) facing = 1;
     }
 
