@@ -28,7 +28,7 @@
 package ch.idsia.benchmark.tasks;
 
 import ch.idsia.agents.Agent;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -40,10 +40,10 @@ public class MushroomTask extends BasicTask implements Task
 {
 private MarioCustomSystemOfValues sov = new MarioCustomSystemOfValues();
 
-public MushroomTask(CmdLineOptions cmdLineOptions)
+public MushroomTask(MarioAIOptions marioAIOptions)
 {
-    super(cmdLineOptions);
-    this.options = cmdLineOptions;
+    super(marioAIOptions);
+    this.options = marioAIOptions;
 }
 
 public float[] evaluate(Agent controller)

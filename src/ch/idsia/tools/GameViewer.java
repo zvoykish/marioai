@@ -170,7 +170,7 @@ private ToolsConfigurator toolsConfigurator = null;
 private int ZLevelMapValue = 0;
 private int ZLevelEnemiesValue = 0;
 
-public GameViewer(CmdLineOptions cmdLineOptions)
+public GameViewer(MarioAIOptions marioAIOptions)
 {
     super(GlobalOptions.getBenchmarkName() + " Game Viewer");
     Dimension size = null;
@@ -213,7 +213,7 @@ public GameViewer(CmdLineOptions cmdLineOptions)
     GameViewerOptionsPanel.add(ShowEnemiesObservation);
     GameViewerOptionsPanel.add(ShowMergedObservation);
     GameViewerOptionsPanel.add(ContinuousUpdates);
-    ContinuousUpdates.setState(cmdLineOptions.isGameViewerContinuousUpdates());
+    ContinuousUpdates.setState(marioAIOptions.isGameViewerContinuousUpdates());
 
     GameViewerOptionsPanel.setBorder(new TitledBorder(new EtchedBorder(), "Mario AI Game Viewer Options"));
 

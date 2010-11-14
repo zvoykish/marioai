@@ -31,7 +31,7 @@ import ch.idsia.agents.Agent;
 import ch.idsia.agents.AgentsPool;
 import ch.idsia.benchmark.tasks.ProgressTask;
 import ch.idsia.benchmark.tasks.Task;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -46,7 +46,7 @@ final static int repetitions = 10;
 public static void main(String[] args)
 {
     Agent controller = AgentsPool.load(args[0]);
-    CmdLineOptions options = new CmdLineOptions(new String[0]);
+    MarioAIOptions options = new MarioAIOptions(new String[0]);
     options.setAgent(controller);
     options.setPauseWorld(false);
     Task task = new ProgressTask(options);

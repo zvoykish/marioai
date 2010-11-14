@@ -32,7 +32,7 @@ import ch.idsia.benchmark.mario.engine.level.LevelGenerator;
 import ch.idsia.benchmark.mario.engine.level.SpriteTemplate;
 import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 import ch.idsia.benchmark.tasks.BasicTask;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 import ch.idsia.tools.RandomCreatureGenerator;
 import junit.framework.TestCase;
 import org.testng.annotations.AfterTest;
@@ -65,15 +65,15 @@ public void testRegressionLBBug() throws Exception
 {
     // This test has to be first because it only happens if blocks have
     // never been on before.
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions();
-    cmdLineOptions.setArgs("-lb off");
-    Level level1 = LevelGenerator.createLevel(cmdLineOptions);
-    cmdLineOptions.setArgs("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -lb on");
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
-    basicTask.reset(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions();
+    marioAIOptions.setArgs("-lb off");
+    Level level1 = LevelGenerator.createLevel(marioAIOptions);
+    marioAIOptions.setArgs("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -lb on");
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
+    basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
-    cmdLineOptions.setArgs("-lb off");
-    Level level2 = LevelGenerator.createLevel(cmdLineOptions);
+    marioAIOptions.setArgs("-lb off");
+    Level level2 = LevelGenerator.createLevel(marioAIOptions);
 
 
     for (int i = 0; i < level1.length; i++)
@@ -84,9 +84,9 @@ public void testRegressionLBBug() throws Exception
 @Test
 public void testCreateLevel() throws Exception
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions();
-    Level level1 = LevelGenerator.createLevel(cmdLineOptions);
-    Level level2 = LevelGenerator.createLevel(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions();
+    Level level1 = LevelGenerator.createLevel(marioAIOptions);
+    Level level2 = LevelGenerator.createLevel(marioAIOptions);
 
     for (int i = 0; i < level1.length; i++)
         for (int j = 0; j < level1.height; j++)
@@ -96,9 +96,9 @@ public void testCreateLevel() throws Exception
 @Test
 public void testSpriteTemplates() throws Exception
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions();
-    Level level1 = LevelGenerator.createLevel(cmdLineOptions);
-    Level level2 = LevelGenerator.createLevel(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions();
+    Level level1 = LevelGenerator.createLevel(marioAIOptions);
+    Level level2 = LevelGenerator.createLevel(marioAIOptions);
 
 
     for (int i = 0; i < level1.length; i++)
@@ -127,8 +127,8 @@ public void testSpriteTemplates() throws Exception
 @Test
 public void testCreateLevelWithoutCreatures() throws Exception
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-le off");
-    Level level = LevelGenerator.createLevel(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-le off");
+    Level level = LevelGenerator.createLevel(marioAIOptions);
 
     for (int i = 0; i < level.length; i++)
         for (int j = 0; j < level.height; j++)
@@ -138,8 +138,8 @@ public void testCreateLevelWithoutCreatures() throws Exception
 //    @Test
 //    public void testCreateLevelWithTubesWithoutFlowers()
 //    {
-//        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-ltb on -le g,gw,gk,gkw,rk,rkw,s,sw");
-//        Level level = LevelGenerator.createLevel(cmdLineOptions);
+//        final MarioAIOptions marioAIOptions = new MarioAIOptions("-ltb on -le g,gw,gk,gkw,rk,rkw,s,sw");
+//        Level level = LevelGenerator.createLevel(marioAIOptions);
 //
 //        assertEquals(true, level.counters.tubesCount > 0);
 //        assertEquals(true, level.counters.totalTubes == Integer.MAX_VALUE);
@@ -148,8 +148,8 @@ public void testCreateLevelWithoutCreatures() throws Exception
 //    @Test
 //    public void testCreateLevelWithTubesWithFlowers()
 //    {
-//        final CmdLineOptions cmdLineOptions = new CmdLineOptions("-ltb on -le f -ld 5 -ls 222");
-//        Level level = LevelGenerator.createLevel(cmdLineOptions);
+//        final MarioAIOptions marioAIOptions = new MarioAIOptions("-ltb on -le f -ld 5 -ls 222");
+//        Level level = LevelGenerator.createLevel(marioAIOptions);
 //
 //        boolean fl = false;
 //
@@ -188,8 +188,8 @@ public void testRandomCreatureGenerator_Goomba()
 @Test
 public void testRandomCreatureGenerator_10Goombas()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-le g:10");
-    Level level = LevelGenerator.createLevel(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-le g:10");
+    Level level = LevelGenerator.createLevel(marioAIOptions);
 
     int counter = 0;
 
@@ -215,8 +215,8 @@ public void testRandomCreatureGenerator_10Goombas()
 @Test
 public void testRandomCreatureGenerator_20RedWingedKoopas()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-le rkw:20");
-    Level level = LevelGenerator.createLevel(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-le rkw:20");
+    Level level = LevelGenerator.createLevel(marioAIOptions);
 
     int counter = 0;
 

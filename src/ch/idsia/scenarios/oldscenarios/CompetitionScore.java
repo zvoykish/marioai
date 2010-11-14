@@ -32,7 +32,7 @@ import ch.idsia.agents.AgentsPool;
 import ch.idsia.agents.controllers.TimingAgent;
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.simulation.SimulationOptions;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 import ch.idsia.utils.statistics.StatisticalSummary;
 
 /**
@@ -67,7 +67,7 @@ public static void score(Agent agent, int startingSeed)
     marioModeSum = 0;
     TimingAgent controller = new TimingAgent(agent);
 //        RegisterableAgent.registerAgent (controller);
-    SimulationOptions options = new CmdLineOptions(new String[0]);
+    SimulationOptions options = new MarioAIOptions(new String[0]);
 
 //        options.setNumberOfTrials(1);
     options.setVisualization(false);

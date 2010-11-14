@@ -33,8 +33,8 @@ import ch.idsia.agents.controllers.ForwardJumpingAgent;
 import ch.idsia.agents.controllers.TimingAgent;
 import ch.idsia.benchmark.mario.simulation.SimulationOptions;
 import ch.idsia.benchmark.tasks.BasicTask;
-import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
+import ch.idsia.tools.MarioAIOptions;
 import ch.idsia.utils.statistics.StatisticalSummary;
 
 
@@ -62,9 +62,9 @@ private static boolean detailedStats = false;
 
 public static void main(String[] args)
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions(args);
 
-    int levelLength = cmdLineOptions.getLevelLength();
+    int levelLength = marioAIOptions.getLevelLength();
 
     final int[] timeLimits = new int[]{levelLength / 10,
             levelLength * 2 / 10,
@@ -74,18 +74,18 @@ public static void main(String[] args)
     final int[] levelTypes = new int[]{0, 1, 2};
     final int[] levelLengths = new int[]{320, 320, 320, 320, 320, 320};
     final boolean[] creaturesEnables = new boolean[]{false, true};
-    int levelSeed = cmdLineOptions.getLevelRandSeed();
-//        cmdLineOptions.setVisualization(false);
-//        cmdLineOptions.setFPS(100);
-    cmdLineOptions.setLevelRandSeed(6189642);
+    int levelSeed = marioAIOptions.getLevelRandSeed();
+//        marioAIOptions.setVisualization(false);
+//        marioAIOptions.setFPS(100);
+    marioAIOptions.setLevelRandSeed(6189642);
 
 //        final Environment environment = new MarioEnvironment();
     final Agent agent = new ForwardJumpingAgent();
-//        final Agent agent = cmdLineOptions.getAgent();
+//        final Agent agent = marioAIOptions.getAgent();
 //        final Agent agent = (SimpleCNAgent) Easy.load("sergeypolikarpov.xml");
 //        System.out.println("agent = " + agent);
-    cmdLineOptions.setAgent(agent);
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
+    marioAIOptions.setAgent(agent);
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
     float fitness = 0;
     boolean verbose = false;
     int trials = 0;
@@ -102,12 +102,12 @@ public static void main(String[] args)
                     for (int timeLimit : timeLimits)
                     {
                         trials++;
-                        cmdLineOptions.setLevelLength(ll);
-                        cmdLineOptions.setLevelDifficulty(levelDifficulty);
-                        cmdLineOptions.setLevelType(levelType);
-                        cmdLineOptions.setPauseWorld(!creaturesEnable);
-                        cmdLineOptions.setTimeLimit(timeLimit);
-                        basicTask.reset(cmdLineOptions);
+                        marioAIOptions.setLevelLength(ll);
+                        marioAIOptions.setLevelDifficulty(levelDifficulty);
+                        marioAIOptions.setLevelType(levelType);
+                        marioAIOptions.setPauseWorld(!creaturesEnable);
+                        marioAIOptions.setTimeLimit(timeLimit);
+                        basicTask.reset(marioAIOptions);
                         if (!basicTask.runOneEpisode())
                         {
                             System.out.println("[MarioAI Evaluation] : out of computational time per action!");
@@ -137,19 +137,19 @@ public static void main(String[] args)
     System.exit(0);
 }
 
-public static void scoreAllAgents(CmdLineOptions cmdLineOptions)
+public static void scoreAllAgents(MarioAIOptions marioAIOptions)
 {
-    int startingSeed = cmdLineOptions.getLevelRandSeed();
+    int startingSeed = marioAIOptions.getLevelRandSeed();
     for (Agent agent : AgentsPool.getAgentsCollection())
-        score(agent, startingSeed, cmdLineOptions);
+        score(agent, startingSeed, marioAIOptions);
 
 //        startingSeed = 0;
 //        for (Agent agent : AgentsPool.getAgentsCollection())
-//            score(agent, startingSeed, cmdLineOptions);
+//            score(agent, startingSeed, marioAIOptions);
 
 }
 
-public static void score(Agent agent, int startingSeed, CmdLineOptions cmdLineOptions)
+public static void score(Agent agent, int startingSeed, MarioAIOptions marioAIOptions)
 {
     TimingAgent controller = new TimingAgent(agent);
     //        options.setNumberOfTrials(1);
@@ -163,10 +163,10 @@ public static void score(Agent agent, int startingSeed, CmdLineOptions cmdLineOp
     timeLeftSum = 0;
     marioModeSum = 0;
 
-    competitionScore += testConfig(controller, cmdLineOptions, startingSeed, 0, false);
-    competitionScore += testConfig(controller, cmdLineOptions, startingSeed, 3, false);
-    competitionScore += testConfig(controller, cmdLineOptions, startingSeed, 5, false);
-    competitionScore += testConfig(controller, cmdLineOptions, startingSeed, 10, false);
+    competitionScore += testConfig(controller, marioAIOptions, startingSeed, 0, false);
+    competitionScore += testConfig(controller, marioAIOptions, startingSeed, 3, false);
+    competitionScore += testConfig(controller, marioAIOptions, startingSeed, 5, false);
+    competitionScore += testConfig(controller, marioAIOptions, startingSeed, 10, false);
 
     System.out.println("\nCompetition score: " + competitionScore + "\n");
     System.out.println("Number of levels cleared = " + marioStatusSum);

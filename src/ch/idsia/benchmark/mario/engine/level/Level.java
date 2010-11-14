@@ -27,7 +27,7 @@
 
 package ch.idsia.benchmark.mario.engine.level;
 
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 
 import java.io.*;
 
@@ -62,7 +62,7 @@ static public class objCounters implements Serializable
 
     private static final long serialVersionUID = 4505050755444159808L;
 
-    public void reset(final CmdLineOptions args)
+    public void reset(final MarioAIOptions args)
     {
         deadEndsCount = 0;
         cannonsCount = 0;

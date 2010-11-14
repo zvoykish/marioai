@@ -32,7 +32,7 @@ import ch.idsia.benchmark.mario.engine.level.LevelGenerator;
 import ch.idsia.benchmark.mario.engine.level.SpriteTemplate;
 import ch.idsia.benchmark.mario.engine.sprites.*;
 import ch.idsia.benchmark.mario.environments.Environment;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 
 import java.awt.*;
 import java.io.DataInputStream;
@@ -80,8 +80,8 @@ private static final int BORDER_HILL = -62;
 // TODO:TASK:!H! : resolve (document why) this: FLOWER_POT_OR_CANNON = -85;
 private static final int FLOWER_POT_OR_CANNON = -85;
 
-private int receptiveFieldHeight = -1; // to be setup via CmdLineOptions
-private int receptiveFieldWidth = -1; // to be setup via CmdLineOptions
+private int receptiveFieldHeight = -1; // to be setup via MarioAIOptions
+private int receptiveFieldWidth = -1; // to be setup via MarioAIOptions
 private int prevRFH = -1;
 private int prevRFW = -1;
 private int[] serializedLevelScene;   // memory is allocated in reset
@@ -959,41 +959,41 @@ public boolean isMarioAbleToJump()
 public void resetDefault()
 {
     // TODO: set values to defaults
-    reset(CmdLineOptions.getDefaultOptions());
+    reset(MarioAIOptions.getDefaultOptions());
 }
 
-public void reset(CmdLineOptions cmdLineOptions)
+public void reset(MarioAIOptions marioAIOptions)
 {
 //        System.out.println("\nLevelScene RESET!");
 //        this.gameViewer = setUpOptions[0] == 1;
 //        System.out.println("this.mario.isMarioInvulnerable = " + this.mario.isMarioInvulnerable);
-//    this.levelDifficulty = cmdLineOptions.getLevelDifficulty();
+//    this.levelDifficulty = marioAIOptions.getLevelDifficulty();
 //        System.out.println("this.levelDifficulty = " + this.levelDifficulty);
-//    this.levelLength = cmdLineOptions.getLevelLength();
+//    this.levelLength = marioAIOptions.getLevelLength();
 //        System.out.println("this.levelLength = " + this.levelLength);
-//    this.levelSeed = cmdLineOptions.getLevelRandSeed();
+//    this.levelSeed = marioAIOptions.getLevelRandSeed();
 //        System.out.println("levelSeed = " + levelSeed);
-//    this.levelType = cmdLineOptions.getLevelType();
+//    this.levelType = marioAIOptions.getLevelType();
 //        System.out.println("levelType = " + levelType);
 
 
-    GlobalOptions.FPS = cmdLineOptions.getFPS();
+    GlobalOptions.FPS = marioAIOptions.getFPS();
 //        System.out.println("GlobalOptions.FPS = " + GlobalOptions.FPS);
-    GlobalOptions.isPowerRestoration = cmdLineOptions.isPowerRestoration();
+    GlobalOptions.isPowerRestoration = marioAIOptions.isPowerRestoration();
 //        System.out.println("GlobalOptions.isPowerRestoration = " + GlobalOptions.isPowerRestoration);
-    GlobalOptions.isPauseWorld = cmdLineOptions.isPauseWorld();
+    GlobalOptions.isPauseWorld = marioAIOptions.isPauseWorld();
 //        System.out.println("GlobalOptions = " + GlobalOptions.isPauseWorld);
-//        GlobalOptions.isTimer = cmdLineOptions.isTimer();
+//        GlobalOptions.isTimer = marioAIOptions.isTimer();
 //        System.out.println("GlobalOptions.isTimer = " + GlobalOptions.isTimer);
 //        isToolsConfigurator = setUpOptions[11] == 1;
-    this.setTimeLimit(cmdLineOptions.getTimeLimit());
+    this.setTimeLimit(marioAIOptions.getTimeLimit());
 //        System.out.println("this.getTimeLimit() = " + this.getTimeLimit());
 //        this.isViewAlwaysOnTop() ? 1 : 0, setUpOptions[13]
-    GlobalOptions.isVisualization = cmdLineOptions.isVisualization();
+    GlobalOptions.isVisualization = marioAIOptions.isVisualization();
 //        System.out.println("visualization = " + visualization);
 
-    receptiveFieldWidth = cmdLineOptions.getReceptiveFieldWidth();
-    receptiveFieldHeight = cmdLineOptions.getReceptiveFieldHeight();
+    receptiveFieldWidth = marioAIOptions.getReceptiveFieldWidth();
+    receptiveFieldHeight = marioAIOptions.getReceptiveFieldHeight();
     killedCreaturesTotal = 0;
     killedCreaturesByFireBall = 0;
     killedCreaturesByStomp = 0;
@@ -1012,7 +1012,7 @@ public void reset(CmdLineOptions cmdLineOptions)
         this.prevRFW = this.receptiveFieldWidth;
     }
 
-    marioInitialPos = cmdLineOptions.getMarioInitialPos();
+    marioInitialPos = marioAIOptions.getMarioInitialPos();
 
     if (replayer != null)
     {
@@ -1033,9 +1033,9 @@ public void reset(CmdLineOptions cmdLineOptions)
             e.printStackTrace();
         }
     } else
-        level = LevelGenerator.createLevel(cmdLineOptions);
+        level = LevelGenerator.createLevel(marioAIOptions);
 
-    String fileName = cmdLineOptions.getLevelFileName();
+    String fileName = marioAIOptions.getLevelFileName();
     if (!fileName.equals(""))
     {
         try
@@ -1059,9 +1059,9 @@ public void reset(CmdLineOptions cmdLineOptions)
     this.width = GlobalOptions.VISUAL_COMPONENT_WIDTH;
     this.height = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
 
-    Sprite.setCreaturesGravity(cmdLineOptions.getCreaturesGravity());
-    Sprite.setWind(cmdLineOptions.getWind());
-    Mario.resetStatic(cmdLineOptions);
+    Sprite.setCreaturesGravity(marioAIOptions.getCreaturesGravity());
+    Sprite.setWind(marioAIOptions.getWind());
+    Mario.resetStatic(marioAIOptions);
     mario = new Mario(this);
 
     sprites.add(mario);

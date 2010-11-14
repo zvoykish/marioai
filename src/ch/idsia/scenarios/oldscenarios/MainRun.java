@@ -32,7 +32,7 @@ import ch.idsia.agents.AgentsPool;
 import ch.idsia.agents.controllers.ScaredAgent;
 import ch.idsia.agents.controllers.TimingAgent;
 import ch.idsia.benchmark.mario.simulation.SimulationOptions;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 import ch.idsia.utils.statistics.StatisticalSummary;
 
 /**
@@ -55,25 +55,25 @@ private static boolean detailedStats = false;
 
 public static void main(String[] args)
 {
-    CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
-    SimulationOptions evaluationOptions = cmdLineOptions;  // if none options mentioned, all defalults are used.
+    MarioAIOptions marioAIOptions = new MarioAIOptions(args);
+    SimulationOptions evaluationOptions = marioAIOptions;  // if none options mentioned, all defalults are used.
     createAgentsPool();
 
     if (scoring)
-        scoreAllAgents(cmdLineOptions);
+        scoreAllAgents(marioAIOptions);
     else
     {
 //            Evaluator evaluator = new Evaluator(evaluationOptions);
 //            evaluationOptions.setAgent(AgentsPool.getCurrentAgent());
 //            evaluationOptions.setAgent(new AmiCoAgent(amicoModuleName, amicoAgentName));
-//            while (cmdLineOptions.getNumberOfTrials() >= SimulationOptions.currentTrial) {
+//            while (marioAIOptions.getNumberOfTrials() >= SimulationOptions.currentTrial) {
 //                List<EvaluationInfo> evaluationSummary;
 //                evaluator.evaluate();
 //            }
 //        LOGGER.save("log.txt");
     }
 
-    if (cmdLineOptions.isExitProgramWhenFinished())
+    if (marioAIOptions.isExitProgramWhenFinished())
         System.exit(0);
 }
 
@@ -112,23 +112,23 @@ public static void createAgentsPool()
     }
 }
 
-public static void scoreAllAgents(CmdLineOptions cmdLineOptions)
+public static void scoreAllAgents(MarioAIOptions marioAIOptions)
 {
-    int startingSeed = cmdLineOptions.getLevelRandSeed();
+    int startingSeed = marioAIOptions.getLevelRandSeed();
     for (Agent agent : AgentsPool.getAgentsCollection())
-        score(agent, startingSeed, cmdLineOptions);
+        score(agent, startingSeed, marioAIOptions);
 
 //        startingSeed = 0;
 //        for (Agent agent : AgentsPool.getAgentsCollection())
-//            score(agent, startingSeed, cmdLineOptions);
+//            score(agent, startingSeed, marioAIOptions);
 
 }
 
 
-public static void score(Agent agent, int startingSeed, CmdLineOptions cmdLineOptions)
+public static void score(Agent agent, int startingSeed, MarioAIOptions marioAIOptions)
 {
     TimingAgent controller = new TimingAgent(agent);
-    SimulationOptions options = cmdLineOptions;
+    SimulationOptions options = marioAIOptions;
 
 //        options.setNumberOfTrials(1);
 //        options.setVisualization(false);

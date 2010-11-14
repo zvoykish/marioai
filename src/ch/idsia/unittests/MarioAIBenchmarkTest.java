@@ -29,7 +29,7 @@ package ch.idsia.unittests;
 
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.tasks.BasicTask;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 import ch.idsia.tools.ReplayerOptions;
 import junit.framework.TestCase;
 import org.junit.Test;
@@ -72,28 +72,28 @@ public void testRandomPersistence()
 @Test
 public void testAgentLoadAndGetAgentName()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -lca off -ag ch.idsia.agents.controllers.ForwardJumpingAgent");
-    assertNotNull(cmdLineOptions.getAgent());
-    assertEquals(cmdLineOptions.getAgent().getName(), "ForwardJumpingAgent");
-    assertEquals(cmdLineOptions.getAgentFullLoadName(), "ch.idsia.agents.controllers.ForwardJumpingAgent");
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -lca off -ag ch.idsia.agents.controllers.ForwardJumpingAgent");
+    assertNotNull(marioAIOptions.getAgent());
+    assertEquals(marioAIOptions.getAgent().getName(), "ForwardJumpingAgent");
+    assertEquals(marioAIOptions.getAgentFullLoadName(), "ch.idsia.agents.controllers.ForwardJumpingAgent");
 }
 
 @Test
 public void testAgentLoadHumanKeyboardAgent()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -lca off");
-    assertNotNull(cmdLineOptions.getAgent());
-    assertEquals(cmdLineOptions.getAgent().getName(), "HumanKeyboardAgent");
-    assertEquals(cmdLineOptions.getAgentFullLoadName(), "ch.idsia.agents.controllers.human.HumanKeyboardAgent");
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -lca off");
+    assertNotNull(marioAIOptions.getAgent());
+    assertEquals(marioAIOptions.getAgent().getName(), "HumanKeyboardAgent");
+    assertEquals(marioAIOptions.getAgentFullLoadName(), "ch.idsia.agents.controllers.human.HumanKeyboardAgent");
 }
 
 
 @Test
 public void testForwardJumpingAgentFitnessWithoutCreatures()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -le 0 -ag ch.idsia.agents.controllers.ForwardJumpingAgent -echo on");
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
-    basicTask.reset(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -le 0 -ag ch.idsia.agents.controllers.ForwardJumpingAgent -echo on");
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
+    basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
     assertEquals(7664, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
@@ -102,9 +102,9 @@ public void testForwardJumpingAgentFitnessWithoutCreatures()
 @Test
 public void testForwardJumpingAgentFitnessWithDefaultCreatures()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -echo on");
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
-    basicTask.reset(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -echo on");
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
+    basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
     assertEquals(5873, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
@@ -113,9 +113,9 @@ public void testForwardJumpingAgentFitnessWithDefaultCreatures()
 @Test
 public void testReceptiveField_1x2()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -fps 75 -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 1 -rfh 2 -srf on");
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
-    basicTask.reset(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis on -fps 75 -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 1 -rfh 2 -srf on");
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
+    basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
     assertEquals(6852, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
@@ -124,9 +124,9 @@ public void testReceptiveField_1x2()
 @Test
 public void testReceptiveField_3x1()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 3 -rfh 1 -srf on");
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
-    basicTask.reset(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 3 -rfh 1 -srf on");
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
+    basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
     assertEquals(6852, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
@@ -135,9 +135,9 @@ public void testReceptiveField_3x1()
 @Test
 public void testReceptiveField_1x1()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 1 -rfh 1 -srf on");
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
-    basicTask.reset(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 1 -rfh 1 -srf on");
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
+    basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
     assertEquals(6852, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
@@ -146,9 +146,9 @@ public void testReceptiveField_1x1()
 @Test
 public void testForwardAgentFitnessWithDefaultCreatures()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -ag ch.idsia.agents.controllers.ForwardAgent -echo on");
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
-    basicTask.reset(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardAgent -echo on");
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
+    basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
     assertEquals(7162, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
@@ -157,9 +157,9 @@ public void testForwardAgentFitnessWithDefaultCreatures()
 @Test
 public void testForwardAgentFitnessWithDefaultCreaturesVisual()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -fps 100 -ag ch.idsia.agents.controllers.ForwardAgent -echo on");
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
-    basicTask.reset(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis on -fps 100 -ag ch.idsia.agents.controllers.ForwardAgent -echo on");
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
+    basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
     assertEquals(7162, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
@@ -174,9 +174,9 @@ public void testForwardAgentCoinsCollected()
 @Test
 public void testForwardAgentFitnessWithoutCreatures()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -le 0 -ag ch.idsia.agents.controllers.ForwardAgent -echo on");
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
-    basicTask.reset(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -le 0 -ag ch.idsia.agents.controllers.ForwardAgent -echo on");
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
+    basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
     assertEquals(7816, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
@@ -195,19 +195,19 @@ public void testForwardJumpingAgentCoinsCollected()
 @Test
 public void testStopGameplay()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -rfw 9 -rfh 5 -stop on -ll 100 -ag ch.idsia.agents.controllers.ForwardAgent -echo on");
-    assertEquals(true, cmdLineOptions.isStopGamePlay());
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
-    basicTask.reset(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis on -rfw 9 -rfh 5 -stop on -ll 100 -ag ch.idsia.agents.controllers.ForwardAgent -echo on");
+    assertEquals(true, marioAIOptions.isStopGamePlay());
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
+    basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
 }
 
 @Test
 public void testScaredShooty_with10Goombas()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:10");
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
-    basicTask.reset(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:10");
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
+    basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     assertEquals(10, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
 }
@@ -215,9 +215,9 @@ public void testScaredShooty_with10Goombas()
 @Test
 public void testScaredShooty_with10Goombas5RedKoopas()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:10,rk:5");
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
-    basicTask.reset(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:10,rk:5");
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
+    basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     assertEquals(15, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
 }
@@ -225,9 +225,9 @@ public void testScaredShooty_with10Goombas5RedKoopas()
 @Test
 public void testScaredShooty_with10GoombasWinged10Goombas()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis on -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:10,gw:10");
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
-    basicTask.reset(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis on -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:10,gw:10");
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
+    basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     assertEquals(10, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
 }
@@ -235,9 +235,9 @@ public void testScaredShooty_with10GoombasWinged10Goombas()
 @Test
 public void testScaredShooty_with6Goombas3Spikies()
 {
-    final CmdLineOptions cmdLineOptions = new CmdLineOptions("-vis off -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:6,s:3");
-    final BasicTask basicTask = new BasicTask(cmdLineOptions);
-    basicTask.reset(cmdLineOptions);
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:6,s:3");
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
+    basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     assertEquals(6, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
 }
@@ -260,10 +260,10 @@ public void testRecorderOptionsParser_TwoFiles()
 @Test
 public void testScale2XEnabledOnStartup()
 {
-    CmdLineOptions cmdLineOptions = new CmdLineOptions("-z on");
+    MarioAIOptions marioAIOptions = new MarioAIOptions("-z on");
 
-    BasicTask basicTask = new BasicTask(cmdLineOptions);
-    basicTask.reset(cmdLineOptions);
+    BasicTask basicTask = new BasicTask(marioAIOptions);
+    basicTask.reset(marioAIOptions);
     assertTrue(GlobalOptions.isScale2x);
 }
 }

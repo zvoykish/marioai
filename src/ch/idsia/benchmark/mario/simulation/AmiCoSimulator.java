@@ -31,7 +31,7 @@ import ch.idsia.agents.Agent;
 import ch.idsia.agents.controllers.ForwardAgent;
 import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.benchmark.mario.environments.MarioEnvironment;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -44,8 +44,8 @@ public class AmiCoSimulator
 {
 public static void main(String[] args)
 {
-    CmdLineOptions cmdLineOptions = new CmdLineOptions(args);
-    cmdLineOptions.setMarioInvulnerable(true);
+    MarioAIOptions marioAIOptions = new MarioAIOptions(args);
+    marioAIOptions.setMarioInvulnerable(true);
     String options = "-lf on -zs 1 -ls 16 -vis 1";
     System.out.print(options);
     Environment environment = MarioEnvironment.getInstance();

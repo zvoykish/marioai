@@ -31,8 +31,8 @@ import ch.idsia.agents.Agent;
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.benchmark.mario.environments.MarioEnvironment;
-import ch.idsia.tools.CmdLineOptions;
 import ch.idsia.tools.EvaluationInfo;
+import ch.idsia.tools.MarioAIOptions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -45,14 +45,14 @@ public class BasicTask implements Task
 {
 protected final static Environment environment = MarioEnvironment.getInstance();
 private Agent agent;
-protected CmdLineOptions options;
+protected MarioAIOptions options;
 private long COMPUTATION_TIME_BOUND = 42; // stands for prescribed  FPS 24.
 private String name = getClass().getSimpleName();
 private EvaluationInfo evaluationInfo;
 
-public BasicTask(CmdLineOptions cmdLineOptions)
+public BasicTask(MarioAIOptions marioAIOptions)
 {
-    this.setOptions(cmdLineOptions);
+    this.setOptions(marioAIOptions);
 }
 
 /**
@@ -79,11 +79,11 @@ public boolean runOneEpisode()
     return true;
 }
 
-public void reset(CmdLineOptions cmdLineOptions)
+public void reset(MarioAIOptions marioAIOptions)
 {
-    options = cmdLineOptions;
+    options = marioAIOptions;
     agent = options.getAgent();
-    environment.reset(cmdLineOptions);
+    environment.reset(marioAIOptions);
     agent.reset();
 }
 
@@ -97,7 +97,7 @@ public float[] evaluate(Agent controller)
     return new float[0];  //To change body of implemented methods use File | Settings | File Templates.
 }
 
-public void setOptions(CmdLineOptions options)
+public void setOptions(MarioAIOptions options)
 {
     this.options = options;
 }

@@ -34,7 +34,7 @@ import ch.idsia.benchmark.tasks.ProgressTask;
 import ch.idsia.benchmark.tasks.Task;
 import ch.idsia.evolution.Evolvable;
 import ch.idsia.evolution.ea.ES;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 import ch.idsia.utils.wox.serial.Easy;
 
 import java.text.DecimalFormat;
@@ -55,7 +55,7 @@ final static int populationSize = 100;
 
 public static void main(String[] args)
 {
-    CmdLineOptions options = new CmdLineOptions(args);
+    MarioAIOptions options = new MarioAIOptions(args);
     options.setPauseWorld(true);
     List<Agent> bestAgents = new ArrayList<Agent>();
     DecimalFormat df = new DecimalFormat("0000");

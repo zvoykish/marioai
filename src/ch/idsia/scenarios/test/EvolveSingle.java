@@ -33,7 +33,7 @@ import ch.idsia.benchmark.tasks.ProgressTask;
 import ch.idsia.evolution.Evolvable;
 import ch.idsia.evolution.ea.ES;
 import ch.idsia.scenarios.oldscenarios.Stats;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 import ch.idsia.utils.wox.serial.Easy;
 
 /**
@@ -49,7 +49,7 @@ final static int populationSize = 100;
 
 public static void main(String[] args)
 {
-    CmdLineOptions options = new CmdLineOptions(new String[0]);
+    MarioAIOptions options = new MarioAIOptions(new String[0]);
 //        options.setNumberOfTrials(1);
     options.setPauseWorld(false);
     Evolvable initial = new SimpleMLPAgent();

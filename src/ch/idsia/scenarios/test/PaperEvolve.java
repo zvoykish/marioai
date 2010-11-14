@@ -33,7 +33,7 @@ import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.tasks.ProgressTask;
 import ch.idsia.evolution.Evolvable;
 import ch.idsia.evolution.ea.ES;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 import ch.idsia.utils.statistics.Stats;
 import ch.idsia.utils.wox.serial.Easy;
 
@@ -53,7 +53,7 @@ final static int populationSize = 100;
 
 public static void main(String[] args)
 {
-    CmdLineOptions options = new CmdLineOptions(args);
+    MarioAIOptions options = new MarioAIOptions(args);
 //        Evolvable initial = new LargeSRNAgent();
 //        Evolvable initial = new SmallSRNAgent();
 //        Evolvable initial = new MediumSRNAgent();
@@ -82,8 +82,8 @@ public static void main(String[] args)
 //        task.uid = seed;
 
 //        options.setLevelRandSeed(seed);
-//        BasicTask bt = new MultiSeedProgressTask(new CmdLineOptions(args));
-//        CmdLineOptions c = new CmdLineOptions(new String[]{"-vis", "on", "-fps", "24"});
+//        BasicTask bt = new MultiSeedProgressTask(new MarioAIOptions(args));
+//        MarioAIOptions c = new MarioAIOptions(new String[]{"-vis", "on", "-fps", "24"});
 
     // start learning in mode 0
     System.out.println("options.getTimeLimit() = " + options.getTimeLimit());

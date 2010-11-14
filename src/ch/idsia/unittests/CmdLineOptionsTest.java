@@ -28,7 +28,7 @@
 package ch.idsia.unittests;
 
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
-import ch.idsia.tools.CmdLineOptions;
+import ch.idsia.tools.MarioAIOptions;
 import ch.idsia.utils.ParameterContainer;
 import junit.framework.TestCase;
 import org.testng.annotations.AfterTest;
@@ -45,12 +45,12 @@ import org.testng.annotations.Test;
 
 public class CmdLineOptionsTest extends TestCase
 {
-CmdLineOptions cmdLineOptions;
+MarioAIOptions marioAIOptions;
 
 @BeforeTest
 public void setUp()
 {
-    cmdLineOptions = new CmdLineOptions();
+    marioAIOptions = new MarioAIOptions();
 }
 
 @AfterTest
@@ -61,7 +61,7 @@ public void tearDown()
 @Test
 public void testTotalNumberOfOptions() throws Exception
 {
-    assertEquals(48, cmdLineOptions.getTotalNumberOfOptions());
+    assertEquals(48, marioAIOptions.getTotalNumberOfOptions());
 }
 
 @Test
@@ -74,7 +74,7 @@ public void testAllOptionsHaveDefaults()
 public void testSetArgs() throws Exception
 {
     String args = "-ag ch.idsia.agents.controllers.human.HumanKeyboardAgent" +
-          //  " -amico off" +
+            //  " -amico off" +
             " -echo off" +
             " -ewf on" +
             " -cgr 1.0" +
@@ -114,94 +114,94 @@ public void testSetArgs() throws Exception
             " -lhb off" +
             " -le g,gw,gk,gkw,rk,rkw,s,sw" +
             " -lf off";
-    cmdLineOptions.setArgs(args);
-    assertEquals(cmdLineOptions.getAgentFullLoadName(),"ch.idsia.agents.controllers.human.HumanKeyboardAgent");
-    assertEquals(cmdLineOptions.isEcho(), false);
-    assertEquals(cmdLineOptions.isExitProgramWhenFinished(), true);
-    assertEquals(cmdLineOptions.getCreaturesGravity(), 1.0f);
-    assertEquals(cmdLineOptions.getMarioGravity(), 1.0f);
-    assertEquals(cmdLineOptions.isGameViewer(), false);
-    assertEquals(cmdLineOptions.isGameViewerContinuousUpdates(), false);
-    assertEquals(cmdLineOptions.isMarioInvulnerable(), false);
-    assertEquals(cmdLineOptions.getLevelDifficulty(), 0);
-    assertEquals(cmdLineOptions.getLevelLength(), 320);
-    assertEquals(cmdLineOptions.getLevelRandSeed(), 0);
-    assertEquals(cmdLineOptions.getLevelType(), 0);
-    assertEquals(cmdLineOptions.getFPS(), 24);
-    assertEquals(cmdLineOptions.getMarioMode(), 2);
-    assertEquals(cmdLineOptions.isPauseWorld(), false);
-    assertEquals(cmdLineOptions.isPowerRestoration(), false);
-    assertEquals(cmdLineOptions.getReceptiveFieldHeight(), 19);
-    assertEquals(cmdLineOptions.getReceptiveFieldWidth(), 19);
-    assertEquals(cmdLineOptions.isReceptiveFieldVisualized(), false);
-    assertEquals(cmdLineOptions.getTimeLimit(), 200);
-    assertEquals(cmdLineOptions.isToolsConfigurator(), false);
-    assertEquals(cmdLineOptions.isViewAlwaysOnTop(), false);
-    assertEquals(cmdLineOptions.getViewLocation().x, 0);
-    assertEquals(cmdLineOptions.getViewLocation().y, 0);
-    assertEquals(cmdLineOptions.isVisualization(), true);
-    assertEquals(cmdLineOptions.getViewWidth(), 320);
-    assertEquals(cmdLineOptions.getViewHeight(), 240);
-    assertEquals(cmdLineOptions.getZLevelScene(), 1);
-    assertEquals(cmdLineOptions.getZLevelEnemies(), 0);
-    assertEquals(cmdLineOptions.getLevelHeight(), 15);
-    assertEquals(cmdLineOptions.getDeadEndsCount(), false);
-    assertEquals(cmdLineOptions.getCannonsCount(), true);
-    assertEquals(cmdLineOptions.getHillStraightCount(), true);
-    assertEquals(cmdLineOptions.getTubesCount(), true);
-    assertEquals(cmdLineOptions.getCoinsCount(), true);
-    assertEquals(cmdLineOptions.getBlocksCount(), true);
-    assertEquals(cmdLineOptions.getGapsCount(), true);
-    assertEquals(cmdLineOptions.getHiddenBlocksCount(), false);
-    assertEquals(cmdLineOptions.getEnemies(), "g,gw,gk,gkw,rk,rkw,s,sw");
-    assertEquals(cmdLineOptions.isFlatLevel(), false);
+    marioAIOptions.setArgs(args);
+    assertEquals(marioAIOptions.getAgentFullLoadName(), "ch.idsia.agents.controllers.human.HumanKeyboardAgent");
+    assertEquals(marioAIOptions.isEcho(), false);
+    assertEquals(marioAIOptions.isExitProgramWhenFinished(), true);
+    assertEquals(marioAIOptions.getCreaturesGravity(), 1.0f);
+    assertEquals(marioAIOptions.getMarioGravity(), 1.0f);
+    assertEquals(marioAIOptions.isGameViewer(), false);
+    assertEquals(marioAIOptions.isGameViewerContinuousUpdates(), false);
+    assertEquals(marioAIOptions.isMarioInvulnerable(), false);
+    assertEquals(marioAIOptions.getLevelDifficulty(), 0);
+    assertEquals(marioAIOptions.getLevelLength(), 320);
+    assertEquals(marioAIOptions.getLevelRandSeed(), 0);
+    assertEquals(marioAIOptions.getLevelType(), 0);
+    assertEquals(marioAIOptions.getFPS(), 24);
+    assertEquals(marioAIOptions.getMarioMode(), 2);
+    assertEquals(marioAIOptions.isPauseWorld(), false);
+    assertEquals(marioAIOptions.isPowerRestoration(), false);
+    assertEquals(marioAIOptions.getReceptiveFieldHeight(), 19);
+    assertEquals(marioAIOptions.getReceptiveFieldWidth(), 19);
+    assertEquals(marioAIOptions.isReceptiveFieldVisualized(), false);
+    assertEquals(marioAIOptions.getTimeLimit(), 200);
+    assertEquals(marioAIOptions.isToolsConfigurator(), false);
+    assertEquals(marioAIOptions.isViewAlwaysOnTop(), false);
+    assertEquals(marioAIOptions.getViewLocation().x, 0);
+    assertEquals(marioAIOptions.getViewLocation().y, 0);
+    assertEquals(marioAIOptions.isVisualization(), true);
+    assertEquals(marioAIOptions.getViewWidth(), 320);
+    assertEquals(marioAIOptions.getViewHeight(), 240);
+    assertEquals(marioAIOptions.getZLevelScene(), 1);
+    assertEquals(marioAIOptions.getZLevelEnemies(), 0);
+    assertEquals(marioAIOptions.getLevelHeight(), 15);
+    assertEquals(marioAIOptions.getDeadEndsCount(), false);
+    assertEquals(marioAIOptions.getCannonsCount(), true);
+    assertEquals(marioAIOptions.getHillStraightCount(), true);
+    assertEquals(marioAIOptions.getTubesCount(), true);
+    assertEquals(marioAIOptions.getCoinsCount(), true);
+    assertEquals(marioAIOptions.getBlocksCount(), true);
+    assertEquals(marioAIOptions.getGapsCount(), true);
+    assertEquals(marioAIOptions.getHiddenBlocksCount(), false);
+    assertEquals(marioAIOptions.getEnemies(), "g,gw,gk,gkw,rk,rkw,s,sw");
+    assertEquals(marioAIOptions.isFlatLevel(), false);
 //    TODO:TASK:[M] test all cases
 }
 
 @Test
 public void testSetLevelEnemies()
 {
-    cmdLineOptions.setArgs("-le 1111111111");
+    marioAIOptions.setArgs("-le 1111111111");
     // TODO:TASK:[M] test various conditions
 }
 
 @Test
 public void testSetMarioInvulnerable() throws Exception
 {
-    cmdLineOptions.setMarioInvulnerable(true);
-    assertEquals(cmdLineOptions.isMarioInvulnerable(), true);
-    cmdLineOptions.setArgs("-i off");
-    assertEquals(cmdLineOptions.isMarioInvulnerable(), false);
+    marioAIOptions.setMarioInvulnerable(true);
+    assertEquals(marioAIOptions.isMarioInvulnerable(), true);
+    marioAIOptions.setArgs("-i off");
+    assertEquals(marioAIOptions.isMarioInvulnerable(), false);
 }
 
 @Test
 public void testDefaultAgent()
 {
-    assertNotNull(cmdLineOptions.getAgent());
-    assertEquals("ch.idsia.agents.controllers.human.HumanKeyboardAgent", cmdLineOptions.getAgentFullLoadName());
-    assertEquals("HumanKeyboardAgent", cmdLineOptions.getAgent().getName());
+    assertNotNull(marioAIOptions.getAgent());
+    assertEquals("ch.idsia.agents.controllers.human.HumanKeyboardAgent", marioAIOptions.getAgentFullLoadName());
+    assertEquals("HumanKeyboardAgent", marioAIOptions.getAgent().getName());
 }
 
 @Test
 public void testStop()
 {
-    this.cmdLineOptions.setArgs("-stop on");
-    assertEquals(true, this.cmdLineOptions.isStopGamePlay());
-    assertEquals(GlobalOptions.isGameplayStopped, this.cmdLineOptions.isStopGamePlay());
+    this.marioAIOptions.setArgs("-stop on");
+    assertEquals(true, this.marioAIOptions.isStopGamePlay());
+    assertEquals(GlobalOptions.isGameplayStopped, this.marioAIOptions.isStopGamePlay());
 }
 
 @Test
 public void testReset()
 {
-    cmdLineOptions.setArgs("-echo on -rfw 21 -rfh 17");
-    assertTrue(cmdLineOptions.isEcho());
-    assertEquals(21, cmdLineOptions.getReceptiveFieldWidth());
-    assertEquals(17, cmdLineOptions.getReceptiveFieldHeight());
+    marioAIOptions.setArgs("-echo on -rfw 21 -rfh 17");
+    assertTrue(marioAIOptions.isEcho());
+    assertEquals(21, marioAIOptions.getReceptiveFieldWidth());
+    assertEquals(17, marioAIOptions.getReceptiveFieldHeight());
 
-    cmdLineOptions.reset();
-    assertFalse(cmdLineOptions.isEcho());
-    assertEquals(19, cmdLineOptions.getReceptiveFieldWidth());
-    assertEquals(19, cmdLineOptions.getReceptiveFieldHeight());
+    marioAIOptions.reset();
+    assertFalse(marioAIOptions.isEcho());
+    assertEquals(19, marioAIOptions.getReceptiveFieldWidth());
+    assertEquals(19, marioAIOptions.getReceptiveFieldHeight());
 }
 
 }

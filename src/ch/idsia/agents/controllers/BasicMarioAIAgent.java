@@ -98,7 +98,7 @@ public void integrateObservation(Environment environment)
     this.enemiesFloatPos = environment.getEnemiesFloatPos();
     this.marioState = environment.getMarioState();
 
-    this.marioCenter = environment.getMarioReceptiveFieldCenter();
+    this.marioCenter = environment.getMarioEgoPos();
     receptiveFieldWidth = environment.getReceptiveFieldWidth();
     receptiveFieldHeight = environment.getReceptiveFieldHeight();
 
