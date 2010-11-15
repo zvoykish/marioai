@@ -129,7 +129,7 @@ public void testReceptiveField_3x1()
     basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals(6852, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
+    assertEquals(313, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
 
 @Test
@@ -140,7 +140,7 @@ public void testReceptiveField_1x1()
     basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals(6852, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
+    assertEquals(313, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
 
 @Test
@@ -151,7 +151,7 @@ public void testForwardAgentFitnessWithDefaultCreatures()
     basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals(7162, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
+    assertEquals(4571, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
 
 @Test
@@ -162,7 +162,7 @@ public void testForwardAgentFitnessWithDefaultCreaturesVisual()
     basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals(7162, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
+    assertEquals(4571, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
 
 @Test
@@ -179,7 +179,7 @@ public void testForwardAgentFitnessWithoutCreatures()
     basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals(7816, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
+    assertEquals(1243, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
 
 @Test
