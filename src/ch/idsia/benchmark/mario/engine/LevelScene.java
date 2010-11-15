@@ -160,6 +160,7 @@ private String enemyToStr(int el)
     return s + " ";
 }
 
+/*
 private byte ZLevelMapElementGeneralization(byte el, int ZLevel)
 {
     if (el == 0)
@@ -317,7 +318,9 @@ private byte ZLevelMapElementGeneralization(byte el, int ZLevel)
     System.err.println("Unkown ZLevel Z" + ZLevel);
     return el; //TODO: Throw unknown ZLevel exception
 }
+*/
 
+/*
 
 private byte ZLevelEnemyGeneralization(byte el, int ZLevel)
 {
@@ -393,6 +396,7 @@ private byte ZLevelEnemyGeneralization(byte el, int ZLevel)
     }
     return el; //TODO: Throw unknown ZLevel exception
 }
+*/
 
 public byte[][] getLevelSceneObservationZ(int ZLevel)
 {
@@ -402,7 +406,7 @@ public byte[][] getLevelSceneObservationZ(int ZLevel)
         {
             if (x >= 0 && x < level.xExit && y >= 0 && y < level.height)
             {
-                levelSceneZ[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevel);
+                levelSceneZ[obsX][obsY] = GeneralizerLevelScene.ZLevelGeneralization(level.map[x][y], ZLevel);
             } else
             {
                 levelSceneZ[obsX][obsY] = 0;
@@ -431,7 +435,7 @@ public byte[][] getEnemiesObservationZ(int ZLevel)
         {
             int obsX = sprite.mapY - mario.mapY + receptiveFieldHeight / 2;
             int obsY = sprite.mapX - mario.mapX + receptiveFieldWidth / 2;
-            enemiesZ[obsX][obsY] = ZLevelEnemyGeneralization(sprite.kind, ZLevel);
+            enemiesZ[obsX][obsY] = GeneralizerEnemies.ZLevelGeneralization(sprite.kind, ZLevel);
         }
     }
     return enemiesZ;
@@ -486,7 +490,7 @@ public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
         {
             if (x >= 0 && x < level.xExit && y >= 0 && y < level.height)
             {
-                mergedZZ[obsX][obsY] = ZLevelMapElementGeneralization(level.map[x][y], ZLevelScene);
+                mergedZZ[obsX][obsY] = GeneralizerLevelScene.ZLevelGeneralization(level.map[x][y], ZLevelScene);
             } else
                 mergedZZ[obsX][obsY] = 0;
 //                if (x == MarioXInMap && y == MarioYInMap)
@@ -513,7 +517,7 @@ public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
             // TODO: substitue '14' by explicit statement
             if (mergedZZ[obsX][obsY] != 14)
             {
-                byte tmp = ZLevelEnemyGeneralization(sprite.kind, ZLevelEnemies);
+                byte tmp = GeneralizerEnemies.ZLevelGeneralization(sprite.kind, ZLevelEnemies);
                 if (tmp != Sprite.KIND_NONE)
                     mergedZZ[obsX][obsY] = tmp;
             }
