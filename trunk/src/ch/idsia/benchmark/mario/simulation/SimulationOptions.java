@@ -96,6 +96,11 @@ public boolean isViewAlwaysOnTop()
     return b(getParameterValue("-vaot"));
 }
 
+public void setViewerAlwaysOnTop(boolean vaot)
+{
+    setParameterValue("-vaot", s(vaot));
+}
+
 public void setFPS(int fps)
 {
     setParameterValue("-fps", s(fps));
@@ -453,5 +458,10 @@ public void setRecordFile(String var)
 public boolean isScale2X()
 {
     return b(getParameterValue("-z"));
+}
+
+public void setScale2X(boolean z)
+{
+    setParameterValue("-z", s(z));
 }
 }
