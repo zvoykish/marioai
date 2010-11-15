@@ -37,10 +37,10 @@ import ch.idsia.benchmark.mario.engine.sprites.Sprite;
  * Package: ch.idsia.benchmark.mario.engine
  */
 
-public class GeneralizerEnemies implements Generalizer
+public class GeneralizerEnemies
 {
 
-public byte ZLevelGeneralization(byte el, int ZLevel)
+public static byte ZLevelGeneralization(byte el, int ZLevel)
 {
     switch (ZLevel)
     {

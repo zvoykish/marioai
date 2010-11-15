@@ -27,8 +27,6 @@
 
 package ch.idsia.benchmark.mario.engine;
 
-import ch.idsia.benchmark.mario.engine.sprites.Sprite;
-
 /**
  * Created by IntelliJ IDEA.
  * User: Sergey Karakovskiy, sergey@idsia.ch
@@ -37,21 +35,20 @@ import ch.idsia.benchmark.mario.engine.sprites.Sprite;
  * Package: ch.idsia.benchmark.mario.engine
  */
 
-public class GeneralizerLevelScene implements Generalizer
+public class GeneralizerLevelScene
 {
-private static final int CANNON_MUZZLE = -82;
-private static final int CANNON_TRUNK = -80;
-private static final int COIN_ANIM = Sprite.KIND_COIN_ANIM;  //1
-private static final int BREAKABLE_BRICK = -20;
-private static final int UNBREAKABLE_BRICK = -22; //a rock with animated question mark
-private static final int BRICK = -24;           //a rock with animated question mark
-private static final int FLOWER_POT = -90;
-private static final int BORDER_CANNOT_PASS_THROUGH = -60;
-private static final int BORDER_HILL = -62;
-// TODO : resolve this FLOWER_POT_OR_CANNON = -85;
-private static final int FLOWER_POT_OR_CANNON = -85;
+public static final int CANNON_MUZZLE = -82;
+public static final int CANNON_TRUNK = -80;
+public static final int COIN_ANIM = 2;
+public static final int BREAKABLE_BRICK = -20;
+public static final int UNBREAKABLE_BRICK = -22; //a rock with animated question mark
+public static final int BRICK = -24;           //a rock with animated question mark
+public static final int FLOWER_POT = -90;
+public static final int BORDER_CANNOT_PASS_THROUGH = -60;
+public static final int BORDER_HILL = -62;
+public static final int FLOWER_POT_OR_CANNON = -85;
 
-public byte ZLevelGeneralization(byte el, int ZLevel)
+public static byte ZLevelGeneralization(byte el, int ZLevel)
 {
     if (el == 0)
         return 0;
@@ -70,6 +67,8 @@ public byte ZLevelGeneralization(byte el, int ZLevel)
                 case 34:
                     return COIN_ANIM;
                 case 4:
+                case -111:
+                case -127:
                     return BORDER_CANNOT_PASS_THROUGH;
                 case 14:
                     return CANNON_MUZZLE;
@@ -104,7 +103,6 @@ public byte ZLevelGeneralization(byte el, int ZLevel)
                 case 22:       // question brick, contains flower/mushroom
                     return BRICK; // any brick
                 case 1:   // hidden block
-                case (-111):
                 case (-108):
                 case (-107):
                 case (-106):
@@ -150,6 +148,7 @@ public byte ZLevelGeneralization(byte el, int ZLevel)
                 case (-82):
                 case (-81):
                 case (-77):
+                case (-111):
                 case (4):  // kicked hidden brick
                 case (9):
                     return BORDER_CANNOT_PASS_THROUGH;   // border, cannot pass through, can stand on
