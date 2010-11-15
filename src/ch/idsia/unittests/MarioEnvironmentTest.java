@@ -241,7 +241,7 @@ public void testMarioCenterPos() throws Exception
 
     int[] pos = env.getMarioEgoPos();
     assertEquals(2, pos[0]);
-    assertEquals(3, pos[1]);
+    assertEquals(2, pos[1]);
 }
 
 @Test
