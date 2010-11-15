@@ -58,53 +58,31 @@ public void reset()
     trueSpeedCounter = 0;
 }
 
-private boolean DangerOfGap(byte[][] levelScene)
+/*private boolean DangerOfGap()
 {
-    int fromX = receptiveFieldWidth / 2;
-    int fromY = receptiveFieldHeight / 2;
 
-    if (fromX > 3)
-    {
-        fromX -= 2;
-    }
-
-    for (int x = fromX; x < receptiveFieldWidth; ++x)
-    {
-        boolean f = true;
-        for (int y = fromY; y < receptiveFieldHeight; ++y)
-        {
-            if (getReceptiveFieldCellValue(y, x) != 0)
-                f = false;
-        }
-        if (f ||
-                getReceptiveFieldCellValue(marioCenter[0] + 1, marioCenter[1]) == 0 ||
-                (marioState[1] > 0 &&
-                        (getReceptiveFieldCellValue(marioCenter[0] + 1, marioCenter[1] - 1) != 0 ||
-                                getReceptiveFieldCellValue(marioCenter[0] + 1, marioCenter[1]) != 0)))
+        if (getReceptiveFieldCellValue(marioCenter[0] - 1, marioCenter[1] + 1) == 0)
             return true;
-    }
-    return false;
-}
-
-private boolean DangerOfGap()
-{
-    return DangerOfGap(levelScene);
-}
+        else
+            return false;
+}*/
 
 public boolean[] getAction()
 {
     // this Agent requires observation integrated in advance.
 
-    if (getReceptiveFieldCellValue(marioCenter[0], marioCenter[1] + 2) != 0 ||
-            getReceptiveFieldCellValue(marioCenter[0], marioCenter[1] + 1) != 0 ||
-            DangerOfGap())
+    if ((getReceptiveEnemyCellValue(marioCenter[0], marioCenter[1] + 2) != 0 ||
+            getReceptiveEnemyCellValue(marioCenter[0], marioCenter[1] + 1) != 0 ||
+            getReceptiveFieldCellValue(marioCenter[0], marioCenter[1] + 1) != 0) &&
+            (getReceptiveFieldCellValue(marioCenter[0], marioCenter[1] + 1) != 1))  // a coin
     {
         if (isMarioAbleToJump || (!isMarioOnGround && action[Mario.KEY_JUMP]))
         {
             action[Mario.KEY_JUMP] = true;
         }
         ++trueJumpCounter;
-    } else
+    }
+    else
     {
         action[Mario.KEY_JUMP] = false;
         trueJumpCounter = 0;
@@ -116,7 +94,7 @@ public boolean[] getAction()
         action[Mario.KEY_JUMP] = false;
     }
 
-    action[Mario.KEY_SPEED] = DangerOfGap();
+    //action[Mario.KEY_SPEED] = !DangerOfGap();
     return action;
 }
 }
