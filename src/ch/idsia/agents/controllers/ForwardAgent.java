@@ -58,23 +58,25 @@ public void reset()
     trueSpeedCounter = 0;
 }
 
-/*private boolean DangerOfGap()
+private boolean DangerOfAny()
 {
 
-        if (getReceptiveFieldCellValue(marioCenter[0] - 1, marioCenter[1] + 1) == 0)
+        if ((getReceptiveFieldCellValue(marioCenter[0] + 2, marioCenter[1] + 1) == 0 && 
+            getReceptiveFieldCellValue(marioCenter[0] + 1, marioCenter[1] + 1) == 0) ||
+            getReceptiveFieldCellValue(marioCenter[0], marioCenter[1] + 1) != 0 ||
+            getReceptiveFieldCellValue(marioCenter[0], marioCenter[1] + 2) != 0 ||
+            getEnemiesCellValue(marioCenter[0], marioCenter[1] + 1) != 0 ||
+            getEnemiesCellValue(marioCenter[0], marioCenter[1] + 2) != 0)
             return true;
         else
             return false;
-}*/
+}
 
 public boolean[] getAction()
 {
     // this Agent requires observation integrated in advance.
 
-    if ((getEnemiesCellValue(marioCenter[0], marioCenter[1] + 2) != 0 ||
-            getEnemiesCellValue(marioCenter[0], marioCenter[1] + 1) != 0 ||
-            getReceptiveFieldCellValue(marioCenter[0], marioCenter[1] + 1) != 0) &&
-            (getReceptiveFieldCellValue(marioCenter[0], marioCenter[1] + 1) != 1))  // a coin
+    if (DangerOfAny() && getReceptiveFieldCellValue(marioCenter[0], marioCenter[1] + 1) != 1)  // a coin
     {
         if (isMarioAbleToJump || (!isMarioOnGround && action[Mario.KEY_JUMP]))
         {
@@ -93,8 +95,7 @@ public boolean[] getAction()
         trueJumpCounter = 0;
         action[Mario.KEY_JUMP] = false;
     }
-
-    //action[Mario.KEY_SPEED] = !DangerOfGap();
+    
     return action;
 }
 }
