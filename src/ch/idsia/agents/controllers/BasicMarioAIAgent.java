@@ -136,7 +136,7 @@ public String getName() { return name; }
 
 public void setName(String Name) { this.name = Name; }
 
-public int getReceptiveEnemyCellValue(int x, int y)
+public int getEnemiesCellValue(int x, int y)
 {
     if (x < 0 || x >= levelScene.length || y < 0 || y >= levelScene[0].length)
         return 0;

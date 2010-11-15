@@ -71,8 +71,8 @@ public boolean[] getAction()
 {
     // this Agent requires observation integrated in advance.
 
-    if ((getReceptiveEnemyCellValue(marioCenter[0], marioCenter[1] + 2) != 0 ||
-            getReceptiveEnemyCellValue(marioCenter[0], marioCenter[1] + 1) != 0 ||
+    if ((getEnemiesCellValue(marioCenter[0], marioCenter[1] + 2) != 0 ||
+            getEnemiesCellValue(marioCenter[0], marioCenter[1] + 1) != 0 ||
             getReceptiveFieldCellValue(marioCenter[0], marioCenter[1] + 1) != 0) &&
             (getReceptiveFieldCellValue(marioCenter[0], marioCenter[1] + 1) != 1))  // a coin
     {
