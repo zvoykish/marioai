@@ -61,7 +61,7 @@ public void tearDown()
 @Test
 public void testTotalNumberOfOptions() throws Exception
 {
-    assertEquals(50, marioAIOptions.getTotalNumberOfOptions());
+    assertEquals(51, marioAIOptions.getTotalNumberOfOptions());
 }
 
 @Test
@@ -82,6 +82,7 @@ public void testSetArgs() throws Exception
             " -gv off" +
             " -gvc off" +
             " -i off" +
+            " -jp 7" +
             " -ld 0" +
             " -ll 320" +
             " -ls 0" +
@@ -123,6 +124,7 @@ public void testSetArgs() throws Exception
     assertEquals(marioAIOptions.isGameViewer(), false);
     assertEquals(marioAIOptions.isGameViewerContinuousUpdates(), false);
     assertEquals(marioAIOptions.isMarioInvulnerable(), false);
+    assertEquals(marioAIOptions.getJumpPower(), 7.0f);
     assertEquals(marioAIOptions.getLevelDifficulty(), 0);
     assertEquals(marioAIOptions.getLevelLength(), 320);
     assertEquals(marioAIOptions.getLevelRandSeed(), 0);

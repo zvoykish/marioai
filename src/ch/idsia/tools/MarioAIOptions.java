@@ -133,11 +133,6 @@ public float getMarioGravity()
     return f(getParameterValue("-mgr"));
 }
 
-public void setMarioGravity(float mgr)
-{
-    setParameterValue("-mgr", s(mgr));
-}
-
 public float getWind()
 {
     return f(getParameterValue("-w"));
@@ -196,19 +191,9 @@ public boolean isGameViewer()
     return b(getParameterValue("-gv"));
 }
 
-public void setGameViewer(boolean gv)
-{
-    setParameterValue("-gv", s(gv));
-}
-
 public boolean isGameViewerContinuousUpdates()
 {
     return b(getParameterValue("-gvc"));
-}
-
-public void setGameViewerContinuousUpdates(boolean gvc)
-{
-    setParameterValue("-gvc", s(gvc));
 }
 
 public boolean isEcho()
@@ -216,19 +201,14 @@ public boolean isEcho()
     return b(getParameterValue("-echo"));
 }
 
-public void setEcho(boolean echo)
-{
-    setParameterValue("-echo", s(echo));
-}
-
 public boolean isStopGamePlay()
 {
     return b(getParameterValue("-stop"));
 }
 
-public void setStopGamePlay(boolean stop)
+public float getJumpPower()
 {
-    setParameterValue("-stop", s(stop));
+    return f(getParameterValue("-jp"));
 }
 
 public int getReceptiveFieldWidth()
@@ -244,11 +224,6 @@ public int getReceptiveFieldWidth()
     return ret;
 }
 
-public void setReceptiveFieldWidth(int rfw)
-{
-    setParameterValue("-rfw", s(rfw));
-}
-
 public int getReceptiveFieldHeight()
 {
     int ret = i(getParameterValue("-rfh"));
@@ -261,19 +236,9 @@ public int getReceptiveFieldHeight()
     return ret;
 }
 
-public void setReceptiveFieldHeight(int rfh)
-{
-    setParameterValue("-rfh", s(rfh));
-}
-
 public boolean isReceptiveFieldVisualized()
 {
     return b(getParameterValue("-srf"));
-}
-
-public void setReceptiveFieldVisualized(boolean srf)
-{
-    setParameterValue("-srf", s(srf));
 }
 
 public Point getMarioInitialPos()

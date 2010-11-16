@@ -76,6 +76,7 @@ private boolean isRacoon;
 private float yaa = 1;
 
 private static float wind = 0f;
+private static float jumpPower;
 
 public static void resetStatic(MarioAIOptions marioAIOptions)
 {
@@ -88,7 +89,7 @@ public static void resetStatic(MarioAIOptions marioAIOptions)
 
     isMarioInvulnerable = marioAIOptions.isMarioInvulnerable();
     marioGravity = marioAIOptions.getMarioGravity();
-    wind = marioAIOptions.getWind();
+    jumpPower = marioAIOptions.getJumpPower();
 
     isTrace = marioAIOptions.isTrace();
 }
@@ -143,8 +144,6 @@ public Mario(LevelScene levelScene)
 
     facing = 1;
     setMode(Mario.large, Mario.fire);
-
-    final float jumpPower = 7;
     // TODO:TASK:!H! -jp <float>, default 7;
     yaa = marioGravity * 3;
     jT = jumpPower / (marioGravity);
