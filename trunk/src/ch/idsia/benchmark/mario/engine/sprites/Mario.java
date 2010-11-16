@@ -144,7 +144,6 @@ public Mario(LevelScene levelScene)
 
     facing = 1;
     setMode(Mario.large, Mario.fire);
-    // TODO:TASK:!H! -jp <float>, default 7;
     yaa = marioGravity * 3;
     jT = jumpPower / (marioGravity);
 }
