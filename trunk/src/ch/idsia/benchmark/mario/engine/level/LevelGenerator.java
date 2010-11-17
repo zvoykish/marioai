@@ -143,6 +143,9 @@ public static Level createLevel(MarioAIOptions args)
         args.setBlocksCount(false);
         args.setCoinsCount(false);
         args.setTubesCount(false);
+        args.setGapsCount(false);
+        args.setDeadEndsCount(false);
+        args.setCannonsCount(false);
         args.setEnemies("off");
     }
     counters.reset(args);
