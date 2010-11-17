@@ -7,7 +7,7 @@ ifeq ("$(OS)","Linux")
 	TO_REMOVE = *.out *.log *.aux
 else 
 	ifeq ("$(OS)","Darwin")
-		TOOL = latex2pdf
+		TOOL = pdflatex
 	endif
 endif
 
