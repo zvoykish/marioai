@@ -138,8 +138,14 @@ public static Level createLevel(MarioAIOptions args)
         height = 15;
     }
     isFlatLevel = args.isFlatLevel();
+    if (isFlatLevel)
+    {
+        args.setBlocksCount(false);
+        args.setCoinsCount(false);
+        args.setTubesCount(false);
+        args.setEnemies("off");
+    }
     counters.reset(args);
-
     levelDifficulty = args.getLevelDifficulty();
     odds[ODDS_STRAIGHT] = 20;
     odds[ODDS_HILL_STRAIGHT] = 1;
@@ -979,7 +985,7 @@ private static void buildBlocks(int x0, int x1, int floor, boolean pHB, int pS, 
 private static void buildCoins(int x0, int x1, int floor, int s, int e)
 {
     if (floor - 2 < 0) return;
-
+    //if (!isFlatLevel)
     if ((x1 - 1 - e) - (x0 + 1 + s) > 1)
     {
         for (int x = x0 + 1 + s; x < x1 - 1 - e; x++)
