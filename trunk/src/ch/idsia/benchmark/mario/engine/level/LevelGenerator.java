@@ -138,16 +138,7 @@ public static Level createLevel(MarioAIOptions args)
         height = 15;
     }
     isFlatLevel = args.isFlatLevel();
-    if (isFlatLevel)
-    {
-        args.setBlocksCount(false);
-        args.setCoinsCount(false);
-        args.setTubesCount(false);
-        args.setGapsCount(false);
-        args.setDeadEndsCount(false);
-        args.setCannonsCount(false);
-        args.setEnemies("off");
-    }
+
     counters.reset(args);
     levelDifficulty = args.getLevelDifficulty();
     odds[ODDS_STRAIGHT] = 20;
