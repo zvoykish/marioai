@@ -29,12 +29,16 @@ package ch.idsia.benchmark.mario.environments;
 
 import ch.idsia.agents.Agent;
 import ch.idsia.benchmark.mario.engine.*;
+import ch.idsia.benchmark.mario.engine.level.Level;
 import ch.idsia.benchmark.mario.engine.sprites.Mario;
+import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.tools.MarioAIOptions;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -46,6 +50,19 @@ import java.io.IOException;
 public final class MarioEnvironment implements Environment
 {
 private int[] marioEgoPos = new int[2];
+private int receptiveFieldHeight = -1; // to be setup via MarioAIOptions
+private int receptiveFieldWidth = -1; // to be setup via MarioAIOptions
+private int prevRFH = -1;
+private int prevRFW = -1;
+
+private Mario mario;
+private Level level;
+private byte[][] levelSceneZ;     // memory is allocated in reset
+private byte[][] enemiesZ;      // memory is allocated in reset
+private byte[][] mergedZZ;      // memory is allocated in reset
+
+final public List<Sprite> sprites = new ArrayList<Sprite>();
+
 
 private final LevelScene levelScene;
 //    private int frame = 0;
@@ -178,6 +195,188 @@ public int getMarioMode()
     return levelScene.getMarioMode();
 }
 
+public byte[][] getLevelSceneObservationZ(int ZLevel)
+{
+    for (int y = mario.mapY - receptiveFieldHeight / 2, obsX = 0; y <= mario.mapY + receptiveFieldHeight / 2; y++, obsX++)
+    {
+        for (int x = mario.mapX - receptiveFieldWidth / 2, obsY = 0; x <= mario.mapX + receptiveFieldWidth / 2; x++, obsY++)
+        {
+            if (x >= 0 && x < level.xExit && y >= 0 && y < level.height)
+            {
+                levelSceneZ[obsX][obsY] = GeneralizerLevelScene.ZLevelGeneralization(level.map[x][y], ZLevel);
+            } else
+            {
+                levelSceneZ[obsX][obsY] = 0;
+            }
+
+        }
+    }
+    return levelSceneZ;
+}
+
+public byte[][] getEnemiesObservationZ(int ZLevel)
+{
+    for (int w = 0; w < enemiesZ.length; w++)
+        for (int h = 0; h < enemiesZ[0].length; h++)
+            enemiesZ[w][h] = 0;
+    for (Sprite sprite : sprites)
+    {
+        if (sprite.kind == mario.kind)
+            continue;
+        if (sprite.mapX >= 0 &&
+                sprite.mapX >= mario.mapX - receptiveFieldWidth / 2 &&
+                sprite.mapX <= mario.mapX + receptiveFieldWidth / 2 &&
+                sprite.mapY >= 0 &&
+                sprite.mapY >= mario.mapY - receptiveFieldHeight / 2 &&
+                sprite.mapY <= mario.mapY + receptiveFieldHeight / 2)
+        {
+            int obsX = sprite.mapY - mario.mapY + receptiveFieldHeight / 2;
+            int obsY = sprite.mapX - mario.mapX + receptiveFieldWidth / 2;
+            enemiesZ[obsX][obsY] = GeneralizerEnemies.ZLevelGeneralization(sprite.kind, ZLevel);
+        }
+    }
+    return enemiesZ;
+}
+
+public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
+{
+//    int MarioXInMap = (int) mario.x / cellSize;
+//    int MarioYInMap = (int) mario.y / cellSize;
+
+//    if (MarioXInMap != (int) mario.x / cellSize ||MarioYInMap != (int) mario.y / cellSize )
+//        throw new Error("WRONG mario x or y pos");
+    for (int y = mario.mapY - receptiveFieldHeight / 2, obsX = 0; y <= mario.mapY + receptiveFieldHeight / 2; y++, obsX++)
+    {
+        for (int x = mario.mapX - receptiveFieldWidth / 2, obsY = 0; x <= mario.mapX + receptiveFieldWidth / 2; x++, obsY++)
+        {
+            if (x >= 0 && x < level.xExit && y >= 0 && y < level.height)
+            {
+                mergedZZ[obsX][obsY] = GeneralizerLevelScene.ZLevelGeneralization(level.map[x][y], ZLevelScene);
+            } else
+                mergedZZ[obsX][obsY] = 0;
+//                if (x == MarioXInMap && y == MarioYInMap)
+//                    mergedZZ[obsX][obsY] = mario.kind;
+        }
+    }
+//        for (int w = 0; w < mergedZZ.length; w++)
+//            for (int h = 0; h < mergedZZ[0].length; h++)
+//                mergedZZ[w][h] = -1;
+    for (Sprite sprite : sprites)
+    {
+        if (sprite.kind == mario.kind)
+            continue;
+        if (sprite.mapX >= 0 &&
+                sprite.mapX > mario.mapX - receptiveFieldWidth / 2 &&
+                sprite.mapX < mario.mapX + receptiveFieldWidth / 2 &&
+                sprite.mapY >= 0 &&
+                sprite.mapY > mario.mapY - receptiveFieldHeight / 2 &&
+                sprite.mapY < mario.mapY + receptiveFieldHeight / 2)
+        {
+            int obsX = sprite.mapY - mario.mapY + receptiveFieldHeight / 2;
+            int obsY = sprite.mapX - mario.mapX + receptiveFieldWidth / 2;
+            // quick fix TODO: handle this in more general way.
+            // TODO: substitue '14' by explicit statement
+            if (mergedZZ[obsX][obsY] != 14)
+            {
+                byte tmp = GeneralizerEnemies.ZLevelGeneralization(sprite.kind, ZLevelEnemies);
+                if (tmp != Sprite.KIND_NONE)
+                    mergedZZ[obsX][obsY] = tmp;
+            }
+        }
+    }
+
+    return mergedZZ;
+}
+
+public List<String> getObservationStrings(boolean Enemies, boolean LevelMap,
+                                          boolean mergedObservationFlag,
+                                          int ZLevelScene, int ZLevelEnemies)
+{
+    List<String> ret = new ArrayList<String>();
+    if (level != null && mario != null)
+    {
+        ret.add("Total levelScene length = " + level.length);
+        ret.add("Total levelScene height = " + level.height);
+        ret.add("Physical Mario Position (x,y): (" + mario.x + "," + mario.y + ")");
+        ret.add("Mario Observation (Receptive Field)   Width: " + receptiveFieldWidth + " Height: " + receptiveFieldHeight);
+        ret.add("X Exit Position: " + level.xExit);
+        int MarioXInMap = (int) mario.x / cellSize;
+        int MarioYInMap = (int) mario.y / cellSize;
+        ret.add("Calibrated Mario Position (x,y): (" + MarioXInMap + "," + MarioYInMap + ")\n");
+
+        byte[][] levelScene = getLevelSceneObservationZ(ZLevelScene);
+        if (LevelMap)
+        {
+            ret.add("~ZLevel: Z" + ZLevelScene + " map:\n");
+            for (int x = 0; x < levelScene.length; ++x)
+            {
+                String tmpData = "";
+                for (int y = 0; y < levelScene[0].length; ++y)
+                    tmpData += mapElToStr(levelScene[x][y]);
+                ret.add(tmpData);
+            }
+        }
+
+        byte[][] enemiesObservation = null;
+        if (Enemies || mergedObservationFlag)
+            enemiesObservation = getEnemiesObservationZ(ZLevelEnemies);
+
+        if (Enemies)
+        {
+            ret.add("~ZLevel: Z" + ZLevelScene + " Enemies Observation:\n");
+            for (int x = 0; x < enemiesObservation.length; x++)
+            {
+                String tmpData = "";
+                for (int y = 0; y < enemiesObservation[0].length; y++)
+                {
+//                        if (x >=0 && x <= level.xExit)
+                    tmpData += enemyToStr(enemiesObservation[x][y]);
+                }
+                ret.add(tmpData);
+            }
+        }
+
+        if (mergedObservationFlag)
+        {
+            byte[][] mergedObs = getMergedObservationZZ(ZLevelScene, ZLevelEnemies);
+            ret.add("~ZLevelScene: Z" + ZLevelScene + " ZLevelEnemies: Z" + ZLevelEnemies + " ; Merged observation /* Mario ~> #M.# */");
+            for (int x = 0; x < levelScene.length; ++x)
+            {
+                String tmpData = "";
+                for (int y = 0; y < levelScene[0].length; ++y)
+                    tmpData += mapElToStr(mergedObs[x][y]);
+                ret.add(tmpData);
+            }
+        }
+    } else
+        ret.add("~[MarioAI ERROR] level : " + level + " mario : " + mario);
+    return ret;
+}
+
+
+private String mapElToStr(int el)
+{
+    String s = "";
+    if (el == 0 || el == 1)
+        s = "##";
+    s += (el == mario.kind) ? "#M.#" : el;
+    while (s.length() < 4)
+        s += "#";
+    return s + " ";
+}
+
+private String enemyToStr(int el)
+{
+    String s = "";
+    if (el == 0)
+        s = "";
+    s += (el == mario.kind) ? "-m" : el;
+    while (s.length() < 2)
+        s += "#";
+    return s + " ";
+}
+
+
 public float[] getEnemiesFloatPos()
 {
     return levelScene.getEnemiesFloatPos();
@@ -205,27 +404,12 @@ public boolean isMarioAbleToShoot()
 
 public int getReceptiveFieldWidth()
 {
-    return levelScene.getReceptiveFieldWidth();
+    return receptiveFieldWidth;
 }
 
 public int getReceptiveFieldHeight()
 {
-    return levelScene.getReceptiveFieldHeight();
-}
-
-public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
-{
-    return levelScene.getMergedObservationZZ(ZLevelScene, ZLevelEnemies);
-}
-
-public byte[][] getLevelSceneObservationZ(int ZLevelScene)
-{
-    return levelScene.getLevelSceneObservationZ(ZLevelScene);
-}
-
-public byte[][] getEnemiesObservationZ(int ZLevelEnemies)
-{
-    return levelScene.getEnemiesObservationZ(ZLevelEnemies);
+    return receptiveFieldHeight;
 }
 
 public int getKillsTotal()
