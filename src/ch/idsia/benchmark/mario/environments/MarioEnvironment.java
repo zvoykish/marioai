@@ -29,6 +29,7 @@ package ch.idsia.benchmark.mario.environments;
 
 import ch.idsia.agents.Agent;
 import ch.idsia.benchmark.mario.engine.*;
+import ch.idsia.benchmark.mario.engine.level.Level;
 import ch.idsia.benchmark.mario.engine.sprites.Mario;
 import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 import ch.idsia.tools.EvaluationInfo;
@@ -58,7 +59,7 @@ private byte[][] levelSceneZ;     // memory is allocated in reset
 private byte[][] enemiesZ;      // memory is allocated in reset
 private byte[][] mergedZZ;      // memory is allocated in reset
 
-final public List<Sprite> sprites = new ArrayList<Sprite>();
+public List<Sprite> sprites;
 
 private int[] serializedLevelScene;   // memory is allocated in reset
 private int[] serializedEnemies;      // memory is allocated in reset
@@ -160,6 +161,8 @@ public void reset(MarioAIOptions setUpOptions)
             GlobalOptions.changeScale2x();
     } else
         levelScene.reset(setUpOptions);
+
+    sprites = levelScene.sprites;
 
     //create recorder
     String recordingFileName = setUpOptions.getRecordingFileName();
@@ -452,6 +455,11 @@ public int getMarioStatus()
     return levelScene.getMarioStatus();
 }
 
+public List<Sprite> getSprites()
+{
+    return sprites;
+}
+
 public float[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies)
 {
     // TODO:TASK:[M], serialize all data to a sole double[]
@@ -535,6 +543,71 @@ public EvaluationInfo getEvaluationInfo()
 {
     computeEvaluationInfo();
     return evaluationInfo;
+}
+
+public Mario getMario()
+{
+    return levelScene.mario;
+}
+
+public int getTick()
+{
+    return levelScene.tick;
+}
+
+public int getLevelDifficulty()
+{
+    return levelScene.getLevelDifficulty();
+}
+
+public long getLevelSeed()
+{
+    return levelScene.getLevelSeed();
+}
+
+public int getLevelType()
+{
+    return levelScene.getLevelType();
+}
+
+public int getKilledCreaturesTotal()
+{
+    return levelScene.getKillsTotal();
+}
+
+public int getLevelLength()
+{
+    return levelScene.getLevelLength();
+}
+
+public int getLevelHeight()
+{
+    return levelScene.getLevelHeight();
+}
+
+public int getKilledCreaturesByFireBall()
+{
+    return levelScene.getKillsByFire();
+}
+
+public int getKilledCreaturesByShell()
+{
+    return levelScene.getKillsByShell();
+}
+
+public int getKilledCreaturesByStomp()
+{
+    return levelScene.getKillsByStomp();
+}
+
+public int getTimeLeft()
+{
+    return levelScene.getTimeLeft();
+}
+
+public Level getLevel()
+{
+    return levelScene.level;
 }
 
 private void computeEvaluationInfo()
