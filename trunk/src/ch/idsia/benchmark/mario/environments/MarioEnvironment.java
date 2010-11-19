@@ -148,7 +148,7 @@ public void reset(MarioAIOptions setUpOptions)
     if (setUpOptions.isVisualization())
     {
         if (marioVisualComponent == null)
-            marioVisualComponent = MarioVisualComponent.getInstance(setUpOptions, levelScene);
+            marioVisualComponent = MarioVisualComponent.getInstance(setUpOptions, this);
         levelScene.reset(setUpOptions);
         marioVisualComponent.reset();
         marioVisualComponent.postInitGraphicsAndLevel();
