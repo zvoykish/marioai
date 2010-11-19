@@ -59,8 +59,10 @@ public static int mariosecondMultiplier = 15;
 public static boolean isPowerRestoration;
 
 // required for rendering grid in ch/idsia/benchmark/mario/engine/sprites/Sprite.java
-public static int receptiveFieldWidth = -1;
-public static int receptiveFieldHeight = -1;
+public static int receptiveFieldWidth = 19;
+public static int receptiveFieldHeight = 19;
+public static int marioEgoCol = 9;
+public static int marioEgoRow = 9;
 
 private static MarioVisualComponent marioVisualComponent;
 public static int VISUAL_COMPONENT_WIDTH = 320;

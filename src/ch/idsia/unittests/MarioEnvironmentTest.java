@@ -241,7 +241,7 @@ public void testMarioCenterPos() throws Exception
 
     int[] pos = env.getMarioEgoPos();
     assertEquals(2, pos[0]);
-    assertEquals(2, pos[1]);
+    assertEquals(3, pos[1]);
 }
 
 @Test
@@ -270,8 +270,8 @@ public void testMarioReceptiveFieldSizeW8H6_vis() throws Exception
         final BasicTask basicTask = new BasicTask(marioAIOptions);
         basicTask.reset(marioAIOptions);
         basicTask.runOneEpisode();
-        assertEquals(7, marioAIOptions.getReceptiveFieldHeight());
-        assertEquals(9, marioAIOptions.getReceptiveFieldWidth());
+        assertEquals(6, marioAIOptions.getReceptiveFieldHeight());
+        assertEquals(8, marioAIOptions.getReceptiveFieldWidth());
         int[] pos = basicTask.getEnvironment().getMarioEgoPos();
         assertEquals(4, pos[0]);
         assertEquals(3, pos[1]);
