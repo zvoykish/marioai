@@ -108,6 +108,9 @@ public void reset()
     srn.reset();
 }
 
+public void setObservationDetails(final int rfWidth, final int rfHeight, final int egoRow, final int egoCol)
+{}
+
 public void mutate()
 {
     srn.mutate();

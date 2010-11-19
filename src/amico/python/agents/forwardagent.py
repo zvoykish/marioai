@@ -23,12 +23,13 @@ class ForwardAgent(MarioAgent):
     trueJumpCounter = 0;
     trueSpeedCounter = 0;
 
-    receptiveFieldWidth = None
-    receptiveFieldHeight = None
-    receptiveFieldCenterX = None
-    receptiveFieldCentery = None
+    """default values for observation details"""
+    receptiveFieldWidth = 19
+    receptiveFieldHeight = 19
+    marioEgoRow = 9
+    marioEgoCol = 9
     
-    agentName = "AmiCo Forward Agent"
+    agentName = "AmiCo Python Forward Agent"
 
 
     def reset(self):
@@ -45,15 +46,22 @@ class ForwardAgent(MarioAgent):
         self.actionStr = ""
 
     def getReceptiveFieldCellValue(self, x, y):
-	if (x < 0 or x >= self.receptiveFieldCenterX or y < 0 or y >= self.receptiveFieldCenterY):
+	if (x < 0 or x >= self.marioEgoRow or y < 0 or y >= self.marioEgoCol):
             return 0
         return self.levelScene[x][y]
         
+    def setObservationDetails(self, rfWidth, rfHeight, egoRow, egoCol):
+	self.receptiveFieldWidth = rfWidth
+	self.receptiveFieldHeight = rfHeight
+	self.marioEgoRow = egoRow;
+	self.marioEgoCol = egoCol;
+	print self.receptiveFieldWidth, self.receptiveFieldHeight, self.marioEgoRow, self.marioEgoCol
+        
     def _dangerOfGap(self):
-        fromX = self.receptiveFieldCenterX
-        fromY = self.receptiveFieldCenterY
-        self.receptiveFieldCenterX = fromX + 1
-        self.receptiveFieldCenterY = fromY + 1
+        fromX = self.marioEgoRow
+        fromY = self.marioEgoCol
+        self.marioEgoRow = fromX + 1
+        self.marioEgoCol = fromY + 1
 
         if (fromX > 3):
             fromX -= 2;
@@ -63,10 +71,10 @@ class ForwardAgent(MarioAgent):
             for y in range(fromY, self.receptiveFieldHeight):
                 if  (self.getReceptiveFieldCellValue(y, x) != 0):
                     f = False
-            if (f or self.getReceptiveFieldCellValue(self.receptiveFieldCenterX + 1, self.receptiveFieldCenterY) == 0 or \
+            if (f or self.getReceptiveFieldCellValue(self.marioEgoRow + 1, self.marioEgoCol) == 0 or \
                 (self.marioState > 0 and \
-                (self.getReceptiveFieldCellValue(self.receptiveFieldCenterX + 1, self.receptiveFieldCenterY - 1) != 0 or \
-                self.getReceptiveFieldCellValue(self.receptiveFieldCenterX + 1, self.receptiveFieldCenterY) != 0))):
+                (self.getReceptiveFieldCellValue(self.marioEgoRow + 1, self.marioEgoCol - 1) != 0 or \
+                self.getReceptiveFieldCellValue(self.marioEgoRow + 1, self.marioEgoCol) != 0))):
                 return True
         return False
 
@@ -79,21 +87,21 @@ class ForwardAgent(MarioAgent):
         """
 #        if (self.mayMarioJump):
 #                    print "m: %d, %s, %s, 12: %d, 13: %d, j: %d" \
-#            % (self.getReceptiveFieldCellValue(self.receptiveFieldCenterX + 2, self.receptiveFieldCenterY + 2), self.mayMarioJump, self.isMarioOnGround, \
-#            self.getReceptiveFieldCellValue(self.receptiveFieldCenterX + 2, self.receptiveFieldCenterY + 3), self.getReceptiveFieldCellValue(self.receptiveFieldCenterX + 2, self.receptiveFieldCenterY + 3), self.trueJumpCounter)
+#            % (self.getReceptiveFieldCellValue(self.marioEgoRow + 2, self.marioEgoCol + 2), self.mayMarioJump, self.isMarioOnGround, \
+#            self.getReceptiveFieldCellValue(self.marioEgoRow + 2, self.marioEgoCol + 3), self.getReceptiveFieldCellValue(self.marioEgoRow + 2, self.marioEgoCol + 3), self.trueJumpCounter)
 #        else:
 #            if self.levelScene == None:
 #                print "Bad news....."
 #            print "m: %d, 12: %d, 13: %d, j: %d" \
-#                % (self.getReceptiveFieldCellValue(self.receptiveFieldCenterX + 2, self.receptiveFieldCenterY + 2), \
-#                self.getReceptiveFieldCellValue(self.receptiveFieldCenterX + 2, self.receptiveFieldCenterY + 3), self.getReceptiveFieldCellValue(self.receptiveFieldCenterX + 2, self.receptiveFieldCenterY + 3), self.trueJumpCounter)
+#                % (self.getReceptiveFieldCellValue(self.marioEgoRow + 2, self.marioEgoCol + 2), \
+#                self.getReceptiveFieldCellValue(self.marioEgoRow + 2, self.marioEgoCol + 3), self.getReceptiveFieldCellValue(self.marioEgoRow + 2, self.marioEgoCol + 3), self.trueJumpCounter)
 
         a = [0, 0, 0, 0, 0, 0]
         a[1] = 1
 
         danger = self._dangerOfGap()
-        if (self.getReceptiveFieldCellValue(self.receptiveFieldCenterX + 2, self.receptiveFieldCenterY + 3) != 0 or \
-            self.getReceptiveFieldCellValue(self.receptiveFieldCenterX + 2, self.receptiveFieldCenterY + 4) != 0 or danger):
+        if (self.getReceptiveFieldCellValue(self.marioEgoRow + 2, self.marioEgoCol + 3) != 0 or \
+            self.getReceptiveFieldCellValue(self.marioEgoRow + 2, self.marioEgoCol + 4) != 0 or danger):
             if (self.mayMarioJump or \
                 (not self.isMarioOnGround and a[self.KEY_JUMP] == 1)):
                 a[self.KEY_JUMP] = 1
@@ -110,7 +118,7 @@ class ForwardAgent(MarioAgent):
 
         actionStr = ""
 
-        for i in range(5):
+        for i in range(6):
             if a[i] == 1:
                 actionStr += '1'
             elif a[i] == 0:
@@ -134,8 +142,8 @@ class ForwardAgent(MarioAgent):
             
     	danger = self._dangerOfGap()
         #print "entered getAction1"
-        if (self.getReceptiveFieldCellValue(self.receptiveFieldCenterX, self.receptiveFieldCenterY + 2) != 0 or \
-            self.getReceptiveFieldCellValue(self.receptiveFieldCenterX, self.receptiveFieldCenterY + 1) != 0 or danger):
+        if (self.getReceptiveFieldCellValue(self.marioEgoRow, self.marioEgoCol + 2) != 0 or \
+            self.getReceptiveFieldCellValue(self.marioEgoRow, self.marioEgoCol + 1) != 0 or danger):
             #print "entered getAction2"
             if (self.mayMarioJump or \
                 (not self.isMarioOnGround and self.action[self.KEY_JUMP] == 1)):
@@ -166,8 +174,8 @@ class ForwardAgent(MarioAgent):
         #print "Py: got observation::: enemiesPos: \n", enemiesPos
         #print "Py: got observation::: marioState: \n", marioState
                 
-        row = marioState[11]
-        col = marioState[12]
+        row = self.receptiveFieldHeight
+        col = self.receptiveFieldWidth
         levelScene=[]
         enemiesObservation=[]
         
@@ -183,10 +191,6 @@ class ForwardAgent(MarioAgent):
         self.isMarioOnGround = marioState[2]
         self.marioState = marioState[1]
         self.levelScene = levelScene
-        self.receptiveFieldWidth = marioState[11]
-        self.receptiveFieldHeight = marioState[12]
-        self.receptiveFieldCenterX = marioState[13]
-        self.receptiveFieldCenterY = marioState[14]
         #self.printLevelScene()
 
     def printLevelScene(self):

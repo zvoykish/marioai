@@ -85,6 +85,10 @@ public void reset(MarioAIOptions marioAIOptions)
     agent = options.getAgent();
     environment.reset(marioAIOptions);
     agent.reset();
+    agent.setObservationDetails(marioAIOptions.getReceptiveFieldWidth(),
+                                marioAIOptions.getReceptiveFieldHeight(),
+                                marioAIOptions.getMarioEgoPosRow(),
+                                marioAIOptions.getMarioEgoPosCol());
 }
 
 public Environment getEnvironment()

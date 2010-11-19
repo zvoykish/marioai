@@ -112,6 +112,9 @@ public void reset()
     action[Mario.KEY_SPEED] = true;
 }
 
+public void setObservationDetails(final int rfWidth, final int rfHeight, final int egoRow, final int egoCol)
+{}
+
 public String getName() { return name; }
 
 public void setName(String Name) { this.name = Name; }

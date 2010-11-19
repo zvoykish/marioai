@@ -80,18 +80,9 @@ private static final int BORDER_HILL = -62;
 // TODO:TASK:!H! : resolve (document why) this: FLOWER_POT_OR_CANNON = -85;
 private static final int FLOWER_POT_OR_CANNON = -85;
 
-private int[] serializedLevelScene;   // memory is allocated in reset
-private int[] serializedEnemies;      // memory is allocated in reset
-private int[] serializedMergedObservation; // memory is allocated in reset
-
-private byte[][] levelSceneZ;     // memory is allocated in reset
-private byte[][] enemiesZ;      // memory is allocated in reset
-private byte[][] mergedZZ;      // memory is allocated in reset
-
-
 final private List<Float> enemiesFloatsList = new ArrayList<Float>();
 final private float[] marioFloatPos = new float[2];
-final private int[] marioState = new int[15];
+final private int[] marioState = new int[11];
 private int numberOfHiddenCoinsGained = 0;
 
 public String memo = "";
@@ -451,12 +442,6 @@ public int[] getMarioState()
     marioState[8] = this.getKillsByStomp();
     marioState[9] = this.getKillsByShell();
     marioState[10] = this.getTimeLeft();
-    marioState[11] = this.receptiveFieldWidth;
-    marioState[12] = this.receptiveFieldHeight;
-    //TODO: use SetUpOptions to access this fields when receptiveFieldCenter feature will be implemented
-    marioState[13] = this.receptiveFieldWidth / 2;
-    //TODO: same for Y
-    marioState[14] = this.receptiveFieldHeight / 2;
     return marioState;
 }
 
@@ -479,44 +464,6 @@ public boolean isMarioAbleToShoot()
 public int getMarioStatus()
 {
     return mario.getStatus();
-}
-
-public float[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies)
-{
-    // TODO:TASK:[M], serialize all data to a sole double[]
-    assert false;
-    return new float[0];
-}
-
-public int[] getSerializedLevelSceneObservationZ(int ZLevelScene)
-{
-    // serialization into arrays of primitive types to speed up the data transfer.
-    byte[][] levelScene = this.getLevelSceneObservationZ(ZLevelScene);
-    for (int i = 0; i < serializedLevelScene.length; ++i)
-    {
-        final int i1 = i / receptiveFieldWidth;
-        final int i2 = i % receptiveFieldWidth;
-        serializedLevelScene[i] = (int) levelScene[i1][i2];
-    }
-    return serializedLevelScene;
-}
-
-public int[] getSerializedEnemiesObservationZ(int ZLevelEnemies)
-{
-    // serialization into arrays of primitive types to speed up the data transfer.
-    byte[][] enemies = this.getEnemiesObservationZ(ZLevelEnemies);
-    for (int i = 0; i < serializedEnemies.length; ++i)
-        serializedEnemies[i] = (int) enemies[i / receptiveFieldWidth][i % receptiveFieldWidth];
-    return serializedEnemies;
-}
-
-public int[] getSerializedMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
-{
-    // serialization into arrays of primitive types to speed up the data transfer.
-    byte[][] merged = this.getMergedObservationZZ(ZLevelScene, ZLevelEnemies);
-    for (int i = 0; i < serializedMergedObservation.length; ++i)
-        serializedMergedObservation[i] = (int) merged[i / receptiveFieldWidth][i % receptiveFieldWidth];
-    return serializedMergedObservation;
 }
 
 /**
@@ -575,25 +522,10 @@ public void reset(MarioAIOptions marioAIOptions)
     GlobalOptions.isVisualization = marioAIOptions.isVisualization();
 //        System.out.println("visualization = " + visualization);
 
-    receptiveFieldWidth = marioAIOptions.getReceptiveFieldWidth();
-    receptiveFieldHeight = marioAIOptions.getReceptiveFieldHeight();
     killedCreaturesTotal = 0;
     killedCreaturesByFireBall = 0;
     killedCreaturesByStomp = 0;
     killedCreaturesByShell = 0;
-
-    if (receptiveFieldHeight != this.prevRFH || receptiveFieldWidth != this.prevRFW)
-    {
-        serializedLevelScene = new int[receptiveFieldHeight * receptiveFieldWidth];
-        serializedEnemies = new int[receptiveFieldHeight * receptiveFieldWidth];
-        serializedMergedObservation = new int[receptiveFieldHeight * receptiveFieldWidth];
-
-        levelSceneZ = new byte[receptiveFieldHeight][receptiveFieldWidth];
-        enemiesZ = new byte[receptiveFieldHeight][receptiveFieldWidth];
-        mergedZZ = new byte[receptiveFieldHeight][receptiveFieldWidth];
-        this.prevRFH = this.receptiveFieldHeight;
-        this.prevRFW = this.receptiveFieldWidth;
-    }
 
     marioInitialPos = marioAIOptions.getMarioInitialPos();
 

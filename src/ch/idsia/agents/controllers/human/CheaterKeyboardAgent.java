@@ -81,6 +81,9 @@ public void reset()
     Action = new boolean[16];
 }
 
+public void setObservationDetails(final int rfWidth, final int rfHeight, final int egoRow, final int egoCol)
+{}
+
 public String getName() { return Name; }
 
 public void setName(String name) { Name = name; }

@@ -83,6 +83,9 @@ public void giveIntermediateReward(final float intermediateReward)
 public void reset()
 {}
 
+public void setObservationDetails(final int rfWidth, final int rfHeight, final int egoRow, final int egoCol)
+{}
+
 public String getName()
 {
     return name;

@@ -31,7 +31,6 @@ import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.simulation.SimulationOptions;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -108,41 +107,13 @@ public void setArgs(String[] args)
 //            this.setUpOptions(shiftedargs);
 //        }
 //        else
-    int lfIndex = 0;
-    ArrayList <String> lfArgs = new ArrayList<String>();
-    lfArgs.add("-lb");
-    lfArgs.add("-lhb");
-    lfArgs.add("-lco");
-    lfArgs.add("-ltb");
-    lfArgs.add("-lg");
-    lfArgs.add("-lde");
-    lfArgs.add("-lca");
-    lfArgs.add("-lhs");
-    lfArgs.add("-le");
-    ArrayList <String> lfAllowedArgs = new ArrayList<String>();
-    lfAllowedArgs.addAll(lfArgs);
-
     if (args != null)
         for (String s : args)
             optionsAsString += s + " ";
 
     this.setUpOptions(args);
 
-    for (int i = 0; i<args.length; i++)
-      if (args[i].equals("-lf"))
-        lfIndex=i;
-
-      for(int i=lfIndex; i<args.length; i++)
-      {
-          if (lfAllowedArgs.contains(args[i]))
-              lfAllowedArgs.remove(args[i]);
-      }
-
-    if(lfAllowedArgs.size() != 0)
-      for(int i = 0; i<lfAllowedArgs.size(); i++)
-        setParameterValue(lfAllowedArgs.get(i), "off");
-
-    if (isEcho())
+     if (isEcho())
     {
         this.printOptions(false);
     }
@@ -322,12 +293,12 @@ public void reset()
     optionsHashMap.clear();
 }
 
-public int marioEgoPosRow()
+public int getMarioEgoPosRow()
 {
     return i(getParameterValue("-mer"));
 }
 
-public int marioEgoPosCol()
+public int getMarioEgoPosCol()
 {
     return i(getParameterValue("-mec"));
 }

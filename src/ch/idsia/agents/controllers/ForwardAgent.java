@@ -61,12 +61,12 @@ public void reset()
 private boolean DangerOfAny()
 {
 
-        if ((getReceptiveFieldCellValue(marioCenter[0] + 2, marioCenter[1] + 1) == 0 && 
-            getReceptiveFieldCellValue(marioCenter[0] + 1, marioCenter[1] + 1) == 0) ||
-            getReceptiveFieldCellValue(marioCenter[0], marioCenter[1] + 1) != 0 ||
-            getReceptiveFieldCellValue(marioCenter[0], marioCenter[1] + 2) != 0 ||
-            getEnemiesCellValue(marioCenter[0], marioCenter[1] + 1) != 0 ||
-            getEnemiesCellValue(marioCenter[0], marioCenter[1] + 2) != 0)
+        if ((getReceptiveFieldCellValue(marioEgoRow + 2, marioEgoCol + 1) == 0 &&
+            getReceptiveFieldCellValue(marioEgoRow + 1, marioEgoCol + 1) == 0) ||
+            getReceptiveFieldCellValue(marioEgoRow, marioEgoCol + 1) != 0 ||
+            getReceptiveFieldCellValue(marioEgoRow, marioEgoCol + 2) != 0 ||
+            getEnemiesCellValue(marioEgoRow, marioEgoCol + 1) != 0 ||
+            getEnemiesCellValue(marioEgoRow, marioEgoCol + 2) != 0)
             return true;
         else
             return false;
@@ -76,7 +76,7 @@ public boolean[] getAction()
 {
     // this Agent requires observation integrated in advance.
 
-    if (DangerOfAny() && getReceptiveFieldCellValue(marioCenter[0], marioCenter[1] + 1) != 1)  // a coin
+    if (DangerOfAny() && getReceptiveFieldCellValue(marioEgoRow, marioEgoCol + 1) != 1)  // a coin
     {
         if (isMarioAbleToJump || (!isMarioOnGround && action[Mario.KEY_JUMP]))
         {

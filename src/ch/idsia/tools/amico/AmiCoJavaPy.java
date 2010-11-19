@@ -58,6 +58,8 @@ public native void giveIntermediateReward(final float intermediateReward);
 
 public native void reset();
 
+public native void setObservationDetails(final int rfWidth, final int rfHeight, final int egoRow, final int egoCol);
+
 static
 {
     System.out.println("Java: loading AmiCo...");

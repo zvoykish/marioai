@@ -446,7 +446,8 @@ public void setGameViewer(GameViewer gameViewer)
 
 public List<String> getTextObservation(boolean showEnemies, boolean showLevelScene, boolean showMerged, int zLevelMapValue, int zLevelEnemiesValue)
 {
-    return levelScene.getObservationStrings(showEnemies, showLevelScene, showMerged, zLevelMapValue, zLevelEnemiesValue);
+//    return levelScene.getObservationStrings(showEnemies, showLevelScene, showMerged, zLevelMapValue, zLevelEnemiesValue);
+    return null;
 }
 
 public void changeScale2x()

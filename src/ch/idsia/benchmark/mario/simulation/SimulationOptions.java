@@ -60,6 +60,17 @@ public void setUpOptions(String[] args)
             try
             {
                 setParameterValue(args[i], args[i + 1]);
+
+                if (args[i].equals("-lf") && args[i+1].equals("on"))
+                {
+                    setBlocksCount(false);
+                    setCoinsCount(false);
+                    setTubesCount(false);
+                    setGapsCount(false);
+                    setDeadEndsCount(false);
+                    setCannonsCount(false);
+                    setEnemies("off");
+                }
             }
             catch (ArrayIndexOutOfBoundsException e)
             {
