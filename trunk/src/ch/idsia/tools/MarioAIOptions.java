@@ -119,6 +119,15 @@ public void setArgs(String[] args)
     }
     GlobalOptions.receptiveFieldWidth = getReceptiveFieldWidth();
     GlobalOptions.receptiveFieldHeight = getReceptiveFieldHeight();
+    if (getMarioEgoPosCol() == 9 && GlobalOptions.receptiveFieldWidth != 19)
+        GlobalOptions.marioEgoCol = GlobalOptions.receptiveFieldWidth / 2;
+    else
+        GlobalOptions.marioEgoCol = getMarioEgoPosCol();
+    if (getMarioEgoPosRow() == 9 && GlobalOptions.receptiveFieldHeight != 19)
+        GlobalOptions.marioEgoRow = GlobalOptions.receptiveFieldHeight / 2;
+    else
+        GlobalOptions.marioEgoRow = getMarioEgoPosRow();
+
     GlobalOptions.VISUAL_COMPONENT_HEIGHT = getViewHeight();
     GlobalOptions.VISUAL_COMPONENT_WIDTH = getViewWidth();
 //        Environment.ObsWidth = GlobalOptions.receptiveFieldWidth/2;

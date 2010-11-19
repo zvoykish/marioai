@@ -174,24 +174,27 @@ public void render(Graphics og)
         {
 //                og.drawString("M", (int) x, (int) y);
             og.drawString("Matrix View", xPixel - 40, yPixel - 20);
-            int width = GlobalOptions.receptiveFieldWidth * 16;
-            int height = GlobalOptions.receptiveFieldHeight * 16;
+            int width = GlobalOptions.receptiveFieldWidth;// * 16;
+            int height = GlobalOptions.receptiveFieldHeight;// * 16;
 
             int rows = GlobalOptions.receptiveFieldHeight;
             int columns = GlobalOptions.receptiveFieldWidth;
+
+            int marioCol = GlobalOptions.marioEgoCol;
+            int marioRow = GlobalOptions.marioEgoRow;
 
             int htOfRow = 16;//height / (columns);
             int k;
             // horizontal lines
             og.setColor(Color.BLACK);
-            for (k = -rows / 2 - 1; k <= rows / 2; k++)
-                og.drawLine((int) x - width / 2, (int) (y + k * htOfRow), (int) (x + width / 2), (int) (y + k * htOfRow));
+            for (k = -marioRow - 1 /*-rows / 2 - 1*/; k < rows - marioRow/*rows / 2*/; k++)
+                og.drawLine((int) x - marioCol * htOfRow-8/*width / 2*/, (int) (y + k * htOfRow), (int) x + (columns-marioCol)*htOfRow-8 /*(x + width / 2)*/, (int) (y + k * htOfRow));
 
 //                og.setColor(Color.RED);
             // vertical lines
             int wdOfRow = 16;// length / (rows);
-            for (k = -columns / 2 - 1; k < columns / 2 + 1; k++)
-                og.drawLine((int) (x + k * wdOfRow + 8), (int) y - height / 2 - 8, (int) (x + k * wdOfRow + 8), (int) (y + height / 2 - 8));
+            for (k = -marioCol -1 /*-columns / 2 - 1*/; k < columns - marioCol /*columns / 2 + 1*/; k++)
+                og.drawLine((int) (x + k * wdOfRow + 8), (int) y - marioRow*htOfRow-16/*height / 2 - 8*/, (int) (x + k * wdOfRow + 8), (int) y + (height-marioRow)*htOfRow-16 /*(y + height / 2 - 8)*/);
         }
         og.setColor(Color.GREEN);
         MarioVisualComponent.drawString(og, String.valueOf(this.kind), (int) x - 4, (int) y - 8, 2);
