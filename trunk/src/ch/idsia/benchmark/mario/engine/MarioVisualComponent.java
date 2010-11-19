@@ -264,7 +264,7 @@ public void render(Graphics g)
 
     g.translate(-xCam, -yCam);
 
-    for (Sprite sprite : marioEnvironment.sprites)          // levelScene.
+    for (Sprite sprite : marioEnvironment.getSprites())          // levelScene.
         if (sprite.layer == 0) sprite.render(g);
 
     g.translate(xCam, yCam);
@@ -275,7 +275,7 @@ public void render(Graphics g)
 
     g.translate(-xCam, -yCam);
 
-    for (Sprite sprite : marioEnvironment.sprites)  // Mario, creatures
+    for (Sprite sprite : marioEnvironment.getSprites())  // Mario, creatures
         if (sprite.layer == 1) sprite.render(g);
 
     g.translate(xCam, yCam);
