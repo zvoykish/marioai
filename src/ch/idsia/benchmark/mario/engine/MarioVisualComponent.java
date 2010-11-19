@@ -286,7 +286,7 @@ public void render(Graphics g)
 //    drawStringDropShadow(g, "CREATURES:" + (mario.levelScene.paused ? "OFF" : " ON"), 19, 0, 7);
     drawStringDropShadow(g, "SEED:" + marioEnvironment.getLevelSeed(), 0, 1, 7);
     drawStringDropShadow(g, "TYPE:" + LEVEL_TYPES[marioEnvironment.getLevelType()], 0, 2, 7);
-    drawStringDropShadow(g, "ALL KILLS: " + marioEnvironment.killedCreaturesTotal, 19, 0, 1);
+    drawStringDropShadow(g, "ALL KILLS: " + marioEnvironment.getKilledCreaturesTotal(), 19, 0, 1);
     drawStringDropShadow(g, "LENGTH:" + (int) mario.x / 16 + " of " + marioEnvironment.getLevelLength(), 0, 3, 7);
     drawStringDropShadow(g, "HEIGHT:" + (int) mario.y / 16 + " of " + marioEnvironment.getLevelHeight(), 0, 4, 7);
     drawStringDropShadow(g, "by Fire  : " + marioEnvironment.getKilledCreaturesByFireBall(), 19, 1, 1);
