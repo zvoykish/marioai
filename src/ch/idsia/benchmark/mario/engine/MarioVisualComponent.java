@@ -34,6 +34,7 @@ import ch.idsia.benchmark.mario.engine.level.Level;
 import ch.idsia.benchmark.mario.engine.sprites.Mario;
 import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 import ch.idsia.benchmark.mario.environments.Environment;
+import ch.idsia.benchmark.mario.environments.MarioEnvironment;
 import ch.idsia.tools.GameViewer;
 import ch.idsia.tools.MarioAIOptions;
 import ch.idsia.tools.Scale2x;
@@ -61,7 +62,7 @@ public VolatileImage thisVolatileImage;
 public Graphics thisVolatileImageGraphics;
 public Graphics thisGraphics;
 
-public LevelScene levelScene;
+private MarioEnvironment marioEnvironment;
 private LevelRenderer layer;
 private BgRenderer[] bgLayer = new BgRenderer[2];
 
@@ -85,9 +86,9 @@ private static MarioVisualComponent marioVisualComponent = null;
 
 private Scale2x scale2x = new Scale2x(320, 240);
 
-private MarioVisualComponent(MarioAIOptions marioAIOptions, LevelScene levelScene)
+private MarioVisualComponent(MarioAIOptions marioAIOptions, MarioEnvironment marioEnvironment)
 {
-    this.levelScene = levelScene;
+    this.marioEnvironment = marioEnvironment;
     adjustFPS();
 
     this.setFocusable(true);
@@ -125,11 +126,11 @@ private MarioVisualComponent(MarioAIOptions marioAIOptions, LevelScene levelScen
     }
 }
 
-public static MarioVisualComponent getInstance(MarioAIOptions marioAIOptions, LevelScene levelScene)
+public static MarioVisualComponent getInstance(MarioAIOptions marioAIOptions, MarioEnvironment marioEnvironment)
 {
     if (marioVisualComponent == null)
     {
-        marioVisualComponent = new MarioVisualComponent(marioAIOptions, levelScene);
+        marioVisualComponent = new MarioVisualComponent(marioAIOptions, marioEnvironment);
         marioVisualComponent.CreateMarioComponentFrame(marioVisualComponent);
     }
     return marioVisualComponent;
@@ -258,39 +259,39 @@ public void render(Graphics g)
     for (int i = 0; i < bgLayer.length; i++)
     {
         bgLayer[i].setCam(xCam, yCam);
-        bgLayer[i].render(g, levelScene.tick); //levelScene.
+        bgLayer[i].render(g, marioEnvironment.getTick()); //levelScene.
     }
 
     g.translate(-xCam, -yCam);
 
-    for (Sprite sprite : levelScene.sprites)          // levelScene.
+    for (Sprite sprite : marioEnvironment.sprites)          // levelScene.
         if (sprite.layer == 0) sprite.render(g);
 
     g.translate(xCam, yCam);
 
     layer.setCam(xCam, yCam);
-    layer.render(g, levelScene.tick /*levelScene.paused ? 0 : */);
-    layer.renderExit0(g, levelScene.tick, /*levelScene.paused ? 0 :*/  mario.winTime == 0);
+    layer.render(g, marioEnvironment.getTick() /*levelScene.paused ? 0 : */);
+    layer.renderExit0(g, marioEnvironment.getTick(), /*levelScene.paused ? 0 :*/  mario.winTime == 0);
 
     g.translate(-xCam, -yCam);
 
-    for (Sprite sprite : levelScene.sprites)  // Mario, creatures
+    for (Sprite sprite : marioEnvironment.sprites)  // Mario, creatures
         if (sprite.layer == 1) sprite.render(g);
 
     g.translate(xCam, yCam);
     g.setColor(Color.BLACK);
-    layer.renderExit1(g, levelScene.tick);
+    layer.renderExit1(g, marioEnvironment.getTick());
 
-    drawStringDropShadow(g, "DIFFICULTY: " + df.format(levelScene.getLevelDifficulty()), 0, 0, levelScene.getLevelDifficulty() > 6 ? 1 : levelScene.getLevelDifficulty() > 2 ? 4 : 7);
+    drawStringDropShadow(g, "DIFFICULTY: " + df.format(marioEnvironment.getLevelDifficulty()), 0, 0, marioEnvironment.getLevelDifficulty() > 6 ? 1 : marioEnvironment.getLevelDifficulty() > 2 ? 4 : 7);
 //    drawStringDropShadow(g, "CREATURES:" + (mario.levelScene.paused ? "OFF" : " ON"), 19, 0, 7);
-    drawStringDropShadow(g, "SEED:" + levelScene.getLevelSeed(), 0, 1, 7);
-    drawStringDropShadow(g, "TYPE:" + LEVEL_TYPES[levelScene.getLevelType()], 0, 2, 7);
-    drawStringDropShadow(g, "ALL KILLS: " + levelScene.killedCreaturesTotal, 19, 0, 1);
-    drawStringDropShadow(g, "LENGTH:" + (int) mario.x / 16 + " of " + levelScene.getLevelLength(), 0, 3, 7);
-    drawStringDropShadow(g, "HEIGHT:" + (int) mario.y / 16 + " of " + levelScene.getLevelHeight(), 0, 4, 7);
-    drawStringDropShadow(g, "by Fire  : " + levelScene.killedCreaturesByFireBall, 19, 1, 1);
+    drawStringDropShadow(g, "SEED:" + marioEnvironment.getLevelSeed(), 0, 1, 7);
+    drawStringDropShadow(g, "TYPE:" + LEVEL_TYPES[marioEnvironment.getLevelType()], 0, 2, 7);
+    drawStringDropShadow(g, "ALL KILLS: " + marioEnvironment.killedCreaturesTotal, 19, 0, 1);
+    drawStringDropShadow(g, "LENGTH:" + (int) mario.x / 16 + " of " + marioEnvironment.getLevelLength(), 0, 3, 7);
+    drawStringDropShadow(g, "HEIGHT:" + (int) mario.y / 16 + " of " + marioEnvironment.getLevelHeight(), 0, 4, 7);
+    drawStringDropShadow(g, "by Fire  : " + marioEnvironment.getKilledCreaturesByFireBall(), 19, 1, 1);
 //    drawStringDropShadow(g, "COINS    : " + df.format(Mario.coins), 0, 4, 4);
-    drawStringDropShadow(g, "by Shell : " + levelScene.killedCreaturesByShell, 19, 2, 1);
+    drawStringDropShadow(g, "by Shell : " + marioEnvironment.getKilledCreaturesByShell(), 19, 2, 1);
     // COINS:
     g.drawImage(Art.level[0][2], 2, 43, 10, 10, null);
     drawStringDropShadow(g, "x" + df.format(Mario.coins), 1, 5, 4);
@@ -299,8 +300,9 @@ public void render(Graphics g)
     g.drawImage(Art.items[1][0], 89, 43, 11, 11, null);
     drawStringDropShadow(g, "x" + df.format(Mario.flowersDevoured), 12, 5, 4);
 //    drawStringDropShadow(g, "MUSHROOMS: " + df.format(Mario.mushroomsDevoured), 0, 5, 4);
-    drawStringDropShadow(g, "by Stomp : " + levelScene.killedCreaturesByStomp, 19, 3, 1);
+    drawStringDropShadow(g, "by Stomp : " + marioEnvironment.getKilledCreaturesByStomp(), 19, 3, 1);
 //    drawStringDropShadow(g, "FLOWERS  : " + df.format(Mario.flowersDevoured), 0, 6, 4);
+
     if (GlobalOptions.isRecording)
     {
         --recordIndicator;
@@ -322,7 +324,7 @@ public void render(Graphics g)
     }
 
     drawStringDropShadow(g, "TIME", 33, 0, 7);
-    int time = levelScene.getTimeLeft();
+    int time = marioEnvironment.getTimeLeft();
 //    if (time < 0) time = 0;
 
     drawStringDropShadow(g, " " + df2.format(time), 33, 1, time < 0 ? 3 : time < 50 ? 1 : time < 100 ? 4 : 7);
@@ -340,7 +342,7 @@ public void render(Graphics g)
 private void drawProgress(Graphics g)
 {
     String entirePathStr = "......................................>";
-    double physLength = (levelScene.getLevelLength()) * 16;
+    double physLength = (marioEnvironment.getLevelLength()) * 16;
     int progressInChars = (int) (mario.x * (entirePathStr.length() / physLength));
     String progress_str = "";
     for (int i = 0; i < progressInChars - 1; ++i)
@@ -398,19 +400,19 @@ public void postInitGraphicsAndLevel()
     {
 //            System.out.println("level = " + level);
 //            System.out.println("levelScene .level = " + levelScene.level);
-        level = levelScene.level;
+//        level = marioEnvironment.getLevel();
 
-        this.mario = levelScene.mario;
+        this.mario = marioEnvironment.getMario();
         this.mario.cheatKeys = cheatAgent.getAction();
 //            System.out.println("mario = " + mario);
-        this.level = levelScene.level;
+        this.level = marioEnvironment.getLevel();
         layer = new LevelRenderer(level, graphicsConfiguration, this.width, this.height);
         for (int i = 0; i < bgLayer.length; i++)
         {
             int scrollSpeed = 4 >> i;
             int w = ((level.length * 16) - GlobalOptions.VISUAL_COMPONENT_WIDTH) / scrollSpeed + GlobalOptions.VISUAL_COMPONENT_WIDTH;
             int h = ((level.height * 16) - GlobalOptions.VISUAL_COMPONENT_HEIGHT) / scrollSpeed + GlobalOptions.VISUAL_COMPONENT_HEIGHT;
-            Level bgLevel = BgLevelGenerator.createLevel(w / 32 + 1, h / 32 + 1, i == 0, levelScene.getLevelType());
+            Level bgLevel = BgLevelGenerator.createLevel(w / 32 + 1, h / 32 + 1, i == 0, marioEnvironment.getLevelType());
             bgLayer[i] = new BgRenderer(bgLevel, graphicsConfiguration, GlobalOptions.VISUAL_COMPONENT_WIDTH, GlobalOptions.VISUAL_COMPONENT_HEIGHT, scrollSpeed);
         }
     } else throw new Error("[Mario AI : ERROR] : Graphics Configuration is null. Graphics initialization failed");
