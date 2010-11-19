@@ -29,7 +29,6 @@ package ch.idsia.benchmark.mario.environments;
 
 import ch.idsia.agents.Agent;
 import ch.idsia.benchmark.mario.engine.*;
-import ch.idsia.benchmark.mario.engine.level.Level;
 import ch.idsia.benchmark.mario.engine.sprites.Mario;
 import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 import ch.idsia.tools.EvaluationInfo;
@@ -55,14 +54,15 @@ private int receptiveFieldWidth = -1; // to be setup via MarioAIOptions
 private int prevRFH = -1;
 private int prevRFW = -1;
 
-private Mario mario;
-private Level level;
 private byte[][] levelSceneZ;     // memory is allocated in reset
 private byte[][] enemiesZ;      // memory is allocated in reset
 private byte[][] mergedZZ;      // memory is allocated in reset
 
 final public List<Sprite> sprites = new ArrayList<Sprite>();
 
+private int[] serializedLevelScene;   // memory is allocated in reset
+private int[] serializedEnemies;      // memory is allocated in reset
+private int[] serializedMergedObservation; // memory is allocated in reset
 
 private final LevelScene levelScene;
 //    private int frame = 0;
@@ -118,17 +118,32 @@ public void reset(MarioAIOptions setUpOptions)
 //    if (!setUpOptions.getReplayOptions().equals(""))
 
     this.setAgent(setUpOptions.getAgent());
-    // TODO:TASK:[M] Arbitrary center of ego in Receptive Field.
-    // TODO: remember to change code in the LevelScene.getMarioState() method
-    marioEgoPos[0] = setUpOptions.marioEgoPosRow();
-    if (marioEgoPos[0] == -1)
-        marioEgoPos[0] = setUpOptions.getReceptiveFieldWidth() / 2;
-    marioEgoPos[1] = setUpOptions.marioEgoPosCol();
-    if (marioEgoPos[1] == -1)
-        marioEgoPos[1] = setUpOptions.getReceptiveFieldWidth() / 2;
+
+    receptiveFieldWidth = setUpOptions.getReceptiveFieldWidth();
+    receptiveFieldHeight = setUpOptions.getReceptiveFieldHeight();
+
+    if (receptiveFieldHeight != this.prevRFH || receptiveFieldWidth != this.prevRFW)
+    {
+        serializedLevelScene = new int[receptiveFieldHeight * receptiveFieldWidth];
+        serializedEnemies = new int[receptiveFieldHeight * receptiveFieldWidth];
+        serializedMergedObservation = new int[receptiveFieldHeight * receptiveFieldWidth];
+
+        levelSceneZ = new byte[receptiveFieldHeight][receptiveFieldWidth];
+        enemiesZ = new byte[receptiveFieldHeight][receptiveFieldWidth];
+        mergedZZ = new byte[receptiveFieldHeight][receptiveFieldWidth];
+        this.prevRFH = this.receptiveFieldHeight;
+        this.prevRFW = this.receptiveFieldWidth;
+    }
+
+    marioEgoPos[0] = setUpOptions.getMarioEgoPosRow();
+    marioEgoPos[1] = setUpOptions.getMarioEgoPosCol();
+
+    if (marioEgoPos[0] == 9 && getReceptiveFieldWidth() != 19)
+        marioEgoPos[0] = getReceptiveFieldWidth() / 2;
+    if (marioEgoPos[1] == 9 && getReceptiveFieldHeight() != 19)
+        marioEgoPos[1] = getReceptiveFieldHeight() / 2;
 
     marioTraceFile = setUpOptions.getTraceFileName();
-
 
     if (setUpOptions.isVisualization())
     {
@@ -197,13 +212,13 @@ public int getMarioMode()
 
 public byte[][] getLevelSceneObservationZ(int ZLevel)
 {
-    for (int y = mario.mapY - receptiveFieldHeight / 2, obsX = 0; y <= mario.mapY + receptiveFieldHeight / 2; y++, obsX++)
+    for (int y = levelScene.mario.mapY - receptiveFieldHeight / 2, obsX = 0; y <= levelScene.mario.mapY + receptiveFieldHeight / 2; y++, obsX++)
     {
-        for (int x = mario.mapX - receptiveFieldWidth / 2, obsY = 0; x <= mario.mapX + receptiveFieldWidth / 2; x++, obsY++)
+        for (int x = levelScene.mario.mapX - receptiveFieldWidth / 2, obsY = 0; x <= levelScene.mario.mapX + receptiveFieldWidth / 2; x++, obsY++)
         {
-            if (x >= 0 && x < level.xExit && y >= 0 && y < level.height)
+            if (x >= 0 && x < levelScene.level.xExit && y >= 0 && y < levelScene.level.height)
             {
-                levelSceneZ[obsX][obsY] = GeneralizerLevelScene.ZLevelGeneralization(level.map[x][y], ZLevel);
+                levelSceneZ[obsX][obsY] = GeneralizerLevelScene.ZLevelGeneralization(levelScene.level.map[x][y], ZLevel);
             } else
             {
                 levelSceneZ[obsX][obsY] = 0;
@@ -221,17 +236,17 @@ public byte[][] getEnemiesObservationZ(int ZLevel)
             enemiesZ[w][h] = 0;
     for (Sprite sprite : sprites)
     {
-        if (sprite.kind == mario.kind)
+        if (sprite.kind == levelScene.mario.kind)
             continue;
         if (sprite.mapX >= 0 &&
-                sprite.mapX >= mario.mapX - receptiveFieldWidth / 2 &&
-                sprite.mapX <= mario.mapX + receptiveFieldWidth / 2 &&
+                sprite.mapX >= levelScene.mario.mapX - receptiveFieldWidth / 2 &&
+                sprite.mapX <= levelScene.mario.mapX + receptiveFieldWidth / 2 &&
                 sprite.mapY >= 0 &&
-                sprite.mapY >= mario.mapY - receptiveFieldHeight / 2 &&
-                sprite.mapY <= mario.mapY + receptiveFieldHeight / 2)
+                sprite.mapY >= levelScene.mario.mapY - receptiveFieldHeight / 2 &&
+                sprite.mapY <= levelScene.mario.mapY + receptiveFieldHeight / 2)
         {
-            int obsX = sprite.mapY - mario.mapY + receptiveFieldHeight / 2;
-            int obsY = sprite.mapX - mario.mapX + receptiveFieldWidth / 2;
+            int obsX = sprite.mapY - levelScene.mario.mapY + receptiveFieldHeight / 2;
+            int obsY = sprite.mapX - levelScene.mario.mapX + receptiveFieldWidth / 2;
             enemiesZ[obsX][obsY] = GeneralizerEnemies.ZLevelGeneralization(sprite.kind, ZLevel);
         }
     }
@@ -245,13 +260,13 @@ public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
 
 //    if (MarioXInMap != (int) mario.x / cellSize ||MarioYInMap != (int) mario.y / cellSize )
 //        throw new Error("WRONG mario x or y pos");
-    for (int y = mario.mapY - receptiveFieldHeight / 2, obsX = 0; y <= mario.mapY + receptiveFieldHeight / 2; y++, obsX++)
+    for (int y = levelScene.mario.mapY - receptiveFieldHeight / 2, obsX = 0; y <= levelScene.mario.mapY + receptiveFieldHeight / 2; y++, obsX++)
     {
-        for (int x = mario.mapX - receptiveFieldWidth / 2, obsY = 0; x <= mario.mapX + receptiveFieldWidth / 2; x++, obsY++)
+        for (int x = levelScene.mario.mapX - receptiveFieldWidth / 2, obsY = 0; x <= levelScene.mario.mapX + receptiveFieldWidth / 2; x++, obsY++)
         {
-            if (x >= 0 && x < level.xExit && y >= 0 && y < level.height)
+            if (x >= 0 && x < levelScene.level.xExit && y >= 0 && y < levelScene.level.height)
             {
-                mergedZZ[obsX][obsY] = GeneralizerLevelScene.ZLevelGeneralization(level.map[x][y], ZLevelScene);
+                mergedZZ[obsX][obsY] = GeneralizerLevelScene.ZLevelGeneralization(levelScene.level.map[x][y], ZLevelScene);
             } else
                 mergedZZ[obsX][obsY] = 0;
 //                if (x == MarioXInMap && y == MarioYInMap)
@@ -263,17 +278,17 @@ public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
 //                mergedZZ[w][h] = -1;
     for (Sprite sprite : sprites)
     {
-        if (sprite.kind == mario.kind)
+        if (sprite.kind == levelScene.mario.kind)
             continue;
         if (sprite.mapX >= 0 &&
-                sprite.mapX > mario.mapX - receptiveFieldWidth / 2 &&
-                sprite.mapX < mario.mapX + receptiveFieldWidth / 2 &&
+                sprite.mapX > levelScene.mario.mapX - receptiveFieldWidth / 2 &&
+                sprite.mapX < levelScene.mario.mapX + receptiveFieldWidth / 2 &&
                 sprite.mapY >= 0 &&
-                sprite.mapY > mario.mapY - receptiveFieldHeight / 2 &&
-                sprite.mapY < mario.mapY + receptiveFieldHeight / 2)
+                sprite.mapY > levelScene.mario.mapY - receptiveFieldHeight / 2 &&
+                sprite.mapY < levelScene.mario.mapY + receptiveFieldHeight / 2)
         {
-            int obsX = sprite.mapY - mario.mapY + receptiveFieldHeight / 2;
-            int obsY = sprite.mapX - mario.mapX + receptiveFieldWidth / 2;
+            int obsX = sprite.mapY - levelScene.mario.mapY + receptiveFieldHeight / 2;
+            int obsY = sprite.mapX - levelScene.mario.mapX + receptiveFieldWidth / 2;
             // quick fix TODO: handle this in more general way.
             // TODO: substitue '14' by explicit statement
             if (mergedZZ[obsX][obsY] != 14)
@@ -293,15 +308,15 @@ public List<String> getObservationStrings(boolean Enemies, boolean LevelMap,
                                           int ZLevelScene, int ZLevelEnemies)
 {
     List<String> ret = new ArrayList<String>();
-    if (level != null && mario != null)
+    if (levelScene.level != null && levelScene.mario != null)
     {
-        ret.add("Total levelScene length = " + level.length);
-        ret.add("Total levelScene height = " + level.height);
-        ret.add("Physical Mario Position (x,y): (" + mario.x + "," + mario.y + ")");
+        ret.add("Total levelScene length = " + levelScene.level.length);
+        ret.add("Total levelScene height = " + levelScene.level.height);
+        ret.add("Physical Mario Position (x,y): (" + levelScene.mario.x + "," + levelScene.mario.y + ")");
         ret.add("Mario Observation (Receptive Field)   Width: " + receptiveFieldWidth + " Height: " + receptiveFieldHeight);
-        ret.add("X Exit Position: " + level.xExit);
-        int MarioXInMap = (int) mario.x / cellSize;
-        int MarioYInMap = (int) mario.y / cellSize;
+        ret.add("X Exit Position: " + levelScene.level.xExit);
+        int MarioXInMap = (int) levelScene.mario.x / levelScene.cellSize;
+        int MarioYInMap = (int) levelScene.mario.y / levelScene.cellSize;
         ret.add("Calibrated Mario Position (x,y): (" + MarioXInMap + "," + MarioYInMap + ")\n");
 
         byte[][] levelScene = getLevelSceneObservationZ(ZLevelScene);
@@ -349,7 +364,7 @@ public List<String> getObservationStrings(boolean Enemies, boolean LevelMap,
             }
         }
     } else
-        ret.add("~[MarioAI ERROR] level : " + level + " mario : " + mario);
+        ret.add("~[MarioAI ERROR] level : " + levelScene.level + " mario : " + levelScene.mario);
     return ret;
 }
 
@@ -359,7 +374,7 @@ private String mapElToStr(int el)
     String s = "";
     if (el == 0 || el == 1)
         s = "##";
-    s += (el == mario.kind) ? "#M.#" : el;
+    s += (el == levelScene.mario.kind) ? "#M.#" : el;
     while (s.length() < 4)
         s += "#";
     return s + " ";
@@ -370,7 +385,7 @@ private String enemyToStr(int el)
     String s = "";
     if (el == 0)
         s = "";
-    s += (el == mario.kind) ? "-m" : el;
+    s += (el == levelScene.mario.kind) ? "-m" : el;
     while (s.length() < 2)
         s += "#";
     return s + " ";
@@ -439,22 +454,40 @@ public int getMarioStatus()
 
 public float[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies)
 {
-    return levelScene.getSerializedFullObservationZZ(ZLevelScene, ZLevelEnemies);
+    // TODO:TASK:[M], serialize all data to a sole double[]
+    assert false;
+    return new float[0];
 }
 
 public int[] getSerializedLevelSceneObservationZ(int ZLevelScene)
 {
-    return levelScene.getSerializedLevelSceneObservationZ(ZLevelScene);
+    // serialization into arrays of primitive types to speed up the data transfer.
+    byte[][] levelScene = this.getLevelSceneObservationZ(ZLevelScene);
+    for (int i = 0; i < serializedLevelScene.length; ++i)
+    {
+        final int i1 = i / receptiveFieldWidth;
+        final int i2 = i % receptiveFieldWidth;
+        serializedLevelScene[i] = (int) levelScene[i1][i2];
+    }
+    return serializedLevelScene;
 }
 
 public int[] getSerializedEnemiesObservationZ(int ZLevelEnemies)
 {
-    return levelScene.getSerializedEnemiesObservationZ(ZLevelEnemies);
+    // serialization into arrays of primitive types to speed up the data transfer.
+    byte[][] enemies = this.getEnemiesObservationZ(ZLevelEnemies);
+    for (int i = 0; i < serializedEnemies.length; ++i)
+        serializedEnemies[i] = (int) enemies[i / receptiveFieldWidth][i % receptiveFieldWidth];
+    return serializedEnemies;
 }
 
 public int[] getSerializedMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
 {
-    return levelScene.getSerializedMergedObservationZZ(ZLevelScene, ZLevelEnemies);
+    // serialization into arrays of primitive types to speed up the data transfer.
+    byte[][] merged = this.getMergedObservationZZ(ZLevelScene, ZLevelEnemies);
+    for (int i = 0; i < serializedMergedObservation.length; ++i)
+        serializedMergedObservation[i] = (int) merged[i / receptiveFieldWidth][i % receptiveFieldWidth];
+    return serializedMergedObservation;
 }
 
 public float[] getCreaturesFloatPos()

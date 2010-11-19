@@ -69,6 +69,9 @@ public void reset()
     Action[Mario.KEY_SPEED] = true;
 }
 
+public void setObservationDetails(final int rfWidth, final int rfHeight, final int egoRow, final int egoCol)
+{}
+
 public boolean[] getAction(Environment observation)
 {
     Action[Mario.KEY_SPEED] = Action[Mario.KEY_JUMP] = observation.isMarioAbleToJump() || !observation.isMarioOnGround();

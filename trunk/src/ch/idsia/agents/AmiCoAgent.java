@@ -123,6 +123,11 @@ public void reset()
     }
 }
 
+public void setObservationDetails(final int rfWidth, final int rfHeight, final int egoRow, final int egoCol)
+{
+    amicoJavaPy.setObservationDetails(rfWidth, rfHeight, egoRow, egoCol);
+}
+
 public String getName()
 {
     return amicoJavaPy.getName();

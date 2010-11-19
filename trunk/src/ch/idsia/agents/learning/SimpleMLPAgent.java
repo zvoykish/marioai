@@ -129,6 +129,9 @@ public void giveIntermediateReward(float intermediateReward)
 public void reset()
 { mlp.reset(); }
 
+public void setObservationDetails(final int rfWidth, final int rfHeight, final int egoRow, final int egoCol)
+{}
+
 public void mutate()
 { mlp.mutate(); }
 

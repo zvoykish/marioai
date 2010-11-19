@@ -51,8 +51,6 @@ protected byte[][] mergedObservation;
 protected float[] marioFloatPos = null;
 protected float[] enemiesFloatPos = null;
 
-int[] marioCenter = null;
-
 protected int[] marioState = null;
 
 protected int marioStatus;
@@ -68,6 +66,8 @@ protected int getKillsByShell;
 
 protected int receptiveFieldWidth;
 protected int receptiveFieldHeight;
+protected int marioEgoRow;
+protected int marioEgoCol;
 
 // values of these variables could be changed during the Agent-Environment interaction.
 // Use them to get more detailed or less detailed description of the level.
@@ -98,7 +98,6 @@ public void integrateObservation(Environment environment)
     this.enemiesFloatPos = environment.getEnemiesFloatPos();
     this.marioState = environment.getMarioState();
 
-    this.marioCenter = environment.getMarioEgoPos();
     receptiveFieldWidth = environment.getReceptiveFieldWidth();
     receptiveFieldHeight = environment.getReceptiveFieldHeight();
 
@@ -124,6 +123,15 @@ public void giveIntermediateReward(float intermediateReward)
 public void reset()
 {
     action = new boolean[Environment.numberOfKeys];// Empty action
+}
+
+public void setObservationDetails(final int rfWidth, final int rfHeight, final int egoRow, final int egoCol)
+{
+    receptiveFieldWidth = rfWidth;
+    receptiveFieldHeight = rfHeight;
+
+    marioEgoRow = egoRow;
+    marioEgoCol = egoCol;
 }
 
 @Deprecated

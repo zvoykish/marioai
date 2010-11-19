@@ -123,6 +123,9 @@ public void reset()
     Action = new boolean[Environment.numberOfKeys];
 }
 
+public void setObservationDetails(final int rfWidth, final int rfHeight, final int egoRow, final int egoCol)
+{}
+
 public boolean[] getAction(Environment observation)
 {
     float[] enemiesPos = observation.getEnemiesFloatPos();

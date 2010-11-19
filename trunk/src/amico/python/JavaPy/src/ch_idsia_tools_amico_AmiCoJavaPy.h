@@ -65,6 +65,9 @@ JNIEXPORT void JNICALL Java_ch_idsia_tools_amico_AmiCoJavaPy_giveIntermediateRew
 JNIEXPORT void JNICALL Java_ch_idsia_tools_amico_AmiCoJavaPy_reset
   (JNIEnv *, jobject);
 
+JNIEXPORT void JNICALL Java_ch_idsia_tools_amico_AmiCoJavaPy_setObservationDetails
+  (JNIEnv *, jobject, jint, jint, jint, jint);
+
 #ifdef __cplusplus
 }
 #endif

@@ -16,6 +16,9 @@ class MarioAgent:
     def giveIntermediateReward(self, reward):
         pass
       
+    def setObservationDetails(rfWidth, rfHeight, egoRow, egoCol):
+	pass
+     
     def _getName(self):
         if self._name is None:
             self._name = self.__class__.__name__

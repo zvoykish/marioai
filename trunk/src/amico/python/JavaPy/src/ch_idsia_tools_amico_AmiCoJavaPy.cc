@@ -34,6 +34,7 @@ PyObject* getNameMethod;
 PyObject* giveIntermediateRewardMethod;
 PyObject* integrateObservationMethod;
 PyObject* resetMethod;
+PyObject* setObservationDetailsMethod;
 
 const char* agentName;
 const char* defaultAgentName = "AmiCo Agent";
@@ -97,6 +98,7 @@ Java_ch_idsia_tools_amico_AmiCoJavaPy_initModule(JNIEnv* env,
     giveIntermediateRewardMethod = PyObject_GetAttrString(classInstance, "giveIntermediateReward");
     integrateObservationMethod = PyObject_GetAttrString(classInstance, "integrateObservation");
     getActionMethod = PyObject_GetAttrString(classInstance, "getAction");
+    setObservationDetailsMethod = PyObject_GetAttrString(classInstance, "setObservationDetails");
 
     if (getNameMethod == NULL)
     {
@@ -127,6 +129,14 @@ Java_ch_idsia_tools_amico_AmiCoJavaPy_initModule(JNIEnv* env,
         std::cerr << AMICO_EXCEPTION << "Method \"getAction\" not found" << std::endl;
         return ERROR_METHOD_NOT_FOUND;
     }
+
+    if (setObservationDetailsMethod == NULL)
+    {
+        std::cerr << AMICO_EXCEPTION << "Method \"setObservationDetails\" not found" << std::endl;
+        return ERROR_METHOD_NOT_FOUND;
+    }
+
+    std::cout << AMICO_INFO << "All methods loaded successfully" << std::endl;
 
     Py_DECREF(agentClass);
 
@@ -226,5 +236,28 @@ Java_ch_idsia_tools_amico_AmiCoJavaPy_reset(JNIEnv* env, jobject obj)
 {
     PyObject* args = Py_BuildValue("()");
     PyEval_CallObject(resetMethod, args);
+    Py_DECREF(args);
+}
+
+JNIEXPORT void JNICALL
+Java_ch_idsia_tools_amico_AmiCoJavaPy_setObservationDetails(JNIEnv* env,
+                                                            jobject obj,
+                                                            jint rfWidth,
+                                                            jint rfHeight,
+                                                            jint egoRow,
+                                                            jint egoCol)
+{
+    PyObject* width = PyInt_FromLong(rfWidth);
+    PyObject* height = PyInt_FromLong(rfHeight);
+    PyObject* row = PyInt_FromLong(egoRow);
+    PyObject* col = PyInt_FromLong(egoCol);
+
+    PyObject* args = PyTuple_New(4);
+    PyTuple_SET_ITEM(args, (Py_ssize_t)0, width);
+    PyTuple_SET_ITEM(args, (Py_ssize_t)1, height);
+    PyTuple_SET_ITEM(args, (Py_ssize_t)2, row);
+    PyTuple_SET_ITEM(args, (Py_ssize_t)3, col);
+
+    PyEval_CallObject(setObservationDetailsMethod, args);
     Py_DECREF(args);
 }
