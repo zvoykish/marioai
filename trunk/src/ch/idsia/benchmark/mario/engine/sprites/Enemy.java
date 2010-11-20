@@ -28,6 +28,7 @@
 package ch.idsia.benchmark.mario.engine.sprites;
 
 import ch.idsia.benchmark.mario.engine.Art;
+import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.engine.LevelScene;
 
 import java.awt.*;
@@ -167,6 +168,8 @@ public void collideCheck()
 
 public void move()
 {
+    if (GlobalOptions.areFrozenCreatures == false)
+    {
     wingTime++;
     if (deadTime > 0)
     {
@@ -250,6 +253,7 @@ public void move()
     if (winged) runFrame = wingTime / 4 % 2;
 
     xPic = runFrame;
+    }
 }
 
 private boolean move(float xa, float ya)

@@ -512,6 +512,7 @@ public void reset(MarioAIOptions marioAIOptions)
     GlobalOptions.isPowerRestoration = marioAIOptions.isPowerRestoration();
 //        System.out.println("GlobalOptions.isPowerRestoration = " + GlobalOptions.isPowerRestoration);
     GlobalOptions.isPauseWorld = marioAIOptions.isPauseWorld();
+    GlobalOptions.areFrozenCreatures = marioAIOptions.isFrozenCreatures();
 //        System.out.println("GlobalOptions = " + GlobalOptions.isPauseWorld);
 //        GlobalOptions.isTimer = marioAIOptions.isTimer();
 //        System.out.println("GlobalOptions.isTimer = " + GlobalOptions.isTimer);

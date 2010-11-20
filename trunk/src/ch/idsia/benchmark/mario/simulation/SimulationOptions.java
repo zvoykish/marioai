@@ -241,7 +241,19 @@ public boolean isPauseWorld()
     return b(getParameterValue("-pw"));
 }
 
+
 //isPowerRestoration
+
+public void setFrozenCreatures(boolean frozenCreatures)
+{
+    setParameterValue("-fc", s(frozenCreatures));
+}
+
+public boolean isFrozenCreatures()
+{
+    return b(getParameterValue("-fc"));
+}
+
 
 public boolean isPowerRestoration()
 {
