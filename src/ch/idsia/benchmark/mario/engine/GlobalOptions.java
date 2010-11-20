@@ -46,6 +46,7 @@ public static boolean isCameraCenteredOnMario = false;
 public static Integer FPS = 24;
 public static int MaxFPS = 100;
 public static boolean isPauseWorld = false;
+public static boolean areFrozenCreatures = false;
 
 public static boolean isVisualization = true;
 public static boolean isGameplayStopped = false;

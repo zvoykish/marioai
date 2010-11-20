@@ -27,6 +27,7 @@
 
 package ch.idsia.benchmark.mario.engine.sprites;
 
+import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.engine.LevelScene;
 
 public class FlowerEnemy extends Enemy
@@ -63,6 +64,8 @@ public FlowerEnemy(LevelScene world, int x, int y, int mapX, int mapY)
 public void move()
 {
     //TODO:|L| check this
+    if (GlobalOptions.areFrozenCreatures == false)
+    {
     if (deadTime > 0)
     {
         deadTime--;
@@ -111,7 +114,7 @@ public void move()
 
     xPic = ((tick / 2) & 1) * 2 + ((tick / 6) & 1);
 }
-
+}
 /*    public void render(Graphics og, float alpha)
     {
         if (!visible) return;

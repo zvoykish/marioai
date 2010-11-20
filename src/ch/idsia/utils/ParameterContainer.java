@@ -53,6 +53,7 @@ private static final String[] allowed = new String[]{
 //        "-amico",
         "-echo", // echo options
         "-ewf",  // System.exit(0) when evaluation finished
+        "-fc",   // frozencreatures
         "-cgr",  //level: Creatures gravity
         "-mgr",  //level: Mario gravity
         "-gv",   // GaveViewer <on|off>
@@ -230,6 +231,7 @@ public static void InitDefaults()
 //        defaultOptionsHashMap.put("-amico", "off");
         defaultOptionsHashMap.put("-echo", "off"); //defaultOptionsHashMap.put("-echo","off");
         defaultOptionsHashMap.put("-ewf", "on"); //defaultOptionsHashMap.put("-exitWhenFinished","off");
+        defaultOptionsHashMap.put("-fc", "off");
         defaultOptionsHashMap.put("-cgr", "1.0"); //Gravity creatures
         defaultOptionsHashMap.put("-mgr", "1.0"); //Gravity Mario
         defaultOptionsHashMap.put("-gv", "off"); //defaultOptionsHashMap.put("-gameViewer","off");

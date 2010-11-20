@@ -44,6 +44,7 @@ import java.awt.event.KeyEvent;
 public class CheaterKeyboardAgent extends KeyAdapter implements Agent
 {
 public static final int CHEAT_KEY_PAUSE = 6;
+public static final int CHEAT_KEY_FC = 5;
 public static final int CHEAT_KEY_DUMP_CURRENT_WORLD = 7;
 public static final int CHEAT_KEY_LIFE_UP = 8;
 public static final int CHEAT_KEY_WIN = 9;
@@ -123,6 +124,13 @@ private void toggleKey(int keyCode, boolean isPressed)
             {
                 GlobalOptions.isPauseWorld = !GlobalOptions.isPauseWorld;
                 Action[CHEAT_KEY_PAUSE] = GlobalOptions.isPauseWorld;
+            }
+            break;
+        case KeyEvent.VK_O:
+            if (isPressed)
+            {
+                GlobalOptions.areFrozenCreatures = !GlobalOptions.areFrozenCreatures;
+                Action[CHEAT_KEY_FC] = GlobalOptions.areFrozenCreatures;
             }
             break;
         case KeyEvent.VK_L:

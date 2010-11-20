@@ -61,7 +61,7 @@ public void tearDown()
 @Test
 public void testTotalNumberOfOptions() throws Exception
 {
-    assertEquals(51, marioAIOptions.getTotalNumberOfOptions());
+    assertEquals(52, marioAIOptions.getTotalNumberOfOptions());
 }
 
 @Test
@@ -77,6 +77,7 @@ public void testSetArgs() throws Exception
             //  " -amico off" +
             " -echo off" +
             " -ewf on" +
+            " -fc off" +
             " -cgr 1.0" +
             " -mgr 1.0" +
             " -gv off" +
@@ -119,6 +120,7 @@ public void testSetArgs() throws Exception
     assertEquals(marioAIOptions.getAgentFullLoadName(), "ch.idsia.agents.controllers.human.HumanKeyboardAgent");
     assertEquals(marioAIOptions.isEcho(), false);
     assertEquals(marioAIOptions.isExitProgramWhenFinished(), true);
+    assertEquals(marioAIOptions.isFrozenCreatures(), false);
     assertEquals(marioAIOptions.getCreaturesGravity(), 1.0f);
     assertEquals(marioAIOptions.getMarioGravity(), 1.0f);
     assertEquals(marioAIOptions.isGameViewer(), false);
