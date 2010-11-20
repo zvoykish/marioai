@@ -64,8 +64,10 @@ public FlowerEnemy(LevelScene world, int x, int y, int mapX, int mapY)
 public void move()
 {
     //TODO:|L| check this
-    if (GlobalOptions.areFrozenCreatures == false)
+    if (GlobalOptions.areFrozenCreatures == true)
     {
+        return;
+    }
     if (deadTime > 0)
     {
         deadTime--;
@@ -113,7 +115,6 @@ public void move()
     ya += 0.1f;
 
     xPic = ((tick / 2) & 1) * 2 + ((tick / 6) & 1);
-}
 }
 /*    public void render(Graphics og, float alpha)
     {

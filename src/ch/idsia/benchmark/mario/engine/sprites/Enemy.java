@@ -168,8 +168,10 @@ public void collideCheck()
 
 public void move()
 {
-    if (GlobalOptions.areFrozenCreatures == false)
+    if (GlobalOptions.areFrozenCreatures == true)
     {
+        return;
+    }
     wingTime++;
     if (deadTime > 0)
     {
@@ -253,7 +255,7 @@ public void move()
     if (winged) runFrame = wingTime / 4 % 2;
 
     xPic = runFrame;
-    }
+
 }
 
 private boolean move(float xa, float ya)
