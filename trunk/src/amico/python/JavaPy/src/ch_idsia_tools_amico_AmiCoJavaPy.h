@@ -68,6 +68,9 @@ JNIEXPORT void JNICALL Java_ch_idsia_tools_amico_AmiCoJavaPy_reset
 JNIEXPORT void JNICALL Java_ch_idsia_tools_amico_AmiCoJavaPy_setObservationDetails
   (JNIEnv *, jobject, jint, jint, jint, jint);
 
+JNIEXPORT void JNICALL Java_ch_idsia_tools_amico_AmiCoJavaPy_finalizePythonEnvironment
+  (JNIEnv *, jobject);
+
 #ifdef __cplusplus
 }
 #endif

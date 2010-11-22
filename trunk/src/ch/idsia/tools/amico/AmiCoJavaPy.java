@@ -66,4 +66,6 @@ static
     System.loadLibrary("AmiCoJavaPy");
     System.out.println("Java: AmiCo library has been successfully loaded!");
 }
+
+public native void finalizePythonEnvironment();
 }

@@ -137,4 +137,17 @@ public void setName(String name)
 {
     throw new Error("AmiCo agent name cannot be changed");
 }
+
+protected void finalize() throws Throwable
+{
+    try
+    {
+        if (amicoJavaPy != null)
+            amicoJavaPy.finalizePythonEnvironment();
+    }
+    finally
+    {
+        super.finalize();
+    }
+}
 }
