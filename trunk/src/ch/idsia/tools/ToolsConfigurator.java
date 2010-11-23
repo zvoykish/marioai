@@ -456,7 +456,7 @@ public class ToolsConfiguratorActions implements ActionListener, ItemListener, C
             */
         } else if (ob == CheckboxPauseWorld)
         {
-            GlobalOptions.isPauseWorld = CheckboxPauseWorld.getState();
+//            GlobalOptions.isPauseWorld = CheckboxPauseWorld.getState();
 
 //                marioComponent.setPaused(GlobalOptions.isPauseWorld);
 //                LOGGER.println("World " + (GlobalOptions.isPauseWorld ? "paused" : "unpaused"),

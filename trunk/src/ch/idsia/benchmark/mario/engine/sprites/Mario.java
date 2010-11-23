@@ -36,7 +36,6 @@ import ch.idsia.tools.MarioAIOptions;
 
 public final class Mario extends Sprite
 {
-private final int FractionalPowerUpTime = 0;
 public static final String[] MODES = new String[]{"small", "Large", "FIRE"};
 
 //        fire = (mode == MODE.MODE_FIRE);
@@ -121,7 +120,6 @@ int height = 24;
 
 public LevelScene levelScene;
 public int facing;
-private int powerUpTime = 0; // exclude pause for rendering changes
 
 public int xDeathPos, yDeathPos;
 
@@ -279,24 +277,6 @@ public void move()
         return;
     }
 
-    if (powerUpTime != 0)
-    {
-        if (powerUpTime > 0)
-        {
-            powerUpTime--;
-            blink(((powerUpTime / 3) & 1) == 0);
-        } else
-        {
-            powerUpTime++;
-            blink(((-powerUpTime / 3) & 1) == 0);
-        }
-
-        if (powerUpTime == 0) levelScene.paused = false;
-
-        calcPic();
-        return;
-    }
-
     if (invulnerableTime > 0) invulnerableTime--;
     visible = ((invulnerableTime / 2) & 1) == 0;
 
@@ -384,7 +364,6 @@ public void move()
 //        if (cheatKeys[KEY_LIFE_UP])
 //            this.lives++;
 
-    levelScene.paused = GlobalOptions.isPauseWorld;
 //        if (keys[KEY_DUMP_CURRENT_WORLD])
 //            try {
 //                System.out.println("DUMP:");
@@ -649,7 +628,7 @@ private boolean isBlocking(float _x, float _y, float xa, float ya)
 
 public void stomp(Enemy enemy)
 {
-    if (deathTime > 0 || levelScene.paused) return;
+    if (deathTime > 0) return;
 
     float targetY = enemy.y - enemy.height / 2;
     move(0, targetY - y);
@@ -666,7 +645,7 @@ public void stomp(Enemy enemy)
 
 public void stomp(Shell shell)
 {
-    if (deathTime > 0 || levelScene.paused) return;
+    if (deathTime > 0) return;
 
     if (keys[KEY_SPEED] && shell.facing == 0)
     {
@@ -691,15 +670,15 @@ public void stomp(Shell shell)
 
 public void getHurt(final int spriteKind)
 {
-    if (deathTime > 0 || levelScene.paused || isMarioInvulnerable) return;
+    if (deathTime > 0 || isMarioInvulnerable) return;
 
     if (invulnerableTime > 0) return;
 
     ++collisionsWithCreatures;
     if (large)
     {
-        levelScene.paused = true;
-        powerUpTime = -3 * FractionalPowerUpTime;
+//        levelScene.paused = true;
+//        powerUpTime = -3 * FractionalPowerUpTime;
         if (fire)
         {
             levelScene.mario.setMode(true, false);
@@ -718,7 +697,6 @@ public void win()
 {
     xDeathPos = (int) x;
     yDeathPos = (int) y;
-    levelScene.paused = true;
     winTime = 1;
     status = Mario.STATUS_WIN;
 }
@@ -727,7 +705,6 @@ public void die(String reasonOfDeath)
 {
     xDeathPos = (int) x;
     yDeathPos = (int) y;
-    levelScene.paused = true;
     deathTime = 25;
     status = Mario.STATUS_DEAD;
     // TODO: [M] refactor reasons of death to enum {COLLISION, GAP, TIMEOUT}
@@ -736,12 +713,10 @@ public void die(String reasonOfDeath)
 
 public void devourFlower()
 {
-    if (deathTime > 0 || levelScene.paused) return;
+    if (deathTime > 0) return;
 
     if (!fire)
     {
-        levelScene.paused = true;
-        powerUpTime = 3 * FractionalPowerUpTime;
         levelScene.mario.setMode(true, true);
     } else
     {
@@ -752,12 +727,10 @@ public void devourFlower()
 
 public void devourMushroom()
 {
-    if (deathTime > 0 || levelScene.paused) return;
+    if (deathTime > 0) return;
 
     if (!large)
     {
-        levelScene.paused = true;
-        powerUpTime = 3 * FractionalPowerUpTime;
         levelScene.mario.setMode(true, false);
     } else
     {
@@ -784,7 +757,8 @@ public void kick(Shell shell)
 
 public void stomp(BulletBill bill)
 {
-    if (deathTime > 0 || levelScene.paused) return;
+    if (deathTime > 0)
+        return;
 
     float targetY = bill.y - bill.height / 2;
     move(0, targetY - y);
