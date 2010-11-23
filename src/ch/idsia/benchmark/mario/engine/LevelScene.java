@@ -59,14 +59,10 @@ public float xCam, yCam, xCamO, yCamO;
 
 public int tick;
 
-public boolean paused = false;
 public int startTime = 0;
 private int timeLeft;
 private int width;
 private int height;
-
-// TODO: fix it! creaturesGravity never used
-private static float creaturesGravity;
 
 private static final int CANNON_MUZZLE = -82;
 private static final int CANNON_TRUNK = -80;
@@ -221,20 +217,6 @@ public void tick()
         }
     }
 
-    if (paused)
-    {
-        for (Sprite sprite : sprites)
-        {
-            if (sprite == mario)
-            {
-                sprite.tick();
-            } else
-            {
-                sprite.tickNoMove();
-            }
-        }
-    } else
-    {
         tick++;
         level.tick();
 
@@ -324,7 +306,7 @@ public void tick()
                     if (sprite.fireballCollideCheck(fireball))
                         fireball.die();
         fireballsToCheck.clear();
-    }
+
 
     sprites.addAll(0, spritesToAdd);
     sprites.removeAll(spritesToRemove);
@@ -511,7 +493,7 @@ public void reset(MarioAIOptions marioAIOptions)
 //        System.out.println("GlobalOptions.FPS = " + GlobalOptions.FPS);
     GlobalOptions.isPowerRestoration = marioAIOptions.isPowerRestoration();
 //        System.out.println("GlobalOptions.isPowerRestoration = " + GlobalOptions.isPowerRestoration);
-    GlobalOptions.isPauseWorld = marioAIOptions.isPauseWorld();
+//    GlobalOptions.isPauseWorld = marioAIOptions.isPauseWorld();
     GlobalOptions.areFrozenCreatures = marioAIOptions.isFrozenCreatures();
 //        System.out.println("GlobalOptions = " + GlobalOptions.isPauseWorld);
 //        GlobalOptions.isTimer = marioAIOptions.isTimer();
@@ -569,7 +551,6 @@ public void reset(MarioAIOptions marioAIOptions)
     this.levelType = level.type;
     this.levelDifficulty = level.difficulty;
 
-    paused = false;
     Sprite.spriteContext = this;
     sprites.clear();
     this.width = GlobalOptions.VISUAL_COMPONENT_WIDTH;

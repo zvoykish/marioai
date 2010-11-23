@@ -80,7 +80,7 @@ public void setUpOptions(String[] args)
             }
     GlobalOptions.isVisualization = isVisualization();
     GlobalOptions.FPS = getFPS() /*GlobalOptions.FPS*/;
-    GlobalOptions.isPauseWorld = isPauseWorld();
+//    GlobalOptions.isPauseWorld = isPauseWorld();
     GlobalOptions.isPowerRestoration = isPowerRestoration();
 //        GlobalOptions.isTimer = isTimer();
 }

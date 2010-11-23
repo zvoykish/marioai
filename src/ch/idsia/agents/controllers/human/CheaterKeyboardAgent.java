@@ -118,13 +118,6 @@ private void toggleKey(int keyCode, boolean isPressed)
         case KeyEvent.VK_W:
             Action[CHEAT_KEY_WIN] = isPressed;
             break;
-        case KeyEvent.VK_P:
-            if (isPressed)
-            {
-                GlobalOptions.isPauseWorld = !GlobalOptions.isPauseWorld;
-                Action[CHEAT_KEY_PAUSE] = GlobalOptions.isPauseWorld;
-            }
-            break;
         case KeyEvent.VK_O:
             if (isPressed)
             {
