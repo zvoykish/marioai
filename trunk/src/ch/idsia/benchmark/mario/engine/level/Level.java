@@ -233,6 +233,15 @@ public void setBlockData(int x, int y, byte b)
     data[x][y] = b;
 }
 
+public byte getBlockData(int x, int y)
+{
+    if (x < 0) return 0;
+    if (y < 0) return 0;
+    if (x >= length) return 0;
+    if (y >= height) return 0;
+    return data[x][y];
+}
+
 public boolean isBlocking(int x, int y, float xa, float ya)
 {
     byte block = getBlock(x, y);

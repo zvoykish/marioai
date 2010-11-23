@@ -334,8 +334,15 @@ public void bump(int x, int y, boolean canBreakBricks)
         if (block == 1)
             Mario.gainHiddenBlock();
         bumpInto(x, y - 1);
-        level.setBlock(x, y, (byte) 4);
-        level.setBlockData(x, y, (byte) 4);
+        byte blockData = level.getBlockData(x, y);
+        if (blockData < 0)
+            level.setBlockData(x, y, (byte) (blockData + 1));
+
+        if (blockData == 0)
+        {
+            level.setBlock(x, y, (byte) 4);
+            level.setBlockData(x, y, (byte) 4);
+        }
 
         if (((Level.TILE_BEHAVIORS[block & 0xff]) & Level.BIT_SPECIAL) > 0)
         {

@@ -908,17 +908,24 @@ private static void buildBlocks(int x0, int x1, int floor, boolean pHB, int pS, 
                         if (canBuildBlocks(x, floor - 4, false))
                         {
                             counters.blocksCount++;
-                            if ((globalRandom.nextInt(4) == 0))
+                            int rnd = globalRandom.nextInt(6);
+                            if (rnd >= 0 && rnd < 2)
                             {
                                 if (level.getBlock(x, floor) == 0)
                                     level.setBlock(x, floor, (byte) (4 + 2 + 1 * 16)); //a brick with animated question symbol with power up. when broken becomes a rock
-                            } else
+                            } else if (rnd >= 2 && rnd < 4)
                             {
                                 if (level.getBlock(x, floor) == 0)
                                 {
                                     level.setBlock(x, floor, (byte) (4 + 1 + 1 * 16)); //a brick with animated question symbol with coin. when broken becomes a rock
                                     ++counters.coinsCount;
                                 }
+                            } else if (rnd >= 4 && rnd < 6)
+                            {
+                                int coinsNumber = globalRandom.nextInt(9)+1;
+                                level.setBlock(x, floor, (byte) (4 + 3 + 1 * 16)); //a brick with animated question symbol with N coins inside. when broken becomes a rock
+                                level.setBlockData(x, floor, (byte) -coinsNumber);
+                                counters.coinsCount += coinsNumber;
                             }
                             canDeco = true;
                         }
