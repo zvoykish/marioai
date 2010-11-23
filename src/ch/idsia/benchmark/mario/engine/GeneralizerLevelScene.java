@@ -63,6 +63,7 @@ public static byte ZLevelGeneralization(byte el, int ZLevel)
                     return BREAKABLE_BRICK;
                 case 21:       // question brick, contains coin
                 case 22:       // question brick, contains flower/mushroom
+                case 23:       // question brick, N coins inside. prevents cheating
                     return UNBREAKABLE_BRICK; // question brick, contains something
                 case 34:
                     return COIN_ANIM;
@@ -101,6 +102,7 @@ public static byte ZLevelGeneralization(byte el, int ZLevel)
                 case 18:  // brick with a hidden flower
                 case 21:       // question brick, contains coin
                 case 22:       // question brick, contains flower/mushroom
+                case 23:       // question brick, N coins inside. prevents cheating
                     return BRICK; // any brick
                 case 1:   // hidden block
                 case (-108):
