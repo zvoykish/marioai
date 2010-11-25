@@ -59,6 +59,7 @@ static public class objCounters implements Serializable
     public int mushrooms = 0;
     public int flowers = 0;
     public int creatures = 0;
+    public int greenMushrooms = 0;
 
     private static final long serialVersionUID = 4505050755444159808L;
 
@@ -75,6 +76,7 @@ static public class objCounters implements Serializable
         mushrooms = 0;
         flowers = 0;
         creatures = 0;
+        greenMushrooms = 0;
         totalHillStraight = args.getHillStraightCount() ? Integer.MAX_VALUE : 0;
         totalCannons = args.getCannonsCount() ? Integer.MAX_VALUE : 0;
         totalGaps = args.getGapsCount() ? Integer.MAX_VALUE : 0;
@@ -90,6 +92,7 @@ static public class objCounters implements Serializable
     {
         mushrooms = 0;
         flowers = 0;
+        greenMushrooms = 0;
     }
 }
 

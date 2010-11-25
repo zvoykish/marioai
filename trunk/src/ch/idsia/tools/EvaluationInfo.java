@@ -62,6 +62,7 @@ public int killsTotal = MagicNumberUnDef;
 public int marioMode = MagicNumberUnDef;
 public int marioStatus = MagicNumberUnDef;
 public int mushroomsDevoured = MagicNumberUnDef;
+public int greenMushroomsDevoured = MagicNumberUnDef;
 public int coinsGained = MagicNumberUnDef;
 public int timeLeft = MagicNumberUnDef;
 public int timeSpent = MagicNumberUnDef;
@@ -106,7 +107,8 @@ public int computeWeightedFitness(SystemOfValues sov)
                     flowersDevoured * sov.flowerFire +
                     marioStatus * sov.win +
                     marioMode * sov.mode +
-                    mushroomsDevoured * sov.mushrooms +
+                    mushroomsDevoured * sov.mushrooms -
+                    greenMushroomsDevoured * sov.greenMushrooms +
                     coinsGained * sov.coins +
                     hiddenBlocksFound * sov.hiddenBlocks +
                     killsTotal * sov.kills +
