@@ -58,6 +58,7 @@ public static int coins = 0;
 public static int hiddenBlocksFound = 0;
 public static int collisionsWithCreatures = 0;
 public static int mushroomsDevoured = 0;
+public static int greenMushroomsDevoured = 0;
 public static int flowersDevoured = 0;
 
 private static boolean isTrace;
@@ -298,6 +299,10 @@ public void move()
     {
         facing = -1;
     }
+
+//    float Wind = 0.2f;
+//    float windAngle = 180;
+//    xa += Wind * Math.cos(windAngle * Math.PI / 180);
 
     if (keys[KEY_JUMP] || (jumpTime < 0 && !onGround && !sliding))
     {
@@ -737,6 +742,15 @@ public void devourMushroom()
         Mario.gainCoin();
     }
     ++mushroomsDevoured;
+}
+
+public void devourGreenMushroom(int mushroomMode)
+{
+    ++greenMushroomsDevoured;
+    if (mushroomMode == 0)
+        getHurt(Sprite.KIND_GREEN_MUSHROOM);
+    else
+        die("Collision with a creature [" + Sprite.getNameByKind(Sprite.KIND_GREEN_MUSHROOM) + "]");
 }
 
 public void kick(Shell shell)

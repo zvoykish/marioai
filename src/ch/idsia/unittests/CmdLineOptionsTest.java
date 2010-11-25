@@ -61,7 +61,7 @@ public void tearDown()
 @Test
 public void testTotalNumberOfOptions() throws Exception
 {
-    assertEquals(51, marioAIOptions.getTotalNumberOfOptions());
+    assertEquals(52, marioAIOptions.getTotalNumberOfOptions());
 }
 
 @Test
@@ -115,7 +115,8 @@ public void testSetArgs() throws Exception
             " -lg on" +
             " -lhb off" +
             " -le g,gw,gk,gkw,rk,rkw,s,sw" +
-            " -lf off";
+            " -lf off" +
+            " -gmm 1";
     marioAIOptions.setArgs(args);
     assertEquals(marioAIOptions.getAgentFullLoadName(), "ch.idsia.agents.controllers.human.HumanKeyboardAgent");
     assertEquals(marioAIOptions.isEcho(), false);
@@ -158,6 +159,7 @@ public void testSetArgs() throws Exception
     assertEquals(marioAIOptions.getHiddenBlocksCount(), false);
     assertEquals(marioAIOptions.getEnemies(), "g,gw,gk,gkw,rk,rkw,s,sw");
     assertEquals(marioAIOptions.isFlatLevel(), false);
+    assertEquals(marioAIOptions.getGreenMushroomMode(), 1);
 //    TODO:TASK:[M] test all cases
 }
 

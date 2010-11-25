@@ -648,6 +648,7 @@ private void computeEvaluationInfo()
     evaluationInfo.levelLength = levelScene.level.length;
     evaluationInfo.marioTraceFileName = marioTraceFile;
     evaluationInfo.marioTrace = levelScene.level.marioTrace;
+    evaluationInfo.greenMushroomsDevoured = Mario.greenMushroomsDevoured;
 }
 
 public void setAgent(Agent agent)

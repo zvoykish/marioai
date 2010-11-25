@@ -45,4 +45,5 @@ public int killedByStomp = 12;
 public int mushrooms = 58;
 public int timeLeft = 8;
 public int hiddenBlocks = 24;
+public int greenMushrooms = 58;
 }

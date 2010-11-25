@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public final class LevelScene implements SpriteContext
 {
@@ -64,22 +65,14 @@ private int timeLeft;
 private int width;
 private int height;
 
-private static final int CANNON_MUZZLE = -82;
-private static final int CANNON_TRUNK = -80;
-private static final int COIN_ANIM = Sprite.KIND_COIN_ANIM;  //1
-private static final int BREAKABLE_BRICK = -20;
-private static final int UNBREAKABLE_BRICK = -22; //a rock with animated question mark
-private static final int BRICK = -24;           //a rock with animated question mark
-private static final int FLOWER_POT = -90;
-private static final int BORDER_CANNOT_PASS_THROUGH = -60;
-private static final int BORDER_HILL = -62;
-// TODO:TASK:!H! : resolve (document why) this: FLOWER_POT_OR_CANNON = -85;
-private static final int FLOWER_POT_OR_CANNON = -85;
+private Random randomGen = new Random(0);
 
 final private List<Float> enemiesFloatsList = new ArrayList<Float>();
 final private float[] marioFloatPos = new float[2];
 final private int[] marioState = new int[11];
 private int numberOfHiddenCoinsGained = 0;
+
+private int greenMushroomMode = 0;
 
 public String memo = "";
 private Point marioInitialPos;
@@ -346,14 +339,21 @@ public void bump(int x, int y, boolean canBreakBricks)
 
         if (((Level.TILE_BEHAVIORS[block & 0xff]) & Level.BIT_SPECIAL) > 0)
         {
-            if (!Mario.large)
+            if (randomGen.nextInt(5) == 0 && level.difficulty > 4)
             {
-                addSprite(new Mushroom(this, x * cellSize + 8, y * cellSize + 8));
-                ++level.counters.mushrooms;
+                addSprite(new GreenMushroom(this, x * cellSize + 8, y * cellSize + 8));
+                ++level.counters.greenMushrooms;
             } else
             {
-                addSprite(new FireFlower(this, x * cellSize + 8, y * cellSize + 8));
-                ++level.counters.flowers;
+                if (!Mario.large)
+                {
+                    addSprite(new Mushroom(this, x * cellSize + 8, y * cellSize + 8));
+                    ++level.counters.mushrooms;
+                } else
+                {
+                    addSprite(new FireFlower(this, x * cellSize + 8, y * cellSize + 8));
+                    ++level.counters.flowers;
+                }
             }
         } else
         {
@@ -518,6 +518,7 @@ public void reset(MarioAIOptions marioAIOptions)
     killedCreaturesByShell = 0;
 
     marioInitialPos = marioAIOptions.getMarioInitialPos();
+    greenMushroomMode = marioAIOptions.getGreenMushroomMode();
 
     if (replayer != null)
     {
@@ -614,6 +615,11 @@ public Point getMarioInitialPos() {return marioInitialPos;}
 public void setReplayer(Replayer replayer)
 {
     this.replayer = replayer;
+}
+
+public int getGreenMushroomMode()
+{
+    return greenMushroomMode;
 }
 }
 

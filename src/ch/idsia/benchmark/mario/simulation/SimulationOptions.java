@@ -474,4 +474,14 @@ public void setScale2X(boolean z)
 {
     setParameterValue("-z", s(z));
 }
+
+public void setGreenMushroomMode(int mode)
+{
+    setParameterValue("-gmm", s(mode));
+}
+
+public int getGreenMushroomMode()
+{
+    return i(getParameterValue("-gmm"));
+}
 }

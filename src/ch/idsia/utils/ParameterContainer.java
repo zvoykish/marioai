@@ -58,6 +58,7 @@ private static final String[] allowed = new String[]{
         "-mgr",  //level: Mario gravity
         "-gv",   // GaveViewer <on|off>
         "-gvc",  // GameViewer continuous updates of the screen <on|off>
+        "-gmm",  // level: Green mushroom mode <0|1>. 0(default) -- hurts Mario; 1 -- kills Mario.
         "-i",    // Invulnerability for Mario <on|off>
         "-jp",  // Mario jump power
         "-ld",  // level: difficulty
@@ -235,6 +236,7 @@ public static void InitDefaults()
         defaultOptionsHashMap.put("-mgr", "1.0"); //Gravity Mario
         defaultOptionsHashMap.put("-gv", "off"); //defaultOptionsHashMap.put("-gameViewer","off");
         defaultOptionsHashMap.put("-gvc", "off"); //defaultOptionsHashMap.put("-gameViewerContinuousUpdates","off");
+        defaultOptionsHashMap.put("-gmm", "0");
         defaultOptionsHashMap.put("-i", "off"); // Mario Invulnerability
         defaultOptionsHashMap.put("-jp", "7");  // Mario Jump Power
         defaultOptionsHashMap.put("-ld", "0"); //defaultOptionsHashMap.put("-levelDifficulty","0");
