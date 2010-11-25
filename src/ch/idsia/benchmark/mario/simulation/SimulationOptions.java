@@ -229,19 +229,6 @@ public void setVisualization(boolean visualization)
     setParameterValue("-vis", s(visualization));
 }
 
-//isPauseWorld
-
-public void setPauseWorld(boolean pauseWorld)
-{
-    setParameterValue("-pw", s(pauseWorld));
-}
-
-public boolean isPauseWorld()
-{
-    return b(getParameterValue("-pw"));
-}
-
-
 //isPowerRestoration
 
 public void setFrozenCreatures(boolean frozenCreatures)

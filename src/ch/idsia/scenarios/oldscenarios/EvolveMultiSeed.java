@@ -54,7 +54,6 @@ public static void main(String[] args)
 {
     MarioAIOptions options = new MarioAIOptions(new String[0]);
 //        options.setNumberOfTrials(1);
-    options.setPauseWorld(true);
     Evolvable initial = new SimpleMLPAgent();
 
     if (args.length > 0)

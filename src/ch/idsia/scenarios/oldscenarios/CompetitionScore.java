@@ -91,7 +91,6 @@ public static void score(Agent agent, int startingSeed)
 public static double testConfig(TimingAgent controller, SimulationOptions options, int seed, int level, boolean paused)
 {
     options.setLevelDifficulty(level);
-    options.setPauseWorld(paused);
 
     StatisticalSummary ss = test(controller, options, seed);
     double averageTimeTaken = controller.averageTimeTaken();

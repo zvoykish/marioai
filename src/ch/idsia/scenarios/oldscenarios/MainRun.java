@@ -158,7 +158,6 @@ public static void score(Agent agent, int startingSeed, MarioAIOptions marioAIOp
 public static double testConfig(TimingAgent controller, SimulationOptions options, int seed, int levelDifficulty, boolean paused)
 {
     options.setLevelDifficulty(levelDifficulty);
-    options.setPauseWorld(paused);
     StatisticalSummary ss = test(controller, options, seed);
     double averageTimeTaken = controller.averageTimeTaken();
     System.out.printf("Difficulty %d score %.4f (avg time %.4f)\n",
