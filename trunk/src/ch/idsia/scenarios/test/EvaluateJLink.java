@@ -72,7 +72,6 @@ public double evaluateLargeSRN(double[][] inputs, double[][] recurrent, double[]
     options.setVisualization(false);
     options.setFPS(GlobalOptions.MaxFPS);
     options.setLevelDifficulty(level);
-    options.setPauseWorld(false);
     agent.reset();
     options.setAgent(agent);
 //        Evaluator evaluator = new Evaluator (options);

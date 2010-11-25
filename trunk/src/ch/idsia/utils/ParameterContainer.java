@@ -82,7 +82,6 @@ private static final String[] allowed = new String[]{
         "-mec", // Mario Ego Column
         "-fps", // Frames Per Second - update frequency
         "-pr",  // Power resoration (cheat) (bring Mario to FIRE state if "Shoot/RUN" key activated.
-        "-pw",  // Pouse World
         "-rfh", // receptive field height (observation )
         "-rfw", // receptive field length (observation )
         "-srf", // show receptive field  (observation )
@@ -246,7 +245,6 @@ public static void InitDefaults()
         defaultOptionsHashMap.put("-mm", "2"); //Mario Mode
         defaultOptionsHashMap.put("-mix", "32"); //Mario Initial physical Position
         defaultOptionsHashMap.put("-miy", "32"); //Mario Initial physical Position
-        defaultOptionsHashMap.put("-pw", "off"); //defaultOptionsHashMap.put("-isPauseWorld","off");
         defaultOptionsHashMap.put("-pr", "off"); //defaultOptionsHashMap.put("-powerRestoration","off");
         defaultOptionsHashMap.put("-rfh", "19");
         defaultOptionsHashMap.put("-rfw", "19");

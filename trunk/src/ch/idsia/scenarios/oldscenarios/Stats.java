@@ -80,7 +80,6 @@ public static void doStats(Agent agent, int startingSeed)
 public static double testConfig(TimingAgent controller, SimulationOptions options, int seed, int level, boolean paused)
 {
     options.setLevelDifficulty(level);
-    options.setPauseWorld(paused);
     StatisticalSummary ss = test(controller, options, seed);
     System.out.printf("Level %d %s %.4f (%.4f) (min %.4f max %.4f) (avg time %.4f)\n",
             level, paused ? "paused" : "unpaused",

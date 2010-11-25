@@ -61,7 +61,7 @@ public void tearDown()
 @Test
 public void testTotalNumberOfOptions() throws Exception
 {
-    assertEquals(52, marioAIOptions.getTotalNumberOfOptions());
+    assertEquals(51, marioAIOptions.getTotalNumberOfOptions());
 }
 
 @Test
@@ -133,7 +133,6 @@ public void testSetArgs() throws Exception
     assertEquals(marioAIOptions.getLevelType(), 0);
     assertEquals(marioAIOptions.getFPS(), 24);
     assertEquals(marioAIOptions.getMarioMode(), 2);
-    assertEquals(marioAIOptions.isPauseWorld(), false);
     assertEquals(marioAIOptions.isPowerRestoration(), false);
     assertEquals(marioAIOptions.getReceptiveFieldHeight(), 19);
     assertEquals(marioAIOptions.getReceptiveFieldWidth(), 19);

@@ -56,7 +56,6 @@ final static int populationSize = 100;
 public static void main(String[] args)
 {
     MarioAIOptions options = new MarioAIOptions(args);
-    options.setPauseWorld(true);
     List<Agent> bestAgents = new ArrayList<Agent>();
     DecimalFormat df = new DecimalFormat("0000");
     for (int difficulty = 0; difficulty < 11; difficulty++)

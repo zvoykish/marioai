@@ -48,7 +48,6 @@ public static void main(String[] args)
     Agent controller = AgentsPool.load(args[0]);
     MarioAIOptions options = new MarioAIOptions(new String[0]);
     options.setAgent(controller);
-    options.setPauseWorld(false);
     Task task = new ProgressTask(options);
     options.setVisualization(false);
     task.setOptions(options);

@@ -77,7 +77,6 @@ public static void main(String[] args)
 //        toolsConfigurator.JSpinnerMaxAttempts.setValue(marioAIOptions.getNumberOfTrials());
     toolsConfigurator.ChoiceAgent.select(AgentsPool.getCurrentAgent().getName());
     toolsConfigurator.CheckboxMaximizeFPS.setState(marioAIOptions.getFPS() > GlobalOptions.MaxFPS - 1);
-    toolsConfigurator.CheckboxPauseWorld.setState(marioAIOptions.isPauseWorld());
     toolsConfigurator.CheckboxPowerRestoration.setState(marioAIOptions.isPowerRestoration());
 //        toolsConfigurator.CheckboxStopSimulationIfWin.setState(marioAIOptions.isStopSimulationIfWin());
     toolsConfigurator.CheckboxExitOnFinish.setState(marioAIOptions.isExitProgramWhenFinished());
@@ -370,7 +369,6 @@ private SimulationOptions prepareSimulationOptions()
     simulationOptions.setLevelLength(Integer.parseInt(JSpinnerLevelLength.getValue().toString()));
     simulationOptions.setVisualization(CheckboxShowVizualization.getState());
 //        simulationOptions.setNumberOfTrials(Integer.parseInt(JSpinnerMaxAttempts.getValue().toString()));
-    simulationOptions.setPauseWorld(CheckboxPauseWorld.getState());
     simulationOptions.setPowerRestoration(CheckboxPowerRestoration.getState());
     simulationOptions.setExitProgramWhenFinished(CheckboxExitOnFinish.getState());
 //        simulationOptions.setMatlabFileName(TextFieldMatLabFileName.getText());
