@@ -220,7 +220,7 @@ public void setLevel(Level level)
     updateArea(0, 0, width, height);
 }
 
-public void renderExit0(Graphics g, int tick, boolean bar)
+/*public void renderExit0(Graphics g, int tick, boolean bar)
 {
     for (int y = level.yExit - 8; y < level.yExit; y++)
     {
@@ -232,14 +232,13 @@ public void renderExit0(Graphics g, int tick, boolean bar)
         g.drawImage(Art.level[12][3], (level.xExit - exitXOffset << 4) - xCam - 16, yh - yCam, null);
         g.drawImage(Art.level[13][3], (level.xExit - exitXOffset << 4) - xCam, yh - yCam, null);
     }
+
 }
 
 
-public void renderExit1(Graphics g, int tick)
+public void renderExit(Graphics g, int tick)
 {
-    for (int y = level.yExit - 8; y < level.yExit; y++)
-    {
-        g.drawImage(Art.level[13][y == level.yExit - 8 ? 4 : 5], (level.xExit - exitXOffset << 4) - xCam + 16, (y << 4) - yCam, null);
-    }
-}
+    //int yh = level.yExit * 14 - 6;
+    g.drawImage(Art.princess[0][0], level.xExit, level.yExit, null);
+}*/
 }

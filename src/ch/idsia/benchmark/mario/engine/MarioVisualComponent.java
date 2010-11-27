@@ -271,7 +271,6 @@ public void render(Graphics g)
 
     layer.setCam(xCam, yCam);
     layer.render(g, marioEnvironment.getTick() /*levelScene.paused ? 0 : */);
-    layer.renderExit0(g, marioEnvironment.getTick(), /*levelScene.paused ? 0 :*/  mario.winTime == 0);
 
     g.translate(-xCam, -yCam);
 
@@ -280,7 +279,7 @@ public void render(Graphics g)
 
     g.translate(xCam, yCam);
     g.setColor(Color.BLACK);
-    layer.renderExit1(g, marioEnvironment.getTick());
+    //layer.renderExit(g, marioEnvironment.getTick());
 
     drawStringDropShadow(g, "DIFFICULTY: " + df.format(marioEnvironment.getLevelDifficulty()), 0, 0, marioEnvironment.getLevelDifficulty() > 6 ? 1 : marioEnvironment.getLevelDifficulty() > 2 ? 4 : 7);
 //    drawStringDropShadow(g, "CREATURES:" + (mario.levelScene.paused ? "OFF" : " ON"), 19, 0, 7);

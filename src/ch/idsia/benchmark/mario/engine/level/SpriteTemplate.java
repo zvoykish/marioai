@@ -30,6 +30,7 @@ package ch.idsia.benchmark.mario.engine.level;
 import ch.idsia.benchmark.mario.engine.LevelScene;
 import ch.idsia.benchmark.mario.engine.sprites.Enemy;
 import ch.idsia.benchmark.mario.engine.sprites.FlowerEnemy;
+import ch.idsia.benchmark.mario.engine.sprites.Princess;
 import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 
 import java.io.Serializable;
@@ -85,6 +86,9 @@ public SpriteTemplate(int type)
         case Sprite.KIND_BULLET_BILL:
             this.winged = false;
             break;
+        case Sprite.KIND_PRINCESS:
+            this.winged = false;
+            break;
     }
 }
 
@@ -95,6 +99,9 @@ public void spawn(LevelScene world, int x, int y, int dir)
     if (type == Sprite.KIND_ENEMY_FLOWER)
     {
         sprite = new FlowerEnemy(world, x * 16 + 15, y * 16 + 24, x, y);
+    } else if (type == Sprite.KIND_PRINCESS)
+    {
+        sprite = new Princess(world, x * 16 + 15, y * 16 + 18, x, y);
     } else
     {
 //            sprite = new Enemy(levelScene, x*16+8, y*16+15, dir, type, winged);
