@@ -60,6 +60,7 @@ private int GREEN_KOOPA = 4;
 private int GREEN_KOOPA_WINGED = 5;
 private int SPIKY = 6;
 private int SPIKY_WINGED = 7;
+private int WAVE_GOOMBA = 7;
 
 private int[] counters = new int[9];
 
@@ -85,7 +86,7 @@ public void setSeed(long seed, String creatures, int difficulty)
         if (!creatures.equals(""))
         {
             kindByDifficulty = false;
-            Pattern pattern = Pattern.compile("[gsfr]k?w?(:\\d+)?");
+            Pattern pattern = Pattern.compile("[gsfr]k?w?w?(:\\d+)?");
             Matcher matcher = pattern.matcher(creatures);
 
             while (matcher.find())
@@ -130,6 +131,8 @@ private int getCreatureType(String type)
                 if (type.charAt(1) == 'w')
                 {
                     kind = Sprite.KIND_GOOMBA_WINGED;
+                    if (type.charAt(2) == 'w')
+                        kind = Sprite.KIND_WAVE_GOOMBA;
                 } else if (type.charAt(1) == 'k')
                 {
                     kind = Sprite.KIND_GREEN_KOOPA;
@@ -166,6 +169,7 @@ private int getCreatureIndex(String c)
     if (c.equals("rkw")) return RED_KOOPA_WINGED;
     if (c.equals("s")) return SPIKY;
     if (c.equals("sw")) return SPIKY_WINGED;
+    if (c.equals("gww")) return WAVE_GOOMBA;
 
     throw new ArrayStoreException("Unknown kind of the creature: " + c);
 }

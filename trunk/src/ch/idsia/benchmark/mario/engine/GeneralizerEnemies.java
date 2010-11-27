@@ -77,6 +77,7 @@ public static byte ZLevelGeneralization(byte el, int ZLevel)
                 case (Sprite.KIND_RED_KOOPA):
                 case (Sprite.KIND_RED_KOOPA_WINGED):
                 case (Sprite.KIND_SHELL):
+                case (Sprite.KIND_WAVE_GOOMBA):
                     return Sprite.KIND_GOOMBA;
                 case (Sprite.KIND_SPIKY):
                 case (Sprite.KIND_ENEMY_FLOWER):
@@ -109,8 +110,10 @@ public static byte ZLevelGeneralization(byte el, int ZLevel)
                 case (Sprite.KIND_SPIKY):
                 case (Sprite.KIND_ENEMY_FLOWER):
                 case (Sprite.KIND_SPIKY_WINGED):
-                case (Sprite.KIND_PRINCESS):
+                case (Sprite.KIND_WAVE_GOOMBA):
                     return 1;
+                case (Sprite.KIND_PRINCESS):
+                    return Sprite.KIND_PRINCESS;
             }
             System.err.println("ERROR: Z2 UNKNOWNN el = " + el);
             return 1;
