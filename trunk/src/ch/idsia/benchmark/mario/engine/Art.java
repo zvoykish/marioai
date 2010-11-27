@@ -45,6 +45,7 @@ public static Image[][] level;
 public static Image[][] particles;
 public static Image[][] font;
 public static Image[][] bg;
+public static Image[][] princess;
 //    public static Image[][] map;
 //    public static Image[][] endScene;
 //    public static Image[][] gameOver;
@@ -69,6 +70,7 @@ public static void init(GraphicsConfiguration gc)
 //            logo = getImage(gc, "resources/logo.gif");
 //            titleScreen = getImage(gc, "resources/title.gif");
         font = cutImage(gc, "resources/font.gif", 8, 8);
+        princess = cutImage(gc, "resources/princess.png", 32, 32);
 //            endScene = cutImage(gc, "resources/endscene.gif", 96, 96);
 //            gameOver = cutImage(gc, "resources/gameovergost.gif", 96, 64);
     }

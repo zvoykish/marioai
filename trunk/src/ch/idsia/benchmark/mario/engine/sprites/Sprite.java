@@ -51,6 +51,7 @@ public static final int KIND_ENEMY_FLOWER = 91;
 public static final int KIND_SHELL = 13;
 public static final int KIND_MUSHROOM = 2;
 public static final int KIND_GREEN_MUSHROOM = 4; //TODO: !H!: check if this number is free
+public static final int KIND_PRINCESS = 49;  // TODO: !H!: same
 public static final int KIND_FIRE_FLOWER = 3;
 public static final int KIND_PARTICLE = 21;
 public static final int KIND_SPARCLE = 22;
@@ -130,6 +131,8 @@ public static String getNameByKind(int kind)
             return "Power up Flower";
         case Sprite.KIND_GREEN_MUSHROOM:
             return "Green mushroom";
+        case Sprite.KIND_PRINCESS:
+            return "Princess";
     }
 
     return "Unknown";
