@@ -41,9 +41,10 @@ public static final int POSITION_GREEN_KOOPA = 1;
 public static final int POSITION_GOOMBA = 2;
 public static final int POSITION_SPIKY = 3;
 public static final int POSITION_FLOWER = 4;
+public static final int POSITION_WAVE_GOOMBA = 7;
 
-private float runTime;
-private boolean onGround = false;
+public float runTime;
+public boolean onGround = false;
 //    private boolean mayJump = false;
 //    private int jumpTime = 0;
 //    private float xJumpSpeed;
@@ -52,7 +53,7 @@ private boolean onGround = false;
 int width = 4;
 int height = 24;
 
-private float yaa = 1;
+public float yaa = 1;
 
 private LevelScene world;
 public int facing;
@@ -62,9 +63,9 @@ public boolean flyDeath = false;
 public boolean avoidCliffs = true;
 
 public boolean winged = true;
-private int wingTime = 0;
+public int wingTime = 0;
 
-private float yaw = 1;
+public float yaw = 1;
 
 public boolean noFireballDeath;
 
@@ -106,6 +107,9 @@ public Enemy(LevelScene world, int x, int y, int dir, int type, boolean winged, 
             break;
         case KIND_ENEMY_FLOWER:
             yPic = POSITION_FLOWER;
+            break;
+        case KIND_WAVE_GOOMBA:
+            yPic = POSITION_WAVE_GOOMBA;
             break;
     }
 
@@ -197,7 +201,6 @@ public void move()
         return;
     }
 
-
     float sideWaysSpeed = 1.75f;
     //        float sideWaysSpeed = onGround ? 2.5f : 1.2f;
 
@@ -255,10 +258,9 @@ public void move()
     if (winged) runFrame = wingTime / 4 % 2;
 
     xPic = runFrame;
-
 }
 
-private boolean move(float xa, float ya)
+public boolean move(float xa, float ya)
 {
     while (xa > 8)
     {

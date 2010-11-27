@@ -28,10 +28,7 @@
 package ch.idsia.benchmark.mario.engine.level;
 
 import ch.idsia.benchmark.mario.engine.LevelScene;
-import ch.idsia.benchmark.mario.engine.sprites.Enemy;
-import ch.idsia.benchmark.mario.engine.sprites.FlowerEnemy;
-import ch.idsia.benchmark.mario.engine.sprites.Princess;
-import ch.idsia.benchmark.mario.engine.sprites.Sprite;
+import ch.idsia.benchmark.mario.engine.sprites.*;
 
 import java.io.Serializable;
 
@@ -89,6 +86,9 @@ public SpriteTemplate(int type)
         case Sprite.KIND_PRINCESS:
             this.winged = false;
             break;
+        case Sprite.KIND_WAVE_GOOMBA:
+            this.winged = true;
+            break;
     }
 }
 
@@ -99,6 +99,9 @@ public void spawn(LevelScene world, int x, int y, int dir)
     if (type == Sprite.KIND_ENEMY_FLOWER)
     {
         sprite = new FlowerEnemy(world, x * 16 + 15, y * 16 + 24, x, y);
+    } else if (type == Sprite.KIND_WAVE_GOOMBA)
+    {
+        sprite = new WaveGoomba(world, x * 16 + 8, y * 16 + 15 - 3*16, dir, x, y);
     } else if (type == Sprite.KIND_PRINCESS)
     {
         sprite = new Princess(world, x * 16 + 15, y * 16 + 18, x, y);

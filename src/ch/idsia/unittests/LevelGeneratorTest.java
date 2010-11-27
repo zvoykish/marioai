@@ -132,7 +132,8 @@ public void testCreateLevelWithoutCreatures() throws Exception
 
     for (int i = 0; i < level.length; i++)
         for (int j = 0; j < level.height; j++)
-            assertNull(level.getSpriteTemplate(i, j));
+            if (level.getSpriteTemplate(i, j).getType() != Sprite.KIND_PRINCESS)
+                assertNull(level.getSpriteTemplate(i, j));
 }
 
 //    @Test
@@ -198,7 +199,7 @@ public void testRandomCreatureGenerator_10Goombas()
         {
             SpriteTemplate st1 = level.getSpriteTemplate(i, j);
 
-            if (st1 != null)
+            if (st1 != null && st1.getType() != Sprite.KIND_PRINCESS)
             {
                 int type = st1.getType();
                 assertEquals(Sprite.KIND_GOOMBA, type);
@@ -225,7 +226,7 @@ public void testRandomCreatureGenerator_20RedWingedKoopas()
         {
             SpriteTemplate st1 = level.getSpriteTemplate(i, j);
 
-            if (st1 != null)
+            if (st1 != null && st1.getType() != Sprite.KIND_PRINCESS)
             {
                 int type = st1.getType();
                 assertEquals(Sprite.KIND_RED_KOOPA_WINGED, type);

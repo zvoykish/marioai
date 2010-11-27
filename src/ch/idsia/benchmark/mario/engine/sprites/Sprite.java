@@ -48,6 +48,7 @@ public static final int KIND_SPIKY = 93;
 public static final int KIND_SPIKY_WINGED = 99;
 //    public static final int KIND_ENEMY_FLOWER = 11;
 public static final int KIND_ENEMY_FLOWER = 91;
+public static final int KIND_WAVE_GOOMBA = 98; // TODO: !H!: same
 public static final int KIND_SHELL = 13;
 public static final int KIND_MUSHROOM = 2;
 public static final int KIND_GREEN_MUSHROOM = 4; //TODO: !H!: check if this number is free

@@ -158,6 +158,11 @@ public static Level createLevel(MarioAIOptions args)
         totalOdds += odds[i];
         odds[i] = totalOdds - odds[i];
     }
+    if (totalOdds <= 0)
+    {
+        System.err.println("[Mario AI SURPRISE] : UNEXPECTED level will be generated");
+        totalOdds = 1;
+    }
 
     level = new Level(length, height);
 //    levelSeed = args.getLevelRandSeed();// + levelType; // TODO:TASK:[M] ensure the difference of underground, castle
