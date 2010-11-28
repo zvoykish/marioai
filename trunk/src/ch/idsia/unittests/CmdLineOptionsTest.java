@@ -61,7 +61,7 @@ public void tearDown()
 @Test
 public void testTotalNumberOfOptions() throws Exception
 {
-    assertEquals(52, marioAIOptions.getTotalNumberOfOptions());
+    assertEquals(53, marioAIOptions.getTotalNumberOfOptions());
 }
 
 @Test

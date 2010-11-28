@@ -47,6 +47,7 @@ public static final int FLOWER_POT = -90;
 public static final int BORDER_CANNOT_PASS_THROUGH = -60;
 public static final int BORDER_HILL = -62;
 public static final int FLOWER_POT_OR_CANNON = -85;
+public static final int LADDER = 61;
 
 public static byte ZLevelGeneralization(byte el, int ZLevel)
 {
@@ -170,6 +171,8 @@ public static byte ZLevelGeneralization(byte el, int ZLevel)
                 case (30):
                 case (46): // canon
                     return FLOWER_POT_OR_CANNON;  // angry flower pot or cannon
+                case (61):
+                    return LADDER;
             }
             System.err.println("ZLevelMapElementGeneralization: Unknown value el = " + el + " Possible Level tiles bug; " +
                     "Please, inform sergey@idsia.ch or julian@togelius.com. Thanks!");

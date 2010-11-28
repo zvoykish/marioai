@@ -65,6 +65,8 @@ private int timeLeft;
 private int width;
 private int height;
 
+private static boolean onLadder = false;
+
 private Random randomGen = new Random(0);
 
 final private List<Float> enemiesFloatsList = new ArrayList<Float>();
@@ -267,6 +269,17 @@ public void tick()
 
         for (Sprite sprite : sprites)
             sprite.tick();
+
+        if (level.getBlock((int)mario.x/16, (int)mario.y/16) == (byte) (13 + 3 * 16))
+        {
+            GlobalOptions.isFly = true;
+            onLadder = true;
+        } else if (onLadder)
+        {
+            onLadder = false;
+            GlobalOptions.isFly = false;
+        }
+
 
         for (Sprite sprite : sprites)
             sprite.collideCheck();

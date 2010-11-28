@@ -88,6 +88,8 @@ private static int levelDifficulty;
 private static int levelType;
 private static int levelSeed;
 
+private static boolean isLadder = false;
+
 private static final int ANY_HEIGHT = -1;
 private static final int INFINITE_FLOOR_HEIGHT = Integer.MAX_VALUE;
 
@@ -170,6 +172,8 @@ public static Level createLevel(MarioAIOptions args)
     creaturesRandom.setSeed(levelSeed, args.getEnemies(), levelDifficulty);
     ceilingRandom.setSeed(levelSeed);
     dxRnd.setSeed(levelSeed);
+
+    isLadder = args.isLevelLadder();
 
     int currentLength = 0; //total level currentLength so far
 
@@ -461,6 +465,18 @@ private static int buildDeadEnds(int x0, int maxLength)
     return length + tLength;
 }
 
+private static void buildLadder(int x0, int floor, int maxHeight)
+{
+    int ladderHeight = globalRandom.nextInt(height);
+    if (ladderHeight > maxHeight && maxHeight != ANY_HEIGHT)
+    {
+        ladderHeight = maxHeight;
+    }
+
+    for (int y = floor, i = 0; i < ladderHeight; y--, i++)
+        level.setBlock(x0, y-1, (byte) (13 + 3 * 16));
+}
+
 private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, int floorHeight)
 {
     int gs = globalRandom.nextInt(5) + 2; //GapStairs
@@ -692,6 +708,9 @@ private static int buildHill(int x0, boolean withStraight, int maxLength, int vf
             addEnemy(xx0, top - 1);
         }
     }
+
+    if (withStraight && globalRandom.nextInt(3) == 0 && isLadder)
+        buildLadder(x0 + length - 1, floor, ANY_HEIGHT);
 
     return length;
 }

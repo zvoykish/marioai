@@ -63,6 +63,7 @@ private static final String[] allowed = new String[]{
         "-jp",  // Mario jump power
         "-ld",  // level: difficulty
         "-ll",  // level: length
+        "-lla", // level: ladder
         "-ls",  // level: seed
         "-lt",  // level: type
         "-lh",  // level: height [16-20]
@@ -241,6 +242,7 @@ public static void InitDefaults()
         defaultOptionsHashMap.put("-jp", "7");  // Mario Jump Power
         defaultOptionsHashMap.put("-ld", "0"); //defaultOptionsHashMap.put("-levelDifficulty","0");
         defaultOptionsHashMap.put("-ll", "256"); //defaultOptionsHashMap.put("-levelLength","320");
+        defaultOptionsHashMap.put("-lla", "off"); //defaultOptionsHashMap.put("-levelLength","320");
         defaultOptionsHashMap.put("-ls", "0"); //defaultOptionsHashMap.put("-levelRandSeed","1");
         defaultOptionsHashMap.put("-lt", "0"); //defaultOptionsHashMap.put("-levelType","1");
         defaultOptionsHashMap.put("-fps", "24");

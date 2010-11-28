@@ -484,4 +484,14 @@ public int getGreenMushroomMode()
 {
     return i(getParameterValue("-gmm"));
 }
+
+public boolean isLevelLadder()
+{
+    return b(getParameterValue("-lla"));
+}
+
+public void setLevelLadder(boolean ladder)
+{
+    setParameterValue("-lla", s(ladder));
+}
 }
