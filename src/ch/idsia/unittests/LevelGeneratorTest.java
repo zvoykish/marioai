@@ -132,8 +132,14 @@ public void testCreateLevelWithoutCreatures() throws Exception
 
     for (int i = 0; i < level.length; i++)
         for (int j = 0; j < level.height; j++)
-            if (level.getSpriteTemplate(i, j).getType() != Sprite.KIND_PRINCESS)
-                assertNull(level.getSpriteTemplate(i, j));
+        {
+            SpriteTemplate st = level.getSpriteTemplate(i, j);
+
+            if (st != null && st.getType() == Sprite.KIND_PRINCESS)
+                continue;
+
+            assertNull(st);
+        }
 }
 
 //    @Test
