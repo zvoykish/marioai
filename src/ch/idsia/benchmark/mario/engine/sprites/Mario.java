@@ -430,14 +430,17 @@ public void move()
     }
 
     ya *= 0.85f;
+    final float windCoeff = 0;
+    final float iceCoeff = 0;
     if (onGround)
     {
-        xa *= GROUND_INERTIA;
+        xa *= (GROUND_INERTIA + windScale(windCoeff) + iceScale(iceCoeff));
     } else
     {
-        xa *= AIR_INERTIA;
+        xa *= AIR_INERTIA + windScale(windCoeff) + iceScale(iceCoeff);
     }
 
+//    if /
 
     if (!onGround)
     {
@@ -458,6 +461,17 @@ public void move()
         }
 //            System.out.println("sideWaysSpeed = " + sideWaysSpeed);
     }
+}
+
+private float iceScale(final float iceCoeff)
+{
+    return 0;
+}
+
+private float windScale(final float windCoeff)
+{
+
+    return 1;
 }
 
 private void calcPic()
