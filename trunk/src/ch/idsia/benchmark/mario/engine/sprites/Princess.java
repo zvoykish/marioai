@@ -51,24 +51,6 @@ public Princess(LevelScene world, int x, int y, int mapX, int mapY)
 
 public void collideCheck()
 {
-    if ((world.mario.mapX - 1 >= this.mapX) && (world.mario.onGround))
-    {
-
-        switch (i)
-        {
-            case (0):
-                i = 1;
-                break;
-            case (1):
-                i = 2;
-                break;
-            case (2):
-                i = 0;
-                break;
-        }
-        xPic = i;
-    }
-
 
 }
 }
