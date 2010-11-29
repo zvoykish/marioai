@@ -217,9 +217,9 @@ public byte[][] getLevelSceneObservationZ(int ZLevel)
 {
     int mCol = marioEgoPos[1];
     int mRow = marioEgoPos[0];
-    for (int y = levelScene.mario.mapY - mRow/*receptiveFieldHeight / 2*/, row = 0; y <= levelScene.mario.mapY + (receptiveFieldHeight - mRow - 1) /*receptiveFieldHeight / 2*/; y++, row++)
+    for (int y = levelScene.mario.mapY - mRow, row = 0; y <= levelScene.mario.mapY + (receptiveFieldHeight - mRow - 1); y++, row++)
     {
-        for (int x = levelScene.mario.mapX - mCol/*receptiveFieldWidth / 2*/, col = 0; x <= levelScene.mario.mapX + (receptiveFieldWidth - mCol - 1)/*receptiveFieldWidth / 2*/; x++, col++)
+        for (int x = levelScene.mario.mapX - mCol, col = 0; x <= levelScene.mario.mapX + (receptiveFieldWidth - mCol - 1); x++, col++)
         {
             if (x >= 0 && x < levelScene.level.xExit && y >= 0 && y < levelScene.level.height)
             {
@@ -236,8 +236,8 @@ public byte[][] getLevelSceneObservationZ(int ZLevel)
 
 public byte[][] getEnemiesObservationZ(int ZLevel)
 {
-    int mCol = marioEgoPos[1];
-    int mRow = marioEgoPos[0];
+    int marioEgoCol = marioEgoPos[1];
+    int marioEgoRow = marioEgoPos[0];
     for (int w = 0; w < enemiesZ.length; w++)
         for (int h = 0; h < enemiesZ[0].length; h++)
             enemiesZ[w][h] = 0;
@@ -246,14 +246,14 @@ public byte[][] getEnemiesObservationZ(int ZLevel)
         if (sprite.kind == levelScene.mario.kind)
             continue;
         if (sprite.mapX >= 0 &&
-                sprite.mapX >= levelScene.mario.mapX - mCol/*receptiveFieldWidth / 2*/ &&
-                sprite.mapX <= levelScene.mario.mapX + (receptiveFieldWidth - mCol - 1)/*receptiveFieldWidth / 2*/ &&
+                sprite.mapX >= levelScene.mario.mapX - marioEgoCol &&
+                sprite.mapX <= levelScene.mario.mapX + (receptiveFieldWidth - marioEgoCol - 1) &&
                 sprite.mapY >= 0 &&
-                sprite.mapY >= levelScene.mario.mapY - mRow/*receptiveFieldHeight / 2*/ &&
-                sprite.mapY <= levelScene.mario.mapY + (receptiveFieldHeight - mRow - 1)/*receptiveFieldHeight / 2*/)
+                sprite.mapY >= levelScene.mario.mapY - marioEgoRow &&
+                sprite.mapY <= levelScene.mario.mapY + (receptiveFieldHeight - marioEgoRow - 1))
         {
-            int row = sprite.mapY - levelScene.mario.mapY + mRow/*receptiveFieldHeight / 2*/;
-            int col = sprite.mapX - levelScene.mario.mapX + mCol/*receptiveFieldWidth / 2*/;
+            int row = sprite.mapY - levelScene.mario.mapY + marioEgoRow;
+            int col = sprite.mapX - levelScene.mario.mapX + marioEgoCol;
             enemiesZ[row][col] = GeneralizerEnemies.ZLevelGeneralization(sprite.kind, ZLevel);
         }
     }
@@ -298,14 +298,9 @@ public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
         {
             int row = sprite.mapY - levelScene.mario.mapY + receptiveFieldHeight / 2;
             int col = sprite.mapX - levelScene.mario.mapX + receptiveFieldWidth / 2;
-            // quick fix TODO: handle this in more general way.
-            // TODO: !H! RESOLVE, if this is a canon, substitue '14' by explicit statement or remove the condition.
-            if (mergedZZ[row][col] != 14)
-            {
-                byte tmp = GeneralizerEnemies.ZLevelGeneralization(sprite.kind, ZLevelEnemies);
-                if (tmp != Sprite.KIND_NONE)
-                    mergedZZ[row][col] = tmp;
-            }
+            byte tmp = GeneralizerEnemies.ZLevelGeneralization(sprite.kind, ZLevelEnemies);
+            if (tmp != Sprite.KIND_NONE)
+                mergedZZ[row][col] = tmp;
         }
     }
 
