@@ -77,6 +77,7 @@ private float yaa = 1;
 
 private static float wind = 0f;
 private static float jumpPower;
+private boolean onLadder;
 
 public static void resetStatic(MarioAIOptions marioAIOptions)
 {
@@ -238,7 +239,7 @@ private void savePrevState()
 
 public void move()
 {
-    if (GlobalOptions.isFly)
+    if (GlobalOptions.isFly || onLadder)
     {
         xa = ya = 0;
         ya = keys[KEY_DOWN] ? 10 : ya;
@@ -246,6 +247,9 @@ public void move()
         xa = keys[KEY_RIGHT] ? 10 : xa;
         xa = keys[KEY_LEFT] ? -10 : xa;
     }
+
+//    if (this.onLadder)
+//        ya = keys[KEY_UP] ? -10 : ya;
 
     if (mapY > -1 && isTrace)
         ++levelScene.level.marioTrace[this.mapX][this.mapY];
