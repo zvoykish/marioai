@@ -194,7 +194,7 @@ public static Level createLevel(MarioAIOptions args)
         floor = height - 1 - globalRandom.nextInt(4); //floor of the exit line
 
     //coordinates of the exit
-    level.xExit = level.length;
+    level.xExit = level.length - 2;
     level.yExit = floor;
     level.randomSeed = levelSeed;
     level.type = levelType;
@@ -212,7 +212,7 @@ public static Level createLevel(MarioAIOptions args)
             }
         }
     }
-    level.setSpriteTemplate(level.xExit - 3, level.yExit - 3, new SpriteTemplate(Sprite.KIND_PRINCESS));
+    level.setSpriteTemplate(level.xExit - 1, level.yExit - 3, new SpriteTemplate(Sprite.KIND_PRINCESS));
 
 //    //if underground or castle then build ceiling
 //    if (levelType == LevelGenerator.TYPE_CASTLE || levelType == LevelGenerator.TYPE_UNDERGROUND)

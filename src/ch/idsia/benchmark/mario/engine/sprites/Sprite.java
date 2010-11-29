@@ -138,8 +138,8 @@ public static String getNameByKind(int kind)
             return "Power up Flower";
         case Sprite.KIND_GREEN_MUSHROOM:
             return "Green mushroom";
-        case Sprite.KIND_PRINCESS:
-            return "Princess";
+        /*case Sprite.KIND_PRINCESS:
+            return "Princess";*/
     }
 
     return "Unknown";
