@@ -152,6 +152,21 @@ public float getWind()
     return f(getParameterValue("-w"));
 }
 
+public void setWind(float wind)
+{
+    setParameterValue("-w", s(wind));
+}
+
+public float getIce()
+{
+    return f(getParameterValue("-ice"));
+}
+
+public void setIce(float ice)
+{
+    setParameterValue("-ice", s(ice));
+}
+
 public float getCreaturesGravity()
 {
     // TODO: getCreaturesGravity, same as for mgr

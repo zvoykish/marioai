@@ -14,7 +14,7 @@ public class WaveGoomba extends Enemy
 {
 private LevelScene world;
 private float sin = 0f;
-private float inc = 0.1f;
+private float inc = 0.01f;
 private int phase = 1;
 private int startX;
 
@@ -60,7 +60,7 @@ public void move()
     }
 
 
-    float sideWaysSpeed = 1.75f;
+    float sideWaysSpeed = 0.75f;
     //        float sideWaysSpeed = onGround ? 2.5f : 1.2f;
 
     if (xa > 2)
@@ -89,7 +89,7 @@ public void move()
 
     if (!move(xa, 0)) facing = -facing;
     onGround = false;
-    if (Math.abs(sin) >= 0.95f && winged)
+    if (Math.abs(sin) >= 0.15f && winged)
     {
         ya *= -1;
         inc *= -1;

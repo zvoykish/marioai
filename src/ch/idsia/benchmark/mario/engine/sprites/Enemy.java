@@ -205,7 +205,7 @@ public void move()
     else if (xa < -2)
         facing = -1;
 
-    xa = facing * (sideWaysSpeed + (facing == 1 ? wind : -wind));
+    xa = facing * sideWaysSpeed;
 //    xa += facing == 1 ? -wind : wind;
 //        mayJump = (onGround);
 
@@ -227,10 +227,10 @@ public void move()
     ya *= winged ? 0.95f : 0.85f;
     if (onGround)
     {
-        xa *= GROUND_INERTIA;
+        xa *= (GROUND_INERTIA + windScale(windCoeff) + iceScale(iceCoeff));
     } else
     {
-        xa *= AIR_INERTIA;
+        xa *= (AIR_INERTIA + windScale(windCoeff) + iceScale(iceCoeff));
     }
 
     if (!onGround)

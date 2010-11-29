@@ -75,7 +75,8 @@ private int prevHPic;
 private boolean isRacoon;
 private float yaa = 1;
 
-private static float wind = 0f;
+private static float windCoeff = 0f;
+private static float iceCoeff = 0f;
 private static float jumpPower;
 private boolean onLadder;
 
@@ -93,6 +94,9 @@ public static void resetStatic(MarioAIOptions marioAIOptions)
     jumpPower = marioAIOptions.getJumpPower();
 
     isTrace = marioAIOptions.isTrace();
+
+    iceCoeff = marioAIOptions.getIce();
+    windCoeff = marioAIOptions.getWind();
 }
 
 public int getMode()
@@ -347,14 +351,14 @@ public void move()
     if (keys[KEY_LEFT] && !ducking)
     {
         if (facing == 1) sliding = false;
-        xa -= sideWaysSpeed * (wind + 1);
+        xa -= sideWaysSpeed;
         if (jumpTime >= 0) facing = -1;
     }
 
     if (keys[KEY_RIGHT] && !ducking)
     {
         if (facing == -1) sliding = false;
-        xa += sideWaysSpeed * (wind + 1);
+        xa += sideWaysSpeed;
         if (jumpTime >= 0) facing = 1;
     }
 
@@ -434,14 +438,12 @@ public void move()
     }
 
     ya *= 0.85f;
-    final float windCoeff = 0;
-    final float iceCoeff = 0;
     if (onGround)
     {
         xa *= (GROUND_INERTIA + windScale(windCoeff) + iceScale(iceCoeff));
     } else
     {
-        xa *= AIR_INERTIA + windScale(windCoeff) + iceScale(iceCoeff);
+        xa *= (AIR_INERTIA + windScale(windCoeff) + iceScale(iceCoeff));
     }
 
 //    if /
@@ -465,17 +467,6 @@ public void move()
         }
 //            System.out.println("sideWaysSpeed = " + sideWaysSpeed);
     }
-}
-
-private float iceScale(final float iceCoeff)
-{
-    return 0;
-}
-
-private float windScale(final float windCoeff)
-{
-
-    return 1;
 }
 
 private void calcPic()
@@ -835,6 +826,16 @@ public boolean mayJump()
 public boolean isCanShoot()
 {
     return canShoot;
+}
+
+public void setOnLadder(final boolean onLadder)
+{
+    this.onLadder = onLadder;
+}
+
+public boolean isOnLadder()
+{
+    return this.onLadder;
 }
 }
 
