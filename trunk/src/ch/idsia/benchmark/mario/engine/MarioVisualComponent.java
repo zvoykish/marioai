@@ -259,7 +259,7 @@ public void render(Graphics g)
     for (int i = 0; i < bgLayer.length; i++)
     {
         bgLayer[i].setCam(xCam, yCam);
-        bgLayer[i].render(g, marioEnvironment.getTick()); //levelScene.
+        bgLayer[i].render(g); //levelScene.
     }
 
     g.translate(-xCam, -yCam);

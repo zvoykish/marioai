@@ -114,14 +114,9 @@ private void updateArea(int x0, int y0, int w, int h)
     }
 }
 
-public void render(Graphics g, int tick)
+public void render(Graphics g)
 {
     g.drawImage(image, 0, 0, null);
 }
 
-public void setLevel(Level level)
-{
-    this.level = level;
-    updateArea(0, 0, width, height);
-}
 }

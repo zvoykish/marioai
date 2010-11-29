@@ -44,11 +44,11 @@ import ch.idsia.tools.MarioAIOptions;
  */
 
 /**
- * Class used for agent evaluation on GamePlay track
- * www.marioai.org/learning-track
+ * Class used for agent evaluation in Learning track
+ * http://www.marioai.org/learning-track
  */
 
-public final class LearningEvaluation
+public final class LearningTrack
 {
 final static int numberOfTrials = 1000;
 final static boolean scoring = false;
@@ -121,7 +121,7 @@ private static float evaluateSubmission(MarioAIOptions marioAIOptions, LearningA
     {
         System.out.println("Intermediate SCORE = " + f + "; Details: " + evaluationInfo.toStringSingleLine());
     }
-    System.out.println("LearningEvaluation final score = " + f);
+    System.out.println("LearningTrack final score = " + f);
     return f;
 }
 
@@ -133,26 +133,26 @@ public static void main(String[] args)
     LearningAgent learningAgent = new SRNESLearningAgent(new MediumSRNAgent()); // Your Competition Entry goes here
 
     marioAIOptions.setArgs("-lco off -lb off -le off -lhb off -lg off -ltb off -lhs off -lca off -lde off");
-    float finalScore = LearningEvaluation.evaluateSubmission(marioAIOptions, learningAgent);
+    float finalScore = LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
 
 //        ProgressTask task = new ProgressTask(options);
 //        ES es = new ES (task, initial, populationSize);
 
 //        Level 2
     marioAIOptions.setArgs("-lco on -lb on -lhb off -lg off -ltb off -lhs off -lca off -lde off -ld 3");
-    finalScore += LearningEvaluation.evaluateSubmission(marioAIOptions, learningAgent);
+    finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
 
 //        Level 3
     marioAIOptions.setArgs("-lco off -lb off -le off -lhb off -lg on -ltb off -lhs off -lca off -lde off -ld 2");
-    finalScore += LearningEvaluation.evaluateSubmission(marioAIOptions, learningAgent);
+    finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
 
 //        Level 4
     marioAIOptions.setArgs("-lco off -lb off -le off -lhb off -lg on -ltb on -lhs off -lca on -lde off -ld 3");
-    finalScore += LearningEvaluation.evaluateSubmission(marioAIOptions, learningAgent);
+    finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
 
 //        Level 5
     marioAIOptions.setArgs("-lco on -lb off -le g,rk,gw -lhb on -lg off -ltb on -lhs off -lca off -lde off -ld 3");
-    finalScore += LearningEvaluation.evaluateSubmission(marioAIOptions, learningAgent);
+    finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
 
 
     System.out.println("finalScore = " + finalScore);

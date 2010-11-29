@@ -51,8 +51,8 @@ public static final int KIND_ENEMY_FLOWER = 91;
 public static final int KIND_WAVE_GOOMBA = 98; // TODO: !H!: same
 public static final int KIND_SHELL = 13;
 public static final int KIND_MUSHROOM = 2;
-public static final int KIND_GREEN_MUSHROOM = 4; //TODO: !H!: check if this number is free
-public static final int KIND_PRINCESS = 49;  // TODO: !H!: same
+public static final int KIND_GREEN_MUSHROOM = 9;
+public static final int KIND_PRINCESS = 49;
 public static final int KIND_FIRE_FLOWER = 3;
 public static final int KIND_PARTICLE = 21;
 public static final int KIND_SPARCLE = 22;
@@ -195,13 +195,13 @@ public void render(Graphics og)
             // horizontal lines
             og.setColor(Color.BLACK);
             for (k = -marioRow - 1 /*-rows / 2 - 1*/; k < rows - marioRow/*rows / 2*/; k++)
-                og.drawLine((int) x - marioCol * htOfRow-8/*width / 2*/, (int) (y + k * htOfRow), (int) x + (columns-marioCol)*htOfRow-8 /*(x + width / 2)*/, (int) (y + k * htOfRow));
+                og.drawLine((int) x - marioCol * htOfRow - 8/*width / 2*/, (int) (y + k * htOfRow), (int) x + (columns - marioCol) * htOfRow - 8 /*(x + width / 2)*/, (int) (y + k * htOfRow));
 
 //                og.setColor(Color.RED);
             // vertical lines
             int wdOfRow = 16;// length / (rows);
-            for (k = -marioCol -1 /*-columns / 2 - 1*/; k < columns - marioCol /*columns / 2 + 1*/; k++)
-                og.drawLine((int) (x + k * wdOfRow + 8), (int) y - marioRow*htOfRow-16/*height / 2 - 8*/, (int) (x + k * wdOfRow + 8), (int) y + (height-marioRow)*htOfRow-16 /*(y + height / 2 - 8)*/);
+            for (k = -marioCol - 1 /*-columns / 2 - 1*/; k < columns - marioCol /*columns / 2 + 1*/; k++)
+                og.drawLine((int) (x + k * wdOfRow + 8), (int) y - marioRow * htOfRow - 16/*height / 2 - 8*/, (int) (x + k * wdOfRow + 8), (int) y + (height - marioRow) * htOfRow - 16 /*(y + height / 2 - 8)*/);
         }
         og.setColor(Color.GREEN);
         MarioVisualComponent.drawString(og, String.valueOf(this.kind), (int) x - 4, (int) y - 8, 2);

@@ -25,6 +25,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+
 package ch.idsia.benchmark.mario.engine.level;
 
 import ch.idsia.benchmark.mario.engine.sprites.Sprite;
@@ -198,7 +199,7 @@ public static Level createLevel(MarioAIOptions args)
     level.randomSeed = levelSeed;
     level.type = levelType;
     level.difficulty = levelDifficulty;
-    
+
 
     //level zone where exit is located
     for (int x = currentLength; x < level.length; x++)
@@ -474,7 +475,7 @@ private static void buildLadder(int x0, int floor, int maxHeight)
     }
 
     for (int y = floor, i = 0; i < ladderHeight; y--, i++)
-        level.setBlock(x0, y-1, (byte) (13 + 3 * 16));
+        level.setBlock(x0, y - 1, (byte) (13 + 3 * 16));
 }
 
 private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, int floorHeight)
@@ -948,7 +949,7 @@ private static void buildBlocks(int x0, int x1, int floor, boolean pHB, int pS, 
                                 }
                             } else if (rnd >= 4 && rnd < 6)
                             {
-                                int coinsNumber = globalRandom.nextInt(9)+1;
+                                int coinsNumber = globalRandom.nextInt(9) + 1;
                                 level.setBlock(x, floor, (byte) (4 + 3 + 1 * 16)); //a brick with animated question symbol with N coins inside. when broken becomes a rock
                                 level.setBlockData(x, floor, (byte) -coinsNumber);
                                 counters.coinsCount += coinsNumber;

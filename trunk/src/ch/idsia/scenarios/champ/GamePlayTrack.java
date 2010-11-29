@@ -46,19 +46,29 @@ import ch.idsia.utils.statistics.StatisticalSummary;
  */
 
 /**
- * Class used for agent evaluation on GamePlay track
- * www.marioai.org/gameplay-track
+ * Class used for agent evaluation in GamePlay track
+ * http://www.marioai.org/gameplay-track
  */
 
-public final class GamePlayEvaluation
+public final class GamePlayTrack
 {
-final static int numberOfTrials = 10;
+final static int numberOfLevels = 512;
 final static boolean scoring = false;
 private static int killsSum = 0;
 private static float marioStatusSum = 0;
 private static int timeLeftSum = 0;
 private static int marioModeSum = 0;
 private static boolean detailedStats = false;
+
+public static void evaluateSubmission()
+{
+
+}
+
+public static void evaluateSubmissionZip(final String zipFileName)
+{
+
+}
 
 public static void main(String[] args)
 {
@@ -129,7 +139,7 @@ public static void main(String[] args)
 
     System.out.println("trials = " + trials);
     System.out.println("disqualifications = " + disqualifications);
-    System.out.println("GamePlayEvaluation final score = " + fitness);
+    System.out.println("GamePlayTrack final score = " + fitness);
 
 //        EvaluationInfo evaluationInfo = new EvaluationInfo(environment.getEvaluationInfoAsFloats());
 //        System.out.println("evaluationInfo = " + evaluationInfo);
@@ -141,11 +151,6 @@ public static void scoreAllAgents(MarioAIOptions marioAIOptions)
     int startingSeed = marioAIOptions.getLevelRandSeed();
     for (Agent agent : AgentsPool.getAgentsCollection())
         score(agent, startingSeed, marioAIOptions);
-
-//        startingSeed = 0;
-//        for (Agent agent : AgentsPool.getAgentsCollection())
-//            score(agent, startingSeed, marioAIOptions);
-
 }
 
 public static void score(Agent agent, int startingSeed, MarioAIOptions marioAIOptions)
@@ -179,46 +184,72 @@ public static void score(Agent agent, int startingSeed, MarioAIOptions marioAIOp
 public static double testConfig(TimingAgent controller, SimulationOptions options, int seed, int levelDifficulty, boolean paused)
 {
     options.setLevelDifficulty(levelDifficulty);
-    StatisticalSummary ss = test(controller, options, seed);
+//    StatisticalSummary ss = test(controller, options, seed);
     double averageTimeTaken = controller.averageTimeTaken();
-    System.out.printf("Difficulty %d score %.4f (avg time %.4f)\n",
-            levelDifficulty, ss.mean(), averageTimeTaken);
-    return ss.mean();
+//    System.out.printf("Difficulty %d score %.4f (avg time %.4f)\n",
+//            levelDifficulty, ss.mean(), averageTimeTaken);
+//    return ss.mean();
+    return 0;
 }
 
-public static StatisticalSummary test(Agent controller, SimulationOptions options, int seed)
+public static StatisticalSummary test(Agent controller, MarioAIOptions marioAIOptions, int seed)
 {
     StatisticalSummary ss = new StatisticalSummary();
     int kills = 0;
     int timeLeft = 0;
     int marioMode = 0;
     float marioStatus = 0;
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
+    float fitness = 0;
+    boolean verbose = false;
+    int trials = 0;
+    int disqualifications = 0;
 
-//        options.setNumberOfTrials(numberOfTrials);
-    for (int i = 0; i < numberOfTrials; i++)
+    for (int i = 0; i < numberOfLevels; i++)
     {
-        options.setLevelRandSeed(seed + i);
-        options.setLevelLength(200 + (i * 128) + (seed % (i + 1)));
-        options.setLevelType(i % 3);
-        controller.reset();
-        options.setAgent(controller);
+        marioAIOptions.setLevelRandSeed(seed + i);
+        marioAIOptions.setLevelLength(200 + (i * 128) + (seed % (i + 1)));
+        marioAIOptions.setLevelType(i % 3);
+        marioAIOptions.setLevelDifficulty(numberOfLevels / 20);
+        marioAIOptions.setAgent(controller);
+        basicTask.reset(marioAIOptions);
+        if (!basicTask.runOneEpisode())
+        {
+            System.out.println("[MarioAI Evaluation] : out of computational time per action!");
+            disqualifications++;
+            continue;
+        }
+        EvaluationInfo evaluationInfo = basicTask.getEnvironment().getEvaluationInfo();
+        float f = evaluationInfo.computeWeightedFitness();
+        if (verbose)
+        {
+//            System.out.println("LEVEL OPTIONS: -ld " + levelDifficulty + " -lt " + levelType + " -pw " + !creaturesEnable +
+//                    " -tl " + timeLimit);
+//            System.out.println("Intermediate SCORE = " + f + "; Details: " + evaluationInfo.toStringSingleLine());
+        }
+        fitness += f;
+//        kills += result.computeKillsTotal();
+//        timeLeft += result.timeLeft;
+//        marioMode += result.marioMode;
+//        marioStatus += result.marioStatus;
+        System.out.println("\ntrial # " + i);
+//        System.out.println("result.timeLeft = " + result.timeLeft);
+//        System.out.println("result.marioMode = " + result.marioMode);
+//        System.out.println("result.marioStatus = " + result.marioStatus);
+//        System.out.println("result.computeKillsTotal() = " + result.computeKillsTotal());
+        ss.add(f);
+
+
+        System.out.println("trials = " + trials);
+        System.out.println("disqualifications = " + disqualifications);
+        System.out.println("GamePlayTrack final score = " + fitness);
 //            Evaluator evaluator = new Evaluator (options);
 //            EvaluationInfo result = evaluator.evaluate().get(0);
-//            kills += result.computeKillsTotal();
-//            timeLeft += result.timeLeft;
-//            marioMode += result.marioMode;
-//            marioStatus += result.marioStatus;
-//            System.out.println("\ntrial # " + i);
-//            System.out.println("result.timeLeft = " + result.timeLeft);
-//            System.out.println("result.marioMode = " + result.marioMode);
-//            System.out.println("result.marioStatus = " + result.marioStatus);
-//            System.out.println("result.computeKillsTotal() = " + result.computeKillsTotal());
-//            ss.add (result.computeDistancePassed());
     }
 
     if (detailedStats)
     {
-        System.out.println("\n===================\nStatistics over " + numberOfTrials + " trials for " + controller.getName());
+        System.out.println("\n===================\nStatistics over " + numberOfLevels + " trials for " + controller.getName());
         System.out.println("Total kills = " + kills);
         System.out.println("marioStatus = " + marioStatus);
         System.out.println("timeLeft = " + timeLeft);

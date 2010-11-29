@@ -78,8 +78,8 @@ private static final String[] allowed = new String[]{
         "-le",  // level: enemies; set up with bit mask
         "-lf",  // level: flat level
         "-mm",  // Mario Mode <0|1|2>
-        "-mix", // TODO
-        "-miy", // TODO
+        "-mix", // TODO description
+        "-miy", // TODO description
         "-mer", // Mario Ego Row
         "-mec", // Mario Ego Column
         "-fps", // Frames Per Second - update frequency
@@ -87,9 +87,9 @@ private static final String[] allowed = new String[]{
         "-rfh", // receptive field height (observation )
         "-rfw", // receptive field length (observation )
         "-srf", // show receptive field  (observation )
-        "-tc",   // TODO
+        "-tc",   // TODO description
         "-tl",   // time limit <int>
-        "-trace",// TODO
+        "-trace",// TODO description
         "-vaot", // View always on top <on|off>
         "-vis",  // Visualization <on|off>
         "-vlx",  // View location x coordinate <int>
@@ -98,7 +98,7 @@ private static final String[] allowed = new String[]{
         "-vh",   // View height <int>
         "-ze",   // Zoom level enemies
         "-zs",   // Zoom level scene
-        "-stop", // Start the gamplay/(TODO: recording) and stop
+        "-stop", // Start the gamplay/(TODO: description in details for recording) and stop
         "-s",    // path to the file where level will be saved
         "-rec",   // Recording <on|off>
         "-z", //enable Scale2X on startup
