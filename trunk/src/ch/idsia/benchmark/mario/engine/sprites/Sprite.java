@@ -90,13 +90,19 @@ public static void setCreaturesGravity(final float creaturesGravity)
     Sprite.creaturesGravity = creaturesGravity;
 }
 
-public static void setWind(final float wind)
+public static void setCreaturesWind(final float wind)
 {
-    Sprite.wind = wind;
+    Sprite.windCoeff = wind;
+}
+
+public static void setCreaturesIce(final float ice)
+{
+    Sprite.iceCoeff = ice;
 }
 
 protected static float creaturesGravity;
-protected static float wind = 0;
+protected static float windCoeff = 0;
+protected static float iceCoeff = 0;
 
 public static String getNameByKind(int kind)
 {
@@ -137,6 +143,16 @@ public static String getNameByKind(int kind)
     }
 
     return "Unknown";
+}
+
+public float iceScale(final float ice)
+{
+    return ice;
+}
+
+public float windScale(final float wind)
+{
+    return wind;
 }
 
 public void move()

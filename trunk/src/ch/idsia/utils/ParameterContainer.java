@@ -102,7 +102,8 @@ private static final String[] allowed = new String[]{
         "-s",    // path to the file where level will be saved
         "-rec",   // Recording <on|off>
         "-z", //enable Scale2X on startup
-        "-w" //wind for Mario
+        "-w", //wind
+        "-ice" //ice
 };
 
 public ParameterContainer()
@@ -281,6 +282,7 @@ public static void InitDefaults()
         defaultOptionsHashMap.put("-rec", "off"); //path to the file where recorded game will be saved
         defaultOptionsHashMap.put("-z", "off"); //enable Scale2X on startup
         defaultOptionsHashMap.put("-w", "0"); //wind for Mario
+        defaultOptionsHashMap.put("-ice", "0"); //wind for Mario
         defaultOptionsHashMap.put("-mer", "9"); //Mario Ego row
         defaultOptionsHashMap.put("-mec", "9"); //Mario Ego column
     }

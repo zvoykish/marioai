@@ -272,12 +272,12 @@ public void tick()
 
     if (level.getBlock(mario.mapX, mario.mapY) == (byte) (13 + 3 * 16))
     {
-        GlobalOptions.isFly = true;
-        onLadder = true;
-    } else if (onLadder)
+//        GlobalOptions.isFly = true;
+        mario.setOnLadder(true);
+    } else if (mario.isOnLadder())
     {
-        onLadder = false;
-        GlobalOptions.isFly = false;
+        mario.setOnLadder(false);
+//        GlobalOptions.isFly = false;
     }
 
 
@@ -578,7 +578,8 @@ public void reset(MarioAIOptions marioAIOptions)
     this.height = GlobalOptions.VISUAL_COMPONENT_HEIGHT;
 
     Sprite.setCreaturesGravity(marioAIOptions.getCreaturesGravity());
-    Sprite.setWind(marioAIOptions.getWind());
+    Sprite.setCreaturesWind(marioAIOptions.getWind());
+    Sprite.setCreaturesIce(marioAIOptions.getIce());
     Mario.resetStatic(marioAIOptions);
     mario = new Mario(this);
 
