@@ -28,18 +28,42 @@
 package ch.idsia.benchmark.tasks;
 
 import ch.idsia.agents.Agent;
-import ch.idsia.benchmark.mario.environments.Environment;
+import ch.idsia.tools.MarioAIOptions;
 
 /**
  * Created by IntelliJ IDEA. \n User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 24, 2010 Time: 12:58:00 PM
  * Package: ch.idsia.maibe.tasks
  */
-public class ChampGamePlayTask extends BasicTask
+public class GamePlayTask implements Task
 {
-public ChampGamePlayTask(Environment environment, Agent agent)
+
+public float[] evaluate(final Agent controller)
 {
-    super(null);
+    return new float[0];  //To change body of implemented methods use File | Settings | File Templates.
 }
 
+public void setOptions(final MarioAIOptions options)
+{
+    //To change body of implemented methods use File | Settings | File Templates.
+}
 
+public void doEpisodes(final int amount, final boolean verbose)
+{
+    //To change body of implemented methods use File | Settings | File Templates.
+}
+
+public boolean isFinished()
+{
+    return false;  //To change body of implemented methods use File | Settings | File Templates.
+}
+
+public void reset()
+{
+    //To change body of implemented methods use File | Settings | File Templates.
+}
+
+public String getName()
+{
+    return null;  //To change body of implemented methods use File | Settings | File Templates.
+}
 }

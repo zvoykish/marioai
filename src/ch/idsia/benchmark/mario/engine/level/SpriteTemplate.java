@@ -92,25 +92,25 @@ public SpriteTemplate(int type)
     }
 }
 
-public void spawn(LevelScene world, int x, int y, int dir)
+public void spawn(LevelScene levelScene, int x, int y, int dir)
 {
     if (isDead) return;
 
     if (type == Sprite.KIND_ENEMY_FLOWER)
     {
-        sprite = new FlowerEnemy(world, x * 16 + 15, y * 16 + 24, x, y);
+        sprite = new FlowerEnemy(levelScene, x * 16 + 15, y * 16 + 24, x, y);
     } else if (type == Sprite.KIND_WAVE_GOOMBA)
     {
-        sprite = new WaveGoomba(world, x * 16 + 8, y * 16 + 15 - 3*16, dir, x, y);
+        sprite = new WaveGoomba(levelScene, x * 16 + 8, y * 16 + 15 - 3 * 16, dir, x, y);
     } else if (type == Sprite.KIND_PRINCESS)
     {
-        sprite = new Princess(world, x * 16 + 15, y * 16 + 18, x, y);
+        sprite = new Princess(levelScene, x * 16 + 15, y * 16 + 18, x, y);
     } else
     {
 //            sprite = new Enemy(levelScene, x*16+8, y*16+15, dir, type, winged);
-        sprite = new Enemy(world, x * 16 + 8, y * 16 + 15, dir, type, winged, x, y);
+        sprite = new Enemy(levelScene, x * 16 + 8, y * 16 + 15, dir, type, winged, x, y);
     }
     sprite.spriteTemplate = this;
-    world.addSprite(sprite);
+    levelScene.addSprite(sprite);
 }
 }

@@ -25,27 +25,19 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package ch.idsia.benchmark.tasks;
+package ch.idsia.scenarios.champ;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Sergey Karakovskiy, sergey@idsia.ch
- * Date: Apr 4, 2010 Time: 11:50:43 AM
+ * User: Sergey Karakovskiy, sergey.karakovskiy@gmail.com
+ * Date: Nov 29, 2010
+ * Time: 9:44:41 AM
+ * Package: ch.idsia.scenarios.champ
  */
-
-public class SystemOfValues
+public class TuringTestTrack
 {
-public int distance = 1;
-public int win = 1024;
-public int mode = 32;
-public int coins = 16;
-public int flowerFire = 64;
-public int kills = 42;
-public int killedByFire = 4;
-public int killedByShell = 17;
-public int killedByStomp = 12;
-public int mushrooms = 58;
-public int timeLeft = 8;
-public int hiddenBlocks = 24;
-public int greenMushrooms = -58;
+public static void main(String[] args)
+{
+
+}
 }

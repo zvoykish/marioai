@@ -107,7 +107,7 @@ public int computeWeightedFitness(SystemOfValues sov)
                     flowersDevoured * sov.flowerFire +
                     marioStatus * sov.win +
                     marioMode * sov.mode +
-                    mushroomsDevoured * sov.mushrooms -
+                    mushroomsDevoured * sov.mushrooms +
                     greenMushroomsDevoured * sov.greenMushrooms +
                     coinsGained * sov.coins +
                     hiddenBlocksFound * sov.hiddenBlocks +

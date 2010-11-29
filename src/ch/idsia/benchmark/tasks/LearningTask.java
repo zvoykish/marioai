@@ -25,10 +25,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package ch.idsia.scenarios.champ;
+package ch.idsia.benchmark.tasks;
 
-import ch.idsia.benchmark.tasks.BasicTask;
-import ch.idsia.benchmark.tasks.Task;
 import ch.idsia.tools.MarioAIOptions;
 
 /**
