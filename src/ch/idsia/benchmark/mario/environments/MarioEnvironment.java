@@ -174,7 +174,10 @@ public void reset(MarioAIOptions setUpOptions)
 
         try
         {
-            recorder = new Recorder(recordingFileName);
+			if(recordingFileName.equals("lazy"))
+				recorder = new Recorder();
+			else
+				recorder = new Recorder(recordingFileName);
 
             recorder.createFile("level.lvl");
             recorder.writeObject(levelScene.level);
@@ -513,7 +516,7 @@ public void performAction(boolean[] action)
 {
     try
     {
-        if (recorder != null && action != null)
+        if (recorder != null && recorder.canRecord() && action != null)
         {
             recorder.writeAction(action);
             recorder.changeRecordingState(GlobalOptions.isRecording, getTimeSpent());
@@ -670,7 +673,7 @@ public void closeRecorder()
         {
 //            recorder.closeFile();
             recorder.closeRecorder(false, getTimeSpent());
-            recorder = null;
+            //recorder = null;
         } catch (IOException e)
         {
             e.printStackTrace();
@@ -688,8 +691,23 @@ public void setReplayer(Replayer replayer)
     levelScene.setReplayer(replayer);
 }
 
+public void saveLastRun(String filename)
+{
+	if (recorder != null && recorder.canSave())
+	{
+		try {
+			recorder.saveLastRun(filename);
+		}
+		catch(IOException ex) {
+			System.err.println("[Mario AI EXCEPTION] : Recording could not be saved.");
+			ex.printStackTrace();
+		}
+	}
+}
+
 //public void setRecording(boolean isRecording)
 //{
 //    this.isRecording = isRecording;
 //}
 }
+

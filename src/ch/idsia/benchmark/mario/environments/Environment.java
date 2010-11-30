@@ -171,4 +171,8 @@ public void closeRecorder();
 public void setReplayer(Replayer recorder);
 
 public int getTimeSpent();
+
+public void saveLastRun(String filename);
 }
+
+
