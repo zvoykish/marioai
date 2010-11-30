@@ -392,9 +392,19 @@ private static int buildDeadEnds(int x0, int maxLength)
     int length = 0; // total zone length
     int preDeadEndLength = 7 + globalRandom.nextInt(10);
     int rHeight = floor - 1; //rest height
+    int separatorY = 3 + globalRandom.nextInt(rHeight - 7); //Y coordinate of the top line of the separator
 
     length += buildStraight(x0, preDeadEndLength, true, floor, INFINITE_FLOOR_HEIGHT);//buildZone( x0, x0+preDeadEndLength, floor ); //build pre dead end zone
-    buildBlocks(x0, x0 + preDeadEndLength, floor, true, 0, 0, true, true);
+
+    if (globalRandom.nextInt(3) == 0 && isLadder)
+    {
+        int ladderX = x0 + globalRandom.nextInt(length - 1) + 1;
+        if (ladderX > x0 + length)
+            ladderX = x0 + length;
+        buildLadder(ladderX, floor, floor - separatorY);
+    }
+    else
+        buildBlocks(x0, x0 + preDeadEndLength, floor, true, 0, 0, true, true);
 
     //correct direction
     //true - top, false = bottom
@@ -402,7 +412,6 @@ private static int buildDeadEnds(int x0, int maxLength)
     int k = globalRandom.nextInt(5);//(globalRandom.nextInt() % (this.levelDifficulty+1));
     boolean direction = globalRandom.nextInt(k + 1) != 1;
 
-    int separatorY = 3 + globalRandom.nextInt(rHeight - 7); //Y coordinate of the top line of the separator
     //Y coordinate of the bottom line of the separator is determined as separatorY + separatorHeight
     int separatorHeight = 2 + globalRandom.nextInt(2);
 
@@ -473,6 +482,9 @@ private static void buildLadder(int x0, int floor, int maxHeight)
     {
         ladderHeight = maxHeight;
     }
+
+    if (ladderHeight < 4)
+        return;
 
     for (int y = floor, i = 0; i < ladderHeight - 1; y--, i++)
         level.setBlock(x0, y - 1, (byte) (13 + 3 * 16));
@@ -712,9 +724,6 @@ private static int buildHill(int x0, boolean withStraight, int maxLength, int vf
         }
     }
 
-    if (withStraight && globalRandom.nextInt(3) == 0 && isLadder)
-        buildLadder(x0 + length - 1, floor, ANY_HEIGHT);
-
     return length;
 }
 
@@ -899,11 +908,12 @@ private static boolean canBuildBlocks(int x0, int floor, boolean isHB)
     return res;
 }
 
-private static void buildBlocks(int x0, int x1, int floor, boolean pHB, int pS, int pE, boolean onlyHB, boolean isDistance)
+private static boolean buildBlocks(int x0, int x1, int floor, boolean pHB, int pS, int pE, boolean onlyHB, boolean isDistance)
 {
+    boolean result = false;
     if (counters.blocksCount > counters.totalBlocks)
     {
-        return;
+        return false;
     }
     int s = pS; //Start
     int e = pE; //End
@@ -1005,11 +1015,15 @@ private static void buildBlocks(int x0, int x1, int floor, boolean pHB, int pS, 
 //        if (creaturesRandom.nextInt(35) > levelDifficulty + 1)
 //            addEnemiesLine(x0 + 1, x1 - 1, floor - 1);
 
-        floor -= isDistance ? 4 : globalRandom.nextInt(6) + 3;
+        int delta = isDistance ? 4 : globalRandom.nextInt(6) + 3;
+        if (delta > 4)
+            result = true;
+        floor -= delta;
         s = globalRandom.nextInt(4);
         e = globalRandom.nextInt(4);
     }
     globalRandom.nextBoolean();
+    return result;
 }
 
 private static void buildCoins(int x0, int x1, int floor, int s, int e)
@@ -1051,7 +1065,10 @@ private static void decorate(int x0, int x1, int floor)
         buildCoins(x0, x1, floor, s, e);
     }
 
-    buildBlocks(x0, x1, floor, hb, s, e, false, false);
+    boolean buildLadder = buildBlocks(x0, x1, floor, hb, s, e, false, false);
+
+    if (buildLadder && isLadder && globalRandom.nextInt(3) == 0)
+        buildLadder(globalRandom.nextBoolean() ? x0 : x1, floor, ANY_HEIGHT);
 }
 
 private static void fixWalls()
