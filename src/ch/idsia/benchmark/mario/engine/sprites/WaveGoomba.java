@@ -13,10 +13,9 @@ import ch.idsia.benchmark.mario.engine.LevelScene;
 public class WaveGoomba extends Enemy
 {
 private LevelScene world;
-private float sin = 0f;
-private float inc = 0.01f;
-private int phase = 1;
-private int startX;
+private float amplitude = 10f;
+private float lastSin;
+private int sideWayCounter = 0;
 
 public WaveGoomba(LevelScene world, int x, int y, int dir, int mapX, int mapY)
 {
@@ -25,7 +24,7 @@ public WaveGoomba(LevelScene world, int x, int y, int dir, int mapX, int mapY)
     this.xPic = 0;
     this.yPic = 7;
     this.world = world;
-    startX = x;
+    lastSin = (float) Math.sin(x);
 }
 
 public void move()
@@ -60,8 +59,7 @@ public void move()
     }
 
 
-    float sideWaysSpeed = 0.75f;
-    //        float sideWaysSpeed = onGround ? 2.5f : 1.2f;
+    float sideWaysSpeed = onGround ? 1.75f : 0.55f;
 
     if (xa > 2)
     {
@@ -73,9 +71,7 @@ public void move()
     }
 
     xa = facing * sideWaysSpeed;
-//    xa += facing == 1 ? -wind : wind;
-//        mayJump = (onGround);
-
+    
     xFlipPic = facing == -1;
 
     runTime += (Math.abs(xa)) + 5;
@@ -89,39 +85,33 @@ public void move()
 
     if (!move(xa, 0)) facing = -facing;
     onGround = false;
-    if (Math.abs(sin) >= 0.15f && winged)
+    if (winged)
     {
-        ya *= -1;
-        inc *= -1;
-        phase *= -1;
+        float curSin = (float) Math.sin(x /10);
+        ya = (curSin - lastSin) * amplitude;
+        lastSin = curSin;
+        sideWayCounter++;
     }
-    sin += inc;
     move(0, ya);
 
-    if (Math.abs(x - startX) >= 32 && winged)
+    if (sideWayCounter >= 100)
+    {
+        sideWayCounter = 0;
         facing *= -1;
-
-    ya *= winged ? 0.95f : 0.85f;
-    if (onGround)
-    {
-        xa *= GROUND_INERTIA;
-    } else
-    {
-        xa *= AIR_INERTIA;
     }
 
-    if (!onGround)
+    ya *= winged ? 0.95 : 0.85f;
+    if (onGround)
     {
-        if (winged)
-        {
-            ya += 0.1f * phase;
-        } else
-        {
-            ya += yaa;
-        }
-    } else if (winged)
+        xa *= (GROUND_INERTIA + windScale(windCoeff, facing) + iceScale(iceCoeff));
+    } else
     {
-//        ya = -10;
+        xa *= (AIR_INERTIA + windScale(windCoeff, facing) + iceScale(iceCoeff));
+    }
+
+    if (!onGround && !winged)
+    {
+        ya += yaa;
     }
 
     if (winged) runFrame = wingTime / 4 % 2;

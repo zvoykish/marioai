@@ -227,10 +227,10 @@ public void move()
     ya *= winged ? 0.95f : 0.85f;
     if (onGround)
     {
-        xa *= (GROUND_INERTIA + windScale(windCoeff) + iceScale(iceCoeff));
+        xa *= (GROUND_INERTIA + windScale(windCoeff, facing) + iceScale(iceCoeff));
     } else
     {
-        xa *= (AIR_INERTIA + windScale(windCoeff) + iceScale(iceCoeff));
+        xa *= (AIR_INERTIA + windScale(windCoeff, facing) + iceScale(iceCoeff));
     }
 
     if (!onGround)
