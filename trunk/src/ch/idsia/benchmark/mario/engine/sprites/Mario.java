@@ -78,7 +78,9 @@ private float yaa = 1;
 private static float windCoeff = 0f;
 private static float iceCoeff = 0f;
 private static float jumpPower;
+private boolean inLadderZone;
 private boolean onLadder;
+private boolean onTopOfLadder = false;
 
 public static void resetStatic(MarioAIOptions marioAIOptions)
 {
@@ -243,7 +245,7 @@ private void savePrevState()
 
 public void move()
 {
-    if (GlobalOptions.isFly || onLadder)
+    if (GlobalOptions.isFly)
     {
         xa = ya = 0;
         ya = keys[KEY_DOWN] ? 10 : ya;
@@ -252,8 +254,31 @@ public void move()
         xa = keys[KEY_LEFT] ? -10 : xa;
     }
 
-//    if (this.onLadder)
-//        ya = keys[KEY_UP] ? -10 : ya;
+    if (this.inLadderZone)
+    {
+        if (keys[KEY_UP] && !onLadder)
+        {
+            onLadder = true;
+        }
+
+        if (!keys[KEY_UP] && !keys[KEY_DOWN] && onLadder)
+            ya = 0;
+
+        if (onLadder)
+        {
+            if (!onTopOfLadder)
+            {
+                ya = keys[KEY_UP] ? -10 : ya;
+            } else
+            {
+                ya = 0;
+                ya = keys[KEY_DOWN] ? 10 : ya;
+                if (keys[KEY_DOWN])
+                    onTopOfLadder = false;
+            }
+            onGround = true;
+        }
+    }
 
     if (mapY > -1 && isTrace)
         ++levelScene.level.marioTrace[this.mapX][this.mapY];
@@ -828,14 +853,29 @@ public boolean isCanShoot()
     return canShoot;
 }
 
-public void setOnLadder(final boolean onLadder)
+public void setInLadderZone(final boolean inLadderZone)
 {
-    this.onLadder = onLadder;
+    this.inLadderZone = inLadderZone;
+    if (!inLadderZone)
+    {
+        onLadder = false;
+        onTopOfLadder = false;
+    }
 }
 
-public boolean isOnLadder()
+public boolean isInLadderZone()
 {
-    return this.onLadder;
+    return this.inLadderZone;
+}
+
+public void setOnTopOfLadder(final boolean onTop)
+{
+    this.onTopOfLadder = onTop;
+}
+
+public boolean isOnTopOfLadder()
+{
+    return this.onTopOfLadder;
 }
 }
 

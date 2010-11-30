@@ -172,6 +172,7 @@ public static byte ZLevelGeneralization(byte el, int ZLevel)
                 case (46): // canon
                     return FLOWER_POT_OR_CANNON;  // angry flower pot or cannon
                 case (61):
+                case (93):
                     return LADDER;
             }
             System.err.println("ZLevelMapElementGeneralization: Unknown value el = " + el + " Possible Level tiles bug; " +
@@ -205,7 +206,7 @@ public static byte ZLevelGeneralization(byte el, int ZLevel)
                 case (14):
                 case (30):
                 case (46): // canon
-                    return BORDER_CANNOT_PASS_THROUGH; // question brick, contains something
+                    return BORDER_CANNOT_PASS_THROUGH;
             }
             return 1;  // everything else is "something", so it is 1
     }
