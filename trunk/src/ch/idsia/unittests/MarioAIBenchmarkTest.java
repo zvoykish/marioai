@@ -96,7 +96,7 @@ public void testForwardJumpingAgentFitnessWithoutCreatures()
     basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals(7320, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
+    assertEquals(7288, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
 
 @Test
@@ -107,7 +107,7 @@ public void testForwardJumpingAgentFitnessWithDefaultCreatures()
     basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals(8166, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
+    assertEquals(8134, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
 
 @Test
@@ -179,7 +179,7 @@ public void testForwardAgentFitnessWithoutCreatures()
     basicTask.reset(marioAIOptions);
     basicTask.runOneEpisode();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
-    assertEquals(7432, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
+    assertEquals(7400, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
 
 @Test

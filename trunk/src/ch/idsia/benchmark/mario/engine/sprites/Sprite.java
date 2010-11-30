@@ -150,9 +150,9 @@ public float iceScale(final float ice)
     return ice;
 }
 
-public float windScale(final float wind)
+public float windScale(final float wind, int facing)
 {
-    return wind;
+    return facing == 1 ? wind : -wind;
 }
 
 public void move()
