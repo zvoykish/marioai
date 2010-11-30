@@ -36,6 +36,11 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Random;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Sergey Karakovskiy, sergey.karakovskiy@gmail.com
@@ -45,7 +50,7 @@ import org.testng.annotations.Test;
  */
 public class MarioEnvironmentTest extends TestCase
 {
-private boolean INCLUDE_VISUAL_TESTS = true;
+private boolean INCLUDE_VISUAL_TESTS = false;
 
 @BeforeTest
 public void setUp()
@@ -281,7 +286,7 @@ public void testMarioReceptiveFieldSizeW8H6_vis() throws Exception
 @Test
 public void testRecordingFitness()
 {
-    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis on -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip -i on");
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip -i on");
     final BasicTask basicTask = new BasicTask(marioAIOptions);
     basicTask.getEnvironment().setReplayer(null);
     basicTask.reset(marioAIOptions);
@@ -316,6 +321,86 @@ public void testRecordingEvaluationString()
 
     for (int i = 0; i < playEvaluationString.length(); i++)
         assertEquals(playEvaluationString.charAt(i), replayEvaluationString.charAt(i));
+}
+
+@Test
+public void testLazyRecordingCreation()
+{
+	final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec lazy -i on");
+    final BasicTask basicTask = new BasicTask(marioAIOptions);
+	basicTask.getEnvironment().setReplayer(null);
+    basicTask.reset(marioAIOptions);
+    basicTask.runOneEpisode();
+
+	Random ran = new Random(System.currentTimeMillis());
+
+	String filename = "lazyRecorderTest" + ran.nextInt(1000) + ".zip";
+	basicTask.getEnvironment().saveLastRun(filename);
+
+	try {
+		FileInputStream in = new FileInputStream(filename);
+	}
+	catch(FileNotFoundException ex) {
+		fail("Recorder File Not Found");
+	}
+}
+
+@Test
+public void testLazyRecordingFitness()
+{
+	try {
+		final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec lazy -i on");
+		final BasicTask basicTask = new BasicTask(marioAIOptions);
+		basicTask.getEnvironment().setReplayer(null);
+		basicTask.reset(marioAIOptions);
+		basicTask.runOneEpisode();
+		float originalFitness = basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
+		System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
+
+		basicTask.getEnvironment().saveLastRun("lazyRecorderTest.zip");
+	
+		final ReplayTask replayTask = new ReplayTask();
+		replayTask.reset("lazyRecorderTest.zip");
+		replayTask.startReplay();
+		System.out.println(replayTask.getEnvironment().getEvaluationInfoAsString());
+		float replayFitness = replayTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
+		assertEquals(originalFitness, replayFitness);
+	}
+	catch(Exception ex)
+	{
+		fail("Exception during test");
+	}
+}
+
+@Test
+public void testMultipleLazyRecordings()
+{
+	try {
+		final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec lazy -i on");
+		final BasicTask basicTask = new BasicTask(marioAIOptions);
+		basicTask.getEnvironment().setReplayer(null);
+		basicTask.reset(marioAIOptions);
+		basicTask.runOneEpisode();
+
+		marioAIOptions.setLevelDifficulty(1);
+		basicTask.reset(marioAIOptions);
+		basicTask.runOneEpisode();
+		float originalFitness = basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();		
+
+		basicTask.getEnvironment().saveLastRun("lazyRecorderTest.zip");
+
+		final ReplayTask replayTask = new ReplayTask();
+		replayTask.reset("lazyRecorderTest.zip");
+		replayTask.startReplay();
+		System.out.println(replayTask.getEnvironment().getEvaluationInfoAsString());
+		float replayFitness = replayTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
+		assertEquals(originalFitness, replayFitness);
+
+	}
+	catch(Exception ex)
+	{
+		fail("Exception during test");
+	}
 }
 
 @Test
