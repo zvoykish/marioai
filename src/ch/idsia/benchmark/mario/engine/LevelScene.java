@@ -270,14 +270,16 @@ public void tick()
     for (Sprite sprite : sprites)
         sprite.tick();
 
-    if (level.getBlock(mario.mapX, mario.mapY) == (byte) (13 + 3 * 16))
+    byte levelElement = level.getBlock(mario.mapX, mario.mapY);
+    if (levelElement == (byte) (13 + 3 * 16) || levelElement == (byte) (13 + 5 * 16))
     {
-//        GlobalOptions.isFly = true;
-        mario.setOnLadder(true);
-    } else if (mario.isOnLadder())
+        if (levelElement == (byte) (13 + 5 * 16))
+            mario.setOnTopOfLadder(true);
+        else
+            mario.setInLadderZone(true);
+    } else if (mario.isInLadderZone())
     {
-        mario.setOnLadder(false);
-//        GlobalOptions.isFly = false;
+        mario.setInLadderZone(false);
     }
 
 

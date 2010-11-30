@@ -474,8 +474,10 @@ private static void buildLadder(int x0, int floor, int maxHeight)
         ladderHeight = maxHeight;
     }
 
-    for (int y = floor, i = 0; i < ladderHeight; y--, i++)
+    for (int y = floor, i = 0; i < ladderHeight - 1; y--, i++)
         level.setBlock(x0, y - 1, (byte) (13 + 3 * 16));
+
+    level.setBlock(x0, floor - ladderHeight, (byte) (13 + 5 * 16));
 }
 
 private static int buildGap(int xo, int maxLength, int maxHeight, int vfloor, int floorHeight)
