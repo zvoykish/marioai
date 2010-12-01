@@ -43,13 +43,13 @@ public MarioCustomSystemOfValues()
     this.mode = 500;
     this.coins = 0;
     this.flowerFire = 1640;
-    this.mushrooms = 1650;
+    this.mushroom = 1650;
     this.kills = 2;
     this.killedByFire = 4;
     this.killedByShell = 170;
     this.killedByStomp = 1;
     this.timeLeft = 1;
-    this.hiddenBlocks = 24;
+    this.hiddenBlock = 24;
 }
 
 }

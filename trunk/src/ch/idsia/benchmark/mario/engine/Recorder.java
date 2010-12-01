@@ -37,7 +37,7 @@ import java.util.zip.ZipOutputStream;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Sergey Karakovskiy, firstName_at_idsia_dot_ch
+ * User: Sergey Karakovskiy, sergey@idsia.ch
  * Date: May 5, 2009
  * Time: 9:34:33 PM
  * Package: ch.idsia.utils
@@ -61,21 +61,21 @@ public Recorder(String fileName) throws FileNotFoundException
         fileName += ".zip";
 
     zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)));
-	canRecord = true;
+    canRecord = true;
 }
 
 public Recorder()
 {
-	byteOut = new ByteArrayOutputStream();
-	zos = new ZipOutputStream(byteOut);
-	canRecord = true;
-	lazyRec = true;
+    byteOut = new ByteArrayOutputStream();
+    zos = new ZipOutputStream(byteOut);
+    canRecord = true;
+    lazyRec = true;
 }
 
 public void saveLastRun(String filename) throws IOException
 {
-	FileOutputStream fo = new FileOutputStream(filename);
-	byteOut.writeTo(fo);
+    FileOutputStream fo = new FileOutputStream(filename);
+    byteOut.writeTo(fo);
 
 }
 
@@ -97,9 +97,9 @@ public void closeFile() throws IOException
     zos.closeEntry();
 }
 
-public void closeRecorder(boolean recordingState, int time) throws IOException
+public void closeRecorder(int time) throws IOException
 {
-    changeRecordingState(recordingState, time);
+    changeRecordingState(false, time);
     if (!chunks.isEmpty())
     {
         createFile("chunks");
@@ -108,9 +108,9 @@ public void closeRecorder(boolean recordingState, int time) throws IOException
     }
     zos.flush();
     zos.close();
-	canRecord = false;
-	if(lazyRec)
-		saveReady = true;
+    canRecord = false;
+    if (lazyRec)
+        saveReady = true;
 }
 
 public void writeAction(final boolean[] bo) throws IOException
@@ -141,11 +141,11 @@ public void changeRecordingState(boolean state, int time)
 
 public boolean canRecord()
 {
-	return canRecord;
+    return canRecord;
 }
 
 public boolean canSave()
 {
-	return saveReady;
+    return saveReady;
 }
 }

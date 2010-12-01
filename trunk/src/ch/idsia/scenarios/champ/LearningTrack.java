@@ -81,11 +81,11 @@ private static float evaluateSubmission(MarioAIOptions marioAIOptions, LearningA
         System.out.println("-------------------------------");
         System.out.println(i + " trial");
         //learningTask.reset(marioAIOptions);
-        task.reset(marioAIOptions);
+        task.setOptionsAndReset(marioAIOptions);
         // inform your agent that new episode is coming, pick up next representative in population.
 //            learningAgent.learn();
-        task.runOneEpisode();
-        /*if (!task.runOneEpisode())  // make evaluation on an episode once
+        task.runSingleEpisode(1);
+        /*if (!task.runSingleEpisode())  // make evaluation on an episode once
         {
             System.out.println("MarioAI: out of computational time per action!");
             disqualifications++;
@@ -108,9 +108,9 @@ private static float evaluateSubmission(MarioAIOptions marioAIOptions, LearningA
     Agent bestAgent = learningAgent.getBestAgent();
     marioAIOptions.setAgent(bestAgent);
     BasicTask basicTask = new BasicTask(marioAIOptions);
-    basicTask.reset(marioAIOptions);
+    basicTask.setOptionsAndReset(marioAIOptions);
 //        basicTask.setAgent(bestAgent);
-    if (!basicTask.runOneEpisode())  // make evaluation on the same episode once
+    if (!basicTask.runSingleEpisode(1))  // make evaluation on the same episode once
     {
         System.out.println("MarioAI: out of computational time per action!");
         disqualifications++;

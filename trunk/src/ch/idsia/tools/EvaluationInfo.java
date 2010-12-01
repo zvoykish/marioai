@@ -86,9 +86,9 @@ public String Memo = "";
 
 private static final DecimalFormat df = new DecimalFormat("#.##");
 private static MarioSystemOfValues marioSystemOfValues = new MarioSystemOfValues();
+
 public int[][] marioTrace;
 public String marioTraceFileName;
-
 
 public EvaluationInfo()
 {
@@ -107,10 +107,10 @@ public int computeWeightedFitness(SystemOfValues sov)
                     flowersDevoured * sov.flowerFire +
                     marioStatus * sov.win +
                     marioMode * sov.mode +
-                    mushroomsDevoured * sov.mushrooms +
-                    greenMushroomsDevoured * sov.greenMushrooms +
+                    mushroomsDevoured * sov.mushroom +
+                    greenMushroomsDevoured * sov.greenMushroom +
                     coinsGained * sov.coins +
-                    hiddenBlocksFound * sov.hiddenBlocks +
+                    hiddenBlocksFound * sov.hiddenBlock +
                     killsTotal * sov.kills +
                     killsByStomp * sov.killedByStomp +
                     killsByFire * sov.killedByFire +
@@ -238,7 +238,8 @@ public String toStringSingleLine()
             "; kills: " + killsTotal +
             "; By Fire: " + killsByFire +
             "; By Shell: " + killsByShell +
-            "; By Stomp: " + killsByStomp;
+            "; By Stomp: " + killsByStomp +
+            "; " + ((Memo.equals("")) ? "" : "\nMEMO INFO: " + Memo);
 }
 
 public void setTaskName(final String name)
@@ -259,6 +260,7 @@ public EvaluationInfo clone()
 {
     try
     {
+        // TODO:!H!:double check the validity of this change!
         return (EvaluationInfo) super.clone();
     }
     catch (CloneNotSupportedException e)
@@ -266,7 +268,7 @@ public EvaluationInfo clone()
         System.err.println(e);
         return null;
     }
-    // TODO:!H!:double check the validity of this change!
+
 //    EvaluationInfo ret = new EvaluationInfo();
 //    ret.marioStatus = this.marioStatus;
 //    ret.flowersDevoured = this.flowersDevoured;

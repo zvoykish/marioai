@@ -46,7 +46,7 @@ private int numberOfSeeds = 3;
 public MultiSeedProgressTask(MarioAIOptions evaluationOptions)
 {
     super(evaluationOptions);
-    setOptions(evaluationOptions);
+    setOptionsAndReset(evaluationOptions);
 }
 
 public float[] evaluate(Agent controller)
@@ -60,8 +60,8 @@ public float[] evaluate(Agent controller)
     {
         controller.reset();
         options.setLevelRandSeed(startingSeed + i);
-        this.reset(options);
-        this.runOneEpisode();
+//        this.reset(options);
+        this.runSingleEpisode(1);
         distanceTravelled += this.getEnvironment().getEvaluationInfo().computeDistancePassed();
     }
     distanceTravelled = distanceTravelled / numberOfSeeds;
@@ -78,7 +78,7 @@ public void setNumberOfSeeds(int number)
     numberOfSeeds = number;
 }
 
-public void setOptions(MarioAIOptions options)
+public void setOptionsAndReset(MarioAIOptions options)
 {
     this.options = options;
 }
@@ -88,7 +88,7 @@ public MarioAIOptions getOptions()
     return options;
 }
 
-public void doEpisodes(int amount, boolean verbose)
+public void doEpisodes(int amount, boolean verbose, final int repetitionsOfSingleEpisode)
 {
 
 }

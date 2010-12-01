@@ -154,7 +154,7 @@ public void render(Graphics g, int tick)
             }
             /*                else if (b == Level.TILE_BONUS)
             {
-            int animTime = (tick / 3) % 4;
+            int animTime = (tickCount / 3) % 4;
             int yo = 0;
             if (x >= 0 && y >= 0 && x < level.length && y < level.height) yo = level.data[x][y];
             if (yo > 0) yo = (int) (Math.sin((yo - cameraOffSet) / 4.0f * Math.PI) * 8);
@@ -220,13 +220,13 @@ public void setLevel(Level level)
     updateArea(0, 0, width, height);
 }
 
-/*public void renderExit0(Graphics g, int tick, boolean bar)
+/*public void renderExit0(Graphics g, int tickCount, boolean bar)
 {
     for (int y = level.yExit - 8; y < level.yExit; y++)
     {
         g.drawImage(Art.level[12][y == level.yExit - 8 ? 4 : 5], (level.xExit - exitXOffset << 4) - xCam - 16, (y << 4) - yCam, null);
     }
-    int yh = level.yExit * 16 - (int) ((Math.sin(tick / 20) * 0.5 + 0.5) * 7 * 16) - 8;
+    int yh = level.yExit * 16 - (int) ((Math.sin(tickCount / 20) * 0.5 + 0.5) * 7 * 16) - 8;
     if (bar)
     {
         g.drawImage(Art.level[12][3], (level.xExit - exitXOffset << 4) - xCam - 16, yh - yCam, null);
@@ -236,7 +236,7 @@ public void setLevel(Level level)
 }
 
 
-public void renderExit(Graphics g, int tick)
+public void renderExit(Graphics g, int tickCount)
 {
     //int yh = level.yExit * 14 - 6;
     g.drawImage(Art.princess[0][0], level.xExit, level.yExit, null);

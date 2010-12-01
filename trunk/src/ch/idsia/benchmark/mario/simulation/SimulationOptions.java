@@ -61,7 +61,7 @@ public void setUpOptions(String[] args)
             {
                 setParameterValue(args[i], args[i + 1]);
 
-                if (args[i].equals("-lf") && args[i+1].equals("on"))
+                if (args[i].equals("-lf") && args[i + 1].equals("on"))
                 {
                     setBlocksCount(false);
                     setCoinsCount(false);
@@ -140,7 +140,7 @@ public Agent getAgent()
 //        return a(getParameterValue("-ag"));      }
     if (agent == null)
     {
-        agent = AgentsPool.load(getParameterValue("-ag"));
+        agent = AgentsPool.loadAgent(getParameterValue("-ag"));
 //            System.out.println("Info: Agent not specified. Default " + agent.getName() + " has been used instead");
     }
     return agent;
@@ -154,7 +154,7 @@ public void setAgent(Agent agent)
 
 public void setAgent(String agentWOXorClassName)
 {
-    this.agent = AgentsPool.load(agentWOXorClassName);
+    this.agent = AgentsPool.loadAgent(agentWOXorClassName);
 }
 
 // LevelType

@@ -55,7 +55,7 @@ private String fileTimeStamp = "-uid-" + uid + "-" + GlobalOptions.getTimeStamp(
 public ProgressTask(MarioAIOptions evaluationOptions)
 {
     super(evaluationOptions);
-    setOptions(evaluationOptions);
+    setOptionsAndReset(evaluationOptions);
 }
 
 public int totalEpisodes = 0;
@@ -72,8 +72,8 @@ private float evaluateSingleLevel(int ld, int tl, int ls, boolean vis, Agent con
 //        options.setVisualization(vis);
 //        options.setFPS(vis ? 42 : 100);
 //        this.setAgent(controller);
-    this.reset(options);
-    this.runOneEpisode();
+    this.setOptionsAndReset(options);
+    this.runSingleEpisode(1);
     distanceTravelled += this.getEnvironment().getEvaluationInfo().computeDistancePassed();
     return distanceTravelled;
 }
@@ -122,7 +122,7 @@ public void dumpFitnessEvaluation(float fitness, String fileName)
     }
 }
 
-public void doEpisodes(int amount, boolean verbose)
+public void doEpisodes(int amount, boolean verbose, final int repetitionsOfSingleEpisode)
 {
     System.out.println("amount = " + amount);
 }

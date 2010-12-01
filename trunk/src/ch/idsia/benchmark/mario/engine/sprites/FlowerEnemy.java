@@ -123,8 +123,8 @@ public void move()
         int xPixel = (int)(xOld+(x-xOld)*alpha)-xPicO;
         int yPixel = (int)(yOld+(y-yOld)*alpha)-yPicO;
 
-        int a = ((tick/3)&1)*2;
-//        a += ((tick/8)&1);
+        int a = ((tickCount/3)&1)*2;
+//        a += ((tickCount/8)&1);
         og.drawImage(sheet[a*2+0][6], xPixel-8, yPixel+8, 16, 32, null);
         og.drawImage(sheet[a*2+1][6], xPixel+8, yPixel+8, 16, 32, null);
     }*/

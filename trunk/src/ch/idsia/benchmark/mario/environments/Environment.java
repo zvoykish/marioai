@@ -162,7 +162,7 @@ void reset(MarioAIOptions marioAIOptions);
 
 void setAgent(Agent agent);
 
-public float getIntermediateReward();
+public int getIntermediateReward();
 
 public int[] getMarioEgoPos();
 
@@ -172,7 +172,9 @@ public void setReplayer(Replayer recorder);
 
 public int getTimeSpent();
 
-public void saveLastRun(String filename);
+public byte[][] getScreenCapture();
+
+void saveLastRun(String filename);
 }
 
 

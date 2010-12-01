@@ -64,7 +64,7 @@ public LevelEditor()
     catch (Exception e)
     {
         e.printStackTrace();
-        JOptionPane.showMessageDialog(this, e.toString(), "Failed to load tile behaviors", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, e.toString(), "Failed to loadAgent tile behaviors", JOptionPane.ERROR_MESSAGE);
     }
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -156,7 +156,7 @@ public void actionPerformed(ActionEvent e)
     }
     catch (Exception ex)
     {
-        JOptionPane.showMessageDialog(this, ex.toString(), "Failed to load/save", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, ex.toString(), "Failed to loadAgent/save", JOptionPane.ERROR_MESSAGE);
     }
 }
 

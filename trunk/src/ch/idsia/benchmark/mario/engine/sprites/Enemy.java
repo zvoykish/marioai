@@ -158,7 +158,6 @@ public void collideCheck()
                     {
                         spriteContext.addSprite(new Shell(levelScene, x, y, 1));
                     }
-//                        System.out.println("collideCheck and stomp");
                     ++LevelScene.killedCreaturesTotal;
                     ++LevelScene.killedCreaturesByStomp;
                 }

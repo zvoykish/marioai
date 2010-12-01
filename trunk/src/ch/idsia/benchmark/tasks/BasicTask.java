@@ -52,43 +52,37 @@ private EvaluationInfo evaluationInfo;
 
 public BasicTask(MarioAIOptions marioAIOptions)
 {
-    this.setOptions(marioAIOptions);
+    this.setOptionsAndReset(marioAIOptions);
 }
 
 /**
+ * @param repetitionsOfSingleEpisode
  * @return boolean flag whether controller is disqualified or not
  */
-public boolean runOneEpisode()
+public boolean runSingleEpisode(final int repetitionsOfSingleEpisode)
 {
-    while (!environment.isLevelFinished())
+    for (int r = 0; r < repetitionsOfSingleEpisode; ++r)
     {
-        environment.tick();
-        if (!GlobalOptions.isGameplayStopped)
+        this.reset();
+        while (!environment.isLevelFinished())
         {
-            agent.integrateObservation(environment);
-            agent.giveIntermediateReward(environment.getIntermediateReward());
+            environment.tick();
+            if (!GlobalOptions.isGameplayStopped)
+            {
+                agent.integrateObservation(environment);
+                agent.giveIntermediateReward(environment.getIntermediateReward());
 
-            boolean[] action = agent.getAction();
+                boolean[] action = agent.getAction();
 //            environment.setRecording(GlobalOptions.isRecording);
-            environment.performAction(action);
+                environment.performAction(action);
+            }
         }
+        environment.closeRecorder(); //recorder initialized in environment.reset
+        environment.getEvaluationInfo().setTaskName(name);
+        this.evaluationInfo = environment.getEvaluationInfo().clone();
     }
-    environment.closeRecorder(); //recorder initialized in environment.reset
-    environment.getEvaluationInfo().setTaskName(name);
-    this.evaluationInfo = environment.getEvaluationInfo().clone();
-    return true;
-}
 
-public void reset(MarioAIOptions marioAIOptions)
-{
-    options = marioAIOptions;
-    agent = options.getAgent();
-    environment.reset(marioAIOptions);
-    agent.reset();
-    agent.setObservationDetails(environment.getReceptiveFieldWidth(),
-                                environment.getReceptiveFieldHeight(),
-                                environment.getMarioEgoPos()[0],
-                                environment.getMarioEgoPos()[1]);
+    return true;
 }
 
 public Environment getEnvironment()
@@ -101,17 +95,24 @@ public float[] evaluate(Agent controller)
     return new float[0];  //To change body of implemented methods use File | Settings | File Templates.
 }
 
-public void setOptions(MarioAIOptions options)
+public void setOptionsAndReset(MarioAIOptions options)
 {
     this.options = options;
+    reset();
 }
 
-public void doEpisodes(int amount, boolean verbose)
+public void setOptionsAndReset(final String options)
+{
+    this.options.setArgs(options);
+    reset();
+}
+
+public void doEpisodes(int amount, boolean verbose, final int repetitionsOfSingleEpisode)
 {
     for (int i = 0; i < amount; ++i)
     {
-        this.reset(options);
-        this.runOneEpisode();
+        this.reset();
+        this.runSingleEpisode(repetitionsOfSingleEpisode);
         if (verbose)
             System.out.println(environment.getEvaluationInfoAsString());
     }
@@ -124,7 +125,13 @@ public boolean isFinished()
 
 public void reset()
 {
-
+    agent = options.getAgent();
+    environment.reset(options);
+    agent.reset();
+    agent.setObservationDetails(environment.getReceptiveFieldWidth(),
+            environment.getReceptiveFieldHeight(),
+            environment.getMarioEgoPos()[0],
+            environment.getMarioEgoPos()[1]);
 }
 
 public String getName()
@@ -132,10 +139,16 @@ public String getName()
     return name;
 }
 
+public void printStatistics()
+{
+    System.out.println("todo: impl");
+}
+
 public EvaluationInfo getEvaluationInfo()
 {
     return evaluationInfo;
 }
+
 }
 
 //            start timer

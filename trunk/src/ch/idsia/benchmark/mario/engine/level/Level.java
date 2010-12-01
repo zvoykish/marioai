@@ -195,6 +195,7 @@ public static void save(Level lvl, ObjectOutputStream oos) throws IOException
  */
 public void tick()
 {
+    // TODO:!!H! Optimize this!
     for (int x = 0; x < length; x++)
         for (int y = 0; y < height; y++)
             if (data[x][y] > 0) data[x][y]--;

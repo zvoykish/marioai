@@ -89,10 +89,15 @@ public float[] evaluate(final Agent controller)
     return new float[0];  //To change body of implemented methods use File | Settings | File Templates.
 }
 
-public void setOptions(final MarioAIOptions options)
+public void setOptionsAndReset(final MarioAIOptions options)
 {}
 
-public void doEpisodes(final int amount, final boolean verbose)
+public void setOptionsAndReset(final String options)
+{
+    //To change body of implemented methods use File | Settings | File Templates.
+}
+
+public void doEpisodes(final int amount, final boolean verbose, final int repetitionsOfSingleEpisode)
 {}
 
 public void startReplay()
@@ -152,6 +157,11 @@ public void reset()
 public String getName()
 {
     return name;
+}
+
+public void printStatistics()
+{
+    //To change body of implemented methods use File | Settings | File Templates.
 }
 
 public Environment getEnvironment()

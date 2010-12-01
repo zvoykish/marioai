@@ -105,8 +105,8 @@ public static void createAgentsPool()
 //            AgentsPool.addAgent(new SergeyPolikarpov_SimpleCyberNeuronAgent());
 //            AgentsPool.addAgent(new SpencerSchumann_SlideRule());
 //            AgentsPool.addAgent(new AndySloane_BestFirstAgent());
-//            AgentsPool.addAgent(AgentsPool.load("competition/cig/matthewerickson/matthewerickson.xml"));
-//            AgentsPool.addAgent(AgentsPool.load("competition/icegic/erek/erekspeed.xml")); // out of memory exception
+//            AgentsPool.addAgent(AgentsPool.loadAgent("competition/cig/matthewerickson/matthewerickson.xml"));
+//            AgentsPool.addAgent(AgentsPool.loadAgent("competition/icegic/erek/erekspeed.xml")); // out of memory exception
 //            AgentsPool.addAgent(new PalerAgent());
 //            AgentsPool.addAgent(new PeterLawford_SlowAgent());
     }

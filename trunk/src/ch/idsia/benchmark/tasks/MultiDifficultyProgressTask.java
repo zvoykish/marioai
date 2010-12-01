@@ -48,7 +48,7 @@ private int[] difficulties = {0, 3, 5, 10};
 
 public MultiDifficultyProgressTask(MarioAIOptions evaluationOptions)
 {
-    setOptions(evaluationOptions);
+    setOptionsAndReset(evaluationOptions);
 }
 
 public float[] evaluate(final Agent controller)
@@ -79,12 +79,17 @@ public void setStartingSeed(int seed)
     startingSeed = seed;
 }
 
-public void setOptions(MarioAIOptions options)
+public void setOptionsAndReset(MarioAIOptions options)
 {
     this.options = options;
 }
 
-public void doEpisodes(int amount, boolean verbose)
+public void setOptionsAndReset(final String options)
+{
+    //To change body of implemented methods use File | Settings | File Templates.
+}
+
+public void doEpisodes(int amount, boolean verbose, final int repetitionsOfSingleEpisode)
 {
 
 }
@@ -102,5 +107,10 @@ public void reset()
 public String getName()
 {
     return null;  //To change body of implemented methods use File | Settings | File Templates.
+}
+
+public void printStatistics()
+{
+    //To change body of implemented methods use File | Settings | File Templates.
 }
 }

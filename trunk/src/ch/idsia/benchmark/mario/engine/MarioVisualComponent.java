@@ -355,6 +355,7 @@ private void drawProgress(Graphics g)
 //            System.err.println("warning: progress line inaccuracy");
     }
     drawStringDropShadow(g, progress_str, 0, 28, 2);
+    drawStringDropShadow(g, "intermediate reward: " + marioEnvironment.getIntermediateReward(), 0, 27, 2);
 }
 
 public static void drawStringDropShadow(Graphics g, String text, int x, int y, int c)
