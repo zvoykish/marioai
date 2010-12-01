@@ -44,8 +44,10 @@ public int kills = 42;
 public int killedByFire = 4;
 public int killedByShell = 17;
 public int killedByStomp = 12;
-public int mushrooms = 58;
+public int mushroom = 58;
 public int timeLeft = 8;
-public int hiddenBlocks = 24;
-public int greenMushrooms = -58;
+public int hiddenBlock = 24;
+public int greenMushroom = -58;
+// For Intermediate rewards only
+public int stomp = 10;
 }

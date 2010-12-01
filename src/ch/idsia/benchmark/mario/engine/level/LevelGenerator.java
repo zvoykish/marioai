@@ -112,7 +112,7 @@ private static void loadLevel(String filePath)
         level = Level.load(new ObjectInputStream(new FileInputStream(filePath)));
     } catch (IOException e)
     {
-        System.err.println("[MarioAI EXCEPTION] : failed while trying to load " + filePath);
+        System.err.println("[MarioAI EXCEPTION] : failed while trying to loadAgent " + filePath);
         System.exit(ErrorCodes.FILE_NAME_OR_LOAD_PROBLEM);
     } catch (ClassNotFoundException e)
     {
@@ -123,7 +123,7 @@ private static void loadLevel(String filePath)
 
 public static Level createLevel(MarioAIOptions args)
 {
-    // -ls option can also load level from file if filename instead of a number provided
+    // -ls option can also loadAgent level from file if filename instead of a number provided
     levelType = args.getLevelType();
     try
     {
@@ -402,8 +402,7 @@ private static int buildDeadEnds(int x0, int maxLength)
         if (ladderX > x0 + length)
             ladderX = x0 + length;
         buildLadder(ladderX, floor, floor - separatorY);
-    }
-    else
+    } else
         buildBlocks(x0, x0 + preDeadEndLength, floor, true, 0, 0, true, true);
 
     //correct direction

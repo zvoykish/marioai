@@ -57,7 +57,7 @@ public static void main(String[] args)
     Evolvable initial = new SimpleMLPAgent();
     if (args.length > 0)
     {
-        initial = (Evolvable) AgentsPool.load(args[0]);
+        initial = (Evolvable) AgentsPool.loadAgent(args[0]);
     }
 //        AgentsPool.registerAgent ((Agent) initial);
     // maybe need

@@ -58,7 +58,7 @@ public Level level;
 public Mario mario;
 public float xCam, yCam, xCamO, yCamO;
 
-public int tick;
+public int tickCount;
 
 public int startTime = 0;
 private int timeLeft;
@@ -78,6 +78,7 @@ private int greenMushroomMode = 0;
 
 public String memo = "";
 private Point marioInitialPos;
+private int bonusPoints = -1;
 
 //    public int getTimeLimit() {  return timeLimit; }
 
@@ -117,12 +118,15 @@ public LevelScene()
 }
 
 
+// TODO: !H!: Move to MarioEnvironment !!
+
 public float[] getEnemiesFloatPos()
 {
     enemiesFloatsList.clear();
     for (Sprite sprite : sprites)
     {
-        // TODO: add unit tests for getEnemiesFloatPos involving all kinds of creatures
+        // TODO:[M]: add unit tests for getEnemiesFloatPos involving all kinds of creatures
+        if (sprite.isDead()) continue;
         switch (sprite.kind)
         {
             case Sprite.KIND_GOOMBA:
@@ -212,7 +216,7 @@ public void tick()
         }
     }
 
-    tick++;
+    tickCount++;
     level.tick();
 
 //            boolean hasShotCannon = false;
@@ -235,13 +239,13 @@ public void tick()
 //                            System.out.println("here");
 //                        }
 
-                if (st.lastVisibleTick != tick - 1)
+                if (st.lastVisibleTick != tickCount - 1)
                 {
                     if (st.sprite == null || !sprites.contains(st.sprite))
                         st.spawn(this, x, y, dir);
                 }
 
-                st.lastVisibleTick = tick;
+                st.lastVisibleTick = tickCount;
             }
 
             if (dir != 0)
@@ -251,7 +255,7 @@ public void tick()
                 {
                     if ((b % cellSize) / 4 == 3 && b / cellSize == 0)
                     {
-                        if ((tick - x * 2) % 100 == 0)
+                        if ((tickCount - x * 2) % 100 == 0)
                         {
 //                                    xCannon = x;
                             for (int i = 0; i < 8; i++)
@@ -462,7 +466,7 @@ public boolean isLevelFinished()
 
 public boolean isMarioAbleToShoot()
 {
-    return mario.isCanShoot();
+    return mario.isAbleToShoot();
 }
 
 public int getMarioStatus()
@@ -589,7 +593,7 @@ public void reset(MarioAIOptions marioAIOptions)
     startTime = 1;
     timeLeft = timeLimit * GlobalOptions.mariosecondMultiplier;
 
-    tick = 0;
+    tickCount = 0;
 }
 
 public float[] getMarioFloatPos()
@@ -637,6 +641,23 @@ public int getGreenMushroomMode()
 {
     return greenMushroomMode;
 }
+
+public int getBonusPoints()
+{
+    return bonusPoints;
+}
+
+public void setBonusPoints(final int bonusPoints)
+{
+    this.bonusPoints = bonusPoints;
+}
+
+public void appendBonusPoints(final int superPunti)
+{
+    bonusPoints += superPunti;
+}
+
+
 }
 
 //    public void update(boolean[] action)

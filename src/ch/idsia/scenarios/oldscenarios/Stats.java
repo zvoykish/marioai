@@ -41,7 +41,7 @@ final static int numberOfTrials = 100;
 
 public static void main(String[] args)
 {
-    Agent controller = AgentsPool.load(args[0]);
+    Agent controller = AgentsPool.loadAgent(args[0]);
     final int startingSeed = Integer.parseInt(args[1]);
     doStats(controller, startingSeed);
     //System.exit(0);

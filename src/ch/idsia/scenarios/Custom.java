@@ -58,8 +58,8 @@ public static void main(String[] args)
         {
             marioAIOptions.setLevelDifficulty(i);
             marioAIOptions.setLevelRandSeed(seed++);
-            basicTask.reset(marioAIOptions);
-            basicTask.runOneEpisode();
+            basicTask.setOptionsAndReset(marioAIOptions);
+            basicTask.runSingleEpisode(1);
             System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
         } while (basicTask.getEnvironment().getEvaluationInfo().marioStatus != Environment.MARIO_STATUS_WIN);
     }

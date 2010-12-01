@@ -70,8 +70,8 @@ public void testRegressionLBBug() throws Exception
     Level level1 = LevelGenerator.createLevel(marioAIOptions);
     marioAIOptions.setArgs("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -lb on");
     final BasicTask basicTask = new BasicTask(marioAIOptions);
-    basicTask.reset(marioAIOptions);
-    basicTask.runOneEpisode();
+    basicTask.setOptionsAndReset(marioAIOptions);
+    basicTask.runSingleEpisode(1);
     marioAIOptions.setArgs("-lb off");
     Level level2 = LevelGenerator.createLevel(marioAIOptions);
 

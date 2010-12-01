@@ -104,7 +104,7 @@ protected static float creaturesGravity;
 protected static float windCoeff = 0;
 protected static float iceCoeff = 0;
 
-public static String getNameByKind(int kind)
+public static String getNameByKind(final int kind)
 {
     switch (kind)
     {
@@ -161,7 +161,7 @@ public void move()
     y += ya;
 }
 
-public void render(Graphics og)
+public void render(final Graphics og)
 {
     if (!visible) return;
 
@@ -253,21 +253,26 @@ public void collideCheck()
 {
 }
 
-public void bumpCheck(int xTile, int yTile)
+public void bumpCheck(final int xTile, final int yTile)
 {
 }
 
-public boolean shellCollideCheck(Shell shell)
+public boolean shellCollideCheck(final Shell shell)
 {
     return false;
 }
 
-public void release(Mario mario)
+public void release(final Mario mario)
 {
 }
 
 public boolean fireballCollideCheck(Fireball fireball)
 {
     return false;
+}
+
+public boolean isDead()
+{
+    return spriteTemplate != null && spriteTemplate.isDead;
 }
 }

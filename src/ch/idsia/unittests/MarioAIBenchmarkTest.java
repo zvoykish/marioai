@@ -93,8 +93,8 @@ public void testForwardJumpingAgentFitnessWithoutCreatures()
 {
     final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -le off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -echo on");
     final BasicTask basicTask = new BasicTask(marioAIOptions);
-    basicTask.reset(marioAIOptions);
-    basicTask.runOneEpisode();
+    basicTask.setOptionsAndReset(marioAIOptions);
+    basicTask.runSingleEpisode(1);
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
     assertEquals(7288, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
@@ -104,8 +104,8 @@ public void testForwardJumpingAgentFitnessWithDefaultCreatures()
 {
     final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -echo on");
     final BasicTask basicTask = new BasicTask(marioAIOptions);
-    basicTask.reset(marioAIOptions);
-    basicTask.runOneEpisode();
+    basicTask.setOptionsAndReset(marioAIOptions);
+    basicTask.runSingleEpisode(1);
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
     assertEquals(8134, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
@@ -115,8 +115,8 @@ public void testReceptiveField_1x2()
 {
     final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis on -fps 75 -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 1 -rfh 2 -srf on");
     final BasicTask basicTask = new BasicTask(marioAIOptions);
-    basicTask.reset(marioAIOptions);
-    basicTask.runOneEpisode();
+    basicTask.setOptionsAndReset(marioAIOptions);
+    basicTask.runSingleEpisode(1);
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
     assertEquals(6557, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
@@ -126,8 +126,8 @@ public void testReceptiveField_3x1()
 {
     final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 3 -rfh 1 -srf on");
     final BasicTask basicTask = new BasicTask(marioAIOptions);
-    basicTask.reset(marioAIOptions);
-    basicTask.runOneEpisode();
+    basicTask.setOptionsAndReset(marioAIOptions);
+    basicTask.runSingleEpisode(1);
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
     assertEquals(6557, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
@@ -137,8 +137,8 @@ public void testReceptiveField_1x1()
 {
     final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardAgent -echo on -rfw 1 -rfh 1 -srf on");
     final BasicTask basicTask = new BasicTask(marioAIOptions);
-    basicTask.reset(marioAIOptions);
-    basicTask.runOneEpisode();
+    basicTask.setOptionsAndReset(marioAIOptions);
+    basicTask.runSingleEpisode(1);
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
     assertEquals(6557, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
@@ -148,8 +148,8 @@ public void testForwardAgentFitnessWithDefaultCreatures()
 {
     final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardAgent -echo on");
     final BasicTask basicTask = new BasicTask(marioAIOptions);
-    basicTask.reset(marioAIOptions);
-    basicTask.runOneEpisode();
+    basicTask.setOptionsAndReset(marioAIOptions);
+    basicTask.runSingleEpisode(1);
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
     assertEquals(5225, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
@@ -159,8 +159,8 @@ public void testForwardAgentFitnessWithDefaultCreaturesVisual()
 {
     final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis on -fps 100 -ag ch.idsia.agents.controllers.ForwardAgent -echo on");
     final BasicTask basicTask = new BasicTask(marioAIOptions);
-    basicTask.reset(marioAIOptions);
-    basicTask.runOneEpisode();
+    basicTask.setOptionsAndReset(marioAIOptions);
+    basicTask.runSingleEpisode(1);
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
     assertEquals(5225, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
@@ -176,8 +176,8 @@ public void testForwardAgentFitnessWithoutCreatures()
 {
     final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -le 0 -ag ch.idsia.agents.controllers.ForwardAgent -echo on");
     final BasicTask basicTask = new BasicTask(marioAIOptions);
-    basicTask.reset(marioAIOptions);
-    basicTask.runOneEpisode();
+    basicTask.setOptionsAndReset(marioAIOptions);
+    basicTask.runSingleEpisode(1);
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
     assertEquals(7400, basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness());
 }
@@ -198,8 +198,8 @@ public void testStopGameplay()
     final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis on -rfw 9 -rfh 5 -stop on -ll 100 -ag ch.idsia.agents.controllers.ForwardAgent -echo on");
     assertEquals(true, marioAIOptions.isStopGamePlay());
     final BasicTask basicTask = new BasicTask(marioAIOptions);
-    basicTask.reset(marioAIOptions);
-    basicTask.runOneEpisode();
+    basicTask.setOptionsAndReset(marioAIOptions);
+    basicTask.runSingleEpisode(1);
 }
 
 @Test
@@ -207,8 +207,8 @@ public void testScaredShooty_with10Goombas()
 {
     final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:10");
     final BasicTask basicTask = new BasicTask(marioAIOptions);
-    basicTask.reset(marioAIOptions);
-    basicTask.runOneEpisode();
+    basicTask.setOptionsAndReset(marioAIOptions);
+    basicTask.runSingleEpisode(1);
     assertEquals(10, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
 }
 
@@ -217,8 +217,8 @@ public void testScaredShooty_with10Goombas5RedKoopas()
 {
     final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:10,rk:5");
     final BasicTask basicTask = new BasicTask(marioAIOptions);
-    basicTask.reset(marioAIOptions);
-    basicTask.runOneEpisode();
+    basicTask.setOptionsAndReset(marioAIOptions);
+    basicTask.runSingleEpisode(1);
     assertEquals(15, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
 }
 
@@ -227,8 +227,8 @@ public void testScaredShooty_with10GoombasWinged10Goombas()
 {
     final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis on -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:10,gw:10");
     final BasicTask basicTask = new BasicTask(marioAIOptions);
-    basicTask.reset(marioAIOptions);
-    basicTask.runOneEpisode();
+    basicTask.setOptionsAndReset(marioAIOptions);
+    basicTask.runSingleEpisode(1);
     assertEquals(10, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
 }
 
@@ -237,8 +237,8 @@ public void testScaredShooty_with6Goombas3Spikies()
 {
     final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -rfw 5 -rfh 5 -ag ch.idsia.agents.controllers.ScaredShooty -lf on -ltb off -lg off -lb off -i on -le g:6,s:3");
     final BasicTask basicTask = new BasicTask(marioAIOptions);
-    basicTask.reset(marioAIOptions);
-    basicTask.runOneEpisode();
+    basicTask.setOptionsAndReset(marioAIOptions);
+    basicTask.runSingleEpisode(1);
     assertEquals(6, basicTask.getEnvironment().getEvaluationInfo().killsByFire);
 }
 
@@ -263,7 +263,7 @@ public void testScale2XEnabledOnStartup()
     MarioAIOptions marioAIOptions = new MarioAIOptions("-z on");
 
     BasicTask basicTask = new BasicTask(marioAIOptions);
-    basicTask.reset(marioAIOptions);
+    basicTask.setOptionsAndReset(marioAIOptions);
     assertTrue(GlobalOptions.isScale2x);
 }
 }

@@ -65,10 +65,10 @@ public static void main(String[] args)
     marioAIOptions.setVisualization(true);
 //        basicTask.reset(marioAIOptions);
     final MarioCustomSystemOfValues m = new MarioCustomSystemOfValues();
-//        basicTask.runOneEpisode();
+//        basicTask.runSingleEpisode();
     // run 1 episode with same options, each time giving output of Evaluation info.
     // verbose = false
-    basicTask.doEpisodes(1, false);
+    basicTask.doEpisodes(1, false, 1);
     System.out.println("\nEvaluationInfo: \n" + basicTask.getEnvironment().getEvaluationInfoAsString());
     System.out.println("\nCustom : \n" + basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness(m));
     System.exit(0);

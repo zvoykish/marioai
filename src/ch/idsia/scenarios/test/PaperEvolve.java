@@ -62,7 +62,7 @@ public static void main(String[] args)
 //        Evolvable initial = new MediumMLPAgent();
 //        if (args.length > 0)
 //        {
-//            initial = (Evolvable) AgentsPool.load (args[0]);
+//            initial = (Evolvable) AgentsPool.loadAgent (args[0]);
 //        }
     options.setTimeLimit(100);
     options.setAgent((Agent) initial);

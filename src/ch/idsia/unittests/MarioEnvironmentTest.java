@@ -36,7 +36,6 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Random;
@@ -256,8 +255,8 @@ public void testMarioReceptiveFieldSizeW5H7_vis() throws Exception
     {
         final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis on -rfw 5 -rfh 7 -le 0 -srf on -gv on");
         final BasicTask basicTask = new BasicTask(marioAIOptions);
-        basicTask.reset(marioAIOptions);
-        basicTask.runOneEpisode();
+        basicTask.setOptionsAndReset(marioAIOptions);
+        basicTask.runSingleEpisode(1);
         assertEquals(marioAIOptions.getReceptiveFieldHeight(), 7);
         assertEquals(marioAIOptions.getReceptiveFieldWidth(), 5);
     }
@@ -273,8 +272,8 @@ public void testMarioReceptiveFieldSizeW8H6_vis() throws Exception
     {
         final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis on -rfw 8 -rfh 6 -le 0 -srf on");
         final BasicTask basicTask = new BasicTask(marioAIOptions);
-        basicTask.reset(marioAIOptions);
-        basicTask.runOneEpisode();
+        basicTask.setOptionsAndReset(marioAIOptions);
+        basicTask.runSingleEpisode(1);
         assertEquals(6, marioAIOptions.getReceptiveFieldHeight());
         assertEquals(8, marioAIOptions.getReceptiveFieldWidth());
         int[] pos = basicTask.getEnvironment().getMarioEgoPos();
@@ -289,8 +288,8 @@ public void testRecordingFitness()
     final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip -i on");
     final BasicTask basicTask = new BasicTask(marioAIOptions);
     basicTask.getEnvironment().setReplayer(null);
-    basicTask.reset(marioAIOptions);
-    basicTask.runOneEpisode();
+    basicTask.setOptionsAndReset(marioAIOptions);
+    basicTask.runSingleEpisode(1);
     float originalFitness = basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
 
@@ -308,8 +307,8 @@ public void testRecordingEvaluationString()
     final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip -i on");
     final BasicTask basicTask = new BasicTask(marioAIOptions);
     basicTask.getEnvironment().setReplayer(null);
-    basicTask.reset(marioAIOptions);
-    basicTask.runOneEpisode();
+    basicTask.setOptionsAndReset(marioAIOptions);
+    basicTask.runSingleEpisode(1);
     String playEvaluationString = basicTask.getEnvironment().getEvaluationInfoAsString();
     System.out.println(playEvaluationString);
 
@@ -326,81 +325,85 @@ public void testRecordingEvaluationString()
 @Test
 public void testLazyRecordingCreation()
 {
-	final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec lazy -i on");
+    final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec lazy -i on");
     final BasicTask basicTask = new BasicTask(marioAIOptions);
-	basicTask.getEnvironment().setReplayer(null);
-    basicTask.reset(marioAIOptions);
-    basicTask.runOneEpisode();
+    basicTask.getEnvironment().setReplayer(null);
+    basicTask.setOptionsAndReset(marioAIOptions);
+    basicTask.runSingleEpisode(1);
 
-	Random ran = new Random(System.currentTimeMillis());
+    Random ran = new Random(System.currentTimeMillis());
 
-	String filename = "lazyRecorderTest" + ran.nextInt(1000) + ".zip";
-	basicTask.getEnvironment().saveLastRun(filename);
+    String filename = "lazyRecorderTest" + ran.nextInt(1000) + ".zip";
+    basicTask.getEnvironment().saveLastRun(filename);
 
-	try {
-		FileInputStream in = new FileInputStream(filename);
-	}
-	catch(FileNotFoundException ex) {
-		fail("Recorder File Not Found");
-	}
+    try
+    {
+        FileInputStream in = new FileInputStream(filename);
+    }
+    catch (FileNotFoundException ex)
+    {
+        fail("Recorder File Not Found");
+    }
 }
 
 @Test
 public void testLazyRecordingFitness()
 {
-	try {
-		final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec lazy -i on");
-		final BasicTask basicTask = new BasicTask(marioAIOptions);
-		basicTask.getEnvironment().setReplayer(null);
-		basicTask.reset(marioAIOptions);
-		basicTask.runOneEpisode();
-		float originalFitness = basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
-		System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
+    try
+    {
+        final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec lazy -i on");
+        final BasicTask basicTask = new BasicTask(marioAIOptions);
+        basicTask.getEnvironment().setReplayer(null);
+        basicTask.setOptionsAndReset(marioAIOptions);
+        basicTask.runSingleEpisode(1);
+        float originalFitness = basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
+        System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
 
-		basicTask.getEnvironment().saveLastRun("lazyRecorderTest.zip");
-	
-		final ReplayTask replayTask = new ReplayTask();
-		replayTask.reset("lazyRecorderTest.zip");
-		replayTask.startReplay();
-		System.out.println(replayTask.getEnvironment().getEvaluationInfoAsString());
-		float replayFitness = replayTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
-		assertEquals(originalFitness, replayFitness);
-	}
-	catch(Exception ex)
-	{
-		fail("Exception during test");
-	}
+        basicTask.getEnvironment().saveLastRun("lazyRecorderTest.zip");
+
+        final ReplayTask replayTask = new ReplayTask();
+        replayTask.reset("lazyRecorderTest.zip");
+        replayTask.startReplay();
+        System.out.println(replayTask.getEnvironment().getEvaluationInfoAsString());
+        float replayFitness = replayTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
+        assertEquals(originalFitness, replayFitness);
+    }
+    catch (Exception ex)
+    {
+        fail("Exception during test");
+    }
 }
 
 @Test
 public void testMultipleLazyRecordings()
 {
-	try {
-		final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec lazy -i on");
-		final BasicTask basicTask = new BasicTask(marioAIOptions);
-		basicTask.getEnvironment().setReplayer(null);
-		basicTask.reset(marioAIOptions);
-		basicTask.runOneEpisode();
+    try
+    {
+        final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec lazy -i on");
+        final BasicTask basicTask = new BasicTask(marioAIOptions);
+        basicTask.getEnvironment().setReplayer(null);
+        basicTask.setOptionsAndReset(marioAIOptions);
+        basicTask.runSingleEpisode(1);
 
-		marioAIOptions.setLevelDifficulty(1);
-		basicTask.reset(marioAIOptions);
-		basicTask.runOneEpisode();
-		float originalFitness = basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();		
+        marioAIOptions.setLevelDifficulty(1);
+        basicTask.setOptionsAndReset(marioAIOptions);
+        basicTask.runSingleEpisode(1);
+        float originalFitness = basicTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
 
-		basicTask.getEnvironment().saveLastRun("lazyRecorderTest.zip");
+        basicTask.getEnvironment().saveLastRun("lazyRecorderTest.zip");
 
-		final ReplayTask replayTask = new ReplayTask();
-		replayTask.reset("lazyRecorderTest.zip");
-		replayTask.startReplay();
-		System.out.println(replayTask.getEnvironment().getEvaluationInfoAsString());
-		float replayFitness = replayTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
-		assertEquals(originalFitness, replayFitness);
+        final ReplayTask replayTask = new ReplayTask();
+        replayTask.reset("lazyRecorderTest.zip");
+        replayTask.startReplay();
+        System.out.println(replayTask.getEnvironment().getEvaluationInfoAsString());
+        float replayFitness = replayTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
+        assertEquals(originalFitness, replayFitness);
 
-	}
-	catch(Exception ex)
-	{
-		fail("Exception during test");
-	}
+    }
+    catch (Exception ex)
+    {
+        fail("Exception during test");
+    }
 }
 
 @Test
@@ -409,8 +412,8 @@ public void testRecordingTrace()
     final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -rec recorderTest.zip -i on");
     final BasicTask basicTask = new BasicTask(marioAIOptions);
     basicTask.getEnvironment().setReplayer(null);
-    basicTask.reset(marioAIOptions);
-    basicTask.runOneEpisode();
+    basicTask.setOptionsAndReset(marioAIOptions);
+    basicTask.runSingleEpisode(1);
 
     int[][] firstTrace = basicTask.getEnvironment().getEvaluationInfo().marioTrace;
     System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());

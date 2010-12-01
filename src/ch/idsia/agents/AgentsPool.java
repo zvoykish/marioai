@@ -51,10 +51,10 @@ public static void addAgent(Agent agent)
 
 public static void addAgent(String agentWOXName) throws IllegalFormatException
 {
-    addAgent(load(agentWOXName));
+    addAgent(loadAgent(agentWOXName));
 }
 
-public static Agent load(String name)
+public static Agent loadAgent(String name)
 {
     Agent agent;
     try
@@ -66,29 +66,29 @@ public static Agent load(String name)
     }
     catch (ClassNotFoundException e)
     {
-        System.out.println(name + " is not a class name; trying to load a wox definition with that name.");
+        System.out.println("[~ Mario AI ~] :" + name + " is not a class name; trying to load a wox definition with that name.");
         try
         {
             agent = (Agent) Easy.load(name);
         } catch (Exception ex)
         {
-            System.err.println(name + " is not a wox definition");
+            System.err.println("[~ Mario AI ~] :" + name + " is not a wox definition");
             agent = null;
         }
 
         if (agent == null)
         {
-            System.err.println("wox definition has not been found as well. Loading <HumanKeyboardAgent> instead");
+            System.err.println("[~ Mario AI ~] : wox definition has not been found as well. Loading <HumanKeyboardAgent> instead");
             agent = new HumanKeyboardAgent();
         }
-        System.out.println("agent = " + agent);
+        System.out.println("[~ Mario AI ~] : agent = " + agent);
     }
     catch (Exception e)
     {
 //            e.printStackTrace ();
         agent = new HumanKeyboardAgent();
-        System.err.println("Agent is null. Loading agent with name " + name + " failed.");
-        System.out.println("agent = " + agent);
+        System.err.println("[~ Mario AI ~] : Agent is null. Loading agent with name " + name + " failed.");
+        System.out.println("Agent has been set to default: " + agent);
 //            System.exit (1);
     }
 
@@ -128,7 +128,7 @@ public static void setCurrentAgent(Agent agent)
 
 public static void setCurrentAgent(String agentWOXName)
 {
-    setCurrentAgent(AgentsPool.load(agentWOXName));
+    setCurrentAgent(AgentsPool.loadAgent(agentWOXName));
 }
 
 static HashMap<String, Agent> agentsHashMap = new LinkedHashMap<String, Agent>();

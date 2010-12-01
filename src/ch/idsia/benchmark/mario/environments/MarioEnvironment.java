@@ -32,6 +32,7 @@ import ch.idsia.benchmark.mario.engine.*;
 import ch.idsia.benchmark.mario.engine.level.Level;
 import ch.idsia.benchmark.mario.engine.sprites.Mario;
 import ch.idsia.benchmark.mario.engine.sprites.Sprite;
+import ch.idsia.benchmark.tasks.SystemOfValues;
 import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.tools.MarioAIOptions;
 
@@ -76,7 +77,8 @@ private static final EvaluationInfo evaluationInfo = new EvaluationInfo();
 private static String marioTraceFile;
 
 private Recorder recorder;
-private float intermediateReward = -1;
+
+public static SystemOfValues IntermediateRewardsSystemOfValues = new SystemOfValues();
 
 public static MarioEnvironment getInstance()
 {
@@ -174,10 +176,10 @@ public void reset(MarioAIOptions setUpOptions)
 
         try
         {
-			if(recordingFileName.equals("lazy"))
-				recorder = new Recorder();
-			else
-				recorder = new Recorder(recordingFileName);
+            if (recordingFileName.equals("lazy"))
+                recorder = new Recorder();
+            else
+                recorder = new Recorder(recordingFileName);
 
             recorder.createFile("level.lvl");
             recorder.writeObject(levelScene.level);
@@ -226,10 +228,10 @@ public byte[][] getLevelSceneObservationZ(int ZLevel)
         {
             if (x >= 0 && x < levelScene.level.xExit && y >= 0 && y < levelScene.level.height)
             {
-                levelSceneZ[row][col] = GeneralizerLevelScene.ZLevelGeneralization(levelScene.level.map[x][y], ZLevel);
+                mergedZZ[row][col] = levelSceneZ[row][col] = GeneralizerLevelScene.ZLevelGeneralization(levelScene.level.map[x][y], ZLevel);
             } else
             {
-                levelSceneZ[row][col] = 0;
+                mergedZZ[row][col] = levelSceneZ[row][col] = 0;
             }
 
         }
@@ -246,7 +248,7 @@ public byte[][] getEnemiesObservationZ(int ZLevel)
             enemiesZ[w][h] = 0;
     for (Sprite sprite : sprites)
     {
-        if (sprite.kind == levelScene.mario.kind)
+        if (sprite.isDead() || sprite.kind == levelScene.mario.kind)
             continue;
         if (sprite.mapX >= 0 &&
                 sprite.mapX >= levelScene.mario.mapX - marioEgoCol &&
@@ -257,11 +259,14 @@ public byte[][] getEnemiesObservationZ(int ZLevel)
         {
             int row = sprite.mapY - levelScene.mario.mapY + marioEgoRow;
             int col = sprite.mapX - levelScene.mario.mapX + marioEgoCol;
-            enemiesZ[row][col] = GeneralizerEnemies.ZLevelGeneralization(sprite.kind, ZLevel);
+            // TODO:!H! take care about side effects of line 243 and be sure not to contaminate levelSceneObservation
+            mergedZZ[row][col] = enemiesZ[row][col] = GeneralizerEnemies.ZLevelGeneralization(sprite.kind, ZLevel);
         }
     }
     return enemiesZ;
 }
+// TODO: !H! substitute the content of getMergedObservationZZ by getLevelSceneObservationZ,
+// TODO: !H! getEnemiesObservationZ, called one after another!
 
 public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
 {
@@ -290,7 +295,7 @@ public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
 //                mergedZZ[w][h] = -1;
     for (Sprite sprite : sprites)
     {
-        if (sprite.kind == levelScene.mario.kind)
+        if (sprite.isDead() || sprite.kind == levelScene.mario.kind)
             continue;
         if (sprite.mapX >= 0 &&
                 sprite.mapX > levelScene.mario.mapX - receptiveFieldWidth / 2 &&
@@ -334,7 +339,7 @@ public List<String> getObservationStrings(boolean Enemies, boolean LevelMap,
             {
                 String tmpData = "";
                 for (int y = 0; y < levelScene[0].length; ++y)
-                    tmpData += mapElToStr(levelScene[x][y]);
+                    tmpData += levelSceneCellToString(levelScene[x][y]);
                 ret.add(tmpData);
             }
         }
@@ -366,7 +371,7 @@ public List<String> getObservationStrings(boolean Enemies, boolean LevelMap,
             {
                 String tmpData = "";
                 for (int y = 0; y < levelScene[0].length; ++y)
-                    tmpData += mapElToStr(mergedObs[x][y]);
+                    tmpData += levelSceneCellToString(mergedObs[x][y]);
                 ret.add(tmpData);
             }
         }
@@ -376,7 +381,7 @@ public List<String> getObservationStrings(boolean Enemies, boolean LevelMap,
 }
 
 
-private String mapElToStr(int el)
+private String levelSceneCellToString(int el)
 {
     String s = "";
     if (el == 0 || el == 1)
@@ -556,7 +561,7 @@ public Mario getMario()
 
 public int getTick()
 {
-    return levelScene.tick;
+    return levelScene.tickCount;
 }
 
 public int getLevelDifficulty()
@@ -654,10 +659,10 @@ public void setAgent(Agent agent)
     this.agent = agent;
 }
 
-public float getIntermediateReward()
+public int getIntermediateReward()
 {
     // TODO: reward for coins, killed creatures, cleared dead-ends, bypassed gaps, hidden blocks found
-    return intermediateReward;
+    return levelScene.getBonusPoints();
 }
 
 public int[] getMarioEgoPos()
@@ -672,7 +677,7 @@ public void closeRecorder()
         try
         {
 //            recorder.closeFile();
-            recorder.closeRecorder(false, getTimeSpent());
+            recorder.closeRecorder(getTimeSpent());
             //recorder = null;
         } catch (IOException e)
         {
@@ -686,6 +691,11 @@ public int getTimeSpent()
     return levelScene.getTimeSpent();
 }
 
+public byte[][] getScreenCapture()
+{
+    return null;
+}
+
 public void setReplayer(Replayer replayer)
 {
     levelScene.setReplayer(replayer);
@@ -693,16 +703,18 @@ public void setReplayer(Replayer replayer)
 
 public void saveLastRun(String filename)
 {
-	if (recorder != null && recorder.canSave())
-	{
-		try {
-			recorder.saveLastRun(filename);
-		}
-		catch(IOException ex) {
-			System.err.println("[Mario AI EXCEPTION] : Recording could not be saved.");
-			ex.printStackTrace();
-		}
-	}
+    if (recorder != null && recorder.canSave())
+    {
+        try
+        {
+            recorder.saveLastRun(filename);
+        }
+        catch (IOException ex)
+        {
+            System.err.println("[Mario AI EXCEPTION] : Recording could not be saved.");
+            ex.printStackTrace();
+        }
+    }
 }
 
 //public void setRecording(boolean isRecording)
