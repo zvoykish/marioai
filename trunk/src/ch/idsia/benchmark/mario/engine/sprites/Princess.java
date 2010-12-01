@@ -33,7 +33,7 @@ import ch.idsia.benchmark.mario.engine.LevelScene;
 public class Princess extends Sprite
 {
 private LevelScene world;
-public int i = 0;
+private int runTime = 0;
 
 public Princess(LevelScene world, int x, int y, int mapX, int mapY)
 {
@@ -50,7 +50,15 @@ public Princess(LevelScene world, int x, int y, int mapX, int mapY)
 }
 
 public void collideCheck()
-{
+{}
 
+public void move()
+{
+    runTime += 5;
+
+    xPic = (runTime / 20) % 2;
 }
+
+
+
 }

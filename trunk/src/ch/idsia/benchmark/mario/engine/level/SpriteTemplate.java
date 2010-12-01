@@ -104,7 +104,7 @@ public void spawn(LevelScene levelScene, int x, int y, int dir)
         sprite = new WaveGoomba(levelScene, x * 16 + 8, y * 16 + 15 - 3 * 16, dir, x, y);
     } else if (type == Sprite.KIND_PRINCESS)
     {
-        sprite = new Princess(levelScene, x * 16 + 15, y * 16 + 18, x, y);
+        sprite = new Princess(levelScene, x * 16 - 16, y * 16 - 15, x, y);
     } else
     {
 //            sprite = new Enemy(levelScene, x*16+8, y*16+15, dir, type, winged);
