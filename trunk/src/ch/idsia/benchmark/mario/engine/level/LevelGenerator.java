@@ -194,8 +194,15 @@ public static Level createLevel(MarioAIOptions args)
         floor = height - 1 - globalRandom.nextInt(4); //floor of the exit line
 
     //coordinates of the exit
-    level.xExit = level.length - 1;
-    level.yExit = floor - 1;
+    level.xExit = args.getExitX();
+    level.yExit = args.getExitY();
+
+    if (level.xExit == 0)
+        level.xExit = level.length - 1;
+
+    if (level.yExit == 0)
+        level.yExit = floor - 1;
+
     level.randomSeed = levelSeed;
     level.type = levelType;
     level.difficulty = levelDifficulty;
@@ -212,7 +219,7 @@ public static Level createLevel(MarioAIOptions args)
             }
         }
     }
-    level.setSpriteTemplate(level.xExit, level.yExit, new SpriteTemplate(Sprite.KIND_PRINCESS));
+//    level.setSpriteTemplate(level.xExit, level.yExit, new SpriteTemplate(Sprite.KIND_PRINCESS));
 
 //    //if underground or castle then build ceiling
 //    if (levelType == LevelGenerator.TYPE_CASTLE || levelType == LevelGenerator.TYPE_UNDERGROUND)
@@ -237,10 +244,19 @@ public static Level createLevel(MarioAIOptions args)
 //    }
 
     fixWalls();
+    setPrincess(level.xExit, level.yExit);
 
     level.counters = counters;
 
     return level;
+}
+
+private static void setPrincess(int x, int y)
+{
+    System.out.println("x = " + x);
+    System.out.println("y = " + y);
+    level.setSpriteTemplate(x, y, new SpriteTemplate(Sprite.KIND_PRINCESS));
+    level.setBlock(x,y, (byte) (15 + 15 * 16));
 }
 
 private static int buildZone(int x, int maxLength, int maxHeight, int floor, int floorHeight)
@@ -448,23 +464,31 @@ private static int buildDeadEnds(int x0, int maxLength)
         tLength += buildZone(nx + tLength, depth - tLength, bSpace, floor, INFINITE_FLOOR_HEIGHT);
     }
 
+    boolean wallFromBlocks = globalRandom.nextInt(5) == 2;
+
     for (int x = nx; x < nx + depth; x++)
     {
         for (int y = 0; y < height; y++)
         {
             if (x - nx >= depth - wallWidth)
             {
-                if (direction == true) //wall on the top
+                if (direction) //wall on the top
                 {
                     if (y <= separatorY)// + separatorHeight )
                     {
-                        level.setBlock(x, y, (byte) (1 + 9 * 16));
+                        if (wallFromBlocks)
+                            level.setBlock(x, y, (byte) (0 + 1 * 16));
+                        else
+                            level.setBlock(x, y, (byte) (1 + 9 * 16));
                     }
                 } else
                 {
                     if (y >= separatorY)
                     {
-                        level.setBlock(x, y, (byte) (1 + 9 * 16));
+                        if (wallFromBlocks)
+                            level.setBlock(x, y, (byte) (0 + 1 * 16));
+                        else
+                            level.setBlock(x, y, (byte) (1 + 9 * 16));
                     }
                 }
             }
@@ -1037,7 +1061,7 @@ private static void buildCoins(int x0, int x1, int floor, int s, int e)
             {
                 break;
             }
-            if (level.getBlock(x, floor - 2) == 0) //if cell (x, floor-2) is empty
+            if (level.getBlock(x, floor - 2) == 0)
             {
                 counters.coinsCount++;
                 level.setBlock(x, floor - 2, (byte) (2 + 2 * 16)); //coin

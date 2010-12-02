@@ -49,6 +49,7 @@ public static final int BORDER_HILL = -62;
 public static final int FLOWER_POT_OR_CANNON = -85;
 public static final int LADDER = 61;
 public static final int TOP_OF_LADDER = 61;
+public static final int PRINCESS = -1;
 
 public static byte ZLevelGeneralization(byte el, int ZLevel)
 {
@@ -98,6 +99,8 @@ public static byte ZLevelGeneralization(byte el, int ZLevel)
                     return LADDER;
                 case (93):
                     return TOP_OF_LADDER;
+                case (-1):
+                    return PRINCESS;
             }
             return el;
         case (1):
@@ -180,6 +183,8 @@ public static byte ZLevelGeneralization(byte el, int ZLevel)
                     return LADDER;
                 case (93):
                     return TOP_OF_LADDER;
+                case (-1):
+                    return PRINCESS;
             }
             System.err.println("ZLevelMapElementGeneralization: Unknown value el = " + el + " Possible Level tiles bug; " +
                     "Please, inform sergey@idsia.ch or julian@togelius.com. Thanks!");
@@ -213,6 +218,8 @@ public static byte ZLevelGeneralization(byte el, int ZLevel)
                 case (30):
                 case (46): // canon
                     return BORDER_CANNOT_PASS_THROUGH;
+                case (-1):
+                    return PRINCESS;
             }
             return 1;  // everything else is "something", so it is 1
     }
