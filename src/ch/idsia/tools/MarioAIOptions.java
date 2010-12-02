@@ -178,9 +178,19 @@ public int getViewWidth()
     return i(getParameterValue("-vw"));
 }
 
+public void setViewWidth(int width)
+{
+    setParameterValue("-vw", s(width));
+}
+
 public int getViewHeight()
 {
     return i(getParameterValue("-vh"));
+}
+
+public void setViewHeight(int height)
+{
+    setParameterValue("-vh", s(height));
 }
 
 public void printOptions(boolean singleLine)
@@ -260,6 +270,11 @@ public float getJumpPower()
     return f(getParameterValue("-jp"));
 }
 
+public void setJumpPower(float jp)
+{
+    setParameterValue("-jp", s(jp));
+}
+
 public int getReceptiveFieldWidth()
 {
     int ret = i(getParameterValue("-rfw"));
@@ -325,5 +340,25 @@ public int getMarioEgoPosRow()
 public int getMarioEgoPosCol()
 {
     return i(getParameterValue("-mec"));
+}
+
+public int getExitX()
+{
+    return i(getParameterValue("-ex"));
+}
+
+public int getExitY()
+{
+    return i(getParameterValue("-ey"));
+}
+
+public void setExitX(int x)
+{
+    setParameterValue("-ex", s(x));
+}
+
+public void setExitY(int y)
+{
+    setParameterValue("-ey", s(y));
 }
 }

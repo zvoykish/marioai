@@ -226,7 +226,7 @@ public byte[][] getLevelSceneObservationZ(int ZLevel)
     {
         for (int x = levelScene.mario.mapX - mCol, col = 0; x <= levelScene.mario.mapX + (receptiveFieldWidth - mCol - 1); x++, col++)
         {
-            if (x >= 0 && x < levelScene.level.xExit && y >= 0 && y < levelScene.level.height)
+            if (x >= 0 && x < levelScene.level.length && y >= 0 && y < levelScene.level.height)
             {
                 mergedZZ[row][col] = levelSceneZ[row][col] = GeneralizerLevelScene.ZLevelGeneralization(levelScene.level.map[x][y], ZLevel);
             } else
@@ -255,7 +255,8 @@ public byte[][] getEnemiesObservationZ(int ZLevel)
                 sprite.mapX <= levelScene.mario.mapX + (receptiveFieldWidth - marioEgoCol - 1) &&
                 sprite.mapY >= 0 &&
                 sprite.mapY >= levelScene.mario.mapY - marioEgoRow &&
-                sprite.mapY <= levelScene.mario.mapY + (receptiveFieldHeight - marioEgoRow - 1))
+                sprite.mapY <= levelScene.mario.mapY + (receptiveFieldHeight - marioEgoRow - 1) &&
+                sprite.kind != Sprite.KIND_PRINCESS)
         {
             int row = sprite.mapY - levelScene.mario.mapY + marioEgoRow;
             int col = sprite.mapX - levelScene.mario.mapX + marioEgoCol;
@@ -298,14 +299,15 @@ public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
         if (sprite.isDead() || sprite.kind == levelScene.mario.kind)
             continue;
         if (sprite.mapX >= 0 &&
-                sprite.mapX > levelScene.mario.mapX - receptiveFieldWidth / 2 &&
-                sprite.mapX < levelScene.mario.mapX + receptiveFieldWidth / 2 &&
-                sprite.mapY >= 0 &&
-                sprite.mapY > levelScene.mario.mapY - receptiveFieldHeight / 2 &&
-                sprite.mapY < levelScene.mario.mapY + receptiveFieldHeight / 2)
+            sprite.mapX >= levelScene.mario.mapX - mCol &&
+            sprite.mapX <= levelScene.mario.mapX + (receptiveFieldWidth - mCol - 1) &&
+            sprite.mapY >= 0 &&
+            sprite.mapY >= levelScene.mario.mapY - mRow &&
+            sprite.mapY <= levelScene.mario.mapY + (receptiveFieldHeight - mRow - 1) &&
+            sprite.kind != Sprite.KIND_PRINCESS)
         {
-            int row = sprite.mapY - levelScene.mario.mapY + receptiveFieldHeight / 2;
-            int col = sprite.mapX - levelScene.mario.mapX + receptiveFieldWidth / 2;
+            int row = sprite.mapY - levelScene.mario.mapY + mRow;
+            int col = sprite.mapX - levelScene.mario.mapX + mCol;
             byte tmp = GeneralizerEnemies.ZLevelGeneralization(sprite.kind, ZLevelEnemies);
             if (tmp != Sprite.KIND_NONE)
                 mergedZZ[row][col] = tmp;
@@ -327,8 +329,8 @@ public List<String> getObservationStrings(boolean Enemies, boolean LevelMap,
         ret.add("Physical Mario Position (x,y): (" + levelScene.mario.x + "," + levelScene.mario.y + ")");
         ret.add("Mario Observation (Receptive Field)   Width: " + receptiveFieldWidth + " Height: " + receptiveFieldHeight);
         ret.add("X Exit Position: " + levelScene.level.xExit);
-        int MarioXInMap = (int) levelScene.mario.x / levelScene.cellSize;
-        int MarioYInMap = (int) levelScene.mario.y / levelScene.cellSize;
+        int MarioXInMap = (int) levelScene.mario.x / levelScene.cellSize; //TODO: !!H! doublcheck and replace with levelScene.mario.mapX
+        int MarioYInMap = (int) levelScene.mario.y / levelScene.cellSize;  //TODO: !!H! doublcheck and replace with levelScene.mario.mapY
         ret.add("Calibrated Mario Position (x,y): (" + MarioXInMap + "," + MarioYInMap + ")\n");
 
         byte[][] levelScene = getLevelSceneObservationZ(ZLevelScene);
@@ -389,6 +391,7 @@ private String levelSceneCellToString(int el)
     s += (el == levelScene.mario.kind) ? "#M.#" : el;
     while (s.length() < 4)
         s += "#";
+
     return s + " ";
 }
 

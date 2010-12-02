@@ -452,7 +452,7 @@ public void move()
     /*if (x > levelScene.level.xExit * LevelScene.cellSize *//*- 8*//* &&
             x < levelScene.level.xExit * LevelScene.cellSize + 2 * LevelScene.cellSize &&
             y < levelScene.level.yExit * LevelScene.cellSize)*/
-    if (mapX == levelScene.level.xExit + 1 && mapY == levelScene.level.yExit)
+    if (mapX == levelScene.level.xExit && mapY == levelScene.level.yExit)
     {
         x = (levelScene.level.xExit + 1) * LevelScene.cellSize;
         win();

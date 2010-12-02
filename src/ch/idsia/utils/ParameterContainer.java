@@ -103,7 +103,9 @@ private static final String[] allowed = new String[]{
         "-rec",   // Recording <on|off>
         "-z", //enable Scale2X on startup
         "-w", //wind
-        "-ice" //ice
+        "-ice", //ice
+        "-ex", //exitX
+        "-ey" //exitY
 };
 
 public ParameterContainer()
@@ -285,6 +287,8 @@ public static void InitDefaults()
         defaultOptionsHashMap.put("-ice", "0"); //wind for Mario
         defaultOptionsHashMap.put("-mer", "9"); //Mario Ego row
         defaultOptionsHashMap.put("-mec", "9"); //Mario Ego column
+        defaultOptionsHashMap.put("-ey", "0"); //exit x
+        defaultOptionsHashMap.put("-ex", "0"); //exit y
     }
 }
 
