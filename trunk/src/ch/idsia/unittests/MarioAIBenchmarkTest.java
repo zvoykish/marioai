@@ -28,6 +28,7 @@
 package ch.idsia.unittests;
 
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
+import ch.idsia.benchmark.mario.engine.sprites.Mario;
 import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.tools.MarioAIOptions;
 import ch.idsia.tools.ReplayerOptions;
@@ -274,8 +275,11 @@ public void testLevelCompletionRegression()
 	final BasicTask basicTask = new BasicTask(marioAIOptions);
 	basicTask.setOptionsAndReset(marioAIOptions);
 	basicTask.runSingleEpisode(1);
+	boolean end = basicTask.getEvaluationInfo().levelLength == basicTask.getEvaluationInfo().distancePassedCells;
+	boolean win = basicTask.getEvaluationInfo().marioStatus == Mario.STATUS_WIN;
+	System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
+	assertEquals(end, win);
 
-	assertEquals(8426, basicTask.getEvaluationInfo().computeWeightedFitness());
 }
 
 }
