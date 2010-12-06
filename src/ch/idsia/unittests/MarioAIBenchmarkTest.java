@@ -266,4 +266,16 @@ public void testScale2XEnabledOnStartup()
     basicTask.setOptionsAndReset(marioAIOptions);
     assertTrue(GlobalOptions.isScale2x);
 }
+
+@Test
+public void testLevelCompletionRegression()
+{
+	final MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -ag ch.idsia.agents.controllers.ForwardJumpingAgent -i on");
+	final BasicTask basicTask = new BasicTask(marioAIOptions);
+	basicTask.setOptionsAndReset(marioAIOptions);
+	basicTask.runSingleEpisode(1);
+
+	assertEquals(8426, basicTask.getEvaluationInfo().computeWeightedFitness());
+}
+
 }
