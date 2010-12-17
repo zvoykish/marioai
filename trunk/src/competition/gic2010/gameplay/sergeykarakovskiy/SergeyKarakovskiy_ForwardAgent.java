@@ -25,54 +25,16 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package ch.idsia.scenarios.champ;
-
-import ch.idsia.agents.Agent;
-import ch.idsia.benchmark.tasks.GamePlayTask;
-import ch.idsia.benchmark.tasks.Task;
-import ch.idsia.tools.MarioAIOptions;
+package competition.gic2010.gameplay.sergeykarakovskiy;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Sergey Karakovskiy, sergey@idsia.ch
- * Date: Mar 17, 2010
- * Time: 8:33:43 AM
- * Package: ch.idsia.scenarios
+ * User: Sergey Karakovskiy, sergey.karakovskiy@gmail.com
+ * Date: 12/15/10
+ * Time: 1:45 AM
+ * Package: competition.gic2010.gameplay.sergeykarakovskiy
  */
-
-/**
- * Class used for agent evaluation in GamePlay track
- * http://www.marioai.org/gameplay-track
- */
-public final class GamePlayTrack
-{
-final static int numberOfLevels = 512;
-private static int killsSum = 0;
-private static float marioStatusSum = 0;
-private static int timeLeftSum = 0;
-private static int marioModeSum = 0;
-private static boolean detailedStats = false;
-private static MarioAIOptions marioAIOptions = new MarioAIOptions();
-
-public static void evaluateAgent(final Agent agent)
-{
-    final Task task = new GamePlayTask();
-    marioAIOptions.setAgent(agent);
-    task.setOptionsAndReset(marioAIOptions);
-    task.doEpisodes(numberOfLevels, false, 1);
-    task.printStatistics();
-}
-
-public static void evaluateSubmissionZip(final String zipFileName)
+public class SergeyKarakovskiy_ForwardAgent
 {
 
 }
-
-public static void main(String[] args)
-{
-    MarioAIOptions marioAIOptions = new MarioAIOptions(args);
-    evaluateAgent(marioAIOptions.getAgent());
-}
-}
-
-
