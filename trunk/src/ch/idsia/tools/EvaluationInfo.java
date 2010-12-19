@@ -299,4 +299,9 @@ public EvaluationInfo clone()
 //    ret.marioTrace = this.marioTrace;
 //    return ret;
 }
+
+public String getTaskName()
+{
+    return taskName;
+}
 }
