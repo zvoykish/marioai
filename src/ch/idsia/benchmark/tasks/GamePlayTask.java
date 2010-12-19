@@ -30,12 +30,15 @@ package ch.idsia.benchmark.tasks;
 import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.tools.MarioAIOptions;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by IntelliJ IDEA. \n User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 24, 2010 Time: 12:58:00 PM
  * Package: ch.idsia.maibe.tasks
  */
 public class GamePlayTask extends BasicTask implements Task
 {
+private static final DecimalFormat df = new DecimalFormat("#.##");
 private EvaluationInfo localEvaluationInfo;
 
 public GamePlayTask(MarioAIOptions marioAIOptions)
@@ -104,6 +107,7 @@ public void doEpisodes(final int amount, final boolean verbose, final int repeti
         options.setCannonsCount(i % 3 != 0);
         options.setCoinsCount(i % 5 != 0);
         options.setBlocksCount(i % 4 != 0);
+        options.setHiddenBlocksCount(i % 6 != 0);
         options.setDeadEndsCount(i % 10 == 0);
         options.setLevelLadder(i % 10 == 2);
         this.reset();
@@ -123,6 +127,25 @@ public EvaluationInfo getEvaluationInfo()
 
 public void printStatistics()
 {
-    System.out.println(localEvaluationInfo.toString());
+    System.out.println("\n[MarioAI] ~ Evaluation Results for Task: " + localEvaluationInfo.getTaskName() +
+            "\n         Weighted Fitness : " + df.format(localEvaluationInfo.computeWeightedFitness()) +
+            "\n             Mario Status : " + localEvaluationInfo.marioStatus +
+            "\n               Mario Mode : " + localEvaluationInfo.marioMode +
+            "\nCollisions with creatures : " + localEvaluationInfo.collisionsWithCreatures +
+            "\n     Passed (Cells, Phys) : " + localEvaluationInfo.distancePassedCells + " of " + localEvaluationInfo.levelLength + ", " + df.format(localEvaluationInfo.distancePassedPhys) + " of " + df.format(localEvaluationInfo.levelLength * 16) + " (" + localEvaluationInfo.distancePassedCells * 100 / localEvaluationInfo.levelLength + "% passed)" +
+            "\n Time Spent(marioseconds) : " + localEvaluationInfo.timeSpent +
+            "\n  Time Left(marioseconds) : " + localEvaluationInfo.timeLeft +
+            "\n             Coins Gained : " + localEvaluationInfo.coinsGained + " of " + localEvaluationInfo.totalNumberOfCoins + " (" + localEvaluationInfo.coinsGained * 100 / (localEvaluationInfo.totalNumberOfCoins == 0 ? 1 : localEvaluationInfo.totalNumberOfCoins) + "% collected)" +
+            "\n      Hidden Blocks Found : " + localEvaluationInfo.hiddenBlocksFound + " of " + localEvaluationInfo.totalNumberOfHiddenBlocks + " (" + localEvaluationInfo.hiddenBlocksFound * 100 / (localEvaluationInfo.totalNumberOfHiddenBlocks == 0 ? 1 : localEvaluationInfo.totalNumberOfHiddenBlocks) + "% found)" +
+            "\n       Mushrooms Devoured : " + localEvaluationInfo.mushroomsDevoured + " of " + localEvaluationInfo.totalNumberOfMushrooms + " found (" + localEvaluationInfo.mushroomsDevoured * 100 / (localEvaluationInfo.totalNumberOfMushrooms == 0 ? 1 : localEvaluationInfo.totalNumberOfMushrooms) + "% collected)" +
+            "\n         Flowers Devoured : " + localEvaluationInfo.flowersDevoured + " of " + localEvaluationInfo.totalNumberOfFlowers + " found (" + localEvaluationInfo.flowersDevoured * 100 / (localEvaluationInfo.totalNumberOfFlowers == 0 ? 1 : localEvaluationInfo.totalNumberOfFlowers) + "% collected)" +
+            "\n              kills Total : " + localEvaluationInfo.killsTotal + " of " + localEvaluationInfo.totalNumberOfCreatures + " found (" + localEvaluationInfo.killsTotal * 100 / (localEvaluationInfo.totalNumberOfCreatures == 0 ? 1 : localEvaluationInfo.totalNumberOfCreatures) + "%)" +
+            "\n            kills By Fire : " + localEvaluationInfo.killsByFire +
+            "\n           kills By Shell : " + localEvaluationInfo.killsByShell +
+            "\n           kills By Stomp : " + localEvaluationInfo.killsByStomp);
+
+//    System.out.println(localEvaluationInfo.toString());
+//    System.out.println("Mario status sum: " + localEvaluationInfo.marioStatus);
+//    System.out.println("Mario mode sum: " + localEvaluationInfo.marioMode);
 }
 }
