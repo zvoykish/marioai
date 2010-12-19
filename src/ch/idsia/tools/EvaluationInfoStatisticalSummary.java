@@ -57,7 +57,7 @@ public static StatisticalSummary test(Agent controller, MarioAIOptions marioAIOp
     int timeLeft = 0;
     int marioMode = 0;
     float marioStatus = 0;
-    final Task task = new GamePlayTask();
+    final Task task = new GamePlayTask(marioAIOptions);
     float fitness = 0;
     boolean verbose = false;
     int trials = 0;

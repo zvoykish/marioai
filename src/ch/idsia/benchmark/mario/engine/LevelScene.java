@@ -586,6 +586,9 @@ public void reset(MarioAIOptions marioAIOptions)
     Sprite.setCreaturesWind(marioAIOptions.getWind());
     Sprite.setCreaturesIce(marioAIOptions.getIce());
     Mario.resetStatic(marioAIOptions);
+
+    bonusPoints = -1;
+
     mario = new Mario(this);
     //System.out.println("mario = " + mario);
 
