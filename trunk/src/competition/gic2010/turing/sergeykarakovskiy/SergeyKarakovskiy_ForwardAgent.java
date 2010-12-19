@@ -39,6 +39,7 @@ import ch.idsia.benchmark.mario.environments.Environment;
  * Time: 1:47 AM
  * Package: competition.gic2010.temp
  */
+
 public class SergeyKarakovskiy_ForwardAgent extends BasicMarioAIAgent implements Agent
 {
 int trueJumpCounter = 0;
