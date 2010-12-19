@@ -4,14 +4,14 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Mario AI nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
+ *  Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *  Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ *  Neither the name of the Mario AI nor the
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -28,7 +28,9 @@
 package ch.idsia.agents;
 
 import ch.idsia.agents.learning.MediumSRNAgent;
-import ch.idsia.benchmark.tasks.ProgressTask;
+import ch.idsia.benchmark.mario.environments.Environment;
+import ch.idsia.benchmark.tasks.LearningTask;
+import ch.idsia.benchmark.tasks.Task;
 import ch.idsia.evolution.ea.ES;
 
 /**
@@ -39,27 +41,22 @@ import ch.idsia.evolution.ea.ES;
  */
 
 
-public class SRNESLearningAgent extends MediumSRNAgent implements LearningAgent
+public class SRNESLearningAgent implements LearningAgent
 {
 private MediumSRNAgent agent;
 Agent bestAgent;
 private static float bestScore = 0;
-private ProgressTask task;
+private Task task;
 ES es;
 int populationSize = 100;
 int generations = 5000;
-int numberOfTrials; //common number of trials
-int exhausted; // number of exhausted trials
-
+long evaluationQuota; //common number of trials
+long currentEvaluation; // number of exhausted trials
+private String name = getClass().getSimpleName();
 
 public void init()
 {
     es = new ES(task, agent, populationSize);
-}
-
-public SRNESLearningAgent(MediumSRNAgent agent)
-{
-    this.agent = agent;
 }
 
 public SRNESLearningAgent()
@@ -69,9 +66,9 @@ public SRNESLearningAgent()
 
 public void learn()
 {
-    this.exhausted++;
+    this.currentEvaluation++;
 
-    int locBestScore = 0; // local best score
+    int localBestScore = 0;
 
     for (int gen = 0; gen < generations; gen++)
     {
@@ -97,18 +94,58 @@ public void newEpisode()
     agent.reset();
 }
 
-public void setTask(ProgressTask task)
+
+public void setLearningTask(LearningTask learningTask)
 {
-    this.task = task;
+    this.task = learningTask;
 }
 
-public void setNumberOfTrials(int num)
+public void setEvaluationQuota(long num)
 {
-    this.numberOfTrials = num;
+    this.evaluationQuota = num;
 }
 
 public Agent getBestAgent()
 {
     return bestAgent;
+}
+
+public boolean[] getAction()
+{
+    return agent.getAction();
+}
+
+public void integrateObservation(final Environment environment)
+{
+    agent.integrateObservation(environment);
+}
+
+public void giveIntermediateReward(final float intermediateReward)
+{
+    agent.giveIntermediateReward(intermediateReward);
+}
+
+/**
+ * clears all dynamic data, such as hidden layers in recurrent networks
+ * just implement an empty method for a reactive controller
+ */
+public void reset()
+{
+    agent.reset();
+}
+
+public void setObservationDetails(final int rfWidth, final int rfHeight, final int egoRow, final int egoCol)
+{
+    agent.setObservationDetails(rfWidth, rfHeight, egoRow, egoCol);
+}
+
+public String getName()
+{
+    return this.name.equals("") ? getClass().getSimpleName() : this.name;
+}
+
+public void setName(final String name)
+{
+    this.name = name;
 }
 }

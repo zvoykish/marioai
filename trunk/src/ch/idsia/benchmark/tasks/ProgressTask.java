@@ -4,14 +4,14 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Mario AI nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
+ *  Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *  Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ *  Neither the name of the Mario AI nor the
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -78,12 +78,12 @@ private float evaluateSingleLevel(int ld, int tl, int ls, boolean vis, Agent con
     return distanceTravelled;
 }
 
-public float[] evaluate(Agent controller)
+public int evaluate(Agent controller)
 {
 //        controller.reset();
 //        options.setLevelRandSeed(startingSeed++);
 //        System.out.println("controller = " + controller);
-    float fitn = this.evaluateSingleLevel(0, 40, this.uniqueSeed, false, controller);
+    int fitn = (int) this.evaluateSingleLevel(0, 40, this.uniqueSeed, false, controller);
 //        System.out.println("fitn = " + fitn);
 //        if (fitn > 1000)
 //            fitn = this.evaluateSingleLevel(0, 150, this.uniqueSeed, false, controller);
@@ -106,7 +106,7 @@ public float[] evaluate(Agent controller)
     this.uniqueSeed += 1;
     this.fitnessEvaluations++;
     this.dumpFitnessEvaluation(fitn, "fitnesses-");
-    return new float[]{fitn};
+    return fitn;
 }
 
 public void dumpFitnessEvaluation(float fitness, String fileName)
