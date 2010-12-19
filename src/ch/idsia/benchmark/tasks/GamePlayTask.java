@@ -40,6 +40,7 @@ public class GamePlayTask extends BasicTask implements Task
 {
 private static final DecimalFormat df = new DecimalFormat("#.##");
 private EvaluationInfo localEvaluationInfo;
+private int difqualifications = 0;
 
 public GamePlayTask(MarioAIOptions marioAIOptions)
 {
@@ -113,7 +114,8 @@ public void doEpisodes(final int amount, final boolean verbose, final int repeti
         options.setFrozenCreatures(i % 3 == 1);
         options.setEnemies(i % 4 == 1 ? "off" : "");
         this.reset();
-        this.runSingleEpisode(repetitionsOfSingleEpisode);
+        if (!this.runSingleEpisode(repetitionsOfSingleEpisode))
+            difqualifications++;
 
         updateEvaluationInfo(environment.getEvaluationInfo());
 
