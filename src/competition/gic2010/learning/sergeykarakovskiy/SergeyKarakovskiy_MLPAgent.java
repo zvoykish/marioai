@@ -28,6 +28,7 @@
 package competition.gic2010.learning.sergeykarakovskiy;
 
 import ch.idsia.agents.Agent;
+import ch.idsia.agents.LearningAgent;
 import ch.idsia.agents.learning.MediumSRNAgent;
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.environments.Environment;
@@ -44,7 +45,7 @@ import java.text.DecimalFormat;
  * Time: 1:46 AM
  * Package: competition.gic2010.learning
  */
-public class SergeyKarakovskiy_MLPAgent
+public class SergeyKarakovskiy_MLPAgent implements LearningAgent
 {
 private LearningTask learningTask = null;
 
