@@ -29,7 +29,7 @@ package ch.idsia.scenarios.champ;
 
 import ch.idsia.agents.Agent;
 import ch.idsia.agents.LearningAgent;
-import ch.idsia.agents.SRNESLearningAgent;
+import ch.idsia.agents.MLPESLearningAgent;
 import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.benchmark.tasks.LearningTask;
 import ch.idsia.tools.EvaluationInfo;
@@ -162,10 +162,10 @@ public static void main(String[] args)
 {
     // set up parameters
     final MarioAIOptions marioAIOptions = new MarioAIOptions(args);
-    LearningAgent learningAgent = new SRNESLearningAgent(); // Learning track competition entry goes here
+    LearningAgent learningAgent = new MLPESLearningAgent(); // Learning track competition entry goes here
 
 //        Level 1
-    marioAIOptions.setArgs("-lco off -lb off -le off -lhb off -lg off -ltb off -lhs off -lca off -lde off");
+    marioAIOptions.setArgs("-vis off -lco off -lb off -le off -lhb off -lg off -ltb off -lhs off -lca off -lde off");
     float finalScore = LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
 
 //        Level 3
