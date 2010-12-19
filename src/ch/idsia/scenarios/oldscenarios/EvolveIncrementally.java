@@ -4,14 +4,14 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Mario AI nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
+ *  Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *  Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ *  Neither the name of the Mario AI nor the
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -53,7 +53,7 @@ final static int populationSize = 100;
 public static void main(String[] args)
 {
     MarioAIOptions options = new MarioAIOptions(new String[0]);
-//        options.setNumberOfTrials(1);
+//        options.setEvaluationQuota(1);
     Evolvable initial = new SimpleMLPAgent();
     if (args.length > 0)
     {
@@ -85,7 +85,7 @@ public static void main(String[] args)
             a.setName(((Agent) initial).getName() + gen);
 //                AgentsPool.addAgent(a);
 //                AgentsPool.setCurrentAgent(a);
-            double result = task.evaluate(a)[0];
+            int result = task.evaluate(a);
             options.setVisualization(false);
 //                options.setFPS(true);
             Easy.save(es.getBests()[0], "evolved.xml");

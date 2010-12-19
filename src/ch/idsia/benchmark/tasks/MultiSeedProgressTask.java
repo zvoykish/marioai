@@ -4,14 +4,14 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Mario AI nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
+ *  Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *  Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ *  Neither the name of the Mario AI nor the
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -49,7 +49,7 @@ public MultiSeedProgressTask(MarioAIOptions evaluationOptions)
     setOptionsAndReset(evaluationOptions);
 }
 
-public float[] evaluate(Agent controller)
+public int evaluate(Agent controller)
 {
     float distanceTravelled = 0;
 
@@ -65,7 +65,7 @@ public float[] evaluate(Agent controller)
         distanceTravelled += this.getEnvironment().getEvaluationInfo().computeDistancePassed();
     }
     distanceTravelled = distanceTravelled / numberOfSeeds;
-    return new float[]{distanceTravelled};
+    return (int) distanceTravelled;
 }
 
 public void setStartingSeed(int seed)

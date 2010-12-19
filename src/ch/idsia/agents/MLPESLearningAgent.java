@@ -25,49 +25,84 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package ch.idsia.benchmark.tasks;
+package ch.idsia.agents;
 
-import ch.idsia.agents.Agent;
-import ch.idsia.tools.MarioAIOptions;
+import ch.idsia.benchmark.mario.environments.Environment;
+import ch.idsia.benchmark.tasks.LearningTask;
 
 /**
- * Created by IntelliJ IDEA. \n User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 24, 2010 Time: 12:58:00 PM
- * Package: ch.idsia.maibe.tasks
+ * Created by IntelliJ IDEA.
+ * User: Sergey Karakovskiy, sergey.karakovskiy@gmail.com
+ * Date: 12/12/10
+ * Time: 12:24 AM
+ * Package: ch.idsia.agents
  */
-public class GamePlayTask implements Task
+public class MLPESLearningAgent implements LearningAgent
+{
+private LearningTask learningTask = null;
+private long evaluationQuota = 0;
+
+
+public void learn()
 {
 
-public int evaluate(final Agent controller)
-{
-    return 0;
 }
 
-public void setOptionsAndReset(final MarioAIOptions options)
+public void giveReward(final float reward)
 {
     //To change body of implemented methods use File | Settings | File Templates.
 }
 
-public void setOptionsAndReset(final String options)
+public void newEpisode()
 {
     //To change body of implemented methods use File | Settings | File Templates.
 }
 
-public void doEpisodes(final int amount, final boolean verbose, final int repetitionsOfSingleEpisode)
+public void setLearningTask(final LearningTask learningTask)
+{
+    this.learningTask = learningTask;
+}
+
+public void setEvaluationQuota(final long num)
+{
+    this.evaluationQuota = num;
+}
+
+public Agent getBestAgent()
+{
+    return null;  //To change body of implemented methods use File | Settings | File Templates.
+}
+
+public void init()
 {
     //To change body of implemented methods use File | Settings | File Templates.
 }
 
-public boolean isFinished()
+public boolean[] getAction()
 {
-    return false;  //To change body of implemented methods use File | Settings | File Templates.
+    return new boolean[0];  //To change body of implemented methods use File | Settings | File Templates.
 }
 
+public void integrateObservation(final Environment environment)
+{
+    //To change body of implemented methods use File | Settings | File Templates.
+}
+
+public void giveIntermediateReward(final float intermediateReward)
+{
+    //To change body of implemented methods use File | Settings | File Templates.
+}
+
+/**
+ * clears all dynamic data, such as hidden layers in recurrent networks
+ * just implement an empty method for a reactive controller
+ */
 public void reset()
 {
     //To change body of implemented methods use File | Settings | File Templates.
 }
 
-public void reset(final String options)
+public void setObservationDetails(final int rfWidth, final int rfHeight, final int egoRow, final int egoCol)
 {
     //To change body of implemented methods use File | Settings | File Templates.
 }
@@ -77,8 +112,8 @@ public String getName()
     return null;  //To change body of implemented methods use File | Settings | File Templates.
 }
 
-public void printStatistics()
+public void setName(final String name)
 {
-    System.out.println("true = " + true);
+    //To change body of implemented methods use File | Settings | File Templates.
 }
 }

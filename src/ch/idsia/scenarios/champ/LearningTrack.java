@@ -4,14 +4,14 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Mario AI nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
+ *  Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *  Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ *  Neither the name of the Mario AI nor the
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -30,9 +30,8 @@ package ch.idsia.scenarios.champ;
 import ch.idsia.agents.Agent;
 import ch.idsia.agents.LearningAgent;
 import ch.idsia.agents.SRNESLearningAgent;
-import ch.idsia.agents.learning.MediumSRNAgent;
 import ch.idsia.benchmark.tasks.BasicTask;
-import ch.idsia.benchmark.tasks.ProgressTask;
+import ch.idsia.benchmark.tasks.LearningTask;
 import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.tools.MarioAIOptions;
 
@@ -50,7 +49,7 @@ import ch.idsia.tools.MarioAIOptions;
 
 public final class LearningTrack
 {
-final static int numberOfTrials = 1000;
+final static long numberOfTrials = 1000;
 final static boolean scoring = false;
 private static int killsSum = 0;
 private static float marioStatusSum = 0;
@@ -60,7 +59,40 @@ private static boolean detailedStats = false;
 
 final static int populationSize = 100;
 
-private static float evaluateSubmission(MarioAIOptions marioAIOptions, LearningAgent learningAgent)
+private static int evaluateSubmission(MarioAIOptions marioAIOptions, LearningAgent learningAgent)
+{
+    LearningTask learningTask = new LearningTask(marioAIOptions); // provides the level
+    learningAgent.setEvaluationQuota(numberOfTrials);        // limits the number of evaluations per run for LearningAgent
+    learningAgent.setLearningTask(learningTask);  // gives LearningAgent access to evaluator via method LearningTask.evaluate(Agent)
+    learningAgent.init();
+    learningAgent.learn(); // launches the training process. numberOfTrials happen here
+    Agent agent = learningAgent.getBestAgent(); // this agent will be evaluated
+
+    // perform the gameplay task on the same level
+    marioAIOptions.setVisualization(true);
+    marioAIOptions.setAgent(agent);
+    BasicTask basicTask = new BasicTask(marioAIOptions);
+    basicTask.setOptionsAndReset(marioAIOptions);
+
+    boolean verbose = false;
+
+    if (!basicTask.runSingleEpisode(1))  // make evaluation on the same episode once
+    {
+        System.out.println("MarioAI: out of computational time per action! Agent disqualified!");
+    }
+    EvaluationInfo evaluationInfo = basicTask.getEnvironment().getEvaluationInfo();
+    System.out.println(evaluationInfo.toString());
+
+    int f = evaluationInfo.computeWeightedFitness();
+    if (verbose)
+    {
+        System.out.println("Intermediate SCORE = " + f + "; Details: " + evaluationInfo.toStringSingleLine());
+    }
+    System.out.println("LearningTrack final score = " + f);
+    return f;
+}
+
+private static int oldEval(MarioAIOptions marioAIOptions, LearningAgent learningAgent)
 {
     boolean verbose = false;
     float fitness = 0;
@@ -69,11 +101,11 @@ private static float evaluateSubmission(MarioAIOptions marioAIOptions, LearningA
     marioAIOptions.setVisualization(false);
     //final LearningTask learningTask = new LearningTask(marioAIOptions);
     //learningTask.setAgent(learningAgent);
-    ProgressTask task = new ProgressTask(marioAIOptions);
+    LearningTask task = new LearningTask(marioAIOptions);
 
     learningAgent.newEpisode();
-    learningAgent.setTask(task);
-    learningAgent.setNumberOfTrials(numberOfTrials);
+    learningAgent.setLearningTask(task);
+    learningAgent.setEvaluationQuota(numberOfTrials);
     learningAgent.init();
 
     for (int i = 0; i < numberOfTrials; ++i)
@@ -116,7 +148,7 @@ private static float evaluateSubmission(MarioAIOptions marioAIOptions, LearningA
         disqualifications++;
     }
     EvaluationInfo evaluationInfo = basicTask.getEnvironment().getEvaluationInfo();
-    float f = evaluationInfo.computeWeightedFitness();
+    int f = evaluationInfo.computeWeightedFitness();
     if (verbose)
     {
         System.out.println("Intermediate SCORE = " + f + "; Details: " + evaluationInfo.toStringSingleLine());
@@ -125,22 +157,16 @@ private static float evaluateSubmission(MarioAIOptions marioAIOptions, LearningA
     return f;
 }
 
+
 public static void main(String[] args)
 {
-//        Level 1
     // set up parameters
     final MarioAIOptions marioAIOptions = new MarioAIOptions(args);
-    LearningAgent learningAgent = new SRNESLearningAgent(new MediumSRNAgent()); // Your Competition Entry goes here
+    LearningAgent learningAgent = new SRNESLearningAgent(); // Learning track competition entry goes here
 
+//        Level 1
     marioAIOptions.setArgs("-lco off -lb off -le off -lhb off -lg off -ltb off -lhs off -lca off -lde off");
     float finalScore = LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
-
-//        ProgressTask task = new ProgressTask(options);
-//        ES es = new ES (task, initial, populationSize);
-
-//        Level 2
-    marioAIOptions.setArgs("-lco on -lb on -lhb off -lg off -ltb off -lhs off -lca off -lde off -ld 3");
-    finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
 
 //        Level 3
     marioAIOptions.setArgs("-lco off -lb off -le off -lhb off -lg on -ltb off -lhs off -lca off -lde off -ld 2");
