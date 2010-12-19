@@ -55,6 +55,7 @@ private String fileTimeStamp = "-uid-" + uid + "-" + GlobalOptions.getTimeStamp(
 public ProgressTask(MarioAIOptions evaluationOptions)
 {
     super(evaluationOptions);
+    System.out.println("evaluationOptions = " + evaluationOptions);
     setOptionsAndReset(evaluationOptions);
 }
 
@@ -131,11 +132,6 @@ public boolean isFinished()
 {
     System.out.println("options = " + options);
     return false;
-}
-
-public void reset()
-{
-    System.out.println("options = " + options);
 }
 
 }

@@ -27,7 +27,7 @@
 
 package ch.idsia.agents;
 
-import ch.idsia.agents.learning.MediumMLPAgent;
+import ch.idsia.agents.learning.MediumSRNAgent;
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.benchmark.tasks.LearningTask;
@@ -47,7 +47,7 @@ public class MLPESLearningAgent implements LearningAgent
 {
 private LearningTask learningTask = null;
 
-private MediumMLPAgent agent;
+private MediumSRNAgent agent;
 Agent bestAgent;
 private int bestScore = 5;
 ES es;
@@ -60,7 +60,7 @@ DecimalFormat df = new DecimalFormat("###.####");
 
 public MLPESLearningAgent()
 {
-    agent = new MediumMLPAgent();
+    agent = new MediumSRNAgent();
 }
 
 public void learn()
@@ -123,6 +123,7 @@ public void init()
 
 public boolean[] getAction()
 {
+    System.out.println("agent = " + agent);
     return agent.getAction();
 }
 
