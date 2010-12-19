@@ -164,22 +164,26 @@ public static void main(String[] args)
 //    LearningAgent learningAgent = new MLPESLearningAgent(); // Learning track competition entry goes here
     LearningAgent learningAgent = (LearningAgent) marioAIOptions.getAgent();
 
+
 //        Level 1
-    marioAIOptions.setArgs("-vis off -lco off -lb off -le off -lhb off -lg off -ltb off -lhs off -lca off -lde off");
+    marioAIOptions.setArgs("-lco off -lb on -le off -lhb off -lg on -ltb on -lhs off -lc on -lde on -ld 5 -ls 33829");
     float finalScore = LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
 
 //        Level 3
-    marioAIOptions.setArgs("-lco off -lb off -le off -lhb off -lg on -ltb off -lhs off -lca off -lde off -ld 2");
+    marioAIOptions.setArgs("-lde on -i on -ld 30 -ls 33434");
     finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
 
 //        Level 4
-    marioAIOptions.setArgs("-lco off -lb off -le off -lhb off -lg on -ltb on -lhs off -lca on -lde off -ld 3");
+    marioAIOptions.setArgs("-lde on -i on -ld 30 -ls 33434 -lhb on");
     finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
 
 //        Level 5
-    marioAIOptions.setArgs("-lco on -lb off -le g,rk,gw -lhb on -lg off -ltb on -lhs off -lca off -lde off -ld 3");
+    marioAIOptions.setArgs("-lla on -le off -lhs on -lde on -ld 5 -ls 332656");
     finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
 
+    // Level 6 (bonus level)
+    marioAIOptions.setArgs("-le off -lhs on -lde on -ld 5 -ls 332656");
+    finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
 
     System.out.println("finalScore = " + finalScore);
     System.exit(0);
