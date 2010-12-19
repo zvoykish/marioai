@@ -111,6 +111,7 @@ public void doEpisodes(final int amount, final boolean verbose, final int repeti
         options.setDeadEndsCount(i % 10 == 0);
         options.setLevelLadder(i % 10 == 2);
         options.setFrozenCreatures(i % 3 == 1);
+        options.setEnemies(i % 4 == 1 ? "off" : "");
         this.reset();
         this.runSingleEpisode(repetitionsOfSingleEpisode);
 
