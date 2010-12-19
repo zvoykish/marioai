@@ -47,7 +47,7 @@ private HashSet<String> allowedCreatures = new HashSet<String>();
 private boolean creaturesEnabled = true;
 private boolean kindByDifficulty = true;
 private int difficulty = 0;
-private final String[] kinds = {"g", "gw", "gk", "gkw", "rk", "rkw", "s", "sw"};
+private final String[] kinds = {"g", "gw", "gk", "gkw", "rk", "rkw", "s", "sw", "gww"};
 private String lastDecreased;
 
 private final int INFINITE = -1;
@@ -193,7 +193,7 @@ public int nextCreature()
 
     if (kindByDifficulty)
     {
-        kind = getCreatureType(kinds[this.nextInt(8)]);
+        kind = getCreatureType(kinds[this.nextInt(9)]);
         if (difficulty < 1)
         {
             kind = this.getCreatureType("g");
