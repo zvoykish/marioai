@@ -4,14 +4,14 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *  Redistributions of source code must retain the above copyright
- * notice, this list of conditions and the following disclaimer.
- *  Redistributions in binary form must reproduce the above copyright
- * notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution.
- *  Neither the name of the Mario AI nor the
- * names of its contributors may be used to endorse or promote products
- * derived from this software without specific prior written permission.
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Mario AI nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -28,7 +28,8 @@
 package ch.idsia.scenarios.champ;
 
 import ch.idsia.agents.Agent;
-import ch.idsia.benchmark.tasks.GamePlayTask;
+import ch.idsia.agents.AgentsPool;
+import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.benchmark.tasks.Task;
 import ch.idsia.tools.MarioAIOptions;
 
@@ -46,7 +47,7 @@ import ch.idsia.tools.MarioAIOptions;
  */
 public final class GamePlayTrack
 {
-final static int numberOfLevels = 512;
+final static int numberOfLevels = 1;//512;
 private static int killsSum = 0;
 private static float marioStatusSum = 0;
 private static int timeLeftSum = 0;
@@ -56,8 +57,8 @@ private static MarioAIOptions marioAIOptions = new MarioAIOptions();
 
 public static void evaluateAgent(final Agent agent)
 {
-    final Task task = new GamePlayTask();
-    marioAIOptions.setAgent(agent);
+    final Task task = new BasicTask(marioAIOptions);
+    //marioAIOptions.setAgent(agent);
     task.setOptionsAndReset(marioAIOptions);
     task.doEpisodes(numberOfLevels, false, 1);
     task.printStatistics();
@@ -68,10 +69,19 @@ public static void evaluateSubmissionZip(final String zipFileName)
 
 }
 
+public static void evaluateAllAgents()
+{
+//       int startingSeed = marioAIOptions.getLevelRandSeed();
+    for (Agent agent : AgentsPool.getAgentsCollection())
+        evaluateAgent(agent);
+}
+
+
 public static void main(String[] args)
 {
-    MarioAIOptions marioAIOptions = new MarioAIOptions(args);
+    marioAIOptions.setArgs(args);
     evaluateAgent(marioAIOptions.getAgent());
+    System.exit(0);
 }
 }
 
