@@ -164,7 +164,6 @@ public static void main(String[] args)
 //    LearningAgent learningAgent = new MLPESLearningAgent(); // Learning track competition entry goes here
     LearningAgent learningAgent = (LearningAgent) marioAIOptions.getAgent();
 
-
 //        Level 1
     marioAIOptions.setArgs("-vis off -lco off -lb off -le off -lhb off -lg off -ltb off -lhs off -lca off -lde off");
     float finalScore = LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
