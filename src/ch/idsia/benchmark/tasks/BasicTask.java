@@ -69,6 +69,7 @@ public boolean runSingleEpisode(final int repetitionsOfSingleEpisode)
             environment.tick();
             if (!GlobalOptions.isGameplayStopped)
             {
+
                 agent.integrateObservation(environment);
                 agent.giveIntermediateReward(environment.getIntermediateReward());
 
