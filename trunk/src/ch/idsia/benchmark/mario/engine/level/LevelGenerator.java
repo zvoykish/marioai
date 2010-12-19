@@ -464,7 +464,7 @@ private static int buildDeadEnds(int x0, int maxLength)
         tLength += buildZone(nx + tLength, depth - tLength, bSpace, floor, INFINITE_FLOOR_HEIGHT);
     }
 
-    boolean wallFromBlocks = globalRandom.nextInt(5) == 2;
+    boolean wallFromBlocks = false;//globalRandom.nextInt(5) == 2;
 
     for (int x = nx; x < nx + depth; x++)
     {

@@ -110,6 +110,7 @@ public void doEpisodes(final int amount, final boolean verbose, final int repeti
         options.setHiddenBlocksCount(i % 6 != 0);
         options.setDeadEndsCount(i % 10 == 0);
         options.setLevelLadder(i % 10 == 2);
+        options.setFrozenCreatures(i % 3 == 1);
         this.reset();
         this.runSingleEpisode(repetitionsOfSingleEpisode);
 
