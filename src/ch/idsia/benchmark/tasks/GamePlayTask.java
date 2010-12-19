@@ -102,7 +102,7 @@ public void doEpisodes(final int amount, final boolean verbose, final int repeti
         options.setLevelLength((200 + (i * 128) + (options.getLevelRandSeed() % (i + 1))) % 512);
         options.setLevelType(i % 3);
         options.setLevelRandSeed(options.getLevelRandSeed() + i);
-        options.setLevelDifficulty(i % 10);
+        options.setLevelDifficulty(i / 20);
         options.setGapsCount(i % 3 == 0);
         options.setCannonsCount(i % 3 != 0);
         options.setCoinsCount(i % 5 != 0);
