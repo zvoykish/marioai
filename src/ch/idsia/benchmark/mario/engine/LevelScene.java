@@ -4,14 +4,14 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Mario AI nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
+ *  Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *  Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ *  Neither the name of the Mario AI nor the
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -108,8 +108,7 @@ public LevelScene()
 //            System.out.println("Java::LevelScene: loading tiles.dat...");
 //            System.out.println("LS: System.getProperty(\"user.dir()\") = " + System.getProperty("user.dir"));
         Level.loadBehaviors(new DataInputStream(LevelScene.class.getResourceAsStream("resources/tiles.dat")));
-    }
-    catch (IOException e)
+    } catch (IOException e)
     {
         System.err.println("[MarioAI ERROR] : error loading file resources/tiles.dat ; ensure this file exists in ch/idsia/benchmark/mario/engine ");
         e.printStackTrace();
@@ -588,6 +587,7 @@ public void reset(MarioAIOptions marioAIOptions)
     Sprite.setCreaturesIce(marioAIOptions.getIce());
     Mario.resetStatic(marioAIOptions);
     mario = new Mario(this);
+    System.out.println("mario = " + mario);
 
     sprites.add(mario);
     startTime = 1;
