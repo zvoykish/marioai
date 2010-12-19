@@ -67,6 +67,8 @@ public int evaluate(Agent agent)
 {
     if (currentEvaluation++ > EVALUATION_QUOTA)
         return 0;
+    options.setAgent(agent);
+    environment.reset(options);
     fitnessEvaluations++;
     this.runSingleEpisode(1);
     return this.getEvaluationInfo().computeWeightedFitness();
