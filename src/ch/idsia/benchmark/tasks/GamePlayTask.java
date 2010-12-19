@@ -27,6 +27,7 @@
 
 package ch.idsia.benchmark.tasks;
 
+import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.tools.MarioAIOptions;
 
 /**
@@ -35,9 +36,60 @@ import ch.idsia.tools.MarioAIOptions;
  */
 public class GamePlayTask extends BasicTask implements Task
 {
+private EvaluationInfo localEvaluationInfo;
+
 public GamePlayTask(MarioAIOptions marioAIOptions)
 {
     super(marioAIOptions);
+
+    localEvaluationInfo = new EvaluationInfo();
+    localEvaluationInfo.setTaskName("GamePlayTask");
+    localEvaluationInfo.distancePassedCells = 0;
+    localEvaluationInfo.distancePassedPhys = 0;
+    localEvaluationInfo.flowersDevoured = 0;
+    localEvaluationInfo.killsTotal = 0;
+    localEvaluationInfo.killsByFire = 0;
+    localEvaluationInfo.killsByShell = 0;
+    localEvaluationInfo.killsByStomp = 0;
+    localEvaluationInfo.marioMode = 0;
+    localEvaluationInfo.marioStatus = 0;
+    localEvaluationInfo.mushroomsDevoured = 0;
+    localEvaluationInfo.coinsGained = 0;
+    localEvaluationInfo.timeLeft = 0;
+    localEvaluationInfo.timeSpent = 0;
+    localEvaluationInfo.hiddenBlocksFound = 0;
+    localEvaluationInfo.totalNumberOfCoins = 0;
+    localEvaluationInfo.totalNumberOfCreatures = 0;
+    localEvaluationInfo.totalNumberOfFlowers = 0;
+    localEvaluationInfo.totalNumberOfMushrooms = 0;
+    localEvaluationInfo.totalNumberOfHiddenBlocks = 0;
+    localEvaluationInfo.collisionsWithCreatures = 0;
+    localEvaluationInfo.levelLength = 0;
+}
+
+private void updateEvaluationInfo(EvaluationInfo evInfo)
+{
+    localEvaluationInfo.distancePassedCells += evInfo.distancePassedCells;
+    localEvaluationInfo.distancePassedPhys += evInfo.distancePassedPhys;
+    localEvaluationInfo.flowersDevoured += evInfo.flowersDevoured;
+    localEvaluationInfo.killsTotal += evInfo.killsTotal;
+    localEvaluationInfo.killsByFire += evInfo.killsByFire;
+    localEvaluationInfo.killsByShell += evInfo.killsByShell;
+    localEvaluationInfo.killsByStomp += evInfo.killsByStomp;
+    localEvaluationInfo.marioMode += evInfo.marioMode;
+    localEvaluationInfo.marioStatus += evInfo.marioStatus;
+    localEvaluationInfo.mushroomsDevoured += evInfo.mushroomsDevoured;
+    localEvaluationInfo.coinsGained += evInfo.coinsGained;
+    localEvaluationInfo.timeLeft += evInfo.timeLeft;
+    localEvaluationInfo.timeSpent += evInfo.timeSpent;
+    localEvaluationInfo.hiddenBlocksFound += evInfo.hiddenBlocksFound;
+    localEvaluationInfo.totalNumberOfCoins += evInfo.totalNumberOfCoins;
+    localEvaluationInfo.totalNumberOfCreatures += evInfo.totalNumberOfCreatures;
+    localEvaluationInfo.totalNumberOfFlowers += evInfo.totalNumberOfFlowers;
+    localEvaluationInfo.totalNumberOfMushrooms += evInfo.totalNumberOfMushrooms;
+    localEvaluationInfo.totalNumberOfHiddenBlocks += evInfo.totalNumberOfHiddenBlocks;
+    localEvaluationInfo.collisionsWithCreatures += evInfo.collisionsWithCreatures;
+    localEvaluationInfo.levelLength += evInfo.levelLength;
 }
 
 public void doEpisodes(final int amount, final boolean verbose, final int repetitionsOfSingleEpisode)
@@ -46,7 +98,7 @@ public void doEpisodes(final int amount, final boolean verbose, final int repeti
     {
         options.setLevelLength(200 + (i * 128) + (options.getLevelRandSeed() % (i + 1)));
         options.setLevelType(i % 3);
-        options.setLevelRandSeed(options.getLevelRandSeed()+ i);
+        options.setLevelRandSeed(options.getLevelRandSeed() + i);
         options.setLevelDifficulty(i % 10);
         options.setGapsCount(i % 3 == 0);
         options.setCannonsCount(i % 3 != 0);
@@ -56,8 +108,21 @@ public void doEpisodes(final int amount, final boolean verbose, final int repeti
         options.setLevelLadder(i % 10 == 2);
         this.reset();
         this.runSingleEpisode(repetitionsOfSingleEpisode);
+
+        updateEvaluationInfo(environment.getEvaluationInfo());
+
         if (verbose)
             System.out.println(environment.getEvaluationInfoAsString());
     }
+}
+
+public EvaluationInfo getEvaluationInfo()
+{
+    return localEvaluationInfo;
+}
+
+public void printStatistics()
+{
+    System.out.println(localEvaluationInfo.toString());
 }
 }
