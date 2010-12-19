@@ -47,7 +47,7 @@ import ch.idsia.tools.MarioAIOptions;
  */
 public final class GamePlayTrack
 {
-final static int numberOfLevels = 512;
+final static int numberOfLevels = 3;
 private static int killsSum = 0;
 private static float marioStatusSum = 0;
 private static int timeLeftSum = 0;

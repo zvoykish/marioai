@@ -279,7 +279,6 @@ public void testLevelCompletionRegression()
 	boolean win = basicTask.getEvaluationInfo().marioStatus == Mario.STATUS_WIN;
 	System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
 	assertEquals(end, win);
-
 }
 
 }

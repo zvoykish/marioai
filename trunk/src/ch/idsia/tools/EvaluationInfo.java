@@ -160,7 +160,7 @@ public String toString()
     // store mario trace:
     try
     {
-        if (!marioTraceFileName.equals(""))
+        if (marioTraceFileName != null && !marioTraceFileName.equals(""))
         {
             final PrintWriter pw = new PrintWriter(new FileWriter(marioTraceFileName));
 
