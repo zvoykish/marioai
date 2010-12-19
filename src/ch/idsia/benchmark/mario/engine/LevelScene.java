@@ -587,7 +587,7 @@ public void reset(MarioAIOptions marioAIOptions)
     Sprite.setCreaturesIce(marioAIOptions.getIce());
     Mario.resetStatic(marioAIOptions);
     mario = new Mario(this);
-    System.out.println("mario = " + mario);
+    //System.out.println("mario = " + mario);
 
     sprites.add(mario);
     startTime = 1;
