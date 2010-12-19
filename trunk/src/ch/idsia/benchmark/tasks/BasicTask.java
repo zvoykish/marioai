@@ -61,6 +61,7 @@ public BasicTask(MarioAIOptions marioAIOptions)
  */
 public boolean runSingleEpisode(final int repetitionsOfSingleEpisode)
 {
+    long c = System.currentTimeMillis();
     for (int r = 0; r < repetitionsOfSingleEpisode; ++r)
     {
         this.reset();
@@ -69,11 +70,13 @@ public boolean runSingleEpisode(final int repetitionsOfSingleEpisode)
             environment.tick();
             if (!GlobalOptions.isGameplayStopped)
             {
-
+                c = System.currentTimeMillis();
                 agent.integrateObservation(environment);
                 agent.giveIntermediateReward(environment.getIntermediateReward());
 
                 boolean[] action = agent.getAction();
+                if (System.currentTimeMillis() - c > COMPUTATION_TIME_BOUND)
+                    return false;
 //                System.out.println("action = " + Arrays.toString(action));
 //            environment.setRecording(GlobalOptions.isRecording);
                 environment.performAction(action);
