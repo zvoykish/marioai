@@ -29,7 +29,7 @@ package ch.idsia.scenarios.champ;
 
 import ch.idsia.agents.Agent;
 import ch.idsia.agents.AgentsPool;
-import ch.idsia.benchmark.tasks.BasicTask;
+import ch.idsia.benchmark.tasks.GamePlayTask;
 import ch.idsia.benchmark.tasks.Task;
 import ch.idsia.tools.MarioAIOptions;
 
@@ -57,7 +57,7 @@ private static MarioAIOptions marioAIOptions = new MarioAIOptions();
 
 public static void evaluateAgent(final Agent agent)
 {
-    final Task task = new BasicTask(marioAIOptions);
+    final Task task = new GamePlayTask(marioAIOptions);
     //marioAIOptions.setAgent(agent);
     task.setOptionsAndReset(marioAIOptions);
     task.doEpisodes(numberOfLevels, false, 1);

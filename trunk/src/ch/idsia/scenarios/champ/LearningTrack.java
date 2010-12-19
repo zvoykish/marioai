@@ -73,7 +73,7 @@ private static int evaluateSubmission(MarioAIOptions marioAIOptions, LearningAge
     BasicTask basicTask = new BasicTask(marioAIOptions);
     basicTask.setOptionsAndReset(marioAIOptions);
 
-    boolean verbose = false;
+    boolean verbose = true;
 
     if (!basicTask.runSingleEpisode(1))  // make evaluation on the same episode once
     {
@@ -85,9 +85,9 @@ private static int evaluateSubmission(MarioAIOptions marioAIOptions, LearningAge
     int f = evaluationInfo.computeWeightedFitness();
     if (verbose)
     {
-        System.out.println("Intermediate SCORE = " + f + "; Details: " + evaluationInfo.toStringSingleLine());
+        System.out.println("Intermediate SCORE = " + f + ";\n Details: " + evaluationInfo.toString());
     }
-    System.out.println("LearningTrack final score = " + f);
+
     return f;
 }
 

@@ -142,7 +142,7 @@ public String getName()
 
 public void printStatistics()
 {
-    System.out.println("todo: impl");
+    System.out.println(evaluationInfo.toString());
 }
 
 public EvaluationInfo getEvaluationInfo()

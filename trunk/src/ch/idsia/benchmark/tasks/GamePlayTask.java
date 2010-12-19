@@ -27,58 +27,37 @@
 
 package ch.idsia.benchmark.tasks;
 
-import ch.idsia.agents.Agent;
 import ch.idsia.tools.MarioAIOptions;
 
 /**
  * Created by IntelliJ IDEA. \n User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 24, 2010 Time: 12:58:00 PM
  * Package: ch.idsia.maibe.tasks
  */
-public class GamePlayTask implements Task
+public class GamePlayTask extends BasicTask implements Task
 {
-
-public int evaluate(final Agent controller)
+public GamePlayTask(MarioAIOptions marioAIOptions)
 {
-    return 0;
-}
-
-public void setOptionsAndReset(final MarioAIOptions options)
-{
-    //To change body of implemented methods use File | Settings | File Templates.
-}
-
-public void setOptionsAndReset(final String options)
-{
-    //To change body of implemented methods use File | Settings | File Templates.
+    super(marioAIOptions);
 }
 
 public void doEpisodes(final int amount, final boolean verbose, final int repetitionsOfSingleEpisode)
 {
-    //To change body of implemented methods use File | Settings | File Templates.
-}
-
-public boolean isFinished()
-{
-    return false;  //To change body of implemented methods use File | Settings | File Templates.
-}
-
-public void reset()
-{
-    //To change body of implemented methods use File | Settings | File Templates.
-}
-
-public void reset(final String options)
-{
-    //To change body of implemented methods use File | Settings | File Templates.
-}
-
-public String getName()
-{
-    return null;  //To change body of implemented methods use File | Settings | File Templates.
-}
-
-public void printStatistics()
-{
-    System.out.println("true = " + true);
+    for (int i = 0; i < amount; ++i)
+    {
+        options.setLevelLength(200 + (i * 128) + (options.getLevelRandSeed() % (i + 1)));
+        options.setLevelType(i % 3);
+        options.setLevelRandSeed(options.getLevelRandSeed()+ i);
+        options.setLevelDifficulty(i % 10);
+        options.setGapsCount(i % 3 == 0);
+        options.setCannonsCount(i % 3 != 0);
+        options.setCoinsCount(i % 5 != 0);
+        options.setBlocksCount(i % 4 != 0);
+        options.setDeadEndsCount(i % 10 == 0);
+        options.setLevelLadder(i % 10 == 2);
+        this.reset();
+        this.runSingleEpisode(repetitionsOfSingleEpisode);
+        if (verbose)
+            System.out.println(environment.getEvaluationInfoAsString());
+    }
 }
 }
