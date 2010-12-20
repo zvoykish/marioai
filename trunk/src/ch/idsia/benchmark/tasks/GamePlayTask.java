@@ -100,7 +100,7 @@ public void doEpisodes(final int amount, final boolean verbose, final int repeti
 {
     for (int i = 0; i < amount; ++i)
     {
-        options.setLevelLength((200 + (i * 128) + (options.getLevelRandSeed() % (i + 1))) % 512);
+        options.setLevelLength((200 + (i * 12) + (options.getLevelRandSeed() % (i + 1))) % 512);
         options.setLevelType(i % 3);
         options.setLevelRandSeed(options.getLevelRandSeed() + i);
         options.setLevelDifficulty(i / 20);
