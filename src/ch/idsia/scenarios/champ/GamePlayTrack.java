@@ -59,6 +59,7 @@ public static void evaluateAgent(final Agent agent)
     final Task task = new GamePlayTask(marioAIOptions);
     //marioAIOptions.setAgent(agent);
     task.setOptionsAndReset(marioAIOptions);
+    System.out.println("Evaluating agent " + agent.getName() + " with seed " + marioAIOptions.getLevelRandSeed());
     task.doEpisodes(numberOfLevels, false, 1);
     task.printStatistics();
 }
