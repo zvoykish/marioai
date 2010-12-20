@@ -146,8 +146,8 @@ public void printStatistics()
             "\n              kills Total : " + localEvaluationInfo.killsTotal + " of " + localEvaluationInfo.totalNumberOfCreatures + " found (" + localEvaluationInfo.killsTotal * 100 / (localEvaluationInfo.totalNumberOfCreatures == 0 ? 1 : localEvaluationInfo.totalNumberOfCreatures) + "%)" +
             "\n            kills By Fire : " + localEvaluationInfo.killsByFire +
             "\n           kills By Shell : " + localEvaluationInfo.killsByShell +
-            "\n           kills By Stomp : " + localEvaluationInfo.killsByStomp);
-
+            "\n           kills By Stomp : " + localEvaluationInfo.killsByStomp +
+            "\n        difqualifications : " + difqualifications);
 //    System.out.println(localEvaluationInfo.toString());
 //    System.out.println("Mario status sum: " + localEvaluationInfo.marioStatus);
 //    System.out.println("Mario mode sum: " + localEvaluationInfo.marioMode);
