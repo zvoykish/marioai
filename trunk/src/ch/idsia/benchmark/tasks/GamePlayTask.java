@@ -105,7 +105,7 @@ public void doEpisodes(final int amount, final boolean verbose, final int repeti
         options.setLevelRandSeed(options.getLevelRandSeed() + i);
         options.setLevelDifficulty(i / 20);
         options.setGapsCount(i % 3 == 0);
-        options.setCannonsCount(i % 3 != 0);
+        options.setCannonsCount(i % 3 != 1);
         options.setCoinsCount(i % 5 != 0);
         options.setBlocksCount(i % 4 != 0);
         options.setHiddenBlocksCount(i % 6 != 0);
