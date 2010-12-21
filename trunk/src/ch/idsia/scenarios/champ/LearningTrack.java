@@ -61,7 +61,7 @@ final static int populationSize = 100;
 private static int evaluateSubmission(MarioAIOptions marioAIOptions, LearningAgent learningAgent)
 {
     LearningTask learningTask = new LearningTask(marioAIOptions); // provides the level
-    learningAgent.setEvaluationQuota(numberOfTrials);        // limits the number of evaluations per run for LearningAgent
+    learningAgent.setEvaluationQuota(LearningTask.getEvaluationQuota());        // limits the number of evaluations per run for LearningAgent
     learningAgent.setLearningTask(learningTask);  // gives LearningAgent access to evaluator via method LearningTask.evaluate(Agent)
     learningAgent.init();
     learningAgent.learn(); // launches the training process. numberOfTrials happen here
