@@ -89,6 +89,7 @@ public void learn()
             System.out.print("TIME LEFT: " + learningTask.getEnvironment().getEvaluationInfo().timeLeft);
             System.out.println(", STATUS = " + learningTask.getEnvironment().getEvaluationInfo().marioStatus);
             bestAgent = a;
+            System.out.println("bestAgent = " + a);
         }
     }
 }

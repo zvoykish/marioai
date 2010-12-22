@@ -69,7 +69,7 @@ public int evaluate(Agent agent)
         return 0;
     options.setAgent(agent);
     environment.reset(options);
-    fitnessEvaluations++;
+    fitnessEvaluations++; // TODO : remove either or two currentEvaluation or fitnessEvaluations
     this.runSingleEpisode(1);
     return this.getEvaluationInfo().computeWeightedFitness();
 }

@@ -69,9 +69,12 @@ private static int evaluateSubmission(MarioAIOptions marioAIOptions, LearningAge
 
     // perform the gameplay task on the same level
     marioAIOptions.setVisualization(true);
+    System.out.println("LearningTrack best agent = " + agent);
     marioAIOptions.setAgent(agent);
     BasicTask basicTask = new BasicTask(marioAIOptions);
     basicTask.setOptionsAndReset(marioAIOptions);
+    System.out.println("basicTask = " + basicTask);
+    System.out.println("agent = " + agent);
 
     boolean verbose = true;
 
@@ -79,7 +82,7 @@ private static int evaluateSubmission(MarioAIOptions marioAIOptions, LearningAge
     {
         System.out.println("MarioAI: out of computational time per action! Agent disqualified!");
     }
-    EvaluationInfo evaluationInfo = basicTask.getEnvironment().getEvaluationInfo();
+    EvaluationInfo evaluationInfo = basicTask.getEvaluationInfo();
     System.out.println(evaluationInfo.toString());
 
     int f = evaluationInfo.computeWeightedFitness();
@@ -163,35 +166,37 @@ public static void main(String[] args)
     MarioAIOptions marioAIOptions = new MarioAIOptions(args);
 //    LearningAgent learningAgent = new MLPESLearningAgent(); // Learning track competition entry goes here
     LearningAgent learningAgent = (LearningAgent) marioAIOptions.getAgent();
+    System.out.println("main.learningAgent = " + learningAgent);
 
 //        Level 0
-    marioAIOptions.setArgs("-lf on -lg on");
+//    marioAIOptions.setArgs("-lf on -lg on");
     float finalScore = LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
 
 //        Level 1
-    marioAIOptions = new MarioAIOptions(args);
-    marioAIOptions.setArgs("-lco off -lb on -le off -lhb off -lg on -ltb on -lhs off -lca on -lde on -ld 5 -ls 133829");
-    finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
+//    marioAIOptions = new MarioAIOptions(args);
+//    marioAIOptions.setAgent(learningAgent);
+//    marioAIOptions.setArgs("-lco off -lb on -le off -lhb off -lg on -ltb on -lhs off -lca on -lde on -ld 5 -ls 133829");
+//    finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
 
 //        Level 2
-    marioAIOptions = new MarioAIOptions(args);
-    marioAIOptions.setArgs("-lde on -i on -ld 30 -ls 133434");
-    finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
-
-//        Level 3
-    marioAIOptions = new MarioAIOptions(args);
-    marioAIOptions.setArgs("-lde on -i on -ld 30 -ls 133434 -lhb on");
-    finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
-
-//        Level 4
-    marioAIOptions = new MarioAIOptions(args);
-    marioAIOptions.setArgs("-lla on -le off -lhs on -lde on -ld 5 -ls 1332656");
-    finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
-
-    // Level 5 (bonus level)
-    marioAIOptions = new MarioAIOptions(args);
-    marioAIOptions.setArgs("-le off -lhs on -lde on -ld 5 -ls 1332656");
-    finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
+//    marioAIOptions = new MarioAIOptions(args);
+//    marioAIOptions.setArgs("-lde on -i on -ld 30 -ls 133434");
+//    finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
+//
+////        Level 3
+//    marioAIOptions = new MarioAIOptions(args);
+//    marioAIOptions.setArgs("-lde on -i on -ld 30 -ls 133434 -lhb on");
+//    finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
+//
+////        Level 4
+//    marioAIOptions = new MarioAIOptions(args);
+//    marioAIOptions.setArgs("-lla on -le off -lhs on -lde on -ld 5 -ls 1332656");
+//    finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
+//
+//    // Level 5 (bonus level)
+//    marioAIOptions = new MarioAIOptions(args);
+//    marioAIOptions.setArgs("-le off -lhs on -lde on -ld 5 -ls 1332656");
+//    finalScore += LearningTrack.evaluateSubmission(marioAIOptions, learningAgent);
 
     System.out.println("finalScore = " + finalScore);
     System.exit(0);
