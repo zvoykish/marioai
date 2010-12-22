@@ -4,14 +4,14 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Mario AI nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
+ *  Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *  Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ *  Neither the name of the Mario AI nor the
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -59,7 +59,7 @@ public void setUp()
 @AfterTest
 public void tearDown()
 {
-	MarioEnvironment.getInstance().setReplayer(null);
+    MarioEnvironment.getInstance().setReplayer(null);
 }
 
 @Test
@@ -298,6 +298,7 @@ public void testRecordingFitness()
     replayTask.startReplay();
     System.out.println(replayTask.getEnvironment().getEvaluationInfoAsString());
     float replayFitness = replayTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
+    assertEquals(originalFitness, replayFitness);
 }
 
 @Test
@@ -336,8 +337,7 @@ public void testLazyRecordingCreation()
     try
     {
         FileInputStream in = new FileInputStream(filename);
-    }
-    catch (FileNotFoundException ex)
+    } catch (FileNotFoundException ex)
     {
         fail("Recorder File Not Found");
     }
@@ -363,8 +363,7 @@ public void testLazyRecordingFitness()
         System.out.println(replayTask.getEnvironment().getEvaluationInfoAsString());
         float replayFitness = replayTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
         assertEquals(originalFitness, replayFitness);
-    }
-    catch (Exception ex)
+    } catch (Exception ex)
     {
         fail("Exception during test");
     }
@@ -394,8 +393,7 @@ public void testMultipleLazyRecordings()
         float replayFitness = replayTask.getEnvironment().getEvaluationInfo().computeWeightedFitness();
         assertEquals(originalFitness, replayFitness);
 
-    }
-    catch (Exception ex)
+    } catch (Exception ex)
     {
         fail("Exception during test");
     }
