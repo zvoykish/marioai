@@ -53,8 +53,8 @@ private MediumSRNAgent agent;
 Agent bestAgent;
 private int bestScore = 5;
 ES es;
-int populationSize = 100;
-int generations = 5000;
+int populationSize = 10;
+int generations = 50;
 long evaluationQuota; //common number of trials
 long currentEvaluation; // number of exhausted trials
 private String name = getClass().getSimpleName();
