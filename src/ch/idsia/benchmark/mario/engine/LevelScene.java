@@ -591,6 +591,7 @@ public void reset(MarioAIOptions marioAIOptions)
 
     mario = new Mario(this);
     //System.out.println("mario = " + mario);
+    memo = "";
 
     sprites.add(mario);
     startTime = 1;

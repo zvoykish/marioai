@@ -151,6 +151,7 @@ public void printStatistics()
 
 public EvaluationInfo getEvaluationInfo()
 {
+//    System.out.println("evaluationInfo = " + evaluationInfo);
     return evaluationInfo;
 }
 

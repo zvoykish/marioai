@@ -91,6 +91,7 @@ public static void resetStatic(MarioAIOptions marioAIOptions)
     hiddenBlocksFound = 0;
     mushroomsDevoured = 0;
     flowersDevoured = 0;
+    collisionsWithCreatures = 0;
 
     isMarioInvulnerable = marioAIOptions.isMarioInvulnerable();
     marioGravity = marioAIOptions.getMarioGravity();
