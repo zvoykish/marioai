@@ -4,7 +4,7 @@
 # AmiCoPyJava build script. Works for both Mac OS X and Linux operating systems.
 # If you have a problem while compiling, please contact us to solve your problem.
 #
-# All usage options will be desctibed in documentation soon.
+# All usage options will be described in documentation soon.
 #
 # Author: Nikolay Sohryakov, nikolay.sohryakov@gmail.com
 #
