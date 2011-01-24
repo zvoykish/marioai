@@ -66,7 +66,7 @@ static jmethodID midPerformAction;
 //static jmethodID midGetReceptiveFieldHeight;
 //static jmethodID midGetMarioReceptiveFieldCenter;
 
-void initMarioAIBenchmark();
+_AMICOPYJAVA_API void initMarioAIBenchmark();
 /*
  *
  */
@@ -91,7 +91,7 @@ void destroyVM();
  @param nOptions Number of startup options.
  @param ... variable list of @c JVM startup options given as strings(i.e. each parameter is a separate startup option).
  */
-void amicoInitialize(int nOptions, ...)
+_AMICOPYJAVA_API void amicoInitialize(int nOptions, ...)
 {
     if (env != NULL)
     {
@@ -103,7 +103,7 @@ void amicoInitialize(int nOptions, ...)
 
     JavaVMInitArgs vm_args;
     vm_args.nOptions = nOptions;
-    JavaVMOption options[nOptions];
+    JavaVMOption* options = new JavaVMOption[nOptions];
 
     if (nOptions > 0)
     {
@@ -168,7 +168,7 @@ jmethodID getMethodIDSafe(const char* methodName, const char* methodSig)
 
  If they were errors they will be printed to the standard error output.
  */
-void destroyEnvironment()
+_AMICOPYJAVA_API void destroyEnvironment()
 {
     //std::cout <<std::endl << "Destroying JVM!" << std::endl;
     if (arraysSize != NULL)
@@ -197,7 +197,7 @@ void destroyVM() {
     exit(-1);
 }
 
-void createMarioEnvironment(const char* javaClassName)
+_AMICOPYJAVA_API void createMarioEnvironment(const char* javaClassName)
 {
     std::cout << "AmiCo: Search for class: " << javaClassName;
     jClass = (env)->FindClass(javaClassName);
@@ -232,7 +232,7 @@ void createMarioEnvironment(const char* javaClassName)
     initMarioAIBenchmark();
 }
 
-void initMarioAIBenchmark()
+_AMICOPYJAVA_API void initMarioAIBenchmark()
 {
     midReset = getMethodIDSafe("reset", "(Ljava/lang/String;)V");
     midIsLevelFinished = getMethodIDSafe("isLevelFinished", "()Z");
@@ -306,7 +306,7 @@ jobject safeCallObjectMethod(jmethodID mid, int arg)
     }
 }
 
-void reset(char* setUpOptions)
+_AMICOPYJAVA_API void reset(char* setUpOptions)
 {
     jobject setUpOptionsjobject = (env)->NewStringUTF(setUpOptions);//<char*, jobjectArray, jobject>(env, setUpOptions, 'L', size);
     (env)->CallVoidMethod(obj, midReset, setUpOptionsjobject);
@@ -314,17 +314,17 @@ void reset(char* setUpOptions)
     env->DeleteLocalRef(setUpOptionsjobject);
 }
 
-bool isLevelFinished()
+_AMICOPYJAVA_API bool isLevelFinished()
 {
     return (env)->CallBooleanMethod(obj, midIsLevelFinished);
 }
 
-void tick()
+_AMICOPYJAVA_API void tick()
 {
     (env)->CallVoidMethod(obj, midTick);
 }
 
-PyObject* getEvaluationInfo()
+_AMICOPYJAVA_API PyObject* getEvaluationInfo()
 {
     jintArray a = (jintArray) (env)->CallObjectMethod(obj, midGetEvaluationInfo);
     PyObject* p = convertJavaArrayToPythonArray<jintArray, jint> (env, a, 'I');
@@ -332,12 +332,12 @@ PyObject* getEvaluationInfo()
     return p ;
 }
 
-PyObject* buildPythonTuple(JNIEnv* env,
-                           jintArray serializedLevelScene,
-                           jintArray serializedEnemies,
-                           jfloatArray marioPos,
-                           jfloatArray enemiesPos,
-                           jintArray marioState)
+_AMICOPYJAVA_API PyObject* buildPythonTuple(JNIEnv* env,
+										    jintArray serializedLevelScene,
+									 	    jintArray serializedEnemies,
+									   	    jfloatArray marioPos,
+										    jfloatArray enemiesPos,
+										    jintArray marioState)
 {
     PyObject* items = PyTuple_New(5);
     PyObject* o = convertJavaArrayToPythonArray<jintArray, jint>(env, serializedLevelScene, 'I');
@@ -354,7 +354,7 @@ PyObject* buildPythonTuple(JNIEnv* env,
     return items;
 }
 
-PyObject* getEntireObservation(int zLevelScene, int zLevelEnemies)
+_AMICOPYJAVA_API PyObject* getEntireObservation(int zLevelScene, int zLevelEnemies)
 {
     PyObject* pyTuple = 0;
 
@@ -380,7 +380,7 @@ PyObject* getEntireObservation(int zLevelScene, int zLevelEnemies)
     return pyTuple;
 }
 
-void performAction(int* action)
+_AMICOPYJAVA_API void performAction(int* action)
 {
     jbooleanArray a = convertPythonArrayToJavaArray<int, jbooleanArray, jboolean>(env, action, 'I', numberOfButtons);
     (env)->CallVoidMethod(obj, midPerformAction, a);

@@ -12,31 +12,37 @@
 #ifndef _PYTHONCALLSJAVA_H
 #define	_PYTHONCALLSJAVA_H
 
+#ifdef _WIN32
+#define _AMICOPYJAVA_API __declspec(dllexport)
+#else
+#define _AMICOPYJAVA_API
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void amicoInitialize(int nOptions = 0, ...);
-void destroyEnvironment();
+_AMICOPYJAVA_API void amicoInitialize(int nOptions = 0, ...);
+_AMICOPYJAVA_API void destroyEnvironment();
 
 /*
  * Mario AI Specific methods:
  */
-void initMarioAIBenchmark();
-void createMarioEnvironment(const char* javaClassName);
-void reset(char* setUpOptions);
-bool isLevelFinished();
-void tick();
-PyObject* getEvaluationInfo() ;
-PyObject* buildPythonTuple(JNIEnv* env,
-                           jintArray serializedLevelScene,
-                           jintArray serializedEnemies,
-                           jfloatArray marioPos,
-                           jfloatArray enemiesPos,
-                           jintArray marioState);
-PyObject* getEntireObservation(int zLevelScene, int zLevelEnemies);
-void performAction(int* action);
-PyObject* getReceptiveFieldInfo();
+_AMICOPYJAVA_API void initMarioAIBenchmark();
+_AMICOPYJAVA_API void createMarioEnvironment(const char* javaClassName);
+_AMICOPYJAVA_API void reset(char* setUpOptions);
+_AMICOPYJAVA_API bool isLevelFinished();
+_AMICOPYJAVA_API void tick();
+_AMICOPYJAVA_API PyObject* getEvaluationInfo() ;
+_AMICOPYJAVA_API PyObject* buildPythonTuple(JNIEnv* env,
+											jintArray serializedLevelScene,
+											jintArray serializedEnemies,
+										    jfloatArray marioPos,
+										    jfloatArray enemiesPos,
+										    jintArray marioState);
+_AMICOPYJAVA_API PyObject* getEntireObservation(int zLevelScene, int zLevelEnemies);
+_AMICOPYJAVA_API void performAction(int* action);
+//_AMICOPYJAVA_API PyObject* getReceptiveFieldInfo();
 /*
  *
  */
