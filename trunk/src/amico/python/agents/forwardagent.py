@@ -44,18 +44,19 @@ class ForwardAgent(MarioAgent):
         self.action = [0, 0, 0, 0, 0, 0]
         self.action[1] = 1
         self.actionStr = ""
+        self.agentName = "Python Forward Agent"
 
     def getReceptiveFieldCellValue(self, x, y):
-	if (x < 0 or x >= self.marioEgoRow or y < 0 or y >= self.marioEgoCol):
+        if (x < 0 or x >= self.marioEgoRow or y < 0 or y >= self.marioEgoCol):
             return 0
         return self.levelScene[x][y]
         
     def setObservationDetails(self, rfWidth, rfHeight, egoRow, egoCol):
-	self.receptiveFieldWidth = rfWidth
-	self.receptiveFieldHeight = rfHeight
-	self.marioEgoRow = egoRow;
-	self.marioEgoCol = egoCol;
-	print self.receptiveFieldWidth, self.receptiveFieldHeight, self.marioEgoRow, self.marioEgoCol
+        self.receptiveFieldWidth = rfWidth
+        self.receptiveFieldHeight = rfHeight
+        self.marioEgoRow = egoRow;
+        self.marioEgoCol = egoCol;
+        print self.receptiveFieldWidth, self.receptiveFieldHeight, self.marioEgoRow, self.marioEgoCol
         
     def _dangerOfGap(self):
         fromX = self.marioEgoRow
@@ -79,7 +80,7 @@ class ForwardAgent(MarioAgent):
         return False
 
     def giveIntermediateReward(self, reward):
-	pass
+        pass
 
     def _a2(self):
         """ Interesting, sometimes very useful behaviour which might prevent falling down into a gap!
@@ -164,7 +165,7 @@ class ForwardAgent(MarioAgent):
         return tuple(self.action)
 
     def getName(self):
-	return self.agentName
+        return self.agentName
 
     def integrateObservation(self, squashedObservation, squashedEnemies, marioPos, enemiesPos, marioState):
         """This method stores the observation inside the agent"""
@@ -180,10 +181,10 @@ class ForwardAgent(MarioAgent):
         enemiesObservation=[]
         
         for i in range(row):
-	  levelScene.append(squashedObservation[i*col:i*col+col])
+            levelScene.append(squashedObservation[i*col:i*col+col])
 	    
         for i in range(row):
-	  enemiesObservation.append(squashedEnemies[i*col:i*col+col])
+            enemiesObservation.append(squashedEnemies[i*col:i*col+col])
         
         self.marioFloats = marioPos
         self.enemiesFloats = enemiesPos

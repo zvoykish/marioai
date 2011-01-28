@@ -29,7 +29,7 @@ if [ "$#" -gt 0 ]; then
             OUT_DIR="$1" ;;
             "-o") shift;
             CMD_LINE_OPTIONS="$1" ;;
-            "-ag") shift;
+            "-agent") shift;
             AGENT="$1" ;;
             *) echo "Usage: [-ch path_to_ch_directory] [-out path_to_output_directory]";
             exit 1 ;;

@@ -15,10 +15,10 @@
 #include "arrayutils.h"
 #include <iostream>
 
-static std::string AMICO_WARNING = "[AmiCo Warning] : ";
-static std::string AMICO_ERROR = "[AmiCo Error] : ";
-static std::string AMICO_INFO = "[AmiCo Info] : ";
-static std::string AMICO_EXCEPTION = "[AmiCo Exception] : ";
+static const char * AMICO_WARNING = "[AmiCo Warning] : ";
+static const char * AMICO_ERROR = "[AmiCo Error] : ";
+static const char * AMICO_INFO = "[AmiCo Info] : ";
+static const char * AMICO_EXCEPTION = "[AmiCo Exception] : ";
 
 static int ERROR_PYTHON_IS_NOT_INITIALIZED = -1;
 static int ERROR_CLASS_NOT_FOUND = -2;

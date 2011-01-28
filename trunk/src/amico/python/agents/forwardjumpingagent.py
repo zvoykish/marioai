@@ -19,17 +19,21 @@ class ForwardJumpingAgent(MarioAgent):
     enemiesFloats = None
     isEpisodeOver = False
     marioState = None
+    
+    def getName(self):
+        return self.agentName
 
     def reset(self):
-	self.action = [0, 0, 0, 0, 0, 0]
-	self.action[1] = 1
-	self.action[self.KEY_SPEED] = 1
+        self.action = [0, 0, 0, 0, 0, 0]
+        self.action[1] = 1
+        self.action[self.KEY_SPEED] = 1
         self.isEpisodeOver = False
         
     def __init__(self):
         """Constructor"""
         self.reset()
         self.actionStr = ""
+        self.agentName = "Python Forward Jumping Agent"
         
     def getAction(self):
         """ Possible analysis of current observation and sending an action back
