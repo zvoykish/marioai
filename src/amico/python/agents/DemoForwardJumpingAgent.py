@@ -3,6 +3,7 @@ __author__ = "Sergey Karakovskiy, sergey at idsia fullstop ch"
 __date__ = "$${date} ${time}$"
 
 import sys
+import os
 
 import ctypes
 from ctypes import *
@@ -87,7 +88,7 @@ def amiCoSimulator():
         print libamico
     
     javaClass = "ch/idsia/benchmark/mario/environments/MarioEnvironment"
-    libamico.amicoInitialize(1, "-Djava.class.path=.:jdom.jar")
+    libamico.amicoInitialize(1, "-Djava.class.path=." + os.pathsep + ":jdom.jar")
     libamico.createMarioEnvironment(javaClass)
     
     reset = cfunc('reset', libamico, None, ('list', ListPOINTER(c_int), 1))
@@ -98,7 +99,11 @@ def amiCoSimulator():
     getEvaluationInfo = cfunc('getEvaluationInfo', libamico, py_object)
     
     agent = ForwardJumpingAgent()
-    options = sys.argv[1]
+	
+    options = ""
+    if len(sys.argv) > 1:
+        options = sys.argv[1]
+	
     k = 1
     seed = 0
     print "Py: ======Evaluation STARTED======"
