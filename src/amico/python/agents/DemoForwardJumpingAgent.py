@@ -70,11 +70,11 @@ def amiCoSimulator():
     print "library found: "
     print "Platform: ", sys.platform
     if (sys.platform == 'linux2'):
-	##########################################
-	# find_library on Linux could only be used if your libAmiCoPyJava.so is
-	# on system search path or path to the library is added in to LD_LIBRARY_PATH
-	#
-	# name =  'AmiCoPyJava'
+        ##########################################
+        # find_library on Linux could only be used if your libAmiCoPyJava.so is
+        # on system search path or path to the library is added in to LD_LIBRARY_PATH
+        #
+        # name =  'AmiCoPyJava'
         # loadName = find_library(name)
         ##########################################
         loadName = './libAmiCoPyJava.so'
@@ -99,18 +99,21 @@ def amiCoSimulator():
     getEvaluationInfo = cfunc('getEvaluationInfo', libamico, py_object)
     
     agent = ForwardJumpingAgent()
-	
+
     options = ""
     if len(sys.argv) > 1:
         options = sys.argv[1]
-	
+
+    if options.startswith('"') and options.endswith('"'):
+        options = options[1:-1]
+
     k = 1
     seed = 0
     print "Py: ======Evaluation STARTED======"
     totalIterations = 0
     for i in range(k, k+10000):
-	options1 = options + " -ls " + str(seed)
-	print "options: ", options1
+        options1 = options + " -ls " + str(seed)
+        print "options: ", options1
         reset(options1)
         while (not libamico.isLevelFinished()):
             totalIterations +=1 

@@ -1,5 +1,5 @@
 @ECHO OFF
-:: AmiCoPyJava example run script.
+:: AmiCoJavaPy example run script.
 :: If you have a problem while compiling, please contact us to solve your problem.
 ::
 :: All usage options will be described in documentation soon.
@@ -8,10 +8,10 @@
 
 set MARIO_DIR=..\..\..\..\bin\MarioAI
 set CMD_LINE_OPTIONS=
-set AGENT=DemoForwardJumpingAgent.py
+set AGENT=forwardjumpingagent.ForwardJumpingAgent.py
 set COMPILE_LIBRARY="true"
 
-set B_DIR=..\..\..\..\bin\AmiCoBuild\PyJava
+set B_DIR=..\..\..\..\bin\AmiCoBuild\JavaPy
 
 :Loop
 if "%1"=="" goto :Continue
@@ -29,12 +29,7 @@ goto :next
 
 :-o
 shift
-set CMD_LINE_OPTIONS="%1"
-goto :next
-
-:-agent
-shift
-set AGENT=%1
+set CMD_LINE_OPTIONS=%1
 goto :next
 	
 :next
@@ -69,10 +64,18 @@ echo.
 echo Copying MarioAI Benchmark files...
 echo.
 
-xcopy /E /Y /I "%~dp0%MARIO_DIR%\ch" "%~dp0%B_DIR%\ch"
+::xcopy /E /Y /I "%~dp0%MARIO_DIR%\ch" "%~dp0%B_DIR%\ch"
 
 cd "%~dp0%B_DIR%"
 
-python %AGENT% "%CMD_LINE_OPTIONS%"
+set CMD_LINE_OPTIONS=%CMD_LINE_OPTIONS:~1,-1%
+if "%CMD_LINE_OPTIONS%"=="~1,-1" set CMD_LINE_OPTIONS=
+
+if "%CMD_LINE_OPTIONS%"=="" (
+    java ch.idsia.scenarios.Main -ag %AGENT%
+) else (
+    echo %CMD_LINE_OPTIONS%
+    java ch.idsia.scenarios.Main %CMD_LINE_OPTIONS%
+)
 
 cd %~dp0
