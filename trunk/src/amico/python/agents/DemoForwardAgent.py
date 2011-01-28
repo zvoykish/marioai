@@ -3,6 +3,7 @@ __author__ = "Sergey Karakovskiy, sergey at idsia fullstop ch"
 __date__ = "$${date} ${time}$"
 
 import sys
+import os
 
 import ctypes
 from ctypes import *
@@ -86,7 +87,7 @@ def amiCoSimulator():
         print libamico
     
     javaClass = "ch/idsia/benchmark/mario/environments/MarioEnvironment"
-    libamico.amicoInitialize(1, "-Djava.class.path=.:../lib/jdom.jar")
+    libamico.amicoInitialize(1, "-Djava.class.path=." + os.pathsep +":../lib/jdom.jar")
     libamico.createMarioEnvironment(javaClass)
     
     reset = cfunc('reset', libamico, None, ('list', ListPOINTER(c_int), 1))
@@ -98,7 +99,11 @@ def amiCoSimulator():
     #getReceptiveFieldInfo = cfunc('getReceptiveFieldInfo', libamico, py_object)
     
     agent = ForwardAgent()
-    options = sys.argv[1] #"-rfw 19 -rfh 19 -ltb on -le gw -ld 5 -lf on -ls 33 -lg off -lc off -gv on -mm 0"
+	
+    options = ""
+    if len(sys.argv) > 1:
+        options = sys.argv[1]
+	
     print "options: ", options
     k = 1
     seed = 0

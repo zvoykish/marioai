@@ -6,17 +6,18 @@
 ::
 :: Author: Nikolay Sohryakov, nikolay.sohryakov@gmail.com
 
-set MARIO_DIR="..\..\..\..\bin"
+set MARIO_DIR=..\..\..\..\bin\MarioAI
 set OUT_DIR="..\..\..\..\bin"
 set BUILD_DIR="AmiCoBuild\PyJava"
-set MAKE_OUT_DIR=".\build"
 set CMD_LINE_OPTIONS=
 set AGENT=
 set LIBRARY_FILE_NAME=
 set COMPILE_LIBRARY="true"
 
+set B_DIR=..\..\..\..\bin\AmiCoBuild\PyJava
+
 :Loop
-IF "%1"=="" goto :Continue
+if "%1"=="" goto :Continue
 
 goto :%~1
 
@@ -53,3 +54,40 @@ goto :next
 shift
 goto Loop
 :Continue
+
+if %COMPILE_LIBRARY% == "true" (
+    if not exist "%~dp0make.cmd" (
+        echo.
+        echo Compile script not found. Exiting...
+        echo.
+        goto :eof
+    )
+    echo here
+    call "%~dp0make.cmd"
+    echo here
+)
+
+if not exist "%~dp0%B_DIR%" (
+    echo.
+    echo Executable file of the library not found in the path %~dp0%B_DIR%. Terminating...
+    echo.
+    goto :eof
+)
+
+echo.
+echo Copying agents...
+echo.
+
+copy /Y "..\agents\*.py" "%~dp0%B_DIR%"
+
+echo.
+echo Copying MarioAI Benchmark files...
+echo.
+
+xcopy /E /Y /I "%~dp0%MARIO_DIR%\ch" "%~dp0%B_DIR%\ch"
+
+cd "%~dp0%B_DIR%"
+
+python DemoForwardJumpingAgent.py
+
+cd %~dp0

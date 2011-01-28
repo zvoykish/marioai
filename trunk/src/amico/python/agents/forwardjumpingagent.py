@@ -12,7 +12,7 @@ class ForwardJumpingAgent(MarioAgent):
     actionStr = None
     KEY_JUMP = 3
     KEY_SPEED = 4
-    levelScene = None
+    #levelScene = None
     mayMarioJump = None
     isMarioOnGround = None
     marioFloats = None
@@ -62,6 +62,6 @@ class ForwardJumpingAgent(MarioAgent):
         self.enemiesFloats = enemiesPos
         self.mayMarioJump = marioState[3]
         self.isMarioOnGround = marioState[2]
-        self.levelScene = levelScene
+        #self.levelScene = levelScene
         self.marioState = marioState[1]
         #self.printLevelScene()
