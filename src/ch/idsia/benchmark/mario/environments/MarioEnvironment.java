@@ -199,6 +199,7 @@ public void reset(MarioAIOptions setUpOptions)
             e.printStackTrace();
         }
     }
+    evaluationInfo.reset();
 }
 
 public void tick()
