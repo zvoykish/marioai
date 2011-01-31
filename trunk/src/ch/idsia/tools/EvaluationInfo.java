@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 
+import java.lang.System;
 
 /**
  * Created by IntelliJ IDEA.
@@ -89,6 +90,10 @@ private static MarioSystemOfValues marioSystemOfValues = new MarioSystemOfValues
 
 public int[][] marioTrace;
 public String marioTraceFileName;
+
+private long evaluationStarted = 0;
+private long evaluationFinished = 0;
+private long evaluationLasted = 0;
 
 public EvaluationInfo()
 {
@@ -157,6 +162,8 @@ public int[] toIntArray()
 
 public String toString()
 {
+    evaluationFinished = System.currentTimeMillis();
+    evaluationLasted = evaluationFinished - evaluationStarted;
     // store mario trace:
     try
     {
@@ -203,6 +210,7 @@ public String toString()
     }
 
     return "\n[MarioAI] ~ Evaluation Results for Task: " + taskName +
+            "\n        Evaluation lasted : " + Long.toString(evaluationLasted) + " ms" +
             "\n         Weighted Fitness : " + df.format(computeWeightedFitness()) +
             "\n             Mario Status : " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss...") +
             "\n               Mario Mode : " + Mario.MODES[marioMode] +
@@ -223,8 +231,12 @@ public String toString()
 
 public String toStringSingleLine()
 {
+    evaluationFinished = System.currentTimeMillis();
+    evaluationLasted = evaluationFinished - evaluationStarted;
+    
     return "\n[MarioAI] ~ Evaluation Results:" +
-            " Status: " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss") +
+            " Evaluation lasted: " + Long.toString(evaluationLasted) + " ms" +
+            "; Status: " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss") +
             "; Mode: " + Mario.MODES[marioMode] +
             " +  Passed (Cells, Phys): " + df.format((double) distancePassedCells) + ", " +
             df.format(distancePassedPhys) +
@@ -303,5 +315,10 @@ public EvaluationInfo clone()
 public String getTaskName()
 {
     return taskName;
+}
+
+public void reset()
+{
+    evaluationStarted = System.currentTimeMillis();
 }
 }

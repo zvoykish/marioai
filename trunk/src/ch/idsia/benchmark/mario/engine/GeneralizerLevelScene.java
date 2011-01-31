@@ -49,7 +49,7 @@ public static final int BORDER_HILL = -62;
 public static final int FLOWER_POT_OR_CANNON = -85;
 public static final int LADDER = 61;
 public static final int TOP_OF_LADDER = 61;
-public static final int PRINCESS = -1;
+public static final int PRINCESS = 5;
 
 public static byte ZLevelGeneralization(byte el, int ZLevel)
 {
