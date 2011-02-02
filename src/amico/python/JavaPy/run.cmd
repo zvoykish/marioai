@@ -44,7 +44,8 @@ if %COMPILE_LIBRARY% == "true" (
         echo.
         goto :eof
     )
-    call "%~dp0make.cmd"
+    ::call "%~dp0make.cmd"
+    nmake /F Makefile.Win
 )
 
 if not exist "%~dp0%B_DIR%" (
