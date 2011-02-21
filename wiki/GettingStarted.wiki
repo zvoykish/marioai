@@ -13,6 +13,7 @@ Look for the specific project files in trunk. Project files for IntelliJ IDEA, E
 Or you might also checkout from SVN using the above mentioned IDEs. Use SVN version 1.6 everywhere.
 
  == * *IntelliJ IDEA* ==
+  # Version Control
   # Checkout from Version Control.
   # Subversion. 
   # http://marioai.googlecode.com/svn/trunk/ or http://marioai.googlecode.com/svn/ if you would like to checkout the entire project with branches, documentation and target folder, etc.
