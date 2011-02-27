@@ -69,3 +69,9 @@ class ForwardJumpingAgent(MarioAgent):
         #self.levelScene = levelScene
         self.marioState = marioState[1]
         #self.printLevelScene()
+
+    def setObservationDetails(self, rfWidth, rfHeight, egoRow, egoCol):
+        self.receptiveFieldWidth = rfWidth
+        self.receptiveFieldHeight = rfHeight
+        self.marioEgoRow = egoRow;
+        self.marioEgoCol = egoCol;

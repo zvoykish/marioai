@@ -468,6 +468,11 @@ public int getMarioStatus()
     return levelScene.getMarioStatus();
 }
 
+public int[] getObservationDetails()
+{
+    return new int[]{receptiveFieldWidth, receptiveFieldHeight, marioEgoPos[0], marioEgoPos[1]};
+}
+
 public List<Sprite> getSprites()
 {
     return sprites;

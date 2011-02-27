@@ -41,6 +41,7 @@ _AMICOPYJAVA_API PyObject* buildPythonTuple(JNIEnv* env,
 										    jfloatArray enemiesPos,
 										    jintArray marioState);
 _AMICOPYJAVA_API PyObject* getEntireObservation(int zLevelScene, int zLevelEnemies);
+_AMICOPYJAVA_API PyObject* getObservationDetails();
 _AMICOPYJAVA_API void performAction(int* action);
 //_AMICOPYJAVA_API PyObject* getReceptiveFieldInfo();
 /*

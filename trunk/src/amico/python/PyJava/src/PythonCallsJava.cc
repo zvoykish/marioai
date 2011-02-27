@@ -62,6 +62,7 @@ static jmethodID midGetMarioFloatPos;
 static jmethodID midGetEnemiesFloatPos;
 static jmethodID midGetMarioState;
 static jmethodID midPerformAction;
+static jmethodID midGetObservationDetails;
 //static jmethodID midGetReceptiveFieldWidth;
 //static jmethodID midGetReceptiveFieldHeight;
 //static jmethodID midGetMarioReceptiveFieldCenter;
@@ -244,6 +245,7 @@ _AMICOPYJAVA_API void initMarioAIBenchmark()
     midGetEnemiesFloatPos = getMethodIDSafe("getEnemiesFloatPos", "()[F");
     midGetMarioState = getMethodIDSafe("getMarioState", "()[I");
     midPerformAction = getMethodIDSafe("performAction", "([Z)V");
+	midGetObservationDetails = getMethodIDSafe("getObservationDetails", "()[I");
     //midGetReceptiveFieldWidth = getMethodIDSafe("getReceptiveFieldWidth", "()I");
     //midGetReceptiveFieldHeight = getMethodIDSafe("getReceptiveFieldHeight", "()I");
     //midGetMarioReceptiveFieldCenter = getMethodIDSafe("getMarioReceptiveFieldCenter", "()[I");
@@ -378,6 +380,19 @@ _AMICOPYJAVA_API PyObject* getEntireObservation(int zLevelScene, int zLevelEnemi
     env->DeleteLocalRef(marioState);
     
     return pyTuple;
+}
+
+_AMICOPYJAVA_API PyObject* getObservationDetails()
+{
+	PyObject* pyTuple = 0;
+	
+	jintArray obsDetails = (jintArray)safeCallObjectMethod(midGetObservationDetails, 0);
+	
+	pyTuple = convertJavaArrayToPythonArray<jintArray, jint>(env, obsDetails, 'I');
+	
+	env->DeleteLocalRef(obsDetails);
+	
+	return pyTuple;
 }
 
 _AMICOPYJAVA_API void performAction(int* action)

@@ -96,24 +96,25 @@ def amiCoSimulator():
                                  ('zEnemies', c_int, 1))
     performAction = cfunc('performAction', libamico, None, ('list', ListPOINTER(c_int), 1))
     getEvaluationInfo = cfunc('getEvaluationInfo', libamico, py_object)
-    #getReceptiveFieldInfo = cfunc('getReceptiveFieldInfo', libamico, py_object)
+    getObservationDetails = cfunc('getObservationDetails', libamico, py_object)
     
     agent = ForwardAgent()
-	
+
     options = ""
     if len(sys.argv) > 1:
         options = sys.argv[1]
-	
+
     print "options: ", options
     k = 1
     seed = 0
     print "Py: ======Evaluation STARTED======"
     totalIterations = 0
     for i in range(k, k+10000):
-	options1 = options + " -ls " + str(seed)
-	print "options: ", options1
+    options1 = options + " -ls " + str(seed)
+    print "options: ", options1
         reset(options1)
-        #agent.setReceptiveFieldInfo(getReceptiveFieldInfo())
+        obsDetails = getObservationDetails()
+        agent.setObservationDetails(obsDetails[0], obsDetails[1], obsDetails[2], obsDetails[3])
         while (not libamico.isLevelFinished()):
             totalIterations +=1 
             libamico.tick();
