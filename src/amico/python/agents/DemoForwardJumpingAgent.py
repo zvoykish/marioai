@@ -97,6 +97,7 @@ def amiCoSimulator():
                                  ('zEnemies', c_int, 1))
     performAction = cfunc('performAction', libamico, None, ('list', ListPOINTER(c_int), 1))
     getEvaluationInfo = cfunc('getEvaluationInfo', libamico, py_object)
+    getObservationDetails = cfunc('getObservationDetails', libamico, py_object)
     
     agent = ForwardJumpingAgent()
 
@@ -115,6 +116,8 @@ def amiCoSimulator():
         options1 = options + " -ls " + str(seed)
         print "options: ", options1
         reset(options1)
+        obsDetails = getObservationDetails()
+        agent.setObservationDetails(obsDetails[0], obsDetails[1], obsDetails[2], obsDetails[3])
         while (not libamico.isLevelFinished()):
             totalIterations +=1 
             libamico.tick();

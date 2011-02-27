@@ -56,7 +56,6 @@ class ForwardAgent(MarioAgent):
         self.receptiveFieldHeight = rfHeight
         self.marioEgoRow = egoRow;
         self.marioEgoCol = egoCol;
-        print self.receptiveFieldWidth, self.receptiveFieldHeight, self.marioEgoRow, self.marioEgoCol
         
     def _dangerOfGap(self):
         fromX = self.marioEgoRow
