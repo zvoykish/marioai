@@ -478,11 +478,17 @@ public List<Sprite> getSprites()
     return sprites;
 }
 
-public float[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies)
+public int[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies)
 {
-    // TODO:TASK:[M], serialize all data to a sole double[]
-    assert false;
-    return new float[0];
+    int[] obs = new int[receptiveFieldHeight*receptiveFieldWidth*2 + 11]; // 11 is a size of the MarioState array
+
+    int receptiveFieldSize = receptiveFieldWidth*receptiveFieldHeight;
+
+    System.arraycopy(getSerializedLevelSceneObservationZ(ZLevelScene), 0, obs, 0, receptiveFieldSize);
+    System.arraycopy(getSerializedEnemiesObservationZ(ZLevelScene), 0, obs, receptiveFieldSize, receptiveFieldSize);
+    System.arraycopy(getMarioState(), 0, obs, receptiveFieldSize * 2, 11);
+
+    return obs;
 }
 
 public int[] getSerializedLevelSceneObservationZ(int ZLevelScene)

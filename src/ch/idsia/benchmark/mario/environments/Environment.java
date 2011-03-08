@@ -96,7 +96,7 @@ public byte[][] getEnemiesObservationZ(int ZLevelEnemies);
 
 // OBSERVATION FOR AmiCo Agents
 
-public float[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies);
+public int[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies);
 
 /**
  * Serializes the LevelScene observation from 22x22 byte array to a 1x484 byte array

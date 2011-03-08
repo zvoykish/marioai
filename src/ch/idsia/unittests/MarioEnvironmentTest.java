@@ -171,6 +171,34 @@ public void testGetMarioStatus() throws Exception
 @Test
 public void testGetSerializedFullObservationZZ() throws Exception
 {
+    MarioAIOptions marioAIOptions = new MarioAIOptions("-vis off -rfw 5 -rfh 7");
+    MarioEnvironment env = MarioEnvironment.getInstance();
+
+    assertNotNull(env);
+
+    env.reset(marioAIOptions);
+
+    int obsSize = env.getReceptiveFieldHeight()*env.getReceptiveFieldWidth();
+
+    int[] fullObs = env.getSerializedFullObservationZZ(1, 1);
+    int[] levelScene = new int[obsSize];
+    int[] enemies = new int[obsSize];
+    int[] marioState = new int[11]; // 11 is a size of the array
+
+    System.arraycopy(fullObs, 0, levelScene, 0, obsSize);
+    System.arraycopy(fullObs, obsSize, enemies, 0, obsSize);
+    System.arraycopy(fullObs, obsSize*2, marioState, 0, 11);
+
+    int[] levelSceneOrig = env.getSerializedLevelSceneObservationZ(1);
+    int[] enemiesOrig = env.getSerializedEnemiesObservationZ(1);
+    int[] marioStateOrig = env.getMarioState();
+
+    for (int i = 0; i < levelScene.length; i++)
+        assertEquals(levelScene[i], levelSceneOrig[i]);
+    for (int i = 0; i < enemies.length; i++)
+        assertEquals(enemies[i], enemiesOrig[i]);
+    for (int i = 0; i < marioState.length; i++)
+        assertEquals(marioState[i], marioStateOrig[i]);
 }
 
 @Test
