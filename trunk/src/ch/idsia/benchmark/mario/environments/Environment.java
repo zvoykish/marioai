@@ -130,7 +130,6 @@ public int getKillsByShell();
 
 int getMarioStatus();
 
-
 /**
  * @return int array filled with data about Mario :
  *         marioState[0] = this.getMarioStatus();

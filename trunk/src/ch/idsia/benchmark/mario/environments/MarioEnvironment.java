@@ -38,6 +38,7 @@ import ch.idsia.tools.MarioAIOptions;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,6 +80,8 @@ private static String marioTraceFile;
 private Recorder recorder;
 
 public static SystemOfValues IntermediateRewardsSystemOfValues = new SystemOfValues();
+
+DecimalFormat df = new DecimalFormat("######.#");
 
 public static MarioEnvironment getInstance()
 {
@@ -300,12 +303,12 @@ public byte[][] getMergedObservationZZ(int ZLevelScene, int ZLevelEnemies)
         if (sprite.isDead() || sprite.kind == levelScene.mario.kind)
             continue;
         if (sprite.mapX >= 0 &&
-            sprite.mapX >= levelScene.mario.mapX - mCol &&
-            sprite.mapX <= levelScene.mario.mapX + (receptiveFieldWidth - mCol - 1) &&
-            sprite.mapY >= 0 &&
-            sprite.mapY >= levelScene.mario.mapY - mRow &&
-            sprite.mapY <= levelScene.mario.mapY + (receptiveFieldHeight - mRow - 1) &&
-            sprite.kind != Sprite.KIND_PRINCESS)
+                sprite.mapX >= levelScene.mario.mapX - mCol &&
+                sprite.mapX <= levelScene.mario.mapX + (receptiveFieldWidth - mCol - 1) &&
+                sprite.mapY >= 0 &&
+                sprite.mapY >= levelScene.mario.mapY - mRow &&
+                sprite.mapY <= levelScene.mario.mapY + (receptiveFieldHeight - mRow - 1) &&
+                sprite.kind != Sprite.KIND_PRINCESS)
         {
             int row = sprite.mapY - levelScene.mario.mapY + mRow;
             int col = sprite.mapX - levelScene.mario.mapX + mCol;
@@ -327,7 +330,7 @@ public List<String> getObservationStrings(boolean Enemies, boolean LevelMap,
     {
         ret.add("Total levelScene length = " + levelScene.level.length);
         ret.add("Total levelScene height = " + levelScene.level.height);
-        ret.add("Physical Mario Position (x,y): (" + levelScene.mario.x + "," + levelScene.mario.y + ")");
+        ret.add("Physical Mario Position (x,y): (" + df.format(levelScene.mario.x) + "," + df.format(levelScene.mario.y) + ")");
         ret.add("Mario Observation (Receptive Field)   Width: " + receptiveFieldWidth + " Height: " + receptiveFieldHeight);
         ret.add("X Exit Position: " + levelScene.level.xExit);
         int MarioXInMap = (int) levelScene.mario.x / levelScene.cellSize; //TODO: !!H! doublcheck and replace with levelScene.mario.mapX
@@ -480,9 +483,9 @@ public List<Sprite> getSprites()
 
 public int[] getSerializedFullObservationZZ(int ZLevelScene, int ZLevelEnemies)
 {
-    int[] obs = new int[receptiveFieldHeight*receptiveFieldWidth*2 + 11]; // 11 is a size of the MarioState array
+    int[] obs = new int[receptiveFieldHeight * receptiveFieldWidth * 2 + 11]; // 11 is a size of the MarioState array
 
-    int receptiveFieldSize = receptiveFieldWidth*receptiveFieldHeight;
+    int receptiveFieldSize = receptiveFieldWidth * receptiveFieldHeight;
 
     System.arraycopy(getSerializedLevelSceneObservationZ(ZLevelScene), 0, obs, 0, receptiveFieldSize);
     System.arraycopy(getSerializedEnemiesObservationZ(ZLevelScene), 0, obs, receptiveFieldSize, receptiveFieldSize);
@@ -723,8 +726,7 @@ public void saveLastRun(String filename)
         try
         {
             recorder.saveLastRun(filename);
-        }
-        catch (IOException ex)
+        } catch (IOException ex)
         {
             System.err.println("[Mario AI EXCEPTION] : Recording could not be saved.");
             ex.printStackTrace();
