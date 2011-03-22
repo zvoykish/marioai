@@ -33,6 +33,9 @@ import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.benchmark.mario.environments.MarioEnvironment;
 import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.tools.MarioAIOptions;
+import ch.idsia.utils.statistics.StatisticalSummary;
+
+import java.util.Vector;
 
 /**
  * Created by IntelliJ IDEA.
@@ -49,6 +52,8 @@ protected MarioAIOptions options;
 private long COMPUTATION_TIME_BOUND = 42; // stands for prescribed  FPS 24.
 private String name = getClass().getSimpleName();
 private EvaluationInfo evaluationInfo;
+
+private Vector statistics = new Vector();
 
 public BasicTask(MarioAIOptions marioAIOptions)
 {
@@ -113,14 +118,24 @@ public void setOptionsAndReset(final String options)
 }
 
 public void doEpisodes(int amount, boolean verbose, final int repetitionsOfSingleEpisode)
-{
+{   for (int j = 0; j < EvaluationInfo.numberOfElements; j++)
+    {
+        statistics.addElement(new StatisticalSummary());
+    }
     for (int i = 0; i < amount; ++i)
     {
         this.reset();
         this.runSingleEpisode(repetitionsOfSingleEpisode);
         if (verbose)
             System.out.println(environment.getEvaluationInfoAsString());
+
+        for (int j = 0; j < EvaluationInfo.numberOfElements; j++)
+            {
+                ((StatisticalSummary) statistics.get(j)).add(environment.getEvaluationInfoAsInts()[j]);
+            }
     }
+
+    System.out.println(statistics.get(3).toString());
 }
 
 public boolean isFinished()

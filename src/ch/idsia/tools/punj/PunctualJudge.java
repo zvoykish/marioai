@@ -27,12 +27,7 @@
 
 package ch.idsia.tools.punj;
 
-import com.sun.tools.javac.jvm.ClassReader;
-
-import java.io.*;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.ListIterator;
+//import com.sun.tools.javac.jvm.ClassReader;
 
 /**
  * Created by IntelliJ IDEA.
@@ -42,32 +37,33 @@ import java.util.ListIterator;
  * Package: ch.idsia.tools.punj
  */
 public class PunctualJudge
-{
-private static int counter;
-protected Hashtable<String, Class> cache = new Hashtable<String, Class>();
+{}
+//{
+//private static int counter;
+//protected Hashtable<String, Class> cache = new Hashtable<String, Class>();
 
-public static void main(String[] args) throws IllegalAccessException, InstantiationException
-{
-    System.out.println("PunJ-0.0.1");
-    PunctualJudge punctualJudge = new PunctualJudge();
+//public static void main(String[] args) throws IllegalAccessException, InstantiationException
+//{
+//    System.out.println("PunJ-0.0.1");
+//    PunctualJudge punctualJudge = new PunctualJudge();
     // Before Instrumentation
-    final String classFileName = /*args[0];*/ "bin/ch/idsia/punj/DemoClass.class";
-    try
-    {
+ //   final String classFileName = /*args[0];*/ "bin/ch/idsia/punj/DemoClass.class";
+//    try
+//    {
         // create a ClassReader that loads the Java .class file specified as the command line argument
-        System.out.println("Disassembling " + classFileName + " Before Instrumentation:");
-        final ClassReader cr = new ClassReader(new FileInputStream(classFileName));
+//        System.out.println("Disassembling " + classFileName + " Before Instrumentation:");
+//        final ClassReader cr = new ClassReader(new FileInputStream(classFileName));
         // create an empty ClassNode (in-memory representation of a class)
-        final ClassNode clazz = new ClassNode();
+//        final ClassNode clazz = new ClassNode();
         // have the ClassReader read the class file and populate the ClassNode with the corresponding information
-        cr.accept(clazz, 0);
+//        cr.accept(clazz, 0);
         // create a dumper and have it dump the given ClassNode
 //            final JavaClassDisassembler dumper = new JavaClassDisassembler();
 //            dumper.disassembleClass(clazz);
-    } catch (Exception e)
-    {
-        e.printStackTrace();
-    }
+//    } catch (Exception e)
+//    {
+//        e.printStackTrace();
+//    }
 //        DemoClass demoClass = new DemoClass();
 //        int sum = demoClass.forWithBreakMethod(42);
 //        System.out.println("sum = " + sum);
@@ -76,63 +72,63 @@ public static void main(String[] args) throws IllegalAccessException, Instantiat
     // After Instrumentation
     // create a ClassReader that loads the Java .class file specified as the command line argument
 
-    byte[] data;
-    try
-    {
-        System.out.println("\n\nDisassembling " + classFileName + " After Instrumentation:");
-        data = punctualJudge.instrumentClass(classFileName);
-        System.out.println("data = " + data);
-        final ClassReader cr = new ClassReader(data);
+//    byte[] data;
+//    try
+//    {
+//        System.out.println("\n\nDisassembling " + classFileName + " After Instrumentation:");
+//        data = punctualJudge.instrumentClass(classFileName);
+//        System.out.println("data = " + data);
+//        final ClassReader cr = new ClassReader(data);
         // create an empty ClassNode (in-memory representation of a class)
-        final ClassNode clazz = new ClassNode();
+//        final ClassNode clazz = new ClassNode();
         // have the ClassReader read the class file and populate the ClassNode with the corresponding information
-        cr.accept(clazz, 0);
+//        cr.accept(clazz, 0);
         // create a dumper and have it dump the given ClassNode
 //            final JavaClassDisassembler dumper = new JavaClassDisassembler();
 //            dumper.disassembleClass(clazz);
+//
+//        final String loadClassFileName = classFileName.replace("bin/", "").replaceAll(".class", "").replace("/", ".");
+//        System.out.println("loadClassFileName = " + loadClassFileName);
+//        Class c = punctualJudge.defineClass(loadClassFileName, data, 0, data.length);
+//        Demo demo = (Demo) c.newInstance();
+//        int sum = demo.forWithBreakMethod(11);
+//        System.out.println("\ndemo = " + sum);
+//        System.out.println("\npunctualJudge = " + demo.getCounter());
+//    } catch (final IOException e)
+ //   {
+ //       e.printStackTrace();
+//    }
+//
+//}
 
-        final String loadClassFileName = classFileName.replace("bin/", "").replaceAll(".class", "").replace("/", ".");
-        System.out.println("loadClassFileName = " + loadClassFileName);
-        Class c = punctualJudge.defineClass(loadClassFileName, data, 0, data.length);
-        Demo demo = (Demo) c.newInstance();
-        int sum = demo.forWithBreakMethod(11);
-        System.out.println("\ndemo = " + sum);
-        System.out.println("\npunctualJudge = " + demo.getCounter());
-    } catch (final IOException e)
-    {
-        e.printStackTrace();
-    }
-
-}
-
-private byte[] getClassData(String name) throws IOException
-{
-    byte[] b = null;
-    try
-    {
+//private byte[] getClassData(String name) throws IOException
+//{
+//    byte[] b = null;
+//    try
+//    {
 //            final String pathname = "plugin-bin/ch/unisi/inf/sp/statistic/Min.class";
 //            final String loadName = directory + name.replace(".", "/") + ".class";
-        final String loadName = name;
+//        final String loadName = name;
 //            if (!pathname.equals(loadName))
 //                System.err.println("Achtung! \n" + pathname + "!=\n" + loadName);
-        File file = new File(loadName);
+//        File file = new File(loadName);
 //            System.out.println("uri.getScheme() = " + uri.());
 
-        System.out.println("System.getProperty(\"user.dir\") = " + System.getProperty("user.dir"));
-        System.out.println(name + " exists = " + file.exists());
-        b = getBytesFromFile(file);
-        final FileReader fileReader = new FileReader(name);
+ //       System.out.println("System.getProperty(\"user.dir\") = " + System.getProperty("user.dir"));
+//        System.out.println(name + " exists = " + file.exists());
+//        b = getBytesFromFile(file);
+//        final FileReader fileReader = new FileReader(name);
 
-    } catch (FileNotFoundException e)
-    {
-        System.err.println("No class file found: " + name);
-    }
+//    } catch (FileNotFoundException e)
+//    {
+//        System.err.println("No class file found: " + name);
+//    }
 
-    return b;
-}
+//    return b;
+//}
 
 
-public static byte[] getBytesFromFile(File file) throws IOException
+/**public static byte[] getBytesFromFile(File file) throws IOException
 {
     InputStream is = new FileInputStream(file);
 
@@ -180,28 +176,28 @@ public static void incrementCounter()
     printOut();
 }
 
-private byte[] instrumentClass(final String classFileName) throws IOException
+//private byte[] instrumentClass(final String classFileName) throws IOException
 {
-    byte[] initialClass = getClassData(classFileName);
-    byte[] instrumentedClass = null;
-    final ClassReader cr = new ClassReader(new FileInputStream(classFileName));
+ //   byte[] initialClass = getClassData(classFileName);
+//    byte[] instrumentedClass = null;
+//    final ClassReader cr = new ClassReader(new FileInputStream(classFileName));
     // create an empty ClassNode (in-memory representation of a class)
-    final ClassNode clazz = new ClassNode();
+//    final ClassNode clazz = new ClassNode();
     // have the ClassReader read the class file and populate the ClassNode with the corresponding information
-    cr.accept(clazz, 0);
+//    cr.accept(clazz, 0);
 
-    System.out.println("Instrumenting Class: " + clazz.name);
+//    System.out.println("Instrumenting Class: " + clazz.name);
     // get the list of all methods in that class
-    final List<MethodNode> methods = clazz.methods;
-    for (int m = 0; m < methods.size(); m++)
-    {
-        final MethodNode method = methods.get(m);
-        if (method.name.startsWith("increment") || method.name.startsWith("getCounter"))
-            continue;
-        instrumentMethod(method, System.out);
-    }
-
-    ClassWriter cw = new ClassWriter(0);
+//    final List<MethodNode> methods = clazz.methods;
+//    for (int m = 0; m < methods.size(); m++)
+//    {
+//        final MethodNode method = methods.get(m);
+//        if (method.name.startsWith("increment") || method.name.startsWith("getCounter"))
+//            continue;
+//        instrumentMethod(method, System.out);
+//    }
+//
+//    ClassWriter cw = new ClassWriter(0);
 
 //        ClassAdapter ca = new ClassAdapter(cw)
 //        {
@@ -225,29 +221,29 @@ private byte[] instrumentClass(final String classFileName) throws IOException
 //            }
 //        };
 //        cr.accept(ca, 0);
-    clazz.accept(cw);
+//    clazz.accept(cw);
 
-    instrumentedClass = cw.toByteArray();
-    return instrumentedClass;
-}
+//    instrumentedClass = cw.toByteArray();
+//    return instrumentedClass;
+//}
 
-private void instrumentMethod(MethodNode methodNode, PrintStream outStream)
+//private void instrumentMethod(MethodNode methodNode, PrintStream outStream)
 {
-    System.out.println("  Instrumenting Method: " + methodNode.name + methodNode.desc);
+//    System.out.println("  Instrumenting Method: " + methodNode.name + methodNode.desc);
     // get the list of all instructions in that method
-    final InsnList instructions = methodNode.instructions;
-    ListIterator it = instructions.iterator();
-    while (it.hasNext())
-    {
+//    final InsnList instructions = methodNode.instructions;
+//    ListIterator it = instructions.iterator();
+//    while (it.hasNext())
+//    {
 //            it.add(new VarInsnNode(Opcodes.INVOKESTATIC, 0));
-        final AbstractInsnNode instruction = (AbstractInsnNode) it.next();
-        if (instruction.getOpcode() != -1 &&
-                instruction.getOpcode() != Opcodes.RETURN &&
-                instruction.getOpcode() != Opcodes.IRETURN &&
-                instruction.getOpcode() != Opcodes.ARETURN)
-            instructions.insert(instruction, new MethodInsnNode(Opcodes.INVOKESTATIC, "ch/idsia/punj/DemoClass", "incrementCounter", "()V"));
-        System.out.print(methodNode.instructions.size() + ",");
-    }
+//        final AbstractInsnNode instruction = (AbstractInsnNode) it.next();
+//        if (instruction.getOpcode() != -1 &&
+//                instruction.getOpcode() != Opcodes.RETURN &&
+//                instruction.getOpcode() != Opcodes.IRETURN &&
+//                instruction.getOpcode() != Opcodes.ARETURN)
+//            instructions.insert(instruction, new MethodInsnNode(Opcodes.INVOKESTATIC, "ch/idsia/punj/DemoClass", "incrementCounter", "()V"));
+//        System.out.print(methodNode.instructions.size() + ",");
+  //  }
 }
 
 public int getCounter()
@@ -290,3 +286,4 @@ public int getCounter()
 //    return c;
 //}
 }
+*/
