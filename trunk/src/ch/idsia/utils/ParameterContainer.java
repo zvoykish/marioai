@@ -84,6 +84,7 @@ private static final String[] allowed = new String[]{
         "-mec", // Mario Ego Column
         "-fps", // Frames Per Second - update frequency
         "-pr",  // Power resoration (cheat) (bring Mario to FIRE state if "Shoot/RUN" key activated.
+        "-punj",// Enable bytecode counting
         "-rfh", // receptive field height (observation )
         "-rfw", // receptive field length (observation )
         "-srf", // show receptive field  (observation )
@@ -289,6 +290,7 @@ public static void InitDefaults()
         defaultOptionsHashMap.put("-mec", "9"); //Mario Ego column
         defaultOptionsHashMap.put("-ey", "0"); //exit x
         defaultOptionsHashMap.put("-ex", "0"); //exit y
+        defaultOptionsHashMap.put("-punj", "off"); //exit y
     }
 }
 

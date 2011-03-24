@@ -77,6 +77,8 @@ public int totalNumberOfMushrooms = MagicNumberUnDef;
 public int totalNumberOfFlowers = MagicNumberUnDef;
 public int totalNumberOfCreatures = MagicNumberUnDef; //including spiky flowers
 
+public long bytecodeInstructions = MagicNumberUnDef;
+
 public int levelLength = MagicNumberUnDef;
 
 public int collisionsWithCreatures = MagicNumberUnDef;
@@ -211,6 +213,7 @@ public String toString()
 
     return "\n[MarioAI] ~ Evaluation Results for Task: " + taskName +
             "\n        Evaluation lasted : " + Long.toString(evaluationLasted) + " ms" +
+            "\n    Bytecode instructions : " + Long.toString(bytecodeInstructions) +
             "\n         Weighted Fitness : " + df.format(computeWeightedFitness()) +
             "\n             Mario Status : " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss...") +
             "\n               Mario Mode : " + Mario.MODES[marioMode] +

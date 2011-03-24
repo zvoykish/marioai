@@ -53,7 +53,7 @@ private static int marioModeSum = 0;
 
 public static void main(String[] args)
 {
-    Agent controller = AgentsPool.loadAgent(args[0]);
+    Agent controller = AgentsPool.loadAgent(args[0], false);
     final int startingSeed = Integer.parseInt(args[1]);
     score(controller, startingSeed);
     System.exit(0);

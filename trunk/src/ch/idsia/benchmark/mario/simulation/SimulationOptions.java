@@ -140,7 +140,7 @@ public Agent getAgent()
 //        return a(getParameterValue("-ag"));      }
     if (agent == null)
     {
-        agent = AgentsPool.loadAgent(getParameterValue("-ag"));
+        agent = AgentsPool.loadAgent(getParameterValue("-ag"), isPunj());
 //            System.out.println("Info: Agent not specified. Default " + agent.getName() + " has been used instead");
     }
     return agent;
@@ -154,7 +154,7 @@ public void setAgent(Agent agent)
 
 public void setAgent(String agentWOXorClassName)
 {
-    this.agent = AgentsPool.loadAgent(agentWOXorClassName);
+    this.agent = AgentsPool.loadAgent(agentWOXorClassName, isPunj());
 }
 
 // LevelType
@@ -493,5 +493,15 @@ public boolean isLevelLadder()
 public void setLevelLadder(boolean ladder)
 {
     setParameterValue("-lla", s(ladder));
+}
+
+public void setPunj(boolean punj)
+{
+    setParameterValue("-punj", s(punj));
+}
+
+public boolean isPunj()
+{
+    return b(getParameterValue("-punj"));
 }
 }

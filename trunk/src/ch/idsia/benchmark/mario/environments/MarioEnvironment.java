@@ -35,6 +35,7 @@ import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 import ch.idsia.benchmark.tasks.SystemOfValues;
 import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.tools.MarioAIOptions;
+import ch.idsia.tools.punj.PunctualJudge;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -203,6 +204,7 @@ public void reset(MarioAIOptions setUpOptions)
         }
     }
     evaluationInfo.reset();
+    PunctualJudge.resetCounter();
 }
 
 public void tick()
@@ -670,6 +672,7 @@ private void computeEvaluationInfo()
     evaluationInfo.marioTraceFileName = marioTraceFile;
     evaluationInfo.marioTrace = levelScene.level.marioTrace;
     evaluationInfo.greenMushroomsDevoured = Mario.greenMushroomsDevoured;
+    evaluationInfo.bytecodeInstructions = PunctualJudge.getCounter();
 }
 
 public void setAgent(Agent agent)
