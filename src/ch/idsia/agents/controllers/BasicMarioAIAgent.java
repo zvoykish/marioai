@@ -75,12 +75,10 @@ protected int marioEgoCol;
 int zLevelScene = 1;
 int zLevelEnemies = 0;
 
-
 public BasicMarioAIAgent(String s)
 {
     setName(s);
 }
-
 
 public boolean[] getAction()
 {

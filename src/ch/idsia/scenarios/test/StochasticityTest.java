@@ -45,7 +45,7 @@ final static int repetitions = 10;
 
 public static void main(String[] args)
 {
-    Agent controller = AgentsPool.loadAgent(args[0]);
+    Agent controller = AgentsPool.loadAgent(args[0], false);
     MarioAIOptions options = new MarioAIOptions(new String[0]);
     options.setAgent(controller);
     Task task = new ProgressTask(options);

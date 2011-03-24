@@ -58,7 +58,7 @@ public static void main(String[] args)
 
     if (args.length > 0)
     {
-        initial = (Evolvable) AgentsPool.loadAgent(args[0]);
+        initial = (Evolvable) AgentsPool.loadAgent(args[0], options.isPunj());
     }
     options.setFPS(GlobalOptions.MaxFPS);
     options.setVisualization(false);

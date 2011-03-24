@@ -33,6 +33,7 @@ import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.benchmark.mario.environments.MarioEnvironment;
 import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.tools.MarioAIOptions;
+import ch.idsia.tools.punj.PunctualJudge;
 import ch.idsia.utils.statistics.StatisticalSummary;
 
 import java.util.Vector;
@@ -53,7 +54,7 @@ private long COMPUTATION_TIME_BOUND = 42; // stands for prescribed  FPS 24.
 private String name = getClass().getSimpleName();
 private EvaluationInfo evaluationInfo;
 
-private Vector statistics = new Vector();
+private Vector<StatisticalSummary> statistics = new Vector<StatisticalSummary>();
 
 public BasicTask(MarioAIOptions marioAIOptions)
 {
@@ -118,7 +119,8 @@ public void setOptionsAndReset(final String options)
 }
 
 public void doEpisodes(int amount, boolean verbose, final int repetitionsOfSingleEpisode)
-{   for (int j = 0; j < EvaluationInfo.numberOfElements; j++)
+{
+    for (int j = 0; j < EvaluationInfo.numberOfElements; j++)
     {
         statistics.addElement(new StatisticalSummary());
     }
@@ -130,9 +132,9 @@ public void doEpisodes(int amount, boolean verbose, final int repetitionsOfSingl
             System.out.println(environment.getEvaluationInfoAsString());
 
         for (int j = 0; j < EvaluationInfo.numberOfElements; j++)
-            {
-                ((StatisticalSummary) statistics.get(j)).add(environment.getEvaluationInfoAsInts()[j]);
-            }
+        {
+            statistics.get(j).add(environment.getEvaluationInfoAsInts()[j]);
+        }
     }
 
     System.out.println(statistics.get(3).toString());
