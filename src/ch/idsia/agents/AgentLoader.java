@@ -68,8 +68,8 @@ public Agent loadAgent(String name, boolean isPunj)
         try
         {
             PunctualJudge punj = new PunctualJudge();
-            String classPath = agent.getClass().getProtectionDomain().getCodeSource().getLocation().getPath().replace("/", "\\");
-            String className = agent.getClass().getName().replace(".", "\\") + ".class";
+            String classPath = agent.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+            String className = agent.getClass().getName().replace(".", "/") + ".class";
 
             byte[] byteClass = punj.instrumentClass(classPath + className);
 
