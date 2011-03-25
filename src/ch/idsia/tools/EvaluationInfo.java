@@ -36,8 +36,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 
-import java.lang.System;
-
 /**
  * Created by IntelliJ IDEA.
  * User: Sergey Karakovskiy
@@ -197,8 +195,7 @@ public String toString()
     } catch (IOException e)
     {
         e.printStackTrace();
-    }
-    finally
+    } finally
     {
 //        Runtime rt = Runtime.getRuntime();
 //        try
@@ -213,7 +210,6 @@ public String toString()
 
     return "\n[MarioAI] ~ Evaluation Results for Task: " + taskName +
             "\n        Evaluation lasted : " + Long.toString(evaluationLasted) + " ms" +
-            "\n    Bytecode instructions : " + Long.toString(bytecodeInstructions) +
             "\n         Weighted Fitness : " + df.format(computeWeightedFitness()) +
             "\n             Mario Status : " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss...") +
             "\n               Mario Mode : " + Mario.MODES[marioMode] +
@@ -229,6 +225,7 @@ public String toString()
             "\n            kills By Fire : " + killsByFire +
             "\n           kills By Shell : " + killsByShell +
             "\n           kills By Stomp : " + killsByStomp +
+            "\n    PunJ : " + Long.toString(bytecodeInstructions) +
             ((Memo.equals("")) ? "" : "\nMEMO INFO: " + Memo);
 }
 
@@ -236,7 +233,7 @@ public String toStringSingleLine()
 {
     evaluationFinished = System.currentTimeMillis();
     evaluationLasted = evaluationFinished - evaluationStarted;
-    
+
     return "\n[MarioAI] ~ Evaluation Results:" +
             " Evaluation lasted: " + Long.toString(evaluationLasted) + " ms" +
             "; Status: " + ((marioStatus == Mario.STATUS_WIN) ? "WIN!" : "Loss") +
@@ -277,8 +274,7 @@ public EvaluationInfo clone()
     {
         // TODO:!H!:double check the validity of this change!
         return (EvaluationInfo) super.clone();
-    }
-    catch (CloneNotSupportedException e)
+    } catch (CloneNotSupportedException e)
     {
         System.err.println(e);
         return null;
