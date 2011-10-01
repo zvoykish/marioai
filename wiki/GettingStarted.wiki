@@ -12,7 +12,7 @@ Checkout from SVN [http://code.google.com/p/marioai/source/checkout Source] or d
 Look for the specific project files in trunk. Project files for IntelliJ IDEA, Eclipse Galileo and Netbeans are provided.
 Or you might also checkout from SVN using the above mentioned IDEs. Use SVN version 1.6 everywhere.
 
- == * *IntelliJ IDEA* (JetBrains issued a free community edition now!) == 
+ == * *IntelliJ IDEA* (*JetBrains* released a free community edition!) == 
   # Version Control
   # Checkout from Version Control.
   # Subversion. 
