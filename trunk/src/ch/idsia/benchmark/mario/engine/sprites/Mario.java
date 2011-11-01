@@ -90,6 +90,7 @@ public static void resetStatic(MarioAIOptions marioAIOptions)
     coins = 0;
     hiddenBlocksFound = 0;
     mushroomsDevoured = 0;
+    greenMushroomsDevoured = 0;
     flowersDevoured = 0;
     collisionsWithCreatures = 0;
 
