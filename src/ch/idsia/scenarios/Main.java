@@ -27,6 +27,7 @@
 
 package ch.idsia.scenarios;
 
+import ch.idsia.agents.controllers.ExternalMarioAgent;
 import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.tools.MarioAIOptions;
 
@@ -34,17 +35,19 @@ import ch.idsia.tools.MarioAIOptions;
  * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 17, 2010 Time: 8:28:00 AM
  * Package: ch.idsia.scenarios
  */
-public final class Main
-{
-public static void main(String[] args)
-{
-//        final String argsString = "-vis on";
-    final MarioAIOptions marioAIOptions = new MarioAIOptions(args);
-//        final Environment environment = new MarioEnvironment();
-//        final Agent agent = new ForwardAgent();
-//        final Agent agent = marioAIOptions.getAgent();
-//        final Agent a = AgentsPool.loadAgent("ch.idsia.controllers.agents.controllers.ForwardJumpingAgent");
-    final BasicTask basicTask = new BasicTask(marioAIOptions);
+public final class Main {
+    public static void main(String[] args) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+        String adapterName = "com.zvoykish.marioai.adapters.ZvikaMarioAIAdapter";
+
+        args = new String[]{"-vw", "640", "-vh", "480"};
+        final MarioAIOptions marioAIOptions = new MarioAIOptions(args);
+
+        marioAIOptions.setVisualization(true); // Disable for MUCH faster computation (when running generations...)
+        marioAIOptions.setMarioMode(0); // Start with a small mario
+        marioAIOptions.setLevelRandSeed(0); // Any value causes the level to be identical to other runs using the same value
+        marioAIOptions.setLevelDifficulty(0); // Increase as you want...
+        marioAIOptions.setAgent(new ExternalMarioAgent(adapterName));
+        final BasicTask basicTask = new BasicTask(marioAIOptions);
 //        for (int i = 0; i < 10; ++i)
 //        {
 //            int seed = 0;
@@ -52,14 +55,14 @@ public static void main(String[] args)
 //            {
 //                marioAIOptions.setLevelDifficulty(i);
 //                marioAIOptions.setLevelRandSeed(seed++);
-    basicTask.setOptionsAndReset(marioAIOptions);
+        basicTask.setOptionsAndReset(marioAIOptions);
 //    basicTask.runSingleEpisode(1);
-    basicTask.doEpisodes(1,true,1);
+        basicTask.doEpisodes(1, true, 1);
 //    System.out.println(basicTask.getEnvironment().getEvaluationInfoAsString());
 //            } while (basicTask.getEnvironment().getEvaluationInfo().marioStatus != Environment.MARIO_STATUS_WIN);
 //        }
 //
-    System.exit(0);
-}
+        System.exit(0);
+    }
 
 }

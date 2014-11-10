@@ -28,13 +28,14 @@
 package ch.idsia.benchmark.tasks;
 
 import ch.idsia.agents.Agent;
+import ch.idsia.agents.controllers.ExternalMarioAgent;
 import ch.idsia.benchmark.mario.engine.GlobalOptions;
 import ch.idsia.benchmark.mario.environments.Environment;
 import ch.idsia.benchmark.mario.environments.MarioEnvironment;
 import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.tools.MarioAIOptions;
-import ch.idsia.tools.punj.PunctualJudge;
 import ch.idsia.utils.statistics.StatisticalSummary;
+import com.zvoykish.marioai.input.MarioGameSummaryAdapter;
 
 import java.util.Vector;
 
@@ -45,133 +46,122 @@ import java.util.Vector;
  * Date: Mar 14, 2010 Time: 4:47:33 PM
  */
 
-public class BasicTask implements Task
-{
-protected final static Environment environment = MarioEnvironment.getInstance();
-private Agent agent;
-protected MarioAIOptions options;
-private long COMPUTATION_TIME_BOUND = 42; // stands for prescribed  FPS 24.
-private String name = getClass().getSimpleName();
-private EvaluationInfo evaluationInfo;
+public class BasicTask implements Task {
+    protected final static Environment environment = MarioEnvironment.getInstance();
+    private Agent agent;
+    protected MarioAIOptions options;
+    private long COMPUTATION_TIME_BOUND = 42; // stands for prescribed  FPS 24.
+    private String name = getClass().getSimpleName();
+    private EvaluationInfo evaluationInfo;
 
-private Vector<StatisticalSummary> statistics = new Vector<StatisticalSummary>();
+    private Vector<StatisticalSummary> statistics = new Vector<StatisticalSummary>();
 
-public BasicTask(MarioAIOptions marioAIOptions)
-{
-    this.setOptionsAndReset(marioAIOptions);
-}
+    public BasicTask(MarioAIOptions marioAIOptions) {
+        this.setOptionsAndReset(marioAIOptions);
+    }
 
-/**
- * @param repetitionsOfSingleEpisode
- * @return boolean flag whether controller is disqualified or not
- */
-public boolean runSingleEpisode(final int repetitionsOfSingleEpisode)
-{
-    long c = System.currentTimeMillis();
-    for (int r = 0; r < repetitionsOfSingleEpisode; ++r)
-    {
-        this.reset();
-        while (!environment.isLevelFinished())
-        {
-            environment.tick();
-            if (!GlobalOptions.isGameplayStopped)
-            {
-                c = System.currentTimeMillis();
-                agent.integrateObservation(environment);
-                agent.giveIntermediateReward(environment.getIntermediateReward());
+    /**
+     * @param repetitionsOfSingleEpisode
+     * @return boolean flag whether controller is disqualified or not
+     */
+    public boolean runSingleEpisode(final int repetitionsOfSingleEpisode) {
+        long c;
+        for (int r = 0; r < repetitionsOfSingleEpisode; ++r) {
+            this.reset();
+            while (!environment.isLevelFinished()) {
+                environment.tick();
+                if (!GlobalOptions.isGameplayStopped) {
+                    c = System.currentTimeMillis();
+                    agent.integrateObservation(environment);
+                    agent.giveIntermediateReward(environment.getIntermediateReward());
 
-                boolean[] action = agent.getAction();
-                if (System.currentTimeMillis() - c > COMPUTATION_TIME_BOUND)
-                    return false;
+                    boolean[] action = agent.getAction();
+                    if (System.currentTimeMillis() - c > COMPUTATION_TIME_BOUND)
+                        return false;
 //                System.out.println("action = " + Arrays.toString(action));
 //            environment.setRecording(GlobalOptions.isRecording);
-                environment.performAction(action);
+                    environment.performAction(action);
+                }
+            }
+            environment.closeRecorder(); //recorder initialized in environment.reset
+            environment.getEvaluationInfo().setTaskName(name);
+            this.evaluationInfo = environment.getEvaluationInfo().clone();
+        }
+
+        return true;
+    }
+
+    public Environment getEnvironment() {
+        return environment;
+    }
+
+    public int evaluate(Agent controller) {
+        return 0;
+    }
+
+    public void setOptionsAndReset(MarioAIOptions options) {
+        this.options = options;
+        reset();
+    }
+
+    public void setOptionsAndReset(final String options) {
+        this.options.setArgs(options);
+        reset();
+    }
+
+    public void doEpisodes(int amount, boolean verbose, final int repetitionsOfSingleEpisode) {
+        for (int j = 0; j < EvaluationInfo.numberOfElements; j++) {
+            statistics.addElement(new StatisticalSummary());
+        }
+        for (int i = 0; i < amount; ++i) {
+            this.reset();
+            this.runSingleEpisode(repetitionsOfSingleEpisode);
+            EvaluationInfo info = environment.getEvaluationInfo();
+            if (verbose) {
+                System.out.println(info.toString());
+            }
+            publishGameEnd(info);
+
+            for (int j = 0; j < EvaluationInfo.numberOfElements; j++) {
+                statistics.get(j).add(environment.getEvaluationInfoAsInts()[j]);
             }
         }
-        environment.closeRecorder(); //recorder initialized in environment.reset
-        environment.getEvaluationInfo().setTaskName(name);
-        this.evaluationInfo = environment.getEvaluationInfo().clone();
+
+        System.out.println(statistics.get(3).toString());
     }
 
-    return true;
-}
-
-public Environment getEnvironment()
-{
-    return environment;
-}
-
-public int evaluate(Agent controller)
-{
-    return 0;
-}
-
-public void setOptionsAndReset(MarioAIOptions options)
-{
-    this.options = options;
-    reset();
-}
-
-public void setOptionsAndReset(final String options)
-{
-    this.options.setArgs(options);
-    reset();
-}
-
-public void doEpisodes(int amount, boolean verbose, final int repetitionsOfSingleEpisode)
-{
-    for (int j = 0; j < EvaluationInfo.numberOfElements; j++)
-    {
-        statistics.addElement(new StatisticalSummary());
-    }
-    for (int i = 0; i < amount; ++i)
-    {
-        this.reset();
-        this.runSingleEpisode(repetitionsOfSingleEpisode);
-        if (verbose)
-            System.out.println(environment.getEvaluationInfoAsString());
-
-        for (int j = 0; j < EvaluationInfo.numberOfElements; j++)
-        {
-            statistics.get(j).add(environment.getEvaluationInfoAsInts()[j]);
+    private void publishGameEnd(EvaluationInfo info) {
+        if (agent instanceof ExternalMarioAgent) {
+            ((ExternalMarioAgent) agent).onGameEnd(new MarioGameSummaryAdapter(info));
         }
     }
 
-    System.out.println(statistics.get(3).toString());
-}
+    public boolean isFinished() {
+        return false;
+    }
 
-public boolean isFinished()
-{
-    return false;
-}
+    public void reset() {
+        agent = options.getAgent();
+        environment.reset(options);
+        agent.reset();
+        agent.setObservationDetails(environment.getReceptiveFieldWidth(),
+                environment.getReceptiveFieldHeight(),
+                environment.getMarioEgoPos()[0],
+                environment.getMarioEgoPos()[1]);
+    }
 
-public void reset()
-{
-    agent = options.getAgent();
-    environment.reset(options);
-    agent.reset();
-    agent.setObservationDetails(environment.getReceptiveFieldWidth(),
-            environment.getReceptiveFieldHeight(),
-            environment.getMarioEgoPos()[0],
-            environment.getMarioEgoPos()[1]);
-}
+    public String getName() {
+        return name;
+    }
 
-public String getName()
-{
-    return name;
-}
+    public void printStatistics() {
+        System.out.println(evaluationInfo.toString());
+    }
 
-public void printStatistics()
-{
-    System.out.println(evaluationInfo.toString());
-}
-
-public EvaluationInfo getEvaluationInfo()
-{
+    public EvaluationInfo getEvaluationInfo() {
 //    System.out.println("evaluationInfo = " + evaluationInfo);
-    return evaluationInfo;
-}
-
+        return evaluationInfo;
+    }
 }
 
 //            start timer
